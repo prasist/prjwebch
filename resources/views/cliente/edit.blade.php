@@ -6,6 +6,11 @@
 
     <div class="col-md-12">
 
+        <div>
+            <i class="fa fa-arrow-circle-left"></i>
+            <a href="{{ url('/cliente')}}"> Voltar </a>
+        </div>
+
         <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action = {{ url('/cliente/' . $clientes_cloud->id . '/update')}}>
             <!--<input type = 'hidden' name = '_token' value = '{{Session::token()}}'>-->
             {!! csrf_field() !!}
@@ -271,7 +276,6 @@
 
         <div class="box-footer">
             <button class = 'btn btn-primary' type ='submit'>Gravar</button>
-            <button class = 'btn btn-default' >Voltar</button>
         </div>
 
        </form>
