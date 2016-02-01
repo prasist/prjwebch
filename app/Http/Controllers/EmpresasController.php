@@ -21,7 +21,7 @@ use Auth;
 use Input;
 use Validator;
 
-class ClientesCloudController extends Controller
+class EmpresasController extends Controller
 {
 
     public function __construct()
@@ -39,18 +39,13 @@ class ClientesCloudController extends Controller
        */
         $cadastrou = usuario::find(Auth::user()->id);
 
-
         if ($cadastrou)
         {
-            //$clientes_cloud = clientescloud::find($cadastrou['empresas_id'])->empresas;
-            //dd($cadastrou['empresas_clientes_cloud_id']);
+            //$emp = empresas::find($cadastrou['empresas_clientes_cloud_id']);
 
-            $clientes_cloud = clientescloud::all()->where('id', intval($cadastrou['empresas_clientes_cloud_id']));
+            $emp = empresas::all()->where('clientes_cloud_id', $cadastrou['empresas_clientes_cloud_id']);
 
-            //$clientes_cloud = clientescloud::find($cadastrou['empresas_clientes_cloud_id']);
-            //dd($clientes_cloud);
-            return view('clientes.index',compact('clientes_cloud'));
-
+            return view('empresas.index',compact('emp'));
         }
         else
         {
@@ -62,13 +57,13 @@ class ClientesCloudController extends Controller
     //
     public function create() {
 
-        return view('clientes.registrar');
+        return view('empresas.registrar');
 
     }
 
 
 /*
-* ClientesCloudRequest = Validação de campos
+* ClientesCloudRequesempresas = Validação de campos
 *
 */
     public function store(\Illuminate\Http\Request  $request)
@@ -88,49 +83,41 @@ class ClientesCloudController extends Controller
 
         $usuarios          = new usuario();
 
-        $clientes_cloud = new clientescloud();
+        $empresas = new empresas();
 
-        $clientes_cloud->razaosocial = $input['razaosocial'];
-        $clientes_cloud->nomefantasia = $input['nomefantasia'];
-        $clientes_cloud->cnpj = preg_replace("/[^0-9]/", '', $input['cnpj']);
-        $clientes_cloud->inscricaoestadual = $input['inscricaoestadual'];
-        $clientes_cloud->endereco = $input['endereco'];
-        $clientes_cloud->numero = $input['numero'];
-        $clientes_cloud->bairro = $input['bairro'];
-        $clientes_cloud->cep = $input['cep'];
-        $clientes_cloud->complemento = $input['complemento'];
-        $clientes_cloud->cidade = $input['cidade'];
-        $clientes_cloud->estado = $input['estado'];
-        $clientes_cloud->foneprincipal = preg_replace("/[^0-9]/", '', $input['foneprincipal']);
-        $clientes_cloud->fonesecundario = preg_replace("/[^0-9]/", '', $input['fonesecundario']);
-        $clientes_cloud->emailprincipal = $input['emailprincipal'];
-        $clientes_cloud->emailsecundario = $input['emailsecundario'];
-        $clientes_cloud->nomecontato = $input['nomecontato'];
-        $clientes_cloud->celular = $input['celular'];
-        $clientes_cloud->ativo = 'S'; //Sempre ativo quando cadastrar ?
-        $clientes_cloud->website = $input['website'];
+        $empresas->razaosocial = $input['razaosocial'];
+        $empresas->nomefantasia = $input['nomefantasia'];
+        $empresas->cnpj = preg_replace("/[^0-9]/", '', $input['cnpj']);
+        $empresas->inscricaoestadual = $input['inscricaoestadual'];
+        $empresas->endereco = $input['endereco'];
+        $empresas->numero = $input['numero'];
+        $empresas->bairro = $input['bairro'];
+        $empresas->cep = $input['cep'];
+        $empresas->complemento = $input['complemento'];
+        $empresas->cidade = $input['cidade'];
+        $empresas->estado = $input['estado'];
+        $empresas->foneprincipal = preg_replace("/[^0-9]/", '', $input['foneprincipal']);
+        $empresas->fonesecundario = preg_replace("/[^0-9]/", '', $input['fonesecundario']);
+        $empresas->emailprincipal = $input['emailprincipal'];
+        $empresas->emailsecundario = $input['emailsecundario'];
+        $empresas->nomecontato = $input['nomecontato'];
+        $empresas->celular = $input['celular'];
+        $empresas->ativo = 'S'; //Sempre ativo quando cadastrar ?
+        $empresas->website = $input['website'];
 
-        if ($image) {
-            $clientes_cloud->caminhologo = $image->getClientOriginalName();
+        $cadastrou = usuario::find(Auth::user()->id);
+
+        if ($cadastrou)
+        {
+            $empresas->clientes_cloud_id = $cadastrou['empresas_clientes_cloud_id'];
         }
 
-        $clientes_cloud->save();
 
-       /*
-        *Busca id da tabela empresas vinculada a tabela clientes_cloud
-       */
-        $id_empresas = empresas::where('clientes_cloud_id', $clientes_cloud->id)->select('id')->first();
+        if ($image) {
+            $empresas->caminhologo = $image->getClientOriginalName();
+        }
 
-
-       /* Aqui faz o vinculo da usuário cadastrado na users com as tabelas do sistema
-       *
-       * Grava o id (users, clientes_cloud e empresas) na tabela usuarios (id, empresas_clientes_cloud_id, empresas_id)
-       */
-        $usuarios->id                                           =  Auth::user()->id;    //id do usuário logado (tabela users)
-        $usuarios->empresas_id                          =  $clientes_cloud->id; //Pegar ID do registro recém criado (clientes_cloud)
-        $usuarios->empresas_clientes_cloud_id  =  $id_empresas['id'];
-        $usuarios->master = 1; //Criada a empresa a primeira vez, o usuario que cadastrou será o master e nao podera ser removido
-        $usuarios->save();
+        $empresas->save();
 
        if ($image) {
                 /*Regras validação imagem*/
@@ -154,13 +141,13 @@ class ClientesCloudController extends Controller
                     {
                         return $this->errors(['message' => 'Erro ao salvar imagem.', 'code' => 400]);
                     }
+
                 }
          }
 
-
         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
 
-        return redirect('clientes');
+        return redirect('empresas');
 
     }
 
@@ -168,22 +155,22 @@ class ClientesCloudController extends Controller
     {
             if($request->ajax())
             {
-                return URL::to ( 'clientes/'.$id);
+                return URL::to ( 'empresas/'.$id);
             }
 
-            $clientes_cloud = clientescloud::find($id);
-            return view('clientes.show',compact('clientes_cloud'));
+            $empresas = empresas::find($id);
+            return view('empresas.show',compact('clientes_cloud'));
     }
 
     public function edit(Request $request, $id)
     {
         if($request->ajax())
         {
-            return URL::to('clientes/'. $id . '/edit');
+            return URL::to('empresas/'. $id . '/edit');
         }
 
-        $clientes_cloud = clientescloud::findOrfail($id);
-        return view('clientes.edit',compact('clientes_cloud'));
+        $empresas = empresas::findOrfail($id);
+        return view('empresas.edit',compact('empresas'));
     }
 
     /**
@@ -208,33 +195,33 @@ class ClientesCloudController extends Controller
 
         $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-        $clientes_cloud = clientescloud::findOrfail($id);
+        $empresas = empresas::findOrfail($id);
 
-        $clientes_cloud->razaosocial  = $input['razaosocial'];
-        $clientes_cloud->nomefantasia = $input['nomefantasia'];
-        $clientes_cloud->cnpj  = preg_replace("/[^0-9]/", '', $input['cnpj']);
-        $clientes_cloud->inscricaoestadual = $input['inscricaoestadual'];
-        $clientes_cloud->endereco = $input['endereco'];
-        $clientes_cloud->numero = $input['numero'];
-        $clientes_cloud->bairro = $input['bairro'];
-        $clientes_cloud->cep = $input['cep'];
-        $clientes_cloud->complemento = $input['complemento'];
-        $clientes_cloud->cidade = $input['cidade'];
-        $clientes_cloud->estado = $input['estado'];
-        $clientes_cloud->foneprincipal = preg_replace("/[^0-9]/", '', $input['foneprincipal']);
-        $clientes_cloud->fonesecundario = preg_replace("/[^0-9]/", '', $input['fonesecundario']);
-        $clientes_cloud->emailprincipal = $input['emailprincipal'];
-        $clientes_cloud->emailsecundario = $input['emailsecundario'];
-        $clientes_cloud->nomecontato = $input['nomecontato'];
-        $clientes_cloud->celular = $input['celular'];
-        //$clientes_cloud->ativo = $input['ativo'];
-        $clientes_cloud->website = $input['website'];
+        $empresas->razaosocial  = $input['razaosocial'];
+        $empresas->nomefantasia = $input['nomefantasia'];
+        $empresas->cnpj  = preg_replace("/[^0-9]/", '', $input['cnpj']);
+        $empresas->inscricaoestadual = $input['inscricaoestadual'];
+        $empresas->endereco = $input['endereco'];
+        $empresas->numero = $input['numero'];
+        $empresas->bairro = $input['bairro'];
+        $empresas->cep = $input['cep'];
+        $empresas->complemento = $input['complemento'];
+        $empresas->cidade = $input['cidade'];
+        $empresas->estado = $input['estado'];
+        $empresas->foneprincipal = preg_replace("/[^0-9]/", '', $input['foneprincipal']);
+        $empresas->fonesecundario = preg_replace("/[^0-9]/", '', $input['fonesecundario']);
+        $empresas->emailprincipal = $input['emailprincipal'];
+        $empresas->emailsecundario = $input['emailsecundario'];
+        $empresas->nomecontato = $input['nomecontato'];
+        $empresas->celular = $input['celular'];
+        //$empresas->ativo = $input['ativo'];
+        $empresas->website = $input['website'];
 
         if ($image) {
-            $clientes_cloud->caminhologo = $image->getClientOriginalName();
+            $empresas->caminhologo = $image->getClientOriginalName();
         }
 
-        $clientes_cloud->save();
+        $empresas->save();
 
         if ($image) {
                 /*Regras validação imagem*/
@@ -263,7 +250,7 @@ class ClientesCloudController extends Controller
 
         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
 
-        return redirect('clientes');
+        return redirect('empresas');
 
     }
 
@@ -274,11 +261,11 @@ class ClientesCloudController extends Controller
      *
      * @return  String
      */
-    public function DeleteMsg($id)
+    public function DeleteMsg(Request $request, $id)
     {
-        $msg = Ajaxis::MtDeleting('Aviso!!','Confirma exclusão ?','/clientes/'. $id . '/delete/');
+        $msg = Ajaxis::MtDeleting('Aviso!!','Confirma exclusão ?','/empresas/'. $id . '/delete/');
 
-        if(Request::ajax())
+        if($request->ajax())
         {
             return $msg;
         }
@@ -292,16 +279,16 @@ class ClientesCloudController extends Controller
      */
     public function destroy($id)
     {
-        $clientes_cloud = clientescloud::findOrfail($id);
-        $clientes_cloud->delete();
-        return URL::to('clientes');
+        $empresas = empresas::findOrfail($id);
+        $empresas->delete();
+        return redirect('empresas');
     }
 
     public function remove_image ($id) {
 
-         $clientes_cloud = clientescloud::findOrfail($id);
+         $empresas = empresas::findOrfail($id);
 
-         if(!\File::delete(public_path() . '/images/clients/' . $clientes_cloud->caminhologo))
+         if(!\File::delete(public_path() . '/images/clients/' . $empresas->caminhologo))
          {
 
             \Session::flash('flash_message_erros', 'Erro ao remover imagem');
@@ -309,14 +296,14 @@ class ClientesCloudController extends Controller
          else
          {
 
-            $clientes_cloud->caminhologo = '';
-            $clientes_cloud->save();
+            $empresas->caminhologo = '';
+            $empresas->save();
 
             \Session::flash('flash_message', 'Imagem Removida com Sucesso!!!');
 
          }
 
-         return redirect('clientes');
+         return redirect('empresas');
 
     }
 

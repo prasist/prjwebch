@@ -2,7 +2,7 @@
 
 return [
 
-    
+
     'env' => env('APP_ENV', 'production'),
 
     'debug' => env('APP_DEBUG', true),
@@ -10,7 +10,7 @@ return [
     'url' => 'http://localhost',
 
     'timezone' => 'UTC',
-   
+
 
     'locale' => 'en',
 
@@ -95,6 +95,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        Amranidev\ScaffoldInterface\ScaffoldInterfaceServiceProvider::class,
+        Amranidev\Ajaxis\AjaxisServiceProvider::class,
         /*
          * Application Service Providers...
          */
