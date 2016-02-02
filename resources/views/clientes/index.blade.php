@@ -36,8 +36,8 @@
                             <td>
                                 <div class = 'row'>
                                     <!-- <a href = '#modal1' class = 'delete btn-floating modal-trigger red' data-link = "/empresa/{{$value->id}}/deleteMsg" ><i class = 'material-icons'>delete</i></a> -->
-                                    <a href = "{{ URL::to('clientes/' . $value->id . '/edit') }}" class = 'btn btn-success btn-flat' data-link = '/cliente/{{$value->id}}/edit'>Editar</a>
-                                    <a href = "{{ URL::to('clientes/' . $value->id . '/preview') }}" class = 'btn btn-primary' data-link = '/cliente/{{$value->id}}'>Visualizar</a>
+                                    <a href = "{{ URL::to('clientes/' . $value->id . '/edit') }}" class = 'btn btn-success btn-flat' data-link = '/cliente/{{$value->id}}/edit'><i class="fa fa-edit"></i> Editar</a>
+                                    <a href = "{{ URL::to('clientes/' . $value->id . '/preview') }}" class = 'btn btn-primary' data-link = '/cliente/{{$value->id}}'><i class="fa fa-search-plus"></i> Visualizar</a>
                                 </div>
                             </td>
 

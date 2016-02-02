@@ -15,7 +15,7 @@
         <div class="row">
                 <div class="col-xs-2">
                   <form method = 'get' class="form-horizontal" action = {{ url('/grupos/registrar')}}>
-                        <button class = 'btn btn-success btn-flat' type ='submit'>Novo Registro</button>
+                        <button class = 'btn btn-success btn-flat' type ='submit'><i class="fa fa-file-text-o"></i> Novo Registro</button>
                   </form>
                   </div>
         </div>
@@ -69,11 +69,11 @@
                                               </div>
 
                                               <div class="col-xs-2">
-                                                    <a href = "{{ URL::to('grupos/' . $value->id . '/edit') }}" class = 'btn btn-info' data-link = '/gupos/{{$value->id}}/edit'>Editar</a>
+                                                    <a href = "{{ URL::to('grupos/' . $value->id . '/edit') }}" class = 'btn btn-info' data-link = '/gupos/{{$value->id}}/edit'><i class="fa fa-edit"></i> Editar</a>
                                               </div>
 
                                               <div class="col-xs-2">
-                                                   <a href = "{{ URL::to('grupos/' . $value->id . '/preview') }}" class = 'btn btn-primary' data-link = '/grupos/{{$value->id}}'>Visualizar</a>
+                                                   <a href = "{{ URL::to('grupos/' . $value->id . '/preview') }}" class = 'btn btn-primary' data-link = '/grupos/{{$value->id}}'><i class="fa fa-search-plus"></i> Visualizar</a>
                                               </div>
                                     </div>
 

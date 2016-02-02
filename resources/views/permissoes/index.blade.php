@@ -11,7 +11,7 @@
         <div class="row">
                 <div class="col-xs-2">
                   <form method = 'get' class="form-horizontal" action = {{ url('/permissoes/registrar')}}>
-                        <button class = 'btn btn-success btn-flat' type ='submit'>Novo Registro</button>
+                        <button class = 'btn btn-success btn-flat' type ='submit'><i class="fa fa-file-text-o"></i> Novo Registro</button>
                   </form>
                   </div>
         </div>
@@ -64,12 +64,13 @@
                                               @endif
                                               </div>
 
+
                                               <div class="col-xs-2">
-                                                    <a href = "{{ URL::to('permissoes/' . $value->id . '/edit') }}" class = 'btn btn-info' data-link = '/permissoes/{{$value->id}}/edit'>Editar</a>
+                                                    <a href = "{{ URL::to('permissoes/' . $value->id . '/edit') }}" class = 'btn btn-info' data-link = '/permissoes/{{$value->id}}/edit'><i class="fa fa-edit"></i> Editar</a>
                                               </div>
 
                                               <div class="col-xs-2">
-                                                   <a href = "{{ URL::to('permissoes/' . $value->id . '/preview') }}" class = 'btn btn-primary' data-link = '/permissoes/{{$value->id}}'>Visualizar</a>
+                                                   <a href = "{{ URL::to('permissoes/' . $value->id . '/preview') }}" class = 'btn btn-primary' data-link = '/permissoes/{{$value->id}}'><i class="fa fa-search-plus"></i> Visualizar</a>
                                               </div>
                                     </div>
 

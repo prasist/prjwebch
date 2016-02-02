@@ -47,13 +47,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('grupos/{id}/deleteMsg','GruposController@DeleteMsg');
 
   /*Permissoes do Grupo*/
-    Route::get('permissoes', 'GruposController@index');
-    Route::post('/permissoes/gravar','GruposController@store');
-    Route::get('/permissoes/registrar','GruposController@create');
+    Route::get('permissoes', 'PermissoesGrupoController@index');
+    Route::post('/permissoes/gravar','PermissoesGrupoController@store');
+    Route::get('/permissoes/registrar','PermissoesGrupoController@create');
     //Route::get('/empresas/{id}/preview','EmpresasController@show');
-    Route::post('permissoes/{id}/update','GruposController@update');
-    Route::get('permissoes/{id}/edit','GruposController@edit');
-    Route::get('permissoes/{id}/delete','GruposController@destroy');
-    Route::get('permissoes/{id}/deleteMsg','GruposController@DeleteMsg');
+    Route::post('permissoes/{id}/update','PermissoesGrupoController@update');
+    Route::get('permissoes/{id}/edit','PermissoesGrupoController@edit');
+    Route::get('permissoes/{id}/delete','PermissoesGrupoController@destroy');
+    Route::get('permissoes/{id}/deleteMsg','PermissoesGrupoController@DeleteMsg');
 
 });

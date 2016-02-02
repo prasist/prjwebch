@@ -121,18 +121,18 @@ class ClientesCloudController extends Controller
        */
         $id_empresas = empresas::where('clientes_cloud_id', $clientes_cloud->id)->select('id')->first();
 
-
        /* Aqui faz o vinculo da usuário cadastrado na users com as tabelas do sistema
        *
        * Grava o id (users, clientes_cloud e empresas) na tabela usuarios (id, empresas_clientes_cloud_id, empresas_id)
        */
         $usuarios->id                                           =  Auth::user()->id;    //id do usuário logado (tabela users)
-        $usuarios->empresas_id                          =  $clientes_cloud->id; //Pegar ID do registro recém criado (clientes_cloud)
-        $usuarios->empresas_clientes_cloud_id  =  $id_empresas['id'];
+        $usuarios->empresas_id                          =  $id_empresas['id']; //Pegar ID do registro recém criado (clientes_cloud)
+        $usuarios->empresas_clientes_cloud_id  =  $clientes_cloud->id;
         $usuarios->master = 1; //Criada a empresa a primeira vez, o usuario que cadastrou será o master e nao podera ser removido
         $usuarios->save();
 
        if ($image) {
+
                 /*Regras validação imagem*/
                 $rules = array(
                     'image' => 'image',

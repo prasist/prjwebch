@@ -11,7 +11,7 @@
         <div class="row">
                 <div class="col-xs-2">
                   <form method = 'get' class="form-horizontal" action = {{ url('/empresas/registrar')}}>
-                        <button class = 'btn btn-success btn-flat' type ='submit'>Novo Registro</button>
+                        <button class = 'btn btn-success btn-flat' type ='submit'><i class="fa fa-file-text-o"></i> Novo Registro</button>
                   </form>
                   </div>
         </div>
@@ -44,24 +44,31 @@
 
                             <td>
                                 <div class = 'row'>
-                                      @if ($value->igreja_sede != 1)
 
-                                     <form id="excluir{{ $value->id }}" action="{{ URL::to('empresas/' . $value->id . '/delete') }}" method="DELETE">
+                                    <div class="col-xs-2">
 
-                                              <button
-                                                  data-toggle="tooltip"
-                                                  data-placement="top" title="Excluir Ítem" type="submit"
-                                                  class="btn btn-danger"
-                                                  onclick="return confirm('Confirma exclusão desse ítem ?');">
-                                                  <i class="fa fa-trash-o"></i> Excluir</button>
+                                         @if ($value->igreja_sede != 1)
 
-                                        </form>
+                                         <form id="excluir{{ $value->id }}" action="{{ URL::to('empresas/' . $value->id . '/delete') }}" method="DELETE">
 
+                                                  <button
+                                                      data-toggle="tooltip"
+                                                      data-placement="top" title="Excluir Ítem" type="submit"
+                                                      class="btn btn-danger"
+                                                      onclick="return confirm('Confirma exclusão desse ítem ?');">
+                                                      <i class="fa fa-trash-o"></i> Excluir</button>
+                                            </form>
 
-                                    @endif
+                                        @endif
+                                      </div>
 
-                                    <a href = "{{ URL::to('empresas/' . $value->id . '/edit') }}" class = 'btn btn-info' data-link = '/empresas/{{$value->id}}/edit'>Editar</a>
-                                    <a href = "{{ URL::to('empresas/' . $value->id . '/preview') }}" class = 'btn btn-primary' data-link = '/empresas/{{$value->id}}'>Visualizar</a>
+                                      <div class="col-xs-2">
+                                             <a href = "{{ URL::to('empresas/' . $value->id . '/edit') }}" class = 'btn btn-info' data-link = '/empresas/{{$value->id}}/edit'><i class="fa fa-edit"></i> Editar</a>
+                                      </div>
+
+                                      <div class="col-xs-2">
+                                            <a href = "{{ URL::to('empresas/' . $value->id . '/preview') }}" class = 'btn btn-primary' data-link = '/empresas/{{$value->id}}'><i class="fa fa-search-plus"></i> Visualizar</a>
+                                      </div>
 
                                 </div>
                             </td>

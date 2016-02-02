@@ -44,6 +44,13 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
+        <!-- Select2 -->
+        <link rel="stylesheet" href="{{ asset('/plugins/select2/select2.min.css') }}">
+
+       <!-- Select2 -->
+       <script src="{{ asset('/plugins/select2/select2.full.min.js') }}"></script>
+
+
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
 
@@ -102,11 +109,15 @@
 
 
 
+
   <script type="text/javascript">
 
                   $(function () {
 
                         $("[data-mask]").inputmask();
+
+                        //Initialize Select2 Elements
+                        $(".select2").select2();
 
                    });
 
