@@ -38,7 +38,7 @@
                                     <div class="col-xs-10">
                                           <label for="email" class="control-label">Email</label>
 
-                                          <input id="email" maxlength="255"  name = "nome" type="text" class="form-control" value="{{ $dados->email }}">
+                                          <input id="email" maxlength="255"  name = "email" type="text" class="form-control" value="{{ $dados->email }}">
 
                                              <!-- se houver erros na validacao do form request -->
                                              @if ($errors->has('email'))
@@ -54,7 +54,7 @@
                                     <div class="col-xs-10">
                                           <label for="password" class="control-label">Senha</label>
 
-                                          <input id="password" maxlength="60"  name = "password" type="password" class="form-control" value="{{ $dados->password }}">
+                                          <input id="password" maxlength="60"  name = "password" type="password" class="form-control" value="">
 
                                              <!-- se houver erros na validacao do form request -->
                                              @if ($errors->has('password'))
@@ -70,7 +70,7 @@
                                     <div class="col-xs-10">
                                           <label for="password_confirmation" class="control-label">Confirmação Senha</label>
 
-                                          <input id="password_confirmation" maxlength="60"  name = "password_confirmation" type="password" class="form-control" value=" {{ $dados->password }}">
+                                          <input id="password_confirmation" maxlength="60"  name = "password_confirmation" type="password" class="form-control" value="">
 
                                              <!-- se houver erros na validacao do form request -->
                                              @if ($errors->has('password_confirmation'))

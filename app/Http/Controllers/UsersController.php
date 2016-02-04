@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use URL;
 use App\Models\users;
+use App\Models\usuario;
 use Auth;
 use Input;
 use Validator;
@@ -24,8 +25,9 @@ class UsersController extends Controller
     {
 
         //$usuarios = users::find(Auth::user()->id);
-        $usuarios = users::select ('id', 'name')
-        ->where('id', Auth::user()->id)
+        $usuarios = users::select ('users.id', 'users.name','usuarios.master')
+        ->join('usuarios', 'usuarios.id' , '=' , 'users.id')
+        ->where('users.id', Auth::user()->id)
         ->get();
 
         return view('usuarios.index', compact('usuarios'));
@@ -35,7 +37,14 @@ class UsersController extends Controller
     //Criar novo registro
     public function create() {
 
-        return view('usuarios.registrar');
+        $cadastrou = usuario::find(Auth::user()->id);
+
+        $dados  = \App\Models\grupos::select('grupos.id', 'grupos.nome')
+        ->where('grupos.empresas_id', $cadastrou['empresas_id'])
+        ->where('grupos.empresas_clientes_cloud_id', $cadastrou['empresas_clientes_cloud_id'])
+        ->get();
+
+        return view('usuarios.registrar', compact('dados'));
 
     }
 
@@ -56,12 +65,33 @@ class UsersController extends Controller
 
             $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-            $grupos = new users();
+            //Grava novo usuario (Tabela USERS)
+            $dados = new users();
+            $dados->name  = $input['name'];
+            $dados->email  = $input['email'];
+            $dados->password  = bcrypt($input['password']);
+            $dados->save();
+            //
 
-            $grupos->nome  = $input['nome'];
-            $grupos->empresas_id  = $cadastrou['empresas_id'];
-            $grupos->empresas_clientes_cloud_id  = $cadastrou['empresas_clientes_cloud_id'];
-            $grupos->save();
+            //Pega dados do usuarios admin (id da empresa e cliente cloud)
+            $usuario_master = usuario::find(Auth::user()->id);
+
+            //cria registro na tabela usuarios para associar com a tabela users
+            $usuarios = new usuario();
+            $usuarios->id                                           =   $dados->id;    //id recem cadastrado na tabela users
+            $usuarios->empresas_id                          =  $usuario_master['empresas_id']; //Pegar ID do registro recém criado (clientes_cloud)
+            $usuarios->empresas_clientes_cloud_id  =  $usuario_master['empresas_clientes_cloud_id'];
+            $usuarios->master = 0; //Criada a empresa a primeira vez, o usuario que cadastrou será o master e nao podera ser removido
+            $usuarios->save();
+
+            //Grava Grupo que o usuário iŕa pertencer
+            $grupo_usuario = new usuarios_grupo();
+            $grupo_usuario->usuarios_id = $dados->id;
+            $grupo_usuario->usuarios_empresas_id = $usuario_master['empresas_id'];
+            $grupo_usuario->usuarios_empresas_clientes_cloud_id = $usuario_master['empresas_clientes_cloud_id'];
+            $grupo_usuario->grupos_id = $input['grupo'];
+            $grupo_usuario->save();
+
 
             \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
 
@@ -110,10 +140,11 @@ class UsersController extends Controller
     public function update(\Illuminate\Http\Request  $request, $id)
     {
 
+
        /*Validação de campos - request*/
         $this->validate($request, [
                'name' => 'required|max:255',
-                'email' => 'required|email|max:255|unique:users',
+                'email' => 'required|email|max:255',
                 'password' => 'required|confirmed|min:6',
          ]);
 
@@ -121,7 +152,9 @@ class UsersController extends Controller
 
         $dados = users::findOrfail($id);
 
-        $dados->nome  = $input['nome'];
+        $dados->name  = $input['name'];
+        $dados->email  = $input['email'];
+        $dados->password  = bcrypt($input['password']);
 
         $dados->save();
 

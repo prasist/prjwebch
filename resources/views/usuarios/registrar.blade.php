@@ -7,10 +7,10 @@
     <div class="col-md-12">
 
         <div>
-            <a href="{{ url('/users')}}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+            <a href="{{ url('/usuarios')}}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
         </div>
 
-        <form method = 'POST' class="form-horizontal" action = {{ url('/users/gravar')}}>
+        <form method = 'POST' class="form-horizontal" action = {{ url('/usuarios/gravar')}}>
 
         {!! csrf_field() !!}
 
@@ -22,7 +22,7 @@
                                     <div class="col-xs-10">
                                           <label for="name" class="control-label">Nome</label>
 
-                                          <input id="name" maxlength="255"  name = "name" type="text" class="form-control" value="{{ old('name') }}">
+                                          <input id="name" maxlength="255"  placeholder = "Campo Obrigatório" name = "name" type="text" class="form-control" value="{{ old('name') }}">
 
                                              <!-- se houver erros na validacao do form request -->
                                              @if ($errors->has('name'))
@@ -38,7 +38,7 @@
                                     <div class="col-xs-10">
                                           <label for="email" class="control-label">Email</label>
 
-                                          <input id="email" maxlength="255"  name = "nome" type="text" class="form-control" value="{{ old('email') }}">
+                                          <input id="email" maxlength="255"  placeholder = "Campo Obrigatório" name = "email" type="text" class="form-control" value="{{ old('email') }}">
 
                                              <!-- se houver erros na validacao do form request -->
                                              @if ($errors->has('email'))
@@ -54,7 +54,7 @@
                                     <div class="col-xs-10">
                                           <label for="password" class="control-label">Senha</label>
 
-                                          <input id="password" maxlength="60"  name = "password" type="password" class="form-control" value="">
+                                          <input id="password" maxlength="60" placeholder = "Campo Obrigatório" name = "password" type="password" class="form-control" value="">
 
                                              <!-- se houver erros na validacao do form request -->
                                              @if ($errors->has('password'))
@@ -70,7 +70,7 @@
                                     <div class="col-xs-10">
                                           <label for="password_confirmation" class="control-label">Confirmação Senha</label>
 
-                                          <input id="password_confirmation" maxlength="60"  name = "password_confirmation" type="password" class="form-control" value="">
+                                          <input id="password_confirmation" placeholder = "Campo Obrigatório" maxlength="60"  name = "password_confirmation" type="password" class="form-control" value="">
 
                                              <!-- se houver erros na validacao do form request -->
                                              @if ($errors->has('password_confirmation'))
@@ -82,6 +82,18 @@
                                     </div>
                             </div>
 
+                            <div class="row{{ $errors->has('grupo') ? ' has-error' : '' }}">
+                                    <div class="col-xs-10">
+                                          <label for="grupo" class="control-label">Grupo</label>
+
+                                          <select name="grupo" class="form-control select2" style="width: 100%;">
+                                          <option  value="0">(Selecione um Grupo)</option>
+                                          @foreach($dados as $item)
+                                                <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                          @endforeach
+                                          </select>
+                                    </div>
+                            </div>
 
 
             </div><!-- fim box-body"-->
@@ -89,7 +101,7 @@
 
         <div class="box-footer">
             <button class = 'btn btn-primary' type ='submit'>Gravar</button>
-            <a href="{{ url('/users')}}" class="btn btn-default">Cancelar</a>
+            <a href="{{ url('/usuarios')}}" class="btn btn-default">Cancelar</a>
         </div>
 
        </form>

@@ -48,7 +48,7 @@
                                 <div class = 'row'>
 
                                               <div class="col-xs-2">
-                                              @if ($value->default != 1)
+                                              @if ($value->master != 1)
 
                                                     <form id="excluir{{ $value->id }}" action="{{ URL::to('usuarios/' . $value->id . '/delete') }}" method="DELETE">
 

@@ -95,8 +95,6 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-        Amranidev\ScaffoldInterface\ScaffoldInterfaceServiceProvider::class,
-        Amranidev\Ajaxis\AjaxisServiceProvider::class,
 
         Barryvdh\Debugbar\ServiceProvider::class,
 
