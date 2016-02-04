@@ -6,6 +6,10 @@
 
     <div class="col-md-12">
 
+      <div>
+            <a href="{{ url('/empresas')}}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+      </div>
+
         <form method = 'POST'  class="form-horizontal" action = {{ url('/empresas/gravar')}}>
             <!--<input type = 'hidden' name = '_token' value = '{{Session::token()}}'>-->
             {!! csrf_field() !!}
@@ -254,6 +258,7 @@
 
         <div class="box-footer">
             <button class = 'btn btn-primary' type ='submit'>Gravar</button>
+            <a href="{{ url('/empresas')}}" class="btn btn-default">Cancelar</a>
         </div>
 
         </form>

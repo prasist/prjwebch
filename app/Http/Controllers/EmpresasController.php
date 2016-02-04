@@ -9,7 +9,6 @@
 */
 namespace App\Http\Controllers;
 
-//use Request;
 use App\Models\clientescloud;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -153,13 +152,16 @@ class EmpresasController extends Controller
 
     public function show(Request $request, $id)
     {
-            if($request->ajax())
-            {
-                return URL::to ( 'empresas/'.$id);
-            }
 
-            $empresas = empresas::find($id);
-            return view('empresas.show',compact('clientes_cloud'));
+        if($request->ajax())
+        {
+            return URL::to('empresas/'. $id . '/edit');
+        }
+
+        $empresas = empresas::findOrfail($id);
+
+        //Preview = true, somente visualização, desabilita botao gravar
+        return view('empresas.edit', ['empresas' => $empresas, 'preview' => 'true']);
     }
 
     public function edit(Request $request, $id)
@@ -170,7 +172,9 @@ class EmpresasController extends Controller
         }
 
         $empresas = empresas::findOrfail($id);
-        return view('empresas.edit',compact('empresas'));
+
+        //Preview = false, habilita botao gravar
+        return view('empresas.edit', ['empresas' => $empresas, 'preview' => 'false']);
     }
 
     /**
@@ -254,22 +258,6 @@ class EmpresasController extends Controller
 
     }
 
-    /**
-     * Delete confirmation message by Ajaxis
-     *
-     * @link  https://github.com/amranidev/ajaxis
-     *
-     * @return  String
-     */
-    public function DeleteMsg(Request $request, $id)
-    {
-        $msg = Ajaxis::MtDeleting('Aviso!!','Confirma exclusão ?','/empresas/'. $id . '/delete/');
-
-        if($request->ajax())
-        {
-            return $msg;
-        }
-    }
 
     /**
      * Remove the specified resource from storage.

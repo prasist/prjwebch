@@ -10,7 +10,7 @@
 
         <div class="row">
                 <div class="col-xs-2">
-                  <form method = 'get' class="form-horizontal" action = {{ url('/grupos/registrar')}}>
+                  <form method = 'get' class="form-horizontal" action = {{ url('/usuarios/registrar')}}>
                         <button class = 'btn btn-success btn-flat' type ='submit'><i class="fa fa-file-text-o"></i> Novo Registro</button>
                   </form>
                   </div>
@@ -27,20 +27,20 @@
                     <thead>
                         <tr>
                         <th>ID</th>
-                        <th>Nome Grupo</th>
+                        <th>Nome Usuário</th>
 
                         <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($dados as $value)
+                        @foreach($usuarios as $value)
 
                         <tr>
                         <div class = 'row'>
 
                               <div class="col-xs-3">
                                     <td>{{$value->id}}</td>
-                                    <td>{{$value->nome}}</td>
+                                    <td>{{$value->name}}</td>
                               </div>
                          </div>
 
@@ -50,13 +50,13 @@
                                               <div class="col-xs-2">
                                               @if ($value->default != 1)
 
-                                                    <form id="excluir{{ $value->id }}" action="{{ URL::to('grupos/' . $value->id . '/delete') }}" method="DELETE">
+                                                    <form id="excluir{{ $value->id }}" action="{{ URL::to('usuarios/' . $value->id . '/delete') }}" method="DELETE">
 
                                                           <button
                                                               data-toggle="tooltip"
                                                               data-placement="top" title="Excluir Ítem" type="submit"
                                                               class="btn btn-danger"
-                                                              onclick="return confirm('Confirma exclusão desse ítem ?');">
+                                                              onclick="return confirm('Confirma exclusão desse registro ?');">
                                                               <i class="fa fa-trash-o"></i> Excluir</button>
 
                                                     </form>
@@ -65,11 +65,11 @@
                                               </div>
 
                                               <div class="col-xs-2">
-                                                    <a href = "{{ URL::to('grupos/' . $value->id . '/edit') }}" class = 'btn btn-info' data-link = '/gupos/{{$value->id}}/edit'><i class="fa fa-edit"></i> Editar</a>
+                                                    <a href = "{{ URL::to('usuarios/' . $value->id . '/edit') }}" class = 'btn btn-info' data-link = '/users/{{$value->id}}/edit'><i class="fa fa-edit"></i> Editar</a>
                                               </div>
 
                                               <div class="col-xs-2">
-                                                   <a href = "{{ URL::to('grupos/' . $value->id . '/preview') }}" class = 'btn btn-primary'><i class="fa fa-search-plus"></i> Visualizar</a>
+                                                   <a href = "{{ URL::to('usuarios/' . $value->id . '/preview') }}" class = 'btn btn-primary'><i class="fa fa-search-plus"></i> Visualizar</a>
                                               </div>
                                     </div>
 

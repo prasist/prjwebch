@@ -10,7 +10,7 @@ class grupos extends Model
     public $timestamps = false;
 
         //
-    public function usuarios_grupo() {
+  /*  public function usuarios_grupo() {
 
          return $this->hasMany('App\Models\usuarios_grupo');
     }
@@ -20,7 +20,7 @@ class grupos extends Model
 
         return $this->hasMany('App\Models\permissoes_grupo');
 
-    }
+    }*/
 
 
 }

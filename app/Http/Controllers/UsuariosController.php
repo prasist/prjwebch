@@ -12,9 +12,10 @@ use Auth;
 use Input;
 use Validator;
 
-class GruposController extends Controller
+class UsuariosController extends Controller
 {
     //
+
 
     public function __construct()
     {
@@ -182,5 +183,6 @@ class GruposController extends Controller
         }
 
     }
+
 
 }

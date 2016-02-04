@@ -41,12 +41,10 @@
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href={{ url('/clientes')}}><i class="fa fa-angle-double-right"></i> Dados Cadastrais Igreja Sede</a></li>
-                    <li><a href={{ url('/empresas')}}><i class="fa fa-angle-double-right"></i> Igrejas / Congregações afiliadas </a></li>
-
+                    <li><a href={{ url('/clientes')}}><i class="fa fa-angle-double-right"></i> Igreja Sede</a></li>
+                    <li><a href={{ url('/empresas')}}><i class="fa fa-angle-double-right"></i> Igrejas / Instituições </a></li>
                 </ul>
             </li>
-
 
             <li class="treeview">
                 <a href="#">

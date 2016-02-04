@@ -7,8 +7,7 @@
     <div class="col-md-12">
 
         <div>
-            <i class="fa fa-arrow-circle-left"></i>
-            <a href="{{ url('/empresas')}}" class="box-title"> Voltar </a>
+            <a href="{{ url('/empresas')}}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
         </div>
 
         <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action = {{ url('/empresas/' . $empresas->id . '/update')}}>
@@ -276,7 +275,8 @@
         </div><!-- box box-primary -->
 
         <div class="box-footer">
-            <button class = 'btn btn-primary' type ='submit'>Gravar</button>
+            <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}>Gravar</button>
+            <a href="{{ url('/empresas')}}" class="btn btn-default">Cancelar</a>
         </div>
 
        </form>

@@ -14,6 +14,7 @@ use App\Models\paginas;
 use Auth;
 use Input;
 use Validator;
+use DB;
 
 class PermissoesGrupoController extends Controller
 {
@@ -27,26 +28,25 @@ class PermissoesGrupoController extends Controller
     public function index()
     {
 
-       /*
-        *    Verificar se foi cadastrado os dados da igreja
-        *    Caso encontre, busca somente os dados da empresa que o usuário pertence
-        */
         $cadastrou = usuario::find(Auth::user()->id);
 
-        if ($cadastrou)
-        {
+            if ($cadastrou)
+            {
+                  $dados  = grupos::select('grupos.id', 'grupos.nome')
+                  ->where('grupos.empresas_id', $cadastrou['empresas_id'])
+                  ->where('grupos.empresas_clientes_cloud_id', $cadastrou['empresas_clientes_cloud_id'])
+                  ->get();
 
-          $dados  = usuarios_grupo::Join('grupos', 'grupos.id', '=', 'usuarios_grupo.grupos_id')
-          ->select('grupos.id', 'grupos.nome', 'grupos.default')
-          ->where('usuarios_grupo.usuarios_id', $cadastrou['id'])
-          ->get();
+                  $paginas = paginas::select('id', 'nome')
+                  ->where('nao_mostrar_todos', '0')
+                  ->get();
 
-            return view('permissoes.index',compact('dados'));
-        }
-        else
-        {
-            return view('pages.dashboard_blank');  //Ainda nao cadastrou, solicitar o cadastro
-        }
+                   return view('permissoes.index', ['dados'=>$dados, 'paginas'=>$paginas]);
+            }
+            else
+            {
+                  return view('pages.dashboard_blank');  //Ainda nao cadastrou, solicitar o cadastro
+            }
 
     }
 
@@ -63,7 +63,9 @@ class PermissoesGrupoController extends Controller
                   ->where('grupos.empresas_clientes_cloud_id', $cadastrou['empresas_clientes_cloud_id'])
                   ->get();
 
-                  $paginas = paginas::all();
+                  $paginas = paginas::select('id','nome')
+                  ->where('nao_mostrar_todos', '0')
+                  ->get();
 
                    return view('permissoes.registrar', ['dados'=>$dados, 'paginas'=>$paginas]);
             }
@@ -103,15 +105,7 @@ class PermissoesGrupoController extends Controller
             {
                    foreach ($paginas_array as $key => $value) {
 
-                            /*echo $input['nome'];
-                            echo "<br/>";
-                            echo "pag : " . $value;
-                            echo "<br/>";
-                            echo "incluir " . (isset($incluir_array[$value]) ? 1 : 0);
-                            echo "<br/>";
-*/
                             $permissoes = new \App\Models\permissoes_grupo();
-
 
                             $permissoes->grupos_id    = $input['nome'];
                             $permissoes->paginas_id   = $value;
@@ -125,113 +119,137 @@ class PermissoesGrupoController extends Controller
 
                             $permissoes->save();
 
-                            //echo "indice : " . $key . " valor : " . $value . " = " . (isset($incluir_array[$key]) ? 1 : 0) . "<br/>";
-
                    }
             }
 
-           // dd($input);
-
             \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
+
         }
 
         return redirect('permissoes');
 
     }
 
-    public function show (\Illuminate\Http\Request $request, $id)
-    {
-            if($request->ajax())
-            {
-                return URL::to ( 'grupos/'.$id);
-            }
+    //Abre tela para visualização ou edição, conforme parametro preview (true ou false)
+   private function exibir ($request, $id, $preview)
+   {
 
-            $grupos = grupos::find($id);
-            return view('grupos.show',compact('grupos'));
-    }
-
-    public function edit(Request $request, $id)
-    {
         if($request->ajax())
         {
             return URL::to('permissoes/'. $id . '/edit');
         }
 
-        $permissoes  = usuarios_grupo::join('permissoes_grupos', 'permissoes_grupos.grupos_id', '=', 'usuarios_grupo.grupos_id')
-        ->join('paginas', 'paginas.id', '=', 'permissoes_grupos.paginas_id')
-        ->select('paginas.id as id_pagina', 'paginas.nome', 'permissoes_grupos.incluir', 'permissoes_grupos.alterar')
-        ->where('usuarios_grupo.grupos_id', $id)
-        ->distinct()->get();
+            $cadastrou = usuario::find(Auth::user()->id);
 
-        $grupos = usuarios_grupo::join('grupos', 'usuarios_grupo.grupos_id', '=', 'grupos.id')
-        ->select('grupos.id as id_grupo', 'grupos.nome', 'grupos.default')
-        ->where('grupos.id', $id)
-        ->distinct()->first();
+            if ($cadastrou)
+            {
+                  $dados  = grupos::select('grupos.id', 'grupos.nome')
+                  ->where('grupos.empresas_id', $cadastrou['empresas_id'])
+                  ->where('grupos.empresas_clientes_cloud_id', $cadastrou['empresas_clientes_cloud_id'])
+                  ->get();
 
-        //$temp =  compact('grupos');
-        dd(compact('permissoes'));
-        //dd($temp['grupos']->id_grupo);
+                  $sql = "select id, nome from grupos where
+                  empresas_id = " . $cadastrou['empresas_id'] . " and
+                  empresas_clientes_cloud_id = " . $cadastrou['empresas_clientes_cloud_id'] . " and
+                  id = " . $id . "";
+                  $dados = DB::select($sql);
 
-        return view('permissoes.edit',['grupos'=>compact('grupos'),'permissoes'=> compact('permissoes')]);
-    }
+
+                  /* Lista todas as páginas e marca o checkbox conforme permissao concedida na tabela permissoes_grupos*/
+                  $sql = "select pg.id as id_permissoes, pg.grupos_id, p.id, p.nome, pg.incluir, pg.alterar, pg.excluir, pg.visualizar, pg.exportar, pg.imprimir, pg.acessar
+                  from paginas p left join permissoes_grupos pg on (p.id = pg.paginas_id) and (pg.grupos_id = " . $id . " or pg.grupos_id is null
+                  where (paginas.nao_mostrar_todos = 0)";
+
+                  $paginas = DB::select($sql);
+
+                  return view('permissoes.edit', ['dados'=>$dados, 'paginas'=>$paginas, 'preview' => $preview]);
+
+            }
+
+   }
+
+   //Somente visualização (preview=true)
+   public function show (\Illuminate\Http\Request $request, $id)
+   {
+
+        return $this->exibir($request, $id, 'true');
+
+   }
+
+   //Edição registros (preview=false)
+   public function edit(\Illuminate\Http\Request $request, $id)
+   {
+
+        return $this->exibir($request, $id, 'false');
+
+   }
 
     /**
      * Update the specified resource in storage.
      *
      * @param    \Illuminate\Http\Request  $request
-     * @param    int  $id
      * @return  \Illuminate\Http\Response
      */
-    public function update(Request  $request, $id)
+    public function update(\Illuminate\Http\Request  $request)
     {
-
-        /*Validação de campos - request*/
-        $this->validate($request, [
-                'nome' => 'required|max:45:min:3',
-
-         ]);
-
 
         $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-        $grupos = grupos::findOrfail($id);
+        $paginas_array     = $input['pagina'];
 
-        $empresas->nome  = $input['nome'];
+        $incluir_array     =  $input['incluir'];
+        $alterar_array    =  $input['alterar'];
+        $excluir_array    =  $input['excluir'];
+        $visualizar_array = $input['visualizar'];
+        $exportar_array  = $input['exportar'];
+        $imprimir_array  = $input['imprimir'];
+        $acessar_array   = $input['acessar'];
+
+            if(is_array($paginas_array))
+            {
+                   foreach ($paginas_array as $key => $value) {
+
+                            //$permissoes = new \App\Models\permissoes_gfinrupo();
+                            $permissoes = \App\Models\permissoes_grupo::firstOrNew(['grupos_id'  => $input['nome'], 'paginas_id' => $value]);
+
+                            $valores = [
+                                        'incluir'        => $incluir_array[$key],
+                                        'alterar'       => $alterar_array[$key],
+                                        'excluir'       => $excluir_array[$key],
+                                        'visualizar'   => $visualizar_array[$key],
+                                        'acessar'     => $acessar_array[$key],
+                                        'exportar'    => $exportar_array[$key],
+                                        'imprimir'    => $imprimir_array[$key]
+                                        ];
+
+                            $permissoes->fill($valores)->save();
+
+                            $permissoes->save();
+
+                   }
+
+            }
+
 
         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
 
-        return redirect('grupos');
+        return redirect('permissoes');
 
     }
 
-    /**
-     * Delete confirmation message by Ajaxis
-     *
-     * @link  https://github.com/amranidev/ajaxis
-     *
-     * @return  String
-     */
-    public function DeleteMsg(Request $request, $id)
-    {
-        $msg = Ajaxis::MtDeleting('Aviso!!','Confirma exclusão ?','/grupos/'. $id . '/delete/');
 
-        if($request->ajax())
-        {
-            return $msg;
-        }
-    }
 
     /**
-     * Remove the specified resource from storage.
+     * Exclusão registro
      *
      * @param    int  $id
      * @return  \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $grupos = grupos::findOrfail($id);
+        $grupos = permissoes_grupo::findOrfail($id);
         $grupos->delete();
-        return redirect('grupos');
+        return redirect('permissoes');
     }
 
 }

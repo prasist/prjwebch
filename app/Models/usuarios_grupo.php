@@ -13,7 +13,7 @@ class usuarios_grupo extends Model
     /*  Exemplo da query
     *   $dados = usuarios_grupo::find(1)->grupos;
     */
-    public function grupos() {
+  /*  public function grupos() {
 
         return $this->hasOne('App\Models\grupos', 'id');
 
@@ -23,6 +23,6 @@ class usuarios_grupo extends Model
 
         return $this->hasMany('App\Models\permissoes_grupo', 'grupos_id');
 
-    }
+    }*/
 
 }

@@ -50,9 +50,9 @@
        <!-- Select2 -->
        <script src="{{ asset('/plugins/select2/select2.full.min.js') }}"></script>
 
-
     </head>
-    <body class="hold-transition skin-blue sidebar-mini">
+
+    <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
 
         <div class="wrapper">
             @include('includes.header')
@@ -86,6 +86,17 @@
                             </div>
 
                     @endif
+
+                    @if (Session::has('flash_message_erro'))
+
+                            <div class="alert alert-danger alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <h4><i class="icon fa fa-check"></i> Erro!</h4>
+                                {{ Session::get('flash_message_erro')}}
+                            </div>
+
+                    @endif
+
                     @yield('content')
                 </section><!-- /.content -->
 
@@ -118,6 +129,152 @@
 
                         //Initialize Select2 Elements
                         $(".select2").select2();
+
+                        $('div.alert').delay(3000).slideUp(300);
+
+                        $('#selecionar_todos').click(function() {
+
+                            if ($(this).prop('checked')) {
+                                $('.acessar').prop('checked', true);
+                            } else {
+                                $('.acessar').prop('checked', false);
+                            }
+
+                            if ($(this).prop('checked')) {
+                                $('.incluir').prop('checked', true);
+                            } else {
+                                $('.incluir').prop('checked', false);
+                            }
+
+                            if ($(this).prop('checked')) {
+                                $('.alterar').prop('checked', true);
+                            } else {
+                                $('.alterar').prop('checked', false);
+                            }
+
+                            if ($(this).prop('checked')) {
+                                $('.excluir').prop('checked', true);
+                            } else {
+                                $('.excluir').prop('checked', false);
+                            }
+
+                            if ($(this).prop('checked')) {
+                                $('.visualizar').prop('checked', true);
+                            } else {
+                                $('.visualizar').prop('checked', false);
+                            }
+
+                            if ($(this).prop('checked')) {
+                                $('.exportar').prop('checked', true);
+                            } else {
+                                $('.exportar').prop('checked', false);
+                            }
+
+                            if ($(this).prop('checked')) {
+                                $('.imprimir').prop('checked', true);
+                            } else {
+                                $('.imprimir').prop('checked', false);
+                            }
+
+                             if ($(this).prop('checked')) {
+                                $('.selecionar_acessar').prop('checked', true);
+                            } else {
+                                $('.selecionar_acessar').prop('checked', false);
+                            }
+
+                            if ($(this).prop('checked')) {
+                                $('.selecionar_incluir').prop('checked', true);
+                            } else {
+                                $('.selecionar_incluir').prop('checked', false);
+                            }
+
+                            if ($(this).prop('checked')) {
+                                $('.selecionar_alterar').prop('checked', true);
+                            } else {
+                                $('.selecionar_alterar').prop('checked', false);
+                            }
+
+                            if ($(this).prop('checked')) {
+                                $('.selecionar_excluir').prop('checked', true);
+                            } else {
+                                $('.selecionar_excluir').prop('checked', false);
+                            }
+
+                            if ($(this).prop('checked')) {
+                                $('.selecionar_visualizar').prop('checked', true);
+                            } else {
+                                $('.selecionar_visualizar').prop('checked', false);
+                            }
+
+                            if ($(this).prop('checked')) {
+                                $('.selecionar_exportar').prop('checked', true);
+                            } else {
+                                $('.selecionar_exportar').prop('checked', false);
+                            }
+
+                            if ($(this).prop('checked')) {
+                                $('.selecionar_imprimir').prop('checked', true);
+                            } else {
+                                $('.selecionar_imprimir').prop('checked', false);
+                            }
+
+                        });
+
+                        $('#selecionar_acessar').click(function() {
+                            if ($(this).prop('checked')) {
+                                $('.acessar').prop('checked', true);
+                            } else {
+                                $('.acessar').prop('checked', false);
+                            }
+                        });
+
+                        $('#selecionar_incluir').click(function() {
+                            if ($(this).prop('checked')) {
+                                $('.incluir').prop('checked', true);
+                            } else {
+                                $('.incluir').prop('checked', false);
+                            }
+                        });
+
+                        $('#selecionar_alterar').click(function() {
+                            if ($(this).prop('checked')) {
+                                $('.alterar').prop('checked', true);
+                            } else {
+                                $('.alterar').prop('checked', false);
+                            }
+                        });
+
+                        $('#selecionar_excluir').click(function() {
+                            if ($(this).prop('checked')) {
+                                $('.excluir').prop('checked', true);
+                            } else {
+                                $('.excluir').prop('checked', false);
+                            }
+                        });
+
+                        $('#selecionar_visualizar').click(function() {
+                            if ($(this).prop('checked')) {
+                                $('.visualizar').prop('checked', true);
+                            } else {
+                                $('.visualizar').prop('checked', false);
+                            }
+                        });
+
+                        $('#selecionar_exportar').click(function() {
+                            if ($(this).prop('checked')) {
+                                $('.exportar').prop('checked', true);
+                            } else {
+                                $('.exportar').prop('checked', false);
+                            }
+                        });
+
+                        $('#selecionar_imprimir').click(function() {
+                            if ($(this).prop('checked')) {
+                                $('.imprimir').prop('checked', true);
+                            } else {
+                                $('.imprimir').prop('checked', false);
+                            }
+                        });
 
                    });
 
