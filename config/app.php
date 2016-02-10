@@ -2,6 +2,16 @@
 
 return [
 
+    /**
+     * nome das rotas e o ID da tabela paginas a qual pertence
+     */
+    'clientes' => '1',
+    'grupos' => '2',
+    'permissoes' => '3',
+    'paginas' => '4',
+    'usuarios' => '5',
+    'logs'  => '6',
+    'empresas' => '7',
 
     'env' => env('APP_ENV', 'production'),
 
@@ -11,62 +21,16 @@ return [
 
     'timezone' => 'UTC',
 
-
     'locale' => 'en',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Application Fallback Locale
-    |--------------------------------------------------------------------------
-    |
-    | The fallback locale determines the locale to use when the current one
-    | is not available. You may change the value to correspond to any of
-    | the language folders that are provided through your application.
-    |
-    */
-
     'fallback_locale' => 'en',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Encryption Key
-    |--------------------------------------------------------------------------
-    |
-    | This key is used by the Illuminate encrypter service and should be set
-    | to a random, 32 character string, otherwise these encrypted strings
-    | will not be safe. Please do this before deploying an application!
-    |
-    */
 
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Logging Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure the log settings for your application. Out of
-    | the box, Laravel uses the Monolog PHP logging library. This gives
-    | you a variety of powerful log handlers / formatters to utilize.
-    |
-    | Available Settings: "single", "daily", "syslog", "errorlog"
-    |
-    */
-
     'log' => env('APP_LOG', 'single'),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Autoloaded Service Providers
-    |--------------------------------------------------------------------------
-    |
-    | The service providers listed here will be automatically loaded on the
-    | request to your application. Feel free to add your own services to
-    | this array to grant expanded functionality to your applications.
-    |
-    */
 
     'providers' => [
 
@@ -108,16 +72,6 @@ return [
 
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Class Aliases
-    |--------------------------------------------------------------------------
-    |
-    | This array of class aliases will be registered when this application
-    | is started. However, feel free to register as many as you wish as
-    | the aliases are "lazy" loaded so they don't hinder performance.
-    |
-    */
 
     'aliases' => [
 
@@ -150,7 +104,8 @@ return [
         'Storage'   => Illuminate\Support\Facades\Storage::class,
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
-        'View'      => Illuminate\Support\Facades\View::class,
+        'View'      => Illuminate\Support\Facades\View::class
+
 
     ],
 

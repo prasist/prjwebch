@@ -68,7 +68,7 @@
                                                                             </td>
                                                                             <td>
                                                                             <input  name="alterar[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="alterar[{{ $value->id }}]" type="checkbox" class="alterar"  value="1" {{ ($value->alterar != 0 ? 'checked' : '') }} /></td>
+                                                                            <input  name="alterar[{{ $value->id }}]" type="checkbox" class="alterar"  value="1" {{ ($value->alterar == 0 ? '' : 'checked') }} /></td>
                                                                             <td>
                                                                             <input  name="excluir[{{ $value->id }}]" type="hidden" value="0" />
                                                                             <input  name="excluir[{{ $value->id }}]" type="checkbox" class="excluir" value="1" {{ ($value->excluir != 0 ? 'checked' : '') }} /></td>

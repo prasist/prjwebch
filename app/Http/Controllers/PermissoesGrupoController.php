@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\clientescloud;
-use Amranidev\Ajaxis\Ajaxis;
 use URL;
 use App\Models\usuario;
 use App\Models\grupos;
@@ -15,6 +14,7 @@ use Auth;
 use Input;
 use Validator;
 use DB;
+use Gate;
 
 class PermissoesGrupoController extends Controller
 {
@@ -23,30 +23,39 @@ class PermissoesGrupoController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        //Validação de permissão de acesso a pagina
+        if (Gate::allows('verifica_permissao', [\Config::get('app.permissoes'),'acessar']))
+        {
+            $this->dados_login = \Session::get('dados_login');
+        }
+
+
     }
+
 
     public function index()
     {
 
-        $cadastrou = usuario::find(Auth::user()->id);
+         if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.permissoes'))==false)
+        {
+              return redirect('home');
+        }
 
-            if ($cadastrou)
-            {
-                  $dados  = grupos::select('grupos.id', 'grupos.nome')
-                  ->where('grupos.empresas_id', $cadastrou['empresas_id'])
-                  ->where('grupos.empresas_clientes_cloud_id', $cadastrou['empresas_clientes_cloud_id'])
-                  ->get();
+        $dados  = grupos::select('grupos.id', 'grupos.nome', 'grupos.default')
+        //->join('usuarios_grupo', 'usuarios_grupo.grupos_id', '=', 'grupos.id')
+        ->join('permissoes_grupos', 'permissoes_grupos.grupos_id', '=', 'grupos.id')
+        //->where('usuarios_grupo.usuarios_empresas_id', $this->dados_login->empresas_id)
+        //->where('permissoes_grupos.usuarios_empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        //->where('grupos.empresas_id', $this->dados_login->empresas_id)
+        ->where('grupos.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->distinct()->get();
 
-                  $paginas = paginas::select('id', 'nome')
-                  ->where('nao_mostrar_todos', '0')
-                  ->get();
+        $paginas = paginas::select('id', 'nome')
+        ->where('nao_mostrar_todos', '0')
+        ->get();
 
-                   return view('permissoes.index', ['dados'=>$dados, 'paginas'=>$paginas]);
-            }
-            else
-            {
-                  return view('pages.dashboard_blank');  //Ainda nao cadastrou, solicitar o cadastro
-            }
+        return view('permissoes.index', ['dados'=>$dados, 'paginas'=>$paginas]);
 
     }
 
@@ -54,25 +63,21 @@ class PermissoesGrupoController extends Controller
    public function create()
    {
 
-            $cadastrou = usuario::find(Auth::user()->id);
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.permissoes'))==false)
+        {
+              return redirect('home');
+        }
 
-            if ($cadastrou)
-            {
-                  $dados  = grupos::select('grupos.id', 'grupos.nome')
-                  ->where('grupos.empresas_id', $cadastrou['empresas_id'])
-                  ->where('grupos.empresas_clientes_cloud_id', $cadastrou['empresas_clientes_cloud_id'])
-                  ->get();
+          $dados  = grupos::select('grupos.id', 'grupos.nome')
+          ->where('grupos.empresas_id', $this->dados_login->empresas_id)
+          ->where('grupos.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+          ->get();
 
-                  $paginas = paginas::select('id','nome')
-                  ->where('nao_mostrar_todos', '0')
-                  ->get();
+          $paginas = paginas::select('id','nome')
+          ->where('nao_mostrar_todos', '0')
+          ->get();
 
-                   return view('permissoes.registrar', ['dados'=>$dados, 'paginas'=>$paginas]);
-            }
-            else
-            {
-                  return view('pages.dashboard_blank');  //Ainda nao cadastrou, solicitar o cadastro
-            }
+          return view('permissoes.registrar', ['dados'=>$dados, 'paginas'=>$paginas]);
 
    }
 
@@ -86,13 +91,10 @@ class PermissoesGrupoController extends Controller
         *    Verificar se foi cadastrado os dados da igreja
         *    Caso encontre, busca somente os dados da empresa que o usuário pertence
         */
-        $cadastrou = usuario::find(Auth::user()->id);
-
-        if ($cadastrou)
-        {
 
             $input = $request->except(array('_token', 'ativo')); //não levar o token
 
+            $acessar_array     = $input['acessar'];
             $paginas_array     = $input['pagina'];
             $incluir_array        = $input['incluir'];
             $alterar_array       = $input['alterar'];
@@ -101,30 +103,28 @@ class PermissoesGrupoController extends Controller
             $exportar_array    = $input['exportar'];
             $imprimir_array    = $input['imprimir'];
 
-            if(is_array($paginas_array))
-            {
-                   foreach ($paginas_array as $key => $value) {
+          if(is_array($paginas_array))
+          {
+                 foreach ($paginas_array as $key => $value) {
 
-                            $permissoes = new \App\Models\permissoes_grupo();
+                          $permissoes = new \App\Models\permissoes_grupo();
 
-                            $permissoes->grupos_id    = $input['nome'];
-                            $permissoes->paginas_id   = $value;
-                            $permissoes->incluir          = (isset($incluir_array[$key]) ? 1 : 0);
-                            $permissoes->alterar         = (isset($alterar_array[$key]) ? 1 : 0);
-                            $permissoes->excluir         = (isset($excluir_array[$key]) ? 1 : 0);
-                            $permissoes->visualizar     = (isset($visualizar_array[$key]) ? 1 : 0);
-                            $permissoes->acessar       = (isset($acessar_array[$key]) ? 1 : 0);
-                            $permissoes->exportar      = (isset($exportar_array[$key]) ? 1 : 0);
-                            $permissoes->imprimir      = (isset($imprimir_array[$key]) ? 1 : 0);
+                          $permissoes->grupos_id    = $input['nome'];
+                          $permissoes->paginas_id   = $value;
+                          $permissoes->incluir          = $incluir_array[$key];
+                          $permissoes->alterar         = $alterar_array[$key];
+                          $permissoes->excluir         = $excluir_array[$key];
+                          $permissoes->visualizar     = $visualizar_array[$key];
+                          $permissoes->acessar       = $acessar_array[$key];
+                          $permissoes->exportar      = $exportar_array[$key];
+                          $permissoes->imprimir      = $imprimir_array[$key];
 
-                            $permissoes->save();
+                          $permissoes->save();
 
-                   }
-            }
+                 }
+          }
 
-            \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-
-        }
+          \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
 
         return redirect('permissoes');
 
@@ -139,32 +139,31 @@ class PermissoesGrupoController extends Controller
             return URL::to('permissoes/'. $id . '/edit');
         }
 
-            $cadastrou = usuario::find(Auth::user()->id);
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.permissoes'))==false)
+        {
+              return redirect('home');
+        }
 
-            if ($cadastrou)
-            {
-                  $dados  = grupos::select('grupos.id', 'grupos.nome')
-                  ->where('grupos.empresas_id', $cadastrou['empresas_id'])
-                  ->where('grupos.empresas_clientes_cloud_id', $cadastrou['empresas_clientes_cloud_id'])
-                  ->get();
+        /*$dados  = grupos::select('grupos.id', 'grupos.nome', 'grupos.default')
+        ->where('grupos.empresas_id', $this->dados_login->empresas_id)
+        ->where('grupos.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->get();*/
 
-                  $sql = "select id, nome from grupos where
-                  empresas_id = " . $cadastrou['empresas_id'] . " and
-                  empresas_clientes_cloud_id = " . $cadastrou['empresas_clientes_cloud_id'] . " and
-                  id = " . $id . "";
-                  $dados = DB::select($sql);
+        $sql = "select id, nome, `default` from grupos where
+        empresas_id = " . $this->dados_login->empresas_id . " and
+        empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " and
+        id = " . $id . "";
+        $dados = DB::select($sql);
 
 
-                  /* Lista todas as páginas e marca o checkbox conforme permissao concedida na tabela permissoes_grupos*/
-                  $sql = "select pg.id as id_permissoes, pg.grupos_id, p.id, p.nome, pg.incluir, pg.alterar, pg.excluir, pg.visualizar, pg.exportar, pg.imprimir, pg.acessar
-                  from paginas p left join permissoes_grupos pg on (p.id = pg.paginas_id) and (pg.grupos_id = " . $id . " or pg.grupos_id is null
-                  where (paginas.nao_mostrar_todos = 0)";
+        /* Lista todas as páginas e marca o checkbox conforme permissao concedida na tabela permissoes_grupos*/
+        $sql = "select pg.id as id_permissoes, pg.grupos_id, p.id, p.nome, pg.incluir, pg.alterar, pg.excluir, pg.visualizar, pg.exportar, pg.imprimir, pg.acessar
+        from paginas p left join permissoes_grupos pg on (p.id = pg.paginas_id) and (pg.grupos_id = " . $id . " or pg.grupos_id is null)
+        where p.nao_mostrar_todos = 0";
 
-                  $paginas = DB::select($sql);
+        $paginas = DB::select($sql);
 
-                  return view('permissoes.edit', ['dados'=>$dados, 'paginas'=>$paginas, 'preview' => $preview]);
-
-            }
+        return view('permissoes.edit', ['dados'=>$dados, 'paginas'=>$paginas, 'preview' => $preview]);
 
    }
 
@@ -238,7 +237,6 @@ class PermissoesGrupoController extends Controller
     }
 
 
-
     /**
      * Exclusão registro
      *
@@ -246,10 +244,9 @@ class PermissoesGrupoController extends Controller
      * @return  \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        $grupos = permissoes_grupo::findOrfail($id);
-        $grupos->delete();
-        return redirect('permissoes');
+   {
+          DB::table('permissoes_grupos')->where('grupos_id', '=', $id)->delete();
+          return redirect('permissoes');
     }
 
 }

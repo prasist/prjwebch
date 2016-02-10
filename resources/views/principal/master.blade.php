@@ -37,6 +37,9 @@
         <link href="{{ asset('/plugins/daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet" type="text/css" />
         <!-- bootstrap wysihtml5 - text editor -->
         <link href="{{ asset('/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}" rel="stylesheet" type="text/css" />
+
+          <!-- DataTables -->
+        <link rel="stylesheet" href="{{ asset('/plugins/datatables/dataTables.bootstrap.css') }}">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -52,7 +55,7 @@
 
     </head>
 
-    <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini">
 
         <div class="wrapper">
             @include('includes.header')
@@ -118,7 +121,9 @@
        <!--<script src="{{ asset('/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>-->
 
 
-
+<!-- DataTables -->
+<script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 
 
   <script type="text/javascript">
@@ -275,6 +280,16 @@
                                 $('.imprimir').prop('checked', false);
                             }
                         });
+
+                            $("#example1").DataTable();
+                            $('#example2').DataTable({
+                              "paging": true,
+                              "lengthChange": false,
+                              "searching": false,
+                              "ordering": true,
+                              "info": true,
+                              "autoWidth": false
+                            });
 
                    });
 

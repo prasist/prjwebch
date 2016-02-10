@@ -15,7 +15,14 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::auth();
 
+
     Route::get('/home', 'HomeController@index');
+
+    Route::get('errors.404', function() {
+
+        return view('errors.404');
+
+    });
 
     /*Clientes Cloud*/
     Route::get('clientes', 'ClientesCloudController@index');

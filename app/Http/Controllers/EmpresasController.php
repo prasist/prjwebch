@@ -12,13 +12,13 @@ namespace App\Http\Controllers;
 use App\Models\clientescloud;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Amranidev\Ajaxis\Ajaxis;
 use URL;
 use App\Models\usuario;
 use App\Models\empresas;
 use Auth;
 use Input;
 use Validator;
+use Gate;
 
 class EmpresasController extends Controller
 {
@@ -26,35 +26,38 @@ class EmpresasController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        //Validação de permissão de acesso a pagina
+        if (Gate::allows('verifica_permissao', [\Config::get('app.empresas'),'acessar']))
+        {
+            $this->dados_login = \Session::get('dados_login');
+        }
+
     }
 
 
     public function index()
     {
 
-       /*
-            Verificar se foi cadastrado os dados da igreja
-            Caso encontre, busca somente os dados da empresa que o usuário pertence
-       */
-        $cadastrou = usuario::find(Auth::user()->id);
-
-        if ($cadastrou)
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.empresas'))==false)
         {
-            //$emp = empresas::find($cadastrou['empresas_clientes_cloud_id']);
-
-            $emp = empresas::all()->where('clientes_cloud_id', $cadastrou['empresas_clientes_cloud_id']);
-
-            return view('empresas.index',compact('emp'));
+              return redirect('home');
         }
-        else
-        {
-            return view('pages.dashboard_blank');  //Ainda nao cadastrou, solicitar o cadastro
-        }
+
+        $emp = empresas::all()->where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id);
+
+        return view('empresas.index',compact('emp'));
 
     }
 
+
     //
     public function create() {
+
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.empresas'))==false)
+        {
+              return redirect('home');
+        }
 
         return view('empresas.registrar');
 
@@ -80,7 +83,7 @@ class EmpresasController extends Controller
 
         $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-        $usuarios          = new usuario();
+        $usuarios   = new usuario();
 
         $empresas = new empresas();
 
@@ -150,8 +153,8 @@ class EmpresasController extends Controller
 
     }
 
-    public function show(Request $request, $id)
-    {
+   public function show(Request $request, $id)
+   {
 
         if($request->ajax())
         {

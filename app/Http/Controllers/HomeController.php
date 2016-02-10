@@ -28,12 +28,19 @@ class HomeController extends Controller
     {
 
         //Verificar se foi cadastrado os dados da igreja
-        if (usuario::find(Auth::user()->id)) {
+        if (usuario::find(Auth::user()->id))
+        {
+            //Busca ID do cliente cloud e ID da empresa
+            $dados_login = usuario::find(Auth::user()->id);
+
+            \Session::put('dados_login', $dados_login);
             return view('pages.dashboard');     //ok, direciona para dashboard
-        } else {
+        }
+        else
+        {
             return view('pages.dashboard_blank');  //Ainda nao cadastrou, solicitar o cadastro
         }
-        
+
 
     }
 }

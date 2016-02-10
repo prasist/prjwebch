@@ -18,11 +18,37 @@
 
                  <div class="box-body"> <!--anterior box-body-->
 
+                             <div class="row{{ $errors->has('empresa') ? ' has-error' : '' }}">
+                                    <div class="col-xs-10">
+                                          <label for="empresa" class="control-label">Empresa</label>
+
+                                          <select name="empresa" class="form-control select2" style="width: 100%;">
+
+                                          @foreach($empresas as $item)
+                                                <option  {{ ($item->id == $grupo_do_usuario[0]->usuarios_empresas_id ? 'selected' : '')  }} value="{{$item->id}}">{{$item->razaosocial}}</option>
+                                          @endforeach
+                                          </select>
+                                    </div>
+                            </div>
+
+                             <div class="row{{ $errors->has('grupo') ? ' has-error' : '' }}">
+                                    <div class="col-xs-10">
+                                          <label for="grupo" class="control-label">Grupo</label>
+
+                                          <select name="grupo" class="form-control select2" style="width: 100%;">
+
+                                          @foreach($grupos as $item)
+                                                <option  {{ ($item->id == $grupo_do_usuario[0]->grupos_id ? 'selected' : '')  }} value="{{$item->id}}">{{$item->nome}}</option>
+                                          @endforeach
+                                          </select>
+                                    </div>
+                            </div>
+
                             <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
                                           <label for="name" class="control-label">Nome</label>
 
-                                          <input id="name" maxlength="255"  name = "name" type="text" class="form-control" value="{{ $dados->name }}">
+                                          <input id="name" maxlength="50"  name = "name" type="text" class="form-control" value="{{ $dados->name }}">
 
                                              <!-- se houver erros na validacao do form request -->
                                              @if ($errors->has('name'))

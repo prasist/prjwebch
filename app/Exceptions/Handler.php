@@ -9,6 +9,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Exceptions\CustomException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +47,27 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        return parent::render($request, $e);
+
+        //Tratamento de erros para PDOException
+          if($e->getCode())
+          {
+                return view('errors.msgerro')
+                ->with('erro',
+                    [
+                        'titulo' => 'Integridade Referencial',
+                        'codigo'=> $e->getCode(),
+                        'mensagem'=> 'Não foi possível excluir o registro, pois ele possui referência(s) em outra(s) tabela(s).',
+                        'mensagem_original'=> $e->getMessage()
+                    ]);
+          }
+
+          //Tratamento para página não encontrada
+          if ($e instanceof NotFoundHttpException)
+          {
+             return redirect()->to('errors.404');
+          }
+
+          //outro tipo de erro não tratado
+            return parent::render($request, $e);
     }
 }

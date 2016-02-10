@@ -9,17 +9,16 @@
 */
 namespace App\Http\Controllers;
 
-//use Request;
 use App\Models\clientescloud;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Amranidev\Ajaxis\Ajaxis;
 use URL;
 use App\Models\usuario;
 use App\Models\empresas;
 use Auth;
 use Input;
 use Validator;
+use Gate;
 
 class ClientesCloudController extends Controller
 {
@@ -29,33 +28,22 @@ class ClientesCloudController extends Controller
         $this->middleware('auth');
     }
 
-
     public function index()
     {
 
-       /*
-            Verificar se foi cadastrado os dados da igreja
-            Caso encontre, busca somente os dados da empresa que o usuário pertence
-       */
-        $cadastrou = usuario::find(Auth::user()->id);
-
-
-        if ($cadastrou)
+        //Validação regras permissão
+        if (Gate::allows('verifica_permissao', [\Config::get('app.clientes'),'acessar']))
         {
-            //$clientes_cloud = clientescloud::find($cadastrou['empresas_id'])->empresas;
-            //dd($cadastrou['empresas_clientes_cloud_id']);
-
-            $clientes_cloud = clientescloud::all()->where('id', intval($cadastrou['empresas_clientes_cloud_id']));
-
-            //$clientes_cloud = clientescloud::find($cadastrou['empresas_clientes_cloud_id']);
-            //dd($clientes_cloud);
-            return view('clientes.index',compact('clientes_cloud'));
-
+            $this->dados_login = \Session::get('dados_login');
         }
         else
         {
-            return view('pages.dashboard_blank');  //Ainda nao cadastrou, solicitar o cadastro
+             return redirect('home');
         }
+
+        $clientes_cloud = clientescloud::all()->where('id', intval($this->dados_login->empresas_clientes_cloud_id));
+
+        return view('clientes.index', ['clientes_cloud'=>$clientes_cloud]);
 
     }
 
@@ -68,13 +56,15 @@ class ClientesCloudController extends Controller
 
 
 /*
-* ClientesCloudRequest = Validação de campos
+* Grava Clientes Cloud, Empresa, associa users com usuarios
+* cria grupo padrao Administrador (trigger tabela grupos executa CALL spCriarPermissoesPadrao(NEW.id);)
+* Associa usuario ao grupo Admin padrão com todas permissões
 *
 */
     public function store(\Illuminate\Http\Request  $request)
     {
 
-        /*Validação de campos - request*/
+        //Validação de campos - request
         $this->validate($request, [
                 'razaosocial' => 'required|max:255:min:3',
                 'foneprincipal' => 'required|min:10',
@@ -82,11 +72,11 @@ class ClientesCloudController extends Controller
                 'emailsecundario' => 'email',
          ]);
 
+        //---------------------------------Cadastro do cliente cloud
+
         $image = $request->file('caminhologo');
 
         $input = $request->except(array('_token', 'ativo')); //não levar o token
-
-        $usuarios          = new usuario();
 
         $clientes_cloud = new clientescloud();
 
@@ -110,29 +100,36 @@ class ClientesCloudController extends Controller
         $clientes_cloud->ativo = 'S'; //Sempre ativo quando cadastrar ?
         $clientes_cloud->website = $input['website'];
 
-        if ($image) {
+        if ($image)
+        {
+
             $clientes_cloud->caminhologo = $image->getClientOriginalName();
+
         }
 
         $clientes_cloud->save();
+        //--------------------------------- FIM - Cadastro do cliente cloud
 
-       /*
-        *Busca id da tabela empresas vinculada a tabela clientes_cloud
-       */
+
+       //Busca id da tabela empresas vinculada a tabela clientes_cloud
         $id_empresas = empresas::where('clientes_cloud_id', $clientes_cloud->id)->select('id')->first();
 
-       /* Aqui faz o vinculo da usuário cadastrado na users com as tabelas do sistema
+
+       /*------------------------- Vinculo tabela users com usuarios
        *
        * Grava o id (users, clientes_cloud e empresas) na tabela usuarios (id, empresas_clientes_cloud_id, empresas_id)
        */
-        $usuarios->id                                           =  Auth::user()->id;    //id do usuário logado (tabela users)
-        $usuarios->empresas_id                          =  $id_empresas['id']; //Pegar ID do registro recém criado (clientes_cloud)
-        $usuarios->empresas_clientes_cloud_id  =  $clientes_cloud->id;
-        $usuarios->master = 1; //Criada a empresa a primeira vez, o usuario que cadastrou será o master e nao podera ser removido
-        $usuarios->save();
+       $usuarios          = new usuario();
+       $usuarios->id                                           =  Auth::user()->id;    //id do usuário logado (tabela users)
+       $usuarios->empresas_id                          =  $id_empresas['id']; //Pegar ID do registro recém criado (clientes_cloud)
+       $usuarios->empresas_clientes_cloud_id  =  $clientes_cloud->id;
+       $usuarios->master = 1; //Criada a empresa a primeira vez, o usuario que cadastrou será o master e nao podera ser removido
+       $usuarios->save();
+       //------------------------- FIM - Vinculo tabela users com usuarios
 
-       if ($image) {
-
+        //---------------------------Upload da imagem
+        if ($image)
+        {
                 /*Regras validação imagem*/
                 $rules = array(
                     'image' => 'image',
@@ -156,11 +153,32 @@ class ClientesCloudController extends Controller
                     }
                 }
          }
+         //---------------------------FIM - Upload da imagem
+
+         //----------------------------------Cria grupo padrão Administrador
+         //A tabela grupos, dispara a triiger de INSERT e chama a  spCriarPermissoesPadrao(NEW.id) que cria as permissoes padrao para o Administrador
+         $grupo_padrao = new \App\Models\grupos();
+         $grupo_padrao->nome = "Administrador";
+         $grupo_padrao->empresas_id = $id_empresas['id'];
+         $grupo_padrao->empresas_clientes_cloud_id  =  $clientes_cloud->id;
+         $grupo_padrao->default = 1; //Grupo padrão
+         $grupo_padrao->save(); //Ira disparar a trigger e chamar a spCriarPermissoesPadrao
+         //----------------------------------FIM - Cria grupo padrão Administrador
 
 
-        \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
+         //------------------------------------Grava usuario e grupo
+         //Usuario Admin com grupo padrão admin (com todas permissões)
+         $usuarios_grupo = new \App\Models\usuarios_grupo();
+         $usuarios_grupo->usuarios_id = Auth::user()->id;
+         $usuarios_grupo->usuarios_empresas_id = $id_empresas['id'];
+         $usuarios_grupo->usuarios_empresas_clientes_cloud_id = $clientes_cloud->id;
+         $usuarios_grupo->grupos_id = $grupo_padrao->id;
+         $usuarios_grupo->save();
+        //------------------------------------FIM Grava usuario e grupo
 
-        return redirect('clientes');
+         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
+
+         return redirect('clientes');
 
     }
 

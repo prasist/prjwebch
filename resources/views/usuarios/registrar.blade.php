@@ -18,11 +18,54 @@
 
                  <div class="box-body"> <!--anterior box-body-->
 
+                            <div class="row{{ $errors->has('empresa') ? ' has-error' : '' }}">
+                                    <div class="col-xs-10">
+                                          <label for="empresa" class="control-label">Empresa</label>
+
+                                          <select name="empresa" class="form-control select2" style="width: 100%;">
+                                          <option  value="">(Selecione uma Igreja/Instituição</option>
+
+                                          @foreach($empresas as $item)
+                                                <option  value="{{$item->id}}">{{$item->razaosocial}}</option>
+                                          @endforeach
+                                          </select>
+
+                                          <!-- se houver erros na validacao do form request -->
+                                             @if ($errors->has('empresa'))
+                                              <span class="help-block">
+                                                  <strong>{{ $errors->first('empresa') }}</strong>
+                                              </span>
+                                             @endif
+
+                                    </div>
+                            </div>
+
+                            <div class="row{{ $errors->has('grupo') ? ' has-error' : '' }}">
+                                    <div class="col-xs-10">
+                                          <label for="grupo" class="control-label">Grupo</label>
+
+                                          <select name="grupo" class="form-control select2" style="width: 100%;">
+                                          <option  value="">(Selecione um Grupo)</option>
+                                          @foreach($dados as $item)
+                                                <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                          @endforeach
+                                          </select>
+
+                                          <!-- se houver erros na validacao do form request -->
+                                             @if ($errors->has('grupo'))
+                                              <span class="help-block">
+                                                  <strong>{{ $errors->first('grupo') }}</strong>
+                                              </span>
+                                             @endif
+
+                                    </div>
+                            </div>
+
                             <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
                                           <label for="name" class="control-label">Nome</label>
 
-                                          <input id="name" maxlength="255"  placeholder = "Campo Obrigatório" name = "name" type="text" class="form-control" value="{{ old('name') }}">
+                                          <input id="name" maxlength="50"  placeholder = "Campo Obrigatório" name = "name" type="text" class="form-control" value="{{ old('name') }}">
 
                                              <!-- se houver erros na validacao do form request -->
                                              @if ($errors->has('name'))
@@ -82,18 +125,6 @@
                                     </div>
                             </div>
 
-                            <div class="row{{ $errors->has('grupo') ? ' has-error' : '' }}">
-                                    <div class="col-xs-10">
-                                          <label for="grupo" class="control-label">Grupo</label>
-
-                                          <select name="grupo" class="form-control select2" style="width: 100%;">
-                                          <option  value="0">(Selecione um Grupo)</option>
-                                          @foreach($dados as $item)
-                                                <option  value="{{$item->id}}">{{$item->nome}}</option>
-                                          @endforeach
-                                          </select>
-                                    </div>
-                            </div>
 
 
             </div><!-- fim box-body"-->
