@@ -2,6 +2,10 @@
 
 @section('content')
 
+{{ \Session::put('titulo', 'Igrejas / Instituições') }}
+{{ \Session::put('subtitulo', 'Alteração / Visualização') }}
+{{ \Session::put('route', 'empresas') }}
+
 <div class = 'row'>
 
     <div class="col-md-12">

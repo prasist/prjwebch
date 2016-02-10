@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>SIGMA3 - Sistema para Igrejas | Dashboard</title>
+        <title>SIGMA3 - Sistema para Igrejas</title>
          <!-- Tell the browser to be responsive to screen width -->
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
@@ -67,12 +67,27 @@
 
                 <section class="content-header">
                     <h1>
-                    Dashboard
-                    <small>Painel</small>
+                    @if (Session::has('titulo'))
+                          {{ Session::get('titulo') }}
+                    @endif
+                    <small>
+                    @if (Session::has('subtitulo'))
+                        {{ Session::get('subtitulo') }}
+                    @endif
+                    </small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Dashboard</li>
+                        <li><a href="{{ url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="active">
+                        @if (Session::has('route'))
+                            <a href="{{ url(Session::get('route'))}}"> {{ Session::get('route') }}</a>
+                        @endif
+                        </li>
+                        <li class="active">
+                        @if (Session::has('titulo'))
+                            {{ Session::get('titulo') }}
+                        @endif
+                        </li>
                     </ol>
                 </section>
 

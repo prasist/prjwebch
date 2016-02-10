@@ -7,7 +7,13 @@
 
             <!--Foto usuário -->
             <div class="pull-left image">
-                <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image" />
+
+                @if (Auth::user()->path_foto!="")
+                        <img src="{{ url('/images/users/' . Auth::user()->path_foto) }}" class="img-circle" alt="Usuário Logado" />
+                @else
+                        <img src="{{ url('/dist/img/boxed-bg.jpg') }}" class="img-circle" alt="Usuário Logado" />
+                @endif
+
             </div>
             <!-- ************* -->
 

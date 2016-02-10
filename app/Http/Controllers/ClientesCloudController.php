@@ -28,6 +28,7 @@ class ClientesCloudController extends Controller
         $this->middleware('auth');
     }
 
+
     public function index()
     {
 
@@ -41,9 +42,17 @@ class ClientesCloudController extends Controller
              return redirect('home');
         }
 
-        $clientes_cloud = clientescloud::all()->where('id', intval($this->dados_login->empresas_clientes_cloud_id));
+        //Somente usuario master pode visualizar dados da igreja sede
+        if ($this->dados_login->master==1) {
+            $clientes_cloud = clientescloud::all()->where('id', intval($this->dados_login->empresas_clientes_cloud_id));
 
-        return view('clientes.index', ['clientes_cloud'=>$clientes_cloud]);
+            return view('clientes.index', ['clientes_cloud'=>$clientes_cloud]);
+        }
+        else
+        {
+            \Session::flash('flash_message_erro', 'Somente usuário MASTER tem acesso aos dados cadastrais da Igreja Sede');
+            return redirect('home');
+        }
 
     }
 
@@ -57,7 +66,8 @@ class ClientesCloudController extends Controller
 
 /*
 * Grava Clientes Cloud, Empresa, associa users com usuarios
-* cria grupo padrao Administrador (trigger tabela grupos executa CALL spCriarPermissoesPadrao(NEW.id);)
+* cria grupo padrao chamado Administrador
+* (trigger tabela grupos executa CALL spCriarPermissoesPadrao(NEW.id);)
 * Associa usuario ao grupo Admin padrão com todas permissões
 *
 */

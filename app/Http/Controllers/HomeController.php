@@ -33,6 +33,9 @@ class HomeController extends Controller
             //Busca ID do cliente cloud e ID da empresa
             $dados_login = usuario::find(Auth::user()->id);
 
+            \Session::put('titulo', 'Home | Dashboard');
+            \Session::put('subtitulo', '');
+            \Session::put('route', '');
             \Session::put('dados_login', $dados_login);
             return view('pages.dashboard');     //ok, direciona para dashboard
         }

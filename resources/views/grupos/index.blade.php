@@ -2,8 +2,9 @@
 
 @section('content')
 
-
-        <p>Grupos de Usuário</p>
+{{ \Session::put('titulo', 'Grupos de Usuário') }}
+{{ \Session::put('subtitulo', 'Listagem') }}
+{{ \Session::put('route', 'grupos') }}
 
         <div>{{{ $errors->first('erros') }}}</div>
 

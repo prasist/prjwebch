@@ -2,6 +2,10 @@
 
 @section('content')
 
+{{ \Session::put('titulo', 'Usuários') }}
+{{ \Session::put('subtitulo', 'Inclusão') }}
+{{ \Session::put('route', 'usuarios') }}
+
 <div class = 'row'>
 
     <div class="col-md-12">
@@ -60,6 +64,19 @@
 
                                     </div>
                             </div>
+
+                          <!--Somente usuário MASTER poderá criar usuários ADMIN-->
+                          <input  name="admin" type="hidden"  value="0" />
+                          @if ($dados_login->master==1)
+                          <div class="row">
+                                    <div class="col-xs-10">
+                                          <label for="admin" class="control-label">É Administrador ?</label>
+
+                                          <input  name="admin" type="checkbox" class="checkbox" value="1" />
+
+                                    </div>
+                          </div>
+                          @endif
 
                             <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
@@ -125,7 +142,12 @@
                                     </div>
                             </div>
 
-
+                            <div class="row">
+                                  <div class="col-xs-5">
+                                          <label for="caminhologo" class="control-label">Foto</label>
+                                          <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" class="form-control" >
+                                  </div>
+                          </div>
 
             </div><!-- fim box-body"-->
         </div><!-- box box-primary -->

@@ -2,6 +2,11 @@
 
 @section('content')
 
+{{ \Session::put('titulo', 'Permissões do Grupo') }}
+{{ \Session::put('subtitulo', 'Alteração / Visualização') }}
+{{ \Session::put('route', 'permissoes') }}
+
+
 <div class = 'row'>
 
     <div class="col-md-12">

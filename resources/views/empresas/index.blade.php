@@ -2,8 +2,9 @@
 
 @section('content')
 
-
-        <p>Igrejas / Instituições</p>
+        {{ \Session::put('titulo', 'Igrejas / Instituições') }}
+        {{ \Session::put('subtitulo', 'Listagem') }}
+        {{ \Session::put('route', 'empresas') }}
 
         <div>{{{ $errors->first('erros') }}}</div>
 

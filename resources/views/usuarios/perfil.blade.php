@@ -2,10 +2,9 @@
 
 @section('content')
 
-{{ \Session::put('titulo', 'Usuários') }}
-{{ \Session::put('subtitulo', 'Alteração / Visualização') }}
+{{ \Session::put('titulo', 'Perfil do Usuário') }}
+{{ \Session::put('subtitulo', 'Alteração') }}
 {{ \Session::put('route', 'usuarios') }}
-
 
 <div class = 'row'>
 
@@ -15,6 +14,7 @@
             <a href="{{ url('/usuarios')}}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
         </div>
 
+        <h4>Alteração Perfil Usuário</h4>
         <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action = {{ url('/usuarios/' . $dados->id . '/update')}}>
 
         {!! csrf_field() !!}
@@ -23,44 +23,32 @@
 
                  <div class="box-body"> <!--anterior box-body-->
 
-                             <div class="row{{ $errors->has('empresa') ? ' has-error' : '' }}">
-                                    <div class="col-xs-10">
-                                          <label for="empresa" class="control-label">Empresa</label>
+                          <div style="display:none;">
+                                <select name="empresa" class="form-control select2" >
 
-                                          <select name="empresa" class="form-control select2" style="width: 100%;">
+                                @foreach($empresas as $item)
+                                      <option  {{ ($item->id == $grupo_do_usuario[0]->usuarios_empresas_id ? 'selected' : '')  }} value="{{$item->id}}">{{$item->razaosocial}}</option>
+                                @endforeach
+                                </select>
+                          </div>
 
-                                          @foreach($empresas as $item)
-                                                <option  {{ ($item->id == $grupo_do_usuario[0]->usuarios_empresas_id ? 'selected' : '')  }} value="{{$item->id}}">{{$item->razaosocial}}</option>
-                                          @endforeach
-                                          </select>
-                                    </div>
-                            </div>
+                          <div style="display:none;">
+                              <select name="grupo" class="form-control select2" >
 
-                           <div class="row{{ $errors->has('grupo') ? ' has-error' : '' }}">
-                                    <div class="col-xs-10">
-                                          <label for="grupo" class="control-label">Grupo</label>
-
-                                          <select name="grupo" class="form-control select2" style="width: 100%;">
-
-                                          @foreach($grupos as $item)
-                                                <option  {{ ($item->id == $grupo_do_usuario[0]->grupos_id ? 'selected' : '')  }} value="{{$item->id}}">{{$item->nome}}</option>
-                                          @endforeach
-                                          </select>
-                                    </div>
-                           </div>
+                              @foreach($grupos as $item)
+                                    <option  {{ ($item->id == $grupo_do_usuario[0]->grupos_id ? 'selected' : '')  }} value="{{$item->id}}">{{$item->nome}}</option>
+                              @endforeach
+                              </select>
+                          </div>
 
                           <!--Somente usuário MASTER poderá criar usuários ADMIN-->
                           <input  name="admin" type="hidden"  value="0" />
                            @if ($dados_login->master==1)
-                           <div class="row">
-                                    <div class="col-xs-10">
-                                          <label for="admin" class="control-label">É Administrador ?</label>
+                                <div style="display:none;">
+                                    <input  name="admin" type="checkbox" style="display:none;" class="acessar" value="1" {{ ($grupo_do_usuario[0]->admin==1 ? 'checked' : '') }} />
+                                </div>
 
-                                          <input  name="admin" type="checkbox" class="acessar" value="1" {{ ($grupo_do_usuario[0]->admin==1 ? 'checked' : '') }} />
-
-                                    </div>
-                            </div>
-                            @endif
+                           @endif
 
 
                             <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -96,7 +84,7 @@
                             </div>
 
                             <div class="row{{ $errors->has('password') ? ' has-error' : '' }}">
-                                    <div class="col-xs-10">
+                                    <div class="col-xs-5">
                                           <label for="password" class="control-label">Senha</label>
 
                                           <input id="password" maxlength="60"  name = "password" type="password" class="form-control" value="">
@@ -109,10 +97,8 @@
                                              @endif
 
                                     </div>
-                            </div>
 
-                            <div class="row{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                    <div class="col-xs-10">
+                                    <div class="col-xs-5">
                                           <label for="password_confirmation" class="control-label">Confirmação Senha</label>
 
                                           <input id="password_confirmation" maxlength="60"  name = "password_confirmation" type="password" class="form-control" value="">
@@ -125,6 +111,7 @@
                                              @endif
 
                                     </div>
+
                             </div>
 
                           <div class="row">

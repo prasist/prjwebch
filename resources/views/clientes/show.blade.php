@@ -4,7 +4,9 @@
 
   <div class = 'container'>
 
-        <p>Dados Cadastrais</p>
+{{ \Session::put('titulo', 'Igreja Sede') }}
+{{ \Session::put('subtitulo', 'Visualização') }}
+{{ \Session::put('route', 'clientes') }}
 
         <div class="row">
         <div class="col-xs-12">

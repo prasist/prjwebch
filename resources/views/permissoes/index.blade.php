@@ -2,8 +2,10 @@
 
 @section('content')
 
+{{ \Session::put('titulo', 'Permissões do Grupo') }}
+{{ \Session::put('subtitulo', 'Listagem') }}
+{{ \Session::put('route', 'permissoes') }}
 
-        <p>Permissões por Grupo</p>
 
         <div>{{{ $errors->first('erros') }}}</div>
 

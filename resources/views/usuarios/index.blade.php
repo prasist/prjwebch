@@ -2,7 +2,10 @@
 
 @section('content')
 
-        <p>Usuários</p>
+{{ \Session::put('titulo', 'Usuários') }}
+{{ \Session::put('subtitulo', 'Listagem') }}
+{{ \Session::put('route', 'usuarios') }}
+
 
         <div>{{{ $errors->first('erros') }}}</div>
 

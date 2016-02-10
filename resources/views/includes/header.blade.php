@@ -7,9 +7,14 @@
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Navegação</span>
         </a>
+
+        <!-- Aqui poderá ser colocado empresa e igreja logado -->
+
         <div class="navbar-custom-menu">
+
             <ul class="nav navbar-nav">
                 <!-- Messages: style can be found in dropdown.less-->
+
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-envelope-o"></i>
@@ -23,7 +28,14 @@
                                 <li><!-- start message -->
                                 <a href="#">
                                 <div class="pull-left">
-                                    <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image"/>
+                                    <!--<img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image"/>-->
+
+                                    @if (Auth::user()->path_foto!="")
+                                            <img src="{{ url('/images/users/' . Auth::user()->path_foto) }}" class="img-circle" alt="Usuário Logado" />
+                                    @else
+                                            <img src="{{ url('/dist/img/boxed-bg.jpg') }}" class="img-circle" alt="Usuário Logado" />
+                                    @endif
+
                                 </div>
                                 <h4>
                                 Support Team
@@ -196,16 +208,30 @@
                         </li>
                     </ul>
                 </li>
+
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image"/>
+
+                    <!--<img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image"/>-->
+                    @if (Auth::user()->path_foto!="")
+                            <img src="{{ url('/images/users/' . Auth::user()->path_foto) }}" class="user-image" alt="Usuário Logado" />
+                    @else
+                            <img src="{{ url('/dist/img/boxed-bg.jpg') }}" class="user-image" alt="Usuário Logado" />
+                    @endif
+
                     <span class="hidden-xs">{{ Auth::user()->name }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image" />
+                            <!--<img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image" />-->
+                            @if (Auth::user()->path_foto!="")
+                                    <img src="{{ url('/images/users/' . Auth::user()->path_foto) }}" class="user-image" alt="Usuário Logado" />
+                            @else
+                                    <img src="{{ url('/dist/img/boxed-bg.jpg') }}" class="user-image" alt="Usuário Logado" />
+                            @endif
+
                             <p>
                             {{ Auth::user()->name }}
                             <small>{{ Auth::user()->created_at }}</small>
@@ -229,7 +255,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                                <a href="{{ URL::to('usuarios/' . Auth::user()->id . '/perfil') }}" class="btn btn-default btn-flat">Perfil</a>
                             </div>
                             <div class="pull-right">
                                 <a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Encerrar Sessão</a>

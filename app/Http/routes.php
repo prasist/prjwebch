@@ -72,6 +72,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('usuarios/{id}/update','UsersController@update');
     Route::get('usuarios/{id}/edit','UsersController@edit');
     Route::get('usuarios/{id}/delete','UsersController@destroy');
+    Route::get('usuarios/{id}/remover','UsersController@remove_image');
+    Route::get('usuarios/{id}/perfil','UsersController@perfil');
 
 
 });

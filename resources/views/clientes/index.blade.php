@@ -2,8 +2,9 @@
 
 @section('content')
 
-
-        <p>Igreja Sede</p>
+{{ \Session::put('titulo', 'Igreja Sede') }}
+{{ \Session::put('subtitulo', 'Listagem') }}
+{{ \Session::put('route', 'clientes') }}
 
         <div>{{{ $errors->first('erros') }}}</div>
         <div class="row">

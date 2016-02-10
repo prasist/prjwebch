@@ -38,7 +38,9 @@ class GruposController extends Controller
               return redirect('home');
         }
 
-        $dados = grupos::all()->where('empresas_id', $this->dados_login->empresas_id, 'empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id);
+        $where = ['empresas_id' => $this->dados_login->empresas_id, 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id];
+
+        $dados = grupos::where($where)->get();
 
         return view('grupos.index',compact('dados'));
 

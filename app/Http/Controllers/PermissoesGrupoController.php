@@ -43,11 +43,10 @@ class PermissoesGrupoController extends Controller
         }
 
         $dados  = grupos::select('grupos.id', 'grupos.nome', 'grupos.default')
-        //->join('usuarios_grupo', 'usuarios_grupo.grupos_id', '=', 'grupos.id')
         ->join('permissoes_grupos', 'permissoes_grupos.grupos_id', '=', 'grupos.id')
         //->where('usuarios_grupo.usuarios_empresas_id', $this->dados_login->empresas_id)
         //->where('permissoes_grupos.usuarios_empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        //->where('grupos.empresas_id', $this->dados_login->empresas_id)
+        ->where('grupos.empresas_id', $this->dados_login->empresas_id)
         ->where('grupos.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->distinct()->get();
 

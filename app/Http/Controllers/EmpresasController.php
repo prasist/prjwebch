@@ -44,7 +44,19 @@ class EmpresasController extends Controller
               return redirect('home');
         }
 
-        $emp = empresas::all()->where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id);
+        //Só exibir todas empresas se for usuário master
+        if ($this->dados_login->master==1) {
+            $where = ['clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id];
+        }
+        else
+        {
+            $where = ['clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'id' => $this->dados_login->empresas_id];
+        }
+
+
+        $emp = empresas::select('id', 'razaosocial', 'nomefantasia','cnpj', 'inscricaoestadual', 'igreja_sede')
+        ->where($where)
+        ->get();
 
         return view('empresas.index',compact('emp'));
 
@@ -275,7 +287,8 @@ class EmpresasController extends Controller
         return redirect('empresas');
     }
 
-    public function remove_image ($id) {
+    public function remove_image ($id)
+    {
 
          $empresas = empresas::findOrfail($id);
 
