@@ -120,4 +120,140 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('profissoes/{id}/edit','ProfissoesController@edit');
     Route::get('profissoes/{id}/delete','ProfissoesController@destroy');
 
+    /*Àreas de Formação */
+    Route::get('areas', 'AreasController@index');
+    Route::post('/areas/gravar','AreasController@store');
+    Route::get('/areas/registrar','AreasController@create');
+    Route::get('/areas/{id}/preview','AreasController@show');
+    Route::post('areas/{id}/update','AreasController@update');
+    Route::get('areas/{id}/edit','AreasController@edit');
+    Route::get('areas/{id}/delete','AreasController@destroy');
+
+    /*Ministério */
+    Route::get('ministerios', 'MinisteriosController@index');
+    Route::post('/ministerios/gravar','MinisteriosController@store');
+    Route::get('/ministerios/registrar','MinisteriosController@create');
+    Route::get('/ministerios/{id}/preview','MinisteriosController@show');
+    Route::post('ministerios/{id}/update','MinisteriosController@update');
+    Route::get('ministerios/{id}/edit','MinisteriosController@edit');
+    Route::get('ministerios/{id}/delete','MinisteriosController@destroy');
+
+     /*Areas Ministério */
+    Route::get('areasministerios', 'AreasMinisteriosController@index');
+    Route::post('/areasministerios/gravar','AreasMinisteriosController@store');
+    Route::get('/areasministerios/registrar','AreasMinisteriosController@create');
+    Route::get('/areasministerios/{id}/preview','AreasMinisteriosController@show');
+    Route::post('areasministerios/{id}/update','AreasMinisteriosController@update');
+    Route::get('areasministerios/{id}/edit','AreasMinisteriosController@edit');
+    Route::get('areasministerios/{id}/delete','AreasMinisteriosController@destroy');
+
+    /*Atividades */
+    Route::get('atividades', 'AtividadesController@index');
+    Route::post('/atividades/gravar','AtividadesController@store');
+    Route::get('/atividades/registrar','AtividadesController@create');
+    Route::get('/atividades/{id}/preview','AtividadesController@show');
+    Route::post('atividades/{id}/update','AtividadesController@update');
+    Route::get('atividades/{id}/edit','AtividadesController@edit');
+    Route::get('atividades/{id}/delete','AtividadesController@destroy');
+
+    /*Dons */
+    Route::get('dons', 'DonsController@index');
+    Route::post('/dons/gravar','DonsController@store');
+    Route::get('/dons/registrar','DonsController@create');
+    Route::get('/dons/{id}/preview','DonsController@show');
+    Route::post('dons/{id}/update','DonsController@update');
+    Route::get('dons/{id}/edit','DonsController@edit');
+    Route::get('dons/{id}/delete','DonsController@destroy');
+
+    /*Tipos Presenca */
+    Route::get('tipospresenca', 'TiposPresencaController@index');
+    Route::post('/tipospresenca/gravar','TiposPresencaController@store');
+    Route::get('/tipospresenca/registrar','TiposPresencaController@create');
+    Route::get('/tipospresenca/{id}/preview','TiposPresencaController@show');
+    Route::post('tipospresenca/{id}/update','TiposPresencaController@update');
+    Route::get('tipospresenca/{id}/edit','TiposPresencaController@edit');
+    Route::get('tipospresenca/{id}/delete','TiposPresencaController@destroy');
+
+    /*Tipos Movimentação */
+    Route::get('tiposmovimentacao', 'TiposMovimentacaoController@index');
+    Route::post('/tiposmovimentacao/gravar','TiposMovimentacaoController@store');
+    Route::get('/tiposmovimentacao/registrar','TiposMovimentacaoController@create');
+    Route::get('/tiposmovimentacao/{id}/preview','TiposMovimentacaoController@show');
+    Route::post('tiposmovimentacao/{id}/update','TiposMovimentacaoController@update');
+    Route::get('tiposmovimentacao/{id}/edit','TiposMovimentacaoController@edit');
+    Route::get('tiposmovimentacao/{id}/delete','TiposMovimentacaoController@destroy');
+
+    /*Graus parentesco */
+    Route::get('grausparentesco', 'GrausParentescoController@index');
+    Route::post('/grausparentesco/gravar','GrausParentescoController@store');
+    Route::get('/grausparentesco/registrar','GrausParentescoController@create');
+    Route::get('/grausparentesco/{id}/preview','GrausParentescoController@show');
+    Route::post('grausparentesco/{id}/update','GrausParentescoController@update');
+    Route::get('grausparentesco/{id}/edit','GrausParentescoController@edit');
+    Route::get('grausparentesco/{id}/delete','GrausParentescoController@destroy');
+
+    /*Cargos e Funções*/
+    Route::get('cargos', 'CargosController@index');
+    Route::post('/cargos/gravar','CargosController@store');
+    Route::get('/cargos/registrar','CargosController@create');
+    Route::get('/cargos/{id}/preview','CargosController@show');
+    Route::post('cargos/{id}/update','CargosController@update');
+    Route::get('cargos/{id}/edit','CargosController@edit');
+    Route::get('cargos/{id}/delete','CargosController@destroy');
+
+    /*Ramos Atividades*/
+    Route::get('ramos', 'RamosAtividadesController@index');
+    Route::post('/ramos/gravar','RamosAtividadesController@store');
+    Route::get('/ramos/registrar','RamosAtividadesController@create');
+    Route::get('/ramos/{id}/preview','RamosAtividadesController@show');
+    Route::post('ramos/{id}/update','RamosAtividadesController@update');
+    Route::get('ramos/{id}/edit','RamosAtividadesController@edit');
+    Route::get('ramos/{id}/delete','RamosAtividadesController@destroy');
+
+    /*Estados Civis*/
+    Route::get('civis', 'EstadosCivisController@index');
+    Route::post('/civis/gravar','EstadosCivisController@store');
+    Route::get('/civis/registrar','EstadosCivisController@create');
+    Route::get('/civis/{id}/preview','EstadosCivisController@show');
+    Route::post('civis/{id}/update','EstadosCivisController@update');
+    Route::get('civis/{id}/edit','EstadosCivisController@edit');
+    Route::get('civis/{id}/delete','EstadosCivisController@destroy');
+
+    /*Religioẽs*/
+    Route::get('religioes', 'ReligioesController@index');
+    Route::post('/religioes/gravar','ReligioesController@store');
+    Route::get('/religioes/registrar','ReligioesController@create');
+    Route::get('/religioes/{id}/preview','ReligioesController@show');
+    Route::post('religioes/{id}/update','ReligioesController@update');
+    Route::get('religioes/{id}/edit','ReligioesController@edit');
+    Route::get('religioes/{id}/delete','ReligioesController@destroy');
+
+    /*Habilidades*/
+    Route::get('habilidades', 'HabilidadesController@index');
+    Route::post('/habilidades/gravar','HabilidadesController@store');
+    Route::get('/habilidades/registrar','HabilidadesController@create');
+    Route::get('/habilidades/{id}/preview','HabilidadesController@show');
+    Route::post('habilidades/{id}/update','HabilidadesController@update');
+    Route::get('habilidades/{id}/edit','HabilidadesController@edit');
+    Route::get('habilidades/{id}/delete','HabilidadesController@destroy');
+
+    /*Habilidades*/
+    Route::get('disponibilidades', 'DisponibilidadesController@index');
+    Route::post('/disponibilidades/gravar','DisponibilidadesController@store');
+    Route::get('/disponibilidades/registrar','DisponibilidadesController@create');
+    Route::get('/disponibilidades/{id}/preview','DisponibilidadesController@show');
+    Route::post('disponibilidades/{id}/update','DisponibilidadesController@update');
+    Route::get('disponibilidades/{id}/edit','DisponibilidadesController@edit');
+    Route::get('disponibilidades/{id}/delete','DisponibilidadesController@destroy');
+
+    /*Situações*/
+    Route::get('situacoes', 'SituacoesController@index');
+    Route::post('/situacoes/gravar','SituacoesController@store');
+    Route::get('/situacoes/registrar','SituacoesController@create');
+    Route::get('/situacoes/{id}/preview','SituacoesController@show');
+    Route::post('situacoes/{id}/update','SituacoesController@update');
+    Route::get('situacoes/{id}/edit','SituacoesController@edit');
+    Route::get('situacoes/{id}/delete','SituacoesController@destroy');
+
+
 });

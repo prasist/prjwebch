@@ -23,7 +23,7 @@ return [
     'atividades' => '16',
     'dons' => '17',
     'tipospresenca' => '18',
-    'tiposmovimentacoes' => '19',
+    'tiposmovimentacao' => '19',
     'grausparentesco' => '20',
     'cargos' => '21',
     'ramos' => '22',
