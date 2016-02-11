@@ -25,7 +25,9 @@
             <!-- ************** -->
 
         </div>
+
         <!-- search form -->
+        <!--
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Pesquisar..."/>
@@ -33,8 +35,9 @@
                 <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
                 </span>
             </div>
-        </form>
+        </form>-->
         <!-- /.search form -->
+
         <!-- sidebar menu: : style can be found in sidebar.less -->
 
         <!--Menu Principal -->
@@ -71,69 +74,32 @@
                 </ul>
             </li>
 
-            <!--
-            <li class="treeview">
-                <a href="#">
-                <i class="fa fa-files-o"></i>
-                <span>Layout Options</span>
-                <span class="label label-primary pull-right">4</span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="pages/layout/top-nav.html"><i class="fa fa-angle-double-right"></i> Top Navigation</a></li>
-                    <li><a href="pages/layout/boxed.html"><i class="fa fa-angle-double-right"></i> Boxed</a></li>
-                    <li><a href="pages/layout/fixed.html"><i class="fa fa-angle-double-right"></i> Fixed</a></li>
-                    <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-angle-double-right"></i> Collapsed Sidebar</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <a href="pages/widgets.html">
-                <i class="fa fa-th"></i> <span>Widgets</span> <small class="label pull-right bg-green">new</small>
-                </a>
-            </li>
-
-            <li class="treeview">
-                <a href="#">
-                <i class="fa fa-pie-chart"></i>
-                <span>Charts</span>
-                <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="pages/charts/morris.html"><i class="fa fa-angle-double-right"></i> Morris</a></li>
-                    <li><a href="pages/charts/flot.html"><i class="fa fa-angle-double-right"></i> Flot</a></li>
-                    <li><a href="pages/charts/inline.html"><i class="fa fa-angle-double-right"></i> Inline charts</a></li>
-                </ul>
-            </li>
-
-            <li class="treeview">
-                <a href="#">
-                <i class="fa fa-laptop"></i>
-                <span>UI Elements</span>
-                <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="pages/UI/general.html"><i class="fa fa-angle-double-right"></i> General</a></li>
-                    <li><a href="pages/UI/icons.html"><i class="fa fa-angle-double-right"></i> Icons</a></li>
-                    <li><a href="pages/UI/buttons.html"><i class="fa fa-angle-double-right"></i> Buttons</a></li>
-                    <li><a href="pages/UI/sliders.html"><i class="fa fa-angle-double-right"></i> Sliders</a></li>
-                    <li><a href="pages/UI/timeline.html"><i class="fa fa-angle-double-right"></i> Timeline</a></li>
-                    <li><a href="pages/UI/modals.html"><i class="fa fa-angle-double-right"></i> Modals</a></li>
-                </ul>
-            </li>
-            -->
-
-            <li class="treeview">
+           <li class="treeview">
                 <a href="#">
                 <i class="fa fa-edit"></i> <span>Cadastro Base</span>
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="pages/forms/general.html"><i class="fa fa-angle-double-right"></i> Tipo Pessoas</a></li>
-                    <li><a href="pages/forms/advanced.html"><i class="fa fa-angle-double-right"></i> Estado Cívil</a></li>
-                    <li><a href="pages/forms/editors.html"><i class="fa fa-angle-double-right"></i> Situações</a></li>
-                    <li><a href="pages/forms/general.html"><i class="fa fa-angle-double-right"></i> Tipo Pessoas</a></li>
-                    <li><a href="pages/forms/advanced.html"><i class="fa fa-angle-double-right"></i> Estado Cívil</a></li>
-                    <li><a href="pages/forms/editors.html"><i class="fa fa-angle-double-right"></i> Situações</a></li>
+                    <li><a href={{ url('/igrejas')}}><i class="fa fa-angle-double-right"></i>Igrejas</a></li>
+                    <li><a href={{ url('/status')}}><i class="fa fa-angle-double-right"></i>Status</a></li>
+                    <li><a href={{ url('/idiomas')}}><i class="fa fa-angle-double-right"></i>Idiomas</a></li>
+                    <li><a href={{ url('/graus')}}><i class="fa fa-angle-double-right"></i>Graus de Instrução</a></li>
+                    <li><a href={{ url('/profissoes')}}><i class="fa fa-angle-double-right"></i>Profissões</a></li>
+                    <li><a href={{ url('/areas')}}><i class="fa fa-angle-double-right"></i>Àreas de Formação</a></li>
+                    <li><a href={{ url('/ministerios')}}><i class="fa fa-angle-double-right"></i>Ministérios</a></li>
+                    <li><a href={{ url('/areasministerios')}}><i class="fa fa-angle-double-right"></i>Àreas de Ministérios</a></li>
+                    <li><a href={{ url('/atividades')}}><i class="fa fa-angle-double-right"></i>Atividades</a></li>
+                    <li><a href={{ url('/dons')}}><i class="fa fa-angle-double-right"></i>Dons Espirituais</a></li>
+                    <li><a href={{ url('/tipospresenca')}}><i class="fa fa-angle-double-right"></i>Tipos de Presença</a></li>
+                    <li><a href={{ url('/tiposmovimentacao')}}><i class="fa fa-angle-double-right"></i>Tipos de Mov. Membros</a></li>
+                    <li><a href={{ url('/grausparentesco')}}><i class="fa fa-angle-double-right"></i>Graus de Parentesco</a></li>
+                    <li><a href={{ url('/cargos')}}><i class="fa fa-angle-double-right"></i>Cargos / Funções</a></li>
+                    <li><a href={{ url('/ramos')}}><i class="fa fa-angle-double-right"></i>Ramos de Atividades</a></li>
+                    <li><a href={{ url('/civis')}}><i class="fa fa-angle-double-right"></i>Estados Civis</a></li>
+                    <li><a href={{ url('/religioes')}}><i class="fa fa-angle-double-right"></i>Religiões</a></li>
+                    <li><a href={{ url('/habilidades')}}><i class="fa fa-angle-double-right"></i>Habilidades</a></li>
+                    <li><a href={{ url('/disponibilidades')}}><i class="fa fa-angle-double-right"></i>Disponibilidades de Tempo</a></li>
+                    <li><a href={{ url('/situacoes')}}><i class="fa fa-angle-double-right"></i>Situações</a></li>
                 </ul>
             </li>
 

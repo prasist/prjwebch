@@ -75,5 +75,49 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('usuarios/{id}/remover','UsersController@remove_image');
     Route::get('usuarios/{id}/perfil','UsersController@perfil');
 
+   /*Igrejas*/
+    Route::get('igrejas', 'IgrejasController@index');
+    Route::post('/igrejas/gravar','IgrejasController@store');
+    Route::get('/igrejas/registrar','IgrejasController@create');
+    Route::get('/igrejas/{id}/preview','IgrejasController@show');
+    Route::post('igrejas/{id}/update','IgrejasController@update');
+    Route::get('igrejas/{id}/edit','IgrejasController@edit');
+    Route::get('igrejas/{id}/delete','IgrejasController@destroy');
+
+    /*Status*/
+    Route::get('status', 'StatusController@index');
+    Route::post('/status/gravar','StatusController@store');
+    Route::get('/status/registrar','StatusController@create');
+    Route::get('/status/{id}/preview','StatusController@show');
+    Route::post('status/{id}/update','StatusController@update');
+    Route::get('status/{id}/edit','StatusController@edit');
+    Route::get('status/{id}/delete','StatusController@destroy');
+
+    /*Idiomas*/
+    Route::get('idiomas', 'IdiomasController@index');
+    Route::post('/idiomas/gravar','IdiomasController@store');
+    Route::get('/idiomas/registrar','IdiomasController@create');
+    Route::get('/idiomas/{id}/preview','IdiomasController@show');
+    Route::post('idiomas/{id}/update','IdiomasController@update');
+    Route::get('idiomas/{id}/edit','IdiomasController@edit');
+    Route::get('idiomas/{id}/delete','IdiomasController@destroy');
+
+     /*Graus de Instrução*/
+    Route::get('graus', 'GrausController@index');
+    Route::post('/graus/gravar','GrausController@store');
+    Route::get('/graus/registrar','GrausController@create');
+    Route::get('/graus/{id}/preview','GrausController@show');
+    Route::post('graus/{id}/update','GrausController@update');
+    Route::get('graus/{id}/edit','GrausController@edit');
+    Route::get('graus/{id}/delete','GrausController@destroy');
+
+    /*Profissoes */
+    Route::get('profissoes', 'ProfissoesController@index');
+    Route::post('/profissoes/gravar','ProfissoesController@store');
+    Route::get('/profissoes/registrar','ProfissoesController@create');
+    Route::get('/profissoes/{id}/preview','ProfissoesController@show');
+    Route::post('profissoes/{id}/update','ProfissoesController@update');
+    Route::get('profissoes/{id}/edit','ProfissoesController@edit');
+    Route::get('profissoes/{id}/delete','ProfissoesController@destroy');
 
 });

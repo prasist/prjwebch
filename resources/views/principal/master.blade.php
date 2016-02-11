@@ -3,29 +3,17 @@
     <head>
         <meta charset="UTF-8">
         <title>SIGMA3 - Sistema para Igrejas</title>
-         <!-- Tell the browser to be responsive to screen width -->
+        <!-- Est-->
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-
-       <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.css" rel="stylesheet" type="text/css" />
-
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.css" rel="stylesheet" type="text/css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-
-        <!-- Bootstrap 3.3.2 -->
         <link href="{{ asset('/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-        <!-- FontAwesome 4.3.0 -->
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-
-        <!-- Ionicons 2.0.0 -->
         <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-        <!-- Theme style -->
         <link href="{{ asset('/dist/css/AdminLTE.min.css') }}" rel="stylesheet" type="text/css" />
-        <!-- AdminLTE Skins. Choose a skin from the css/skins
-        folder instead of downloading all of them to reduce the load. -->
         <link href="{{ asset('/dist/css/skins/_all-skins.min.css') }}" rel="stylesheet" type="text/css" />
-        <!-- iCheck -->
         <link href="{{ asset('/plugins/iCheck/flat/blue.css') }}" rel="stylesheet" type="text/css" />
         <!-- Morris chart -->
         <link href="{{ asset('/plugins/morris/morris.css') }}" rel="stylesheet" type="text/css" />
@@ -37,7 +25,6 @@
         <link href="{{ asset('/plugins/daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet" type="text/css" />
         <!-- bootstrap wysihtml5 - text editor -->
         <link href="{{ asset('/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}" rel="stylesheet" type="text/css" />
-
           <!-- DataTables -->
         <link rel="stylesheet" href="{{ asset('/plugins/datatables/dataTables.bootstrap.css') }}">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -47,11 +34,8 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
-        <!-- Select2 -->
         <link rel="stylesheet" href="{{ asset('/plugins/select2/select2.min.css') }}">
-
-       <!-- Select2 -->
-       <script src="{{ asset('/plugins/select2/select2.full.min.js') }}"></script>
+        <script src="{{ asset('/plugins/select2/select2.full.min.js') }}"></script>
 
     </head>
 
@@ -63,8 +47,8 @@
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
-                <!-- Content Header (Page header) -->
 
+                <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
                     @if (Session::has('titulo'))
