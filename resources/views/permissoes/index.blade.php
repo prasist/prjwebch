@@ -5,18 +5,18 @@
 {{ \Session::put('titulo', 'Permissões do Grupo') }}
 {{ \Session::put('subtitulo', 'Listagem') }}
 {{ \Session::put('route', 'permissoes') }}
-
+{{ \Session::put('id_pagina', '3') }}
 
         <div>{{{ $errors->first('erros') }}}</div>
 
         <div class="row">
                 <div class="col-xs-2">
-                @can('verifica_permissao', [3,'excluir'])
-                  <form method = 'get' class="form-horizontal" action = {{ url('/permissoes/registrar')}}>
+                @can('verifica_permissao', [ \Session::get('id_pagina'),'incluir'])
+                  <form method = 'get' class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/registrar')}}>
                         <button class = 'btn btn-success btn-flat' type ='submit'><i class="fa fa-file-text-o"></i> Novo Registro</button>
                   </form>
-                  @endcan
-                  </div>
+                @endcan
+                </div>
         </div>
 
         <div class="row">
@@ -31,58 +31,46 @@
                         <tr>
                         <th>ID</th>
                         <th>Grupo / Permissão</th>
-
-                        <th>Ações</th>
+                        <th>Alterar</th>
+                        <th>Visualizar</th>
+                        <th>Excluir</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($dados as $value)
 
                         <tr>
-                        <div class = 'row'>
+                            <td>{{$value->id}}</td>
+                            <td>{{$value->nome}}</td>
 
-                              <div class="col-xs-3">
-                                    <td>{{$value->id}}</td>
-                                    <td>{{$value->nome}}</td>
-                              </div>
-                         </div>
+                            <td class="col-xs-1">
+                                      @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
+                                            <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" class = 'btn  btn-info btn-sm'><spam class="glyphicon glyphicon-pencil"></spam></a>
+                                      @endcan
+                            </td>
 
-                            <td>
-                                <div class = 'row'>
+                            <td class="col-xs-1">
+                                      @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
+                                               <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" class = 'btn btn-primary btn-sm'><span class="glyphicon glyphicon-zoom-in"></span></a>
+                                      @endcan
+                            </td>
 
-                                              <div class="col-xs-3">
-                                              @if ($value->default != 1)
+                            <td class="col-xs-1">
+                                        @if ($value->default != 1)
 
-                                                    @can('verifica_permissao', [3,'excluir'])
-                                                    <form id="excluir{{ $value->id }}" action="{{ URL::to('permissoes/' . $value->id . '/delete') }}" method="DELETE">
+                                                @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
+                                                <form id="excluir{{ $value->id }}" action="{{ URL::to(\Session::get('route') . '/' . $value->id . '/delete') }}" method="DELETE">
 
-                                                          <button
-                                                              data-toggle="tooltip"
-                                                              data-placement="top" title="Excluir Ítem" type="submit"
-                                                              class="btn btn-block  btn-danger btn-sm"
-                                                              onclick="return confirm('Confirma exclusão desse ítem ?');">
-                                                              <i class="fa fa-trash-o"></i> Excluir</button>
+                                                      <button
+                                                          data-toggle="tooltip" data-placement="top" title="Excluir Ítem" type="submit"
+                                                          class="btn btn-danger btn-sm"
+                                                          onclick="return confirm('Confirma exclusão desse ítem ?');">
+                                                          <spam class="glyphicon glyphicon-trash"></spam></button>
 
-                                                    </form>
-                                                    @endcan
+                                                </form>
+                                                @endcan
 
-                                              @endif
-                                              </div>
-
-                                              <div class="col-xs-3">
-                                              @can('verifica_permissao', [3,'alterar'])
-                                                    <a href = "{{ URL::to('permissoes/' . $value->id . '/edit') }}" class = 'btn btn-block  btn-info btn-sm' data-link = '/permissoes/{{$value->id}}/edit'><i class="fa fa-edit"></i> Editar</a>
-                                              @endcan
-                                              </div>
-
-                                              <div class="col-xs-3">
-                                              @can('verifica_permissao', [3,'visualizar'])
-                                                   <a href = "{{ URL::to('permissoes/' . $value->id . '/preview') }}" class = 'btn btn-block   btn-primary btn-sm' data-link = '/permissoes/{{$value->id}}'><i class="fa fa-search-plus"></i> Visualizar</a>
-                                              @endcan
-                                              </div>
-
-                                    </div>
-
+                                        @endif
                             </td>
 
                         </tr>

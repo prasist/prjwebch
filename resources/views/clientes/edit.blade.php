@@ -5,6 +5,7 @@
 {{ \Session::put('titulo', 'Igreja Sede') }}
 {{ \Session::put('subtitulo', 'Alteração / Visualização') }}
 {{ \Session::put('route', 'clientes') }}
+{{ \Session::put('id_pagina', '1') }}
 
 <div class = 'row'>
 
@@ -14,7 +15,7 @@
             <a href="{{ url('/clientes')}}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar </a>
         </div>
 
-        <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action = {{ url('/clientes/' . $clientes_cloud->id . '/update')}}>
+        <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action = {{ url('/clientes/' . $dados->id . '/update')}}>
             <!--<input type = 'hidden' name = '_token' value = '{{Session::token()}}'>-->
             {!! csrf_field() !!}
 
@@ -53,7 +54,7 @@
                                                 <div class="col-xs-10">
                                                       <label for="razaosocial" class="control-label">Razão Social</label>
 
-                                                      <input id="razaosocial" maxlength="150"  name = "razaosocial" type="text" class="form-control" value="{{ $clientes_cloud->razaosocial }}">
+                                                      <input id="razaosocial" maxlength="150"  name = "razaosocial" type="text" class="form-control" value="{{ $dados->razaosocial }}">
 
                                                          <!-- se houver erros na validacao do form request -->
                                                          @if ($errors->has('razaosocial'))
@@ -68,7 +69,7 @@
                                         <div class="row">
                                             <div class="col-xs-10">
                                                     <label for="nomefantasia" class="control-label">Nome Fantasia</label>
-                                                    <input id="nomefantasia" maxlength="100" name = "nomefantasia" type="text" class="form-control" value="{{$clientes_cloud->nomefantasia}}">
+                                                    <input id="nomefantasia" maxlength="100" name = "nomefantasia" type="text" class="form-control" value="{{$dados->nomefantasia}}">
                                             </div>
                                         </div>
 
@@ -76,12 +77,12 @@
 
                                                 <div class="col-xs-3">
                                                        <label for="cnpj" class="control-label">CNPJ</label>
-                                                       <input id="cnpj" data-inputmask='"mask": "99.999.999/9999-99"' data-mask name = "cnpj" type="text" class="form-control" value="{{$clientes_cloud->cnpj}}">
+                                                       <input id="cnpj" data-inputmask='"mask": "99.999.999/9999-99"' data-mask name = "cnpj" type="text" class="form-control" value="{{$dados->cnpj}}">
                                                 </div>
 
                                                 <div class="col-xs-3">
                                                      <label for="inscricaoestadual" class="control-label">Inscr. Estadual</label>
-                                                     <input id="inscricaoestadual"  maxlength="15" name = "inscricaoestadual" type="text" class="form-control" value="{{$clientes_cloud->inscricaoestadual}}">
+                                                     <input id="inscricaoestadual"  maxlength="15" name = "inscricaoestadual" type="text" class="form-control" value="{{$dados->inscricaoestadual}}">
                                                 </div>
 
                                                 <div class="col-xs-3">
@@ -92,7 +93,7 @@
                                                             <i class="fa fa-phone"></i>
                                                             </div>
 
-                                                            <input id="foneprincipal" name = "foneprincipal" type="text" class="form-control" value="{{$clientes_cloud->foneprincipal}}"  data-inputmask='"mask": "(99) 9999-9999"' data-mask >
+                                                            <input id="foneprincipal" name = "foneprincipal" type="text" class="form-control" value="{{$dados->foneprincipal}}"  data-inputmask='"mask": "(99) 9999-9999"' data-mask >
 
                                                              <!-- se houver erros na validacao do form request -->
                                                              @if ($errors->has('foneprincipal'))
@@ -113,7 +114,7 @@
                                                                 <i class="fa fa-phone"></i>
                                                                 </div>
 
-                                                                <input id="fonesecundario" name = "fonesecundario" type="text" class="form-control" data-inputmask='"mask": "(99) 9999-9999"' data-mask  value="{{$clientes_cloud->fonesecundario}}">
+                                                                <input id="fonesecundario" name = "fonesecundario" type="text" class="form-control" data-inputmask='"mask": "(99) 9999-9999"' data-mask  value="{{$dados->fonesecundario}}">
                                                         </div>
 
                                                  </div>
@@ -124,7 +125,7 @@
                                         <div class="row">
                                                 <div class="col-xs-3">
                                                     <label for="nomecontato" class="control-label">Contato</label>
-                                                    <input id="nomecontato" maxlength="45" name = "nomecontato" type="text" class="form-control" value="{{$clientes_cloud->nomecontato}}">
+                                                    <input id="nomecontato" maxlength="45" name = "nomecontato" type="text" class="form-control" value="{{$dados->nomecontato}}">
                                                 </div>
 
                                                 <div class="col-xs-3">
@@ -134,7 +135,7 @@
                                                                <div class="input-group-addon">
                                                                 <i class="fa fa-phone"></i>
                                                                 </div>
-                                                                <input id="celular" data-inputmask='"mask": "(99) 9999-9999"' data-mask  name = "celular" type="text" class="form-control" value="{{$clientes_cloud->celular}}">
+                                                                <input id="celular" data-inputmask='"mask": "(99) 9999-9999"' data-mask  name = "celular" type="text" class="form-control" value="{{$dados->celular}}">
                                                     </div>
                                                 </div>
                                         </div>
@@ -147,7 +148,7 @@
                                                                    <div class="input-group-addon">
                                                                     <i class="fa fa-envelope"></i>
                                                                     </div>
-                                                                    <input id="emailprincipal" maxlength="150" name = "emailprincipal" type="text" class="form-control" value="{{$clientes_cloud->emailprincipal}}">
+                                                                    <input id="emailprincipal" maxlength="150" name = "emailprincipal" type="text" class="form-control" value="{{$dados->emailprincipal}}">
 
                                                                      <!-- se houver erros na validacao do form request -->
                                                                      @if ($errors->has('emailprincipal'))
@@ -167,7 +168,7 @@
                                                                    <div class="input-group-addon">
                                                                          <i class="fa fa-envelope"></i>
                                                                     </div>
-                                                                    <input id="emailsecundario" maxlength="150" name = "emailsecundario" type="text" class="form-control" value="{{$clientes_cloud->emailsecundario}}">
+                                                                    <input id="emailsecundario" maxlength="150" name = "emailsecundario" type="text" class="form-control" value="{{$dados->emailsecundario}}">
 
                                                                      <!-- se houver erros na validacao do form request -->
                                                                      @if ($errors->has('emailsecundario'))
@@ -190,24 +191,24 @@
                                      <div class="row">
                                             <div class="col-xs-7">
                                                     <label for="endereco" class="control-label">Endereço</label>
-                                                    <input id="endereco" maxlength="150" name = "endereco" type="text" class="form-control" value="{{$clientes_cloud->endereco}}">
+                                                    <input id="endereco" maxlength="150" name = "endereco" type="text" class="form-control" value="{{$dados->endereco}}">
                                             </div>
 
                                             <div class="col-xs-2">
                                                     <label for="numero" class="control-label">Número</label>
-                                                    <input id="numero" maxlength="10" name = "numero" type="text" class="form-control" value="{{$clientes_cloud->numero}}">
+                                                    <input id="numero" maxlength="10" name = "numero" type="text" class="form-control" value="{{$dados->numero}}">
                                             </div>
                                     </div>
 
                                     <div class="row">
                                             <div class="col-xs-7">
                                                   <label for="bairro" class="control-label">Bairro</label>
-                                                  <input id="bairro" maxlength="50" name = "bairro" type="text" class="form-control" value="{{$clientes_cloud->bairro}}">
+                                                  <input id="bairro" maxlength="50" name = "bairro" type="text" class="form-control" value="{{$dados->bairro}}">
                                              </div>
 
                                             <div class="col-xs-2">
                                                  <label for="cep" class="control-label">CEP</label>
-                                                 <input id="cep" maxlength="8" name = "cep" type="text" class="form-control" value="{{$clientes_cloud->cep}}">
+                                                 <input id="cep" maxlength="8" name = "cep" type="text" class="form-control" value="{{$dados->cep}}">
                                             </div>
 
                                     </div>
@@ -216,19 +217,19 @@
                                     <div class="row">
                                             <div class="col-xs-9">
                                                 <label for="complemento" class="control-label">Complemento</label>
-                                                <input id="complemento" name = "complemento" type="text" class="form-control" value="{{$clientes_cloud->complemento}}">
+                                                <input id="complemento" name = "complemento" type="text" class="form-control" value="{{$dados->complemento}}">
                                             </div>
                                     </div>
 
                                     <div class="row">
                                             <div class="col-xs-7">
                                                     <label for="cidade" class="control-label">Cidade</label>
-                                                    <input id="cidade" maxlength="60" name = "cidade" type="text" class="form-control" value="{{$clientes_cloud->cidade}}">
+                                                    <input id="cidade" maxlength="60" name = "cidade" type="text" class="form-control" value="{{$dados->cidade}}">
                                             </div>
 
                                             <div class="col-xs-2">
                                                 <label for="estado" class="control-label">Estado</label>
-                                                <input id="estado" maxlength="2" name = "estado" type="text" class="form-control" value="{{$clientes_cloud->estado}}">
+                                                <input id="estado" maxlength="2" name = "estado" type="text" class="form-control" value="{{$dados->estado}}">
                                             </div>
                                     </div>
                              </div><!-- FIM TAB ENDERECO-->
@@ -242,7 +243,7 @@
                                     <div class="row">
                                             <div class="col-xs-1">
                                                     <label for="ativo" class="control-label">Ativo</label>
-                                                    <input id="ativo" maxlength="1" name = "ativo" type="text" class="form-control" value="{{$clientes_cloud->ativo}}" >
+                                                    <input id="ativo" maxlength="1" name = "ativo" type="text" class="form-control" value="{{$dados->ativo}}" >
                                             </div>
                                     </div>
                                     -->
@@ -250,7 +251,7 @@
                                     <div class="row">
                                             <div class="col-xs-9">
                                                 <label for="website" class="control-label">Website</label>
-                                                <input id="website" maxlength="255" name = "website" type="text" class="form-control" value="{{$clientes_cloud->website}}">
+                                                <input id="website" maxlength="255" name = "website" type="text" class="form-control" value="{{$dados->website}}">
                                             </div>
                                     </div>
 
@@ -260,11 +261,11 @@
                                                     <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" class="form-control" >
                                             </div>
 
-                                              @if ($clientes_cloud->caminhologo!="")
+                                              @if ($dados->caminhologo!="")
                                                   <p></p>
                                                   <div class="col-xs-3">
-                                                        <img src="{{ url('/images/clients/' . $clientes_cloud->caminhologo) }}" width="200px" height="100px">
-                                                        <a href="{{ url('/clientes/' . $clientes_cloud->id . '/remover')}}"><i class="fa fa-remove"> Remover Imagem</i> </a>
+                                                        <img src="{{ url('/images/clients/' . $dados->caminhologo) }}" width="200px" height="100px">
+                                                        <a href="{{ url('/clientes/' . $dados->id . '/remover')}}"><i class="fa fa-remove"> Remover Imagem</i> </a>
                                                   </div>
 
                                               @endif
@@ -279,8 +280,8 @@
         </div><!-- box box-primary -->
 
         <div class="box-footer">
-            <button class = 'btn btn-primary' type ='submit'>Gravar</button>
-            <a href="{{ url('/clientes')}}" class="btn btn-default">Cancelar</a>
+            <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}>Gravar</button>
+            <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Cancelar</a>
         </div>
 
        </form>

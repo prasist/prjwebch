@@ -26,6 +26,7 @@ class ClientesCloudController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->rota = "clientes"; //Define nome da rota que será usada na classe
     }
 
 
@@ -192,26 +193,33 @@ class ClientesCloudController extends Controller
 
     }
 
+    //Abre tela para edicao ou somente visualização dos registros
+    private function exibir ($request, $id, $preview)
+    {
+        if($request->ajax())
+        {
+            return URL::to($this->rota . '/'. $id . '/edit');
+        }
+
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
+        {
+              return redirect('home');
+        }
+
+        //preview = true, somente visualizacao, desabilita botao gravar
+        $dados = clientescloud::findOrfail($id);
+        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview] );
+
+    }
+
     public function show(Request $request, $id)
     {
-            if($request->ajax())
-            {
-                return URL::to ( 'clientes/'.$id);
-            }
-
-            $clientes_cloud = clientescloud::find($id);
-            return view('clientes.show',compact('clientes_cloud'));
+            return $this->exibir($request, $id, 'true');
     }
 
     public function edit(Request $request, $id)
     {
-        if($request->ajax())
-        {
-            return URL::to('clientes/'. $id . '/edit');
-        }
-
-        $clientes_cloud = clientescloud::findOrfail($id);
-        return view('clientes.edit',compact('clientes_cloud'));
+        return $this->exibir($request, $id, 'false');
     }
 
     /**

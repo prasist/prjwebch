@@ -26,20 +26,6 @@
 
         </div>
 
-        <!-- search form -->
-        <!--
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Pesquisar..."/>
-                <span class="input-group-btn">
-                <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                </span>
-            </div>
-        </form>-->
-        <!-- /.search form -->
-
-        <!-- sidebar menu: : style can be found in sidebar.less -->
-
         <!--Menu Principal -->
         <ul class="sidebar-menu">
             <li class="header">Menu Principal</li>
@@ -126,21 +112,8 @@
                 <small class="label pull-right bg-yellow">12</small>
                 </a>
             </li>
-            <li class="treeview">
-                <a href="#">
-                <i class="fa fa-folder"></i> <span>Examples</span>
-                <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="pages/examples/invoice.html"><i class="fa fa-angle-double-right"></i> Invoice</a></li>
-                    <li><a href="pages/examples/login.html"><i class="fa fa-angle-double-right"></i> Login</a></li>
-                    <li><a href="pages/examples/register.html"><i class="fa fa-angle-double-right"></i> Register</a></li>
-                    <li><a href="pages/examples/lockscreen.html"><i class="fa fa-angle-double-right"></i> Lockscreen</a></li>
-                    <li><a href="pages/examples/404.html"><i class="fa fa-angle-double-right"></i> 404 Error</a></li>
-                    <li><a href="pages/examples/500.html"><i class="fa fa-angle-double-right"></i> 500 Error</a></li>
-                    <li><a href="pages/examples/blank.html"><i class="fa fa-angle-double-right"></i> Blank Page</a></li>
-                </ul>
-            </li>
+
+
             <li class="treeview">
                 <a href="#">
                 <i class="fa fa-share"></i> <span>Multilevel</span>
@@ -165,11 +138,6 @@
                 </ul>
             </li>
 
-            <li><a href="documentation/index.html"><i class="fa fa-book"></i> Documentation</a></li>
-            <li class="header">LABELS</li>
-            <li><a href="#"><i class="fa fa-angle-double-right text-danger"></i> Important</a></li>
-            <li><a href="#"><i class="fa fa-angle-double-right text-warning"></i> Warning</a></li>
-            <li><a href="#"><i class="fa fa-angle-double-right text-info"></i> Information</a></li>
         </ul>
     </section>
     <!-- /.sidebar -->

@@ -5,6 +5,7 @@
 {{ \Session::put('titulo', 'Igreja Sede') }}
 {{ \Session::put('subtitulo', 'Listagem') }}
 {{ \Session::put('route', 'clientes') }}
+{{ \Session::put('id_pagina', '1') }}
 
         <div>{{{ $errors->first('erros') }}}</div>
         <div class="row">
@@ -21,7 +22,8 @@
                         <th>Nome Fantasia</th>
                         <th>CNPJ</th>
                         <th>Insc. Est.</th>
-                        <th>Ações</th>
+                        <th>Alterar</th>
+                        <th>Visualizar</th>
 
                         </tr>
                     </thead>
@@ -31,34 +33,22 @@
 
                         <tr>
 
-                            <div class = 'row'>
+                            <td>{{$value->razaosocial}}</td>
+                            <td>{{$value->nomefantasia}}</td>
+                            <td>{{$value->cnpj}}</td>
+                            <td>{{$value->inscricaoestadual}}</td>
 
-                               <div class="col-xs-5">
-                                    <td>{{$value->razaosocial}}</td>
-                                    <td>{{$value->nomefantasia}}</td>
-                                    <td>{{$value->cnpj}}</td>
-                                    <td>{{$value->inscricaoestadual}}</td>
-                               </div>
-                            </div>
-
-                            <td>
-
-                                <div class = 'row'>
-                                    <div class="col-xs-5">
-                                    @can('verifica_permissao', [1, 'alterar'])
-                                          <a href = "{{ URL::to('clientes/' . $value->id . '/edit') }}" class = 'btn btn-block btn-info btn-sm' data-link = '/cliente/{{$value->id}}/edit'><i class="fa fa-edit"></i> Editar</a>
-                                    @endcan
-                                    </div>
-
-                                    <div class="col-xs-5">
-                                    @can('verifica_permissao', ['1', 'visualizar'])
-                                            <a href = "{{ URL::to('clientes/' . $value->id . '/preview') }}" class = 'btn btn-block btn-primary btn-sm' data-link = '/cliente/{{$value->id}}'><i class="fa fa-search-plus"></i> Visualizar</a>
-                                    @endcan
-                                    </div>
-                                </div>
-
+                            <td class="col-xs-1">
+                                      @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
+                                            <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" class = 'btn  btn-info btn-sm'><spam class="glyphicon glyphicon-pencil"></spam></a>
+                                      @endcan
                             </td>
 
+                            <td class="col-xs-1">
+                                      @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
+                                               <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" class = 'btn btn-primary btn-sm'><span class="glyphicon glyphicon-zoom-in"></span></a>
+                                      @endcan
+                            </td>
 
                         </tr>
                         @endforeach
@@ -70,11 +60,5 @@
           </div>
          </div>
         </div>
-
-
-    <div id="modal1" class="modal">
-        <div class = "row AjaxisModal">
-        </div>
-    </div>
 
 @endsection
