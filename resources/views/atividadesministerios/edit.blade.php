@@ -2,9 +2,9 @@
 
 @section('content')
 
-{{ \Session::put('titulo', 'Àreas de Ministério') }}
+{{ \Session::put('titulo', 'Atividades do Ministério') }}
 {{ \Session::put('subtitulo', 'Alteração / Visualização') }}
-{{ \Session::put('route', 'areasministerio') }}
+{{ \Session::put('route', 'atividadesministerios') }}
 {{ \Session::put('id_pagina', '15') }}
 
 <div class = 'row'>
@@ -22,6 +22,19 @@
             <div class="box box-primary">
 
                  <div class="box-body"> <!--anterior box-body-->
+
+                            <div class="row{{ $errors->has('ministerio') ? ' has-error' : '' }}">
+                                    <div class="col-xs-10">
+                                          <label for="ministerio" class="control-label">Ministério</label>
+
+                                          <select name="ministerio" class="form-control select2" style="width: 100%;">
+
+                                          @foreach($ministerios as $item)
+                                                <option  {{ ($item->id == $dados->ministerio_id ? 'selected' : '')  }} value="{{$item->id}}">{{$item->nome}}</option>
+                                          @endforeach
+                                          </select>
+                                    </div>
+                            </div>
 
                             <div class="row{{ $errors->has('nome') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">

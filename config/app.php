@@ -19,7 +19,7 @@ return [
     'profissoes' => '12',
     'areas' => '13',
     'ministerios' => '14',
-    'areasministerios' => '15',
+    'atividadesministerios' => '15',
     'atividades' => '16',
     'dons' => '17',
     'tipospresenca' => '18',

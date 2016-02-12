@@ -5,18 +5,23 @@
         <title>SIGMA3 - Sistema para Igrejas</title>
         <!-- Est-->
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
         <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.css" rel="stylesheet" type="text/css" />
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+
         <link href="{{ asset('/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+        <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <link href="{{ asset('/dist/css/AdminLTE.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('/dist/css/skins/_all-skins.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('/dist/css/skins/skin-blue.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('/plugins/iCheck/flat/blue.css') }}" rel="stylesheet" type="text/css" />
-        <!-- Morris chart -->
-        <link href="{{ asset('/plugins/morris/morris.css') }}" rel="stylesheet" type="text/css" />
+
+        <!-- iCheck for checkboxes and radio inputs -->
+        <link rel="stylesheet" href="{{ asset('/plugins/iCheck/all.css') }}">
+
         <!-- jvectormap -->
         <link href="{{ asset('/plugins/jvectormap/jquery-jvectormap-1.2.2.css') }}" rel="stylesheet" type="text/css" />
         <!-- Date Picker -->
@@ -124,10 +129,10 @@
 <script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 
-
   <script type="text/javascript">
 
                   $(function () {
+
 
                         $("[data-mask]").inputmask();
 
@@ -290,146 +295,49 @@
                               "autoWidth": false
                             });
 
+
                    });
 
    </script>
 
+
 <!-- bootbox code -->
 
-
-
-  <!-- Bootstrap 3.3.2 JS -->
+        <!-- Bootstrap 3.3.2 JS -->
         <script src="{{ asset('/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
-
-
-        <!-- jQuery UI 1.11.2 -->
-        <!--<script src="{{ asset('/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}" type="text/javascript"></script>-->
-        <!--<script src="{{ asset('/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}" type="text/javascript"></script>-->
-
-       <!-- jQuery Knob Chart -->
-        <!--<script src="{{ asset('/plugins/knob/jquery.knob.js') }}" type="text/javascript"></script>-->
-
-        <!-- Slimscroll -->
-        <!--<script src="{{ asset('/plugins/slimScroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>-->
-
-
-     <!-- DataTables -->
-      <!--  <script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>-->
-
         <!-- InputMask -->
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.js') }}"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.extensions.js') }}"></script>
+        <script src="{{ asset('/dist/js/app.min.js') }}" type="text/javascript"></script>
 
 
         <!-- Morris.js charts -->
-       <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-        <script src="{{ asset('/plugins/morris/morris.min.js') }}" type="text/javascript"></script>-->
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
+        <!-- Sparkline -->
+        <script src="{{ asset('plugins/sparkline/jquery.sparkline.min.js') }}"></script>
+        <!-- jvectormap -->
+        <script src="{{ asset('plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
+        <script src="{{ asset('plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+        <!-- jQuery Knob Chart -->
+        <script src="{{ asset('plugins/knob/jquery.knob.js') }}"></script>
 
-        <!-- daterangepicker -->
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
-        <script src="{{ asset('/plugins/daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>-->
-
-        <!-- datepicker -->
-        <!--<script src="{{ asset('/plugins/datepicker/bootstrap-datepicker.js') }}" type="text/javascript"></script>-->
         <!-- Bootstrap WYSIHTML5 -->
-        <!--<script src="{{ asset('/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}" type="text/javascript"></script>-->
+        <script src="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+        <!-- Slimscroll -->
+        <script src="{{ asset('plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
+        <!-- FastClick -->
+        <script src="{{ asset('plugins/fastclick/fastclick.js') }}"></script>
 
-        <!-- iCheck -->
-        <!--<script src="{{ asset('/plugins/iCheck/icheck.min.js') }}" type="text/javascript"></script>-->
-     <!-- FastClick -->
-       <!-- <script src="{{ asset('/plugins/fastclick/fastclick.min.js') }}"></script>-->
-
-        <!-- AdminLTE App -->
-        <script src="{{ asset('/dist/js/app.min.js') }}" type="text/javascript"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-        <!--<script src="{{ asset('/dist/js/pages/dashboard.js') }}" type="text/javascript"></script>-->
-        <!-- AdminLTE for demo purposes -->
-        <!--<script src="{{ asset('/dist/js/demo.js') }}" type="text/javascript"></script>-->
+        <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
 
-       <!-- Select2 -->
-       <!-- <script src="{{ asset('/plugins/select2/select2.full.min.js') }}"></script>-->
+        <!-- iCheck 1.0.1 -->
+        <script src="{{ asset('/plugins/iCheck/icheck.min.js') }}"></script>
 
 
-
-<!--
-        <script type="text/javascript">
-
-          $(function () {
-            //Initialize Select2 Elements
-            $(".select2").select2();
-
-            //Datemask dd/mm/yyyy
-            $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-            //Datemask2 mm/dd/yyyy
-            $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
-
-            $("[data-mask]").inputmask();
-
-               $("#example1").DataTable();
-                $('#example2').DataTable({
-                  "paging": true,
-                  "lengthChange": false,
-                  "searching": false,
-                  "ordering": true,
-                  "info": true,
-                  "autoWidth": false
-                });
-
-
-            //Date range picker
-            $('#reservation').daterangepicker();
-            //Date range picker with time picker
-            $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
-            //Date range as a button
-            $('#daterange-btn').daterangepicker(
-                {
-                  ranges: {
-                    'Today': [moment(), moment()],
-                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                  },
-                  startDate: moment().subtract(29, 'days'),
-                  endDate: moment()
-                },
-                function (start, end) {
-                  $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-                }
-            );
-
-            //iCheck for checkbox and radio inputs
-            $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-              checkboxClass: 'icheckbox_minimal-blue',
-              radioClass: 'iradio_minimal-blue'
-            });
-            //Red color scheme for iCheck
-            $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-              checkboxClass: 'icheckbox_minimal-red',
-              radioClass: 'iradio_minimal-red'
-            });
-            //Flat red color scheme for iCheck
-            $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-              checkboxClass: 'icheckbox_flat-green',
-              radioClass: 'iradio_flat-green'
-            });
-
-            //Colorpicker
-            $(".my-colorpicker1").colorpicker();
-            //color picker with addon
-            $(".my-colorpicker2").colorpicker();
-
-            //Timepicker
-            $(".timepicker").timepicker({
-              showInputs: false
-            });
-          });
-
-        </script>
-        -->
     </body>
 </html>

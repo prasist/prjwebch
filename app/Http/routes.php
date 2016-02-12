@@ -138,23 +138,14 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('ministerios/{id}/edit','MinisteriosController@edit');
     Route::get('ministerios/{id}/delete','MinisteriosController@destroy');
 
-     /*Areas Ministério */
-    Route::get('areasministerios', 'AreasMinisteriosController@index');
-    Route::post('/areasministerios/gravar','AreasMinisteriosController@store');
-    Route::get('/areasministerios/registrar','AreasMinisteriosController@create');
-    Route::get('/areasministerios/{id}/preview','AreasMinisteriosController@show');
-    Route::post('areasministerios/{id}/update','AreasMinisteriosController@update');
-    Route::get('areasministerios/{id}/edit','AreasMinisteriosController@edit');
-    Route::get('areasministerios/{id}/delete','AreasMinisteriosController@destroy');
-
-    /*Atividades */
-    Route::get('atividades', 'AtividadesController@index');
-    Route::post('/atividades/gravar','AtividadesController@store');
-    Route::get('/atividades/registrar','AtividadesController@create');
-    Route::get('/atividades/{id}/preview','AtividadesController@show');
-    Route::post('atividades/{id}/update','AtividadesController@update');
-    Route::get('atividades/{id}/edit','AtividadesController@edit');
-    Route::get('atividades/{id}/delete','AtividadesController@destroy');
+     /*Atividades Ministério */
+    Route::get('atividadesministerios', 'AtividadesMinisteriosController@index');
+    Route::post('/atividadesministerios/gravar','AtividadesMinisteriosController@store');
+    Route::get('/atividadesministerios/registrar','AtividadesMinisteriosController@create');
+    Route::get('/atividadesministerios/{id}/preview','AtividadesMinisteriosController@show');
+    Route::post('atividadesministerios/{id}/update','AtividadesMinisteriosController@update');
+    Route::get('atividadesministerios/{id}/edit','AtividadesMinisteriosController@edit');
+    Route::get('atividadesministerios/{id}/delete','AtividadesMinisteriosController@destroy');
 
     /*Dons */
     Route::get('dons', 'DonsController@index');

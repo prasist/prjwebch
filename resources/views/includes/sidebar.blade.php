@@ -72,9 +72,23 @@
                     <li><a href={{ url('/graus')}}><i class="fa fa-angle-double-right"></i>Graus de Instrução</a></li>
                     <li><a href={{ url('/profissoes')}}><i class="fa fa-angle-double-right"></i>Profissões</a></li>
                     <li><a href={{ url('/areas')}}><i class="fa fa-angle-double-right"></i>Àreas de Formação</a></li>
-                    <li><a href={{ url('/ministerios')}}><i class="fa fa-angle-double-right"></i>Ministérios</a></li>
-                    <li><a href={{ url('/areasministerios')}}><i class="fa fa-angle-double-right"></i>Àreas de Ministérios</a></li>
-                    <li><a href={{ url('/atividades')}}><i class="fa fa-angle-double-right"></i>Atividades</a></li>
+
+                    <li class="treeview">
+                        <a href="#">
+                        <i class="fa fa-share"></i> <span>Ministérios</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+
+                            <li>
+                                <li><a href={{ url('/ministerios')}}><i class="fa fa-angle-double-right"></i>Cadastro</a></li>
+                                <li><a href={{ url('/atividadesministerios')}}><i class="fa fa-angle-double-right"></i>Atividades x Ministérios</a></li>
+                            </li>
+
+                        </ul>
+                    </li>
+
+
                     <li><a href={{ url('/dons')}}><i class="fa fa-angle-double-right"></i>Dons Espirituais</a></li>
                     <li><a href={{ url('/tipospresenca')}}><i class="fa fa-angle-double-right"></i>Tipos de Presença</a></li>
                     <li><a href={{ url('/tiposmovimentacao')}}><i class="fa fa-angle-double-right"></i>Tipos de Mov. Membros</a></li>
@@ -96,10 +110,10 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="pages/tables/simple.html"><i class="fa fa-angle-double-right"></i> Cadastro</a></li>
-                    <li><a href="pages/tables/data.html"><i class="fa fa-angle-double-right"></i> Data tables</a></li>
                 </ul>
             </li>
 
+            <!--
             <li>
                 <a href="pages/calendar.html">
                 <i class="fa fa-calendar"></i> <span>Calendar</span>
@@ -112,31 +126,7 @@
                 <small class="label pull-right bg-yellow">12</small>
                 </a>
             </li>
-
-
-            <li class="treeview">
-                <a href="#">
-                <i class="fa fa-share"></i> <span>Multilevel</span>
-                <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Level One</a></li>
-                    <li>
-                        <a href="#"><i class="fa fa-angle-double-right"></i> Level One <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i> Level Two</a></li>
-                            <li>
-                                <a href="#"><i class="fa fa-angle-double-right"></i> Level Two <i class="fa fa-angle-left pull-right"></i></a>
-                                <ul class="treeview-menu">
-                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Level Three</a></li>
-                                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Level Three</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Level One</a></li>
-                </ul>
-            </li>
+            -->
 
         </ul>
     </section>
