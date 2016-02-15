@@ -295,7 +295,6 @@
                               "autoWidth": false
                             });
 
-
                    });
 
    </script>
