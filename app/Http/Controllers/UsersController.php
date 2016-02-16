@@ -65,6 +65,7 @@ class UsersController extends Controller
               return redirect('home');
         }
 
+        //Query para mostrar os grupos da empresa e cliente logados na dropdown
         $dados  = \App\Models\grupos::select('grupos.id', 'grupos.nome')
         ->where('grupos.empresas_id', $this->dados_login->empresas_id)
         ->where('grupos.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
@@ -80,6 +81,7 @@ class UsersController extends Controller
             $where = ['empresas.id' => $this->dados_login->empresas_id, 'clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id];
         }
 
+        //Query para trazer empresas na dropdown
         $empresas = \App\Models\empresas::select('empresas.id', 'empresas.razaosocial')
         ->where($where)
         ->get();
@@ -130,7 +132,23 @@ class UsersController extends Controller
             $usuarios->id                                           =   $dados->id;    //id recem cadastrado na tabela users
             $usuarios->empresas_id                          =  $input['empresa'];
             $usuarios->empresas_clientes_cloud_id  =  $usuario_master['empresas_clientes_cloud_id'];
-            $usuarios->master = 0; //Criada a empresa a primeira vez, o usuario que cadastrou será o master e nao podera ser removido
+
+
+            if ($input['admin']) //Se estiver criando usuário ADMIN
+            {
+                //Se este for de outra empresa, cria como MASTER
+                if ($input['empresa']!=$this->dados_login->empresas_id) {
+                    $usuarios->master = 1; //MASTER tem acesso total e nao pode ser excluido
+                } else {
+                    $usuarios->master = 0;
+                }
+
+            }
+            else
+            {
+                $usuarios->master = 0; //Criada a empresa a primeira vez, o usuario que cadastrou será o master e nao podera ser removido
+            }
+
             $usuarios->admin = $input['admin'];
             $usuarios->save();
             //-----------------FIM - Cria registro na tabela usuarios para associar com a tabela users

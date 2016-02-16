@@ -162,5 +162,9 @@
     </div><!-- <col-md-12 -->
 
 </div><!-- row -->
+<script type="text/javascript">
 
+  function
+
+</script>
 @endsection
