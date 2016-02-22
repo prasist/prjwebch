@@ -49,9 +49,11 @@
                             <td>{{$value->inscricaoestadual}}</td>
 
                             <td class="col-xs-1">
+                            @if ($value->igreja_sede != 1)
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
                                             <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" class = 'btn  btn-info btn-sm'><spam class="glyphicon glyphicon-pencil"></spam></a>
                                       @endcan
+                             @endif
                             </td>
 
                             <td class="col-xs-1">

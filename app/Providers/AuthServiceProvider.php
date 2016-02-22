@@ -32,12 +32,15 @@ class AuthServiceProvider extends ServiceProvider
         {
 
                 //--------Verificar se o usuario ja cadastrou os dados da empresa
-                $cadastrou = \App\Models\usuario::find($user->id);
-
+                $cadastrou = \App\Models\usuario::findOrfail($user->id);
 
                 if ($cadastrou) //Verifica se cadastrou os dados da empresa
                 {
 
+                    //Verifica se a empresa logada é sede, para das as devidas permissoes ao master
+                    $verifica_sede = \App\Models\empresas::select('igreja_sede')->findOrfail($cadastrou->empresas_id);
+
+                    \Session::put('master_sede', $verifica_sede);
                     \Session::put('dados_login', $cadastrou);
 
                     //Ler todas permissoes do usuarios

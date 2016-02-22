@@ -43,10 +43,11 @@ class ClientesCloudController extends Controller
              return redirect('home');
         }
 
-        //Somente usuario master pode visualizar dados da igreja sede
-        if ($this->dados_login->master==1) {
-            $clientes_cloud = clientescloud::all()->where('id', intval($this->dados_login->empresas_clientes_cloud_id));
 
+        //Somente usuario master pode visualizar dados da igreja sede
+        if ($this->dados_login->master==1 && \Session::get('master_sede')->igreja_sede!=null)
+        {
+            $clientes_cloud = clientescloud::all()->where('id', intval($this->dados_login->empresas_clientes_cloud_id));
             return view('clientes.index', ['clientes_cloud'=>$clientes_cloud]);
         }
         else

@@ -38,7 +38,9 @@ class UsersController extends Controller
         }
 
         //Só exibir todas empresas se for usuário master
-        if ($this->dados_login->master==1) {
+        //Somente usuario master pode visualizar dados da igreja sede
+        if ($this->dados_login->master==1 && \Session::get('master_sede')->igreja_sede!=null)
+        {
             $where = ['usuarios.empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id];
         }
         else

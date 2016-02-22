@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaginasTable extends Migration
+class CreateTableGrupos extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,21 @@ class CreatePaginasTable extends Migration
      */
     public function up()
     {
-        Schema::create('paginas', function (Blueprint $table) {
+        Schema::create('grupos', function (Blueprint $table)
+        {
+
             $table->increments('id');
+
+            $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
+
             $table->string('nome', 45);
-            $table->string('route',45);
-            $table->string('menu', 45);
-            $table->smallinteger('nao_mostrar_todos')->default(0);
+            $table->integer('empresas_id');
+            $table->integer('empresas_clientes_cloud_id');
+            $table->smallinteger('default');
             $table->timestamps();
+
         });
+
     }
 
     /**
@@ -29,6 +36,6 @@ class CreatePaginasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('paginas');
+        Schema::drop('grupos');
     }
 }

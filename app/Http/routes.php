@@ -138,14 +138,14 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('ministerios/{id}/edit','MinisteriosController@edit');
     Route::get('ministerios/{id}/delete','MinisteriosController@destroy');
 
-     /*Atividades Ministério */
-    Route::get('atividadesministerios', 'AtividadesMinisteriosController@index');
-    Route::post('/atividadesministerios/gravar','AtividadesMinisteriosController@store');
-    Route::get('/atividadesministerios/registrar','AtividadesMinisteriosController@create');
-    Route::get('/atividadesministerios/{id}/preview','AtividadesMinisteriosController@show');
-    Route::post('atividadesministerios/{id}/update','AtividadesMinisteriosController@update');
-    Route::get('atividadesministerios/{id}/edit','AtividadesMinisteriosController@edit');
-    Route::get('atividadesministerios/{id}/delete','AtividadesMinisteriosController@destroy');
+     /*Atividades  */
+    Route::get('atividades', 'AtividadesController@index');
+    Route::post('/atividades/gravar','AtividadesController@store');
+    Route::get('/atividades/registrar','AtividadesController@create');
+    Route::get('/atividades/{id}/preview','AtividadesController@show');
+    Route::post('atividades/{id}/update','AtividadesController@update');
+    Route::get('atividades/{id}/edit','AtividadesController@edit');
+    Route::get('atividades/{id}/delete','AtividadesController@destroy');
 
     /*Dons */
     Route::get('dons', 'DonsController@index');
@@ -228,7 +228,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('habilidades/{id}/edit','HabilidadesController@edit');
     Route::get('habilidades/{id}/delete','HabilidadesController@destroy');
 
-    /*Habilidades*/
+    /*Disponibilidades*/
     Route::get('disponibilidades', 'DisponibilidadesController@index');
     Route::post('/disponibilidades/gravar','DisponibilidadesController@store');
     Route::get('/disponibilidades/registrar','DisponibilidadesController@create');
