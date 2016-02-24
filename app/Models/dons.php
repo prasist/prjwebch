@@ -17,5 +17,4 @@ class dons extends Model
 
     }
 
-
 }

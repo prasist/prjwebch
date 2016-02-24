@@ -25,7 +25,7 @@
 
                              <div class="row{{ $errors->has('empresa') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
-                                          <label for="empresa" class="control-label">Empresa</label>
+                                          <label for="empresa" class="control-label">Igreja / Instituição</label>
 
                                           <select name="empresa" class="form-control select2" style="width: 100%;">
 

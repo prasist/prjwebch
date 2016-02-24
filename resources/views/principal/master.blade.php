@@ -16,8 +16,8 @@
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <link href="{{ asset('/dist/css/AdminLTE.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('/dist/css/skins/skin-blue.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('/plugins/iCheck/flat/blue.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('/dist/css/skins/skin-green.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('/plugins/iCheck/flat/green.css') }}" rel="stylesheet" type="text/css" />
 
         <!-- iCheck for checkboxes and radio inputs -->
         <link rel="stylesheet" href="{{ asset('/plugins/iCheck/all.css') }}">
@@ -44,7 +44,7 @@
 
     </head>
 
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-green sidebar-mini">
 
         <div class="wrapper">
             @include('includes.header')
@@ -132,7 +132,6 @@
   <script type="text/javascript">
 
                   $(function () {
-
 
                         $("[data-mask]").inputmask();
 
@@ -336,7 +335,6 @@
 
         <!-- iCheck 1.0.1 -->
         <script src="{{ asset('/plugins/iCheck/icheck.min.js') }}"></script>
-
 
     </body>
 </html>

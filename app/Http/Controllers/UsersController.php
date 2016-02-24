@@ -139,9 +139,11 @@ class UsersController extends Controller
             if ($input['admin']) //Se estiver criando usuário ADMIN
             {
                 //Se este for de outra empresa, cria como MASTER
-                if ($input['empresa']!=$this->dados_login->empresas_id) {
+                if ($input['empresa']!=$this->dados_login->empresas_id)
+                {
                     $usuarios->master = 1; //MASTER tem acesso total e nao pode ser excluido
-                } else {
+                } else
+                {
                     $usuarios->master = 0;
                 }
 
@@ -159,26 +161,41 @@ class UsersController extends Controller
             //Se usuário master estiver criando um admin para outras igrejas/instituições, cria um usuario como admin.
             if ($input['admin'])
             {
-                     //----------------------------------Cria grupo padrão Administrador
-                     //A tabela grupos, dispara a triiger de INSERT e chama a  spCriarPermissoesPadrao(NEW.id) que cria as permissoes padrao para o Administrador
-                     $grupo_padrao = new \App\Models\grupos();
-                     $grupo_padrao->nome = "Administrador";
-                     $grupo_padrao->empresas_id = $input['empresa'];
-                     $grupo_padrao->empresas_clientes_cloud_id  =  $usuario_master['empresas_clientes_cloud_id'];
-                     $grupo_padrao->default = 1; //Grupo padrão
-                     $grupo_padrao->save(); //Ira disparar a trigger e chamar a spCriarPermissoesPadrao
-                     //----------------------------------FIM - Cria grupo padrão Administrador
+
+                    //Cria o novo grupo somente se o usuário for pertencer a outra empresa
+                    //Caso seja da mesma empresa associa ao grupo existente
+                    if ($input['empresa']!=$this->dados_login->empresas_id) {
+
+                         //----------------------------------Cria grupo padrão Administrador
+                         //A tabela grupos, dispara a triiger de INSERT e chama a  spCriarPermissoesPadrao(NEW.id) que cria as permissoes padrao para o Administrador
+                         $grupo_padrao = new \App\Models\grupos();
+                         $grupo_padrao->nome = "Administrador";
+                         $grupo_padrao->empresas_id = $input['empresa'];
+                         $grupo_padrao->empresas_clientes_cloud_id  =  $usuario_master['empresas_clientes_cloud_id'];
+                         $grupo_padrao->default = 1; //Grupo padrão
+                         $grupo_padrao->save(); //Ira disparar a trigger e chamar a spCriarPermissoesPadrao
+                         //----------------------------------FIM - Cria grupo padrão Administrador
 
 
-                     //------------------------------------Grava usuario e grupo
-                     //Usuario Admin com grupo padrão admin (com todas permissões)
-                     $usuarios_grupo = new \App\Models\usuarios_grupo();
-                     $usuarios_grupo->usuarios_id = $dados->id;
-                     $usuarios_grupo->usuarios_empresas_id = $input['empresa'];
-                     $usuarios_grupo->usuarios_empresas_clientes_cloud_id = $usuario_master['empresas_clientes_cloud_id'];
-                     $usuarios_grupo->grupos_id = $grupo_padrao->id;
-                     $usuarios_grupo->save();
-                    //------------------------------------FIM Grava usuario e grupo
+                         //------------------------------------Grava usuario e grupo
+                         //Usuario Admin com grupo padrão admin (com todas permissões)
+                         $usuarios_grupo = new \App\Models\usuarios_grupo();
+                         $usuarios_grupo->usuarios_id = $dados->id;
+                         $usuarios_grupo->usuarios_empresas_id = $input['empresa'];
+                         $usuarios_grupo->usuarios_empresas_clientes_cloud_id = $usuario_master['empresas_clientes_cloud_id'];
+                         $usuarios_grupo->grupos_id = $grupo_padrao->id;
+                         $usuarios_grupo->save();
+                        //------------------------------------FIM Grava usuario e grupo
+                    } else
+                    {
+                           //Grava Grupo que o usuário iŕa pertencer
+                            $grupo_usuario = new \App\Models\usuarios_grupo();
+                            $grupo_usuario->usuarios_id = $dados->id;
+                            $grupo_usuario->usuarios_empresas_id = $input['empresa'];
+                            $grupo_usuario->usuarios_empresas_clientes_cloud_id = $usuario_master['empresas_clientes_cloud_id'];
+                            $grupo_usuario->grupos_id = $input['grupo'];
+                            $grupo_usuario->save();
+                    }
 
             } else {
 
@@ -421,7 +438,6 @@ class UsersController extends Controller
         }
 
     }
-
 
 
     public function remove_image ($id)
