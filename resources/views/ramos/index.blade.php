@@ -5,7 +5,7 @@
 {{ \Session::put('titulo', 'Ramos de Atividades') }}
 {{ \Session::put('subtitulo', 'Listagem') }}
 {{ \Session::put('route', 'ramos') }}
-{{ \Session::put('id_pagina', '22') }}
+{{ \Session::put('id_pagina', '21') }}
 
 @include('pagina_padrao')
 

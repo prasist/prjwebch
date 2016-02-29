@@ -115,7 +115,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{{ URL::to('usuarios/' . Auth::user()->id . '/perfil') }}" class="btn btn-default btn-flat">Perfil</a>
+                                <a href="{{ URL::to('perfil/' . Auth::user()->id . '/perfil') }}" class="btn btn-default btn-flat">Perfil</a>
                             </div>
                             <div class="pull-right">
                                 <a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Encerrar Sessão</a>

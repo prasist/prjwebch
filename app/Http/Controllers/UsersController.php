@@ -384,7 +384,17 @@ class UsersController extends Controller
          }//-----FIM upload
 
 
-       //Atualizar tabela USUARIOS_GRUPO
+         //Atualizar tabela USUARIOS
+         $where = ['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $this->dados_login->empresas_id, 'id' => $id];
+
+            $update = \DB::table('usuarios')->where($where)
+            ->update(array(
+                        'empresas_id'    =>  $input['empresa'],
+                        'admin' =>  $input['admin']));
+
+         //-----------------FIM - Cria registro na tabela usuarios para associar com a tabela users
+
+        //Atualizar tabela USUARIOS_GRUPO
         $where = ['usuarios_empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'usuarios_id' => $id];
 
         $update = \DB::table('usuarios_grupo')->where($where)

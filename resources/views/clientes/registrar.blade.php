@@ -46,7 +46,7 @@
                                         <br/>
 
                                         <div class="row{{ $errors->has('razaosocial') ? ' has-error' : '' }}">
-                                                <div class="col-xs-10">
+                                                <div class="col-xs-6">
                                                       <label for="razaosocial" class="control-label">Razão Social</label>
 
                                                       <input id="razaosocial" maxlength="150"  placeholder="Campo Obrigatório" name = "razaosocial" type="text" class="form-control" value="{{ old('razaosocial') }}">
@@ -59,14 +59,14 @@
                                                          @endif
 
                                                 </div>
-                                        </div>
 
-                                        <div class="row">
-                                            <div class="col-xs-10">
+                                               <div class="col-xs-6">
                                                     <label for="nomefantasia" class="control-label">Nome Fantasia</label>
                                                     <input id="nomefantasia" maxlength="100" name = "nomefantasia" type="text" class="form-control" value="{{old('nomefantasia')}}">
-                                            </div>
+                                               </div>
+
                                         </div>
+
 
                                         <div class="row">
 

@@ -5,7 +5,7 @@
 {{ \Session::put('titulo', 'Igrejas') }}
 {{ \Session::put('subtitulo', 'Listagem') }}
 {{ \Session::put('route', 'igrejas') }}
-{{ \Session::put('id_pagina', '8') }}
+{{ \Session::put('id_pagina', '7') }}
 
 @include('pagina_padrao')
 

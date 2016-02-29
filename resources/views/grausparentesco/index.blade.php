@@ -6,7 +6,7 @@
 {{ \Session::put('titulo', 'Graus de Parentesco') }}
 {{ \Session::put('subtitulo', 'Listagem') }}
 {{ \Session::put('route', 'grausparentesco') }}
-{{ \Session::put('id_pagina', '20') }}
+{{ \Session::put('id_pagina', '19') }}
 
 @include('pagina_padrao')
 

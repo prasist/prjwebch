@@ -5,7 +5,7 @@
 {{ \Session::put('titulo', 'Graus de Parentesco') }}
 {{ \Session::put('subtitulo', 'Alteração / Visualização') }}
 {{ \Session::put('route', 'grausparentesco') }}
-{{ \Session::put('id_pagina', '20') }}
+{{ \Session::put('id_pagina', '19') }}
 
 <div class = 'row'>
 

@@ -74,6 +74,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('usuarios/{id}/remover','UsersController@remove_image');
     Route::get('usuarios/{id}/perfil','UsersController@perfil');
 
+    /*Perfil*/
+    Route::get('perfil/{id}/perfil','PerfilController@perfil');
+
    /*Igrejas*/
     Route::get('igrejas', 'IgrejasController@index');
     Route::post('/igrejas/gravar','IgrejasController@store');
@@ -244,6 +247,24 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('situacoes/{id}/update','SituacoesController@update');
     Route::get('situacoes/{id}/edit','SituacoesController@edit');
     Route::get('situacoes/{id}/delete','SituacoesController@destroy');
+
+    /*Pessoas*/
+    Route::get('pessoas', 'PessoasController@index');
+    Route::post('/pessoas/gravar','PessoasController@store');
+    Route::get('/pessoas/registrar','PessoasController@create');
+    Route::get('/pessoas/{id}/preview','PessoasController@show');
+    Route::post('pessoas/{id}/update','PessoasController@update');
+    Route::get('pessoas/{id}/edit','PessoasController@edit');
+    Route::get('pessoas/{id}/delete','PessoasController@destroy');
+
+    /*Grupos Pessoas*/
+    Route::get('grupospessoas', 'GruposPessoasController@index');
+    Route::post('/grupospessoas/gravar','GruposPessoasController@store');
+    Route::get('/grupospessoas/registrar','GruposPessoasController@create');
+    Route::get('/grupospessoas/{id}/preview','GruposPessoasController@show');
+    Route::post('grupospessoas/{id}/update','GruposPessoasController@update');
+    Route::get('grupospessoas/{id}/edit','GruposPessoasController@edit');
+    Route::get('grupospessoas/{id}/delete','GruposPessoasController@destroy');
 
 
 });

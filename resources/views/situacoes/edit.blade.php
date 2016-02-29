@@ -5,7 +5,7 @@
 {{ \Session::put('titulo', 'Situações') }}
 {{ \Session::put('subtitulo', 'Alteração / Visualização') }}
 {{ \Session::put('route', 'situacoes') }}
-{{ \Session::put('id_pagina', '27') }}
+{{ \Session::put('id_pagina', '26') }}
 
 <div class = 'row'>
 

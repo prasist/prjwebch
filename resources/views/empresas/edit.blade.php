@@ -5,6 +5,7 @@
 {{ \Session::put('titulo', 'Igrejas / Instituições') }}
 {{ \Session::put('subtitulo', 'Alteração / Visualização') }}
 {{ \Session::put('route', 'empresas') }}
+{{ \Session::put('id_pagina', '27') }}
 
 <div class = 'row'>
 
@@ -50,7 +51,7 @@
                                         <br/>
 
                                         <div class="row{{ $errors->has('razaosocial') ? ' has-error' : '' }}">
-                                                <div class="col-xs-10">
+                                                <div class="col-xs-6">
                                                       <label for="razaosocial" class="control-label">Razão Social</label>
 
                                                       <input id="razaosocial" maxlength="150"  name = "razaosocial" type="text" class="form-control" value="{{ $empresas->razaosocial }}">
@@ -63,14 +64,15 @@
                                                          @endif
 
                                                 </div>
-                                        </div>
 
-                                        <div class="row">
-                                            <div class="col-xs-10">
+                                                <div class="col-xs-6">
                                                     <label for="nomefantasia" class="control-label">Nome Fantasia</label>
                                                     <input id="nomefantasia" maxlength="100" name = "nomefantasia" type="text" class="form-control" value="{{$empresas->nomefantasia}}">
-                                            </div>
+                                              </div>
+
+
                                         </div>
+
 
                                         <div class="row">
 
@@ -264,7 +266,10 @@
                                                   <p></p>
                                                   <div class="col-xs-3">
                                                         <img src="{{ url('/images/clients/' . $empresas->caminhologo) }}" width="200px" height="100px">
+
+                                                        @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
                                                         <a href="{{ url('/empresas/' . $empresas->id . '/remover')}}"><i class="fa fa-remove"> Remover Imagem</i> </a>
+                                                        @endcan
                                                   </div>
 
                                               @endif

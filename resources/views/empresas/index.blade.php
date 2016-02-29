@@ -5,7 +5,7 @@
         {{ \Session::put('titulo', 'Igrejas / Instituições') }}
         {{ \Session::put('subtitulo', 'Listagem') }}
         {{ \Session::put('route', 'empresas') }}
-        {{ \Session::put('id_pagina', '7') }}
+        {{ \Session::put('id_pagina', '27') }}
 
         <div>{{{ $errors->first('erros') }}}</div>
 

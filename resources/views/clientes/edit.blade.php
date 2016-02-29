@@ -51,7 +51,7 @@
                                         <br/>
 
                                         <div class="row{{ $errors->has('razaosocial') ? ' has-error' : '' }}">
-                                                <div class="col-xs-10">
+                                                <div class="col-xs-6">
                                                       <label for="razaosocial" class="control-label">Razão Social</label>
 
                                                       <input id="razaosocial" maxlength="150"  name = "razaosocial" type="text" class="form-control" value="{{ $dados->razaosocial }}">
@@ -64,14 +64,14 @@
                                                          @endif
 
                                                 </div>
-                                        </div>
 
-                                        <div class="row">
-                                            <div class="col-xs-10">
+                                                <div class="col-xs-6">
                                                     <label for="nomefantasia" class="control-label">Nome Fantasia</label>
                                                     <input id="nomefantasia" maxlength="100" name = "nomefantasia" type="text" class="form-control" value="{{$dados->nomefantasia}}">
-                                            </div>
+                                                </div>
+
                                         </div>
+
 
                                         <div class="row">
 
@@ -265,7 +265,10 @@
                                                   <p></p>
                                                   <div class="col-xs-3">
                                                         <img src="{{ url('/images/clients/' . $dados->caminhologo) }}" width="200px" height="100px">
+
+                                                        @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
                                                         <a href="{{ url('/clientes/' . $dados->id . '/remover')}}"><i class="fa fa-remove"> Remover Imagem</i> </a>
+                                                        @endcan
                                                   </div>
 
                                               @endif

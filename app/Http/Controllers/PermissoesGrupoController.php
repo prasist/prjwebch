@@ -148,7 +148,7 @@ class PermissoesGrupoController extends Controller
         ->where('grupos.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->get();*/
 
-        $sql = "select id, nome, `default` from grupos where
+        $sql = "select id, nome, grupos.default from grupos where
         empresas_id = " . $this->dados_login->empresas_id . " and
         empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " and
         id = " . $id . "";
