@@ -75,7 +75,8 @@ class UsersController extends Controller
 
 
         //Só exibir todas empresas se for usuário master
-        if ($this->dados_login->master==1) {
+        if ($this->dados_login->master==1)
+        {
             $where = ['clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id];
         }
         else
@@ -150,7 +151,7 @@ class UsersController extends Controller
             }
             else
             {
-                $usuarios->master = 0; //Criada a empresa a primeira vez, o usuario que cadastrou será o master e nao podera ser removido
+                $usuarios->master = 0;
             }
 
             $usuarios->admin = $input['admin'];

@@ -30,7 +30,6 @@
                     <table id="example1" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                        <th>ID</th>
                         <th>Nome Usuário</th>
                         <th>Email</th>
                         <th>Igreja/Instituição</th>
@@ -44,7 +43,6 @@
 
                         <tr>
 
-                            <td>{{$value->id}}</td>
                             <td>{{$value->name}}</td>
                             <td>{{$value->email}}</td>
                             <td>{{$value->razaosocial}}</td>

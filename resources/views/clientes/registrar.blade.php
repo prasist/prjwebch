@@ -244,7 +244,7 @@
                                     <div class="row">
                                             <div class="col-xs-5">
                                                     <label for="caminhologo" class="control-label">Logo</label>
-                                                    <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" class="form-control" >
+                                                    <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" >
                                             </div>
 
                                     </div>

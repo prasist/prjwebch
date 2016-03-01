@@ -11,19 +11,25 @@
                 @if (Auth::user()->path_foto!="")
                         <img src="{{ url('/images/users/' . Auth::user()->path_foto) }}" class="img-circle" alt="Usuário Logado" />
                 @else
-                        <img src="{{ url('/dist/img/boxed-bg.jpg') }}" class="img-circle" alt="Usuário Logado" />
+                        <img src="{{ url('/images/users/user.png') }}" class="img-circle" alt="Usuário Logado" />
                 @endif
 
             </div>
             <!-- ************* -->
 
+
             <!-- Usuário logado-->
             <div class="pull-left info">
                 <p>{{ Auth::user()->name }}</p>
                 <!--<a href="#"><i class="fa fa-circle text-success"></i> Online</a>-->
+                <a href="{{ URL::to('perfil/' . Auth::user()->id . '/perfil') }}"><i class="fa fa-user text-success"></i> Alterar Perfil</a>
             </div>
             <!-- ************** -->
 
+        </div>
+
+        <div>
+            <p></p>
         </div>
 
         <!--Menu Principal -->
