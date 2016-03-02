@@ -2,7 +2,7 @@
 
 @section('content')
 
-{{ \Session::put('titulo', 'Pessoas') }}
+{{ \Session::put('titulo', $interface->nome) }}
 {{ \Session::put('subtitulo', 'Inclusão') }}
 {{ \Session::put('route', 'pessoas') }}
 {{ \Session::put('id_pagina', '28') }}
@@ -78,15 +78,20 @@
                                                       <label for="opPessoa" class="control-label">Tipo Pessoa :</label>
                                                       <br/>
 
+
+                                                        @if ($interface->fisica)
                                                          <label>
                                                               <input type="radio" name="opPessoa" class="minimal" checked>
                                                               Física
                                                          </label>
+                                                         @endif
 
+                                                         @if ($interface->juridica)
                                                          <label>
-                                                              <input type="radio" name="opPessoa" class="minimal">
+                                                              <input type="radio" name="opPessoa" class="minimal" checked>
                                                               Jurídica
                                                          </label>
+                                                         @endif
 
                                                 </div>
 
@@ -114,7 +119,8 @@
 
                                         <div class="row{{ $errors->has('razaosocial') ? ' has-error' : '' }}">
                                                 <div class="col-xs-6">
-                                                      <label for="razaosocial" class="control-label">Razão Social</label>
+
+                                                      <label for="razaosocial" class="control-label">{{ $interface->fisica==true ? 'Nome' : 'Razão Social'}}</label>
 
                                                       <input id="razaosocial" maxlength="150"  placeholder="Campo Obrigatório" name = "razaosocial" type="text" class="form-control" value="{{ old('razaosocial') }}">
 
@@ -128,7 +134,7 @@
                                                 </div>
 
                                                <div class="col-xs-6">
-                                                    <label for="nomefantasia" class="control-label">Nome Fantasia</label>
+                                                    <label for="nomefantasia" class="control-label">{{ $interface->fisica==true ? 'Nome Abrev.' : 'Nome Fantasia'}}</label>
                                                     <input id="nomefantasia" maxlength="100" name = "nomefantasia" type="text" class="form-control" value="{{old('nomefantasia')}}">
                                                </div>
 
@@ -137,6 +143,8 @@
 
                                         <div class="row">
 
+
+                                                    @if ($interface->juridica)
                                                     <div class="col-xs-2">
                                                            <label for="cnpj" class="control-label">CNPJ</label>
                                                            <input id="cnpj" data-inputmask='"mask": "99.999.999/9999-99"' data-mask name = "cnpj" type="text" class="form-control" value="{{old('cnpj')}}">
@@ -146,7 +154,9 @@
                                                          <label for="inscricaoestadual" class="control-label">Inscr. Estadual</label>
                                                          <input id="inscricaoestadual"  maxlength="15" name = "inscricaoestadual" type="text" class="form-control" value="{{ old('inscricaoestadual') }}">
                                                     </div>
+                                                    @endif
 
+                                                    @if ($interface->fisica)
                                                     <div class="col-xs-2">
                                                            <label for="cpf" class="control-label">CPF</label>
                                                            <input id="cpf" data-inputmask='"mask": "999.999.999-99"' data-mask name = "cpf" type="text" class="form-control" value="{{old('cpf')}}">
@@ -156,9 +166,10 @@
                                                          <label for="rg" class="control-label">R.G.</label>
                                                          <input id="rg"  maxlength="15" name = "rg" type="text" class="form-control" value="{{ old('rg') }}">
                                                     </div>
+                                                    @endif
 
                                                     <div class="col-xs-2">
-                                                              <label for="datanasc" class="control-label">Data Nasc.</label>
+                                                              <label for="datanasc" class="control-label">{{ $interface->fisica==true ? 'Data Nasc.' : 'Data Fundação'}}</label>
 
                                                               <div class="input-group">
                                                                      <div class="input-group-addon">
@@ -208,9 +219,17 @@
                                                  </div>
 
                                                 <div class="col-xs-2">
-                                                    <label for="nomecontato" class="control-label">Contato</label>
-                                                    <input id="nomecontato" maxlength="45" name = "nomecontato" type="text" class="form-control" value="{{old('nomecontato')}}">
-                                                </div>
+                                                        <label for="fonerecado" class="control-label">Fone Recado</label>
+
+                                                        <div class="input-group">
+                                                               <div class="input-group-addon">
+                                                                <i class="fa fa-phone"></i>
+                                                                </div>
+
+                                                                <input id="fonerecado" name = "fonerecado" type="text" class="form-control" data-inputmask='"mask": "(99) 9999-9999"' data-mask  value="{{old('fonerecado')}}">
+                                                        </div>
+
+                                                 </div>
 
                                                 <div class="col-xs-2">
                                                     <label for="celular" class="control-label">Celular</label>

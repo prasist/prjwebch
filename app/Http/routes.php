@@ -276,5 +276,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('tipospessoas/{id}/edit','TiposPessoasController@edit');
     Route::get('tipospessoas/{id}/delete','TiposPessoasController@destroy');
 
+    /*Tipos de Telefones*/
+    Route::get('tipostelefones', 'TiposTelefonesController@index');
+    Route::post('/tipostelefones/gravar','TiposTelefonesController@store');
+    Route::get('/tipostelefones/registrar','TiposTelefonesController@create');
+    Route::get('/tipostelefones/{id}/preview','TiposTelefonesController@show');
+    Route::post('tipostelefones/{id}/update','TiposTelefonesController@update');
+    Route::get('tipostelefones/{id}/edit','TiposTelefonesController@edit');
+    Route::get('tipostelefones/{id}/delete','TiposTelefonesController@destroy');
 
 });

@@ -36,15 +36,17 @@ class PessoasController extends Controller
               return redirect('home');
         }
 
-        $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->clientes_cloud_id)->get();
+        $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
 
         $dados = pessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
 
-        return view($this->rota . '.index',compact('dados'));
+        return view($this->rota . '.index', ['dados' => $dados, 'tipos' => $tipos]);
 
     }
 
     //Criar novo registro
+    //parametros = $id (id do cadastro tipos de pessoas)
+    //Buscar pelo ID o cadastro do tipo de pessoa e verificar quais abas e dados habilitar na página
     public function create($id)
     {
 
@@ -57,7 +59,9 @@ class PessoasController extends Controller
         ->where('empresas_id', $this->dados_login->empresas_id)
         ->get();
 
-        return view($this->rota . '.registrar', compact('dados'));
+        $habilitar_interface = \App\Models\tipospessoas::findOrfail($id);
+
+        return view($this->rota . '.registrar', ['dados'=> $dados, 'interface' => $habilitar_interface]);
 
     }
 

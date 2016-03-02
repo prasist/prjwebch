@@ -35,6 +35,13 @@
                                             <i class="fa fa-map-marker"></i> Endereço
                                         </a>
                                   </li>
+
+                                  <li>
+                                        <a href="#financeiro" role="tab" data-toggle="tab">
+                                            <i class="fa fa-map-marker"></i> Dados Financeiros
+                                        </a>
+                                  </li>
+
                                    <li>
                                         <a href="#compl" role="tab" data-toggle="tab">
                                             <i class="fa fa-cog"></i> Complementos
@@ -124,8 +131,14 @@
 
                                         <div class="row">
                                                 <div class="col-xs-3">
-                                                    <label for="nomecontato" class="control-label">Contato</label>
-                                                    <input id="nomecontato" maxlength="45" name = "nomecontato" type="text" class="form-control" value="{{$dados->nomecontato}}">
+                                                    <label for="fonerecado" class="control-label">Fone Recado</label>
+
+                                                    <div class="input-group">
+                                                               <div class="input-group-addon">
+                                                                <i class="fa fa-phone"></i>
+                                                                </div>
+                                                                <input id="fonerecado" data-inputmask='"mask": "(99) 9999-9999"' data-mask  name = "fonerecado" type="text" class="form-control" value="{{$dados->fonerecado}}">
+                                                    </div>
                                                 </div>
 
                                                 <div class="col-xs-3">
@@ -234,19 +247,68 @@
                                     </div>
                              </div><!-- FIM TAB ENDERECO-->
 
+                                <!-- TAB FINANCEIRO-->
+                                <div class="tab-pane" id="financeiro">
+                                    <br/>
+
+                                    <div class="row">
+                                            <div class="col-xs-9">
+                                                <label for="banco" class="control-label">Banco para emissão boletos</label>
+                                                <input id="banco" maxlength="255" name = "banco" type="text" class="form-control" value="{{$financeiro->banco}}">
+                                            </div>
+                                    </div>
+
+                                    <div class="row">
+                                            <div class="col-xs-7">
+                                                    <label for="endereco_cobranca" class="control-label">Endereço para Cobrança</label>
+                                                    <input id="endereco_cobranca" maxlength="150" name = "endereco_cobranca" type="text" class="form-control" value="{{$financeiro->endereco}}">
+                                            </div>
+
+                                            <div class="col-xs-2">
+                                                    <label for="numero_cobranca" class="control-label">Número</label>
+                                                    <input id="numero_cobranca" maxlength="10" name = "numero_cobranca" type="text" class="form-control" value="{{$financeiro->numero}}">
+                                            </div>
+                                    </div>
+
+                                    <div class="row">
+                                            <div class="col-xs-7">
+                                                  <label for="bairro_cobranca" class="control-label">Bairro</label>
+                                                  <input id="bairro_cobranca" maxlength="50" name = "bairro_cobranca" type="text" class="form-control" value="{{$financeiro->bairro}}">
+                                             </div>
+
+                                            <div class="col-xs-2">
+                                                 <label for="cep_cobranca" class="control-label">CEP</label>
+                                                 <input id="cep_cobranca" maxlength="8" name = "cep_cobranca" type="text" class="form-control" value="{{$financeiro->cep}}">
+                                            </div>
+
+                                    </div>
+
+
+                                    <div class="row">
+                                            <div class="col-xs-9">
+                                                <label for="complemento_cobranca" class="control-label">Complemento</label>
+                                                <input id="complemento_cobranca" name = "complemento_cobranca" type="text" class="form-control" value="{{$financeiro->complemento}}">
+                                            </div>
+                                    </div>
+
+                                    <div class="row">
+                                            <div class="col-xs-7">
+                                                    <label for="cidade_cobranca" class="control-label">Cidade</label>
+                                                    <input id="cidade_cobranca" maxlength="60" name = "cidade_cobranca" type="text" class="form-control" value="{{$financeiro->cidade}}">
+                                            </div>
+
+                                            <div class="col-xs-2">
+                                                <label for="estado_cobranca" class="control-label">Estado</label>
+                                                <input id="estado_cobranca" maxlength="2" name = "estado_cobranca" type="text" class="form-control" value="{{$financeiro->estado}}">
+                                            </div>
+                                    </div>
+
+
+                                </div><!--  FIM TAB FINANCEIRO-->
 
                                 <!-- TAB COMPLEMENTO-->
                                 <div class="tab-pane" id="compl">
                                     <br/>
-
-                                    <!--
-                                    <div class="row">
-                                            <div class="col-xs-1">
-                                                    <label for="ativo" class="control-label">Ativo</label>
-                                                    <input id="ativo" maxlength="1" name = "ativo" type="text" class="form-control" value="{{$dados->ativo}}" >
-                                            </div>
-                                    </div>
-                                    -->
 
                                     <div class="row">
                                             <div class="col-xs-9">

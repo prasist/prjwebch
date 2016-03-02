@@ -20,7 +20,7 @@
                         <ul class="dropdown-menu">
 
                           @foreach($tipos as $item)
-                              <li><a href={{ url('/' . \Session::get('route') . '/registrar')}}>$item->nome</a></li>
+                              <li><a href={{ url('/' . \Session::get('route') . '/registrar/' . $item->id )}}>{{ $item->nome }}</a></li>
                           @endforeach
 
                           <!--
