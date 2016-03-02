@@ -55,7 +55,6 @@ class TiposPessoasController extends Controller
 
     }
 
-
 /*
 * Grava dados no banco
 *

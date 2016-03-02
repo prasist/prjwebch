@@ -5,7 +5,7 @@
 {{ \Session::put('titulo', 'Tipos de Pessoas') }}
 {{ \Session::put('subtitulo', 'Listagem') }}
 {{ \Session::put('route', 'tipospessoas') }}
-{{ \Session::put('id_pagina', '33') }}
+{{ \Session::put('id_pagina', '29') }}
 
         <div>{{{ $errors->first('erros') }}}</div>
 

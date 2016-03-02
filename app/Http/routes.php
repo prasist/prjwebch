@@ -252,6 +252,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('pessoas', 'PessoasController@index');
     Route::post('/pessoas/gravar','PessoasController@store');
     Route::get('/pessoas/registrar','PessoasController@create');
+    Route::get('/pessoas/registrar/{id}','PessoasController@create');
     Route::get('/pessoas/{id}/preview','PessoasController@show');
     Route::post('pessoas/{id}/update','PessoasController@update');
     Route::get('pessoas/{id}/edit','PessoasController@edit');

@@ -29,7 +29,6 @@
                           <li><a href={{ url('/' . \Session::get('route') . '/registrar')}}>Pessoa</a></li>
                           -->
 
-
                         </ul>
                   </div>
                   <br/>

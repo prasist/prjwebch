@@ -36,6 +36,8 @@ class PessoasController extends Controller
               return redirect('home');
         }
 
+        $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->clientes_cloud_id)->get();
+
         $dados = pessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
 
         return view($this->rota . '.index',compact('dados'));
@@ -43,13 +45,13 @@ class PessoasController extends Controller
     }
 
     //Criar novo registro
-    public function create()
+    public function create($id)
     {
 
-        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
-        {
+       if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
+       {
               return redirect('home');
-        }
+       }
 
         $dados = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('empresas_id', $this->dados_login->empresas_id)

@@ -30,13 +30,12 @@ return [
     'civis' => '22',
     'religioes' => '23',
     'habilidades' => '24',
-    'tempo' => '25',
+    'disponibilidades' => '25',
     'situacoes' => '26',
     'empresas' => '27',
     'pessoas' => '28',
     'tipospessoas' => '29',
     'grupospessoas' => '31',
-    'tipospessoas' => '33',
 
 
     'env' => env('APP_ENV', 'production'),
