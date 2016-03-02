@@ -96,6 +96,7 @@
                     <li><a href={{ url('/habilidades')}}><i class="fa fa-angle-double-right"></i>Habilidades</a></li>
 
                     <li class="text">&nbsp;</li>
+                    <li><a href={{ url('/tipospessoas')}}><i class="fa fa-angle-double-right"></i>Tipos de Pessoas</a></li>
                     <li><a href={{ url('/grupospessoas')}}><i class="fa fa-angle-double-right"></i>Grupos de Pessoas</a></li>
                     <li><a href={{ url('/tipospresenca')}}><i class="fa fa-angle-double-right"></i>Tipos de Presença</a></li>
                     <li><a href={{ url('/tiposmovimentacao')}}><i class="fa fa-angle-double-right"></i>Tipos de Mov. Membros</a></li>

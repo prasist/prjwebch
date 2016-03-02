@@ -266,5 +266,14 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('grupospessoas/{id}/edit','GruposPessoasController@edit');
     Route::get('grupospessoas/{id}/delete','GruposPessoasController@destroy');
 
+    /*Tipos de Pessoas*/
+    Route::get('tipospessoas', 'TiposPessoasController@index');
+    Route::post('/tipospessoas/gravar','TiposPessoasController@store');
+    Route::get('/tipospessoas/registrar','TiposPessoasController@create');
+    Route::get('/tipospessoas/{id}/preview','TiposPessoasController@show');
+    Route::post('tipospessoas/{id}/update','TiposPessoasController@update');
+    Route::get('tipospessoas/{id}/edit','TiposPessoasController@edit');
+    Route::get('tipospessoas/{id}/delete','TiposPessoasController@destroy');
+
 
 });

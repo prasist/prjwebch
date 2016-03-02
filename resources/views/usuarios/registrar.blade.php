@@ -14,7 +14,7 @@
             <a href="{{ url('/usuarios')}}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
         </div>
 
-        <form method = 'POST' class="form-horizontal" action = {{ url('/usuarios/gravar')}}>
+        <form method = 'POST' class="form-horizontal" enctype="multipart/form-data"  action = {{ url('/usuarios/gravar')}}>
 
         {!! csrf_field() !!}
 

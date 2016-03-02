@@ -2,10 +2,10 @@
 
 @section('content')
 
-{{ \Session::put('titulo', 'Tipos de Presença') }}
+{{ \Session::put('titulo', 'Tipos de Pessoas') }}
 {{ \Session::put('subtitulo', 'Inclusão') }}
-{{ \Session::put('route', 'tipospresenca') }}
-{{ \Session::put('id_pagina', '17') }}
+{{ \Session::put('route', 'tipospessoas') }}
+{{ \Session::put('id_pagina', '33') }}
 
     <div class = 'row'>
 

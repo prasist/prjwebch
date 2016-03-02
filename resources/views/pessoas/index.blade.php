@@ -18,9 +18,18 @@
                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-new-window"></span>  Novo Registro
                         <span class="fa fa-caret-down"></span></button>
                         <ul class="dropdown-menu">
-                            <li><a href={{ url('/' . \Session::get('route') . '/registrar')}}>Membro</a></li>
-                            <li class="divider"></li>
-                            <li><a href={{ url('/' . \Session::get('route') . '/registrar')}}>Pessoa</a></li>
+
+                          @foreach($tipos as $item)
+                              <li><a href={{ url('/' . \Session::get('route') . '/registrar')}}>$item->nome</a></li>
+                          @endforeach
+
+                          <!--
+                          <li><a href={{ url('/' . \Session::get('route') . '/registrar')}}>Membro</a></li>
+                          <li class="divider"></li>
+                          <li><a href={{ url('/' . \Session::get('route') . '/registrar')}}>Pessoa</a></li>
+                          -->
+
+
                         </ul>
                   </div>
                   <br/>
