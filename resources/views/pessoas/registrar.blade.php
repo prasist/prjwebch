@@ -15,7 +15,7 @@
             <a href={{ url('/' . \Session::get('route')) }} class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
         </div>
 
-        <form method = 'POST' class="form-horizontal"  action = {{ url('/' . \Session::get('route') . '/gravar')}}>
+        <form method = 'POST' class="form-horizontal"  enctype="multipart/form-data" action = {{ url('/' . \Session::get('route') . '/gravar')}}>
 
         {!! csrf_field() !!}
 
@@ -35,6 +35,13 @@
                                             <i class="fa fa-map-marker"></i> Endereço
                                         </a>
                                   </li>
+
+                                    <li>
+                                        <a href="#financ" role="tab" data-toggle="tab">
+                                            <i class="fa fa-cog"></i> Dados Financeiros
+                                        </a>
+                                   </li>
+
                                    <li>
                                         <a href="#compl" role="tab" data-toggle="tab">
                                             <i class="fa fa-cog"></i> Complementos
@@ -335,6 +342,65 @@
                                             </div>
                                     </div>
                              </div><!-- FIM TAB ENDERECO-->
+
+                                <!-- TAB FINANCEIRO-->
+                                <div class="tab-pane" id="financeiro">
+                                    <br/>
+
+                                    <div class="row">
+                                            <div class="col-xs-9">
+                                                <label for="banco" class="control-label">Banco para emissão boletos</label>
+                                                <input id="banco" maxlength="255" name = "banco" type="text" class="form-control" value="{{$financeiro->banco}}">
+                                            </div>
+                                    </div>
+
+                                    <div class="row">
+                                            <div class="col-xs-7">
+                                                    <label for="endereco_cobranca" class="control-label">Endereço para Cobrança</label>
+                                                    <input id="endereco_cobranca" maxlength="150" name = "endereco_cobranca" type="text" class="form-control" value="{{$financeiro->endereco}}">
+                                            </div>
+
+                                            <div class="col-xs-2">
+                                                    <label for="numero_cobranca" class="control-label">Número</label>
+                                                    <input id="numero_cobranca" maxlength="10" name = "numero_cobranca" type="text" class="form-control" value="{{$financeiro->numero}}">
+                                            </div>
+                                    </div>
+
+                                    <div class="row">
+                                            <div class="col-xs-7">
+                                                  <label for="bairro_cobranca" class="control-label">Bairro</label>
+                                                  <input id="bairro_cobranca" maxlength="50" name = "bairro_cobranca" type="text" class="form-control" value="{{$financeiro->bairro}}">
+                                             </div>
+
+                                            <div class="col-xs-2">
+                                                 <label for="cep_cobranca" class="control-label">CEP</label>
+                                                 <input id="cep_cobranca" maxlength="8" name = "cep_cobranca" type="text" class="form-control" value="{{$financeiro->cep}}">
+                                            </div>
+
+                                    </div>
+
+
+                                    <div class="row">
+                                            <div class="col-xs-9">
+                                                <label for="complemento_cobranca" class="control-label">Complemento</label>
+                                                <input id="complemento_cobranca" name = "complemento_cobranca" type="text" class="form-control" value="{{$financeiro->complemento}}">
+                                            </div>
+                                    </div>
+
+                                    <div class="row">
+                                            <div class="col-xs-7">
+                                                    <label for="cidade_cobranca" class="control-label">Cidade</label>
+                                                    <input id="cidade_cobranca" maxlength="60" name = "cidade_cobranca" type="text" class="form-control" value="{{$financeiro->cidade}}">
+                                            </div>
+
+                                            <div class="col-xs-2">
+                                                <label for="estado_cobranca" class="control-label">Estado</label>
+                                                <input id="estado_cobranca" maxlength="2" name = "estado_cobranca" type="text" class="form-control" value="{{$financeiro->estado}}">
+                                            </div>
+                                    </div>
+
+
+                                </div><!--  FIM TAB FINANCEIRO-->
 
 
                                 <!-- TAB COMPLEMENTO-->

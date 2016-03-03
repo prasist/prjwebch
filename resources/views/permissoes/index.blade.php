@@ -29,7 +29,6 @@
                     <table id="example1" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                        <th>ID</th>
                         <th>Grupo / Permissão</th>
                         <th>Alterar</th>
                         <th>Visualizar</th>
@@ -40,7 +39,7 @@
                         @foreach($dados as $value)
 
                         <tr>
-                            <td>{{$value->id}}</td>
+
                             <td>{{$value->nome}}</td>
 
                             <td class="col-xs-1">

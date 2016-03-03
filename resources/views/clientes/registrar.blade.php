@@ -10,7 +10,7 @@
 
     <div class="col-md-12">
 
-        <form method = 'POST'  class="form-horizontal" action = {{ url('/clientes/gravar')}}>
+        <form method = 'POST'  enctype="multipart/form-data" class="form-horizontal" action = {{ url('/clientes/gravar')}}>
             <!--<input type = 'hidden' name = '_token' value = '{{Session::token()}}'>-->
             {!! csrf_field() !!}
 
