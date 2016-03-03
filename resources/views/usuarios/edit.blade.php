@@ -25,9 +25,13 @@
 
                              <div class="row{{ $errors->has('empresa') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
+
+                                         <!-- Campo hidden para preservar valor da empresa gravado, pois o combo desabilitado nao envia valor para o POST quando disabled-->
+                                          <input  name="empresa" type="hidden"  value="{{ $grupo_do_usuario[0]->usuarios_empresas_id }}" />
+
                                           <label for="empresa" class="control-label">Igreja / Instituição</label>
 
-                                          <select name="empresa" class="form-control select2" style="width: 100%;">
+                                          <select name="empresa" class="form-control select2" style="width: 100%;" disabled>
 
                                           @foreach($empresas as $item)
                                                 <option  {{ ($item->id == $grupo_do_usuario[0]->usuarios_empresas_id ? 'selected' : '')  }} value="{{$item->id}}">{{$item->razaosocial}}</option>
@@ -39,6 +43,9 @@
                            <div class="row{{ $errors->has('grupo') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
                                           <label for="grupo" class="control-label">Grupo</label>
+
+                                          <!-- Campo hidden para preservar valor do grupo gravado, pois o combo desabilitado nao envia valor para o POST quando disabled-->
+                                          <input  name="grupo" type="hidden"  value="{{ $grupo_do_usuario[0]->grupos_id }}" />
 
                                           <select name="grupo" class="form-control select2" style="width: 100%;">
 

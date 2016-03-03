@@ -120,15 +120,18 @@ class UsersController extends Controller
             $dados->email  = $input['email'];
             $dados->password  = bcrypt($input['password']);
 
-            if ($image) {
+            if ($image)
+            {
                 $dados->path_foto = $image->getClientOriginalName();
             }
 
             $dados->save();
             //----------------------FIM - Grava novo usuario (Tabela USERS)
 
+
             //-----------------Pega dados do usuarios admin (id da empresa e cliente cloud)
             $usuario_master = usuario::find(Auth::user()->id);
+
 
             //-----------------Cria registro na tabela usuarios para associar com a tabela users
             $usuarios = new usuario();
@@ -140,13 +143,14 @@ class UsersController extends Controller
             if ($input['admin']) //Se estiver criando usuário ADMIN
             {
                 //Se este for de outra empresa, cria como MASTER
-                if ($input['empresa']!=$this->dados_login->empresas_id)
-                {
-                    $usuarios->master = 1; //MASTER tem acesso total e nao pode ser excluido
-                } else
-                {
-                    $usuarios->master = 0;
-                }
+                //if ($input['empresa']!=$this->dados_login->empresas_id)
+                //{
+                //    $usuarios->master = 1; //MASTER tem acesso total e nao pode ser excluido
+
+                //} else
+                //{
+                 //   $usuarios->master = 0;
+               // }
 
             }
             else
@@ -167,9 +171,10 @@ class UsersController extends Controller
                     //Caso seja da mesma empresa associa ao grupo existente
                     if ($input['empresa']!=$this->dados_login->empresas_id) {
 
-                         //----------------------------------Cria grupo padrão Administrador
+                         //----------------------------------Cria grupo padrão Administrador (Se já não existir)
                          //A tabela grupos, dispara a triiger de INSERT e chama a  spCriarPermissoesPadrao(NEW.id) que cria as permissoes padrao para o Administrador
-                         $grupo_padrao = new \App\Models\grupos();
+                         $grupo_padrao = \App\Models\grupos::firstOrCreate(['nome' => 'Administrador',  'empresas_id' => $input['empresa'], 'empresas_clientes_cloud_id' => $usuario_master['empresas_clientes_cloud_id']]);
+
                          $grupo_padrao->nome = "Administrador";
                          $grupo_padrao->empresas_id = $input['empresa'];
                          $grupo_padrao->empresas_clientes_cloud_id  =  $usuario_master['empresas_clientes_cloud_id'];
@@ -384,9 +389,8 @@ class UsersController extends Controller
                 }
          }//-----FIM upload
 
-
          //Atualizar tabela USUARIOS
-         $where = ['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $this->dados_login->empresas_id, 'id' => $id];
+         $where = ['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $input['empresa'], 'id' => $id];
 
             $update = \DB::table('usuarios')->where($where)
             ->update(array(
