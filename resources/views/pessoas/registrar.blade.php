@@ -343,38 +343,48 @@
                                     </div>
                              </div><!-- FIM TAB ENDERECO-->
 
+
+
+
                                 <!-- TAB FINANCEIRO-->
                                 <div class="tab-pane" id="financeiro">
                                     <br/>
 
                                     <div class="row">
-                                            <div class="col-xs-9">
-                                                <label for="banco" class="control-label">Banco para emissão boletos</label>
-                                                <input id="banco" maxlength="255" name = "banco" type="text" class="form-control" value="{{$financeiro->banco}}">
+                                            <div class="col-xs-10">
+                                                  <label for="banco" class="control-label">Banco Emissão boleto</label>
+
+                                                  <select name="banco" class="form-control select2" style="width: 100%;">
+                                                  <option  value="">(Selecione um Banco)</option>
+                                                  @foreach($bancos as $item)
+                                                        <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                  @endforeach
+                                                  </select>
+
                                             </div>
                                     </div>
 
                                     <div class="row">
                                             <div class="col-xs-7">
                                                     <label for="endereco_cobranca" class="control-label">Endereço para Cobrança</label>
-                                                    <input id="endereco_cobranca" maxlength="150" name = "endereco_cobranca" type="text" class="form-control" value="{{$financeiro->endereco}}">
+                                                    <input id="endereco_cobranca" maxlength="150" name = "endereco_cobranca" type="text" class="form-control" value="{{old('endereco')}}">
                                             </div>
 
                                             <div class="col-xs-2">
                                                     <label for="numero_cobranca" class="control-label">Número</label>
-                                                    <input id="numero_cobranca" maxlength="10" name = "numero_cobranca" type="text" class="form-control" value="{{$financeiro->numero}}">
+                                                    <input id="numero_cobranca" maxlength="10" name = "numero_cobranca" type="text" class="form-control" value="{{old('numero')}}">
                                             </div>
                                     </div>
 
                                     <div class="row">
                                             <div class="col-xs-7">
                                                   <label for="bairro_cobranca" class="control-label">Bairro</label>
-                                                  <input id="bairro_cobranca" maxlength="50" name = "bairro_cobranca" type="text" class="form-control" value="{{$financeiro->bairro}}">
+                                                  <input id="bairro_cobranca" maxlength="50" name = "bairro_cobranca" type="text" class="form-control" value="{{old('bairro')}}">
                                              </div>
 
                                             <div class="col-xs-2">
                                                  <label for="cep_cobranca" class="control-label">CEP</label>
-                                                 <input id="cep_cobranca" maxlength="8" name = "cep_cobranca" type="text" class="form-control" value="{{$financeiro->cep}}">
+                                                 <input id="cep_cobranca" maxlength="8" name = "cep_cobranca" type="text" class="form-control" value="{{old('cep')}}">
                                             </div>
 
                                     </div>
@@ -383,19 +393,19 @@
                                     <div class="row">
                                             <div class="col-xs-9">
                                                 <label for="complemento_cobranca" class="control-label">Complemento</label>
-                                                <input id="complemento_cobranca" name = "complemento_cobranca" type="text" class="form-control" value="{{$financeiro->complemento}}">
+                                                <input id="complemento_cobranca" name = "complemento_cobranca" type="text" class="form-control" value="{{old('complemento')}}">
                                             </div>
                                     </div>
 
                                     <div class="row">
                                             <div class="col-xs-7">
                                                     <label for="cidade_cobranca" class="control-label">Cidade</label>
-                                                    <input id="cidade_cobranca" maxlength="60" name = "cidade_cobranca" type="text" class="form-control" value="{{$financeiro->cidade}}">
+                                                    <input id="cidade_cobranca" maxlength="60" name = "cidade_cobranca" type="text" class="form-control" value="{{old('cidade')}}">
                                             </div>
 
                                             <div class="col-xs-2">
                                                 <label for="estado_cobranca" class="control-label">Estado</label>
-                                                <input id="estado_cobranca" maxlength="2" name = "estado_cobranca" type="text" class="form-control" value="{{$financeiro->estado}}">
+                                                <input id="estado_cobranca" maxlength="2" name = "estado_cobranca" type="text" class="form-control" value="{{old('estado')}}">
                                             </div>
                                     </div>
 

@@ -37,7 +37,7 @@
                                   </li>
 
                                   <li>
-                                        <a href="#financeiro" role="tab" data-toggle="tab">
+                                        <a href="#financ" role="tab" data-toggle="tab">
                                             <i class="fa fa-map-marker"></i> Dados Financeiros
                                         </a>
                                   </li>
@@ -247,14 +247,23 @@
                                     </div>
                              </div><!-- FIM TAB ENDERECO-->
 
+
+
                                 <!-- TAB FINANCEIRO-->
                                 <div class="tab-pane" id="financeiro">
                                     <br/>
 
                                     <div class="row">
-                                            <div class="col-xs-9">
-                                                <label for="banco" class="control-label">Banco para emissão boletos</label>
-                                                <input id="banco" maxlength="255" name = "banco" type="text" class="form-control" value="{{$financeiro->banco}}">
+                                            <div class="col-xs-10">
+                                                  <label for="banco" class="control-label">Banco Emissão boleto</label>
+
+                                                  <select name="banco" class="form-control select2" style="width: 100%;">
+                                                  <option  value="">(Selecione um Banco)</option>
+                                                  @foreach($bancos as $item)
+                                                        <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                  @endforeach
+                                                  </select>
+
                                             </div>
                                     </div>
 

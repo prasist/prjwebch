@@ -30,6 +30,7 @@
                                             <i class="fa fa-map-marker"></i> Endereço
                                         </a>
                                   </li>
+
                                    <li>
                                         <a href="#compl" role="tab" data-toggle="tab">
                                             <i class="fa fa-cog"></i> Complementos
@@ -228,7 +229,6 @@
                                             </div>
                                     </div>
                              </div><!-- FIM TAB ENDERECO-->
-
 
                                 <!-- TAB COMPLEMENTO-->
                                 <div class="tab-pane fade" id="compl">
