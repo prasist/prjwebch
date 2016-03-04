@@ -173,13 +173,13 @@ class UsersController extends Controller
 
                          //----------------------------------Cria grupo padrão Administrador (Se já não existir)
                          //A tabela grupos, dispara a triiger de INSERT e chama a  spCriarPermissoesPadrao(NEW.id) que cria as permissoes padrao para o Administrador
-                         $grupo_padrao = \App\Models\grupos::firstOrCreate(['nome' => 'Administrador',  'empresas_id' => $input['empresa'], 'empresas_clientes_cloud_id' => $usuario_master['empresas_clientes_cloud_id']]);
-
-                         $grupo_padrao->nome = "Administrador";
-                         $grupo_padrao->empresas_id = $input['empresa'];
-                         $grupo_padrao->empresas_clientes_cloud_id  =  $usuario_master['empresas_clientes_cloud_id'];
-                         $grupo_padrao->default = 1; //Grupo padrão
-                         $grupo_padrao->save(); //Ira disparar a trigger e chamar a spCriarPermissoesPadrao
+                         $grupo_padrao = \App\Models\grupos::firstOrCreate(
+                            [
+                                'nome' => 'Administrador',
+                                'empresas_id' => $input['empresa'],
+                                'empresas_clientes_cloud_id' => $usuario_master['empresas_clientes_cloud_id'],
+                                'default' => '1'
+                            ]);
                          //----------------------------------FIM - Cria grupo padrão Administrador
 
 
@@ -454,6 +454,33 @@ class UsersController extends Controller
 
     }
 
+
+    public function validar($id)
+    {
+
+        //Verifica se existe usuário para a congregação e retorna a quantidade de registros. Caso seja nullo, trataremos a mensagem para a view
+        //dizendo que não existe usuário e o primeiro deverá ser o ADMIN
+        $where = ['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $id];
+
+        $quantidade = \App\Models\usuario::where($where)->count();
+
+        //Se não existir usuário e a igreja for diferente da sede = Avisar o usuário para cadastrar o primeiro usuario como ADMIN
+        if ($quantidade==0 && $id != $this->dados_login->empresas_id)
+        {
+            return 0;
+        }
+        //Já existe usuário para a igreja/instuição = Avisar o usuario que somente o ADMIN daquela igreja é quem poderá cadastrar novos usuarios
+        else if ($quantidade>0 && $id != $this->dados_login->empresas_id)
+        {
+            return 1;
+        }
+        //Existe usuario pois é a igreja Sede = Deixa cadastrar usuarios mas enconde a opção "É Administrador"
+        else if ($quantidade>0 && $id == $this->dados_login->empresas_id)
+        {
+            return 2;
+        }
+
+    }
 
     public function remove_image ($id)
     {

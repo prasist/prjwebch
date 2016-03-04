@@ -26,8 +26,8 @@
                                     <div class="col-xs-10">
                                           <label for="empresa" class="control-label">Igreja / Instituição</label>
 
-                                          <select name="empresa" class="form-control select2" style="width: 100%;">
-                                          <option  value="">(Selecione uma Igreja/Instituição</option>
+                                          <select id="empresa" name="empresa" class="form-control select2" style="width: 100%;">
+                                          <option  selected="selected" value="">(Selecione uma Igreja/Instituição</option>
 
                                           @foreach($empresas as $item)
                                                 <option  value="{{$item->id}}">{{$item->razaosocial}}</option>
@@ -44,39 +44,53 @@
                                     </div>
                             </div>
 
-                            <div class="row{{ $errors->has('grupo') ? ' has-error' : '' }}">
-                                    <div class="col-xs-10">
-                                          <label for="grupo" class="control-label">Grupo</label>
-
-                                          <select name="grupo" class="form-control select2" style="width: 100%;">
-                                          <option  value="">(Selecione um Grupo)</option>
-                                          @foreach($dados as $item)
-                                                <option  value="{{$item->id}}">{{$item->nome}}</option>
-                                          @endforeach
-                                          </select>
-
-                                          <!-- se houver erros na validacao do form request -->
-                                             @if ($errors->has('grupo'))
-                                              <span class="help-block">
-                                                  <strong>{{ $errors->first('grupo') }}</strong>
-                                              </span>
-                                             @endif
-
-                                    </div>
+                            <!-- Usado para exibir mensagem de validação-->
+                            <div class="row">
+                                  <div class="col-xs-11">
+                                          <p>&nbsp;</p>
+                                          <div id="mensagem"></div>
+                                          <p></p>
+                                   </div>
                             </div>
 
-                          <!--Somente usuário MASTER poderá criar usuários ADMIN-->
-                          <input  name="admin" type="hidden"  value="0" />
-                          @if ($dados_login->master==1)
-                          <div class="row">
-                                    <div class="col-xs-10">
-                                          <label for="admin" class="control-label">É Administrador ?</label>
+                            <div id="ocultar_grupo">
 
-                                          <input  name="admin" type="checkbox" class="checkbox" value="1" />
+                                  <div class="row{{ $errors->has('grupo') ? ' has-error' : '' }}">
+                                          <div class="col-xs-10">
+                                                <label for="grupo" class="control-label">Grupo</label>
 
-                                    </div>
+                                                <select name="grupo" class="form-control select2" style="width: 100%;">
+
+                                                @foreach($dados as $item)
+                                                      <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                @endforeach
+                                                </select>
+
+                                                <!-- se houver erros na validacao do form request -->
+                                                   @if ($errors->has('grupo'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('grupo') }}</strong>
+                                                    </span>
+                                                   @endif
+
+                                          </div>
+                                  </div>
+                           </div>
+
+                           <input  class="check_hidden" name="admin" type="hidden"  value="0" />
+                           <div id="ocultar_check">
+                                <!--Somente usuário MASTER poderá criar usuários ADMIN-->
+                                @if ($dados_login->master==1)
+                                <div class="row">
+                                          <div class="col-xs-5">
+                                                <label for="admin" class="control-label">É Administrador ?</label>
+
+                                                <input  id="chkAdmin" name="admin" type="checkbox" class="checkbox" value="1" />
+
+                                          </div>
+                                </div>
+                                @endif
                           </div>
-                          @endif
 
                             <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
@@ -110,8 +124,8 @@
                                     </div>
                             </div>
 
-                            <div class="row{{ $errors->has('password') ? ' has-error' : '' }}">
-                                    <div class="col-xs-10">
+                            <div class="row">
+                                    <div class="col-xs-5 {{ $errors->has('password') ? ' has-error' : '' }}">
                                           <label for="password" class="control-label">Senha</label>
 
                                           <input id="password" maxlength="60" placeholder = "Campo Obrigatório" name = "password" type="password" class="form-control" value="">
@@ -124,10 +138,8 @@
                                              @endif
 
                                     </div>
-                            </div>
 
-                            <div class="row{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                    <div class="col-xs-10">
+                                    <div class="col-xs-5 {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                                           <label for="password_confirmation" class="control-label">Confirmação Senha</label>
 
                                           <input id="password_confirmation" placeholder = "Campo Obrigatório" maxlength="60"  name = "password_confirmation" type="password" class="form-control" value="">
@@ -140,7 +152,10 @@
                                              @endif
 
                                     </div>
+
                             </div>
+
+
 
                             <div class="row">
                                   <div class="col-xs-5">
@@ -153,7 +168,7 @@
         </div><!-- box box-primary -->
 
         <div class="box-footer">
-            <button class = 'btn btn-primary' type ='submit'>Gravar</button>
+            <button class = 'btn btn-primary' type ='submit' id='gravar'>Gravar</button>
             <a href="{{ url('/usuarios')}}" class="btn btn-default">Cancelar</a>
         </div>
 
@@ -162,9 +177,6 @@
     </div><!-- <col-md-12 -->
 
 </div><!-- row -->
-<script type="text/javascript">
 
-  function
 
-</script>
 @endsection

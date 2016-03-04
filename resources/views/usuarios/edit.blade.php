@@ -47,7 +47,7 @@
                                           <!-- Campo hidden para preservar valor do grupo gravado, pois o combo desabilitado nao envia valor para o POST quando disabled-->
                                           <input  name="grupo" type="hidden"  value="{{ $grupo_do_usuario[0]->grupos_id }}" />
 
-                                          <select name="grupo" class="form-control select2" style="width: 100%;">
+                                          <select name="grupo" class="form-control select2" style="width: 100%;" {{ ($dados_login->empresas_id != $grupo_do_usuario[0]->empresas_id ? 'disabled' : '') }}>
 
                                           @foreach($grupos as $item)
                                                 <option  {{ ($item->id == $grupo_do_usuario[0]->grupos_id ? 'selected' : '')  }} value="{{$item->id}}">{{$item->nome}}</option>
@@ -102,8 +102,8 @@
                                     </div>
                             </div>
 
-                            <div class="row{{ $errors->has('password') ? ' has-error' : '' }}">
-                                    <div class="col-xs-10">
+                            <div class="row">
+                                    <div class="col-xs-5 {{ $errors->has('password') ? ' has-error' : '' }}">
                                           <label for="password" class="control-label">Senha</label>
 
                                           <input id="password" maxlength="60"  name = "password" type="password" class="form-control" value="">
@@ -116,10 +116,8 @@
                                              @endif
 
                                     </div>
-                            </div>
 
-                            <div class="row{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                    <div class="col-xs-10">
+                                    <div class="col-xs-5{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                                           <label for="password_confirmation" class="control-label">Confirmação Senha</label>
 
                                           <input id="password_confirmation" maxlength="60"  name = "password_confirmation" type="password" class="form-control" value="">
@@ -132,7 +130,9 @@
                                              @endif
 
                                     </div>
+
                             </div>
+
 
                           <div class="row">
                                   <div class="col-xs-5">

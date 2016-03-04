@@ -8,19 +8,6 @@ class grupos extends Model
 {
     //
     public $timestamps = false;
-
-        //
-  /*  public function usuarios_grupo() {
-
-         return $this->hasMany('App\Models\usuarios_grupo');
-    }
-
-
-    public function permissoes_grupo() {
-
-        return $this->hasMany('App\Models\permissoes_grupo');
-
-    }*/
-
+    protected $fillable = array('nome','empresas_id','empresas_clientes_cloud_id','default');
 
 }

@@ -285,4 +285,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('tipostelefones/{id}/edit','TiposTelefonesController@edit');
     Route::get('tipostelefones/{id}/delete','TiposTelefonesController@destroy');
 
+    /* Usado para verificar a existencia de um usuário para as igrejas/instituições.*/
+    Route::get('/validar/{id}/user', 'UsersController@validar');
+
+
 });

@@ -65,9 +65,9 @@
                                                 <form id="excluir{{ $value->id }}" action="{{ URL::to(\Session::get('route') . '/' . $value->id . '/delete') }}" method="DELETE">
 
                                                       <button
-                                                          data-toggle="tooltip" data-placement="top" title="Excluir Ítem" type="submit"
+                                                          data-toggle="tooltip" data-placement="top" title="Excluir Registro" type="submit"
                                                           class="btn btn-danger btn-sm"
-                                                          onclick="return confirm('Confirma exclusão desse ítem ?');">
+                                                          onclick="return confirm('Confirma exclusão do registro ?');">
                                                           <spam class="glyphicon glyphicon-trash"></spam></button>
 
                                                 </form>
