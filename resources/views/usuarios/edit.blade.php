@@ -166,3 +166,55 @@
 </div><!-- row -->
 
 @endsection
+
+@section('tela_usuarios')
+
+<script type="text/javascript">
+
+                  $(function () {
+
+            //TELA USUARIOS
+                            //----Quando abrir a pagina
+                            $("#ocultar_check").hide();     //Por padrao ocultar a DIV do check ADMIN
+                            //-----------------------------------------------------
+
+
+                            //------ Quando selecionar uma igreja/instituicao
+                            //  Se for diferente da sede, verifica se já existe ou não o ADMIN para aquela igreja...
+                                    $('#empresa').change(function () {
+
+                                        var empresa_id = $(this).val();
+
+                                        $.get('./../validar/' + empresa_id + '/user',  function (data)
+                                        {
+
+                                            if (data==0) //Não existe ADMIN ainda...
+                                            {
+                                                $('#mensagem').html('<span class="alert alert-warning alert-dismissible">Este será o primeiro usuário para a Igreja/Instituição selecionada. Por padrão será cadastrado como Administrador.</span>');
+                                                $("#ocultar_grupo").hide();
+                                                $("#ocultar_check").show();
+                                                $("#chkAdmin").attr('checked','checked');
+                                            }
+                                            else if (data==1) //Já existe ADMIN, nao deixa criar mais usuarios
+                                            {
+                                                $('#mensagem').html('<span class="alert alert-warning alert-dismissible">Já existe usuário Administrador cadastrado para essa Igreja/Instituição. Somente o Administrador poderá cadastrar novos usuários.</span>');
+                                                $("#ocultar_grupo").hide();
+                                                $("#ocultar_check").hide();
+                                                $("#gravar").hide();
+                                            }
+                                            else if (data==2) //Igreja Sede, pode criar usuarios a vontade, porem esconde a check de ADMIN
+                                            {
+                                                $('#mensagem').html('<span class="mensagem"></span>');
+                                                $("#ocultar_check").hide();
+                                                $("#chkAdmin").attr('checked','unchecked');
+                                            }
+
+                                        });
+
+                                    });
+
+                                            });
+
+   </script>
+
+@endsection
