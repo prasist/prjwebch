@@ -80,7 +80,7 @@
                     </ol>
                 </section>
 
-                <!--Aqui o conteudo será as páginas chamadas...-->
+
                 <!-- Main content -->
                 <section class="content">
 
@@ -116,13 +116,6 @@
                 <strong>Copyright &copy; 2016 <a href="http://www.prasist.com.br">WP Sistemas</a>.</strong> All rights reserved.
             </footer>
         </div><!-- ./wrapper -->
-
-
-        <!--retirado daqui js -->
-       <!-- Page script -->
-
-       <!-- jQuery 2.1.4 -->
-       <!--<script src="{{ asset('/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>-->
 
 
 <!-- DataTables -->
@@ -308,7 +301,7 @@
 
                                         var empresa_id = $(this).val();
 
-                                        $.get('/webigrejas.vs2/public/validar/' + empresa_id + '/user',  function (data)
+                                        $.get('./../validar/' + empresa_id + '/user',  function (data)
                                         {
 
                                             if (data==0) //Não existe ADMIN ainda...
