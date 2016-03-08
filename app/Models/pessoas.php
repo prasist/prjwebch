@@ -12,9 +12,7 @@ class pessoas extends Model
 
     public function clientes_cloud()
     {
-
         return $this->belongsTo('App\Models\clientes_cloud');
-
     }
 
 }

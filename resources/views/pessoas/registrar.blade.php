@@ -465,7 +465,6 @@
 @endsection
 
 @section('tela_pessoas')
-
      <script type="text/javascript">
 
                   $(function ()
@@ -499,13 +498,10 @@
 
 
                    });
-
      </script>
-
 @endsection
 
 @section('busca_endereco')
-
 <script type="text/javascript">
 
                   $(function ()
@@ -637,7 +633,5 @@
                                         });
 
                    });
-
-   </script>
-
+</script>
 @endsection

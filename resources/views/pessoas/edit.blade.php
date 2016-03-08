@@ -513,6 +513,43 @@
      </script>
 @endsection
 
+@section('tela_pessoas')
+     <script type="text/javascript">
+
+                  $(function ()
+                  {
+
+                        $('#endcobranca').click(function()
+                        {
+                            if ($(this).prop('checked'))
+                            {
+                                $("#exibir_endereco_cobranca").show();
+                            } else
+                            {
+                                $("#exibir_endereco_cobranca").hide();
+                            }
+                        });
+
+
+                        $('.opFisica').click(function()
+                        {
+                              $("#lb_cnpj_cpf").text('CPF');
+                              $("#lb_inscricaoestadual_rg").text('RG');
+                              $("#lb_datanasc").text('Data Nasc.');
+                        });
+
+                        $('.opJuridica').click(function()
+                        {
+                              $("#lb_cnpj_cpf").text('CNPJ');
+                              $("#lb_inscricaoestadual_rg").text('Insc. Estadual');
+                              $("#lb_datanasc").text('Data Fundação');
+                        });
+
+
+                   });
+     </script>
+@endsection
+
 @section('busca_endereco')
 <script type="text/javascript">
 
