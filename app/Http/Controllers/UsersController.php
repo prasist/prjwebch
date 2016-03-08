@@ -389,26 +389,25 @@ class UsersController extends Controller
                 }
          }//-----FIM upload
 
-         //Atualizar tabela USUARIOS
+
+         //-----------------Cria registro na tabela usuarios para associar com a tabela users
          $where = ['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $input['empresa'], 'id' => $id];
 
-            $update = \DB::table('usuarios')->where($where)
-            ->update(array(
-                        'empresas_id'    =>  $input['empresa'],
-                        'admin' =>  $input['admin']));
-
+         $update = \DB::table('usuarios')->where($where)->update(array('empresas_id'    =>  $input['empresa'],'admin' =>  $input['admin']));
          //-----------------FIM - Cria registro na tabela usuarios para associar com a tabela users
 
-        //Atualizar tabela USUARIOS_GRUPO
+
+        //------------------Atualizar tabela USUARIOS_GRUPO
         $where = ['usuarios_empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'usuarios_id' => $id];
 
         $update = \DB::table('usuarios_grupo')->where($where)
-           ->update(array(
+        ->update(array(
                         'usuarios_empresas_id'    =>  $input['empresa'],
                         'grupos_id'    => $input['grupo']));
+        //------------------FIM - Atualizar tabela USUARIOS_GRUPO
+
 
         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-
         return redirect('usuarios');
 
     }

@@ -11,17 +11,19 @@
 
     <div class="col-md-12">
 
-        <div>
-            <a href={{ url('/' . \Session::get('route')) }} class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
-        </div>
+        <form name="form_endereco" method="get" action=".">
+        </form>
 
-        <form method = 'POST' class="form-horizontal"  enctype="multipart/form-data" action = {{ url('/' . \Session::get('route') . '/gravar')}}>
+        <form name ="form_principal" method = 'POST' class="form-horizontal"  enctype="multipart/form-data" action = {{ url('/' . \Session::get('route') . '/gravar')}}>
 
         {!! csrf_field() !!}
 
           <div>
 
                  <div class="nav-tabs-custom"> <!--anterior box-body-->
+
+                        <!-- Guarda ID tipo pessoa-->
+                        <input  name="tipos_pessoas_id" type="hidden"  value="{{ $interface->id }}" />
 
                          <!-- Nav tabs -->
                           <ul class="nav nav-tabs" role="tablist">
@@ -31,14 +33,14 @@
                                       </a>
                                   </li>
                                   <li>
-                                        <a href="#endereco" role="tab" data-toggle="tab">
+                                        <a href="#panel_endereco" role="tab" data-toggle="tab">
                                             <i class="fa fa-map-marker"></i> Endereço
                                         </a>
                                   </li>
 
                                     <li>
                                         <a href="#financ" role="tab" data-toggle="tab">
-                                            <i class="fa fa-cog"></i> Dados Financeiros
+                                            <i class="fa fa-money"></i> Dados Financeiros
                                         </a>
                                    </li>
 
@@ -85,17 +87,16 @@
                                                       <label for="opPessoa" class="control-label">Tipo Pessoa :</label>
                                                       <br/>
 
-
                                                         @if ($interface->fisica)
                                                          <label>
-                                                              <input type="radio" name="opPessoa" class="minimal" checked>
+                                                              <input type="radio" id="opFisica" name="opPessoa" value="F" class="opFisica" {{ ( ($interface->fisica==true && $interface->juridica==false) ? 'checked' : '') }}>
                                                               Física
                                                          </label>
                                                          @endif
 
                                                          @if ($interface->juridica)
                                                          <label>
-                                                              <input type="radio" name="opPessoa" class="minimal" checked>
+                                                              <input type="radio" id="opJuridica" name="opPessoa" value="J" class="opJuridica" {{ ( ($interface->fisica==false && $interface->juridica==true) ? 'checked' : '') }}>
                                                               Jurídica
                                                          </label>
                                                          @endif
@@ -103,7 +104,7 @@
                                                 </div>
 
 
-                                              <div class="col-xs-5">
+                                             <div class="col-xs-5">
                                                     <label for="grupo" class="control-label">Grupo</label>
 
                                                     <select name="grupo" class="form-control select2" style="width: 100%;">
@@ -120,7 +121,7 @@
                                                         </span>
                                                        @endif
 
-                                              </div>
+                                             </div>
 
                                         </div>
 
@@ -147,43 +148,27 @@
 
                                         </div>
 
-
                                         <div class="row">
 
-
-                                                    @if ($interface->juridica)
                                                     <div class="col-xs-2">
-                                                           <label for="cnpj" class="control-label">CNPJ</label>
-                                                           <input id="cnpj" data-inputmask='"mask": "99.999.999/9999-99"' data-mask name = "cnpj" type="text" class="form-control" value="{{old('cnpj')}}">
+                                                           <label id="lb_cnpj_cpf" for="cnpj_cpf" class="control-label">{{ $interface->fisica==true ? 'CPF' : 'CNPJ'}}</label>
+                                                           <input id="cnpj_cpf" name="cnpj_cpf" data-inputmask='' data-mask  type="text" class="form-control" value="{{old('cnpj_cpf')}}">
                                                     </div>
 
                                                     <div class="col-xs-2">
-                                                         <label for="inscricaoestadual" class="control-label">Inscr. Estadual</label>
-                                                         <input id="inscricaoestadual"  maxlength="15" name = "inscricaoestadual" type="text" class="form-control" value="{{ old('inscricaoestadual') }}">
-                                                    </div>
-                                                    @endif
-
-                                                    @if ($interface->fisica)
-                                                    <div class="col-xs-2">
-                                                           <label for="cpf" class="control-label">CPF</label>
-                                                           <input id="cpf" data-inputmask='"mask": "999.999.999-99"' data-mask name = "cpf" type="text" class="form-control" value="{{old('cpf')}}">
+                                                         <label id="lb_inscricaoestadual_rg" for="inscricaoestadual_rg" class="control-label">{{ $interface->fisica==true ? 'RG' : 'Insc. Estadual'}}</label>
+                                                         <input id="inscricaoestadual_rg"  maxlength="15" name = "inscricaoestadual_rg" type="text" class="form-control" value="{{ old('inscricaoestadual_rg') }}">
                                                     </div>
 
                                                     <div class="col-xs-2">
-                                                         <label for="rg" class="control-label">R.G.</label>
-                                                         <input id="rg"  maxlength="15" name = "rg" type="text" class="form-control" value="{{ old('rg') }}">
-                                                    </div>
-                                                    @endif
-
-                                                    <div class="col-xs-2">
-                                                              <label for="datanasc" class="control-label">{{ $interface->fisica==true ? 'Data Nasc.' : 'Data Fundação'}}</label>
+                                                              <label id="lb_datanasc" for="datanasc" class="control-label">{{ $interface->fisica==true ? 'Data Nasc.' : 'Data Fundação'}}</label>
 
                                                               <div class="input-group">
                                                                      <div class="input-group-addon">
                                                                       <i class="fa fa-calendar"></i>
                                                                       </div>
 
-                                                                      <input name = "datanasc" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datanasc')}}">
+                                                                      <input id ="datanasc" name = "datanasc" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datanasc')}}">
                                                               </div>
 
                                                      </div>
@@ -296,14 +281,15 @@
 
                                   </div> <!-- FIM DADOS CADASTRAIS-->
 
-                                    <!-- ENDEREÇO-->
-                                 <div class="tab-pane fade" id="endereco">
+                                 <!-- ENDEREÇO-->
+                                 <div class="tab-pane fade" id="panel_endereco">
 
-                                     <div class="row">
+                                      <div class="row">
 
+                                        <!-- Inicio do formulario -->
                                             <div class="col-xs-2">
                                                  <label for="cep" class="control-label">CEP</label>
-                                                 <input id="cep" maxlength="8" name = "cep" type="text" class="form-control" value="{{old('cep')}}">
+                                                 <input id="cep" maxlength="8" name = "cep" type="text" class="form-control" value="{{old('cep')}}" placeholder="Digite o CEP para consultar endereço">
                                             </div>
 
                                             <div class="col-xs-7">
@@ -315,9 +301,9 @@
                                                     <label for="numero" class="control-label">Número</label>
                                                     <input id="numero" maxlength="10" name = "numero" type="text" class="form-control" value="{{old('numero')}}">
                                             </div>
-                                    </div>
+                                      </div>
 
-                                    <div class="row">
+                                      <div class="row">
                                             <div class="col-xs-5">
                                                   <label for="bairro" class="control-label">Bairro</label>
                                                   <input id="bairro" maxlength="50" name = "bairro" type="text" class="form-control" value="{{old('bairro')}}">
@@ -328,7 +314,7 @@
                                                 <input id="complemento" name = "complemento" type="text" class="form-control" value="{{old('complemento')}}">
                                             </div>
 
-                                    </div>
+                                      </div>
 
                                     <div class="row">
                                             <div class="col-xs-5">
@@ -336,22 +322,23 @@
                                                     <input id="cidade" maxlength="60" name = "cidade" type="text" class="form-control" value="{{old('cidade')}}">
                                             </div>
 
-                                            <div class="col-xs-2">
+                                            <div class="col-xs-1">
                                                 <label for="estado" class="control-label">Estado</label>
                                                 <input id="estado" maxlength="2" name = "estado" type="text" class="form-control" value="{{old('estado')}}">
                                             </div>
                                     </div>
-                             </div><!-- FIM TAB ENDERECO-->
 
 
+
+                                </div><!-- FIM TAB ENDERECO-->
 
 
                                 <!-- TAB FINANCEIRO-->
-                                <div class="tab-pane" id="financeiro">
+                                <div class="tab-pane" id="financ">
                                     <br/>
 
-                                    <div class="row">
-                                            <div class="col-xs-10">
+                                      <div class="row">
+                                            <div class="col-xs-8">
                                                   <label for="banco" class="control-label">Banco Emissão boleto</label>
 
                                                   <select name="banco" class="form-control select2" style="width: 100%;">
@@ -362,53 +349,63 @@
                                                   </select>
 
                                             </div>
-                                    </div>
+                                      </div>
 
-                                    <div class="row">
-                                            <div class="col-xs-7">
-                                                    <label for="endereco_cobranca" class="control-label">Endereço para Cobrança</label>
-                                                    <input id="endereco_cobranca" maxlength="150" name = "endereco_cobranca" type="text" class="form-control" value="{{old('endereco')}}">
-                                            </div>
+                                      <div class="row">
+                                                <div class="col-xs-5">
+                                                            <p></p>
+                                                            <label for="endcobranca">
+                                                                  <input  id="endcobranca" name="endcobranca" type="checkbox" class="minimal-red" value="1" />
+                                                                  Endereço de Cobrança diferente do principal
+                                                            </label>
+                                                </div>
+                                      </div>
 
-                                            <div class="col-xs-2">
-                                                    <label for="numero_cobranca" class="control-label">Número</label>
-                                                    <input id="numero_cobranca" maxlength="10" name = "numero_cobranca" type="text" class="form-control" value="{{old('numero')}}">
-                                            </div>
-                                    </div>
+                                      <div id="exibir_endereco_cobranca" style="display: none">
+                                              <div class="row">
 
-                                    <div class="row">
-                                            <div class="col-xs-7">
-                                                  <label for="bairro_cobranca" class="control-label">Bairro</label>
-                                                  <input id="bairro_cobranca" maxlength="50" name = "bairro_cobranca" type="text" class="form-control" value="{{old('bairro')}}">
-                                             </div>
+                                                      <div class="col-xs-2">
+                                                           <label for="cep_cobranca" class="control-label">CEP</label>
+                                                           <input id="cep_cobranca" maxlength="8" name = "cep_cobranca" type="text" class="form-control" value="{{old('cep')}}">
+                                                      </div>
 
-                                            <div class="col-xs-2">
-                                                 <label for="cep_cobranca" class="control-label">CEP</label>
-                                                 <input id="cep_cobranca" maxlength="8" name = "cep_cobranca" type="text" class="form-control" value="{{old('cep')}}">
-                                            </div>
+                                                      <div class="col-xs-7">
+                                                              <label for="endereco_cobranca" class="control-label">Endereço para Cobrança</label>
+                                                              <input id="endereco_cobranca" maxlength="150" name = "endereco_cobranca" type="text" class="form-control" value="{{old('endereco')}}">
+                                                      </div>
 
-                                    </div>
+                                                      <div class="col-xs-1">
+                                                              <label for="numero_cobranca" class="control-label">Número</label>
+                                                              <input id="numero_cobranca" maxlength="10" name = "numero_cobranca" type="text" class="form-control" value="{{old('numero')}}">
+                                                      </div>
+                                              </div>
+
+                                              <div class="row">
+                                                      <div class="col-xs-5">
+                                                            <label for="bairro_cobranca" class="control-label">Bairro</label>
+                                                            <input id="bairro_cobranca" maxlength="50" name = "bairro_cobranca" type="text" class="form-control" value="{{old('bairro')}}">
+                                                       </div>
+
+                                                      <div class="col-xs-5">
+                                                          <label for="complemento_cobranca" class="control-label">Complemento</label>
+                                                          <input id="complemento_cobranca" name = "complemento_cobranca" type="text" class="form-control" value="{{old('complemento')}}">
+                                                      </div>
 
 
-                                    <div class="row">
-                                            <div class="col-xs-9">
-                                                <label for="complemento_cobranca" class="control-label">Complemento</label>
-                                                <input id="complemento_cobranca" name = "complemento_cobranca" type="text" class="form-control" value="{{old('complemento')}}">
-                                            </div>
-                                    </div>
+                                              </div>
 
-                                    <div class="row">
-                                            <div class="col-xs-7">
-                                                    <label for="cidade_cobranca" class="control-label">Cidade</label>
-                                                    <input id="cidade_cobranca" maxlength="60" name = "cidade_cobranca" type="text" class="form-control" value="{{old('cidade')}}">
-                                            </div>
+                                              <div class="row">
+                                                      <div class="col-xs-5">
+                                                              <label for="cidade_cobranca" class="control-label">Cidade</label>
+                                                              <input id="cidade_cobranca" maxlength="60" name = "cidade_cobranca" type="text" class="form-control" value="{{old('cidade')}}">
+                                                      </div>
 
-                                            <div class="col-xs-2">
-                                                <label for="estado_cobranca" class="control-label">Estado</label>
-                                                <input id="estado_cobranca" maxlength="2" name = "estado_cobranca" type="text" class="form-control" value="{{old('estado')}}">
-                                            </div>
-                                    </div>
-
+                                                      <div class="col-xs-2">
+                                                          <label for="estado_cobranca" class="control-label">Estado</label>
+                                                          <input id="estado_cobranca" maxlength="2" name = "estado_cobranca" type="text" class="form-control" value="{{old('estado')}}">
+                                                      </div>
+                                              </div>
+                                       </div>
 
                                 </div><!--  FIM TAB FINANCEIRO-->
 
@@ -426,7 +423,7 @@
                                     <div class="row">
                                             <div class="col-xs-5">
                                                     <label for="caminhologo" class="control-label">Logo</label>
-                                                    <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" class="form-control" >
+                                                    <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" >
                                             </div>
 
                                     </div>
@@ -438,10 +435,10 @@
                                 <div class="tab-pane fade" id="obs">
 
                                         <div class="row">
-                                                <div class="col-xs-3">
+                                                <div class="col-xs-10">
 
                                                     <label for="obs" class="control-label">Observações</label>
-                                                    <textarea class="form-control" rows="3" placeholder="Digite o texto..." value="{{old('obs')}}"></textarea>
+                                                    <textarea name="obs" class="form-control" rows="6" placeholder="Digite o texto..." value="{{old('obs')}}"></textarea>
 
                                                 </div>
                                          </div>
@@ -464,5 +461,183 @@
     </div>
 
 </div>
+
+@endsection
+
+@section('tela_pessoas')
+
+     <script type="text/javascript">
+
+                  $(function ()
+                  {
+
+                        $('#endcobranca').click(function()
+                        {
+                            if ($(this).prop('checked'))
+                            {
+                                $("#exibir_endereco_cobranca").show();
+                            } else
+                            {
+                                $("#exibir_endereco_cobranca").hide();
+                            }
+                        });
+
+
+                        $('.opFisica').click(function()
+                        {
+                              $("#lb_cnpj_cpf").text('CPF');
+                              $("#lb_inscricaoestadual_rg").text('RG');
+                              $("#lb_datanasc").text('Data Nasc.');
+                        });
+
+                        $('.opJuridica').click(function()
+                        {
+                              $("#lb_cnpj_cpf").text('CNPJ');
+                              $("#lb_inscricaoestadual_rg").text('Insc. Estadual');
+                              $("#lb_datanasc").text('Data Fundação');
+                        });
+
+
+                   });
+
+     </script>
+
+@endsection
+
+@section('busca_endereco')
+
+<script type="text/javascript">
+
+                  $(function ()
+                  {
+
+                            function limpa_formulario_cep()
+                            {
+                                // Limpa valores do formulário de cep.
+                                $("#endereco").val("");
+                                $("#bairro").val("");
+                                $("#cidade").val("");
+                                $("#estado").val("");
+                                $("#ibge").val("");
+                            }
+
+                             function limpa_formulario_cep_cobranca()
+                            {
+                                // Limpa valores do formulário de cep.
+                                $("#endereco_cobranca").val("");
+                                $("#bairro_cobranca").val("");
+                                $("#cidade_cobranca").val("");
+                                $("#estado_cobranca").val("");
+                                $("#ibge_cobranca").val("");
+                            }
+
+                                        //Quando o campo cep perde o foco.
+                                        $("#cep").blur(function() {
+
+                                            //Nova variável "cep" somente com dígitos.
+                                            var cep = $(this).val().replace(/\D/g, '');
+
+                                            //Verifica se campo cep possui valor informado.
+                                            if (cep != "") {
+
+                                                //Expressão regular para validar o CEP.
+                                                var validacep = /^[0-9]{8}$/;
+
+                                                //Valida o formato do CEP.
+                                                if(validacep.test(cep)) {
+
+                                                    //Preenche os campos com "..." enquanto consulta webservice.
+                                                    $("#endereco").val("...")
+                                                    $("#bairro").val("...")
+                                                    $("#cidade").val("...")
+                                                    $("#estado").val("...")
+                                                    $("#ibge").val("...")
+
+                                                    //Consulta o webservice viacep.com.br/
+                                                    $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                                                        if (!("erro" in dados)) {
+                                                            //Atualiza os campos com os valores da consulta.
+                                                            $("#endereco").val(dados.logradouro);
+                                                            $("#bairro").val(dados.bairro);
+                                                            $("#cidade").val(dados.localidade);
+                                                            $("#estado").val(dados.uf);
+                                                            $("#ibge").val(dados.ibge);
+                                                        } //end if.
+                                                        else {
+                                                            //CEP pesquisado não foi encontrado.
+                                                            limpa_formulario_cep();
+                                                            alert("CEP não encontrado.");
+                                                        }
+                                                    });
+                                                } //end if.
+                                                else {
+                                                    //cep é inválido.
+                                                    limpa_formulario_cep();
+                                                    alert("Formato de CEP inválido.");
+                                                }
+                                            } //end if.
+                                            else {
+                                                //cep sem valor, limpa formulário.
+                                                limpa_formulario_cep();
+                                            }
+                                        });
+
+
+                                        //Quando o campo cep perde o foco.
+                                        $("#cep_cobranca").blur(function() {
+
+                                            //Nova variável "cep" somente com dígitos.
+                                            var cep = $(this).val().replace(/\D/g, '');
+
+                                            //Verifica se campo cep possui valor informado.
+                                            if (cep != "") {
+
+                                                //Expressão regular para validar o CEP.
+                                                var validacep = /^[0-9]{8}$/;
+
+                                                //Valida o formato do CEP.
+                                                if(validacep.test(cep)) {
+
+                                                    //Preenche os campos com "..." enquanto consulta webservice.
+                                                    $("#endereco_cobranca").val("...")
+                                                    $("#bairro_cobranca").val("...")
+                                                    $("#cidade_cobranca").val("...")
+                                                    $("#estado_cobranca").val("...")
+                                                    $("#ibge_cobranca").val("...")
+
+                                                    //Consulta o webservice viacep.com.br/
+                                                    $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                                                        if (!("erro" in dados)) {
+                                                            //Atualiza os campos com os valores da consulta.
+                                                            $("#endereco_cobranca").val(dados.logradouro);
+                                                            $("#bairro_cobranca").val(dados.bairro);
+                                                            $("#cidade_cobranca").val(dados.localidade);
+                                                            $("#estado_cobranca").val(dados.uf);
+                                                            $("#ibge_cobranca").val(dados.ibge);
+                                                        } //end if.
+                                                        else {
+                                                            //CEP pesquisado não foi encontrado.
+                                                            limpa_formulario_cep_cobranca();
+                                                            alert("CEP não encontrado.");
+                                                        }
+                                                    });
+                                                } //end if.
+                                                else {
+                                                    //cep é inválido.
+                                                    limpa_formulario_cep_cobranca();
+                                                    alert("Formato de CEP inválido.");
+                                                }
+                                            } //end if.
+                                            else {
+                                                //cep sem valor, limpa formulário.
+                                                limpa_formulario_cep_cobranca();
+                                            }
+                                        });
+
+                   });
+
+   </script>
 
 @endsection

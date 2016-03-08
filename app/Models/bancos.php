@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class pessoas extends Model
+class bancos extends Model
 {
 
     public $timestamps = false;
-    protected $table = "pessoas";
+    protected $table = "bancos";
 
     public function clientes_cloud()
     {
@@ -16,5 +16,6 @@ class pessoas extends Model
         return $this->belongsTo('App\Models\clientes_cloud');
 
     }
+
 
 }

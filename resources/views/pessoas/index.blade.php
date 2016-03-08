@@ -19,15 +19,10 @@
                         <span class="fa fa-caret-down"></span></button>
                         <ul class="dropdown-menu">
 
+                          <!-- Carrega todos os tipos de pessoas, cria uma rota passando o ID do tipo de pessoa. Com esse ID a interface habilitara ou nao campos -->
                           @foreach($tipos as $item)
                               <li><a href={{ url('/' . \Session::get('route') . '/registrar/' . $item->id )}}>{{ $item->nome }}</a></li>
                           @endforeach
-
-                          <!--
-                          <li><a href={{ url('/' . \Session::get('route') . '/registrar')}}>Membro</a></li>
-                          <li class="divider"></li>
-                          <li><a href={{ url('/' . \Session::get('route') . '/registrar')}}>Pessoa</a></li>
-                          -->
 
                         </ul>
                   </div>
@@ -50,8 +45,10 @@
                         <tr>
                         <th>Nome</th>
                         <th>Abrev.</th>
+                        <th>Tipo Pessoa</th>
                         <th>Alterar</th>
                         <th>Visualizar</th>
+                        <th>Excluir</th>
 
                         </tr>
                     </thead>
@@ -63,17 +60,33 @@
 
                             <td>{{$value->razaosocial}}</td>
                             <td>{{$value->nomefantasia}}</td>
+                            <td>{{$value->nome_tipo_pessoa}}</td>
 
                             <td class="col-xs-1">
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
-                                            <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" class = 'btn  btn-info btn-sm'><spam class="glyphicon glyphicon-pencil"></spam></a>
+                                            <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit/' . $value->id_tipo_pessoa) }}" class = 'btn  btn-info btn-sm'><spam class="glyphicon glyphicon-pencil"></spam></a>
                                       @endcan
                             </td>
 
                             <td class="col-xs-1">
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
-                                               <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" class = 'btn btn-primary btn-sm'><span class="glyphicon glyphicon-zoom-in"></span></a>
+                                               <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview/' . $value->id_tipo_pessoa) }}" class = 'btn btn-primary btn-sm'><span class="glyphicon glyphicon-zoom-in"></span></a>
                                       @endcan
+                            </td>
+                            <td class="col-xs-1">
+
+                                        @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
+                                        <form id="excluir{{ $value->id }}" action="{{ URL::to(\Session::get('route') . '/' . $value->id . '/delete') }}" method="DELETE">
+
+                                              <button
+                                                  data-toggle="tooltip" data-placement="top" title="Excluir Ítem" type="submit"
+                                                  class="btn btn-danger btn-sm"
+                                                  onclick="return confirm('Confirma exclusão desse registro : {{ $value->nome }} ?');">
+                                                  <spam class="glyphicon glyphicon-trash"></spam></button>
+
+                                        </form>
+                                        @endcan
+
                             </td>
 
                         </tr>

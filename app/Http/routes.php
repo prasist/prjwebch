@@ -1,27 +1,31 @@
 <?php
 
-Route::get('/', function () {
+    Route::get('/', function ()
+    {
+        return view('home');
+    });
 
-	return view('home');
-});
+    Route::group(['middleware' => ['web']], function ()
+    {
+        //
+    });
 
+    Route::group(['middleware' => 'web'], function ()
+    {
 
-Route::group(['middleware' => ['web']], function () {
-    //
-});
+        Route::auth();
 
-Route::group(['middleware' => 'web'], function () {
+        Route::get('/home', 'HomeController@index');
 
-    Route::auth();
+        Route::get('errors.404', function() {
 
-
-    Route::get('/home', 'HomeController@index');
-
-    Route::get('errors.404', function() {
-
-        return view('errors.404');
+            return view('errors.404');
 
     });
+
+    //Pesquisar endereco pelo cep
+    Route::get('buscarcep/get', 'buscacep@busca_cep');
+
 
     /*Clientes Cloud*/
     Route::get('clientes', 'ClientesCloudController@index');
@@ -254,9 +258,12 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/pessoas/registrar','PessoasController@create');
     Route::get('/pessoas/registrar/{id}','PessoasController@create');
     Route::get('/pessoas/{id}/preview','PessoasController@show');
+    Route::get('/pessoas/{id}/preview/{id_tipo_pessoa}','PessoasController@show');
     Route::post('pessoas/{id}/update','PessoasController@update');
     Route::get('pessoas/{id}/edit','PessoasController@edit');
+    Route::get('pessoas/{id}/edit/{id_tipo_pessoa}','PessoasController@edit');
     Route::get('pessoas/{id}/delete','PessoasController@destroy');
+    Route::get('pessoas/{id}/remover','PessoasController@remove_image');
 
     /*Grupos Pessoas*/
     Route::get('grupospessoas', 'GruposPessoasController@index');
