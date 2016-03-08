@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class bancos extends Model
 {
-
+    //testes
     public $timestamps = false;
     protected $table = "bancos";
 
