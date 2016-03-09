@@ -65,7 +65,8 @@
                                   <div class="tab-pane fade active in" id="home">
 
                                         <div class="row">
-                                                <div class="col-xs-3">
+
+                                        <div class="col-xs-3">
 
                                                     <label for="opStatus" class="control-label">Status :</label>
                                                     <br/>
@@ -82,6 +83,7 @@
 
                                                 </div>
 
+
                                                 <div class="col-xs-3">
 
                                                       <label for="opPessoa" class="control-label">Tipo Pessoa :</label>
@@ -89,14 +91,14 @@
 
                                                         @if ($interface->fisica)
                                                          <label>
-                                                              <input type="radio" id="opFisica" name="opPessoa" value="F" class="opFisica" {{ ( ($interface->fisica==true && $interface->juridica==false) ? 'checked' : '') }}>
+                                                              <input type="radio" id="opFisica" name="opPessoa" value="F" class="opFisica" {{ ( ($pessoas[0]->tipopessoa="F") ? 'checked' : '') }}>
                                                               Física
                                                          </label>
                                                          @endif
 
                                                          @if ($interface->juridica)
                                                          <label>
-                                                              <input type="radio" id="opJuridica" name="opPessoa" value="J" class="opJuridica" {{ ( ($interface->fisica==false && $interface->juridica==true) ? 'checked' : '') }}>
+                                                              <input type="radio" id="opJuridica" name="opPessoa" value="J" class="opJuridica" {{ ( ($pessoas[0]->tipopessoa="J") ? 'checked' : '') }}>
                                                               Jurídica
                                                          </label>
                                                          @endif
@@ -148,11 +150,17 @@
 
                                         </div>
 
+                                        <input id="cnpj" type="hidden" name="cnpj" value="">
+                                        <input id="cpf"  type="hidden" name="cpf"  value="">
+
                                         <div class="row">
 
                                                     <div class="col-xs-2">
-                                                           <label id="lb_cnpj_cpf" for="cnpj_cpf" class="control-label">{{ $interface->fisica==true ? 'CPF' : 'CNPJ'}}</label>
-                                                           <input id="cnpj_cpf" name="cnpj_cpf" data-inputmask='' data-mask  type="text" class="form-control" value="{{$pessoas[0]->cnpj_cpf}}">
+                                                           <label id="lb_cnpj_cpf" for="cnpj_cpf" class="control-label">{{ $pessoas[0]->tipopessoa=="F" ? 'CPF' : 'CNPJ'}}</label>
+
+                                                           <input id="cnpj" style='{{ $pessoas[0]->tipopessoa=='F' ? 'display:none' : '' }}' data-inputmask='"mask": "99.999.999/9999-99"' data-mask name="cnpj" type="text" class="cnpj form-control" value="{{$pessoas[0]->cnpj_cpf}}">
+                                                           <input id="cpf"  style='{{ $pessoas[0]->tipopessoa=='J' ? 'display:none' : '' }}' data-inputmask='"mask": "999.999.999-99"' data-mask name="cpf" type="text" class="cpf form-control" value="{{$pessoas[0]->cnpj_cpf}}">
+
                                                     </div>
 
                                                     <div class="col-xs-2">
@@ -286,11 +294,19 @@
 
                                       <div class="row">
 
-                                        <!-- Inicio do formulario -->
                                             <div class="col-xs-2">
-                                                 <label for="cep" class="control-label">CEP</label>
-                                                 <input id="cep" maxlength="8" name = "cep" type="text" class="form-control" value="{{$pessoas[0]->cep}}" placeholder="Digite o CEP para consultar endereço">
-                                            </div>
+                                                      <label for="cep" class="control-label">CEP</label>
+                                                      <div class="input-group">
+                                                               <div class="input-group-addon">
+                                                                  <a href="#" data-toggle="tooltip" title="Digite o CEP para buscar automaticamente o endereço. Não informar pontos ou traços.">
+                                                                        <img src="{{ url('/images/help.png') }}" class="user-image" alt="Ajuda"  />
+                                                                   </a>
+                                                                </div>
+
+                                                                <input id="cep" maxlength="8" name = "cep" type="text" class="form-control" value="{{$pessoas[0]->cep}}">
+                                                        </div>
+                                           </div>
+
 
                                             <div class="col-xs-7">
                                                     <label for="endereco" class="control-label">Endereço</label>
@@ -482,6 +498,8 @@
                   $(function ()
                   {
 
+                       $('[data-toggle="tooltip"]').tooltip();
+
                         $('#check_endcobranca').click(function()
                         {
                             if ($(this).prop('checked'))
@@ -493,12 +511,13 @@
                             }
                         });
 
-
                         $('.opFisica').click(function()
                         {
                               $("#lb_cnpj_cpf").text('CPF');
                               $("#lb_inscricaoestadual_rg").text('RG');
                               $("#lb_datanasc").text('Data Nasc.');
+                              $(".cpf").show();
+                              $(".cnpj").hide();
                         });
 
                         $('.opJuridica').click(function()
@@ -506,45 +525,9 @@
                               $("#lb_cnpj_cpf").text('CNPJ');
                               $("#lb_inscricaoestadual_rg").text('Insc. Estadual');
                               $("#lb_datanasc").text('Data Fundação');
+                              $(".cpf").hide();
+                              $(".cnpj").show();
                         });
-
-
-                   });
-     </script>
-@endsection
-
-@section('tela_pessoas')
-     <script type="text/javascript">
-
-                  $(function ()
-                  {
-
-                        $('#endcobranca').click(function()
-                        {
-                            if ($(this).prop('checked'))
-                            {
-                                $("#exibir_endereco_cobranca").show();
-                            } else
-                            {
-                                $("#exibir_endereco_cobranca").hide();
-                            }
-                        });
-
-
-                        $('.opFisica').click(function()
-                        {
-                              $("#lb_cnpj_cpf").text('CPF');
-                              $("#lb_inscricaoestadual_rg").text('RG');
-                              $("#lb_datanasc").text('Data Nasc.');
-                        });
-
-                        $('.opJuridica').click(function()
-                        {
-                              $("#lb_cnpj_cpf").text('CNPJ');
-                              $("#lb_inscricaoestadual_rg").text('Insc. Estadual');
-                              $("#lb_datanasc").text('Data Fundação');
-                        });
-
 
                    });
      </script>

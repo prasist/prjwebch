@@ -150,13 +150,14 @@
 
    </script>
 
-   @yield('tela_permissoes')
+@yield('tela_permissoes')
 
-   @yield('tela_usuarios')
+@yield('tela_usuarios')
 
-   @yield('tela_pessoas')
+@yield('tela_pessoas')
 
-   @yield('busca_endereco')
+@yield('busca_endereco')
+
 
 <!-- Adicionando JQuery -->
 

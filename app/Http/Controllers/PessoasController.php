@@ -109,7 +109,7 @@ public function salvar($request, $id, $tipo_operacao) {
 
         $pessoas->razaosocial = $input['razaosocial'];
         $pessoas->nomefantasia = $input['nomefantasia'];
-        $pessoas->cnpj_cpf = preg_replace("/[^0-9]/", '', $input['cnpj_cpf']);
+        $pessoas->cnpj_cpf = preg_replace("/[^0-9]/", '', ($input['cnpj']!="" ? $input['cnpj'] : $input['cpf']) );
         $pessoas->inscricaoestadual_rg = $input['inscricaoestadual_rg'];
         $pessoas->endereco = $input['endereco'];
         $pessoas->numero = $input['numero'];
@@ -135,7 +135,7 @@ public function salvar($request, $id, $tipo_operacao) {
             $pessoas->datanasc = $data_formatada->format('Y-m-d');
         }
 
-        $pessoas->tipopessoa = ($input['opPessoa'] ? 1 : 0);
+        $pessoas->tipopessoa = $input['opPessoa'];
         $pessoas->website = $input['website'];
         $pessoas->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
         $pessoas->empresas_id = $this->dados_login->empresas_id;
@@ -151,31 +151,35 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
         /*------------------------------DADOS FINANCEIROS------------------------------*/
-        $where = [
-            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-            'empresas_id' =>  $this->dados_login->empresas_id,
-            'pessoas_id' => $pessoas->id
-        ];
 
-        $financ = \App\Models\financpessoas::firstOrNew($where);
+        if ($input['banco']!="" || $input['endereco_cobranca']!="") {
 
-        $valores =
-                [
-                    'pessoas_id' => $pessoas->id,
-                    'endereco' => $input['endereco_cobranca'],
-                    'numero' => $input['numero_cobranca'],
-                    'bairro' => $input['bairro_cobranca'],
-                    'cep' => $input['cep_cobranca'],
-                    'complemento' => $input['complemento_cobranca'],
-                    'cidade' => $input['cidade_cobranca'],
-                    'estado' => $input['estado_cobranca'],
-                    'bancos_id' => ($input['banco']=="" ? null : $input['banco']),
+                $where = [
                     'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                    'empresas_id' =>  $this->dados_login->empresas_id
+                    'empresas_id' =>  $this->dados_login->empresas_id,
+                    'pessoas_id' => $pessoas->id
                 ];
 
-        $financ->fill($valores)->save();
-        $financ->save();
+                $financ = \App\Models\financpessoas::firstOrNew($where);
+
+                $valores =
+                        [
+                            'pessoas_id' => $pessoas->id,
+                            'endereco' => $input['endereco_cobranca'],
+                            'numero' => $input['numero_cobranca'],
+                            'bairro' => $input['bairro_cobranca'],
+                            'cep' => $input['cep_cobranca'],
+                            'complemento' => $input['complemento_cobranca'],
+                            'cidade' => $input['cidade_cobranca'],
+                            'estado' => $input['estado_cobranca'],
+                            'bancos_id' => ($input['banco']=="" ? null : $input['banco']),
+                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                            'empresas_id' =>  $this->dados_login->empresas_id
+                        ];
+
+                $financ->fill($valores)->save();
+                $financ->save();
+            }
         /*------------------------------FIM - DADOS FINANCEIROS------------------------------*/
 
 

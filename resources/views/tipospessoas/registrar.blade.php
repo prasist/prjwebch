@@ -29,17 +29,17 @@
                           <input  name="membro" type="hidden"  value="false" />
 
                            <div class="row">
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                           <label for="fisica" class="control-label">Pessoa Física</label>
                                           <input  name="fisica" type="checkbox" class="acessar" value="true"  />
                                     </div>
 
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                           <label for="juridica" class="control-label">Pessoa Jurídica</label>
                                           <input  name="juridica" type="checkbox" class="acessar" value="true"  />
                                     </div>
 
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                           <label for="membro" class="control-label">Membro</label>
                                           <input  name="membro" type="checkbox" class="acessar" value="true" />
                                     </div>

@@ -148,11 +148,17 @@
 
                                         </div>
 
+                                        <input id="cnpj" type="hidden" name="cnpj" value="">
+                                        <input id="cpf"  type="hidden" name="cpf"  value="">
+
                                         <div class="row">
 
                                                     <div class="col-xs-2">
                                                            <label id="lb_cnpj_cpf" for="cnpj_cpf" class="control-label">{{ $interface->fisica==true ? 'CPF' : 'CNPJ'}}</label>
-                                                           <input id="cnpj_cpf" name="cnpj_cpf" data-inputmask='' data-mask  type="text" class="form-control" value="{{old('cnpj_cpf')}}">
+
+                                                           <input id="cnpj" style='{{ $interface->fisica==true ? 'display:none' : '' }}' data-inputmask='"mask": "99.999.999/9999-99"' data-mask name="cnpj" type="text" class="cnpj form-control" value="{{old('cnpj_cpf')}}">
+                                                           <input id="cpf"  style='{{ $interface->juridica==true ? 'display:none' : '' }}' data-inputmask='"mask": "999.999.999-99"' data-mask name="cpf" type="text" class="cpf form-control" value="{{old('cnpj_cpf')}}">
+
                                                     </div>
 
                                                     <div class="col-xs-2">
@@ -286,11 +292,18 @@
 
                                       <div class="row">
 
-                                        <!-- Inicio do formulario -->
-                                            <div class="col-xs-2">
-                                                 <label for="cep" class="control-label">CEP</label>
-                                                 <input id="cep" maxlength="8" name = "cep" type="text" class="form-control" value="{{old('cep')}}" placeholder="Digite o CEP para consultar endereço">
-                                            </div>
+                                           <div class="col-xs-2">
+                                                      <label for="cep" class="control-label">CEP</label>
+                                                      <div class="input-group">
+                                                               <div class="input-group-addon">
+                                                                  <a href="#" data-toggle="tooltip" title="Digite o CEP para buscar automaticamente o endereço. Não informar pontos ou traços.">
+                                                                        <img src="{{ url('/images/help.png') }}" class="user-image" alt="Ajuda"  />
+                                                                   </a>
+                                                                </div>
+
+                                                                <input id="cep" maxlength="8" name = "cep" type="text" class="form-control" value="{{old('cep')}}">
+                                                        </div>
+                                           </div>
 
                                             <div class="col-xs-7">
                                                     <label for="endereco" class="control-label">Endereço</label>
@@ -365,8 +378,18 @@
                                               <div class="row">
 
                                                       <div class="col-xs-2">
-                                                           <label for="cep_cobranca" class="control-label">CEP</label>
-                                                           <input id="cep_cobranca" maxlength="8" name = "cep_cobranca" type="text" class="form-control" value="{{old('cep')}}">
+
+                                                          <label for="cep_cobranca" class="control-label">CEP</label>
+                                                          <div class="input-group">
+                                                                   <div class="input-group-addon">
+                                                                      <a href="#" data-toggle="tooltip" title="Digite o CEP para buscar automaticamente o endereço. Não informar pontos ou traços.">
+                                                                            <img src="{{ url('/images/help.png') }}" class="user-image" alt="Ajuda"  />
+                                                                       </a>
+                                                                    </div>
+
+                                                                    <input id="cep_cobranca" maxlength="8" name = "cep_cobranca" type="text" class="form-control" value="{{old('cep')}}">
+                                                            </div>
+
                                                       </div>
 
                                                       <div class="col-xs-7">
@@ -470,6 +493,8 @@
                   $(function ()
                   {
 
+                       $('[data-toggle="tooltip"]').tooltip();
+
                         $('#endcobranca').click(function()
                         {
                             if ($(this).prop('checked'))
@@ -481,12 +506,15 @@
                             }
                         });
 
+                        $(".cpf").show();
 
                         $('.opFisica').click(function()
                         {
                               $("#lb_cnpj_cpf").text('CPF');
                               $("#lb_inscricaoestadual_rg").text('RG');
                               $("#lb_datanasc").text('Data Nasc.');
+                              $(".cpf").show();
+                              $(".cnpj").hide();
                         });
 
                         $('.opJuridica').click(function()
@@ -494,8 +522,9 @@
                               $("#lb_cnpj_cpf").text('CNPJ');
                               $("#lb_inscricaoestadual_rg").text('Insc. Estadual');
                               $("#lb_datanasc").text('Data Fundação');
+                              $(".cpf").hide();
+                              $(".cnpj").show();
                         });
-
 
                    });
      </script>
