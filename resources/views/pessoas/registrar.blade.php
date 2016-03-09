@@ -45,22 +45,18 @@
                                    </li>
 
                                    <li>
-                                        <a href="#compl" role="tab" data-toggle="tab">
-                                            <i class="fa fa-cog"></i> Complementos
-                                        </a>
-                                   </li>
-
-                                   <li>
                                         <a href="#obs" role="tab" data-toggle="tab">
                                             <i class="fa fa-edit"></i> Observações
                                         </a>
                                    </li>
 
+                                   @if ($interface->membro)
                                    <li>
                                         <a href="#eclesia" role="tab" data-toggle="tab">
-                                            <i class="fa fa-edit"></i> Dados Eclesiásticos
+                                            <i class="fa fa-child"></i> Dados Eclesiásticos
                                         </a>
                                    </li>
+                                   @endif
 
                           </ul>
 
@@ -288,6 +284,20 @@
                                                             </div>
 
                                                     </div>
+
+
+                                        </div>
+
+                                        <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <label for="website" class="control-label">Website</label>
+                                                        <input id="website" maxlength="255" name = "website" type="text" class="form-control" value="{{old('website')}}">
+                                                    </div>
+
+                                                    <div class="col-xs-5">
+                                                            <label for="caminhologo" class="control-label">Foto</label>
+                                                            <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" >
+                                                    </div>
                                         </div>
 
 
@@ -439,27 +449,6 @@
                                 </div><!--  FIM TAB FINANCEIRO-->
 
 
-                                <!-- TAB COMPLEMENTO-->
-                                <div class="tab-pane fade" id="compl">
-
-                                    <div class="row">
-                                            <div class="col-xs-9">
-                                                <label for="website" class="control-label">Website</label>
-                                                <input id="website" maxlength="255" name = "website" type="text" class="form-control" value="{{old('website')}}">
-                                            </div>
-                                    </div>
-
-                                    <div class="row">
-                                            <div class="col-xs-5">
-                                                    <label for="caminhologo" class="control-label">Logo</label>
-                                                    <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" >
-                                            </div>
-
-                                    </div>
-
-                                </div><!--  FIM TAB COMPLEMENTO-->
-
-
                                 <!-- TAB OBSERVACOES -->
                                 <div class="tab-pane fade" id="obs">
 
@@ -485,7 +474,7 @@
                                                  <!-- Custom Tabs (Pulled to the right) -->
                                                 <div class="nav-tabs-custom">
                                                   <ul class="nav nav-tabs">
-                                                    <li class="active"><a href="#tab_1-1" data-toggle="tab">Informações Pessoais</a></li>
+                                                    <li class="active"><a href="#tab_1-1" data-toggle="tab">Dados Pessoais</a></li>
                                                     <li><a href="#tab_2-2" data-toggle="tab">Dados Profissionais</a></li>
                                                     <li><a href="#tab_2-2" data-toggle="tab">Formação</a></li>
                                                     <li><a href="#tab_3-2" data-toggle="tab">Familiar</a></li>
@@ -497,17 +486,63 @@
                                                   </ul>
                                                   <div class="tab-content">
                                                     <div class="tab-pane active" id="tab_1-1">
-                                                      <b>How to use:</b>
 
-                                                      <p>Exactly like the original bootstrap tabs except you should use
-                                                        the custom wrapper <code>.nav-tabs-custom</code> to achieve this style.</p>
-                                                      A wonderful serenity has taken possession of my entire soul,
-                                                      like these sweet mornings of spring which I enjoy with my whole heart.
-                                                      I am alone, and feel the charm of existence in this spot,
-                                                      which was created for the bliss of souls like mine. I am so happy,
-                                                      my dear friend, so absorbed in the exquisite sense of mere tranquil existence,
-                                                      that I neglect my talents. I should be incapable of drawing a single stroke
-                                                      at the present moment; and yet I feel that I never was a greater artist than now.
+                                                       <div class="row">
+                                                              <div class="col-xs-3">
+                                                                  <label for="opSexo" class="control-label">Sexo</label>
+
+                                                                  <br/>
+                                                                 <label>
+                                                                      <input type="radio" name="opSexo" class="minimal" value="M">
+                                                                      Masculino
+                                                                 </label>
+
+                                                                 <label>
+                                                                      <input type="radio" name="opSexo" class="minimal" value="F">
+                                                                      Feminino
+                                                                 </label>
+
+                                                             </div>
+
+                                                                <div class="col-xs-3">
+                                                                    <label for="opDoadorSangue" class="control-label">Doador Sangue</label>
+
+                                                                    <br/>
+                                                                   <label>
+                                                                        <input type="radio" name="opDoadorSangue" class="minimal" value="S">
+                                                                        Sim
+                                                                   </label>
+
+                                                                   <label>
+                                                                        <input type="radio" name="opDoadorSangue" class="minimal" value="N">
+                                                                        Não
+                                                                   </label>
+
+                                                                </div>
+
+                                                                <div class="col-xs-3">
+                                                                    <label for="opDoadorOrgaos" class="control-label">Doador Orgãos</label>
+
+                                                                    <br/>
+                                                                   <label>
+                                                                        <input type="radio" name="opDoadorOrgaos" class="minimal" value="S">
+                                                                        Sim
+                                                                   </label>
+
+                                                                   <label>
+                                                                        <input type="radio" name="opDoadorOrgaos" class="minimal" value="N">
+                                                                        Não
+                                                                   </label>
+
+                                                                </div>
+
+                                                              <div class="col-xs-3">
+                                                                      <label for="grpsangue" class="control-label">Grupo Sanguínio</label>
+                                                                      <input id="grpsangue" name = "grpsangue" type="text" class="form-control"  value="{{old('gruposanguinio')}}">
+                                                              </div>
+
+                                                       </div>
+
                                                     </div>
                                                     <!-- /.tab-pane -->
                                                     <div class="tab-pane" id="tab_2-2">

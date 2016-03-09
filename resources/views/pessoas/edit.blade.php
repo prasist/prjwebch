@@ -45,12 +45,6 @@
                                    </li>
 
                                    <li>
-                                        <a href="#compl" role="tab" data-toggle="tab">
-                                            <i class="fa fa-cog"></i> Complementos
-                                        </a>
-                                   </li>
-
-                                   <li>
                                         <a href="#obs" role="tab" data-toggle="tab">
                                             <i class="fa fa-edit"></i> Observações
                                         </a>
@@ -286,8 +280,36 @@
                                                     </div>
                                         </div>
 
+                                       <div class="row">
+                                            <div class="col-xs-6">
+                                                <label for="website" class="control-label">Website</label>
+                                                <input id="website" maxlength="255" name = "website" type="text" class="form-control" value="{{$pessoas[0]->website}}">
+                                            </div>
+
+                                            <div class="col-xs-5">
+                                                    <label for="caminhologo" class="control-label">Logo</label>
+                                                    <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" >
+                                            </div>
+
+                                            @if ($pessoas[0]->caminhofoto!="")
+                                                  <p></p>
+                                                  <div class="col-xs-3">
+                                                        <img src="{{ url('/images/persons/' . $pessoas[0]->caminhofoto) }}" width="200px" height="100px">
+
+                                                        @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
+                                                        <a href="{{ url('/pessoas/' . $pessoas[0]->id . '/remover')}}"><i class="fa fa-remove"> Remover Imagem</i> </a>
+                                                        @endcan
+                                                  </div>
+
+                                              @endif
+
+                                       </div>
+
 
                                   </div> <!-- FIM DADOS CADASTRAIS-->
+
+
+
 
                                  <!-- ENDEREÇO-->
                                  <div class="tab-pane fade" id="panel_endereco">
@@ -344,9 +366,8 @@
                                             </div>
                                     </div>
 
-
-
                                 </div><!-- FIM TAB ENDERECO-->
+
 
 
                                 <!-- TAB FINANCEIRO-->
@@ -425,38 +446,6 @@
 
                                 </div><!--  FIM TAB FINANCEIRO-->
 
-
-                                <!-- TAB COMPLEMENTO-->
-                                <div class="tab-pane fade" id="compl">
-
-                                    <div class="row">
-                                            <div class="col-xs-9">
-                                                <label for="website" class="control-label">Website</label>
-                                                <input id="website" maxlength="255" name = "website" type="text" class="form-control" value="{{$pessoas[0]->website}}">
-                                            </div>
-                                    </div>
-
-                                    <div class="row">
-                                            <div class="col-xs-5">
-                                                    <label for="caminhologo" class="control-label">Logo</label>
-                                                    <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" >
-                                            </div>
-
-                                            @if ($pessoas[0]->caminhofoto!="")
-                                                  <p></p>
-                                                  <div class="col-xs-3">
-                                                        <img src="{{ url('/images/persons/' . $pessoas[0]->caminhofoto) }}" width="200px" height="100px">
-
-                                                        @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
-                                                        <a href="{{ url('/pessoas/' . $pessoas[0]->id . '/remover')}}"><i class="fa fa-remove"> Remover Imagem</i> </a>
-                                                        @endcan
-                                                  </div>
-
-                                              @endif
-
-                                    </div>
-
-                                </div><!--  FIM TAB COMPLEMENTO-->
 
 
                                 <!-- TAB OBSERVACOES -->

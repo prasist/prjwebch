@@ -15,7 +15,7 @@
 
               <div class="input-group margin">
                   <div class="input-group-btn">
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-new-window"></span>  Novo Registro
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user-plus"></span>  Novo Registro
                         <span class="fa fa-caret-down"></span></button>
                         <ul class="dropdown-menu">
 
