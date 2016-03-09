@@ -40,16 +40,17 @@
 
                 <div class="box-body">
 
-                    <table id="example1" class="table table-bordered table-hover">
+                    <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                         <th>Nome</th>
                         <th>Abrev.</th>
                         <th>Tipo Pessoa</th>
+                        <th>CNPJ/CPF</th>
+                        <th>Telefone</th>
                         <th>Alterar</th>
                         <th>Visualizar</th>
                         <th>Excluir</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -61,6 +62,8 @@
                             <td>{{$value->razaosocial}}</td>
                             <td>{{$value->nomefantasia}}</td>
                             <td>{{$value->nome_tipo_pessoa}}</td>
+                            <td>{{$value->cnpj_cpf}}</td>
+                            <td>{{ "(".substr($value->fone_principal, 0, 2).") ".substr($value->fone_principal, 2, 10) }}</td>
 
                             <td class="col-xs-1">
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
@@ -100,4 +103,20 @@
          </div>
         </div>
 
+@endsection
+
+@section('data_table_custom')
+<script type="text/javascript">
+
+        $(function ()
+        {
+                  $("#example2").DataTable({
+                      language: {
+                      searchPlaceholder: "Nome, CNPJ, CPF, Telefone..."
+                      }
+                  });
+
+        });
+
+</script>
 @endsection

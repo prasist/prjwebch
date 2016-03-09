@@ -122,6 +122,9 @@
 
 <!-- DataTables -->
 
+
+
+<!--<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>-->
 <script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 
@@ -137,16 +140,8 @@
                             $('div.alert').delay(3000).slideUp(300);
 
                             $("#example1").DataTable();
-                            $('#example2').DataTable({
-                              "paging": true,
-                              "lengthChange": false,
-                              "searching": false,
-                              "ordering": true,
-                              "info": true,
-                              "autoWidth": false
-                            });
 
-                   });
+                     });
 
    </script>
 
@@ -158,6 +153,7 @@
 
 @yield('busca_endereco')
 
+@yield('data_table_custom')
 
 <!-- Adicionando JQuery -->
 
