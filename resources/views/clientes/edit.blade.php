@@ -200,30 +200,30 @@
                                                                    </a>
                                                                 </div>
 
-                                                                <input id="cep" maxlength="8" name = "cep" type="text" class="form-control" value="{{$empresas->cep}}">
+                                                                <input id="cep" maxlength="8" name = "cep" type="text" class="form-control" value="{{$dados->cep}}">
                                                         </div>
                                            </div>
 
                                             <div class="col-xs-7">
                                                     <label for="endereco" class="control-label">Endereço</label>
-                                                    <input id="endereco" maxlength="150" name = "endereco" type="text" class="form-control" value="{{$empresas->endereco}}">
+                                                    <input id="endereco" maxlength="150" name = "endereco" type="text" class="form-control" value="{{$dados->endereco}}">
                                             </div>
 
                                             <div class="col-xs-1">
                                                     <label for="numero" class="control-label">Número</label>
-                                                    <input id="numero" maxlength="10" name = "numero" type="text" class="form-control" value="{{$empresas->numero}}">
+                                                    <input id="numero" maxlength="10" name = "numero" type="text" class="form-control" value="{{$dados->numero}}">
                                             </div>
                                       </div>
 
                                       <div class="row">
                                             <div class="col-xs-5">
                                                   <label for="bairro" class="control-label">Bairro</label>
-                                                  <input id="bairro" maxlength="50" name = "bairro" type="text" class="form-control" value="{{$empresas->bairro}}">
+                                                  <input id="bairro" maxlength="50" name = "bairro" type="text" class="form-control" value="{{$dados->bairro}}">
                                              </div>
 
                                             <div class="col-xs-5">
                                                 <label for="complemento" class="control-label">Complemento</label>
-                                                <input id="complemento" name = "complemento" type="text" class="form-control" value="{{$empresas->complemento}}">
+                                                <input id="complemento" name = "complemento" type="text" class="form-control" value="{{$dados->complemento}}">
                                             </div>
 
                                       </div>
@@ -231,12 +231,12 @@
                                     <div class="row">
                                             <div class="col-xs-5">
                                                     <label for="cidade" class="control-label">Cidade</label>
-                                                    <input id="cidade" maxlength="60" name = "cidade" type="text" class="form-control" value="{{$empresas->cidade}}">
+                                                    <input id="cidade" maxlength="60" name = "cidade" type="text" class="form-control" value="{{$dados->cidade}}">
                                             </div>
 
                                             <div class="col-xs-1">
                                                 <label for="estado" class="control-label">Estado</label>
-                                                <input id="estado" maxlength="2" name = "estado" type="text" class="form-control" value="{{$empresas->estado}}">
+                                                <input id="estado" maxlength="2" name = "estado" type="text" class="form-control" value="{{$dados->estado}}">
                                             </div>
                                     </div>
 
