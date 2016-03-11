@@ -123,7 +123,7 @@
                                                         </span>
                                                        @endif
 
-                                             </div>
+                                             </div><!-- col-xs-5-->
 
                                         </div>
 
@@ -463,116 +463,931 @@
                                 </div><!-- FIM - TAB OBSERVACOES -->
 
 
-
                                  <!-- DADOS ECLISIASTICOS-->
                                  <div class="tab-pane fade" id="eclesia">
 
-                                      <div class="row">
 
-                                           <div class="col-xs-12">
+                                  <div class="row">
+                                          <div class="col-md-12">
+                                            <div class="box box-solid">
 
-                                                 <!-- Custom Tabs (Pulled to the right) -->
-                                                <div class="nav-tabs-custom">
-                                                  <ul class="nav nav-tabs">
-                                                    <li class="active"><a href="#tab_1-1" data-toggle="tab">Dados Pessoais</a></li>
-                                                    <li><a href="#tab_2-2" data-toggle="tab">Dados Profissionais</a></li>
-                                                    <li><a href="#tab_2-2" data-toggle="tab">Formação</a></li>
-                                                    <li><a href="#tab_3-2" data-toggle="tab">Familiar</a></li>
-                                                    <li><a href="#tab_3-2" data-toggle="tab">Hist. Eclesiástico</a></li>
-                                                    <li><a href="#tab_3-2" data-toggle="tab">Habilidades, Dons e Cursos</a></li>
-                                                    <li><a href="#tab_3-2" data-toggle="tab">Envolvimento Ministerial</a></li>
-                                                    <li><a href="#tab_3-2" data-toggle="tab">Hist. de Movimentações</a></li>
+                                              <div class="box-header with-border">
+                                                <h3 class="box-title">Clique nas opções abaixo para preencher os dados</h3>
+                                              </div>
 
-                                                  </ul>
-                                                  <div class="tab-content">
-                                                    <div class="tab-pane active" id="tab_1-1">
+                                              <!-- /.box-header -->
+                                              <div class="box-body">
 
-                                                       <div class="row">
-                                                              <div class="col-xs-3">
-                                                                  <label for="opSexo" class="control-label">Sexo</label>
+                                                <div class="box-group" id="accordion">
 
-                                                                  <br/>
-                                                                 <label>
-                                                                      <input type="radio" name="opSexo" class="minimal" value="M">
-                                                                      Masculino
-                                                                 </label>
-
-                                                                 <label>
-                                                                      <input type="radio" name="opSexo" class="minimal" value="F">
-                                                                      Feminino
-                                                                 </label>
-
-                                                             </div>
-
-                                                                <div class="col-xs-3">
-                                                                    <label for="opDoadorSangue" class="control-label">Doador Sangue</label>
-
-                                                                    <br/>
-                                                                   <label>
-                                                                        <input type="radio" name="opDoadorSangue" class="minimal" value="S">
-                                                                        Sim
-                                                                   </label>
-
-                                                                   <label>
-                                                                        <input type="radio" name="opDoadorSangue" class="minimal" value="N">
-                                                                        Não
-                                                                   </label>
-
-                                                                </div>
-
-                                                                <div class="col-xs-3">
-                                                                    <label for="opDoadorOrgaos" class="control-label">Doador Orgãos</label>
-
-                                                                    <br/>
-                                                                   <label>
-                                                                        <input type="radio" name="opDoadorOrgaos" class="minimal" value="S">
-                                                                        Sim
-                                                                   </label>
-
-                                                                   <label>
-                                                                        <input type="radio" name="opDoadorOrgaos" class="minimal" value="N">
-                                                                        Não
-                                                                   </label>
-
-                                                                </div>
-
-                                                              <div class="col-xs-3">
-                                                                      <label for="grpsangue" class="control-label">Grupo Sanguínio</label>
-                                                                      <input id="grpsangue" name = "grpsangue" type="text" class="form-control"  value="{{old('gruposanguinio')}}">
-                                                              </div>
-
-                                                       </div>
-
+                                                  <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+                                                  <div class="panel box box-primary">
+                                                    <div class="box-header with-border">
+                                                      <h5 class="box-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                                          <span class="fa fa-user-plus"></span> Dados Pessoais
+                                                        </a>
+                                                      </h5>
                                                     </div>
-                                                    <!-- /.tab-pane -->
-                                                    <div class="tab-pane" id="tab_2-2">
-                                                      The European languages are members of the same family. Their separate existence is a myth.
-                                                      For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                                                      in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                                                      new common language would be desirable: one could refuse to pay expensive translators. To
-                                                      achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                                                      words. If several languages coalesce, the grammar of the resulting language is more simple
-                                                      and regular than that of the individual languages.
-                                                    </div>
-                                                    <!-- /.tab-pane -->
-                                                    <div class="tab-pane" id="tab_3-2">
-                                                      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                                      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                                      when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                                      It has survived not only five centuries, but also the leap into electronic typesetting,
-                                                      remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                                                      sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                                                      like Aldus PageMaker including versions of Lorem Ipsum.
-                                                    </div>
-                                                    <!-- /.tab-pane -->
+                                                    <div id="collapseOne" class="panel-collapse collapse">
+                                                      <div class="box-body">
+
+                                                            <div class="row">
+                                                                     <div class="col-md-6">
+                                                                            <div class="box box-default">
+                                                                                  <div class="box-body">
+
+                                                                                   <div class="col-xs-4">
+                                                                                          <label for="opSexo" class="control-label">Sexo</label>
+
+                                                                                          <br/>
+                                                                                         <label>
+                                                                                              <input type="radio" name="opSexo" class="minimal" value="M">
+                                                                                              Masculino
+                                                                                         </label>
+
+                                                                                         <label>
+                                                                                              <input type="radio" name="opSexo" class="minimal" value="F">
+                                                                                              Feminino
+                                                                                         </label>
+                                                                                   </div>
+
+                                                                                    <div class="col-xs-4">
+                                                                                          <label for="opDoadorSangue" class="control-label">Doador Sangue</label>
+
+                                                                                          <br/>
+                                                                                         <label>
+                                                                                              <input type="radio" name="opDoadorSangue" class="minimal" value="S">
+                                                                                              Sim
+                                                                                         </label>
+
+                                                                                         <label>
+                                                                                              <input type="radio" name="opDoadorSangue" class="minimal" value="N">
+                                                                                              Não
+                                                                                         </label>
+
+                                                                                    </div>
+
+                                                                                    <div class="col-xs-4">
+                                                                                            <label for="opDoadorOrgaos" class="control-label">Doador Orgãos</label>
+
+                                                                                            <br/>
+                                                                                           <label>
+                                                                                                <input type="radio" name="opDoadorOrgaos" class="minimal" value="S">
+                                                                                                Sim
+                                                                                           </label>
+
+                                                                                           <label>
+                                                                                                <input type="radio" name="opDoadorOrgaos" class="minimal" value="N">
+                                                                                                Não
+                                                                                           </label>
+                                                                                    </div>
+
+                                                                                 </div>
+                                                                            </div>
+                                                                      </div>
+
+                                                                       <div class="col-md-6">
+                                                                              <div class="box box-default">
+                                                                                    <div class="box-body">
+
+                                                                                             <div class="col-xs-3">
+                                                                                                      <label for="grpsangue" class="control-label">Grupo Sanguínio</label>
+                                                                                                      <input id="grpsangue" name = "grpsangue" type="text" class="form-control"  value="{{old('gruposanguinio')}}">
+                                                                                              </div>
+
+                                                                                              <div class="col-xs-7">
+
+                                                                                                      <label for="ck_necessidades">Possui Necessidades Especiais ?</label>
+                                                                                                      <div class="input-group">
+                                                                                                           <div class="input-group-addon">
+                                                                                                                    <input  id="ck_necessidades" name="ck_necessidades" type="checkbox" class="minimal-red" value="1" />
+                                                                                                            </div>
+
+                                                                                                            <input id="necessidades" name = "necessidades" type="text" class="form-control" placeholder="Descrição Tipo Necessidade"  value="{{old('necessidades')}}">
+                                                                                                      </div>
+
+                                                                                             </div>
+
+                                                                                   </div>
+                                                                              </div>
+                                                                        </div>
+
+                                                       </div> <!-- end row-->
+
+                                                       <div  class="row">
+
+                                                                          <div class="col-md-6">
+
+                                                                                <div class="box box-default">
+
+                                                                                      <div class="box-body">
+
+                                                                                            <div class="col-xs-4">
+                                                                                                      <label for="naturalidade" class="control-label">Naturalidade</label>
+                                                                                                      <input id="naturalidade" name = "naturalidade" type="text" class="form-control"  value="{{old('naturalidade')}}">
+                                                                                            </div>
+
+                                                                                            <div class="col-xs-2">
+                                                                                                      <label for="ufnaturalidade" class="control-label">UF</label>
+                                                                                                      <input id="ufnaturalidade" name = "naturalidade" type="text" class="form-control"  value="{{old('ufnaturalidade')}}">
+                                                                                            </div>
+
+                                                                                              <div class="col-xs-3">
+                                                                                                        <label for="nacionalidade" class="control-label">Nacionalidade</label>
+                                                                                                        <input id="nacionalidade" name = "nacionalidade" type="text" class="form-control"  value="{{old('nacionalidade')}}">
+                                                                                              </div>
+
+                                                                                              <div class="col-xs-3">
+                                                                                                    <label for="lingua" class="control-label">Lingua Oficial</label>
+
+                                                                                                      <select name="lingua" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecione)</option>
+                                                                                                      @foreach($dados as $item)
+                                                                                                            <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                      @endforeach
+                                                                                                      </select>
+                                                                                              </div>
+
+
+                                                                                      </div>
+
+                                                                                </div>
+                                                                          </div>
+
+
+                                                                          <div class="col-md-6">
+
+                                                                                <div class="box box-default">
+
+                                                                                      <div class="box-body">
+
+                                                                                             <div class="col-xs-7">
+                                                                                                     <label for="igreja" class="control-label">Igreja</label>
+
+                                                                                                     <select name="igreja" class="form-control select2" style="width: 100%;">
+                                                                                                     <option  value="">(Selecione)</option>
+                                                                                                     @foreach($dados as $item)
+                                                                                                           <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                     @endforeach
+                                                                                                     </select>
+                                                                                             </div>
+
+                                                                                      </div>
+
+                                                                                </div>
+                                                                          </div>
+
+
+                                                       </div><!-- end row-->
+
+
+                                                       <!-- REDES SOCIAIS -->
+                                                       <div  class="row">
+
+                                                                          <div class="col-md-12">
+
+                                                                                <div class="box box-default">
+                                                                                      <div class="box-header">
+                                                                                        <h3 class="box-title">Redes Sociais</h3>
+                                                                                      </div>
+
+                                                                                      <div class="box-body">
+
+                                                                                            <div class="col-xs-10">
+                                                                                                      <label for="facebook" class="control-label">Facebook</label>
+                                                                                                      <input id="facebook" name = "facebook" type="text" class="form-control"  value="{{old('facebook')}}">
+                                                                                            </div>
+
+                                                                                            <div class="col-xs-10">
+                                                                                                      <label for="google" class="control-label">Google+</label>
+                                                                                                      <input id="google" name = "google" type="text" class="form-control"  value="{{old('google')}}">
+                                                                                            </div>
+
+                                                                                              <div class="col-xs-10">
+                                                                                                        <label for="instagram" class="control-label">Instagram</label>
+                                                                                                        <input id="instagram" name = "instagram" type="text" class="form-control"  value="{{old('instagram')}}">
+                                                                                              </div>
+
+                                                                                              <div class="col-xs-10">
+                                                                                                        <label for="linkedin" class="control-label">LinkedIn</label>
+                                                                                                        <input id="linkedin" name = "linkedin" type="text" class="form-control"  value="{{old('linkedin')}}">
+                                                                                              </div>
+
+
+                                                                                      </div>
+
+                                                                                </div>
+                                                                          </div>
+
+                                                          </div><!-- end row-->
+
+                                                      </div><!-- end box-body-->
+
+                                                    </div> <!-- end collapse-->
+
                                                   </div>
-                                                  <!-- /.tab-content -->
-                                                </div>
-                                                <!-- nav-tabs-custom -->
 
-                                           </div>
+                                                  <!-- TAB Dados Profissionais -->
+                                                  <div class="panel box box-primary">
+                                                    <div class="box-header with-border">
+                                                      <h5 class="box-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#tab2">
+                                                          <span class="fa fa-user-md"></span> Dados Profissionais
+                                                        </a>
+                                                      </h5>
+                                                    </div>
+                                                    <div id="tab2" class="panel-collapse collapse">
+                                                      <div class="box-body">
 
-                                      </div>
+                                                           <div  class="row">
+
+                                                                 <div class="col-md-12">
+
+                                                                          <div class="box box-default">
+
+                                                                                <div class="box-body"><!-- box-body-->
+
+                                                                                       <div class="row">
+
+                                                                                            <div class="col-xs-10">
+                                                                                                    <label for="endereco" class="control-label">Empresa</label>
+                                                                                                    <input id="endereco" maxlength="150" name = "endereco" type="text" class="form-control" value="{{old('endereco')}}">
+                                                                                            </div>
+                                                                                       </div>
+
+                                                                                       <div class="row">
+
+                                                                                              <div class="col-xs-2">
+                                                                                                          <label for="cep" class="control-label">CEP</label>
+                                                                                                          <div class="input-group">
+                                                                                                                   <div class="input-group-addon">
+                                                                                                                      <a href="#" data-toggle="tooltip" title="Digite o CEP para buscar automaticamente o endereço. Não informar pontos ou traços.">
+                                                                                                                            <img src="{{ url('/images/help.png') }}" class="user-image" alt="Ajuda"  />
+                                                                                                                       </a>
+                                                                                                                    </div>
+
+                                                                                                                    <input id="cep" maxlength="8" name = "cep" type="text" class="form-control" value="{{old('cep')}}">
+                                                                                                            </div>
+                                                                                              </div>
+
+                                                                                                <div class="col-xs-7">
+                                                                                                        <label for="endereco" class="control-label">Endereço</label>
+                                                                                                        <input id="endereco" maxlength="150" name = "endereco" type="text" class="form-control" value="{{old('endereco')}}">
+                                                                                                </div>
+
+                                                                                                <div class="col-xs-1">
+                                                                                                        <label for="numero" class="control-label">Número</label>
+                                                                                                        <input id="numero" maxlength="10" name = "numero" type="text" class="form-control" value="{{old('numero')}}">
+                                                                                                </div>
+
+                                                                                         </div>
+
+                                                                                        <div class="row">
+                                                                                              <div class="col-xs-5">
+                                                                                                    <label for="bairro" class="control-label">Bairro</label>
+                                                                                                    <input id="bairro" maxlength="50" name = "bairro" type="text" class="form-control" value="{{old('bairro')}}">
+                                                                                               </div>
+
+                                                                                              <div class="col-xs-5">
+                                                                                                  <label for="complemento" class="control-label">Complemento</label>
+                                                                                                  <input id="complemento" name = "complemento" type="text" class="form-control" value="{{old('complemento')}}">
+                                                                                              </div>
+                                                                                         </div>
+
+                                                                                        <div class="row">
+                                                                                                <div class="col-xs-5">
+                                                                                                        <label for="cidade" class="control-label">Cidade</label>
+                                                                                                        <input id="cidade" maxlength="60" name = "cidade" type="text" class="form-control" value="{{old('cidade')}}">
+                                                                                                </div>
+
+                                                                                                <div class="col-xs-1">
+                                                                                                    <label for="estado" class="control-label">Estado</label>
+                                                                                                    <input id="estado" maxlength="2" name = "estado" type="text" class="form-control" value="{{old('estado')}}">
+                                                                                                </div>
+
+                                                                                                <div class="col-xs-6"><!-- col-xs-6-->
+                                                                                                    <label for="emailprincipal" class="control-label">Email</label>
+
+                                                                                                    <div class="input-group{{ $errors->has('emailprincipal') ? ' has-error' : '' }}">
+                                                                                                               <div class="input-group-addon">
+                                                                                                                <i class="fa fa-envelope"></i>
+                                                                                                                </div>
+                                                                                                                <input id="emailprincipal" maxlength="150" name = "emailprincipal" type="text" class="form-control" value="{{old('emailprincipal')}}">
+
+                                                                                                                 <!-- se houver erros na validacao do form request -->
+                                                                                                                 @if ($errors->has('emailprincipal'))
+                                                                                                                  <span class="help-block">
+                                                                                                                      <strong>{{ $errors->first('emailprincipal') }}</strong>
+                                                                                                                  </span>
+                                                                                                                 @endif
+                                                                                                    </div>
+                                                                                               </div><!-- end col-xs-6-->
+
+                                                                                        </div>
+
+                                                                                        <div class="row"><!-- row-->
+
+                                                                                               <div class="col-xs-4">
+                                                                                                      <label for="cargo" class="control-label">Cargo/Função</label>
+
+                                                                                                      <select name="cargo" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecione um Cargo)</option>
+                                                                                                      @foreach($dados as $item)
+                                                                                                            <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                      @endforeach
+                                                                                                      </select>
+
+                                                                                               </div><!-- col-xs-5-->
+
+                                                                                               <div class="col-xs-4">
+                                                                                                      <label for="ramos" class="control-label">Ramo de Atividade</label>
+
+                                                                                                      <select name="ramos" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecione um Cargo)</option>
+                                                                                                      @foreach($dados as $item)
+                                                                                                            <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                      @endforeach
+                                                                                                      </select>
+
+                                                                                               </div><!-- col-xs-5-->
+
+                                                                                               <div class="col-xs-4">
+                                                                                                      <label for="profissoes" class="control-label">Profissão</label>
+
+                                                                                                      <select name="profissoes" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecione um Cargo)</option>
+                                                                                                      @foreach($dados as $item)
+                                                                                                            <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                      @endforeach
+                                                                                                      </select>
+
+                                                                                               </div><!-- col-xs-5-->
+
+                                                                                        </div><!-- end row-->
+
+                                                                                 </div><!-- end box-body-->
+
+                                                                           </div><!-- end box-default-->
+
+                                                                    </div>
+
+                                                           </div><!-- end row-->
+
+                                                      </div>
+                                                    </div>
+                                                  </div><!-- FIM TAB Dados Profissionais -->
+
+
+
+                                                  <!-- TAB FORMAÇÃO-->
+                                                  <div class="panel box box-primary">
+                                                      <div class="box-header with-border">
+                                                        <h5 class="box-title">
+                                                          <a data-toggle="collapse" data-parent="#accordion" href="#tab3">
+                                                            <span class="fa fa-mortar-board"></span> Formação
+                                                          </a>
+                                                        </h5>
+                                                      </div>
+                                                      <div id="tab3" class="panel-collapse collapse">
+                                                        <div class="box-body">
+
+                                                         <div  class="row">
+
+                                                                 <div class="col-md-12">
+
+                                                                          <div class="box box-default">
+
+                                                                                <div class="box-body"><!-- box-body-->
+
+                                                                                        <div class="row"><!-- row-->
+
+                                                                                               <div class="col-xs-4">
+                                                                                                      <label for="grauinstrucao" class="control-label">Grau de Instrução</label>
+
+                                                                                                      <select name="grauinstrucao" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecione um registro)</option>
+                                                                                                      @foreach($dados as $item)
+                                                                                                            <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                      @endforeach
+                                                                                                      </select>
+
+                                                                                               </div><!-- col-xs-5-->
+
+                                                                                               <div class="col-xs-4">
+                                                                                                      <label for="formacao" class="control-label">Áreas de Formação</label>
+
+                                                                                                      <select name="formacao" multiple="multiple" data-placeholder="Selecione um ou vários" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecione um ou vários)</option>
+                                                                                                      @foreach($dados as $item)
+                                                                                                            <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                      @endforeach
+                                                                                                      </select>
+
+                                                                                               </div><!-- col-xs-5-->
+
+                                                                                               <div class="col-xs-4">
+                                                                                                      <label for="idiomas" class="control-label">Idiomas</label>
+
+                                                                                                      <select name="idiomas" multiple="multiple" data-placeholder="Selecione um ou vários" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecione um ou vários)</option>
+                                                                                                      @foreach($dados as $item)
+                                                                                                            <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                      @endforeach
+                                                                                                      </select>
+
+                                                                                               </div><!-- col-xs-5-->
+
+                                                                                        </div><!-- end row-->
+
+                                                                                 </div><!-- end box-body-->
+
+                                                                           </div><!-- end box-default-->
+
+                                                                 </div>
+
+                                                           </div><!-- end row-->
+
+                                                        </div>
+
+                                                      </div>
+                                                  </div><!-- FIM TAB FORMAÇÃO-->
+
+
+
+                                                  <!-- TAB FAMILIAR-->
+                                                  <div class="panel box box-primary">
+                                                      <div class="box-header with-border">
+                                                        <h5 class="box-title">
+                                                          <a data-toggle="collapse" data-parent="#accordion" href="#tab4">
+                                                            <span class="fa fa-users"></span> Familiar
+                                                          </a>
+                                                        </h5>
+                                                      </div>
+                                                      <div id="tab4" class="panel-collapse collapse">
+                                                        <div class="box-body">
+
+                                                        </div>
+                                                      </div>
+                                                  </div><!-- FIM TAB FAMILIAR-->
+
+
+                                                  <!-- TAB HISTORICO ECLESIASTICO-->
+                                                  <div class="panel box box-primary">
+                                                      <div class="box-header with-border">
+                                                        <h5 class="box-title">
+                                                          <a data-toggle="collapse" data-parent="#accordion" href="#tab5">
+                                                            <span class="fa fa-clone"></span> Histórico Eclesiástico
+                                                          </a>
+                                                        </h5>
+                                                      </div>
+                                                      <div id="tab5" class="panel-collapse collapse">
+                                                        <div class="box-body">
+
+                                                            <div  class="row">
+
+                                                                 <div class="col-md-12">
+
+                                                                          <div class="box box-default">
+
+                                                                                <div class="box-body"><!-- box-body-->
+
+                                                                                       <div class="row">
+                                                                                            <div class="col-xs-5">
+                                                                                                    <label for="igrejaanterior" class="control-label">Igreja Anterior</label>
+                                                                                                    <input id="igrejaanterior" maxlength="150" name = "igrejaanterior" type="text" class="form-control" value="{{old('igrejaanterior')}}">
+                                                                                            </div>
+
+
+                                                                                            <div class="col-xs-2">
+                                                                                                <label for="foneigrejaanterior" class="control-label">Telefone</label>
+
+                                                                                                <div class="input-group">
+                                                                                                       <div class="input-group-addon">
+                                                                                                        <i class="fa fa-phone"></i>
+                                                                                                        </div>
+
+                                                                                                        <input id="foneigrejaanterior"  name = "foneprincipal" type="text" class="form-control" value="{{old('foneigrejaanterior')}}"  data-inputmask='"mask": "(99) 9999-9999"' data-mask >
+
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="col-xs-3">
+                                                                                                      <label for="religiao" class="control-label">Religião Anterior</label>
+
+                                                                                                      <select name="religiao" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecione)</option>
+                                                                                                      @foreach($dados as $item)
+                                                                                                            <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                      @endforeach
+                                                                                                      </select>
+                                                                                            </div><!-- col-xs-5-->
+
+
+                                                                                       </div><!-- end row-->
+
+
+                                                                                       <div class="row">
+
+                                                                                              <div class="col-xs-2">
+                                                                                                          <label for="cep" class="control-label">CEP</label>
+                                                                                                          <div class="input-group">
+                                                                                                                   <div class="input-group-addon">
+                                                                                                                      <a href="#" data-toggle="tooltip" title="Digite o CEP para buscar automaticamente o endereço. Não informar pontos ou traços.">
+                                                                                                                            <img src="{{ url('/images/help.png') }}" class="user-image" alt="Ajuda"  />
+                                                                                                                       </a>
+                                                                                                                    </div>
+
+                                                                                                                    <input id="cep" maxlength="8" name = "cep" type="text" class="form-control" value="{{old('cep')}}">
+                                                                                                            </div>
+                                                                                              </div>
+
+                                                                                                <div class="col-xs-7">
+                                                                                                        <label for="endereco" class="control-label">Endereço</label>
+                                                                                                        <input id="endereco" maxlength="150" name = "endereco" type="text" class="form-control" value="{{old('endereco')}}">
+                                                                                                </div>
+
+                                                                                                <div class="col-xs-1">
+                                                                                                        <label for="numero" class="control-label">Número</label>
+                                                                                                        <input id="numero" maxlength="10" name = "numero" type="text" class="form-control" value="{{old('numero')}}">
+                                                                                                </div>
+
+                                                                                        </div><!-- end row  -->
+
+                                                                                        <div class="row">
+                                                                                              <div class="col-xs-5">
+                                                                                                    <label for="bairro" class="control-label">Bairro</label>
+                                                                                                    <input id="bairro" maxlength="50" name = "bairro" type="text" class="form-control" value="{{old('bairro')}}">
+                                                                                               </div>
+
+                                                                                              <div class="col-xs-5">
+                                                                                                  <label for="complemento" class="control-label">Complemento</label>
+                                                                                                  <input id="complemento" name = "complemento" type="text" class="form-control" value="{{old('complemento')}}">
+                                                                                              </div>
+                                                                                         </div><!-- end row  -->
+
+                                                                                        <div class="row">
+                                                                                                <div class="col-xs-5">
+                                                                                                        <label for="cidade" class="control-label">Cidade</label>
+                                                                                                        <input id="cidade" maxlength="60" name = "cidade" type="text" class="form-control" value="{{old('cidade')}}">
+                                                                                                </div>
+
+                                                                                                <div class="col-xs-1">
+                                                                                                    <label for="estado" class="control-label">Estado</label>
+                                                                                                    <input id="estado" maxlength="2" name = "estado" type="text" class="form-control" value="{{old('estado')}}">
+                                                                                                </div>
+
+                                                                                        </div><!-- end row  -->
+
+
+                                                                                       <div class="row">
+
+                                                                                            <div class="col-xs-2">
+                                                                                                    <label id="databatismo" for="datanasc" class="control-label">Data Batismo</label>
+
+                                                                                                    <div class="input-group">
+                                                                                                           <div class="input-group-addon">
+                                                                                                            <i class="fa fa-calendar"></i>
+                                                                                                            </div>
+
+                                                                                                            <input id ="databatismo" name = "databatismo" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('databatismo')}}">
+                                                                                                    </div>
+
+                                                                                           </div>
+
+                                                                                            <div class="col-xs-5">
+                                                                                                    <label for="endereco" class="control-label">Igreja</label>
+                                                                                                    <input id="endereco" maxlength="150" name = "endereco" type="text" class="form-control" value="{{old('endereco')}}">
+                                                                                            </div>
+
+                                                                                            <div class="col-xs-4">
+                                                                                                    <label for="numero" class="control-label">Celebrador</label>
+                                                                                                    <input id="numero" maxlength="10" name = "numero" type="text" class="form-control" value="{{old('numero')}}">
+                                                                                            </div>
+
+                                                                                       </div><!-- end row -->
+
+
+                                                                                        <div class="row"><!-- row entrada-->
+
+                                                                                            <div class="col-xs-2">
+                                                                                                    <label id="dataentrada" for="datanasc" class="control-label">Data Entrada</label>
+
+                                                                                                    <div class="input-group">
+                                                                                                           <div class="input-group-addon">
+                                                                                                            <i class="fa fa-calendar"></i>
+                                                                                                            </div>
+
+                                                                                                            <input id ="dataentrada" name = "dataentrada" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('databatismo')}}">
+                                                                                                    </div>
+
+                                                                                           </div>
+
+                                                                                            <div class="col-xs-3">
+                                                                                                      <label for="motivoentrada" class="control-label">Motivo Entrada</label>
+
+                                                                                                      <select name="motivoentrada" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecione)</option>
+                                                                                                      @foreach($dados as $item)
+                                                                                                            <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                      @endforeach
+                                                                                                      </select>
+                                                                                            </div><!-- col-xs-5-->
+
+                                                                                            <div class="col-xs-4">
+                                                                                                    <label for="ataentrada" class="control-label">Registrado em Ata n.:</label>
+                                                                                                    <input id="ataentrada" maxlength="10" name = "numero" type="text" class="form-control" value="{{old('ata_entrada')}}">
+                                                                                            </div>
+
+                                                                                       </div><!-- end row -->
+
+
+                                                                                      <div class="row"><!-- row saida-->
+
+                                                                                            <div class="col-xs-2">
+                                                                                                    <label id="datasaida" for="datanasc" class="control-label">Data Saída</label>
+
+                                                                                                    <div class="input-group">
+                                                                                                           <div class="input-group-addon">
+                                                                                                            <i class="fa fa-calendar"></i>
+                                                                                                            </div>
+
+                                                                                                            <input id ="datasaida" name = "datasaida" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('databatismo')}}">
+                                                                                                    </div>
+
+                                                                                           </div>
+
+                                                                                            <div class="col-xs-3">
+                                                                                                      <label for="motivosaida" class="control-label">Motivo Saída</label>
+
+                                                                                                      <select name="motivosaida" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecione)</option>
+                                                                                                      @foreach($dados as $item)
+                                                                                                            <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                      @endforeach
+                                                                                                      </select>
+                                                                                            </div><!-- col-xs-5-->
+
+                                                                                            <div class="col-xs-4">
+                                                                                                    <label for="atasaida" class="control-label">Registrado em Ata n.:</label>
+                                                                                                    <input id="atasaida" maxlength="10" name = "atasaida" type="text" class="form-control" value="{{old('ata_entrada')}}">
+                                                                                            </div>
+
+                                                                                       </div><!-- end row -->
+
+                                                                                      <div class="row">
+                                                                                            <div class="col-xs-4">
+                                                                                                    <label for="reintegracao" class="control-label">Reintegração</label>
+                                                                                                    <input id="reintegracao" maxlength="10" name = "reintegracao" type="text" class="form-control" value="{{old('reintegracao')}}">
+                                                                                            </div>
+                                                                                      </div><!--end row-->
+
+
+                                                                                 </div><!-- end box-body-->
+
+                                                                           </div><!-- end box-default-->
+
+                                                                    </div>
+
+                                                           </div><!-- end row-->
+
+                                                        </div>
+                                                      </div>
+                                                  </div><!-- FIM TAB HISTORICO ECLESIASTICO-->
+
+
+                                                  <!-- TAB Habilidades, Dons e Cursos-->
+                                                  <div class="panel box box-primary">
+                                                      <div class="box-header with-border">
+                                                        <h5 class="box-title">
+                                                          <a data-toggle="collapse" data-parent="#accordion" href="#tab6">
+                                                            <span class="fa fa-magic"></span> Dons e Habilidades
+                                                          </a>
+                                                        </h5>
+                                                      </div>
+                                                      <div id="tab6" class="panel-collapse collapse">
+                                                        <div class="box-body">
+
+
+                                                               <div class="col-md-12">
+
+                                                                          <div class="box box-default">
+
+                                                                                <div class="box-body"><!-- box-body-->
+
+
+                                                                                        <div class="row"><!-- row-->
+
+                                                                                              <div class="col-xs-4">
+                                                                                                    <label for="opDoadorSangue" class="control-label">Prefere trabalhar com :</label>
+
+                                                                                                    <br/>
+                                                                                                   <label>
+                                                                                                        <input type="radio" name="opDoadorSangue" class="minimal" value="S">
+                                                                                                        Tarefas
+                                                                                                   </label>
+
+                                                                                                   <label>
+                                                                                                        <input type="radio" name="opDoadorSangue" class="minimal" value="N">
+                                                                                                        Pessoas
+                                                                                                   </label>
+                                                                                              </div><!-- end col-xs-->
+
+                                                                                              <div class="col-xs-4">
+                                                                                                    <label for="opDoadorSangue" class="control-label">Considera-se :</label>
+
+                                                                                                    <br/>
+                                                                                                   <label>
+                                                                                                        <input type="radio" name="opDoadorSangue" class="minimal" value="S">
+                                                                                                        Muito Estruturado
+                                                                                                   </label>
+
+                                                                                                   <label>
+                                                                                                        <input type="radio" name="opDoadorSangue" class="minimal" value="N">
+                                                                                                        Estruturado
+                                                                                                   </label>
+
+                                                                                                   <label>
+                                                                                                        <input type="radio" name="opDoadorSangue" class="minimal" value="S">
+                                                                                                        Pouco Estruturado
+                                                                                                   </label>
+
+                                                                                              </div><!-- end col-xs-->
+
+                                                                                        </div><!-- end row-->
+
+                                                                                        <div class="row"><!-- row-->
+
+                                                                                               <div class="col-xs-4">
+                                                                                                      <label for="disponibilidade" class="control-label">Disponibilidade de Tempo</label>
+
+                                                                                                      <select name="disponibilidade" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecione um registro)</option>
+                                                                                                      @foreach($dados as $item)
+                                                                                                            <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                      @endforeach
+                                                                                                      </select>
+
+                                                                                               </div><!-- col-xs-5-->
+
+                                                                                               <div class="col-xs-4">
+                                                                                                      <label for="dons" class="control-label">Dons Espirituais</label>
+
+                                                                                                      <select name="dons" multiple="multiple" data-placeholder="Selecione um ou vários" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecione um ou vários)</option>
+                                                                                                      @foreach($dados as $item)
+                                                                                                            <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                      @endforeach
+                                                                                                      </select>
+
+                                                                                               </div><!-- col-xs-5-->
+
+                                                                                               <div class="col-xs-4">
+                                                                                                      <label for="habilidades" class="control-label">Habilidades</label>
+
+                                                                                                      <select name="habilidades" multiple="multiple" data-placeholder="Selecione um ou vários" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecione um ou vários)</option>
+                                                                                                      @foreach($dados as $item)
+                                                                                                            <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                      @endforeach
+                                                                                                      </select>
+
+                                                                                               </div><!-- col-xs-5-->
+
+                                                                                        </div><!-- end row-->
+
+                                                                                 </div><!-- end box-body-->
+
+                                                                           </div><!-- end box-default-->
+
+                                                                 </div>
+
+                                                        </div>
+                                                      </div>
+                                                  </div><!-- FIM TAB Habilidades, Dons e Cursos-->
+
+                                                  <!-- TAB Envolvimento Ministerial-->
+                                                  <div class="panel box box-primary">
+                                                      <div class="box-header with-border">
+                                                        <h5 class="box-title">
+                                                          <a data-toggle="collapse" data-parent="#accordion" href="#tab7">
+                                                            <span class="fa fa-bullseye"></span> Envolvimento Ministerial
+                                                          </a>
+                                                        </h5>
+                                                      </div>
+                                                      <div id="tab7" class="panel-collapse collapse">
+                                                        <div class="box-body">
+
+                                                                 <div  class="row">
+
+                                                                         <div class="col-md-12">
+
+                                                                                  <div class="box box-default">
+
+                                                                                        <div class="box-body"><!-- box-body-->
+
+                                                                                                <div class="row"><!-- row-->
+
+                                                                                                       <div class="col-xs-6">
+                                                                                                              <label for="ministerio" class="control-label">Ministério</label>
+
+                                                                                                              <select name="ministerio" multiple="multiple" class="form-control select2" style="width: 100%;">
+                                                                                                              <option  value="">(Selecione um ou vários)</option>
+                                                                                                              @foreach($dados as $item)
+                                                                                                                    <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                              @endforeach
+                                                                                                              </select>
+
+                                                                                                       </div><!-- col-xs-5-->
+
+                                                                                                       <div class="col-xs-6">
+                                                                                                              <label for="atividades" class="control-label">Atividade</label>
+
+                                                                                                              <select name="atividades" multiple="multiple" class="form-control select2" style="width: 100%;">
+                                                                                                              <option  value="">(Selecione um Cargo)</option>
+                                                                                                              @foreach($dados as $item)
+                                                                                                                    <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                              @endforeach
+                                                                                                              </select>
+
+                                                                                                       </div><!-- col-xs-5-->
+
+                                                                                                </div><!-- end row-->
+
+                                                                                         </div><!-- end box-body-->
+
+                                                                                   </div><!-- end box-default-->
+
+                                                                         </div>
+
+                                                                 </div><!-- end row-->
+
+
+                                                        </div>
+                                                      </div>
+                                                  </div><!-- FIM TAB Envolvimento Ministerial -->
+
+                                                  <!-- TAB Histórico de Movimentações -->
+                                                  <div class="panel box box-primary">
+                                                      <div class="box-header with-border">
+                                                        <h5 class="box-title">
+                                                          <a data-toggle="collapse" data-parent="#accordion" href="#tab8">
+                                                            <span class="fa fa-exchange"></span> Histórico de Movimentações
+                                                          </a>
+                                                        </h5>
+                                                      </div>
+                                                      <div id="tab8" class="panel-collapse collapse">
+                                                        <div class="box-body">
+
+                                                        </div>
+                                                      </div>
+                                                  </div><!-- FIM TAB Histórico de Movimentações -->
+
+                                                  <!-- TAB Cursos-->
+                                                  <div class="panel box box-primary">
+                                                      <div class="box-header with-border">
+                                                        <h5 class="box-title">
+                                                          <a data-toggle="collapse" data-parent="#accordion" href="#tab9">
+                                                            <span class="fa fa-trophy"></span> Cursos
+                                                          </a>
+                                                        </h5>
+                                                      </div>
+                                                      <div id="tab9" class="panel-collapse collapse">
+                                                        <div class="box-body">
+                                                             Em Breve
+                                                        </div>
+                                                      </div>
+                                                  </div><!-- FIM TAB Cursos -->
+
+                                                  <!-- TAB Células -->
+                                                  <div class="panel box box-primary">
+                                                      <div class="box-header with-border">
+                                                        <h5 class="box-title">
+                                                          <a data-toggle="collapse" data-parent="#accordion" href="#tab10">
+                                                            <span class="fa fa-street-view"></span> Células
+                                                          </a>
+                                                        </h5>
+                                                      </div>
+                                                      <div id="tab10" class="panel-collapse collapse">
+                                                        <div class="box-body">
+                                                            Em Breve
+                                                        </div>
+                                                      </div>
+                                                  </div><!-- FIM TAB Células-->
+
+
+
+                                                </div><!-- end box-group -->
+
+
+
+                                              </div>
+                                              <!-- /.box-body -->
+                                            </div>
+                                            <!-- /.box -->
+                                          </div>
+                                     </div>
+
 
                                  </div>
                                  <!-- FIM - DADOS ECLISIASTICOS-->
@@ -583,6 +1398,7 @@
             </div><!-- fim box-body"-->
 
        </div>
+
 
         <div class="box-footer">
             <button class = 'btn btn-primary' type ='submit'>Gravar</button>

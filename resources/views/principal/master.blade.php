@@ -9,8 +9,8 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.css" rel="stylesheet" type="text/css" />
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <!--<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>-->
 
         <link href="{{ asset('/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -40,9 +40,6 @@
         <![endif]-->
 
         <link rel="stylesheet" href="{{ asset('/plugins/select2/select2.min.css') }}">
-        <script src="{{ asset('/plugins/select2/select2.full.min.js') }}"></script>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.6/angular.min.js"></script>
 
     </head>
 
@@ -127,15 +124,16 @@
 <!--<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>-->
 <script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('/plugins/select2/select2.full.min.js') }}"></script>
 
 <script type="text/javascript">
 
                   $(function ()
                   {
 
-                            $("[data-mask]").inputmask();
-
                             $(".select2").select2();
+
+                            $("[data-mask]").inputmask();
 
                             $('div.alert').delay(3000).slideUp(300);
 
@@ -156,6 +154,7 @@
 @yield('data_table_custom')
 
 <!-- Adicionando JQuery -->
+
 
         <script src="{{ asset('/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.js') }}"></script>
