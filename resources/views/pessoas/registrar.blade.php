@@ -303,6 +303,7 @@
 
                                   </div> <!-- FIM DADOS CADASTRAIS-->
 
+
                                  <!-- ENDEREÇO-->
                                  <div class="tab-pane fade" id="panel_endereco">
 
@@ -463,16 +464,16 @@
                                 </div><!-- FIM - TAB OBSERVACOES -->
 
 
-                                 <!-- DADOS ECLISIASTICOS-->
-                                 <div class="tab-pane fade" id="eclesia">
-
+                               <!-- DADOS ECLISIASTICOS-->
+                               <div class="tab-pane fade" id="eclesia">
 
                                   <div class="row">
                                           <div class="col-md-12">
+
                                             <div class="box box-solid">
 
                                               <div class="box-header with-border">
-                                                <h3 class="box-title">Clique nas opções abaixo para preencher os dados</h3>
+                                                      <h3 class="box-title">Clique nas opções abaixo para preencher os dados</h3>
                                               </div>
 
                                               <!-- /.box-header -->
@@ -492,10 +493,62 @@
                                                     <div id="collapseOne" class="panel-collapse collapse">
                                                       <div class="box-body">
 
+
                                                             <div class="row">
+
+                                                                    <div class="col-md-12">
+                                                                            <div class="box box-default">
+                                                                                <div class="box-body">
+
+                                                                                      <div class="col-xs-12">
+                                                                                          <label for="familia" class="control-label">Família</label>
+
+                                                                                          <select name="familia" class="form-control select2" style="width: 100%;">
+                                                                                          <option  value="">(Selecionar)</option>
+                                                                                          @foreach($familias as $item)
+                                                                                                <option  value="{{$item->id}}">{{$item->razaosocial}}</option>
+                                                                                          @endforeach
+                                                                                          </select>
+
+                                                                                      </div><!-- col-xs-5-->
+
+
+                                                                                       <div class="col-xs-6">
+                                                                                              <label for="status" class="control-label">Status</label>
+
+                                                                                              <select name="status" class="form-control select2" style="width: 100%;">
+                                                                                              <option  value="">(Selecionar)</option>
+                                                                                              @foreach($status as $item)
+                                                                                                    <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                              @endforeach
+                                                                                              </select>
+
+                                                                                       </div><!-- col-xs-5-->
+
+                                                                                       <div class="col-xs-6">
+                                                                                              <label for="situacoes" class="control-label">Situações</label>
+
+                                                                                              <select name="situacoes" class="form-control select2" multiple="multiple" style="width: 100%;">
+                                                                                              <option  value="">(Selecionar)</option>
+                                                                                              @foreach($situacoes as $item)
+                                                                                                    <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                              @endforeach
+                                                                                              </select>
+
+                                                                                       </div><!-- col-xs-5-->
+                                                                               </div>
+                                                                            </div>
+                                                                      </div>
+
+                                                            </div><!-- end row-->
+
+
+                                                            <div class="row">
+
+
                                                                      <div class="col-md-6">
                                                                             <div class="box box-default">
-                                                                                  <div class="box-body">
+                                                                                <div class="box-body">
 
                                                                                    <div class="col-xs-4">
                                                                                           <label for="opSexo" class="control-label">Sexo</label>
@@ -517,12 +570,12 @@
 
                                                                                           <br/>
                                                                                          <label>
-                                                                                              <input type="radio" name="opDoadorSangue" class="minimal" value="S">
+                                                                                              <input type="radio" name="opDoadorSangue" class="minimal" value="true">
                                                                                               Sim
                                                                                          </label>
 
                                                                                          <label>
-                                                                                              <input type="radio" name="opDoadorSangue" class="minimal" value="N">
+                                                                                              <input type="radio" name="opDoadorSangue" class="minimal" value="false">
                                                                                               Não
                                                                                          </label>
 
@@ -533,12 +586,12 @@
 
                                                                                             <br/>
                                                                                            <label>
-                                                                                                <input type="radio" name="opDoadorOrgaos" class="minimal" value="S">
+                                                                                                <input type="radio" name="opDoadorOrgaos" class="minimal" value="true">
                                                                                                 Sim
                                                                                            </label>
 
                                                                                            <label>
-                                                                                                <input type="radio" name="opDoadorOrgaos" class="minimal" value="N">
+                                                                                                <input type="radio" name="opDoadorOrgaos" class="minimal" value="false">
                                                                                                 Não
                                                                                            </label>
                                                                                     </div>
@@ -561,7 +614,7 @@
                                                                                                       <label for="ck_necessidades">Possui Necessidades Especiais ?</label>
                                                                                                       <div class="input-group">
                                                                                                            <div class="input-group-addon">
-                                                                                                                    <input  id="ck_necessidades" name="ck_necessidades" type="checkbox" class="minimal-red" value="1" />
+                                                                                                                    <input  id="ck_necessidades" name="ck_necessidades" type="checkbox" class="minimal-red" value="true" />
                                                                                                             </div>
 
                                                                                                             <input id="necessidades" name = "necessidades" type="text" class="form-control" placeholder="Descrição Tipo Necessidade"  value="{{old('necessidades')}}">
@@ -603,7 +656,7 @@
 
                                                                                                       <select name="lingua" class="form-control select2" style="width: 100%;">
                                                                                                       <option  value="">(Selecione)</option>
-                                                                                                      @foreach($dados as $item)
+                                                                                                      @foreach($idiomas as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
                                                                                                       </select>
@@ -627,7 +680,7 @@
 
                                                                                                      <select name="igreja" class="form-control select2" style="width: 100%;">
                                                                                                      <option  value="">(Selecione)</option>
-                                                                                                     @foreach($dados as $item)
+                                                                                                     @foreach($igrejas as $item)
                                                                                                            <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                      @endforeach
                                                                                                      </select>
@@ -792,8 +845,8 @@
                                                                                                       <label for="cargo" class="control-label">Cargo/Função</label>
 
                                                                                                       <select name="cargo" class="form-control select2" style="width: 100%;">
-                                                                                                      <option  value="">(Selecione um Cargo)</option>
-                                                                                                      @foreach($dados as $item)
+                                                                                                      <option  value="">(Selecionar)</option>
+                                                                                                      @foreach($cargos as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
                                                                                                       </select>
@@ -804,8 +857,8 @@
                                                                                                       <label for="ramos" class="control-label">Ramo de Atividade</label>
 
                                                                                                       <select name="ramos" class="form-control select2" style="width: 100%;">
-                                                                                                      <option  value="">(Selecione um Cargo)</option>
-                                                                                                      @foreach($dados as $item)
+                                                                                                      <option  value="">(Selecionar)</option>
+                                                                                                      @foreach($ramos as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
                                                                                                       </select>
@@ -816,8 +869,8 @@
                                                                                                       <label for="profissoes" class="control-label">Profissão</label>
 
                                                                                                       <select name="profissoes" class="form-control select2" style="width: 100%;">
-                                                                                                      <option  value="">(Selecione um Cargo)</option>
-                                                                                                      @foreach($dados as $item)
+                                                                                                      <option  value="">(Selecionar)</option>
+                                                                                                      @foreach($profissoes as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
                                                                                                       </select>
@@ -927,6 +980,317 @@
                                                       <div id="tab4" class="panel-collapse collapse">
                                                         <div class="box-body">
 
+                                                           <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="box box-default">
+                                                                    <div class="box-body"><!-- box-body-->
+
+                                                                              <div class="col-xs-3">
+                                                                                      <label for="estadocivil" class="control-label">Estado Civil</label>
+
+                                                                                      <select name="estadocivil" class="form-control select2" style="width: 100%;">
+                                                                                      <option  value="">(Selecionar)</option>
+                                                                                      @foreach($dados as $item)
+                                                                                            <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                      @endforeach
+                                                                                      </select>
+                                                                                </div><!-- col-xs-->
+
+                                                                    </div>
+                                                                </div>
+                                                               </div>
+                                                           </div>
+
+
+                                                           <div class="row">
+
+                                                                   <div class="col-md-12">
+
+                                                                          <div class="box box-default">
+
+                                                                                <div class="box-header">
+                                                                                        <h3 class="box-title">Conjuge</h3>
+                                                                                </div>
+
+                                                                                <div class="box-body"><!-- box-body-->
+
+                                                                                      <div class="row"><!-- row entrada-->
+
+                                                                                               <div class="col-xs-5">
+                                                                                                    <label for="conjuge" class="control-label">Nome</label>
+                                                                                                    <select name="estadocivil" class="form-control select2" style="width: 100%;">
+                                                                                                    <option  value="">(Selecionar)</option>
+                                                                                                    @foreach($dados as $item)
+                                                                                                          <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                    @endforeach
+                                                                                                    </select>
+                                                                                               </div>
+
+                                                                                               <div class="col-xs-5">
+                                                                                                  <label for="igrejacasamento" class="control-label">Igreja Casamento</label>
+                                                                                                  <input id="igrejacasamento" name = "igrejacasamento" type="text" class="form-control" value="{{old('igrejacasamento')}}">
+                                                                                               </div>
+
+                                                                                               <div class="col-xs-2">
+                                                                                                    <label id="datacasamento" for="datacasamento" class="control-label">Data Casamento</label>
+
+                                                                                                    <div class="input-group">
+                                                                                                           <div class="input-group-addon">
+                                                                                                            <i class="fa fa-calendar"></i>
+                                                                                                            </div>
+
+                                                                                                            <input id ="datacasamento" name = "datacasamento" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('databatismo')}}">
+                                                                                                    </div>
+
+                                                                                               </div>
+
+                                                                                      </div>
+
+                                                                                      <div class="row">
+
+                                                                                           <div class="col-xs-4">
+                                                                                                    <label for="status_conjuge" class="control-label">Status</label>
+                                                                                                    <select name="status_conjuge" class="form-control select2" style="width: 100%;">
+                                                                                                    <option  value="">(Selecionar)</option>
+                                                                                                    @foreach($dados as $item)
+                                                                                                          <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                    @endforeach
+                                                                                                    </select>
+                                                                                          </div>
+
+                                                                                          <div class="col-xs-4">
+                                                                                                    <label for="profissao_conjuge" class="control-label">Profissão</label>
+                                                                                                    <select name="profissao_conjuge" class="form-control select2" style="width: 100%;">
+                                                                                                    <option  value="">(Selecionar)</option>
+                                                                                                    @foreach($dados as $item)
+                                                                                                          <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                    @endforeach
+                                                                                                    </select>
+                                                                                          </div>
+
+                                                                                               <div class="col-xs-2">
+                                                                                                    <label for="datanasc_conjuge" class="control-label">Data Nascimento</label>
+
+                                                                                                    <div class="input-group">
+                                                                                                           <div class="input-group-addon">
+                                                                                                            <i class="fa fa-calendar"></i>
+                                                                                                            </div>
+
+                                                                                                            <input id ="datanasc_conjuge" name = "datanasc_conjuge" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('databatismo')}}">
+                                                                                                    </div>
+
+                                                                                               </div>
+
+                                                                                               <div class="col-xs-2">
+                                                                                                    <label for="datacasamento" class="control-label">Data Falecimento</label>
+
+                                                                                                    <div class="input-group">
+                                                                                                           <div class="input-group-addon">
+                                                                                                            <i class="fa fa-calendar"></i>
+                                                                                                            </div>
+
+                                                                                                            <input id ="datafalecimento" name = "datafalecimento" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datafalecimento')}}">
+                                                                                                    </div>
+
+                                                                                               </div>
+
+                                                                                            </div><!-- end row-->
+
+
+
+                                                                                </div>
+                                                                          </div>
+                                                                       </div>
+                                                           </div><!-- end row-->
+
+                                                           <div class="row">
+
+                                                                   <div class="col-md-12">
+
+                                                                          <div class="box box-default">
+
+                                                                                <div class="box-header">
+                                                                                        <h3 class="box-title">Filhos</h3>
+                                                                                </div>
+
+                                                                                <div class="box-body"><!-- box-body-->
+
+                                                                                      <div class="row"><!-- row entrada-->
+
+                                                                                               <div class="col-xs-5">
+                                                                                                    <label for="filhos" class="control-label">Nome</label>
+                                                                                                    <select name="filhos" class="form-control select2" style="width: 100%;">
+                                                                                                    <option  value="">(Selecionar)</option>
+                                                                                                    @foreach($dados as $item)
+                                                                                                          <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                    @endforeach
+                                                                                                    </select>
+                                                                                               </div>
+
+                                                                                               <div class="col-xs-4">
+                                                                                                      <label for="opSexo" class="control-label">Sexo</label>
+
+                                                                                                      <br/>
+                                                                                                     <label>
+                                                                                                          <input type="radio" name="opSexo" class="minimal" value="M">
+                                                                                                          Masculino
+                                                                                                     </label>
+
+                                                                                                     <label>
+                                                                                                          <input type="radio" name="opSexo" class="minimal" value="F">
+                                                                                                          Feminino
+                                                                                                     </label>
+                                                                                               </div>
+
+                                                                                               <div class="col-xs-2">
+                                                                                                    <label id="datacasamento" for="datacasamento" class="control-label">Data Nascimento</label>
+
+                                                                                                    <div class="input-group">
+                                                                                                           <div class="input-group-addon">
+                                                                                                            <i class="fa fa-calendar"></i>
+                                                                                                            </div>
+
+                                                                                                            <input id ="datacasamento" name = "datacasamento" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('databatismo')}}">
+                                                                                                    </div>
+
+                                                                                               </div>
+
+                                                                                      </div>
+
+                                                                                      <div class="row">
+
+                                                                                           <div class="col-xs-5">
+                                                                                                    <label for="status_conjuge" class="control-label">Status</label>
+                                                                                                    <select name="status_conjuge" class="form-control select2" style="width: 100%;">
+                                                                                                    <option  value="">(Selecionar)</option>
+                                                                                                    @foreach($dados as $item)
+                                                                                                          <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                    @endforeach
+                                                                                                    </select>
+                                                                                          </div>
+
+                                                                                          <div class="col-xs-4">
+                                                                                                    <label for="profissao_conjuge" class="control-label">Estado Civil</label>
+                                                                                                    <select name="profissao_conjuge" class="form-control select2" style="width: 100%;">
+                                                                                                    <option  value="">(Selecionar)</option>
+                                                                                                    @foreach($dados as $item)
+                                                                                                          <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                    @endforeach
+                                                                                                    </select>
+                                                                                          </div>
+
+
+                                                                                               <div class="col-xs-2">
+                                                                                                    <label for="datacasamento" class="control-label">Data Falecimento</label>
+
+                                                                                                    <div class="input-group">
+                                                                                                           <div class="input-group-addon">
+                                                                                                            <i class="fa fa-calendar"></i>
+                                                                                                            </div>
+
+                                                                                                            <input id ="datafalecimento" name = "datafalecimento" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datafalecimento')}}">
+                                                                                                    </div>
+
+                                                                                               </div>
+
+                                                                                            </div><!-- end row-->
+                                                                                </div>
+                                                                          </div>
+                                                                       </div>
+                                                           </div><!-- end row-->
+
+
+                                                           <div class="row">
+
+                                                                   <div class="col-md-12">
+
+                                                                          <div class="box box-default">
+
+                                                                                <div class="box-header">
+                                                                                        <h3 class="box-title">Filiação</h3>
+                                                                                </div>
+
+                                                                                <div class="box-body"><!-- box-body-->
+
+                                                                                      <div class="row"><!-- row pai-->
+
+                                                                                               <div class="col-xs-5">
+                                                                                                    <label for="filhos" class="control-label">Nome do Pai</label>
+                                                                                                    <select name="filhos" class="form-control select2" style="width: 100%;">
+                                                                                                    <option  value="">(Selecionar)</option>
+                                                                                                    @foreach($dados as $item)
+                                                                                                          <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                    @endforeach
+                                                                                                    </select>
+                                                                                               </div>
+
+                                                                                               <div class="col-xs-5">
+                                                                                                    <label for="status_conjuge" class="control-label">Status</label>
+                                                                                                    <select name="status_conjuge" class="form-control select2" style="width: 100%;">
+                                                                                                    <option  value="">(Selecionar)</option>
+                                                                                                    @foreach($dados as $item)
+                                                                                                          <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                    @endforeach
+                                                                                                    </select>
+                                                                                                </div>
+
+                                                                                                <div class="col-xs-2">
+                                                                                                    <label for="datacasamento" class="control-label">Data Falecimento</label>
+
+                                                                                                    <div class="input-group">
+                                                                                                           <div class="input-group-addon">
+                                                                                                            <i class="fa fa-calendar"></i>
+                                                                                                            </div>
+
+                                                                                                            <input id ="datafalecimento" name = "datafalecimento" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datafalecimento')}}">
+                                                                                                    </div>
+
+                                                                                               </div>
+
+                                                                                      </div><!-- end row-->
+
+                                                                                      <div class="row"><!-- row mãe-->
+
+                                                                                               <div class="col-xs-5">
+                                                                                                    <label for="filhos" class="control-label">Nome da Mãe</label>
+                                                                                                    <select name="filhos" class="form-control select2" style="width: 100%;">
+                                                                                                    <option  value="">(Selecionar)</option>
+                                                                                                    @foreach($dados as $item)
+                                                                                                          <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                    @endforeach
+                                                                                                    </select>
+                                                                                               </div>
+
+                                                                                               <div class="col-xs-5">
+                                                                                                    <label for="status_conjuge" class="control-label">Status</label>
+                                                                                                    <select name="status_conjuge" class="form-control select2" style="width: 100%;">
+                                                                                                    <option  value="">(Selecionar)</option>
+                                                                                                    @foreach($dados as $item)
+                                                                                                          <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                    @endforeach
+                                                                                                    </select>
+                                                                                                </div>
+
+                                                                                                <div class="col-xs-2">
+                                                                                                    <label for="datacasamento" class="control-label">Data Falecimento</label>
+
+                                                                                                    <div class="input-group">
+                                                                                                           <div class="input-group-addon">
+                                                                                                            <i class="fa fa-calendar"></i>
+                                                                                                            </div>
+
+                                                                                                            <input id ="datafalecimento" name = "datafalecimento" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datafalecimento')}}">
+                                                                                                    </div>
+
+                                                                                               </div>
+
+                                                                                      </div><!-- end row-->
+
+                                                                                </div>
+                                                                          </div>
+                                                                       </div>
+                                                           </div><!-- end row-->
+
                                                         </div>
                                                       </div>
                                                   </div><!-- FIM TAB FAMILIAR-->
@@ -937,11 +1301,13 @@
                                                       <div class="box-header with-border">
                                                         <h5 class="box-title">
                                                           <a data-toggle="collapse" data-parent="#accordion" href="#tab5">
-                                                            <span class="fa fa-clone"></span> Histórico Eclesiástico
+                                                                <span class="fa fa-clone"></span> Histórico Eclesiástico
                                                           </a>
                                                         </h5>
                                                       </div>
+
                                                       <div id="tab5" class="panel-collapse collapse">
+
                                                         <div class="box-body">
 
                                                             <div  class="row">
@@ -950,11 +1316,15 @@
 
                                                                           <div class="box box-default">
 
+                                                                                <div class="box-header">
+                                                                                        <h3 class="box-title">Igreja Anterior</h3>
+                                                                                </div>
+
                                                                                 <div class="box-body"><!-- box-body-->
 
                                                                                        <div class="row">
                                                                                             <div class="col-xs-5">
-                                                                                                    <label for="igrejaanterior" class="control-label">Igreja Anterior</label>
+                                                                                                    <label for="igrejaanterior" class="control-label">Igreja</label>
                                                                                                     <input id="igrejaanterior" maxlength="150" name = "igrejaanterior" type="text" class="form-control" value="{{old('igrejaanterior')}}">
                                                                                             </div>
 
@@ -1024,7 +1394,7 @@
                                                                                                   <label for="complemento" class="control-label">Complemento</label>
                                                                                                   <input id="complemento" name = "complemento" type="text" class="form-control" value="{{old('complemento')}}">
                                                                                               </div>
-                                                                                         </div><!-- end row  -->
+                                                                                        </div><!-- end row  -->
 
                                                                                         <div class="row">
                                                                                                 <div class="col-xs-5">
@@ -1040,7 +1410,24 @@
                                                                                         </div><!-- end row  -->
 
 
-                                                                                       <div class="row">
+                                                                                 </div><!-- end box-body-->
+
+                                                                           </div><!-- end box-default-->
+
+                                                                    </div>
+
+                                                           </div><!-- end row-->
+
+
+                                                           <div  class="row">
+
+                                                                 <div class="col-md-12">
+
+                                                                          <div class="box box-default">
+
+                                                                                <div class="box-body"><!-- box-body-->
+
+                                                                                        <div class="row">
 
                                                                                             <div class="col-xs-2">
                                                                                                     <label id="databatismo" for="datanasc" class="control-label">Data Batismo</label>
@@ -1067,8 +1454,24 @@
 
                                                                                        </div><!-- end row -->
 
+                                                                                </div>
+                                                                          </div>
+                                                                 </div>
+                                                           </div>
 
-                                                                                        <div class="row"><!-- row entrada-->
+                                                           <div  class="row">
+
+                                                                 <div class="col-md-12">
+
+                                                                          <div class="box box-default">
+
+                                                                                <div class="box-header">
+                                                                                        <h3 class="box-title">Movimento de Membro</h3>
+                                                                                </div>
+
+                                                                                <div class="box-body"><!-- box-body-->
+
+                                                                                      <div class="row"><!-- row entrada-->
 
                                                                                             <div class="col-xs-2">
                                                                                                     <label id="dataentrada" for="datanasc" class="control-label">Data Entrada</label>
@@ -1083,7 +1486,7 @@
 
                                                                                            </div>
 
-                                                                                            <div class="col-xs-3">
+                                                                                            <div class="col-xs-4">
                                                                                                       <label for="motivoentrada" class="control-label">Motivo Entrada</label>
 
                                                                                                       <select name="motivoentrada" class="form-control select2" style="width: 100%;">
@@ -1101,7 +1504,6 @@
 
                                                                                        </div><!-- end row -->
 
-
                                                                                       <div class="row"><!-- row saida-->
 
                                                                                             <div class="col-xs-2">
@@ -1117,7 +1519,7 @@
 
                                                                                            </div>
 
-                                                                                            <div class="col-xs-3">
+                                                                                            <div class="col-xs-4">
                                                                                                       <label for="motivosaida" class="control-label">Motivo Saída</label>
 
                                                                                                       <select name="motivosaida" class="form-control select2" style="width: 100%;">
@@ -1136,20 +1538,19 @@
                                                                                        </div><!-- end row -->
 
                                                                                       <div class="row">
-                                                                                            <div class="col-xs-4">
-                                                                                                    <label for="reintegracao" class="control-label">Reintegração</label>
+                                                                                            <div class="col-xs-10">
+                                                                                                    <label for="reintegracao" class="control-label">Observação</label>
                                                                                                     <input id="reintegracao" maxlength="10" name = "reintegracao" type="text" class="form-control" value="{{old('reintegracao')}}">
                                                                                             </div>
                                                                                       </div><!--end row-->
+                                                                                 </div>
+                                                                             </div>
+                                                                         </div>
+                                                                     </div>
+
+                                                           <!-- fim aqui-->
 
 
-                                                                                 </div><!-- end box-body-->
-
-                                                                           </div><!-- end box-default-->
-
-                                                                    </div>
-
-                                                           </div><!-- end row-->
 
                                                         </div>
                                                       </div>
@@ -1304,7 +1705,7 @@
                                                                                                               <label for="atividades" class="control-label">Atividade</label>
 
                                                                                                               <select name="atividades" multiple="multiple" class="form-control select2" style="width: 100%;">
-                                                                                                              <option  value="">(Selecione um Cargo)</option>
+                                                                                                              <option  value="">(Selecionar)</option>
                                                                                                               @foreach($dados as $item)
                                                                                                                     <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                               @endforeach

@@ -74,8 +74,6 @@
                 <ul class="treeview-menu">
 
                     <li class="text">&nbsp;</li>
-                    <li><a href={{ url('/status')}}><i class="fa fa-angle-double-right"></i>Status</a></li>
-                    <li><a href={{ url('/situacoes')}}><i class="fa fa-angle-double-right"></i>Situações</a></li>
                     <li><a href={{ url('/cargos')}}><i class="fa fa-angle-double-right"></i>Cargos / Funções</a></li>
                     <li><a href={{ url('/ramos')}}><i class="fa fa-angle-double-right"></i>Ramos de Atividades</a></li>
                     <li><a href={{ url('/civis')}}><i class="fa fa-angle-double-right"></i>Estados Civis</a></li>
@@ -87,7 +85,6 @@
                     <li><a href={{ url('/disponibilidades')}}><i class="fa fa-angle-double-right"></i>Disponibilidades de Tempo</a></li>
 
                     <li class="text">&nbsp;</li>
-
                     <li><a href={{ url('/igrejas')}}><i class="fa fa-angle-double-right"></i>Igrejas</a></li>
                     <li><a href={{ url('/religioes')}}><i class="fa fa-angle-double-right"></i>Religiões</a></li>
                     <li><a href={{ url('/ministerios')}}><i class="fa fa-angle-double-right"></i>Ministérios</a></li>
@@ -96,8 +93,11 @@
                     <li><a href={{ url('/habilidades')}}><i class="fa fa-angle-double-right"></i>Habilidades</a></li>
 
                     <li class="text">&nbsp;</li>
+                    <li><a href={{ url('/status')}}><i class="fa fa-angle-double-right"></i>Status</a></li>
+                    <li><a href={{ url('/situacoes')}}><i class="fa fa-angle-double-right"></i>Situações</a></li>
                     <li><a href={{ url('/tipospessoas')}}><i class="fa fa-angle-double-right"></i>Tipos de Pessoas</a></li>
                     <li><a href={{ url('/grupospessoas')}}><i class="fa fa-angle-double-right"></i>Grupos de Pessoas</a></li>
+                    <li class="text">&nbsp;</li>
                     <li><a href={{ url('/tipospresenca')}}><i class="fa fa-angle-double-right"></i>Tipos de Presença</a></li>
                     <li><a href={{ url('/tiposmovimentacao')}}><i class="fa fa-angle-double-right"></i>Tipos de Mov. Membros</a></li>
 
@@ -107,6 +107,7 @@
             <li class="treeview">
                 <a href={{ url('/pessoas')}}><i class="fa fa-users"></i>Pessoas</a>
             </li>
+
 
             <!--
             <li>
