@@ -115,6 +115,32 @@
             </li>
 
 
+          <li class="text">&nbsp;</li>
+
+          <li class="treeview">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>Ajuda / Documentação</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="#"><i class="fa fa-angle-double-right"></i>Tour Rápido</i></a>
+              <ul class="treeview-menu">
+                <li><a href="#"><i class="fa fa-flag-checkered"></i> Visão Geral do SIGMA3</a></li>
+                <li><a href={{ url('/quicktour/reload')}}><i class="fa fa-flag-checkered"></i> Cadastrar Novo Usuário</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="#"><i class="fa fa-angle-double-right"></i>Tutoriais</i></a>
+              <ul class="treeview-menu">
+                <li><a href={{ url('/tutoriais/1')}}><i class="fa fa-flag-checkered"></i> Cadastro / Alteração de Usuários</a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </li>
+
             <!--
             <li>
                 <a href="pages/calendar.html">

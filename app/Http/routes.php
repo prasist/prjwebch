@@ -24,8 +24,11 @@
     });
 
 
+    Route::get('tutoriais/{id}', 'TutoriaisController@tutorial');
+
     Route::get('quicktour', 'TutoriaisController@index');
     Route::post('quicktour/done', 'TutoriaisController@concluir');
+    Route::get('quicktour/reload', 'TutoriaisController@iniciar');
 
     /*Clientes Cloud*/
     Route::get('clientes', 'ClientesCloudController@index');

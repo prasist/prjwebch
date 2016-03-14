@@ -40,5 +40,31 @@ class TutoriaisController extends Controller
 
     }
 
+    public function  iniciar()
+    {
+
+          \Session::put('tour_rapido', 'N'); //Atualiza session
+
+         //------------------Atualizar tabela USUARIOS com termino do TOUR RAPIDO
+        $where = ['empresas_id' => $this->dados_login->empresas_id, 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'id' => $this->dados_login->id];
+
+        $update = \DB::table('usuarios')->where($where)
+        ->update(array(
+                        'tutorial'    => 'N'));
+
+        return redirect('home');
+
+    }
+
+    public function  tutorial ($id)
+    {
+
+            if ($id==1)
+            {
+                    return view('tutoriais.users');
+            }
+
+    }
+
 
 }
