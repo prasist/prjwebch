@@ -179,10 +179,9 @@
         <script src="{{ asset('js/tour_sigma3.js') }}"></script>
 
 
-        @if (1==1)
+        @if (\Session::get('tour_rapido')==' ' || \Session::get('tour_rapido')!='S')
         <script type="text/javascript">
 
-                // Start the tour!
                 hopscotch.startTour(tour);
 
         </script>

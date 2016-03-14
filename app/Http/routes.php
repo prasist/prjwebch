@@ -23,9 +23,9 @@
 
     });
 
-    //Pesquisar endereco pelo cep
-    Route::get('buscarcep/get', 'buscacep@busca_cep');
 
+    Route::get('quicktour', 'TutoriaisController@index');
+    Route::post('quicktour/done', 'TutoriaisController@concluir');
 
     /*Clientes Cloud*/
     Route::get('clientes', 'ClientesCloudController@index');

@@ -15,7 +15,10 @@
           placement: "bottom",
           multipage: true,
               onNext: function() {
-                window.location = "/webigrejas.vs2/public/grupos"
+
+                var pathArray = window.location.pathname.split( '/' );
+                var secondLevelLocation = pathArray[0];
+                window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/grupos";
               }
         },
         {
@@ -25,7 +28,11 @@
           placement: "bottom",
           multipage: true,
               onNext: function() {
-                window.location = "/webigrejas.vs2/public/grupos/registrar"
+
+                var pathArray = window.location.pathname.split( '/' );
+                var secondLevelLocation = pathArray[0];
+                window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/grupos/registrar";
+
               }
         },
         {
@@ -35,7 +42,11 @@
           placement: "bottom",
           multipage: true,
               onNext: function() {
-                window.location = "/webigrejas.vs2/public/permissoes"
+
+                var pathArray = window.location.pathname.split( '/' );
+                var secondLevelLocation = pathArray[0];
+                window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/permissoes";
+
               }
         },
         {
@@ -45,7 +56,9 @@
           placement: "bottom",
           multipage: true,
               onNext: function() {
-                window.location = "/webigrejas.vs2/public/permissoes/registrar"
+                var pathArray = window.location.pathname.split( '/' );
+                var secondLevelLocation = pathArray[0];
+                window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/permissoes/registrar";
               }
         },
         {
@@ -55,7 +68,9 @@
           placement: "bottom",
           multipage: true,
               onNext: function() {
-                window.location = "/webigrejas.vs2/public/usuarios"
+                var pathArray = window.location.pathname.split( '/' );
+                var secondLevelLocation = pathArray[0];
+                window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/usuarios";
               }
         },
 
@@ -66,20 +81,31 @@
           placement: "bottom",
           multipage: true,
               onNext: function() {
-                window.location = "/webigrejas.vs2/public/usuarios/registrar"
+                var pathArray = window.location.pathname.split( '/' );
+                var secondLevelLocation = pathArray[0];
+                window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/usuarios/registrar";
               }
         },
 
         {
           title: "Passo 7",
-          content: "Não esqueça de fazer a escolha do Grupo do usuário de acordo com as permissões que você deseja dar a ele. Preencha as informações cadastrais do usuário e clique em 'Gravar' e pronto! O novo usuário está cadastrado. Ele poderá ter acesso ao sistema fazendo login com o e-mail e a senha cadastrados pelo administrador.",
+          content: "Não esqueça de fazer a escolha do Grupo do usuário de acordo com as permissões que você deseja dar a ele. Preencha as informações cadastrais do usuário, clique em 'Gravar' e pronto! O novo usuário está cadastrado. Ele poderá ter acesso ao sistema fazendo login com o e-mail e a senha cadastrados pelo administrador.",
           target: document.querySelector("#tour8"),
           placement: "bottom",
           multipage: true,
-              onNext: function() {
-                window.location = "/webigrejas.vs2/public/home"
+              onNext: function()
+              {
+                  var pathArray = window.location.pathname.split( '/' );
+                  var secondLevelLocation = pathArray[0];
+                  window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/quicktour";
               }
-        }
+        },
 
+        {
+          title: "Parabéns",
+          content: "Você concluiu o guia rápido!!! <br/> O Tour poderá ser acessado a qualquer momento na opção 'Ajuda/Documentação', opção 'Tour - Cadastro de Usuários'.",
+          target: document.querySelector("#tour9"),
+          placement: "bottom"
+        }
       ]
     };

@@ -51,6 +51,7 @@
 
             <div id="tour2"></div>
             <div id="tour8"></div>
+            <div id="tour9"></div>
 
             <li class="treeview">
                 <a href="#">

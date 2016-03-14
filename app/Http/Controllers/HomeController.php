@@ -37,6 +37,7 @@ class HomeController extends Controller
             \Session::put('subtitulo', '');
             \Session::put('route', '');
             \Session::put('dados_login', $dados_login);
+            \Session::put('tour_rapido', $dados_login->tutorial);
             return view('pages.dashboard');     //ok, direciona para dashboard
         }
         else

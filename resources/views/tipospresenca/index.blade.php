@@ -7,7 +7,6 @@
 {{ \Session::put('route', 'tipospresenca') }}
 {{ \Session::put('id_pagina', '17') }}
 
-        <div>{{{ $errors->first('erros') }}}</div>
 @include('pagina_padrao')
 
 @endsection
