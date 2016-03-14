@@ -47,6 +47,7 @@
             <a href="{{ url('/grupos')}}" class="btn btn-default">Cancelar</a>
         </div>
 
+        <div id="tour4"></div>
         </form>
 
     </div>

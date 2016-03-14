@@ -41,6 +41,9 @@
                                   <div class="box-header">
 
                                                 <div class="box-body">
+
+                                                <div id="tour6"></div>
+
                                                  <p><input  id= "selecionar_todos" name="selecionar_todos" type="checkbox" checked />  Selecionar todos</p>
 
                                                     <table id="paginas" class="table table-bordered table-hover">

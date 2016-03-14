@@ -32,6 +32,8 @@
         <link href="{{ asset('/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}" rel="stylesheet" type="text/css" />
           <!-- DataTables -->
         <link rel="stylesheet" href="{{ asset('/plugins/datatables/dataTables.bootstrap.css') }}">
+
+        <link rel="stylesheet" href="{{ asset('dist/css/hopscotch.min.css') }}">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -53,7 +55,7 @@
             <div class="content-wrapper">
 
                 <!-- Content Header (Page header) -->
-                <section class="content-header">
+                <section id="tst" class="content-header">
                     <h1>
                     @if (Session::has('titulo'))
                           {{ Session::get('titulo') }}
@@ -141,7 +143,8 @@
 
                      });
 
-   </script>
+</script>
+
 
 @yield('tela_permissoes')
 
@@ -172,6 +175,18 @@
         <script src="{{ asset('plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
         <script src="{{ asset('plugins/fastclick/fastclick.js') }}"></script>
         <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
+        <script src="{{ asset('dist/js/hopscotch.min.js') }}"></script>
+        <script src="{{ asset('js/tour_sigma3.js') }}"></script>
+
+
+        @if (1==1)
+        <script type="text/javascript">
+
+                // Start the tour!
+                hopscotch.startTour(tour);
+
+        </script>
+        @endif
 
     </body>
 </html>

@@ -5,6 +5,8 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
 
+             <div id="tour1"></div>
+
             <!--Foto usuário -->
             <div class="pull-left image">
 
@@ -47,11 +49,14 @@
                 </ul>
             </li>
 
+            <div id="tour2"></div>
+            <div id="tour8"></div>
+
             <li class="treeview">
                 <a href="#">
                 <i class="fa fa-lock"></i> <span>Segurança</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
-                <ul class="treeview-menu">
+                <ul  class="treeview-menu">
                     <li class="active">
                         <a href={{ url('/grupos')}}><i class="fa fa-angle-double-right"></i>Grupos de Usuário</a>
                     </li>

@@ -44,7 +44,7 @@
     <div class="col-lg-3 col-xs-6">
         <!-- small box -->
         <div class="small-box bg-red">
-            <div class="inner">
+            <div  class="inner">
                 <h3>65</h3>
                 <p>Visitantes</p>
             </div>
