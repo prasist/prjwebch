@@ -8,7 +8,20 @@
                 <div class="panel-heading">Mensagens</div>
 
                 <div class="panel-body">
-                    Você encerrou sua sessão
+
+                <ul>
+                        <li>Você encerrou sua sessão</li>
+
+                        <li>
+                                <a  href="{{ url('http://177.101.149.118') }}">Retonar ao site SIGMA3</a>
+                        </li>
+
+                        <li>
+                                <a  href="{{ url('/login') }}">Logar Novamente</a>
+                        </li>
+
+                </ul>
+
                 </div>
             </div>
         </div>

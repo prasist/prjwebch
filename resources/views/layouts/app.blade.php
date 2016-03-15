@@ -18,7 +18,7 @@
     <style>
         body {
             font-family: 'Lato';
-            background-image: url('http://177.101.149.118/wp-content/uploads/2016/02/online-church-sruvey-checklist-bg.jpg');
+            background-image: url('http://177.101.149.118/wp-content/uploads/2016/03/bridge-lake-bokeh-hd-wallpaper.jpg');
         }
 
         .fa-btn {
@@ -27,11 +27,13 @@
     </style>
 </head>
 <body id="app-layout">
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="navbar-header">
 
-                <!-- Collapsed Hamburger -->
+    <!--<nav class="navbar navbar-default">
+        <div class="container">
+
+
+           <div class="navbar-header">
+
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                     <span class="sr-only">Toggle Navigation</span>
                     <span class="icon-bar"></span>
@@ -39,21 +41,22 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <!-- Branding Image -->
+
                 <a class="navbar-brand" href="{{ url('http://177.101.149.118') }}">
                     SIGMA3 - Gestão de Igrejas
                 </a>
             </div>
 
+
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
+
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
                 </ul>
 
-                <!-- Right Side Of Navbar -->
+
                 <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
+
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">Logar</a></li>
                         <li><a href="{{ url('/register') }}">Cadastrar-se</a></li>
@@ -71,7 +74,7 @@
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav>-->
 
     @yield('content')
 
