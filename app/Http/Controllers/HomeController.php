@@ -38,7 +38,37 @@ class HomeController extends Controller
             \Session::put('route', '');
             \Session::put('dados_login', $dados_login);
             \Session::put('tour_rapido', $dados_login->tutorial);
-            return view('pages.dashboard');     //ok, direciona para dashboard
+
+            $where =
+            [
+                'empresas_id' => $dados_login->empresas_id,
+                'empresas_clientes_cloud_id' => $dados_login->empresas_clientes_cloud_id
+            ];
+
+            //-------------------Functions no POSTGRES
+            //Total de registro na tabela pessoas
+            $retorno = \DB::select('select  fn_total_pessoas()');
+            $total_pessoas = $retorno[0]->fn_total_pessoas;
+
+            //Total de membros. Verifica-se no cadastro de tipo de pessoas o registro que contenha a aba membros configurada
+            $retorno = \DB::select('select  fn_total_membros()');
+            $total_membros = $retorno[0]->fn_total_membros;
+
+            //Total de aniversariantes no mes
+            $retorno = \DB::select('select  fn_total_niver()');
+            $total_aniversariantes = $retorno[0]->fn_total_niver;
+
+            $retorno = \DB::select('select  fn_total_inativos()');
+            $total_inativos = $retorno[0]->fn_total_inativos;
+
+            //----------------- FIM Functions POSTGRES
+
+            return view('pages.dashboard', [
+            'total_pessoas' => $total_pessoas,
+            'total_membros' => $total_membros,
+            'total_aniversariantes' => $total_aniversariantes,
+            'total_inativos' => $total_inativos]);     //ok, direciona para dashboard
+
         }
         else
         {
