@@ -17,7 +17,7 @@
 
                 <div class="box-body">
 
-                    <div id="tour3"></div>
+
 
                     <table id="example1" class="table table-bordered table-hover">
                     <thead>
@@ -70,6 +70,7 @@
                         @endforeach
                     </tbody>
                     </table>
+                    <div id="tour3"></div>
                 </div>
             </div>
           </div>

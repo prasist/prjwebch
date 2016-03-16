@@ -5,7 +5,8 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
 
-             <div id="tour1"></div>
+            <div id="tour1"></div>
+            <div id="tour3_visaogeral"></div>
 
             <!--Foto usuário -->
             <div class="pull-left image">
@@ -49,9 +50,6 @@
                 </ul>
             </li>
 
-            <div id="tour2"></div>
-            <div id="tour8"></div>
-            <div id="tour9"></div>
 
             <li class="treeview">
                 <a href="#">
@@ -71,6 +69,8 @@
                     </li>
                 </ul>
             </li>
+
+            <div id="tour2"></div>
 
            <li class="treeview">
                 <a href="#">
@@ -122,12 +122,13 @@
             <i class="fa fa-book"></i> <span>Ajuda / Documentação</span>
             <i class="fa fa-angle-left pull-right"></i>
           </a>
+
           <ul class="treeview-menu">
             <li>
               <a href="#"><i class="fa fa-angle-double-right"></i>Tour Rápido</i></a>
               <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-flag-checkered"></i> Visão Geral do SIGMA3</a></li>
-                <li><a href={{ url('/quicktour/reload')}}><i class="fa fa-flag-checkered"></i> Cadastrar Novo Usuário</a></li>
+                <li><a href={{ url('/quicktour/reload/2')}}><i class="fa fa-flag-checkered"></i> Visão Geral do SIGMA3</a></li>
+                <li><a href={{ url('/quicktour/reload/1')}}><i class="fa fa-flag-checkered"></i> Cadastrar Novo Usuário</a></li>
               </ul>
             </li>
 
@@ -137,8 +138,9 @@
                 <li><a href={{ url('/tutoriais/1')}}><i class="fa fa-flag-checkered"></i> Cadastro / Alteração de Usuários</a></li>
               </ul>
             </li>
-
           </ul>
+          <div id="tour5_visaogeral"></div>
+
         </li>
 
             <!--

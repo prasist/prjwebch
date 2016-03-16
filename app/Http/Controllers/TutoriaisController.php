@@ -18,39 +18,65 @@ class TutoriaisController extends Controller
         $this->dados_login = \Session::get('dados_login');
     }
 
-    //Exibir listagem
-    public function index()
+
+    /**
+     * Abre tela para informação de conclusão do TOUR
+     * @param type $id  - Número do Tour Rápido     *
+     */
+    public function index($id)
     {
-        return view('tutoriais.conclusao');     //ok, direciona para dashboard
+        return view('tutoriais.conclusao', ['id'=> $id]);     //ok, direciona para dashboard
     }
 
-    public function  concluir()
-    {
 
-          \Session::put('tour_rapido', 'S'); //Atualiza session
+    /**//**
+     * Description - Grava como concluido o Tour na tabela do usuário
+     * @param type $id - Numero do tour (1 = Cadastro Usuario, 2 = Visão Geral)
+     *
+     */
+    public function  concluir($id)
+    {
 
          //------------------Atualizar tabela USUARIOS com termino do TOUR RAPIDO
         $where = ['empresas_id' => $this->dados_login->empresas_id, 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'id' => $this->dados_login->id];
 
-        $update = \DB::table('usuarios')->where($where)
-        ->update(array(
-                        'tutorial'    => 'S'));
+        if ($id==1)
+        {
+            \Session::put('tour_rapido', 'S'); //Atualiza session
+            $update = \DB::table('usuarios')->where($where)->update(array('tutorial'    => 'S'));
+        }
+        else if ($id==2)
+        {
+            \Session::put('tour_visaogeral', 'S'); //Atualiza session
+            $update = \DB::table('usuarios')->where($where)->update(array('tutorial_visaogeral'    => 'S'));
+        }
 
         return redirect('home');
 
     }
 
-    public function  iniciar()
+    /**//**
+     * Description - Reinicia o Tour rápido limpando a variavel de sessao e gravando na tabela usuarios como nao assistido
+     * @param type $id - Numero do tour (1 = Cadastro Usuario, 2 = Visão Geral)
+     *
+     */
+    public function  iniciar($id)
     {
 
-          \Session::put('tour_rapido', 'N'); //Atualiza session
-
-         //------------------Atualizar tabela USUARIOS com termino do TOUR RAPIDO
+        //------------------Atualizar tabela USUARIOS com termino do TOUR RAPIDO
         $where = ['empresas_id' => $this->dados_login->empresas_id, 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'id' => $this->dados_login->id];
 
-        $update = \DB::table('usuarios')->where($where)
-        ->update(array(
-                        'tutorial'    => 'N'));
+
+       if ($id==1)
+       {
+            \Session::put('tour_rapido', 'N'); //Atualiza session
+            $update = \DB::table('usuarios')->where($where)->update(array('tutorial'    => 'N'));
+       }
+       else  if ($id==2)
+       {
+            \Session::put('tour_visaogeral', 'N'); //Atualiza session
+            $update = \DB::table('usuarios')->where($where)->update(array('tutorial_visaogeral'    => 'N'));
+       }
 
         return redirect('home');
 
@@ -62,6 +88,10 @@ class TutoriaisController extends Controller
             if ($id==1)
             {
                     return view('tutoriais.users');
+            }
+            else if ($id==2)
+            {
+
             }
 
     }

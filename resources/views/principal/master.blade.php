@@ -179,6 +179,14 @@
         <script src="{{ asset('js/tour_sigma3.js') }}"></script>
 
 
+        @if (\Session::get('tour_visaogeral')==' ' || \Session::get('tour_visaogeral')!='S')
+        <script type="text/javascript">
+
+                hopscotch.startTour(tour_visao_geral);
+
+        </script>
+        @endif
+
         @if (\Session::get('tour_rapido')==' ' || \Session::get('tour_rapido')!='S')
         <script type="text/javascript">
 

@@ -1,8 +1,11 @@
 @extends('principal.master')
 @section('content')
 <!-- Small boxes (Stat box) -->
+
 <div class="row">
     <div class="col-lg-3 col-xs-6">
+    <div id="tour1_visaogeral"></div>
+    <div id="tour3_visaogeral"></div>
         <!-- small box -->
         <div class="small-box bg-aqua">
             <div class="inner">

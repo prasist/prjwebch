@@ -10,7 +10,7 @@
 
     <div class="col-md-12">
 
-        <form method = 'POST'  class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/done')}}>
+        <form method = 'POST'  class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/done/' . $id)}}>
         {!! csrf_field() !!}
 
         <div class="row">
@@ -20,22 +20,33 @@
 
                         <div class="box-body">
 
-                            <div id="tour8"></div>
-                            <div id="tour9"></div>
-
+                            @if ($id==1)
                             <p>
-                             Tour Rápido - Cadastro de Usuários concluído! <br/>
-                             Clique no botão abaixo para confirmar e não exibir mais o Tour quando logar novamente.
+                                 Tour Rápido - Cadastro de Usuários concluído! <br/>
+                                Clique no botão abaixo para confirmar e não exibir mais o Tour quando logar novamente.
                             </p>
+                            @endif
+
+                            @if ($id==2)
+                            <p>
+                                 Tour Rápido - Visão Geral do SIGMA3 concluído! <br/>
+                                Clique no botão abaixo para confirmar e não exibir mais o Tour quando logar novamente.
+                            </p>
+                            @endif
+
+                                <div class="box-footer">
+                                    <button class = 'btn btn-primary' type ='submit'><span class="fa fa-trophy"></span>Confirmar Conclusão</button>
+                                </div>
+                                <div id="tour9"></div>
+                                <div id="tour6_visaogeral"></div>
 
                         </div>
+
                      </div>
                    </div>
                 </div>
 
-                <div class="box-footer">
-                    <button class = 'btn btn-primary' type ='submit'>Confirmar Conclusão</button>
-                </div>
+
 
          </div>
         </form>

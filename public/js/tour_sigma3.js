@@ -1,8 +1,13 @@
   // Define the tour!
     var tour = {
-      id: "hello-hopscotch",
+      id: "tour_novousuario",
       steps: [
         {
+          nextBtn: "Próximo",
+          prevBtn: "Anterior",
+          doneBtn: "Concluir",
+          skipBtn: "Pular",
+          closeTooltip: "Fechar Tour",
           title: "Bem-Vindo ao Sigma3",
           content: "Criando um novo usuário. <br/><br/>Antes é necessário entender que o sistema separa os usuários por grupos, para assim facilitar as permissões de acesso que serão feitas posteriormente. Dito isso, vamos começar!",
           target: document.querySelector("#tour1"),
@@ -97,7 +102,7 @@
               {
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[0];
-                  window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/quicktour";
+                  window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/quicktour/1";
               }
         },
 
@@ -105,6 +110,55 @@
           title: "Parabéns",
           content: "Você concluiu o guia rápido!!! <br/> O Tour poderá ser acessado a qualquer momento na opção 'Ajuda/Documentação', opção 'Tour - Cadastro de Usuários'.",
           target: document.querySelector("#tour9"),
+          placement: "bottom"
+        }
+      ]
+    };
+
+    var tour_visao_geral = {
+      id: "tour_visaogeral",
+      steps: [
+        {
+          title: "Bem-Vindo ao Sigma3 - Sistema de Gestão para Igrejas",
+          content: "Nesse Guia Rápido você terá uma visão geral do SIGMA3.",
+          target: document.querySelector("#tour1_visaogeral"),
+          placement: "right"
+        },
+        {
+          title: "Iniciando",
+          content: "Por aqui você pode acessar seu perfil ou encerrar a sessão.",
+          target: document.querySelector("#tour2_visaogeral"),
+          placement: "left"
+        },
+        {
+          title: "Passo 2",
+          content: "Use o menu de navegação para começar usar o sistema.",
+          target: document.querySelector("#tour3_visaogeral"),
+          placement: "right"
+        },
+        {
+          title: "Passo 3",
+          content: "Aqui você escolhe mostrar ou ocultar o menu de navegação.",
+          target: document.querySelector("#tour4_visaogeral"),
+          placement: "bottom"
+        },
+        {
+          title: "Passo 4",
+          content: "Para outras informações e tutoriais mais detalhados, clique na opção 'Ajuda / Documentação'.",
+          target: document.querySelector("#tour5_visaogeral"),
+          placement: "bottom",
+          multipage: true,
+              onNext: function()
+              {
+                  var pathArray = window.location.pathname.split( '/' );
+                  var secondLevelLocation = pathArray[0];
+                  window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/quicktour/2";
+              }
+        },
+        {
+          title: "Parabéns! Você conclui o Guia Rápido.",
+          content: "O Tour poderá se acessado a qualquer momento no menu 'Ajuda / Documentação', opção 'Visão Geral do Sigma3'." ,
+          target: document.querySelector("#tour6_visaogeral"),
           placement: "bottom"
         }
       ]

@@ -28,7 +28,6 @@
                 <div class="box-body">
 
                     <div id="tour7"></div>
-
                     <table id="example1" class="table table-bordered table-hover">
                     <thead>
                         <tr>

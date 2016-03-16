@@ -38,6 +38,7 @@ return [
     'grupospessoas' => '31',
     'tipostelefones' => '33',
     'validar' => '5',
+    'home' => '34',
 
     'env' => env('APP_ENV', 'production'),
 

@@ -77,6 +77,8 @@
                                   </div>
                            </div>
 
+                           <div id="tour8"></div>
+
                            <input  class="check_hidden" name="admin" type="hidden"  value="0" />
                            <div id="ocultar_check">
                                 <!--Somente usuário MASTER poderá criar usuários ADMIN-->

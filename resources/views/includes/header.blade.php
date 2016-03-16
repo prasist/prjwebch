@@ -6,6 +6,7 @@
 
     <nav class="navbar navbar-static-top" role="navigation">
 
+        <div id="tour4_visaogeral"></div>
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Navegação</span>
         </a>
@@ -68,9 +69,8 @@
                 </li>
 
 
-                <!-- User Account: style can be found in dropdown.less -->
-
                 <li class="dropdown user user-menu">
+                    <div id="tour2_visaogeral"></div>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
                     <!--<img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image"/>-->
