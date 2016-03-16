@@ -68,10 +68,8 @@
 
                                         <div class="row">
                                                 <div class="col-xs-3">
-
                                                     <label for="opStatus" class="control-label">Status :</label>
                                                     <br/>
-
                                                          <label>
                                                               <input type="radio" name="opStatus" class="minimal" checked>
                                                               Ativo
@@ -81,7 +79,6 @@
                                                               <input type="radio" name="opStatus" class="minimal">
                                                               Inativo
                                                          </label>
-
                                                 </div>
 
                                                 <div class="col-xs-3">
@@ -416,7 +413,7 @@
 
                                                       <div class="col-xs-1">
                                                               <label for="numero_cobranca" class="control-label">Número</label>
-                                                              <input id="numero_cobranca" maxlength="10" name = "numero_cobranca" type="text" class="form-control" value="{{old('numero')}}">
+                                                              <input id="numero_cobranca" maxlength="10" name = "numero_cobranca" type="text" class="form-control" value="{{old('numero_cobranca')}}">
                                                       </div>
                                               </div>
 
@@ -764,15 +761,15 @@
                                                                                        <div class="row">
 
                                                                                             <div class="col-xs-10">
-                                                                                                    <label for="endereco" class="control-label">Empresa</label>
-                                                                                                    <input id="endereco" maxlength="150" name = "endereco" type="text" class="form-control" value="{{old('endereco')}}">
+                                                                                                    <label for="nome_empresa" class="control-label">Empresa</label>
+                                                                                                    <input id="nome_empresa" maxlength="150" name = "nome_empresa" type="text" class="form-control" value="{{old('nome_empresa')}}">
                                                                                             </div>
                                                                                        </div>
 
                                                                                        <div class="row">
 
                                                                                               <div class="col-xs-2">
-                                                                                                          <label for="cep" class="control-label">CEP</label>
+                                                                                                          <label for="cep_cobranca" class="control-label">CEP</label>
                                                                                                           <div class="input-group">
                                                                                                                    <div class="input-group-addon">
                                                                                                                       <a href="#" data-toggle="tooltip" title="Digite o CEP para buscar automaticamente o endereço. Não informar pontos ou traços.">
@@ -780,58 +777,58 @@
                                                                                                                        </a>
                                                                                                                     </div>
 
-                                                                                                                    <input id="cep" maxlength="8" name = "cep" type="text" class="form-control" value="{{old('cep')}}">
+                                                                                                                    <input id="cep_cobranca" maxlength="8" name = "cep_cobranca" type="text" class="form-control" value="{{old('cep_cobranca')}}">
                                                                                                             </div>
                                                                                               </div>
 
                                                                                                 <div class="col-xs-7">
-                                                                                                        <label for="endereco" class="control-label">Endereço</label>
-                                                                                                        <input id="endereco" maxlength="150" name = "endereco" type="text" class="form-control" value="{{old('endereco')}}">
+                                                                                                        <label for="endereco_prof" class="control-label">Endereço</label>
+                                                                                                        <input id="endereco_prof" maxlength="150" name = "endereco_prof" type="text" class="form-control" value="{{old('endereco_prof')}}">
                                                                                                 </div>
 
                                                                                                 <div class="col-xs-1">
-                                                                                                        <label for="numero" class="control-label">Número</label>
-                                                                                                        <input id="numero" maxlength="10" name = "numero" type="text" class="form-control" value="{{old('numero')}}">
+                                                                                                        <label for="numero_prof" class="control-label">Número</label>
+                                                                                                        <input id="numero_prof" maxlength="10" name = "numero_prof" type="text" class="form-control" value="{{old('numero_prof')}}">
                                                                                                 </div>
 
                                                                                          </div>
 
                                                                                         <div class="row">
                                                                                               <div class="col-xs-5">
-                                                                                                    <label for="bairro" class="control-label">Bairro</label>
-                                                                                                    <input id="bairro" maxlength="50" name = "bairro" type="text" class="form-control" value="{{old('bairro')}}">
+                                                                                                    <label for="bairro_prof" class="control-label">Bairro</label>
+                                                                                                    <input id="bairro_prof" maxlength="50" name = "bairro_prof" type="text" class="form-control" value="{{old('bairro_prof')}}">
                                                                                                </div>
 
                                                                                               <div class="col-xs-5">
-                                                                                                  <label for="complemento" class="control-label">Complemento</label>
-                                                                                                  <input id="complemento" name = "complemento" type="text" class="form-control" value="{{old('complemento')}}">
+                                                                                                  <label for="complemento_prof" class="control-label">Complemento</label>
+                                                                                                  <input id="complemento_prof" name = "complemento_prof" type="text" class="form-control" value="{{old('complemento_prof')}}">
                                                                                               </div>
                                                                                          </div>
 
                                                                                         <div class="row">
                                                                                                 <div class="col-xs-5">
-                                                                                                        <label for="cidade" class="control-label">Cidade</label>
-                                                                                                        <input id="cidade" maxlength="60" name = "cidade" type="text" class="form-control" value="{{old('cidade')}}">
+                                                                                                        <label for="cidade_prof" class="control-label">Cidade</label>
+                                                                                                        <input id="cidade_prof" maxlength="60" name = "cidade_prof" type="text" class="form-control" value="{{old('cidade_prof')}}">
                                                                                                 </div>
 
                                                                                                 <div class="col-xs-1">
-                                                                                                    <label for="estado" class="control-label">Estado</label>
-                                                                                                    <input id="estado" maxlength="2" name = "estado" type="text" class="form-control" value="{{old('estado')}}">
+                                                                                                    <label for="estado_prof" class="control-label">Estado</label>
+                                                                                                    <input id="estado_prof" maxlength="2" name = "estado_prof" type="text" class="form-control" value="{{old('estado_prof')}}">
                                                                                                 </div>
 
                                                                                                 <div class="col-xs-6"><!-- col-xs-6-->
-                                                                                                    <label for="emailprincipal" class="control-label">Email</label>
+                                                                                                    <label for="emailprofissional" class="control-label">Email</label>
 
-                                                                                                    <div class="input-group{{ $errors->has('emailprincipal') ? ' has-error' : '' }}">
+                                                                                                    <div class="input-group{{ $errors->has('emailprofissional') ? ' has-error' : '' }}">
                                                                                                                <div class="input-group-addon">
                                                                                                                 <i class="fa fa-envelope"></i>
                                                                                                                 </div>
-                                                                                                                <input id="emailprincipal" maxlength="150" name = "emailprincipal" type="text" class="form-control" value="{{old('emailprincipal')}}">
+                                                                                                                <input id="emailprofissional" maxlength="150" name = "emailprofissional" type="text" class="form-control" value="{{old('emailprofissional')}}">
 
                                                                                                                  <!-- se houver erros na validacao do form request -->
-                                                                                                                 @if ($errors->has('emailprincipal'))
+                                                                                                                 @if ($errors->has('emailprofissional'))
                                                                                                                   <span class="help-block">
-                                                                                                                      <strong>{{ $errors->first('emailprincipal') }}</strong>
+                                                                                                                      <strong>{{ $errors->first('emailprofissional') }}</strong>
                                                                                                                   </span>
                                                                                                                  @endif
                                                                                                     </div>
@@ -1337,7 +1334,7 @@
                                                                                                         <i class="fa fa-phone"></i>
                                                                                                         </div>
 
-                                                                                                        <input id="foneigrejaanterior"  name = "foneprincipal" type="text" class="form-control" value="{{old('foneigrejaanterior')}}"  data-inputmask='"mask": "(99) 9999-9999"' data-mask >
+                                                                                                        <input id="foneigrejaanterior"  name = "foneigrejaanterior" type="text" class="form-control" value="{{old('foneigrejaanterior')}}"  data-inputmask='"mask": "(99) 9999-9999"' data-mask >
 
                                                                                                 </div>
                                                                                             </div>
@@ -1360,7 +1357,7 @@
                                                                                        <div class="row">
 
                                                                                               <div class="col-xs-2">
-                                                                                                          <label for="cep" class="control-label">CEP</label>
+                                                                                                          <label for="cep_igreja_anterior" class="control-label">CEP</label>
                                                                                                           <div class="input-group">
                                                                                                                    <div class="input-group-addon">
                                                                                                                       <a href="#" data-toggle="tooltip" title="Digite o CEP para buscar automaticamente o endereço. Não informar pontos ou traços.">
@@ -1368,43 +1365,43 @@
                                                                                                                        </a>
                                                                                                                     </div>
 
-                                                                                                                    <input id="cep" maxlength="8" name = "cep" type="text" class="form-control" value="{{old('cep')}}">
+                                                                                                                    <input id="cep_igreja_anterior" maxlength="8" name = "cep_igreja_anterior" type="text" class="form-control" value="{{old('cep_igreja_anterior')}}">
                                                                                                             </div>
                                                                                               </div>
 
                                                                                                 <div class="col-xs-7">
-                                                                                                        <label for="endereco" class="control-label">Endereço</label>
-                                                                                                        <input id="endereco" maxlength="150" name = "endereco" type="text" class="form-control" value="{{old('endereco')}}">
+                                                                                                        <label for="endereco_igreja_anterior" class="control-label">Endereço</label>
+                                                                                                        <input id="endereco_igreja_anterior" maxlength="150" name = "endereco_igreja_anterior" type="text" class="form-control" value="{{old('endereco_igreja_anterior')}}">
                                                                                                 </div>
 
                                                                                                 <div class="col-xs-1">
-                                                                                                        <label for="numero" class="control-label">Número</label>
-                                                                                                        <input id="numero" maxlength="10" name = "numero" type="text" class="form-control" value="{{old('numero')}}">
+                                                                                                        <label for="numero_igreja_anterior" class="control-label">Número</label>
+                                                                                                        <input id="numero_igreja_anterior" maxlength="10" name = "numero_igreja_anterior" type="text" class="form-control" value="{{old('numero_igreja_anterior')}}">
                                                                                                 </div>
 
                                                                                         </div><!-- end row  -->
 
                                                                                         <div class="row">
                                                                                               <div class="col-xs-5">
-                                                                                                    <label for="bairro" class="control-label">Bairro</label>
-                                                                                                    <input id="bairro" maxlength="50" name = "bairro" type="text" class="form-control" value="{{old('bairro')}}">
+                                                                                                    <label for="bairro_igreja_anterior" class="control-label">Bairro</label>
+                                                                                                    <input id="bairro_igreja_anterior" maxlength="50" name = "bairro_igreja_anterior" type="text" class="form-control" value="{{old('bairro_igreja_anterior')}}">
                                                                                                </div>
 
                                                                                               <div class="col-xs-5">
-                                                                                                  <label for="complemento" class="control-label">Complemento</label>
-                                                                                                  <input id="complemento" name = "complemento" type="text" class="form-control" value="{{old('complemento')}}">
+                                                                                                  <label for="complemento_igreja_anterior" class="control-label">Complemento</label>
+                                                                                                  <input id="complemento_igreja_anterior" name = "complemento_igreja_anterior" type="text" class="form-control" value="{{old('complemento_igreja_anterior')}}">
                                                                                               </div>
                                                                                         </div><!-- end row  -->
 
                                                                                         <div class="row">
                                                                                                 <div class="col-xs-5">
-                                                                                                        <label for="cidade" class="control-label">Cidade</label>
-                                                                                                        <input id="cidade" maxlength="60" name = "cidade" type="text" class="form-control" value="{{old('cidade')}}">
+                                                                                                        <label for="cidade_igreja_anterior" class="control-label">Cidade</label>
+                                                                                                        <input id="cidade_igreja_anterior" maxlength="60" name = "cidade_igreja_anterior" type="text" class="form-control" value="{{old('cidade_igreja_anterior')}}">
                                                                                                 </div>
 
                                                                                                 <div class="col-xs-1">
-                                                                                                    <label for="estado" class="control-label">Estado</label>
-                                                                                                    <input id="estado" maxlength="2" name = "estado" type="text" class="form-control" value="{{old('estado')}}">
+                                                                                                    <label for="estado_igreja_anterior" class="control-label">Estado</label>
+                                                                                                    <input id="estado_igreja_anterior" maxlength="2" name = "estado_igreja_anterior" type="text" class="form-control" value="{{old('estado_igreja_anterior')}}">
                                                                                                 </div>
 
                                                                                         </div><!-- end row  -->
@@ -1443,13 +1440,13 @@
                                                                                            </div>
 
                                                                                             <div class="col-xs-5">
-                                                                                                    <label for="endereco" class="control-label">Igreja</label>
-                                                                                                    <input id="endereco" maxlength="150" name = "endereco" type="text" class="form-control" value="{{old('endereco')}}">
+                                                                                                    <label for="igreja_batismo" class="control-label">Igreja</label>
+                                                                                                    <input id="igreja_batismo" maxlength="150" name = "igreja_batismo" type="text" class="form-control" value="{{old('igreja_batismo')}}">
                                                                                             </div>
 
                                                                                             <div class="col-xs-4">
-                                                                                                    <label for="numero" class="control-label">Celebrador</label>
-                                                                                                    <input id="numero" maxlength="10" name = "numero" type="text" class="form-control" value="{{old('numero')}}">
+                                                                                                    <label for="celebrador" class="control-label">Celebrador</label>
+                                                                                                    <input id="celebrador" maxlength="10" name = "celebrador" type="text" class="form-control" value="{{old('celebrador')}}">
                                                                                             </div>
 
                                                                                        </div><!-- end row -->
@@ -1499,7 +1496,7 @@
 
                                                                                             <div class="col-xs-4">
                                                                                                     <label for="ataentrada" class="control-label">Registrado em Ata n.:</label>
-                                                                                                    <input id="ataentrada" maxlength="10" name = "numero" type="text" class="form-control" value="{{old('ata_entrada')}}">
+                                                                                                    <input id="ataentrada" maxlength="10" name = "ataentrada" type="text" class="form-control" value="{{old('ata_entrada')}}">
                                                                                             </div>
 
                                                                                        </div><!-- end row -->

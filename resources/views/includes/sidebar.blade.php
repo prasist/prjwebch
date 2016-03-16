@@ -80,6 +80,7 @@
                 <ul class="treeview-menu">
 
                     <li class="text">&nbsp;</li>
+                    <li><a href={{ url('/bancos')}}><i class="fa fa-angle-double-right"></i>Bancos</a></li>
                     <li><a href={{ url('/cargos')}}><i class="fa fa-angle-double-right"></i>Cargos / Funções</a></li>
                     <li><a href={{ url('/ramos')}}><i class="fa fa-angle-double-right"></i>Ramos de Atividades</a></li>
                     <li><a href={{ url('/civis')}}><i class="fa fa-angle-double-right"></i>Estados Civis</a></li>

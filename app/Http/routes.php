@@ -59,7 +59,6 @@
     Route::get('grupos/{id}/edit','GruposController@edit');
     Route::get('grupos/{id}/delete','GruposController@destroy');
 
-
   /*Permissoes do Grupo*/
     Route::get('permissoes', 'PermissoesGrupoController@index');
     Route::post('/permissoes/gravar','PermissoesGrupoController@store');
@@ -298,5 +297,13 @@
     /* Usado para verificar a existencia de um usuário para as igrejas/instituições.*/
     Route::get('/validar/{id}/user', 'UsersController@validar');
 
+    /*Bancos*/
+    Route::get('bancos', 'BancosController@index');
+    Route::post('/bancos/gravar','BancosController@store');
+    Route::get('/bancos/registrar','BancosController@create');
+    Route::get('/bancos/{id}/preview','BancosController@show');
+    Route::post('bancos/{id}/update','BancosController@update');
+    Route::get('bancos/{id}/edit','BancosController@edit');
+    Route::get('bancos/{id}/delete','BancosController@destroy');
 
 });

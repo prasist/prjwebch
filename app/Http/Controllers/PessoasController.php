@@ -70,7 +70,6 @@ class PessoasController extends Controller
         //Ex; Pessoa fisica, habilita cpf e rg, juridica habilita CNPJ,  membros habilita dados especificos de membresia.
         $habilitar_interface = \App\Models\tipospessoas::findOrfail($id);
 
-
         /*Para preencher combos Dados eclesiasticos*/
         $igrejas = \App\Models\igrejas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         $situacoes = \App\Models\situacoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
@@ -81,7 +80,6 @@ class PessoasController extends Controller
         $ramos = \App\Models\ramos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         $cargos = \App\Models\cargos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         /* FIM Para preencher combos Dados eclesiasticos*/
-
 
         //Para carregar combo de bancos
         $bancos = \App\Models\bancos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();

@@ -39,6 +39,7 @@ return [
     'tipostelefones' => '33',
     'validar' => '5',
     'home' => '34',
+    'bancos' => '35',
 
     'env' => env('APP_ENV', 'production'),
 

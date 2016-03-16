@@ -7,7 +7,6 @@
 {{ \Session::put('route', 'tipospessoas') }}
 {{ \Session::put('id_pagina', '29') }}
 
-
 <div class = 'row'>
 
     <div class="col-md-12">
