@@ -592,11 +592,11 @@
 
   HopscotchI18N = {
     stepNums: null,
-    nextBtn: 'Next',
-    prevBtn: 'Back',
-    doneBtn: 'Done',
-    skipBtn: 'Skip',
-    closeTooltip: 'Close'
+    nextBtn: 'Próximo',
+    prevBtn: 'Anterior',
+    doneBtn: 'Concluído',
+    skipBtn: 'Pular',
+    closeTooltip: 'Fechar'
   };
 
   customI18N = {}; // Developer's custom i18n strings goes here.
@@ -1871,7 +1871,7 @@
       // loadTour if we are calling startTour directly. (When we call startTour
       // from window onLoad handler, we'll use currTour)
       if (!currTour) {
-        
+
         // Sanity check! Is there a tour?
         if(!tour){
           throw new Error('Tour data is required for startTour.');
@@ -2452,7 +2452,7 @@ var _ = {};
  */
 _.escape = function(str){
   if(customEscape){ return customEscape(str); }
-  
+
   if(str == null) return '';
   return ('' + str).replace(new RegExp('[&<>"\']', 'g'), function(match){
     if(match == '&'){ return '&amp;' }

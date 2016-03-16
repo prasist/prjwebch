@@ -14,7 +14,7 @@ var content = "<form id = 'form' method = 'post' action = '" + baseURL + "/scaff
         </div>\
         </table>\
         <div class 'row'>\
-        <button type = 'submit' class = 'val btn green col s12'><i class = 'material-icons left'>done</i>Done</button></div>\
+        <button type = 'submit' class = 'val btn green col s12'><i class = 'material-icons left'>done</i>Concluído</button></div>\
         </form>";
 var i = 0;
 var j = 0;

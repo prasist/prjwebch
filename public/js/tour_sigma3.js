@@ -3,11 +3,6 @@
       id: "tour_novousuario",
       steps: [
         {
-          nextBtn: "Próximo",
-          prevBtn: "Anterior",
-          doneBtn: "Concluir",
-          skipBtn: "Pular",
-          closeTooltip: "Fechar Tour",
           title: "Bem-Vindo ao Sigma3",
           content: "Criando um novo usuário. <br/><br/>Antes é necessário entender que o sistema separa os usuários por grupos, para assim facilitar as permissões de acesso que serão feitas posteriormente. Dito isso, vamos começar!",
           target: document.querySelector("#tour1"),
@@ -131,19 +126,19 @@
           placement: "left"
         },
         {
-          title: "Passo 2",
+          title: "Menu",
           content: "Use o menu de navegação para começar usar o sistema.",
           target: document.querySelector("#tour3_visaogeral"),
           placement: "right"
         },
         {
-          title: "Passo 3",
+          title: "Ocultar Menu",
           content: "Aqui você escolhe mostrar ou ocultar o menu de navegação.",
           target: document.querySelector("#tour4_visaogeral"),
           placement: "bottom"
         },
         {
-          title: "Passo 4",
+          title: "Menu - Ajuda",
           content: "Para outras informações e tutoriais mais detalhados, clique na opção 'Ajuda / Documentação'.",
           target: document.querySelector("#tour5_visaogeral"),
           placement: "bottom",
