@@ -28,7 +28,9 @@ class PessoasController extends Controller
     }
 
 
-    //Exibir listagem
+    /**//**
+     * Description = Listagem de Pessoas cadastradas
+     */
     public function index()
     {
 
@@ -49,6 +51,7 @@ class PessoasController extends Controller
         return view($this->rota . '.index', ['dados' => $dados, 'tipos' => $tipos]);
 
     }
+
 
     //Criar novo registro
     //parametros = $id (id do cadastro tipos de pessoas)
@@ -98,7 +101,6 @@ class PessoasController extends Controller
                 'ramos' => $ramos,
                 'cargos' => $cargos
             ]);
-
     }
 
 
@@ -108,140 +110,395 @@ class PessoasController extends Controller
 */
 public function salvar($request, $id, $tipo_operacao) {
 
-        /*Validação de campos - request*/
-        $this->validate($request, [
-                'razaosocial' => 'required|max:255:min:3',
-                'emailprincipal' => 'email',
-                'emailsecundario' => 'email',
-         ]);
-
-        $image = $request->file('caminhologo');
-
-        $input = $request->except(array('_token', 'ativo')); //não levar o token
-
-
-
-        /*--------------------------------- CADASTRO DE PESSOAS------------------- */
-        if ($tipo_operacao=="create") //novo registro
+/* ------------------ INICIA TRANSACTION -----------------------*/
+        \DB::transaction(function() use ($request, $id, $tipo_operacao)
         {
-             $pessoas = new pessoas();
-        }
-        else //update
-        {
-             $pessoas = pessoas::findOrfail($id);
-        }
+                /*Validação de campos - request*/
+                $this->validate($request, [
+                        'razaosocial' => 'required|max:255:min:3',
+                        'emailprincipal' => 'email',
+                        'emailsecundario' => 'email',
+                 ]);
 
-        $pessoas->razaosocial = $input['razaosocial'];
-        $pessoas->nomefantasia = $input['nomefantasia'];
-        $pessoas->cnpj_cpf = preg_replace("/[^0-9]/", '', ($input['cnpj']!="" ? $input['cnpj'] : $input['cpf']) );
-        $pessoas->inscricaoestadual_rg = $input['inscricaoestadual_rg'];
-        $pessoas->endereco = $input['endereco'];
-        $pessoas->numero = $input['numero'];
-        $pessoas->bairro = $input['bairro'];
-        $pessoas->cep = $input['cep'];
-        $pessoas->complemento = $input['complemento'];
-        $pessoas->cidade = $input['cidade'];
-        $pessoas->estado = $input['estado'];
-        $pessoas->grupos_pessoas_id = ($input['grupo']=="" ? null : $input['grupo']);
-        $pessoas->obs = $input['obs'];
-        $pessoas->fone_principal = preg_replace("/[^0-9]/", '', $input['foneprincipal']);
-        $pessoas->fone_secundario = preg_replace("/[^0-9]/", '', $input['fonesecundario']);
-        $pessoas->fone_recado = $input['fonerecado'];
-        $pessoas->fone_celular = $input['celular'];
-        $pessoas->emailprincipal = $input['emailprincipal'];
-        $pessoas->emailsecundario = $input['emailsecundario'];
-        $pessoas->ativo = ($input['opStatus'] ? 1 : 0);
-        $pessoas->tipos_pessoas_id = $input['tipos_pessoas_id'];
-
-        if ($input['datanasc']!="")
-        {
-            $data_formatada = \DateTime::createFromFormat('d/m/Y', $input['datanasc']);
-            $pessoas->datanasc = $data_formatada->format('Y-m-d');
-        }
-
-        $pessoas->tipopessoa = $input['opPessoa'];
-        $pessoas->website = $input['website'];
-        $pessoas->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
-        $pessoas->empresas_id = $this->dados_login->empresas_id;
-
-        if ($image)
-        {
-            $pessoas->caminhofoto = $image->getClientOriginalName();
-        }
-
-        $pessoas->save();
-        /*------------------------------FIM  CADASTRO DE PESSOAS------------------- */
+                $image = $request->file('caminhologo'); //Imagem / Logo
+                $input = $request->except(array('_token', 'ativo')); //não levar o token
 
 
+                /*--------------------------------- CADASTRO DE PESSOAS------------------- */
+                if ($tipo_operacao=="create") //novo registro
+                {
+                     $pessoas = new pessoas();
+                }
+                else //update
+                {
+                     $pessoas = pessoas::findOrfail($id);
+                }
 
-        /*------------------------------DADOS FINANCEIROS------------------------------*/
+                $pessoas->razaosocial = $input['razaosocial'];
+                $pessoas->nomefantasia = $input['nomefantasia'];
+                $pessoas->cnpj_cpf = preg_replace("/[^0-9]/", '', ($input['cnpj']!="" ? $input['cnpj'] : $input['cpf']) );
+                $pessoas->inscricaoestadual_rg = $input['inscricaoestadual_rg'];
+                $pessoas->endereco = $input['endereco'];
+                $pessoas->numero = $input['numero'];
+                $pessoas->bairro = $input['bairro'];
+                $pessoas->cep = $input['cep'];
+                $pessoas->complemento = $input['complemento'];
+                $pessoas->cidade = $input['cidade'];
+                $pessoas->estado = $input['estado'];
+                $pessoas->grupos_pessoas_id = ($input['grupo']=="" ? null : $input['grupo']);
+                $pessoas->obs = $input['obs'];
+                $pessoas->fone_principal = preg_replace("/[^0-9]/", '', $input['foneprincipal']);
+                $pessoas->fone_secundario = preg_replace("/[^0-9]/", '', $input['fonesecundario']);
+                $pessoas->fone_recado = $input['fonerecado'];
+                $pessoas->fone_celular = $input['celular'];
+                $pessoas->emailprincipal = $input['emailprincipal'];
+                $pessoas->emailsecundario = $input['emailsecundario'];
+                $pessoas->ativo = ($input['opStatus'] ? 1 : 0);
+                $pessoas->tipos_pessoas_id = $input['tipos_pessoas_id'];
 
-        if ($input['banco']!="" || $input['endereco_cobranca']!="") {
+                if ($input['datanasc']!="")
+                {
+                    $data_formatada = \DateTime::createFromFormat('d/m/Y', $input['datanasc']);
+                    $pessoas->datanasc = $data_formatada->format('Y-m-d');
+                }
 
+                $pessoas->tipopessoa = $input['opPessoa'];
+                $pessoas->website = $input['website'];
+                $pessoas->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
+                $pessoas->empresas_id = $this->dados_login->empresas_id;
+
+                if ($image)
+                {
+                    $pessoas->caminhofoto = $image->getClientOriginalName();
+                }
+
+                $pessoas->save();
+                /*------------------------------FIM  CADASTRO DE PESSOAS------------------- */
+
+
+
+                /*------------------------------DADOS FINANCEIROS------------------------------*/
                 $where = [
+                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                            'empresas_id' =>  $this->dados_login->empresas_id,
+                            'pessoas_id' => $pessoas->id
+                        ];
+
+                 /*Exclui dados antes de inserir*/
+                $financ = \App\Models\financpessoas::firstOrNew($where);
+                $financ->delete();
+
+                if ($input['banco']!="" || $input['endereco_cobranca']!="") {
+
+                        $where = [
+                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                            'empresas_id' =>  $this->dados_login->empresas_id,
+                            'pessoas_id' => $pessoas->id
+                        ];
+
+                        $financ = \App\Models\financpessoas::firstOrNew($where);
+
+                        $valores =
+                                [
+                                    'pessoas_id' => $pessoas->id,
+                                    'endereco' => $input['endereco_cobranca'],
+                                    'numero' => $input['numero_cobranca'],
+                                    'bairro' => $input['bairro_cobranca'],
+                                    'cep' => $input['cep_cobranca'],
+                                    'complemento' => $input['complemento_cobranca'],
+                                    'cidade' => $input['cidade_cobranca'],
+                                    'estado' => $input['estado_cobranca'],
+                                    'bancos_id' => ($input['banco']=="" ? null : $input['banco']),
+                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                    'empresas_id' =>  $this->dados_login->empresas_id
+                                ];
+
+                        $financ->fill($valores)->save();
+                        $financ->save();
+                    }
+                /*------------------------------FIM - DADOS FINANCEIROS------------------------------*/
+
+
+
+
+
+                /*------------------------------DADOS ECLESIASTICOS------------------------------*/
+                $where =
+                [
+                    'pessoas_id' => $pessoas->id,
+                    'empresas_id' =>  $this->dados_login->empresas_id,
+                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id
+                ];
+
+                /*Exclui antes de inserir ou atualizar*/
+                $eclesiasticos = \App\Models\membros_dados::firstOrNew($where);
+                $eclesiasticos->delete();
+
+                if ($input['opSexo'][0]!="" || $input['status']!="" || $input['graus']!="" || $input['lingua']!="" || $input['igreja']!=""
+                    || $input['familia']!="" || $input['opDoadorSangue'][0]!="" || $input['opDoadorOrgaos'][0]!="" || $input['naturalidade']!=""
+                    || $input['ufnaturalidade']!="" || $input['nacionalidade']!="" || $input['grpsangue']!="" || $input['necessidades']!=""
+                    || $input['facebook']!="" || $input['google']!="" || $input['instagram']!="" || $input['linkedin']!="")
+
+                {
+                        $eclesiasticos = \App\Models\membros_dados::firstOrNew($where);
+
+                        $valores =
+                        [
+                            'pessoas_id' => $pessoas->id,
+                            'empresas_id' =>  $this->dados_login->empresas_id,
+                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                            'status_id' => ($input['status']=="" ? null : $input['status']),
+                            'idiomas_id' => ($input['lingua']=="" ? null : $input['lingua']),
+                            'igrejas_id' => ($input['igreja']=="" ? null : $input['igreja']),
+                            'graus_id' => ($input['graus']=="" ? null : $input['graus']),
+                            'familias_id' => ($input['familia']=="" ? null : $input['familia']),
+                            'sexo' => ($input['opSexo'][0]=="" ? $input['opSexo'][1] : $input['opSexo'][0]),
+                            'doador_sangue' => ($input['opDoadorSangue'][0]=="" ? 'false' : $input['opDoadorSangue'][0]),
+                            'doador_orgaos' => ($input['opDoadorOrgaos'][0]=="" ? 'false' : $input['opDoadorOrgaos'][0]),
+                            'naturalidade' => $input['naturalidade'],
+                            'uf_naturalidade' => $input['ufnaturalidade'],
+                            'nacionalidade' => $input['nacionalidade'],
+                            'grupo_sanguinio' => ($input['grpsangue']=="" ? null : $input['grpsangue']),
+                            'possui_necessidades_especiais' => ($input['ck_necessidades']=="" ? 'false' : $input['ck_necessidades']),
+                            'descricao_necessidade_especial' => $input['necessidades'],
+                            'link_facebook' => $input['facebook'],
+                            'link_google' => $input['google'],
+                            'link_instagram' => $input['instagram'],
+                            'link_outros' => '',
+                            'link_linkedin' => $input['linkedin']
+                        ];
+
+                        $eclesiasticos->fill($valores)->save();
+                        $eclesiasticos->save();
+                    }
+                /*------------------------------FIM - DADOS ECLESIASTICOS------------------------------*/
+
+
+
+
+
+                /*------------------------------ DADOS PROFISSIONAIS ------------------------------*/
+                $where =
+                [
+                    'pessoas_id' => $pessoas->id,
+                    'empresas_id' =>  $this->dados_login->empresas_id,
+                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id
+                ];
+
+                /*Exclui antes de inserir ou atualizar*/
+                $profissionais = \App\Models\membros_profissionais::firstOrNew($where);
+                $profissionais->delete();
+
+                if ($input['nome_empresa']!="" || $input['endereco_prof']!=""
+                    || $input['numero_prof']!="" || $input['bairro_prof']!="" || $input['cep_prof']!="" || $input['complemento_prof']!=""
+                    || $input['cidade_prof']!="" || $input['estado_prof']!="" || $input['cargos']!="" || $input['ramos']!=""
+                    || $input['profissoes']!="" || $input['emailprofissional']!="")
+
+                {
+                        $profissionais = \App\Models\membros_profissionais::firstOrNew($where);
+
+                        $valores =
+                        [
+                            'pessoas_id' => $pessoas->id,
+                            'empresas_id' =>  $this->dados_login->empresas_id,
+                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                            'nome_empresa' => $input['nome_empresa'],
+                            'endereco' => $input['endereco_prof'],
+                            'numero' => $input['numero_prof'],
+                            'bairro' => $input['bairro_prof'],
+                            'cep' => $input['cep_prof'],
+                            'complemento' => $input['complemento_prof'],
+                            'cidade' => $input['cidade_prof'],
+                            'estado' => $input['estado_prof'],
+                            'cargos_id' => ($input['cargos']=="" ? null : $input['cargos']),
+                            'ramos_id' => ($input['ramos']=="" ? null : $input['ramos']),
+                            'profissoes_id' => ($input['profissoes']=="" ? null : $input['profissoes']),
+                            'emailprofissional' => $input['emailprofissional']
+                        ];
+
+                        $profissionais->fill($valores)->save();
+                        $profissionais->save();
+                    }
+                /*------------------------------ FIM - DADOS PROFISSIONAIS ------------------------------*/
+
+
+
+
+
+                /*------------------------------ Tabela MEMBROS_SITUACOES---------------------------*/
+                $where =
+                [
                     'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
                     'empresas_id' =>  $this->dados_login->empresas_id,
                     'pessoas_id' => $pessoas->id
                 ];
 
-                $financ = \App\Models\financpessoas::firstOrNew($where);
+                /*Excluir antes de inserir*/
+                $situacoes = \App\Models\membros_situacoes::firstOrNew($where);
+                $situacoes->delete();
 
-                $valores =
-                        [
-                            'pessoas_id' => $pessoas->id,
-                            'endereco' => $input['endereco_cobranca'],
-                            'numero' => $input['numero_cobranca'],
-                            'bairro' => $input['bairro_cobranca'],
-                            'cep' => $input['cep_cobranca'],
-                            'complemento' => $input['complemento_cobranca'],
-                            'cidade' => $input['cidade_cobranca'],
-                            'estado' => $input['estado_cobranca'],
-                            'bancos_id' => ($input['banco']=="" ? null : $input['banco']),
-                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                            'empresas_id' =>  $this->dados_login->empresas_id
-                        ];
+                if ($input['situacoes']!="")  /*Array combo multiple*/
+                {
+                        foreach($input['situacoes'] as $selected)
+                        {
+                                if ($selected!="")
+                                {
+                                        $where =
+                                        [
+                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                            'empresas_id' =>  $this->dados_login->empresas_id,
+                                            'pessoas_id' => $pessoas->id,
+                                            'situacoes_id' => $selected
+                                        ];
 
-                $financ->fill($valores)->save();
-                $financ->save();
-            }
-        /*------------------------------FIM - DADOS FINANCEIROS------------------------------*/
+                                        $situacoes = \App\Models\membros_situacoes::firstOrNew($where);
 
+                                        $valores =
+                                        [
+                                            'pessoas_id' => $pessoas->id,
+                                            'situacoes_id' => $selected,
+                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                            'empresas_id' =>  $this->dados_login->empresas_id
+                                        ];
 
-
-       /*--------------------------------------------------UPLOAD IMAGEM */
-       if ($image) {
-
-
-                /*Regras validação imagem*/
-                $rules = array(
-                    'image' => 'image',
-                    'image' => array('mimes:jpeg,jpg,png', 'max:2000kb'),
-                );
-
-                // Validar regras
-                $validator = \Validator::make([$image], $rules);
-
-                // Check to see if validation fails or passes
-
-                if ($validator->fails()) {
-
-                    \Session::flash('flash_message_erro', 'Os dados foram salvos, porém houve erro no envio da imagem.');
-                    return redirect($this->rota);
-
-                } else {
-
-                    $destinationPath = base_path() . '/public/images/persons'; //caminho onde será gravado
-                    if(!$image->move($destinationPath, $image->getClientOriginalName())) //move para pasta destino com nome fixo logo
-                    {
-                        //return $this->errors(['message' => 'Erro ao salvar imagem.', 'code' => 400]);
-                        \Session::flash('flash_message_erro', 'Os dados foram salvos, porém houve erro no envio da imagem.' . ['message' => 'Erro ao salvar imagem.', 'code' => 400]);
-                    }
-
+                                        $situacoes->fill($valores)->save();
+                                        $situacoes->save();
+                                }
+                        }
                 }
-         }
-         /*--------------------------------------------------FIM UPLOAD IMAGEM */
+                /*------------------------------ FIM Tabela MEMBROS_SITUACOES---------------------------*/
+
+
+
+
+
+                /*------------------------------ Tabela MEMBROS_FORMAÇÕES ---------------------------*/
+                $where =
+                [
+                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                    'empresas_id' =>  $this->dados_login->empresas_id,
+                    'pessoas_id' => $pessoas->id
+                ];
+
+                /*Excluir antes de inserir*/
+                $formacoes = \App\Models\membros_formacoes::firstOrNew($where);
+                $formacoes->delete();
+
+                if ($input['formacoes']!="")  /*Array combo multiple*/
+                {
+                        foreach($input['formacoes'] as $selected)
+                        {
+                                if ($selected!="")
+                                {
+                                        $where =
+                                        [
+                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                            'empresas_id' =>  $this->dados_login->empresas_id,
+                                            'pessoas_id' => $pessoas->id,
+                                            'formacoes_id' => $selected
+                                        ];
+
+                                        $formacoes = \App\Models\membros_formacoes::firstOrNew($where);
+
+                                        $valores =
+                                        [
+                                            'pessoas_id' => $pessoas->id,
+                                            'formacoes_id' => $selected,
+                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                            'empresas_id' =>  $this->dados_login->empresas_id
+                                        ];
+
+                                        $formacoes->fill($valores)->save();
+                                        $formacoes->save();
+                                }
+                        }
+                }
+                /*------------------------------ FIM Tabela MEMBROS_SITUACOES---------------------------*/
+
+
+
+
+
+                /*------------------------------ Tabela MEMBROS_IDIOMAS ---------------------------*/
+                $where =
+                [
+                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                    'empresas_id' =>  $this->dados_login->empresas_id,
+                    'pessoas_id' => $pessoas->id
+                ];
+
+                /*Excluir antes de inserir*/
+                $idiomas = \App\Models\membros_idiomas::firstOrNew($where);
+                $idiomas->delete();
+
+                if ($input['idiomas']!="")  /*Array combo multiple*/
+                {
+                        foreach($input['idiomas'] as $selected)
+                        {
+                                if ($selected!="")
+                                {
+                                        $where =
+                                        [
+                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                            'empresas_id' =>  $this->dados_login->empresas_id,
+                                            'pessoas_id' => $pessoas->id,
+                                            'idiomas_id' => $selected
+                                        ];
+
+                                        $idiomas = \App\Models\membros_idiomas::firstOrNew($where);
+
+                                        $valores =
+                                        [
+                                            'pessoas_id' => $pessoas->id,
+                                            'idiomas_id' => $selected,
+                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                            'empresas_id' =>  $this->dados_login->empresas_id
+                                        ];
+
+                                        $idiomas->fill($valores)->save();
+                                        $idiomas->save();
+                                }
+                        }
+                }
+                /*------------------------------ FIM Tabela MEMBROS_IDIOMAS---------------------------*/
+
+
+
+
+
+               /*-------------------------------------------------- UPLOAD IMAGEM */
+               if ($image)
+               {
+                        /*Regras validação imagem*/
+                        $rules = array (
+                            'image' => 'image',
+                            'image' => array('mimes:jpeg,jpg,png', 'max:2000kb'),
+                        );
+
+                        // Validar regras
+                        $validator = \Validator::make([$image], $rules);
+
+                        // Check to see if validation fails or passes
+                        if ($validator->fails())
+                        {
+                            \Session::flash('flash_message_erro', 'Os dados foram salvos, porém houve erro no envio da imagem.');
+                            return redirect($this->rota);
+                        }
+                        else
+                        {
+                            $destinationPath = base_path() . '/public/images/persons';   //caminho onde será gravado
+                            if(!$image->move($destinationPath, $image->getClientOriginalName()))    //move para pasta destino com nome fixo logo
+                            {
+                                \Session::flash('flash_message_erro', 'Os dados foram salvos, porém houve erro no envio da imagem.' . ['message' => 'Erro ao salvar imagem.', 'code' => 400]);
+                            }
+                        }
+                 }
+                 /*-------------------------------------------------- FIM UPLOAD IMAGEM */
+
+         });// ------------ FIM TRANSACTION
 
 }
+
 
     //Criar novo registro
     public function store(\Illuminate\Http\Request  $request)
@@ -294,13 +551,13 @@ public function salvar($request, $id, $tipo_operacao) {
     //Visualizar registro
     public function show (\Illuminate\Http\Request $request, $id, $id_tipo_pessoa)
     {
-            return $this->exibir($request, $id, $id_tipo_pessoa, 'true');
+          return $this->exibir($request, $id, $id_tipo_pessoa, 'true');
     }
 
     //Direciona para tela de alteracao
     public function edit(\Illuminate\Http\Request $request, $id, $id_tipo_pessoa)
     {
-            return $this->exibir($request, $id, $id_tipo_pessoa, 'false');
+          return $this->exibir($request, $id, $id_tipo_pessoa, 'false');
     }
 
     /**

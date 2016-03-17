@@ -22,20 +22,20 @@
 
                             @if ($id==1)
                             <p>
-                                 Tour Rápido - Cadastro de Usuários concluído! <br/>
+                                 <b>Tour Rápido - Cadastro de Usuários concluído!</b><br/>
                                 Clique no botão abaixo para confirmar e não exibir mais o Tour quando logar novamente.
                             </p>
                             @endif
 
                             @if ($id==2)
                             <p>
-                                 Tour Rápido - Visão Geral do SIGMA3 concluído! <br/>
+                                 <b>Tour Rápido - Visão Geral do SIGMA3 concluído!</b><br/>
                                 Clique no botão abaixo para confirmar e não exibir mais o Tour quando logar novamente.
                             </p>
                             @endif
 
                                 <div class="box-footer">
-                                    <button class = 'btn btn-primary' type ='submit'><span class="fa fa-trophy"></span>Confirmar Conclusão</button>
+                                    <button class = 'btn btn-primary' type ='submit'><span class="fa fa-trophy"></span> Confirmar Conclusão</button>
                                 </div>
                                 <div id="tour9"></div>
                                 <div id="tour6_visaogeral"></div>
@@ -45,8 +45,6 @@
                      </div>
                    </div>
                 </div>
-
-
 
          </div>
         </form>

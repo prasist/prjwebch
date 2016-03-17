@@ -490,6 +490,7 @@
                                                     <div id="collapseOne" class="panel-collapse collapse">
                                                       <div class="box-body">
 
+                                                      <input type="hidden" name="situacoes[]" class="minimal" value="">
 
                                                             <div class="row">
 
@@ -523,9 +524,9 @@
                                                                                        </div><!-- col-xs-5-->
 
                                                                                        <div class="col-xs-6">
-                                                                                              <label for="situacoes" class="control-label">Situações</label>
+                                                                                              <label for="situacoes[]" class="control-label">Situações</label>
 
-                                                                                              <select name="situacoes" class="form-control select2" multiple="multiple" style="width: 100%;">
+                                                                                              <select name="situacoes[]" class="form-control select2" multiple="multiple" style="width: 100%;">
                                                                                               <option  value="">(Selecionar)</option>
                                                                                               @foreach($situacoes as $item)
                                                                                                     <option  value="{{$item->id}}">{{$item->nome}}</option>
@@ -542,53 +543,58 @@
 
                                                             <div class="row">
 
+                                                            <!-- campos hidden -->
+                                                            <input type="hidden" name="opSexo[]" class="minimal" value="">
+                                                            <input type="hidden" name="opDoadorSangue[]" class="minimal" value="false">
+                                                            <input type="hidden" name="opDoadorOrgaos[]" class="minimal" value="false">
+                                                            <input type="hidden" name="ck_necessidades" class="minimal" value="false">
 
                                                                      <div class="col-md-6">
                                                                             <div class="box box-default">
                                                                                 <div class="box-body">
 
                                                                                    <div class="col-xs-4">
-                                                                                          <label for="opSexo" class="control-label">Sexo</label>
+                                                                                          <label for="opSexo[]" class="control-label">Sexo</label>
 
                                                                                           <br/>
                                                                                          <label>
-                                                                                              <input type="radio" name="opSexo" class="minimal" value="M">
+                                                                                              <input type="radio" name="opSexo[]" class="minimal" value="M">
                                                                                               Masculino
                                                                                          </label>
 
                                                                                          <label>
-                                                                                              <input type="radio" name="opSexo" class="minimal" value="F">
+                                                                                              <input type="radio" name="opSexo[]" class="minimal" value="F">
                                                                                               Feminino
                                                                                          </label>
                                                                                    </div>
 
                                                                                     <div class="col-xs-4">
-                                                                                          <label for="opDoadorSangue" class="control-label">Doador Sangue</label>
+                                                                                          <label for="opDoadorSangue[]" class="control-label">Doador Sangue</label>
 
                                                                                           <br/>
                                                                                          <label>
-                                                                                              <input type="radio" name="opDoadorSangue" class="minimal" value="true">
+                                                                                              <input type="radio" name="opDoadorSangue[]" class="minimal" value="true">
                                                                                               Sim
                                                                                          </label>
 
                                                                                          <label>
-                                                                                              <input type="radio" name="opDoadorSangue" class="minimal" value="false">
+                                                                                              <input type="radio" name="opDoadorSangue[]" class="minimal" value="false">
                                                                                               Não
                                                                                          </label>
 
                                                                                     </div>
 
                                                                                     <div class="col-xs-4">
-                                                                                            <label for="opDoadorOrgaos" class="control-label">Doador Orgãos</label>
+                                                                                            <label for="opDoadorOrgaos[]" class="control-label">Doador Orgãos</label>
 
                                                                                             <br/>
                                                                                            <label>
-                                                                                                <input type="radio" name="opDoadorOrgaos" class="minimal" value="true">
+                                                                                                <input type="radio" name="opDoadorOrgaos[]" class="minimal" value="true">
                                                                                                 Sim
                                                                                            </label>
 
                                                                                            <label>
-                                                                                                <input type="radio" name="opDoadorOrgaos" class="minimal" value="false">
+                                                                                                <input type="radio" name="opDoadorOrgaos[]" class="minimal" value="false">
                                                                                                 Não
                                                                                            </label>
                                                                                     </div>
@@ -640,7 +646,7 @@
 
                                                                                             <div class="col-xs-2">
                                                                                                       <label for="ufnaturalidade" class="control-label">UF</label>
-                                                                                                      <input id="ufnaturalidade" name = "naturalidade" type="text" class="form-control"  value="{{old('ufnaturalidade')}}">
+                                                                                                      <input id="ufnaturalidade" name = "ufnaturalidade" type="text" class="form-control"  value="{{old('ufnaturalidade')}}">
                                                                                             </div>
 
                                                                                               <div class="col-xs-3">
@@ -769,7 +775,7 @@
                                                                                        <div class="row">
 
                                                                                               <div class="col-xs-2">
-                                                                                                          <label for="cep_cobranca" class="control-label">CEP</label>
+                                                                                                          <label for="cep_prof" class="control-label">CEP</label>
                                                                                                           <div class="input-group">
                                                                                                                    <div class="input-group-addon">
                                                                                                                       <a href="#" data-toggle="tooltip" title="Digite o CEP para buscar automaticamente o endereço. Não informar pontos ou traços.">
@@ -777,7 +783,7 @@
                                                                                                                        </a>
                                                                                                                     </div>
 
-                                                                                                                    <input id="cep_cobranca" maxlength="8" name = "cep_cobranca" type="text" class="form-control" value="{{old('cep_cobranca')}}">
+                                                                                                                    <input id="cep_prof" maxlength="8" name = "cep_prof" type="text" class="form-control" value="{{old('cep_prof')}}">
                                                                                                             </div>
                                                                                               </div>
 
@@ -839,9 +845,9 @@
                                                                                         <div class="row"><!-- row-->
 
                                                                                                <div class="col-xs-4">
-                                                                                                      <label for="cargo" class="control-label">Cargo/Função</label>
+                                                                                                      <label for="cargos" class="control-label">Cargo/Função</label>
 
-                                                                                                      <select name="cargo" class="form-control select2" style="width: 100%;">
+                                                                                                      <select name="cargos" class="form-control select2" style="width: 100%;">
                                                                                                       <option  value="">(Selecionar)</option>
                                                                                                       @foreach($cargos as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
@@ -912,10 +918,12 @@
 
                                                                                         <div class="row"><!-- row-->
 
-                                                                                               <div class="col-xs-4">
-                                                                                                      <label for="grauinstrucao" class="control-label">Grau de Instrução</label>
+                                                                                              <input type="hidden" name="graus" class="minimal" value="">
 
-                                                                                                      <select name="grauinstrucao" class="form-control select2" style="width: 100%;">
+                                                                                               <div class="col-xs-4">
+                                                                                                      <label for="graus" class="control-label">Graus de Instrução</label>
+
+                                                                                                      <select name="graus" class="form-control select2" style="width: 100%;">
                                                                                                       <option  value="">(Selecione um registro)</option>
                                                                                                       @foreach($dados as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
@@ -924,10 +932,13 @@
 
                                                                                                </div><!-- col-xs-5-->
 
-                                                                                               <div class="col-xs-4">
-                                                                                                      <label for="formacao" class="control-label">Áreas de Formação</label>
+                                                                                               <input type="hidden" name="formacoes[]" class="minimal" value="">
+                                                                                               <input type="hidden" name="idiomas[]" class="minimal" value="">
 
-                                                                                                      <select name="formacao" multiple="multiple" data-placeholder="Selecione um ou vários" class="form-control select2" style="width: 100%;">
+                                                                                               <div class="col-xs-4">
+                                                                                                      <label for="formacoes[]" class="control-label">Áreas de Formação</label>
+
+                                                                                                      <select name="formacoes[]" multiple="multiple" data-placeholder="Selecione um ou vários" class="form-control select2" style="width: 100%;">
                                                                                                       <option  value="">(Selecione um ou vários)</option>
                                                                                                       @foreach($dados as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
@@ -937,9 +948,9 @@
                                                                                                </div><!-- col-xs-5-->
 
                                                                                                <div class="col-xs-4">
-                                                                                                      <label for="idiomas" class="control-label">Idiomas</label>
+                                                                                                      <label for="idiomas[]" class="control-label">Idiomas</label>
 
-                                                                                                      <select name="idiomas" multiple="multiple" data-placeholder="Selecione um ou vários" class="form-control select2" style="width: 100%;">
+                                                                                                      <select name="idiomas[]" multiple="multiple" data-placeholder="Selecione um ou vários" class="form-control select2" style="width: 100%;">
                                                                                                       <option  value="">(Selecione um ou vários)</option>
                                                                                                       @foreach($dados as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>

@@ -49,6 +49,7 @@ class Handler extends ExceptionHandler
     {
 
         //Tratamento de erros para PDOException
+
           if($e->getCode())
           {
                 return view('errors.msgerro')

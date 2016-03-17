@@ -21,10 +21,12 @@
                 <div class="panel-body">
 
                 <ul>
-                        <li>Você encerrou sua sessão</li>
+                        <li>
+                               <a  href="{{ url('/home') }}">Retonar ao SIGMA3</a>
+                        </li>
 
                         <li>
-                                <a  href="{{ url('http://177.101.149.118') }}">Retonar ao site SIGMA3</a>
+                                <a  href="{{ url('http://177.101.149.118') }}">Retonar ao site</a>
                         </li>
 
                         <li>
