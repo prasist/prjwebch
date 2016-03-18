@@ -924,7 +924,7 @@
                                                                                                       <label for="graus" class="control-label">Graus de Instrução</label>
 
                                                                                                       <select name="graus" class="form-control select2" style="width: 100%;">
-                                                                                                      <option  value="">(Selecione um registro)</option>
+                                                                                                      <option  value="">(Selecionar)</option>
                                                                                                       @foreach($dados as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
@@ -938,8 +938,8 @@
                                                                                                <div class="col-xs-4">
                                                                                                       <label for="formacoes[]" class="control-label">Áreas de Formação</label>
 
-                                                                                                      <select name="formacoes[]" multiple="multiple" data-placeholder="Selecione um ou vários" class="form-control select2" style="width: 100%;">
-                                                                                                      <option  value="">(Selecione um ou vários)</option>
+                                                                                                      <select name="formacoes[]" multiple="multiple" data-placeholder="Um ou Vários" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Um ou Vários)</option>
                                                                                                       @foreach($dados as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
@@ -950,8 +950,8 @@
                                                                                                <div class="col-xs-4">
                                                                                                       <label for="idiomas[]" class="control-label">Idiomas</label>
 
-                                                                                                      <select name="idiomas[]" multiple="multiple" data-placeholder="Selecione um ou vários" class="form-control select2" style="width: 100%;">
-                                                                                                      <option  value="">(Selecione um ou vários)</option>
+                                                                                                      <select name="idiomas[]" multiple="multiple" data-placeholder="Um ou Vários" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Um ou Vários)</option>
                                                                                                       @foreach($dados as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
@@ -987,6 +987,7 @@
                                                       </div>
                                                       <div id="tab4" class="panel-collapse collapse">
                                                         <div class="box-body">
+
 
                                                            <div class="row">
                                                             <div class="col-md-12">
@@ -1032,7 +1033,9 @@
                                                                                                           <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                     @endforeach
                                                                                                     </select>
+
                                                                                                </div>
+
 
                                                                                                <div class="col-xs-5">
                                                                                                   <label for="igrejacasamento" class="control-label">Igreja Casamento</label>
@@ -1584,54 +1587,44 @@
 
                                                                                 <div class="box-body"><!-- box-body-->
 
-
                                                                                         <div class="row"><!-- row-->
 
                                                                                               <div class="col-xs-4">
-                                                                                                    <label for="opDoadorSangue" class="control-label">Prefere trabalhar com :</label>
+                                                                                                    <label for="prefere_trabalhar_com" class="control-label">Prefere trabalhar com :</label>
 
-                                                                                                    <br/>
-                                                                                                   <label>
-                                                                                                        <input type="radio" name="opDoadorSangue" class="minimal" value="S">
-                                                                                                        Tarefas
-                                                                                                   </label>
-
-                                                                                                   <label>
-                                                                                                        <input type="radio" name="opDoadorSangue" class="minimal" value="N">
-                                                                                                        Pessoas
-                                                                                                   </label>
+                                                                                                     <select name="prefere_trabalhar_com" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecionar)</option>
+                                                                                                            <option  value="P">Pessoas</option>
+                                                                                                            <option  value="T">Tarefas</option>
+                                                                                                      </select>
                                                                                               </div><!-- end col-xs-->
 
                                                                                               <div class="col-xs-4">
-                                                                                                    <label for="opDoadorSangue" class="control-label">Considera-se :</label>
 
-                                                                                                    <br/>
-                                                                                                   <label>
-                                                                                                        <input type="radio" name="opDoadorSangue" class="minimal" value="S">
-                                                                                                        Muito Estruturado
-                                                                                                   </label>
+                                                                                                    <label for="considera_se" class="control-label">Considera-se :</label>
 
-                                                                                                   <label>
-                                                                                                        <input type="radio" name="opDoadorSangue" class="minimal" value="N">
-                                                                                                        Estruturado
-                                                                                                   </label>
-
-                                                                                                   <label>
-                                                                                                        <input type="radio" name="opDoadorSangue" class="minimal" value="S">
-                                                                                                        Pouco Estruturado
-                                                                                                   </label>
+                                                                                                      <select name="considera_se" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecionar)</option>
+                                                                                                            <option  value="M">Muito Estruturado</option>
+                                                                                                            <option  value="P">Pouco Estruturado</option>
+                                                                                                            <option  value="E">Estruturado</option>
+                                                                                                      </select>
 
                                                                                               </div><!-- end col-xs-->
 
                                                                                         </div><!-- end row-->
 
+                                                                                        <input type="hidden" name="dons[]" class="minimal" value="">
+                                                                                        <input type="hidden" name="habilidades[]" class="minimal" value="">
+
+
                                                                                         <div class="row"><!-- row-->
 
                                                                                                <div class="col-xs-4">
-                                                                                                      <label for="disponibilidade" class="control-label">Disponibilidade de Tempo</label>
+                                                                                                      <label for="disponibilidades" class="control-label">Disponibilidade de Tempo</label>
 
-                                                                                                      <select name="disponibilidade" class="form-control select2" style="width: 100%;">
-                                                                                                      <option  value="">(Selecione um registro)</option>
+                                                                                                      <select name="disponibilidades" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Selecionar)</option>
                                                                                                       @foreach($dados as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
@@ -1640,10 +1633,10 @@
                                                                                                </div><!-- col-xs-5-->
 
                                                                                                <div class="col-xs-4">
-                                                                                                      <label for="dons" class="control-label">Dons Espirituais</label>
+                                                                                                      <label for="dons[]" class="control-label">Dons Espirituais</label>
 
-                                                                                                      <select name="dons" multiple="multiple" data-placeholder="Selecione um ou vários" class="form-control select2" style="width: 100%;">
-                                                                                                      <option  value="">(Selecione um ou vários)</option>
+                                                                                                      <select name="dons[]" multiple="multiple" data-placeholder="Um ou Vários" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Um ou Vários)</option>
                                                                                                       @foreach($dados as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
@@ -1652,10 +1645,10 @@
                                                                                                </div><!-- col-xs-5-->
 
                                                                                                <div class="col-xs-4">
-                                                                                                      <label for="habilidades" class="control-label">Habilidades</label>
+                                                                                                      <label for="habilidades[]" class="control-label">Habilidades</label>
 
-                                                                                                      <select name="habilidades" multiple="multiple" data-placeholder="Selecione um ou vários" class="form-control select2" style="width: 100%;">
-                                                                                                      <option  value="">(Selecione um ou vários)</option>
+                                                                                                      <select name="habilidades[]" multiple="multiple" data-placeholder="Um ou Vários" class="form-control select2" style="width: 100%;">
+                                                                                                      <option  value="">(Um ou Vários)</option>
                                                                                                       @foreach($dados as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
@@ -1698,10 +1691,10 @@
                                                                                                 <div class="row"><!-- row-->
 
                                                                                                        <div class="col-xs-6">
-                                                                                                              <label for="ministerio" class="control-label">Ministério</label>
+                                                                                                              <label for="ministerios[]" class="control-label">Ministério</label>
 
-                                                                                                              <select name="ministerio" multiple="multiple" class="form-control select2" style="width: 100%;">
-                                                                                                              <option  value="">(Selecione um ou vários)</option>
+                                                                                                              <select name="ministerios[]" multiple="multiple" data-placeholder="Um ou Vários" class="form-control select2" style="width: 100%;">
+                                                                                                              <option  value="">(Um ou Vários)</option>
                                                                                                               @foreach($dados as $item)
                                                                                                                     <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                               @endforeach
@@ -1710,9 +1703,9 @@
                                                                                                        </div><!-- col-xs-5-->
 
                                                                                                        <div class="col-xs-6">
-                                                                                                              <label for="atividades" class="control-label">Atividade</label>
+                                                                                                              <label for="atividades[]" class="control-label">Atividade</label>
 
-                                                                                                              <select name="atividades" multiple="multiple" class="form-control select2" style="width: 100%;">
+                                                                                                              <select name="atividades[]" multiple="multiple" data-placeholder="Um ou Vários" class="form-control select2" style="width: 100%;">
                                                                                                               <option  value="">(Selecionar)</option>
                                                                                                               @foreach($dados as $item)
                                                                                                                     <option  value="{{$item->id}}">{{$item->nome}}</option>

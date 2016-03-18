@@ -250,9 +250,13 @@ public function salvar($request, $id, $tipo_operacao) {
                             'status_id' => ($input['status']=="" ? null : $input['status']),
                             'idiomas_id' => ($input['lingua']=="" ? null : $input['lingua']),
                             'igrejas_id' => ($input['igreja']=="" ? null : $input['igreja']),
+                            'estadoscivis_id' => ($input['estadocivil']=="" ? null : $input['estadocivil']),
+                            'disponibilidades_id' => ($input['disponibilidades']=="" ? null : $input['disponibilidades']),
                             'graus_id' => ($input['graus']=="" ? null : $input['graus']),
                             'familias_id' => ($input['familia']=="" ? null : $input['familia']),
                             'sexo' => ($input['opSexo'][0]=="" ? $input['opSexo'][1] : $input['opSexo'][0]),
+                            'prefere_trabalhar_com' => ($input['prefere_trabalhar_com']=="" ? null : $input['prefere_trabalhar_com']),
+                            'considera_se' => ($input['considera_se']=="" ? null : $input['considera_se']),
                             'doador_sangue' => ($input['opDoadorSangue'][0]=="" ? 'false' : $input['opDoadorSangue'][0]),
                             'doador_orgaos' => ($input['opDoadorOrgaos'][0]=="" ? 'false' : $input['opDoadorOrgaos'][0]),
                             'naturalidade' => $input['naturalidade'],
@@ -466,6 +470,101 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
 
+                /*------------------------------ Tabela MEMBROS_DONS ---------------------------*/
+                $where =
+                [
+                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                    'empresas_id' =>  $this->dados_login->empresas_id,
+                    'pessoas_id' => $pessoas->id
+                ];
+
+                /*Excluir antes de inserir*/
+                $dons = \App\Models\membros_dons::firstOrNew($where);
+                $dons->delete();
+
+                if ($input['dons']!="")  /*Array combo multiple*/
+                {
+                        foreach($input['dons'] as $selected)
+                        {
+                                if ($selected!="")
+                                {
+                                        $where =
+                                        [
+                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                            'empresas_id' =>  $this->dados_login->empresas_id,
+                                            'pessoas_id' => $pessoas->id,
+                                            'dons_id' => $selected
+                                        ];
+
+                                        $dons = \App\Models\membros_dons::firstOrNew($where);
+
+                                        $valores =
+                                        [
+                                            'pessoas_id' => $pessoas->id,
+                                            'dons_id' => $selected,
+                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                            'empresas_id' =>  $this->dados_login->empresas_id
+                                        ];
+
+                                        $dons->fill($valores)->save();
+                                        $dons->save();
+                                }
+                        }
+                }
+                /*------------------------------ FIM Tabela MEMBROS_DONS---------------------------*/
+
+
+
+
+
+                /*------------------------------ Tabela MEMBROS_HABILIDADES ---------------------------*/
+                $where =
+                [
+                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                    'empresas_id' =>  $this->dados_login->empresas_id,
+                    'pessoas_id' => $pessoas->id
+                ];
+
+                /*Excluir antes de inserir*/
+                $habilidades = \App\Models\membros_habilidades::firstOrNew($where);
+                $habilidades->delete();
+
+                if ($input['habilidades']!="")  /*Array combo multiple*/
+                {
+                        foreach($input['habilidades'] as $selected)
+                        {
+                                if ($selected!="")
+                                {
+                                        $where =
+                                        [
+                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                            'empresas_id' =>  $this->dados_login->empresas_id,
+                                            'pessoas_id' => $pessoas->id,
+                                            'habilidades_id' => $selected
+                                        ];
+
+                                        $habilidades = \App\Models\membros_habilidades::firstOrNew($where);
+
+                                        $valores =
+                                        [
+                                            'pessoas_id' => $pessoas->id,
+                                            'habilidades_id' => $selected,
+                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                            'empresas_id' =>  $this->dados_login->empresas_id
+                                        ];
+
+                                        $habilidades->fill($valores)->save();
+                                        $habilidades->save();
+                                }
+                        }
+                }
+                /*------------------------------ FIM Tabela MEMBROS_HABILIDADES---------------------------*/
+
+
+
+
+
+
                /*-------------------------------------------------- UPLOAD IMAGEM */
                if ($image)
                {
@@ -498,6 +597,7 @@ public function salvar($request, $id, $tipo_operacao) {
          });// ------------ FIM TRANSACTION
 
 }
+
 
 
     //Criar novo registro
