@@ -73,12 +73,14 @@ class PessoasController extends Controller
         //Ex; Pessoa fisica, habilita cpf e rg, juridica habilita CNPJ,  membros habilita dados especificos de membresia.
         $habilitar_interface = \App\Models\tipospessoas::findOrfail($id);
 
-        /*Para preencher combos Dados eclesiasticos*/
+        /*
+        Para preencher combos Dados eclesiasticos
+        */
+        $familias = \App\Models\pessoas::select('razaosocial as nome', 'id')->where(['empresas_id' => $this->dados_login->empresas_id, 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id])->get();
         $igrejas = \App\Models\igrejas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         $situacoes = \App\Models\situacoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         $idiomas = \App\Models\idiomas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         $status = \App\Models\status::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-        $familias = \App\Models\pessoas::select('razaosocial', 'id')->where(['empresas_id' => $this->dados_login->empresas_id, 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id])->get();
         $profissoes = \App\Models\profissoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         $ramos = \App\Models\ramos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         $cargos = \App\Models\cargos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
@@ -89,6 +91,9 @@ class PessoasController extends Controller
         $dons = \App\Models\dons::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         $habilidades = \App\Models\habilidades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         $religioes = \App\Models\religioes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $atividades = \App\Models\atividades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $ministerios = \App\Models\ministerios::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $motivos = \App\Models\tiposmovimentacao::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         /* FIM Para preencher combos Dados eclesiasticos*/
 
         //Para carregar combo de bancos
@@ -113,6 +118,9 @@ class PessoasController extends Controller
                 'dons' => $dons,
                 'habilidades' => $habilidades,
                 'estadoscivis' => $estadoscivis,
+                'motivos' => $motivos,
+                'atividades' => $atividades,
+                'ministerios' => $ministerios,
                 'cargos' => $cargos
             ]);
     }
@@ -248,8 +256,9 @@ public function salvar($request, $id, $tipo_operacao) {
                 $eclesiasticos = \App\Models\membros_dados::firstOrNew($where);
                 $eclesiasticos->delete();
 
-                if ($input['opSexo'][0]!="" || $input['status']!="" || $input['graus']!="" || $input['lingua']!="" || $input['igreja']!=""
-                    || $input['familia']!="" || $input['opDoadorSangue'][0]!="" || $input['opDoadorOrgaos'][0]!="" || $input['naturalidade']!=""
+
+                if ($input['opSexo']!="" || $input['status']!="" || $input['graus']!="" || $input['lingua']!="" || $input['igreja']!=""
+                    || $input['familia']!="" || $input['opDoadorSangue']!="" || $input['opDoadorOrgaos']!="" || $input['naturalidade']!=""
                     || $input['ufnaturalidade']!="" || $input['nacionalidade']!="" || $input['grpsangue']!="" || $input['necessidades']!=""
                     || $input['facebook']!="" || $input['google']!="" || $input['instagram']!="" || $input['linkedin']!="")
 
@@ -264,15 +273,15 @@ public function salvar($request, $id, $tipo_operacao) {
                             'status_id' => ($input['status']=="" ? null : $input['status']),
                             'idiomas_id' => ($input['lingua']=="" ? null : $input['lingua']),
                             'igrejas_id' => ($input['igreja']=="" ? null : $input['igreja']),
-                            'estadoscivis_id' => ($input['estadocivil']=="" ? null : $input['estadocivil']),
+                            'estadoscivis_id' => ($input['estadoscivis']=="" ? null : $input['estadoscivis']),
                             'disponibilidades_id' => ($input['disponibilidades']=="" ? null : $input['disponibilidades']),
                             'graus_id' => ($input['graus']=="" ? null : $input['graus']),
                             'familias_id' => ($input['familia']=="" ? null : $input['familia']),
-                            'sexo' => ($input['opSexo'][0]=="" ? $input['opSexo'][1] : $input['opSexo'][0]),
+                            'sexo' => ($input['opSexo']=="" ? null : $input['opSexo']),
                             'prefere_trabalhar_com' => ($input['prefere_trabalhar_com']=="" ? null : $input['prefere_trabalhar_com']),
                             'considera_se' => ($input['considera_se']=="" ? null : $input['considera_se']),
-                            'doador_sangue' => ($input['opDoadorSangue'][0]=="" ? 'false' : $input['opDoadorSangue'][0]),
-                            'doador_orgaos' => ($input['opDoadorOrgaos'][0]=="" ? 'false' : $input['opDoadorOrgaos'][0]),
+                            'doador_sangue' => $input['opDoadorSangue'],
+                            'doador_orgaos' => $input['opDoadorOrgaos'],
                             'naturalidade' => $input['naturalidade'],
                             'uf_naturalidade' => $input['ufnaturalidade'],
                             'nacionalidade' => $input['nacionalidade'],
@@ -579,6 +588,156 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
 
+                /*------------------------------ Tabela MEMBROS_ATIVIDADES ---------------------------*/
+                $where =
+                [
+                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                    'empresas_id' =>  $this->dados_login->empresas_id,
+                    'pessoas_id' => $pessoas->id
+                ];
+
+                /*Excluir antes de inserir*/
+                $atividades = \App\Models\membros_atividades::firstOrNew($where);
+                $atividades->delete();
+
+                if ($input['atividades']!="")  /*Array combo multiple*/
+                {
+                        foreach($input['atividades'] as $selected)
+                        {
+                                if ($selected!="")
+                                {
+                                        $where =
+                                        [
+                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                            'empresas_id' =>  $this->dados_login->empresas_id,
+                                            'pessoas_id' => $pessoas->id,
+                                            'atividades_id' => $selected
+                                        ];
+
+                                        $atividades = \App\Models\membros_atividades::firstOrNew($where);
+
+                                        $valores =
+                                        [
+                                            'pessoas_id' => $pessoas->id,
+                                            'atividades_id' => $selected,
+                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                            'empresas_id' =>  $this->dados_login->empresas_id
+                                        ];
+
+                                        $atividades->fill($valores)->save();
+                                        $atividades->save();
+                                }
+                        }
+                }
+                /*------------------------------ FIM Tabela MEMBROS_ATIVIDADES---------------------------*/
+
+
+
+
+
+                /*------------------------------ Tabela MEMBROS_MINISTERIOS ---------------------------*/
+                $where =
+                [
+                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                    'empresas_id' =>  $this->dados_login->empresas_id,
+                    'pessoas_id' => $pessoas->id
+                ];
+
+                /*Excluir antes de inserir*/
+                $ministerios = \App\Models\membros_ministerios::firstOrNew($where);
+                $ministerios->delete();
+
+                if ($input['ministerios']!="")  /*Array combo multiple*/
+                {
+                        foreach($input['ministerios'] as $selected)
+                        {
+                                if ($selected!="")
+                                {
+                                        $where =
+                                        [
+                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                            'empresas_id' =>  $this->dados_login->empresas_id,
+                                            'pessoas_id' => $pessoas->id,
+                                            'ministerios_id' => $selected
+                                        ];
+
+                                        $ministerios = \App\Models\membros_ministerios::firstOrNew($where);
+
+                                        $valores =
+                                        [
+                                            'pessoas_id' => $pessoas->id,
+                                            'ministerios_id' => $selected,
+                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                            'empresas_id' =>  $this->dados_login->empresas_id
+                                        ];
+
+                                        $ministerios->fill($valores)->save();
+                                        $ministerios->save();
+                                }
+                        }
+                }
+                /*------------------------------ FIM Tabela MEMBROS_MINISTERIOS---------------------------*/
+
+
+
+
+                /*------------------------------ DADOS HIST. ECLESIASTICOS ------------------------------*/
+                $where =
+                [
+                    'pessoas_id' => $pessoas->id,
+                    'empresas_id' =>  $this->dados_login->empresas_id,
+                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id
+                ];
+
+                /*Exclui antes de inserir ou atualizar*/
+                $historico = \App\Models\membros_hist_eclesiasticos::firstOrNew($where);
+                $historico->delete();
+
+                if ($input['igrejaanterior']!="" || $input['foneigrejaanterior']!=""
+                    || $input['religiao']!="" || $input['cep_igreja_anterior']!="" || $input['endereco_igreja_anterior']!="" || $input['numero_igreja_anterior']!=""
+                    || $input['cidade_igreja_anterior']!="" || $input['estado_igreja_anterior']!="" || $input['bairro_igreja_anterior']!="" || $input['databatismo']!=""
+                    || $input['igreja_batismo']!="" || $input['celebrador']!="" || $input['dataentrada']!="" || $input['datasaida']!="")
+
+                {
+                        $historico = \App\Models\membros_hist_eclesiasticos::firstOrNew($where);
+
+
+
+                        $valores =
+                        [
+                            'pessoas_id' => $pessoas->id,
+                            'empresas_id' =>  $this->dados_login->empresas_id,
+                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                            'nome_igreja_anterior' => $input['igrejaanterior'],
+                            'telefone'  => $input['foneigrejaanterior'],
+                            'religioes_id' => ($input['religioes']=="" ? null : $input['religioes']),
+                            'endereco' => $input['endereco_igreja_anterior'],
+                            'numero' => $input['numero_igreja_anterior'],
+                            'bairro' => $input['bairro_igreja_anterior'],
+                            'cep' => $input['cep_igreja_anterior'],
+                            'complemento' => $input['complemento_igreja_anterior'],
+                            'cidade' => $input['cidade_igreja_anterior'],
+                            'estado' => $input['estado_igreja_anterior'],
+                            'data_batismo' => $input['databatismo'],
+                            'nome_igreja_batismo' => $input['igreja_batismo'],
+                            'celebrador' => $input['celebrador'],
+                            'data_entrada' => $input['dataentrada'],
+                            'data_saida' => $input['datasaida'],
+                            'motivos_entrada_id' => ($input['motivoentrada']=="" ? null : $input['motivoentrada']),
+                            'motivos_saida_id' => ($input['motivosaida']=="" ? null : $input['motivosaida']),
+                            'registro_ata_entrada' => $input['ataentrada'],
+                            'registro_ata_saida' => $input['atasaida'],
+                            'observacao' => $input['observacoes_hist']
+                        ];
+
+                        $historico->fill($valores)->save();
+                        $historico->save();
+                    }
+                /*------------------------------ FIM - HIST. ECLESIASTICO ------------------------------*/
+
+
+
+
                /*-------------------------------------------------- UPLOAD IMAGEM */
                if ($image)
                {
@@ -655,10 +814,64 @@ public function salvar($request, $id, $tipo_operacao) {
         ->where('pessoas.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->get();
 
+        $membros_dados_pessoais  = \App\Models\membros_dados::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('pessoas_id', $id)
+        ->get();
+
+        /*
+        Para preencher combos Dados eclesiasticos
+        */
+        $familias = \App\Models\pessoas::select('razaosocial as nome', 'id')->where(['empresas_id' => $this->dados_login->empresas_id, 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id])->get();
+        $igrejas = \App\Models\igrejas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $situacoes = \App\Models\situacoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $idiomas = \App\Models\idiomas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $status = \App\Models\status::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $profissoes = \App\Models\profissoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $ramos = \App\Models\ramos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $cargos = \App\Models\cargos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $graus = \App\Models\graus::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $formacoes = \App\Models\areas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $estadoscivis = \App\Models\civis::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $disponibilidades = \App\Models\disponibilidades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $dons = \App\Models\dons::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $habilidades = \App\Models\habilidades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $religioes = \App\Models\religioes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $atividades = \App\Models\atividades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $ministerios = \App\Models\ministerios::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $motivos = \App\Models\tiposmovimentacao::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        /* FIM Para preencher combos Dados eclesiasticos*/
+
         //Listagem de bancos (Para carregar dropdown )
         $bancos = \App\Models\bancos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
 
-        return view($this->rota . '.edit', ['grupos' =>$grupos, 'preview' => $preview, 'interface' => $habilitar_interface, 'bancos' => $bancos, 'pessoas' => $pessoas]);
+        return view($this->rota . '.edit',
+            [
+                'grupos' =>$grupos,
+                'preview' => $preview,
+                'interface' => $habilitar_interface,
+                'bancos' => $bancos,
+                'membros_dados_pessoais' =>$membros_dados_pessoais,
+                'pessoas' => $pessoas,
+                'igrejas' => $igrejas,
+                'situacoes' => $situacoes,
+                'status' => $status,
+                'familias' => $familias,
+                'idiomas' => $idiomas,
+                'profissoes' => $profissoes,
+                'ramos' => $ramos,
+                'graus' => $graus,
+                'formacoes' => $formacoes,
+                'religioes' => $religioes,
+                'disponibilidades' => $disponibilidades,
+                'dons' => $dons,
+                'habilidades' => $habilidades,
+                'estadoscivis' => $estadoscivis,
+                'motivos' => $motivos,
+                'atividades' => $atividades,
+                'ministerios' => $ministerios,
+                'cargos' => $cargos
+            ]
+            );
 
     }
 

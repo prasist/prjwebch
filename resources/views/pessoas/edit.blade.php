@@ -50,6 +50,15 @@
                                         </a>
                                    </li>
 
+                                  @if ($interface->membro)
+                                   <li>
+                                        <a href="#eclesia" role="tab" data-toggle="tab">
+                                            <i class="fa fa-child"></i> Dados Eclesiásticos
+                                        </a>
+                                   </li>
+                                   @endif
+
+
                           </ul>
 
                               <!-- Tab panes -->
@@ -101,6 +110,8 @@
 
 
                                              <div class="col-xs-5">
+
+                                                   <!--
                                                     <label for="grupo" class="control-label">Grupo</label>
 
                                                     <select name="grupo" class="form-control select2" style="width: 100%;">
@@ -109,6 +120,9 @@
                                                           <option  value="{{$item->id}}" {{ $pessoas[0]->grupos_pessoas_id==$item->id ? 'selected' : '' }} >{{$item->nome}}</option>
                                                     @endforeach
                                                     </select>
+                                                    -->
+
+                                                  @include('carregar_combos', array('dados'=>$grupos, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>$pessoas[0]->grupos_pessoas_id))
 
                                                     <!-- se houver erros na validacao do form request -->
                                                        @if ($errors->has('grupo'))
@@ -376,15 +390,7 @@
 
                                       <div class="row">
                                             <div class="col-xs-8">
-                                                  <label for="banco" class="control-label">Banco Emissão boleto</label>
-
-                                                  <select name="banco" class="form-control select2" style="width: 100%;">
-                                                  <option  value="">(Selecione um Banco)</option>
-                                                  @foreach($bancos as $item)
-                                                        <option  value="{{$item->id}}"  {{ ($pessoas[0]->bancos_id==$item->id ? 'selected=selected' : '') }} >{{$item->nome}}</option>
-                                                  @endforeach
-                                                  </select>
-
+                                                  @include('carregar_combos', array('dados'=>$bancos, 'titulo' =>'Banco Emissão Boleto', 'id_combo'=>'banco', 'complemento'=>'', 'comparar'=>$pessoas[0]->bancos_id))
                                             </div>
                                       </div>
 
@@ -460,6 +466,14 @@
                                                 </div>
                                          </div>
                                 </div><!-- FIM - TAB OBSERVACOES -->
+
+
+                              <!--
+                               AQUI INCLUI ABAS DE DADOS ECLESIASTICOS
+                               Será o mesmo include para edicao e inclusao, diferenciando pela variavel tipo_operacao. Quando inclusao mostra no campo
+                               value os dados de post value = old('nomecampo'), quando edição mostra os dados do banco de dados value = $tabela->campo
+                               -->
+                               @include('pessoas.dados_eclesiasticos', array('tipo_operacao'=>'alteracao'))
 
 
                          </div><!-- Fim tab panes-->
