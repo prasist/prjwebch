@@ -925,7 +925,7 @@
 
                                                                                                       <select name="graus" class="form-control select2" style="width: 100%;">
                                                                                                       <option  value="">(Selecionar)</option>
-                                                                                                      @foreach($dados as $item)
+                                                                                                      @foreach($graus as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
                                                                                                       </select>
@@ -940,7 +940,7 @@
 
                                                                                                       <select name="formacoes[]" multiple="multiple" data-placeholder="Um ou Vários" class="form-control select2" style="width: 100%;">
                                                                                                       <option  value="">(Um ou Vários)</option>
-                                                                                                      @foreach($dados as $item)
+                                                                                                      @foreach($formacoes as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
                                                                                                       </select>
@@ -952,7 +952,7 @@
 
                                                                                                       <select name="idiomas[]" multiple="multiple" data-placeholder="Um ou Vários" class="form-control select2" style="width: 100%;">
                                                                                                       <option  value="">(Um ou Vários)</option>
-                                                                                                      @foreach($dados as $item)
+                                                                                                      @foreach($idiomas as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
                                                                                                       </select>
@@ -995,11 +995,11 @@
                                                                     <div class="box-body"><!-- box-body-->
 
                                                                               <div class="col-xs-3">
-                                                                                      <label for="estadocivil" class="control-label">Estado Civil</label>
+                                                                                      <label for="estadoscivis" class="control-label">Estado Civil</label>
 
-                                                                                      <select name="estadocivil" class="form-control select2" style="width: 100%;">
+                                                                                      <select name="estadoscivis" class="form-control select2" style="width: 100%;">
                                                                                       <option  value="">(Selecionar)</option>
-                                                                                      @foreach($dados as $item)
+                                                                                      @foreach($estadoscivis as $item)
                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                       @endforeach
                                                                                       </select>
@@ -1029,8 +1029,8 @@
                                                                                                     <label for="conjuge" class="control-label">Nome</label>
                                                                                                     <select name="estadocivil" class="form-control select2" style="width: 100%;">
                                                                                                     <option  value="">(Selecionar)</option>
-                                                                                                    @foreach($dados as $item)
-                                                                                                          <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                    @foreach($familias as $item)
+                                                                                                          <option  value="{{$item->id}}">{{$item->razaosocial}}</option>
                                                                                                     @endforeach
                                                                                                     </select>
 
@@ -1063,7 +1063,7 @@
                                                                                                     <label for="status_conjuge" class="control-label">Status</label>
                                                                                                     <select name="status_conjuge" class="form-control select2" style="width: 100%;">
                                                                                                     <option  value="">(Selecionar)</option>
-                                                                                                    @foreach($dados as $item)
+                                                                                                    @foreach($status as $item)
                                                                                                           <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                     @endforeach
                                                                                                     </select>
@@ -1073,7 +1073,7 @@
                                                                                                     <label for="profissao_conjuge" class="control-label">Profissão</label>
                                                                                                     <select name="profissao_conjuge" class="form-control select2" style="width: 100%;">
                                                                                                     <option  value="">(Selecionar)</option>
-                                                                                                    @foreach($dados as $item)
+                                                                                                    @foreach($profissoes as $item)
                                                                                                           <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                     @endforeach
                                                                                                     </select>
@@ -1132,8 +1132,8 @@
                                                                                                     <label for="filhos" class="control-label">Nome</label>
                                                                                                     <select name="filhos" class="form-control select2" style="width: 100%;">
                                                                                                     <option  value="">(Selecionar)</option>
-                                                                                                    @foreach($dados as $item)
-                                                                                                          <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                    @foreach($familias as $item)
+                                                                                                          <option  value="{{$item->id}}">{{$item->razaosocial}}</option>
                                                                                                     @endforeach
                                                                                                     </select>
                                                                                                </div>
@@ -1174,7 +1174,7 @@
                                                                                                     <label for="status_conjuge" class="control-label">Status</label>
                                                                                                     <select name="status_conjuge" class="form-control select2" style="width: 100%;">
                                                                                                     <option  value="">(Selecionar)</option>
-                                                                                                    @foreach($dados as $item)
+                                                                                                    @foreach($status as $item)
                                                                                                           <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                     @endforeach
                                                                                                     </select>
@@ -1184,7 +1184,7 @@
                                                                                                     <label for="profissao_conjuge" class="control-label">Estado Civil</label>
                                                                                                     <select name="profissao_conjuge" class="form-control select2" style="width: 100%;">
                                                                                                     <option  value="">(Selecionar)</option>
-                                                                                                    @foreach($dados as $item)
+                                                                                                    @foreach($profissoes as $item)
                                                                                                           <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                     @endforeach
                                                                                                     </select>
@@ -1226,34 +1226,34 @@
                                                                                       <div class="row"><!-- row pai-->
 
                                                                                                <div class="col-xs-5">
-                                                                                                    <label for="filhos" class="control-label">Nome do Pai</label>
-                                                                                                    <select name="filhos" class="form-control select2" style="width: 100%;">
+                                                                                                    <label for="pai" class="control-label">Nome do Pai</label>
+                                                                                                    <select name="pai" class="form-control select2" style="width: 100%;">
                                                                                                     <option  value="">(Selecionar)</option>
-                                                                                                    @foreach($dados as $item)
-                                                                                                          <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                    @foreach($familias as $item)
+                                                                                                          <option  value="{{$item->id}}">{{$item->razaosocial}}</option>
                                                                                                     @endforeach
                                                                                                     </select>
                                                                                                </div>
 
                                                                                                <div class="col-xs-5">
-                                                                                                    <label for="status_conjuge" class="control-label">Status</label>
-                                                                                                    <select name="status_conjuge" class="form-control select2" style="width: 100%;">
+                                                                                                    <label for="status_pai" class="control-label">Status</label>
+                                                                                                    <select name="status_pai" class="form-control select2" style="width: 100%;">
                                                                                                     <option  value="">(Selecionar)</option>
-                                                                                                    @foreach($dados as $item)
+                                                                                                    @foreach($status as $item)
                                                                                                           <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                     @endforeach
                                                                                                     </select>
                                                                                                 </div>
 
                                                                                                 <div class="col-xs-2">
-                                                                                                    <label for="datacasamento" class="control-label">Data Falecimento</label>
+                                                                                                    <label for="datafalecimento_pai" class="control-label">Data Falecimento</label>
 
                                                                                                     <div class="input-group">
                                                                                                            <div class="input-group-addon">
                                                                                                             <i class="fa fa-calendar"></i>
                                                                                                             </div>
 
-                                                                                                            <input id ="datafalecimento" name = "datafalecimento" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datafalecimento')}}">
+                                                                                                            <input id ="datafalecimento_pai" name = "datafalecimento_pai" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datafalecimento_pai')}}">
                                                                                                     </div>
 
                                                                                                </div>
@@ -1263,34 +1263,34 @@
                                                                                       <div class="row"><!-- row mãe-->
 
                                                                                                <div class="col-xs-5">
-                                                                                                    <label for="filhos" class="control-label">Nome da Mãe</label>
-                                                                                                    <select name="filhos" class="form-control select2" style="width: 100%;">
+                                                                                                    <label for="mae" class="control-label">Nome da Mãe</label>
+                                                                                                    <select name="mae" class="form-control select2" style="width: 100%;">
                                                                                                     <option  value="">(Selecionar)</option>
-                                                                                                    @foreach($dados as $item)
-                                                                                                          <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                                                    @foreach($familias as $item)
+                                                                                                          <option  value="{{$item->id}}">{{$item->razaosocial}}</option>
                                                                                                     @endforeach
                                                                                                     </select>
                                                                                                </div>
 
                                                                                                <div class="col-xs-5">
-                                                                                                    <label for="status_conjuge" class="control-label">Status</label>
-                                                                                                    <select name="status_conjuge" class="form-control select2" style="width: 100%;">
+                                                                                                    <label for="status_mae" class="control-label">Status</label>
+                                                                                                    <select name="status_mae" class="form-control select2" style="width: 100%;">
                                                                                                     <option  value="">(Selecionar)</option>
-                                                                                                    @foreach($dados as $item)
+                                                                                                    @foreach($status as $item)
                                                                                                           <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                     @endforeach
                                                                                                     </select>
                                                                                                 </div>
 
                                                                                                 <div class="col-xs-2">
-                                                                                                    <label for="datacasamento" class="control-label">Data Falecimento</label>
+                                                                                                    <label for="datafalecimento_mae" class="control-label">Data Falecimento</label>
 
                                                                                                     <div class="input-group">
                                                                                                            <div class="input-group-addon">
                                                                                                             <i class="fa fa-calendar"></i>
                                                                                                             </div>
 
-                                                                                                            <input id ="datafalecimento" name = "datafalecimento" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datafalecimento')}}">
+                                                                                                            <input id ="datafalecimento_mae" name = "datafalecimento_mae" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datafalecimento_mae')}}">
                                                                                                     </div>
 
                                                                                                </div>
@@ -1358,7 +1358,7 @@
 
                                                                                                       <select name="religiao" class="form-control select2" style="width: 100%;">
                                                                                                       <option  value="">(Selecione)</option>
-                                                                                                      @foreach($dados as $item)
+                                                                                                      @foreach($religioes as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
                                                                                                       </select>
@@ -1625,7 +1625,7 @@
 
                                                                                                       <select name="disponibilidades" class="form-control select2" style="width: 100%;">
                                                                                                       <option  value="">(Selecionar)</option>
-                                                                                                      @foreach($dados as $item)
+                                                                                                      @foreach($disponibilidades as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
                                                                                                       </select>
@@ -1637,7 +1637,7 @@
 
                                                                                                       <select name="dons[]" multiple="multiple" data-placeholder="Um ou Vários" class="form-control select2" style="width: 100%;">
                                                                                                       <option  value="">(Um ou Vários)</option>
-                                                                                                      @foreach($dados as $item)
+                                                                                                      @foreach($dons as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
                                                                                                       </select>
@@ -1649,7 +1649,7 @@
 
                                                                                                       <select name="habilidades[]" multiple="multiple" data-placeholder="Um ou Vários" class="form-control select2" style="width: 100%;">
                                                                                                       <option  value="">(Um ou Vários)</option>
-                                                                                                      @foreach($dados as $item)
+                                                                                                      @foreach($habilidades as $item)
                                                                                                             <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                                                       @endforeach
                                                                                                       </select>
@@ -1871,7 +1871,6 @@
                                 $("#bairro").val("");
                                 $("#cidade").val("");
                                 $("#estado").val("");
-                                $("#ibge").val("");
                             }
 
                              function limpa_formulario_cep_cobranca()
@@ -1881,7 +1880,15 @@
                                 $("#bairro_cobranca").val("");
                                 $("#cidade_cobranca").val("");
                                 $("#estado_cobranca").val("");
-                                $("#ibge_cobranca").val("");
+                            }
+
+                            function limpa_formulario_cep_profissional()
+                            {
+                                // Limpa valores do formulário de cep.
+                                $("#endereco_prof").val("");
+                                $("#bairro_prof").val("");
+                                $("#cidade_prof").val("");
+                                $("#estado_prof").val("");
                             }
 
                                         //Quando o campo cep perde o foco.
@@ -1904,7 +1911,6 @@
                                                     $("#bairro").val("...")
                                                     $("#cidade").val("...")
                                                     $("#estado").val("...")
-                                                    $("#ibge").val("...")
 
                                                     //Consulta o webservice viacep.com.br/
                                                     $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
@@ -1915,7 +1921,6 @@
                                                             $("#bairro").val(dados.bairro);
                                                             $("#cidade").val(dados.localidade);
                                                             $("#estado").val(dados.uf);
-                                                            $("#ibge").val(dados.ibge);
                                                         } //end if.
                                                         else {
                                                             //CEP pesquisado não foi encontrado.
@@ -1957,7 +1962,6 @@
                                                     $("#bairro_cobranca").val("...")
                                                     $("#cidade_cobranca").val("...")
                                                     $("#estado_cobranca").val("...")
-                                                    $("#ibge_cobranca").val("...")
 
                                                     //Consulta o webservice viacep.com.br/
                                                     $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
@@ -1968,7 +1972,7 @@
                                                             $("#bairro_cobranca").val(dados.bairro);
                                                             $("#cidade_cobranca").val(dados.localidade);
                                                             $("#estado_cobranca").val(dados.uf);
-                                                            $("#ibge_cobranca").val(dados.ibge);
+
                                                         } //end if.
                                                         else {
                                                             //CEP pesquisado não foi encontrado.
@@ -1986,6 +1990,57 @@
                                             else {
                                                 //cep sem valor, limpa formulário.
                                                 limpa_formulario_cep_cobranca();
+                                            }
+                                        });
+
+
+                                        //Quando o campo cep perde o foco.
+                                        $("#cep_prof").blur(function() {
+
+                                            //Nova variável "cep" somente com dígitos.
+                                            var cep = $(this).val().replace(/\D/g, '');
+
+                                            //Verifica se campo cep possui valor informado.
+                                            if (cep != "") {
+
+                                                //Expressão regular para validar o CEP.
+                                                var validacep = /^[0-9]{8}$/;
+
+                                                //Valida o formato do CEP.
+                                                if(validacep.test(cep)) {
+
+                                                    //Preenche os campos com "..." enquanto consulta webservice.
+                                                    $("#endereco_prof").val("...")
+                                                    $("#bairro_prof").val("...")
+                                                    $("#cidade_prof").val("...")
+                                                    $("#estado_prof").val("...")
+
+                                                    //Consulta o webservice viacep.com.br/
+                                                    $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                                                        if (!("erro" in dados)) {
+                                                            //Atualiza os campos com os valores da consulta.
+                                                            $("#endereco_prof").val(dados.logradouro);
+                                                            $("#bairro_prof").val(dados.bairro);
+                                                            $("#cidade_prof").val(dados.localidade);
+                                                            $("#estado_prof").val(dados.uf);
+                                                        } //end if.
+                                                        else {
+                                                            //CEP pesquisado não foi encontrado.
+                                                            limpa_formulario_cep_profissional();
+                                                            alert("CEP não encontrado.");
+                                                        }
+                                                    });
+                                                } //end if.
+                                                else {
+                                                    //cep é inválido.
+                                                    limpa_formulario_cep_profissional();
+                                                    alert("Formato de CEP inválido.");
+                                                }
+                                            } //end if.
+                                            else {
+                                                //cep sem valor, limpa formulário.
+                                                limpa_formulario_cep_profissional();
                                             }
                                         });
 

@@ -82,6 +82,13 @@ class PessoasController extends Controller
         $profissoes = \App\Models\profissoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         $ramos = \App\Models\ramos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         $cargos = \App\Models\cargos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $graus = \App\Models\graus::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $formacoes = \App\Models\areas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $estadoscivis = \App\Models\civis::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $disponibilidades = \App\Models\disponibilidades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $dons = \App\Models\dons::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $habilidades = \App\Models\habilidades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $religioes = \App\Models\religioes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         /* FIM Para preencher combos Dados eclesiasticos*/
 
         //Para carregar combo de bancos
@@ -99,6 +106,13 @@ class PessoasController extends Controller
                 'idiomas' => $idiomas,
                 'profissoes' => $profissoes,
                 'ramos' => $ramos,
+                'graus' => $graus,
+                'formacoes' => $formacoes,
+                'religioes' => $religioes,
+                'disponibilidades' => $disponibilidades,
+                'dons' => $dons,
+                'habilidades' => $habilidades,
+                'estadoscivis' => $estadoscivis,
                 'cargos' => $cargos
             ]);
     }
