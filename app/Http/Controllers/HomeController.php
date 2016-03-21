@@ -22,6 +22,7 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
         $this->rota = "home"; //Define nome da rota que será usada na classe
+        //retirado gate
     }
 
     /**
@@ -32,6 +33,7 @@ class HomeController extends Controller
     public function index()
     {
 
+        //retirado da construct
         //Validação de permissão de acesso a pagina
         if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
         {
