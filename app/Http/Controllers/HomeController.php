@@ -35,10 +35,10 @@ class HomeController extends Controller
 
         //retirado da construct
         //Validação de permissão de acesso a pagina
-        if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
-        {
-            $this->dados_login = \Session::get('dados_login');
-        }
+        //if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
+        //{
+            //$this->dados_login = \Session::get('dados_login');
+        //}
 
         //Verificar se foi cadastrado os dados da igreja
         if (usuario::find(Auth::user()->id))
