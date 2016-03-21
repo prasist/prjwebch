@@ -544,7 +544,7 @@
                                                             <div class="row">
 
                                                             <!-- campos hidden -->
-                                                            <input type="hidden" name="opSexo[]" class="minimal" value="">
+                                                            <input type="hidden" name="opSexo[]" class="minimal" value="M">
                                                             <input type="hidden" name="opDoadorSangue[]" class="minimal" value="false">
                                                             <input type="hidden" name="opDoadorOrgaos[]" class="minimal" value="false">
                                                             <input type="hidden" name="ck_necessidades" class="minimal" value="false">
