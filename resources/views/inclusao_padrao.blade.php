@@ -38,6 +38,8 @@
             <button class = 'btn btn-primary' type ='submit'>Gravar</button>
             <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Cancelar</a>
         </div>
+        <div id="tour3"></div>
+        <div id="tour4"></div>
 
         </form>
 
