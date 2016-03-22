@@ -12,6 +12,23 @@
 <option  value="">(Selecionar)</option>
 
 @foreach($dados as $item)
-       <option  value="{{$item->id}}" {{$comparar==$item->id ? 'selected' : '' }}>{{$item->nome}}</option>
+
+    <?php $resultado = ''; ?>
+
+    @if ($comparar=='')
+            <option  value="{{$item->id}}">{{$item->nome}}</option>
+    @else
+
+            @foreach($comparar as $selecionar)
+                    @if ($selecionar->id==$item->id)
+                           <?php $resultado = 'selected'; ?>
+                    @endif
+            @endforeach
+
+            <option  value="{{$item->id}}" {{$resultado}}>{{$item->nome}}</option>
+
+    @endif
+
 @endforeach
+
 </select>
