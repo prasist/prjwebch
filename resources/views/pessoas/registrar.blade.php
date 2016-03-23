@@ -174,7 +174,7 @@
                                                                       <i class="fa fa-calendar"></i>
                                                                       </div>
 
-                                                                      <input id ="datanasc" name = "datanasc" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datanasc')}}">
+                                                                      <input id ="datanasc" name = "datanasc" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datanasc')}}">
                                                               </div>
 
                                                      </div>

@@ -154,7 +154,6 @@
                                                                           @include('carregar_combos', array('dados'=>$idiomas, 'titulo' =>'Lingua Oficial', 'id_combo'=>'lingua', 'complemento'=>'', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->idiomas_id) ))
                                                                   </div>
 
-
                                                           </div>
 
                                                     </div>
@@ -473,7 +472,7 @@
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="datacasamento" name = "datacasamento" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('datacasamento') : $membros_familiares[0]->data_casamento) }}">
+                                                                                <input id ="datacasamento" name = "datacasamento" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('datacasamento') : $membros_familiares[0]->data_casamento) }}">
                                                                         </div>
 
                                                                    </div>
@@ -498,7 +497,7 @@
                                                                                     <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="datanasc_conjuge" name = "datanasc_conjuge" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('datanasc_conjuge') : $membros_familiares[0]->data_nasc) }}">
+                                                                                <input id ="datanasc_conjuge" onblur="validar_data(this)" name = "datanasc_conjuge" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('datanasc_conjuge') : $membros_familiares[0]->data_nasc) }}">
                                                                         </div>
 
                                                                    </div>
@@ -511,7 +510,7 @@
                                                                                     <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="datafalecimento" name = "datafalecimento" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('datafalecimento') : $membros_familiares[0]->data_falecimento) }}">
+                                                                                <input id ="datafalecimento" name = "datafalecimento" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('datafalecimento') : $membros_familiares[0]->data_falecimento) }}">
                                                                         </div>
 
                                                                    </div>
@@ -572,7 +571,7 @@
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="datanascimento_filho" name = "datanascimento_filho" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datanascimento_filho')}}">
+                                                                                <input id ="datanascimento_filho" onblur="validar_data(this)" name = "datanascimento_filho" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datanascimento_filho')}}">
                                                                         </div>
 
                                                                    </div>
@@ -610,7 +609,7 @@
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="datafalecimento_filho" name = "datafalecimento_filho" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datafalecimento_filho')}}">
+                                                                                <input id ="datafalecimento_filho" name = "datafalecimento_filho" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datafalecimento_filho')}}">
                                                                         </div>
 
                                                                    </div>
@@ -657,7 +656,7 @@
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="datafalecimento_pai" name = "datafalecimento_pai" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('datafalecimento_pai') : $membros_familiares[0]->data_falecimento_pai) }}">
+                                                                                <input id ="datafalecimento_pai" name = "datafalecimento_pai" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('datafalecimento_pai') : $membros_familiares[0]->data_falecimento_pai) }}">
                                                                         </div>
 
                                                                    </div>
@@ -688,7 +687,7 @@
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="datafalecimento_mae" name = "datafalecimento_mae" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('datafalecimento_mae') : $membros_familiares[0]->data_falecimento_mae) }}">
+                                                                                <input id ="datafalecimento_mae" name = "datafalecimento_mae" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('datafalecimento_mae') : $membros_familiares[0]->data_falecimento_mae) }}">
                                                                         </div>
 
                                                                    </div>
@@ -840,7 +839,7 @@
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="data_batismo" name = "data_batismo" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('data_batismo') : $membros_historico[0]->data_batismo) }}">
+                                                                                <input id ="data_batismo" name = "data_batismo" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('data_batismo') : $membros_historico[0]->data_batismo) }}">
                                                                         </div>
 
                                                                </div>
@@ -884,7 +883,7 @@
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="data_entrada" name = "data_entrada" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('data_entrada') : $membros_historico[0]->data_entrada) }}">
+                                                                                <input id ="data_entrada" name = "data_entrada" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('data_entrada') : $membros_historico[0]->data_entrada) }}">
                                                                         </div>
 
                                                                </div>
@@ -910,7 +909,7 @@
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="data_saida" name = "data_saida" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('data_saida') : $membros_historico[0]->data_saida) }}">
+                                                                                <input id ="data_saida" name = "data_saida" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('data_saida') : $membros_historico[0]->data_saida) }}">
                                                                         </div>
 
                                                                </div>
@@ -1119,9 +1118,7 @@
                       </div><!-- FIM TAB Células-->
 
 
-
                     </div><!-- end box-group -->
-
 
 
                   </div>
@@ -1133,3 +1130,25 @@
 
 
    </div><!-- FIM - DADOS ECLISIASTICOS-->
+
+   <script type="text/javascript">
+        function validar_data(who)
+        {
+              if (who.value!="")
+              {
+                  str=who.value;
+                  str=str.split('/');
+                  dte=new Date(str[1]+'/'+str[0]+'/'+str[2]);
+                  mStr=''+(dte.getMonth()+1);
+                  mStr=(mStr<10)?'0'+mStr:mStr;
+
+                  if(mStr!=str[1]||isNaN(dte))
+                  {
+                      who.value="";
+                      alert('Data Inválida!');
+                      who.focus();
+                      return;
+                  }
+              }
+        }
+</script>

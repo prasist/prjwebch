@@ -74,6 +74,16 @@
                                 $("#estado_prof").val("");
                             }
 
+
+                            function limpa_formulario_cep_igreja()
+                            {
+                                // Limpa valores do formulário de cep.
+                                $("#endereco_igreja_anterior").val("");
+                                $("#bairro_igreja_anterior").val("");
+                                $("#cidade_igreja_anterior").val("");
+                                $("#estado_igreja_anterior").val("");
+                            }
+
                                         //Quando o campo cep perde o foco.
                                         $("#cep").blur(function() {
 
@@ -201,14 +211,16 @@
                                                     //Consulta o webservice viacep.com.br/
                                                     $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
 
-                                                        if (!("erro" in dados)) {
+                                                        if (!("erro" in dados))
+                                                        {
                                                             //Atualiza os campos com os valores da consulta.
                                                             $("#endereco_prof").val(dados.logradouro);
                                                             $("#bairro_prof").val(dados.bairro);
                                                             $("#cidade_prof").val(dados.localidade);
                                                             $("#estado_prof").val(dados.uf);
                                                         } //end if.
-                                                        else {
+                                                        else
+                                                        {
                                                             //CEP pesquisado não foi encontrado.
                                                             limpa_formulario_cep_profissional();
                                                             alert("CEP não encontrado.");
@@ -224,6 +236,58 @@
                                             else {
                                                 //cep sem valor, limpa formulário.
                                                 limpa_formulario_cep_profissional();
+                                            }
+                                        });
+
+
+
+                                        //Quando o campo cep perde o foco.
+                                        $("#cep_igreja_anterior").blur(function() {
+
+                                            //Nova variável "cep" somente com dígitos.
+                                            var cep = $(this).val().replace(/\D/g, '');
+
+                                            //Verifica se campo cep possui valor informado.
+                                            if (cep != "") {
+
+                                                //Expressão regular para validar o CEP.
+                                                var validacep = /^[0-9]{8}$/;
+
+                                                //Valida o formato do CEP.
+                                                if(validacep.test(cep)) {
+
+                                                    //Preenche os campos com "..." enquanto consulta webservice.
+                                                    $("#endereco_igreja_anterior").val("...")
+                                                    $("#bairro_igreja_anterior").val("...")
+                                                    $("#cidade_igreja_anterior").val("...")
+                                                    $("#estado_igreja_anterior").val("...")
+
+                                                    //Consulta o webservice viacep.com.br/
+                                                    $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                                                        if (!("erro" in dados)) {
+                                                            //Atualiza os campos com os valores da consulta.
+                                                            $("#endereco_igreja_anterior").val(dados.logradouro);
+                                                            $("#bairro_igreja_anterior").val(dados.bairro);
+                                                            $("#cidade_igreja_anterior").val(dados.localidade);
+                                                            $("#estado_igreja_anterior").val(dados.uf);
+                                                        } //end if.
+                                                        else {
+                                                            //CEP pesquisado não foi encontrado.
+                                                            limpa_formulario_cep_igreja();
+                                                            alert("CEP não encontrado.");
+                                                        }
+                                                    });
+                                                } //end if.
+                                                else {
+                                                    //cep é inválido.
+                                                    limpa_formulario_cep_igreja();
+                                                    alert("Formato de CEP inválido.");
+                                                }
+                                            } //end if.
+                                            else {
+                                                //cep sem valor, limpa formulário.
+                                                limpa_formulario_cep_igreja();
                                             }
                                         });
 
