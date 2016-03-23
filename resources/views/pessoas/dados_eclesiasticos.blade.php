@@ -466,7 +466,7 @@
                                                                    </div>
 
                                                                    <div class="col-xs-2">
-                                                                        <label id="datacasamento" for="datacasamento" class="control-label">Data Casamento</label>
+                                                                        <label for="datacasamento" class="control-label">Data Casamento</label>
 
                                                                         <div class="input-group">
                                                                                <div class="input-group-addon">
@@ -504,7 +504,7 @@
                                                                    </div>
 
                                                                    <div class="col-xs-2">
-                                                                        <label for="datacasamento" class="control-label">Data Falecimento</label>
+                                                                        <label for="datafalecimento" class="control-label">Data Falecimento</label>
 
                                                                         <div class="input-group">
                                                                                <div class="input-group-addon">
@@ -550,29 +550,29 @@
                                                                    </div>
 
                                                                    <div class="col-xs-4">
-                                                                          <label for="opSexo" class="control-label">Sexo</label>
+                                                                          <label for="opSexoFilho" class="control-label">Sexo</label>
 
                                                                           <br/>
                                                                          <label>
-                                                                              <input type="radio" name="opSexo" class="minimal" value="M">
+                                                                              <input type="radio" name="opSexoFilho" class="minimal" value="M">
                                                                               Masculino
                                                                          </label>
 
                                                                          <label>
-                                                                              <input type="radio" name="opSexo" class="minimal" value="F">
+                                                                              <input type="radio" name="opSexoFilho" class="minimal" value="F">
                                                                               Feminino
                                                                          </label>
                                                                    </div>
 
                                                                    <div class="col-xs-2">
-                                                                        <label id="datacasamento" for="datacasamento" class="control-label">Data Nascimento</label>
+                                                                        <label for="datanascimento_filho" class="control-label">Data Nascimento</label>
 
                                                                         <div class="input-group">
                                                                                <div class="input-group-addon">
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="datacasamento" name = "datacasamento" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('databatismo')}}">
+                                                                                <input id ="datanascimento_filho" name = "datanascimento_filho" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datanascimento_filho')}}">
                                                                         </div>
 
                                                                    </div>
@@ -582,8 +582,8 @@
                                                           <div class="row">
 
                                                                <div class="col-xs-5">
-                                                                        <label for="status_conjuge" class="control-label">Status</label>
-                                                                        <select name="status_conjuge" class="form-control select2" style="width: 100%;">
+                                                                        <label for="status_filho" class="control-label">Status</label>
+                                                                        <select name="status_filho" class="form-control select2" style="width: 100%;">
                                                                         <option  value="">(Selecionar)</option>
                                                                         @foreach($status as $item)
                                                                               <option  value="{{$item->id}}">{{$item->nome}}</option>
@@ -592,10 +592,10 @@
                                                               </div>
 
                                                               <div class="col-xs-4">
-                                                                        <label for="profissao_conjuge" class="control-label">Estado Civil</label>
-                                                                        <select name="profissao_conjuge" class="form-control select2" style="width: 100%;">
+                                                                        <label for="estado_civil_filho" class="control-label">Estado Civil</label>
+                                                                        <select name="estado_civil_filho" class="form-control select2" style="width: 100%;">
                                                                         <option  value="">(Selecionar)</option>
-                                                                        @foreach($profissoes as $item)
+                                                                        @foreach($estadoscivis as $item)
                                                                               <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                         @endforeach
                                                                         </select>
@@ -603,14 +603,14 @@
 
 
                                                                    <div class="col-xs-2">
-                                                                        <label for="datacasamento" class="control-label">Data Falecimento</label>
+                                                                        <label for="datafalecimento_filho" class="control-label">Data Falecimento</label>
 
                                                                         <div class="input-group">
                                                                                <div class="input-group-addon">
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="datafalecimento" name = "datafalecimento" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datafalecimento')}}">
+                                                                                <input id ="datafalecimento_filho" name = "datafalecimento_filho" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datafalecimento_filho')}}">
                                                                         </div>
 
                                                                    </div>
@@ -645,7 +645,7 @@
                                                                       <input id="nome_pai" name = "nome_pai" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('nome_pai') : $membros_familiares[0]->nome_pai) }}">
                                                                    </div>
 
-                                                                   <div class="col-xs-5">
+                                                                   <div class="col-xs-3">
                                                                         @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status_pai', 'complemento'=>'', 'comparar'=>$membros_familiares[0]->status_pai_id))
                                                                     </div>
 
@@ -676,7 +676,7 @@
                                                                    </div>
 
 
-                                                                   <div class="col-xs-5">
+                                                                   <div class="col-xs-3">
                                                                         @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status_mae', 'complemento'=>'', 'comparar'=>$membros_familiares[0]->status_mae_id))
                                                                     </div>
 
@@ -733,26 +733,27 @@
 
                                                            <div class="row">
                                                                 <div class="col-xs-5">
-                                                                        <label for="igrejaanterior" class="control-label">Igreja</label>
-                                                                        <input id="igrejaanterior" maxlength="150" name = "igrejaanterior" type="text" class="form-control" value="{{old('igrejaanterior')}}">
+                                                                        <label for="igreja_anterior" class="control-label">Igreja</label>
+                                                                        <input id="igreja_anterior" maxlength="150" name = "igreja_anterior" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('igreja_anterior') : $membros_historico[0]->igreja_anterior) }}">
                                                                 </div>
 
 
                                                                 <div class="col-xs-2">
-                                                                    <label for="foneigrejaanterior" class="control-label">Telefone</label>
+                                                                    <label for="fone_igreja_anterior" class="control-label">Telefone</label>
 
                                                                     <div class="input-group">
                                                                            <div class="input-group-addon">
                                                                             <i class="fa fa-phone"></i>
                                                                             </div>
 
-                                                                            <input id="foneigrejaanterior"  name = "foneigrejaanterior" type="text" class="form-control" value="{{old('foneigrejaanterior')}}"  data-inputmask='"mask": "(99) 9999-9999"' data-mask >
+                                                                            <input id="fone_igreja_anterior"  name = "fone_igreja_anterior" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('fone_igreja_anterior') : $membros_historico[0]->fone_igreja_anterior) }}"  data-inputmask='"mask": "(99) 9999-9999"' data-mask >
 
                                                                     </div>
                                                                 </div>
 
+
                                                                 <div class="col-xs-3">
-                                                                          @include('carregar_combos', array('dados'=>$religioes, 'titulo' =>'Religião Anterior', 'id_combo'=>'religioes', 'complemento'=>'', 'comparar'=>''))
+                                                                          @include('carregar_combos', array('dados'=>$religioes, 'titulo' =>'Religião Anterior', 'id_combo'=>'religioes', 'complemento'=>'', 'comparar'=>$membros_historico[0]->religioes_id))
                                                                 </div><!-- col-xs-5-->
 
 
@@ -770,18 +771,18 @@
                                                                                            </a>
                                                                                         </div>
 
-                                                                                        <input id="cep_igreja_anterior" maxlength="8" name = "cep_igreja_anterior" type="text" class="form-control" value="{{old('cep_igreja_anterior')}}">
+                                                                                        <input id="cep_igreja_anterior" maxlength="8" name = "cep_igreja_anterior" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('cep_igreja_anterior') : $membros_historico[0]->cep_igreja_anterior) }}">
                                                                                 </div>
                                                                   </div>
 
                                                                     <div class="col-xs-7">
                                                                             <label for="endereco_igreja_anterior" class="control-label">Endereço</label>
-                                                                            <input id="endereco_igreja_anterior" maxlength="150" name = "endereco_igreja_anterior" type="text" class="form-control" value="{{old('endereco_igreja_anterior')}}">
+                                                                            <input id="endereco_igreja_anterior" maxlength="150" name = "endereco_igreja_anterior" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('endereco_igreja_anterior') : $membros_historico[0]->endereco_igreja_anterior) }}">
                                                                     </div>
 
                                                                     <div class="col-xs-1">
                                                                             <label for="numero_igreja_anterior" class="control-label">Número</label>
-                                                                            <input id="numero_igreja_anterior" maxlength="10" name = "numero_igreja_anterior" type="text" class="form-control" value="{{old('numero_igreja_anterior')}}">
+                                                                            <input id="numero_igreja_anterior" maxlength="10" name = "numero_igreja_anterior" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('numero_igreja_anterior') : $membros_historico[0]->numero_igreja_anterior) }}">
                                                                     </div>
 
                                                             </div><!-- end row  -->
@@ -789,24 +790,24 @@
                                                             <div class="row">
                                                                   <div class="col-xs-5">
                                                                         <label for="bairro_igreja_anterior" class="control-label">Bairro</label>
-                                                                        <input id="bairro_igreja_anterior" maxlength="50" name = "bairro_igreja_anterior" type="text" class="form-control" value="{{old('bairro_igreja_anterior')}}">
+                                                                        <input id="bairro_igreja_anterior" maxlength="50" name = "bairro_igreja_anterior" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('bairro_igreja_anterior') : $membros_historico[0]->bairro_igreja_anterior) }}">
                                                                    </div>
 
                                                                   <div class="col-xs-5">
                                                                       <label for="complemento_igreja_anterior" class="control-label">Complemento</label>
-                                                                      <input id="complemento_igreja_anterior" name = "complemento_igreja_anterior" type="text" class="form-control" value="{{old('complemento_igreja_anterior')}}">
+                                                                      <input id="complemento_igreja_anterior" name = "complemento_igreja_anterior" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('complemento_igreja_anterior') : $membros_historico[0]->complemento_igreja_anterior) }}">
                                                                   </div>
                                                             </div><!-- end row  -->
 
                                                             <div class="row">
                                                                     <div class="col-xs-5">
                                                                             <label for="cidade_igreja_anterior" class="control-label">Cidade</label>
-                                                                            <input id="cidade_igreja_anterior" maxlength="60" name = "cidade_igreja_anterior" type="text" class="form-control" value="{{old('cidade_igreja_anterior')}}">
+                                                                            <input id="cidade_igreja_anterior" maxlength="60" name = "cidade_igreja_anterior" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('cidade_igreja_anterior') : $membros_historico[0]->cidade_igreja_anterior) }}">
                                                                     </div>
 
                                                                     <div class="col-xs-1">
                                                                         <label for="estado_igreja_anterior" class="control-label">Estado</label>
-                                                                        <input id="estado_igreja_anterior" maxlength="2" name = "estado_igreja_anterior" type="text" class="form-control" value="{{old('estado_igreja_anterior')}}">
+                                                                        <input id="estado_igreja_anterior" maxlength="2" name = "estado_igreja_anterior" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('estado_igreja_anterior') : $membros_historico[0]->estado_igreja_anterior) }}">
                                                                     </div>
 
                                                             </div><!-- end row  -->
@@ -832,26 +833,26 @@
                                                             <div class="row">
 
                                                                 <div class="col-xs-2">
-                                                                        <label id="databatismo" for="datanasc" class="control-label">Data Batismo</label>
+                                                                        <label for="data_batismo" class="control-label">Data Batismo</label>
 
                                                                         <div class="input-group">
                                                                                <div class="input-group-addon">
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="databatismo" name = "databatismo" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('databatismo')}}">
+                                                                                <input id ="data_batismo" name = "data_batismo" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('data_batismo') : $membros_historico[0]->data_batismo) }}">
                                                                         </div>
 
                                                                </div>
 
                                                                 <div class="col-xs-5">
                                                                         <label for="igreja_batismo" class="control-label">Igreja</label>
-                                                                        <input id="igreja_batismo" maxlength="150" name = "igreja_batismo" type="text" class="form-control" value="{{old('igreja_batismo')}}">
+                                                                        <input id="igreja_batismo" maxlength="150" name = "igreja_batismo" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('igreja_batismo') : $membros_historico[0]->igreja_batismo) }}">
                                                                 </div>
 
                                                                 <div class="col-xs-4">
                                                                         <label for="celebrador" class="control-label">Celebrador</label>
-                                                                        <input id="celebrador" maxlength="10" name = "celebrador" type="text" class="form-control" value="{{old('celebrador')}}">
+                                                                        <input id="celebrador" maxlength="10" name = "celebrador" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('celebrador') : $membros_historico[0]->celebrador) }}">
                                                                 </div>
 
                                                            </div><!-- end row -->
@@ -876,32 +877,25 @@
                                                           <div class="row"><!-- row entrada-->
 
                                                                 <div class="col-xs-2">
-                                                                        <label id="dataentrada" for="datanasc" class="control-label">Data Entrada</label>
+                                                                        <label  for="data_entrada" class="control-label">Data Entrada</label>
 
                                                                         <div class="input-group">
                                                                                <div class="input-group-addon">
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="dataentrada" name = "dataentrada" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('databatismo')}}">
+                                                                                <input id ="data_entrada" name = "data_entrada" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('data_entrada') : $membros_historico[0]->data_entrada) }}">
                                                                         </div>
 
                                                                </div>
 
                                                                 <div class="col-xs-4">
-                                                                          <label for="motivoentrada" class="control-label">Motivo Entrada</label>
-
-                                                                          <select name="motivoentrada" class="form-control select2" style="width: 100%;">
-                                                                          <option  value="">(Selecione)</option>
-                                                                          @foreach($motivos as $item)
-                                                                                <option  value="{{$item->id}}">{{$item->nome}}</option>
-                                                                          @endforeach
-                                                                          </select>
+                                                                        @include('carregar_combos', array('dados'=>$motivos, 'titulo' =>'Motivo Entrada', 'id_combo'=>'motivo_entrada', 'complemento'=>'', 'comparar'=>$membros_historico[0]->motivos_entrada_id))
                                                                 </div><!-- col-xs-5-->
 
                                                                 <div class="col-xs-4">
-                                                                        <label for="ataentrada" class="control-label">Registrado em Ata n.:</label>
-                                                                        <input id="ataentrada" maxlength="10" name = "ataentrada" type="text" class="form-control" value="{{old('ata_entrada')}}">
+                                                                        <label for="ata_entrada" class="control-label">Registrado em Ata n.:</label>
+                                                                        <input id="ata_entrada" maxlength="10" name = "ata_entrada" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('ata_entrada') : $membros_historico[0]->ata_entrada) }}">
                                                                 </div>
 
                                                            </div><!-- end row -->
@@ -909,32 +903,25 @@
                                                           <div class="row"><!-- row saida-->
 
                                                                 <div class="col-xs-2">
-                                                                        <label id="datasaida" for="datanasc" class="control-label">Data Saída</label>
+                                                                        <label  for="data_saida" class="control-label">Data Saída</label>
 
                                                                         <div class="input-group">
                                                                                <div class="input-group-addon">
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="datasaida" name = "datasaida" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('databatismo')}}">
+                                                                                <input id ="data_saida" name = "data_saida" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('data_saida') : $membros_historico[0]->data_saida) }}">
                                                                         </div>
 
                                                                </div>
 
                                                                 <div class="col-xs-4">
-                                                                          <label for="motivosaida" class="control-label">Motivo Saída</label>
-
-                                                                          <select name="motivosaida" class="form-control select2" style="width: 100%;">
-                                                                          <option  value="">(Selecione)</option>
-                                                                          @foreach($motivos as $item)
-                                                                                <option  value="{{$item->id}}">{{$item->nome}}</option>
-                                                                          @endforeach
-                                                                          </select>
+                                                                        @include('carregar_combos', array('dados'=>$motivos, 'titulo' =>'Motivo Saída', 'id_combo'=>'motivosaida', 'complemento'=>'', 'comparar'=>$membros_historico[0]->motivos_saida_id))
                                                                 </div><!-- col-xs-5-->
 
                                                                 <div class="col-xs-4">
-                                                                        <label for="atasaida" class="control-label">Registrado em Ata n.:</label>
-                                                                        <input id="atasaida" maxlength="10" name = "atasaida" type="text" class="form-control" value="{{old('ata_entrada')}}">
+                                                                        <label for="ata_saida" class="control-label">Registrado em Ata n.:</label>
+                                                                        <input id="ata_saida" maxlength="10" name = "ata_saida" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('ata_saida') : $membros_historico[0]->ata_saida) }}">
                                                                 </div>
 
                                                            </div><!-- end row -->
@@ -942,7 +929,7 @@
                                                           <div class="row">
                                                                 <div class="col-xs-10">
                                                                         <label for="observacoes_hist" class="control-label">Observação</label>
-                                                                        <input id="observacoes_hist" name = "observacoes_hist" type="text" class="form-control" value="{{old('observacoes')}}">
+                                                                        <input id="observacoes_hist" name = "observacoes_hist" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('observacoes_hist') : $membros_historico[0]->observacoes_hist) }}">
                                                                 </div>
                                                           </div><!--end row-->
                                                      </div>
@@ -1094,7 +1081,7 @@
                           </div>
                           <div id="tab8" class="panel-collapse collapse">
                             <div class="box-body">
-
+                                 Em Breve...
                             </div>
                           </div>
                       </div><!-- FIM TAB Histórico de Movimentações -->

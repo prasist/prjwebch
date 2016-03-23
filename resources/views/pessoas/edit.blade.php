@@ -184,7 +184,7 @@
                                                                       <i class="fa fa-calendar"></i>
                                                                       </div>
 
-                                                                      <input id ="datanasc" name = "datanasc" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{$pessoas[0]->datanasc}}">
+                                                                      <input id ="datanasc" name = "datanasc" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{$pessoas[0]->datanasc_formatada}}">
                                                               </div>
 
                                                      </div>

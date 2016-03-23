@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\pessoas;
+use App\Functions;
 use URL;
 use Auth;
 use Input;
@@ -113,6 +114,7 @@ class PessoasController extends Controller
             $membros_familiares = $religioes;
             $membros_atividades =  "";
             $membros_ministerios =  "";
+            $membros_historico =  $religioes;
             $membros_profissionais =  $religioes; //array('0' => ['0'  => 'membros_profissionais']);
 
 
@@ -147,6 +149,7 @@ class PessoasController extends Controller
                 'membros_ministerios' => $membros_ministerios,
                 'membros_habilidades' => $membros_habilidades,
                 'membros_familiares' => $membros_familiares,
+                'membros_historico' => $membros_historico,
                 'membros_formacoes' => $membros_formacoes,
                 'membros_idiomas' => $membros_idiomas,
                 'membros_profissionais' => $membros_profissionais
@@ -178,6 +181,10 @@ public function salvar($request, $id, $tipo_operacao) {
 /* ------------------ INICIA TRANSACTION -----------------------*/
         \DB::transaction(function() use ($request, $id, $tipo_operacao)
         {
+
+            /*Instancia biblioteca de funcoes globais*/
+            $formatador = new  \App\Functions\FuncoesGerais();
+
                 /*Validação de campos - request*/
                 $this->validate($request, [
                         'razaosocial' => 'required|max:255:min:3',
@@ -202,7 +209,7 @@ public function salvar($request, $id, $tipo_operacao) {
 
                 $pessoas->razaosocial = $input['razaosocial'];
                 $pessoas->nomefantasia = $input['nomefantasia'];
-                $pessoas->cnpj_cpf = preg_replace("/[^0-9]/", '', ($input['cnpj']!="" ? $input['cnpj'] : $input['cpf']) );
+                $pessoas->cnpj_cpf = $formatador->RetirarCaracteres(($input['cnpj']!="" ? $input['cnpj'] : $input['cpf']));
                 $pessoas->inscricaoestadual_rg = $input['inscricaoestadual_rg'];
                 $pessoas->endereco = $input['endereco'];
                 $pessoas->numero = $input['numero'];
@@ -213,21 +220,15 @@ public function salvar($request, $id, $tipo_operacao) {
                 $pessoas->estado = $input['estado'];
                 $pessoas->grupos_pessoas_id = ($input['grupo']=="" ? null : $input['grupo']);
                 $pessoas->obs = $input['obs'];
-                $pessoas->fone_principal = preg_replace("/[^0-9]/", '', $input['foneprincipal']);
-                $pessoas->fone_secundario = preg_replace("/[^0-9]/", '', $input['fonesecundario']);
+                $pessoas->fone_principal = $formatador->RetirarCaracteres($input['foneprincipal']); //preg_replace("/[^0-9]/", '', $input['foneprincipal']);
+                $pessoas->fone_secundario = $formatador->RetirarCaracteres($input['fonesecundario']);//preg_replace("/[^0-9]/", '', $input['fonesecundario']);
                 $pessoas->fone_recado = $input['fonerecado'];
                 $pessoas->fone_celular = $input['celular'];
                 $pessoas->emailprincipal = $input['emailprincipal'];
                 $pessoas->emailsecundario = $input['emailsecundario'];
                 $pessoas->ativo = ($input['opStatus'] ? 1 : 0);
                 $pessoas->tipos_pessoas_id = $input['tipos_pessoas_id'];
-
-                if ($input['datanasc']!="")
-                {
-                    $data_formatada = \DateTime::createFromFormat('d/m/Y', $input['datanasc']);
-                    $pessoas->datanasc = $data_formatada->format('Y-m-d');
-                }
-
+                $pessoas->datanasc = $formatador->FormatarData($input['datanasc']);
                 $pessoas->tipopessoa = $input['opPessoa'];
                 $pessoas->website = $input['website'];
                 $pessoas->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
@@ -428,9 +429,11 @@ public function salvar($request, $id, $tipo_operacao) {
                                     'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
                                     'conjuge_id'=> ($input['conjuge']=="" ? null : $input['conjuge']),
                                     'nome_conjuge' => $input['nome_conjuge'],
-                                    'data_nasc' => $input['datanasc_conjuge'],
-                                    'data_falecimento' => $input['datafalecimento'],
-                                    'data_casamento' => $input['datacasamento'],
+                                    'data_nasc' => $formatador->FormatarData($input['datanasc_conjuge']),
+                                    'data_falecimento' => $formatador->FormatarData($input['datafalecimento']),
+                                    'data_casamento' => $formatador->FormatarData($input['datacasamento']),
+                                    'data_falecimento_pai' => $formatador->FormatarData($input['datafalecimento_pai']),
+                                    'data_falecimento_mae' => $formatador->FormatarData($input['datafalecimento_mae']),
                                     'status_id' => ($input['status_conjuge']=="" ? null : $input['status_conjuge']),
                                     'profissoes_id' => ($input['profissao_conjuge']=="" ? null : $input['profissao_conjuge']),
                                     'igreja_casamento' => $input['igrejacasamento'],
@@ -439,9 +442,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                     'nome_pai' => $input['nome_pai'],
                                     'nome_mae' => $input['nome_mae'],
                                     'status_pai_id' => ($input['status_pai']=="" ? null : $input['status_pai']),
-                                    'status_mae_id' => ($input['status_mae']=="" ? null : $input['status_mae']),
-                                    'data_falecimento_pai' => $input['datafalecimento_pai'],
-                                    'data_falecimento_mae' => $input['datafalecimento_mae']
+                                    'status_mae_id' => ($input['status_mae']=="" ? null : $input['status_mae'])
                                 ];
 
                                 $familiares->fill($valores)->save();
@@ -793,10 +794,12 @@ public function salvar($request, $id, $tipo_operacao) {
                         $historico = \App\Models\membros_hist_eclesiasticos::firstOrNew($where);
                         $historico->delete();
 
-                        if ($input['igrejaanterior']!="" || $input['foneigrejaanterior']!=""
+
+
+                        if ($input['igreja_anterior']!="" || $input['fone_igreja_anterior']!=""
                             || $input['religioes']!="" || $input['cep_igreja_anterior']!="" || $input['endereco_igreja_anterior']!="" || $input['numero_igreja_anterior']!=""
-                            || $input['cidade_igreja_anterior']!="" || $input['estado_igreja_anterior']!="" || $input['bairro_igreja_anterior']!="" || $input['databatismo']!=""
-                            || $input['igreja_batismo']!="" || $input['celebrador']!="" || $input['dataentrada']!="" || $input['datasaida']!="")
+                            || $input['cidade_igreja_anterior']!="" || $input['estado_igreja_anterior']!="" || $input['bairro_igreja_anterior']!="" || $input['data_batismo']!=""
+                            || $input['igreja_batismo']!="" || $input['celebrador']!="" || $input['data_entrada']!="" || $input['data_saida']!="")
 
                         {
                                 $historico = \App\Models\membros_hist_eclesiasticos::firstOrNew($where);
@@ -808,26 +811,27 @@ public function salvar($request, $id, $tipo_operacao) {
                                     'pessoas_id' => $pessoas->id,
                                     'empresas_id' =>  $this->dados_login->empresas_id,
                                     'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                    'nome_igreja_anterior' => $input['igrejaanterior'],
-                                    'telefone'  => $input['foneigrejaanterior'],
+                                    'igreja_anterior'  => $input['igreja_anterior'],
+                                    'fone_igreja_anterior' => $input['fone_igreja_anterior'],
                                     'religioes_id' => ($input['religioes']=="" ? null : $input['religioes']),
-                                    'endereco' => $input['endereco_igreja_anterior'],
-                                    'numero' => $input['numero_igreja_anterior'],
-                                    'bairro' => $input['bairro_igreja_anterior'],
-                                    'cep' => $input['cep_igreja_anterior'],
-                                    'complemento' => $input['complemento_igreja_anterior'],
-                                    'cidade' => $input['cidade_igreja_anterior'],
-                                    'estado' => $input['estado_igreja_anterior'],
-                                    'data_batismo' => $input['databatismo'],
-                                    'nome_igreja_batismo' => $input['igreja_batismo'],
+                                    'cep_igreja_anterior' => $input['cep_igreja_anterior'],
+                                    'endereco_igreja_anterior' => $input['endereco_igreja_anterior'],
+                                    'numero_igreja_anterior' => $input['numero_igreja_anterior'],
+                                    'bairro_igreja_anterior' => $input['bairro_igreja_anterior'],
+                                    'complemento_igreja_anterior' => $input['complemento_igreja_anterior'],
+                                    'cidade_igreja_anterior' => $input['cidade_igreja_anterior'],
+                                    'estado_igreja_anterior' => $input['estado_igreja_anterior'],
+                                    'data_batismo' => $input['data_batismo'],
+                                    'igreja_batismo' => $input['igreja_batismo'],
                                     'celebrador' => $input['celebrador'],
-                                    'data_entrada' => $input['dataentrada'],
-                                    'data_saida' => $input['datasaida'],
-                                    'motivos_entrada_id' => ($input['motivoentrada']=="" ? null : $input['motivoentrada']),
-                                    'motivos_saida_id' => ($input['motivosaida']=="" ? null : $input['motivosaida']),
-                                    'registro_ata_entrada' => $input['ataentrada'],
-                                    'registro_ata_saida' => $input['atasaida'],
-                                    'observacao' => $input['observacoes_hist']
+                                    'data_entrada' => $input['data_entrada'],
+                                    'data_saida'  => $input['data_saida'],
+                                    'ata_entrada' => $input['ata_entrada'],
+                                    'ata_saida' => $input['ata_saida'],
+                                     'motivos_saida_id' => ($input['motivosaida']=="" ? null : $input['motivosaida']),
+                                     'motivos_entrada_id' => ($input['motivo_entrada']=="" ? null : $input['motivo_entrada']),
+                                     'observacoes_hist' => $input['observacoes_hist']
+
                                 ];
 
                                 $historico->fill($valores)->save();
@@ -912,13 +916,23 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
         /*Pessoas e dados financeiros*/
+        /*Usado dessa forma para formatar a data de nascimento */
+        $sQuery = "select to_char(datanasc, 'DD-MM-YYYY') AS datanasc_formatada, pessoas.*, financ_pessoas.id as id_financ, financ_pessoas.bancos_id, financ_pessoas.endereco as endereco_cobranca, financ_pessoas.numero as numero_cobranca, financ_pessoas.bairro as bairro_cobranca, financ_pessoas.cidade as cidade_cobranca, financ_pessoas.estado as estado_cobranca, financ_pessoas.cep as cep_cobranca, financ_pessoas.complemento as complemento_cobranca";
+        $sQuery .= " from pessoas left join financ_pessoas on financ_pessoas.pessoas_id = pessoas.id";
+        $sQuery .= " where pessoas.id = ? ";
+        $sQuery .= " and pessoas.empresas_id = ? ";
+        $sQuery .= " and pessoas.empresas_clientes_cloud_id = ? ";
+
+        $pessoas = \DB::select($sQuery, [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        /* FORMA ANTERIOR
         $pessoas = pessoas::select('pessoas.*', 'financ_pessoas.id as id_financ', 'financ_pessoas.bancos_id', 'financ_pessoas.endereco as endereco_cobranca', 'financ_pessoas.numero as numero_cobranca', 'financ_pessoas.bairro as bairro_cobranca', 'financ_pessoas.cidade as cidade_cobranca', 'financ_pessoas.estado as estado_cobranca', 'financ_pessoas.cep as cep_cobranca', 'financ_pessoas.complemento as complemento_cobranca')
         ->leftjoin('financ_pessoas', 'pessoas.id', '=', 'financ_pessoas.pessoas_id')
         ->where('pessoas.id', $id)
         ->where('pessoas.empresas_id', $this->dados_login->empresas_id)
         ->where('pessoas.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->get();
-
+        */
 
         /*Se for MEMBRO, busca informacoes em tabelas especificas*/
         if ($habilitar_interface->membro)
@@ -934,6 +948,28 @@ public function salvar($request, $id, $tipo_operacao) {
             {
                 $membros_dados_pessoais = $bancos; //Artificio para nao ter que tratar array vazia nas views
             }
+
+            /* Membros Historico Eclesiastico*/
+            $sQuery = " select pessoas_id, empresas_id, empresas_clientes_cloud_id, ";
+            $sQuery .= " igreja_anterior, fone_igreja_anterior, religioes_id, cep_igreja_anterior, endereco_igreja_anterior, ";
+            $sQuery .= " numero_igreja_anterior, bairro_igreja_anterior, complemento_igreja_anterior, cidade_igreja_anterior, estado_igreja_anterior, ";
+            $sQuery .= " igreja_batismo, celebrador, ata_entrada, ata_saida, motivos_saida_id, motivos_entrada_id, observacoes_hist, ";
+            $sQuery .= " to_char(data_entrada, 'DD-MM-YYYY') AS data_entrada, ";
+            $sQuery .= " to_char(data_saida, 'DD-MM-YYYY') AS data_saida, ";
+            $sQuery .= " to_char(data_batismo, 'DD-MM-YYYY') AS data_batismo ";
+            $sQuery .= " from membros_historicos";
+            $sQuery .= " where membros_historicos.pessoas_id = ? ";
+            $sQuery .= " and membros_historicos.empresas_id = ? ";
+            $sQuery .= " and membros_historicos.empresas_clientes_cloud_id = ? ";
+
+            $membros_historico  = \DB::select($sQuery, [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+            /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
+            if ($membros_historico==null)
+            {
+                $membros_historico = $bancos; //Artificio para nao ter que tratar array vazia nas views
+            }
+
 
             /*Situacoes Membros*/
             $membros_situacoes  = \App\Models\membros_situacoes::select('situacoes_id as id')
@@ -956,17 +992,31 @@ public function salvar($request, $id, $tipo_operacao) {
             }
 
             /*Dados de Familiares*/
+            /*
             $membros_familiares  = \App\Models\membros_familiares::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
             ->where('empresas_id', $this->dados_login->empresas_id)
             ->where('pessoas_id', $id)
             ->get();
+            */
+            $sQuery = " select pessoas_id, empresas_id, empresas_clientes_cloud_id, conjuge_id, nome_conjuge, ";
+            $sQuery .= " to_char(data_falecimento, 'DD-MM-YYYY') AS data_falecimento, ";
+            $sQuery .= " to_char(data_casamento, 'DD-MM-YYYY') AS data_casamento, ";
+            $sQuery .= " to_char(data_nasc, 'DD-MM-YYYY') AS data_nasc,";
+            $sQuery .= " to_char(data_falecimento_pai, 'DD-MM-YYYY') AS data_falecimento_pai, ";
+            $sQuery .= " to_char(data_falecimento_mae, 'DD-MM-YYYY') AS data_falecimento_mae, ";
+            $sQuery .= " status_id, profissoes_id, igreja_casamento, pai_id, mae_id, nome_pai, nome_mae, status_pai_id, status_mae_id ";
+            $sQuery .= " from membros_familiares";
+            $sQuery .= " where membros_familiares.pessoas_id = ? ";
+            $sQuery .= " and membros_familiares.empresas_id = ? ";
+            $sQuery .= " and membros_familiares.empresas_clientes_cloud_id = ? ";
+
+            $membros_familiares  = \DB::select($sQuery, [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
-            if ($membros_familiares->count()==0)
+            if ($membros_familiares==null)
             {
                 $membros_familiares = $bancos; //Artificio para nao ter que tratar array vazia nas views
             }
-
 
             /*Dados Formacoes*/
             $membros_formacoes  = \App\Models\membros_formacoes::select('formacoes_id as id')
@@ -1072,6 +1122,7 @@ public function salvar($request, $id, $tipo_operacao) {
                     'membros_formacoes' =>$membros_formacoes,
                     'membros_idiomas' =>$membros_idiomas,
                     'membros_atividades' =>$membros_atividades,
+                    'membros_historico' =>$membros_historico,
                     'membros_ministerios' =>$membros_ministerios,
                     'membros_familiares' =>$membros_familiares,
                     'membros_dons' =>$membros_dons,
