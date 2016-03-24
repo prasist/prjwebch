@@ -193,53 +193,17 @@ public function salvar($request, $id, $tipo_operacao) {
 
             /*Excluir antes atualizar*/
             $excluir = \App\Models\membros_dons::where($where)->delete();
-            //$dons = \App\Models\membros_dons::findOrFail($where);
-            //$dons->delete();
-
-            //$profissionais = \App\Models\membros_profissionais::findOrFail($where);
-            //$profissionais->delete();
             $excluir = \App\Models\membros_profissionais::where($where)->delete();
-
-            //$financ = \App\Models\financpessoas::findOrFail($where);
-            //$financ->delete();
             $excluir = \App\Models\financpessoas::where($where)->delete();
-
-            //$eclesiasticos = \App\Models\membros_dados::findOrFail($where);
-            //$eclesiasticos->delete();
             $excluir = \App\Models\membros_dados::where($where)->delete();
-
-            //$familiares = \App\Models\membros_familiares::findOrFail($where);
-            //$familiares->delete();
             $excluir = \App\Models\membros_familiares::where($where)->delete();
-
-            //$situacoes = \App\Models\membros_situacoes::findOrFail($where);
-            //$situacoes->delete();
             $excluir = \App\Models\membros_situacoes::where($where)->delete();
-
-            //$formacoes = \App\Models\membros_formacoes::findOrFail($where);
-            //$formacoes->delete();
             $excluir = \App\Models\membros_formacoes::where($where)->delete();
-
-            //$idiomas = \App\Models\membros_idiomas::findOrFail($where);
-            //$idiomas->delete();
             $excluir = \App\Models\membros_idiomas::where($where)->delete();
-
-            //$habilidades = \App\Models\membros_habilidades::findOrFail($where);
-            //$habilidades->delete();
             $excluir = \App\Models\membros_habilidades::where($where)->delete();
-
-            //$atividades = \App\Models\membros_atividades::findOrFail($where);
-            //$atividades->delete();
             $excluir = \App\Models\membros_atividades::where($where)->delete();
-
-            //$ministerios = \App\Models\membros_ministerios::findOrFail($where);
-            //$ministerios->delete();
             $excluir = \App\Models\membros_ministerios::where($where)->delete();
-
-            //$historico = \App\Models\membros_hist_eclesiasticos::findOrFail($where);
-            //$historico->delete();
             $excluir = \App\Models\membros_hist_eclesiasticos::where($where)->delete();
-
     }
 
 

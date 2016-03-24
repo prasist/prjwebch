@@ -113,7 +113,7 @@
                                                                           <label for="ck_necessidades">Possui Necessidades Especiais ?</label>
                                                                           <div class="input-group">
                                                                                <div class="input-group-addon">
-                                                                                        <input  id="ck_necessidades" name="ck_necessidades" type="checkbox" class="minimal-red" value="true" />
+                                                                                        <input  id="ck_necessidades" name="ck_necessidades" type="checkbox" class="minimal-red" value="true" {{ ($tipo_operacao=='inclusao' ? '' : ($membros_dados_pessoais[0]->possui_necessidades_especiais==1 ? 'checked' : '')) }} />
                                                                                 </div>
 
                                                                                 <input id="necessidades" name = "necessidades" type="text" class="form-control" placeholder="Descrição Tipo Necessidade"  value="{{ ($tipo_operacao=='inclusao' ? old('necessidades') : $membros_dados_pessoais[0]->descricao_necessidade_especial) }}">
@@ -841,7 +841,7 @@
 
                                                                 <div class="col-xs-4">
                                                                         <label for="celebrador" class="control-label">Celebrador</label>
-                                                                        <input id="celebrador" maxlength="10" name = "celebrador" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('celebrador') : $membros_historico[0]->celebrador) }}">
+                                                                        <input id="celebrador"  name = "celebrador" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('celebrador') : $membros_historico[0]->celebrador) }}">
                                                                 </div>
 
                                                            </div><!-- end row -->
@@ -884,7 +884,7 @@
 
                                                                 <div class="col-xs-4">
                                                                         <label for="ata_entrada" class="control-label">Registrado em Ata n.:</label>
-                                                                        <input id="ata_entrada" maxlength="10" name = "ata_entrada" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('ata_entrada') : $membros_historico[0]->ata_entrada) }}">
+                                                                        <input id="ata_entrada" name = "ata_entrada" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('ata_entrada') : $membros_historico[0]->ata_entrada) }}">
                                                                 </div>
 
                                                            </div><!-- end row -->
@@ -910,7 +910,7 @@
 
                                                                 <div class="col-xs-4">
                                                                         <label for="ata_saida" class="control-label">Registrado em Ata n.:</label>
-                                                                        <input id="ata_saida" maxlength="10" name = "ata_saida" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('ata_saida') : $membros_historico[0]->ata_saida) }}">
+                                                                        <input id="ata_saida" name = "ata_saida" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('ata_saida') : $membros_historico[0]->ata_saida) }}">
                                                                 </div>
 
                                                            </div><!-- end row -->
