@@ -585,6 +585,7 @@
 
                                                                </div>
 
+                                                               <!--
                                                                <table id="exibir_filhos" class="table">
                                                                     <tr>
                                                                           <td>Nome</td>
@@ -595,10 +596,8 @@
                                                                           <td>Data Falecimento</td>
                                                                     </tr>
 
-                                                                    @foreach($filhos as $item)
-
-                                                                    @endforeach
                                                                </table>
+                                                               -->
 
                                                           </div>
 
