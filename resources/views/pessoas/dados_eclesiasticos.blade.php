@@ -538,70 +538,137 @@
 
                                                           <div class="row"><!-- row entrada-->
 
-                                                                   <div class="col-xs-4">
-                                                                        @include('carregar_combos', array('dados'=>$familias, 'titulo' =>'Filho(a) - Selecionar do cadastro', 'id_combo'=>'filhos', 'complemento'=>'', 'comparar'=>''))
-                                                                   </div>
-
-                                                                   <div class="col-xs-3">
-                                                                      <label for="nome_filho" class="control-label">ou Informar Nome</label>
-                                                                      <input id="nome_filho" name = "nome_conjuge" type="text" class="form-control" value="">
-                                                                   </div>
-
-                                                                   <div class="col-xs-3">
-                                                                          <label for="opSexoFilho" class="control-label">Sexo</label>
-                                                                         <select name="opSexoFilho" class="form-control select2" style="width: 100%;">
-                                                                         <option  value="">(Selecionar)</option>
-                                                                               <option  value="M">Masculino</option>
-                                                                               <option  value="F">Feminino</option>
-                                                                         </select>
-
-                                                                   </div>
-
-                                                                   <div class="col-xs-2">
-                                                                        <label for="datanascimento_filho" class="control-label">Data Nascimento</label>
-
-                                                                        <div class="input-group">
-                                                                               <div class="input-group-addon">
-                                                                                <i class="fa fa-calendar"></i>
-                                                                                </div>
-
-                                                                                <input id ="datanascimento_filho" onblur="validar_data(this)" name = "datanascimento_filho" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
-                                                                        </div>
-
+                                                                   <div class="col-xs-10">
+                                                                        @include('carregar_combos_multiple', array('dados'=>$familias, 'titulo' =>'Filho(s) - Selecionar do cadastro (Um ou mais)', 'id_combo'=>'filhos[]', 'complemento'=>'multiple="multiple"', 'comparar'=>''))
                                                                    </div>
 
                                                           </div>
 
                                                           <div class="row">
+                                                                  <div class="col-xs-10">
 
-                                                              <div class="col-xs-5">
-                                                                        @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status_filho', 'complemento'=>'', 'comparar'=>''))
-                                                              </div>
+                                                                      <label for="datanasc_conjuge" class="control-label">Caso o filho(a) não seja membro, clicar no botão abaixo para informar os dados sem cadastrá-lo no sistema.</label>
+                                                                      <br/>
 
-                                                              <div class="col-xs-4">
-                                                                        @include('carregar_combos', array('dados'=>$estadoscivis, 'titulo' =>'Estado Civil', 'id_combo'=>'estado_civil_filho', 'complemento'=>'', 'comparar'=>''))
-                                                              </div>
+                                                                       <button  id="novofilho" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                                                            Incluir filhos sem cadastrar
+                                                                       </button>
 
+                                                                       <br/>
 
-                                                                   <div class="col-xs-2">
-                                                                        <label for="datafalecimento_filho" class="control-label">Data Falecimento</label>
+                                                                       <table class="table table-striped">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                <th>Nome Filho(a)</th>
+                                                                                <th>Sexo</th>
+                                                                                <th>Data Nasc.</th>
+                                                                                <th>Data Falecimento</th>
+                                                                                <th>Status</th>
+                                                                                <th>Estado Civil</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
 
-                                                                        <div class="input-group">
-                                                                               <div class="input-group-addon">
-                                                                                <i class="fa fa-calendar"></i>
-                                                                                </div>
+                                                                            <tr>
 
-                                                                                <input id ="datafalecimento_filho" name = "datafalecimento_filho" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
-                                                                        </div>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
 
+                                                                            </tr>
+
+                                                                        </tbody>
+                                                                        </table>
                                                                    </div>
-
-                                                           </div><!-- end row-->
+                                                          </div>
 
                                                           <!-- aqui juaquim-->
                                                           <div class="row">
+                                                              <!--
                                                               <div class="col-xs-8">
-                                                              <a href="#" class="btn btn-default">Adicionar</a>
+                                                              <a href="#" class="btn btn-default" onclick="criar_campos();">Adicionar</a>
+                                                              </div>
+                                                              -->
+                                                              <!-- Button trigger modal -->
+
+
+                                                              <!-- Modal -->
+                                                              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                <div class="modal-dialog  modal-lg" role="document">
+                                                                  <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                      <h4 class="modal-title" id="myModalLabel">Incluir Filho(a)</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+
+                                                                         <div class="row">
+                                                                                    <div class="col-xs-5">
+                                                                                    <label for="nome_filho" class="control-label">Nome</label>
+                                                                                    <input id="nome_filho" name = "nome_conjuge" type="text" class="form-control" value="">
+                                                                                 </div>
+
+                                                                                 <div class="col-xs-3">
+                                                                                        <label for="opSexoFilho" class="control-label">Sexo</label>
+                                                                                       <select name="opSexoFilho" class="form-control select2" style="width: 100%;">
+                                                                                       <option  value="">(Selecionar)</option>
+                                                                                             <option  value="M">Masculino</option>
+                                                                                             <option  value="F">Feminino</option>
+                                                                                       </select>
+
+                                                                                 </div>
+
+                                                                                 <div class="col-xs-3">
+                                                                                      <label for="datanascimento_filho" class="control-label">Data Nascimento</label>
+
+                                                                                      <div class="input-group">
+                                                                                             <div class="input-group-addon">
+                                                                                              <i class="fa fa-calendar"></i>
+                                                                                              </div>
+
+                                                                                              <input id ="datanascimento_filho" onblur="validar_data(this)" name = "datanascimento_filho" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                                      </div>
+
+                                                                                 </div>
+
+                                                                        </div>
+
+                                                                        <div class="row">
+
+                                                                            <div class="col-xs-4">
+                                                                                      @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status_filho', 'complemento'=>'', 'comparar'=>''))
+                                                                            </div>
+
+                                                                            <div class="col-xs-4">
+                                                                                      @include('carregar_combos', array('dados'=>$estadoscivis, 'titulo' =>'Estado Civil', 'id_combo'=>'estado_civil_filho', 'complemento'=>'', 'comparar'=>''))
+                                                                            </div>
+
+
+                                                                                 <div class="col-xs-3">
+                                                                                      <label for="datafalecimento_filho" class="control-label">Data Falecimento</label>
+
+                                                                                      <div class="input-group">
+                                                                                             <div class="input-group-addon">
+                                                                                              <i class="fa fa-calendar"></i>
+                                                                                              </div>
+
+                                                                                              <input id ="datafalecimento_filho" name = "datafalecimento_filho" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                                      </div>
+
+                                                                                 </div>
+
+                                                                         </div><!-- end row-->
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                      <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                                                      <button type="button" class="btn btn-primary">Salvar</button>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
                                                               </div>
                                                           </div>
 
@@ -1141,4 +1208,16 @@
                   }
               }
         }
+
+      function criar_campos()
+      {
+
+              document.getElementById("mais_filhos").innerHTML=""; //APAGA O CONTEUDO DA DIV
+
+              var sHtml = '<div class="row"><div class="col-xs-4"></div><div class="col-xs-3"><label for="nome_filho" class="control-label">ou Informar Nome</label><input id="nome_filho" name = "nome_conjuge" type="text" class="form-control" value=""></div><div class="col-xs-2"><label for="opSexoFilho" class="control-label">Sexo</label><select name="opSexoFilho" class="form-control select2" style="width: 100%;"><option value="">(Selecionar)</option><option value="M">Masculino</option><option value="F">Feminino</option></select></div> <div class="col-xs-2"><label for="datanascimento_filho" class="control-label">Data Nascimento</label><div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i></div><input id ="datanascimento_filho" onblur="validar_data(this)" name = "datanascimento_filho" type="text" class="form-control" data-inputmask=""mask": "99/99/9999"" data-maskvalue=""></div> </div></div><div class="row"><div class="col-xs-5"></div><div class="col-xs-4"></div> <div class="col-xs-2"><label for="datafalecimento_filho" class="control-label">Data Falecimento</label><div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i></div><input id ="datafalecimento_filho" name = "datafalecimento_filho" onblur="validar_data(this)" type="text" class="form-control" data-inputmask=""mask": "99/99/9999"" data-maskvalue=""></div></div></div>';
+
+              $('#mais_filhos').append(sHtml);
+
+      }
+
 </script>
