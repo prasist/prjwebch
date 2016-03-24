@@ -538,29 +538,23 @@
 
                                                           <div class="row"><!-- row entrada-->
 
-                                                                   <div class="col-xs-5">
-                                                                        <label for="filhos" class="control-label">Nome</label>
-                                                                        <select name="filhos" class="form-control select2" style="width: 100%;">
-                                                                        <option  value="">(Selecionar)</option>
-                                                                        @foreach($familias as $item)
-                                                                              <option  value="{{$item->id}}">{{$item->razaosocial}}</option>
-                                                                        @endforeach
-                                                                        </select>
+                                                                   <div class="col-xs-4">
+                                                                        @include('carregar_combos', array('dados'=>$familias, 'titulo' =>'Filho(a) - Selecionar do cadastro', 'id_combo'=>'filhos', 'complemento'=>'', 'comparar'=>''))
                                                                    </div>
 
-                                                                   <div class="col-xs-4">
+                                                                   <div class="col-xs-3">
+                                                                      <label for="nome_filho" class="control-label">ou Informar Nome</label>
+                                                                      <input id="nome_filho" name = "nome_conjuge" type="text" class="form-control" value="">
+                                                                   </div>
+
+                                                                   <div class="col-xs-3">
                                                                           <label for="opSexoFilho" class="control-label">Sexo</label>
+                                                                         <select name="opSexoFilho" class="form-control select2" style="width: 100%;">
+                                                                         <option  value="">(Selecionar)</option>
+                                                                               <option  value="M">Masculino</option>
+                                                                               <option  value="F">Feminino</option>
+                                                                         </select>
 
-                                                                          <br/>
-                                                                         <label>
-                                                                              <input type="radio" name="opSexoFilho" class="minimal" value="M">
-                                                                              Masculino
-                                                                         </label>
-
-                                                                         <label>
-                                                                              <input type="radio" name="opSexoFilho" class="minimal" value="F">
-                                                                              Feminino
-                                                                         </label>
                                                                    </div>
 
                                                                    <div class="col-xs-2">
@@ -571,7 +565,7 @@
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="datanascimento_filho" onblur="validar_data(this)" name = "datanascimento_filho" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datanascimento_filho')}}">
+                                                                                <input id ="datanascimento_filho" onblur="validar_data(this)" name = "datanascimento_filho" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
                                                                         </div>
 
                                                                    </div>
@@ -580,24 +574,12 @@
 
                                                           <div class="row">
 
-                                                               <div class="col-xs-5">
-                                                                        <label for="status_filho" class="control-label">Status</label>
-                                                                        <select name="status_filho" class="form-control select2" style="width: 100%;">
-                                                                        <option  value="">(Selecionar)</option>
-                                                                        @foreach($status as $item)
-                                                                              <option  value="{{$item->id}}">{{$item->nome}}</option>
-                                                                        @endforeach
-                                                                        </select>
+                                                              <div class="col-xs-5">
+                                                                        @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status_filho', 'complemento'=>'', 'comparar'=>''))
                                                               </div>
 
                                                               <div class="col-xs-4">
-                                                                        <label for="estado_civil_filho" class="control-label">Estado Civil</label>
-                                                                        <select name="estado_civil_filho" class="form-control select2" style="width: 100%;">
-                                                                        <option  value="">(Selecionar)</option>
-                                                                        @foreach($estadoscivis as $item)
-                                                                              <option  value="{{$item->id}}">{{$item->nome}}</option>
-                                                                        @endforeach
-                                                                        </select>
+                                                                        @include('carregar_combos', array('dados'=>$estadoscivis, 'titulo' =>'Estado Civil', 'id_combo'=>'estado_civil_filho', 'complemento'=>'', 'comparar'=>''))
                                                               </div>
 
 
@@ -609,13 +591,21 @@
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="datafalecimento_filho" name = "datafalecimento_filho" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('datafalecimento_filho')}}">
+                                                                                <input id ="datafalecimento_filho" name = "datafalecimento_filho" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
                                                                         </div>
 
                                                                    </div>
 
-                                                                </div><!-- end row-->
-                                                    </div>
+                                                           </div><!-- end row-->
+
+                                                          <!-- aqui juaquim-->
+                                                          <div class="row">
+                                                              <div class="col-xs-8">
+                                                              <a href="#" class="btn btn-default">Adicionar</a>
+                                                              </div>
+                                                          </div>
+
+                                                    </div> <!-- fim box-body-->
                                               </div>
                                            </div>
                                </div><!-- end row-->

@@ -179,8 +179,72 @@ class PessoasController extends Controller
 */
 public function salvar($request, $id, $tipo_operacao) {
 
+    /*
+        Se for UPDATE (houver conteudo variavel $id), exclui as tabelas auxiliares antes da TRANSACTION
+    */
+    if ($id!="")
+    {
+            $where =
+            [
+                'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                'empresas_id' =>  $this->dados_login->empresas_id,
+                'pessoas_id' => $id
+            ];
+
+            /*Excluir antes atualizar*/
+            $excluir = \App\Models\membros_dons::where($where)->delete();
+            //$dons = \App\Models\membros_dons::findOrFail($where);
+            //$dons->delete();
+
+            //$profissionais = \App\Models\membros_profissionais::findOrFail($where);
+            //$profissionais->delete();
+            $excluir = \App\Models\membros_profissionais::where($where)->delete();
+
+            //$financ = \App\Models\financpessoas::findOrFail($where);
+            //$financ->delete();
+            $excluir = \App\Models\financpessoas::where($where)->delete();
+
+            //$eclesiasticos = \App\Models\membros_dados::findOrFail($where);
+            //$eclesiasticos->delete();
+            $excluir = \App\Models\membros_dados::where($where)->delete();
+
+            //$familiares = \App\Models\membros_familiares::findOrFail($where);
+            //$familiares->delete();
+            $excluir = \App\Models\membros_familiares::where($where)->delete();
+
+            //$situacoes = \App\Models\membros_situacoes::findOrFail($where);
+            //$situacoes->delete();
+            $excluir = \App\Models\membros_situacoes::where($where)->delete();
+
+            //$formacoes = \App\Models\membros_formacoes::findOrFail($where);
+            //$formacoes->delete();
+            $excluir = \App\Models\membros_formacoes::where($where)->delete();
+
+            //$idiomas = \App\Models\membros_idiomas::findOrFail($where);
+            //$idiomas->delete();
+            $excluir = \App\Models\membros_idiomas::where($where)->delete();
+
+            //$habilidades = \App\Models\membros_habilidades::findOrFail($where);
+            //$habilidades->delete();
+            $excluir = \App\Models\membros_habilidades::where($where)->delete();
+
+            //$atividades = \App\Models\membros_atividades::findOrFail($where);
+            //$atividades->delete();
+            $excluir = \App\Models\membros_atividades::where($where)->delete();
+
+            //$ministerios = \App\Models\membros_ministerios::findOrFail($where);
+            //$ministerios->delete();
+            $excluir = \App\Models\membros_ministerios::where($where)->delete();
+
+            //$historico = \App\Models\membros_hist_eclesiasticos::findOrFail($where);
+            //$historico->delete();
+            $excluir = \App\Models\membros_hist_eclesiasticos::where($where)->delete();
+
+    }
+
+
 /* ------------------ INICIA TRANSACTION -----------------------*/
-        \DB::transaction(function() use ($request, $id, $tipo_operacao)
+        \DB::transaction(function() use ($request, $id, $tipo_operacao, $where)
         {
 
             /*Instancia biblioteca de funcoes globais*/
@@ -246,23 +310,8 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                 /*------------------------------DADOS FINANCEIROS------------------------------*/
-                $where = [
-                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                            'empresas_id' =>  $this->dados_login->empresas_id,
-                            'pessoas_id' => $pessoas->id
-                        ];
-
-                 /*Exclui dados antes de inserir*/
-                $financ = \App\Models\financpessoas::firstOrNew($where);
-                $financ->delete();
 
                 if ($input['banco']!="" || $input['endereco_cobranca']!="") {
-
-                        $where = [
-                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                            'empresas_id' =>  $this->dados_login->empresas_id,
-                            'pessoas_id' => $pessoas->id
-                        ];
 
                         $financ = \App\Models\financpessoas::firstOrNew($where);
 
@@ -297,17 +346,6 @@ public function salvar($request, $id, $tipo_operacao) {
               {
 
                         /*------------------------------DADOS ECLESIASTICOS------------------------------*/
-                        $where =
-                        [
-                            'pessoas_id' => $pessoas->id,
-                            'empresas_id' =>  $this->dados_login->empresas_id,
-                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id
-                        ];
-
-                        /*Exclui antes de inserir ou atualizar*/
-                        $eclesiasticos = \App\Models\membros_dados::firstOrNew($where);
-                        $eclesiasticos->delete();
-
 
                         if ($input['opSexo']!="" || $input['status']!="" || $input['graus']!="" || $input['lingua']!="" || $input['igreja']!=""
                             || $input['familia']!="" || $input['opDoadorSangue']!="" || $input['opDoadorOrgaos']!="" || $input['naturalidade']!=""
@@ -332,13 +370,13 @@ public function salvar($request, $id, $tipo_operacao) {
                                     'sexo' => ($input['opSexo']=="" ? null : $input['opSexo']),
                                     'prefere_trabalhar_com' => ($input['prefere_trabalhar_com']=="" ? null : $input['prefere_trabalhar_com']),
                                     'considera_se' => ($input['considera_se']=="" ? null : $input['considera_se']),
-                                    'doador_sangue' => $input['opDoadorSangue'],
-                                    'doador_orgaos' => $input['opDoadorOrgaos'],
+                                    'doador_sangue' => ($input['opDoadorSangue']=="" ? null : $input['opDoadorSangue']),
+                                    'doador_orgaos' => ($input['opDoadorOrgaos']=="" ? null : $input['opDoadorOrgaos']),
                                     'naturalidade' => $input['naturalidade'],
                                     'uf_naturalidade' => $input['ufnaturalidade'],
                                     'nacionalidade' => $input['nacionalidade'],
                                     'grupo_sanguinio' => ($input['grpsangue']=="" ? null : $input['grpsangue']),
-                                    'possui_necessidades_especiais' => ($input['ck_necessidades']=="" ? 'false' : $input['ck_necessidades']),
+                                    'possui_necessidades_especiais' => ($input['ck_necessidades']=="" ? 0 : $input['ck_necessidades']),
                                     'descricao_necessidade_especial' => $input['necessidades'],
                                     'link_facebook' => $input['facebook'],
                                     'link_google' => $input['google'],
@@ -357,16 +395,6 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                         /*------------------------------ DADOS PROFISSIONAIS ------------------------------*/
-                        $where =
-                        [
-                            'pessoas_id' => $pessoas->id,
-                            'empresas_id' =>  $this->dados_login->empresas_id,
-                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id
-                        ];
-
-                        /*Exclui antes de inserir ou atualizar*/
-                        $profissionais = \App\Models\membros_profissionais::firstOrNew($where);
-                        $profissionais->delete();
 
                         if ($input['nome_empresa']!="" || $input['endereco_prof']!=""
                             || $input['numero_prof']!="" || $input['bairro_prof']!="" || $input['cep_prof']!="" || $input['complemento_prof']!=""
@@ -404,16 +432,6 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                         /*------------------------------ DADOS FAMILIARES ------------------------------*/
-                        $where =
-                        [
-                            'pessoas_id' => $pessoas->id,
-                            'empresas_id' =>  $this->dados_login->empresas_id,
-                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id
-                        ];
-
-                        /*Exclui antes de inserir ou atualizar*/
-                        $familiares = \App\Models\membros_familiares::firstOrNew($where);
-                        $familiares->delete();
 
                         if ($input['conjuge']!="" || $input['nome_conjuge']!=""
                             || $input['datanasc_conjuge']!="" || $input['datafalecimento']!="" || $input['datacasamento']!="" || $input['status_conjuge']!=""
@@ -455,16 +473,6 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                         /*------------------------------ Tabela MEMBROS_SITUACOES---------------------------*/
-                        $where =
-                        [
-                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                            'empresas_id' =>  $this->dados_login->empresas_id,
-                            'pessoas_id' => $pessoas->id
-                        ];
-
-                        /*Excluir antes de inserir*/
-                        $situacoes = \App\Models\membros_situacoes::firstOrNew($where);
-                        $situacoes->delete();
 
                         if ($input['situacoes']!="")  /*Array combo multiple*/
                         {
@@ -472,7 +480,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                 {
                                         if ($selected!="")
                                         {
-                                                $where =
+                                                $whereForEach =
                                                 [
                                                     'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
                                                     'empresas_id' =>  $this->dados_login->empresas_id,
@@ -480,7 +488,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'situacoes_id' => $selected
                                                 ];
 
-                                                $situacoes = \App\Models\membros_situacoes::firstOrNew($where);
+                                                $situacoes = \App\Models\membros_situacoes::firstOrNew($whereForEach);
 
                                                 $valores =
                                                 [
@@ -502,16 +510,6 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                         /*------------------------------ Tabela MEMBROS_FORMAÇÕES ---------------------------*/
-                        $where =
-                        [
-                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                            'empresas_id' =>  $this->dados_login->empresas_id,
-                            'pessoas_id' => $pessoas->id
-                        ];
-
-                        /*Excluir antes de inserir*/
-                        $formacoes = \App\Models\membros_formacoes::firstOrNew($where);
-                        $formacoes->delete();
 
                         if ($input['formacoes']!="")  /*Array combo multiple*/
                         {
@@ -519,7 +517,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                 {
                                         if ($selected!="")
                                         {
-                                                $where =
+                                                $whereForEach =
                                                 [
                                                     'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
                                                     'empresas_id' =>  $this->dados_login->empresas_id,
@@ -527,7 +525,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'formacoes_id' => $selected
                                                 ];
 
-                                                $formacoes = \App\Models\membros_formacoes::firstOrNew($where);
+                                                $formacoes = \App\Models\membros_formacoes::firstOrNew($whereForEach);
 
                                                 $valores =
                                                 [
@@ -549,16 +547,6 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                         /*------------------------------ Tabela MEMBROS_IDIOMAS ---------------------------*/
-                        $where =
-                        [
-                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                            'empresas_id' =>  $this->dados_login->empresas_id,
-                            'pessoas_id' => $pessoas->id
-                        ];
-
-                        /*Excluir antes de inserir*/
-                        $idiomas = \App\Models\membros_idiomas::firstOrNew($where);
-                        $idiomas->delete();
 
                         if ($input['idiomas']!="")  /*Array combo multiple*/
                         {
@@ -566,7 +554,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                 {
                                         if ($selected!="")
                                         {
-                                                $where =
+                                                $whereForEach =
                                                 [
                                                     'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
                                                     'empresas_id' =>  $this->dados_login->empresas_id,
@@ -574,7 +562,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'idiomas_id' => $selected
                                                 ];
 
-                                                $idiomas = \App\Models\membros_idiomas::firstOrNew($where);
+                                                $idiomas = \App\Models\membros_idiomas::firstOrNew($whereForEach);
 
                                                 $valores =
                                                 [
@@ -596,16 +584,7 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                         /*------------------------------ Tabela MEMBROS_DONS ---------------------------*/
-                        $where =
-                        [
-                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                            'empresas_id' =>  $this->dados_login->empresas_id,
-                            'pessoas_id' => $pessoas->id
-                        ];
 
-                        /*Excluir antes de inserir*/
-                        $dons = \App\Models\membros_dons::firstOrNew($where);
-                        $dons->delete();
 
                         if ($input['dons']!="")  /*Array combo multiple*/
                         {
@@ -613,7 +592,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                 {
                                         if ($selected!="")
                                         {
-                                                $where =
+                                                $whereForEach =
                                                 [
                                                     'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
                                                     'empresas_id' =>  $this->dados_login->empresas_id,
@@ -621,7 +600,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'dons_id' => $selected
                                                 ];
 
-                                                $dons = \App\Models\membros_dons::firstOrNew($where);
+                                                $dons = \App\Models\membros_dons::firstOrNew($whereForEach);
 
                                                 $valores =
                                                 [
@@ -633,8 +612,10 @@ public function salvar($request, $id, $tipo_operacao) {
 
                                                 $dons->fill($valores)->save();
                                                 $dons->save();
+
                                         }
                                 }
+
                         }
                         /*------------------------------ FIM Tabela MEMBROS_DONS---------------------------*/
 
@@ -643,16 +624,6 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                         /*------------------------------ Tabela MEMBROS_HABILIDADES ---------------------------*/
-                        $where =
-                        [
-                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                            'empresas_id' =>  $this->dados_login->empresas_id,
-                            'pessoas_id' => $pessoas->id
-                        ];
-
-                        /*Excluir antes de inserir*/
-                        $habilidades = \App\Models\membros_habilidades::firstOrNew($where);
-                        $habilidades->delete();
 
                         if ($input['habilidades']!="")  /*Array combo multiple*/
                         {
@@ -660,7 +631,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                 {
                                         if ($selected!="")
                                         {
-                                                $where =
+                                                $whereForEach =
                                                 [
                                                     'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
                                                     'empresas_id' =>  $this->dados_login->empresas_id,
@@ -668,7 +639,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'habilidades_id' => $selected
                                                 ];
 
-                                                $habilidades = \App\Models\membros_habilidades::firstOrNew($where);
+                                                $habilidades = \App\Models\membros_habilidades::firstOrNew($whereForEach);
 
                                                 $valores =
                                                 [
@@ -691,16 +662,6 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                         /*------------------------------ Tabela MEMBROS_ATIVIDADES ---------------------------*/
-                        $where =
-                        [
-                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                            'empresas_id' =>  $this->dados_login->empresas_id,
-                            'pessoas_id' => $pessoas->id
-                        ];
-
-                        /*Excluir antes de inserir*/
-                        $atividades = \App\Models\membros_atividades::firstOrNew($where);
-                        $atividades->delete();
 
                         if ($input['atividades']!="")  /*Array combo multiple*/
                         {
@@ -708,7 +669,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                 {
                                         if ($selected!="")
                                         {
-                                                $where =
+                                                $whereForEach =
                                                 [
                                                     'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
                                                     'empresas_id' =>  $this->dados_login->empresas_id,
@@ -716,7 +677,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'atividades_id' => $selected
                                                 ];
 
-                                                $atividades = \App\Models\membros_atividades::firstOrNew($where);
+                                                $atividades = \App\Models\membros_atividades::firstOrNew($whereForEach);
 
                                                 $valores =
                                                 [
@@ -738,16 +699,6 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                         /*------------------------------ Tabela MEMBROS_MINISTERIOS ---------------------------*/
-                        $where =
-                        [
-                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                            'empresas_id' =>  $this->dados_login->empresas_id,
-                            'pessoas_id' => $pessoas->id
-                        ];
-
-                        /*Excluir antes de inserir*/
-                        $ministerios = \App\Models\membros_ministerios::firstOrNew($where);
-                        $ministerios->delete();
 
                         if ($input['ministerios']!="")  /*Array combo multiple*/
                         {
@@ -755,7 +706,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                 {
                                         if ($selected!="")
                                         {
-                                                $where =
+                                                $whereForEach =
                                                 [
                                                     'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
                                                     'empresas_id' =>  $this->dados_login->empresas_id,
@@ -763,7 +714,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'ministerios_id' => $selected
                                                 ];
 
-                                                $ministerios = \App\Models\membros_ministerios::firstOrNew($where);
+                                                $ministerios = \App\Models\membros_ministerios::firstOrNew($whereForEach);
 
                                                 $valores =
                                                 [
@@ -784,18 +735,6 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                         /*------------------------------ DADOS HIST. ECLESIASTICOS ------------------------------*/
-                        $where =
-                        [
-                            'pessoas_id' => $pessoas->id,
-                            'empresas_id' =>  $this->dados_login->empresas_id,
-                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id
-                        ];
-
-                        /*Exclui antes de inserir ou atualizar*/
-                        $historico = \App\Models\membros_hist_eclesiasticos::firstOrNew($where);
-                        $historico->delete();
-
-
 
                         if ($input['igreja_anterior']!="" || $input['fone_igreja_anterior']!=""
                             || $input['religioes']!="" || $input['cep_igreja_anterior']!="" || $input['endereco_igreja_anterior']!="" || $input['numero_igreja_anterior']!=""
@@ -804,8 +743,6 @@ public function salvar($request, $id, $tipo_operacao) {
 
                         {
                                 $historico = \App\Models\membros_hist_eclesiasticos::firstOrNew($where);
-
-
 
                                 $valores =
                                 [

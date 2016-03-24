@@ -51,7 +51,7 @@
         },
         {
           title: "Passo 4",
-          content: "Após clicar em 'Novo Registro', aparecerão as permissões ACESSAR, INCLUIR, ALTERAR, EXCLUIR, VISUALIZAR, EXPORTAR ou IMPRIMIR. Defina as permissões do grupo e grave.",
+          content: "Após clicar em 'Novo Registro', aparecerão as permissões ACESSAR, INCLUIR, ALTERAR, EXCLUIR, VISUALIZAR, EXPORTAR ou IMPRIMIR.",
           target: document.querySelector("#tour5"),
           placement: "bottom",
           multipage: true,
@@ -61,8 +61,24 @@
                 window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/permissoes/registrar";
               }
         },
-        {
+
+       {
           title: "Passo 5",
+          content: "Defina as permissões do grupo e grave.",
+          target: document.querySelector("#tour4_1"),
+          placement: "bottom",
+          multipage: true,
+              onNext: function() {
+                var pathArray = window.location.pathname.split( '/' );
+                var secondLevelLocation = pathArray[0];
+                window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/permissoes";
+              }
+        },
+
+
+
+        {
+          title: "Passo 6",
           content: "Concluído o cadastro das permissões, clique em 'Usuários',  no menu 'Segurança' e comece a cadastrar os novos usuários clicando no botão 'Novo Registro'.",
           target: document.querySelector("#tour6"),
           placement: "bottom",
@@ -75,7 +91,7 @@
         },
 
         {
-          title: "Passo 6",
+          title: "Passo 7",
           content: "Clique no botão 'Novo Registro' para criar um novo usuário",
           target: document.querySelector("#tour7"),
           placement: "bottom",
@@ -88,7 +104,7 @@
         },
 
         {
-          title: "Passo 7",
+          title: "Passo 8",
           content: "Não esqueça de fazer a escolha do Grupo do usuário de acordo com as permissões que você deseja dar a ele. Preencha as informações cadastrais do usuário, clique em 'Gravar' e pronto! O novo usuário está cadastrado. Ele poderá ter acesso ao sistema fazendo login com o e-mail e a senha cadastrados pelo administrador.",
           target: document.querySelector("#tour8"),
           placement: "bottom",

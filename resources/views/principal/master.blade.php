@@ -188,11 +188,13 @@
         @endif
 
         @if (\Session::get('tour_rapido')==' ' || \Session::get('tour_rapido')!='S')
-        <script type="text/javascript">
+            @if (\Session::get('admin')==1)
+                <script type="text/javascript">
 
-                hopscotch.startTour(tour);
+                        hopscotch.startTour(tour);
 
-        </script>
+                </script>
+            @endif
         @endif
 
     </body>

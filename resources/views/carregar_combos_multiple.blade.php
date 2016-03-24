@@ -8,7 +8,7 @@
 
  <label for={{$id_combo}} class="control-label">{{$titulo}}</label>
 
-<select name="{{$id_combo}}" {{$complemento}} class="form-control select2" style="width: 100%;">
+<select name="{{$id_combo}}" {{$complemento}} placeholder="(Selecionar)" class="form-control select2" style="width: 100%;">
 <option  value="">(Selecionar)</option>
 
 @foreach($dados as $item)

@@ -43,6 +43,7 @@
                                                 <div class="box-body">
 
                                                 <div id="tour6"></div>
+                                                <div id="tour4_1"></div>
 
                                                  <p><input  id= "selecionar_todos" name="selecionar_todos" type="checkbox" checked />  Selecionar todos</p>
 
