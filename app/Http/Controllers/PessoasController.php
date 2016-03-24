@@ -357,6 +357,95 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
 
+                        /*------------------------------MEMBROS FILHOS (SEM CADASTRO)------------------------------*/
+
+                        if ($input['inc_filhos']!="") /*Se for inclusão sem cadastro vinculado*/
+                        {
+
+                            $i_index=0; /*Inicia sequencia*/
+
+                            /*Pode ser um ou vários, por isso percorre array de inputs gerados*/
+                            foreach($input['inc_filhos'] as $selected)
+                                {
+                                        if ($selected!="")
+                                        {
+
+                                                $whereForEach =
+                                                [
+                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                    'empresas_id' =>  $this->dados_login->empresas_id,
+                                                    'pessoas_id' => $pessoas->id,
+                                                    'nome_filho' => $selected
+                                                ];
+
+                                                $filhos = \App\Models\membros_filhos::firstOrNew($whereForEach);
+
+                                                $valores =
+                                                [
+                                                    'pessoas_id' => $pessoas->id,
+                                                    'empresas_id' =>  $this->dados_login->empresas_id,
+                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                    'nome_filho' => $input['inc_filhos'][$i_index],
+                                                    'status_id' => ($input['hidden_status'][$i_index]=="" ? null : $input['hidden_status'][$i_index]),
+                                                    'estadocivil_id' => ($input['hidden_estadocivl'][$i_index]=="" ? null : $input['hidden_estadocivl'][$i_index]),
+                                                    'sexo' => ($input['hidden_sexo'][$i_index]=="" ? null : $input['hidden_sexo'][$i_index]),
+                                                    'data_nasc' => $formatador->FormatarData($input['inc_datanasc'][$i_index]),
+                                                    'data_falecimento' => $formatador->FormatarData($input['inc_datafalec'][$i_index])
+                                                ];
+
+                                                $filhos->fill($valores)->save();
+                                                $filhos->save();
+
+                                                $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
+                                        }
+                                }
+
+
+                            }
+                        /*------------------------------FIM - MEMBROS FILHOS (SEM CADASTRO) ------------------------------*/
+
+
+
+
+                        /*------------------------------FIM - MEMBROS FILHOS ------------------------------*/
+                        if ($input['filhos']!="") /*Se foi informado um ou varios na combo (do cadastro de pessoas)*/
+                        {
+
+                            /*Pode ser um ou vários, por isso percorre array de inputs gerados*/
+                            foreach($input['filhos'] as $selected)
+                                {
+                                        if ($selected!="")
+                                        {
+
+                                                $whereForEach =
+                                                [
+                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                    'empresas_id' =>  $this->dados_login->empresas_id,
+                                                    'pessoas_id' => $pessoas->id,
+                                                    'filhos_id' => $selected
+                                                ];
+
+                                                $filhos = \App\Models\membros_filhos::firstOrNew($whereForEach);
+
+                                                $valores =
+                                                [
+                                                    'pessoas_id' => $pessoas->id,
+                                                    'empresas_id' =>  $this->dados_login->empresas_id,
+                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                    'filhos_id' => $selected,
+                                                ];
+
+                                                $filhos->fill($valores)->save();
+                                                $filhos->save();
+
+                                        }
+                                }
+
+
+                            }
+                        /*------------------------------FIM - MEMBROS FILHOS------------------------------*/
+
+
 
 
                         /*------------------------------ DADOS PROFISSIONAIS ------------------------------*/
@@ -852,15 +941,15 @@ public function salvar($request, $id, $tipo_operacao) {
                 $membros_dados_pessoais = $bancos; //Artificio para nao ter que tratar array vazia nas views
             }
 
-            /* Membros Historico Eclesiastico*/
-            $sQuery = " select pessoas_id, empresas_id, empresas_clientes_cloud_id, ";
+            /* Membros Historico Eclesiastico */
+            $sQuery  = " select pessoas_id, empresas_id, empresas_clientes_cloud_id, ";
             $sQuery .= " igreja_anterior, fone_igreja_anterior, religioes_id, cep_igreja_anterior, endereco_igreja_anterior, ";
             $sQuery .= " numero_igreja_anterior, bairro_igreja_anterior, complemento_igreja_anterior, cidade_igreja_anterior, estado_igreja_anterior, ";
             $sQuery .= " igreja_batismo, celebrador, ata_entrada, ata_saida, motivos_saida_id, motivos_entrada_id, observacoes_hist, ";
             $sQuery .= " to_char(data_entrada, 'DD-MM-YYYY') AS data_entrada, ";
             $sQuery .= " to_char(data_saida, 'DD-MM-YYYY') AS data_saida, ";
             $sQuery .= " to_char(data_batismo, 'DD-MM-YYYY') AS data_batismo ";
-            $sQuery .= " from membros_historicos";
+            $sQuery .= " from membros_historicos ";
             $sQuery .= " where membros_historicos.pessoas_id = ? ";
             $sQuery .= " and membros_historicos.empresas_id = ? ";
             $sQuery .= " and membros_historicos.empresas_clientes_cloud_id = ? ";

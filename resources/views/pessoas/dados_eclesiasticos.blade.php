@@ -534,6 +534,8 @@
                                                             <h3 class="box-title">Filhos</h3>
                                                     </div>
 
+                                                    <input type="hidden" name="filhos[]" class="minimal" value="">
+
                                                     <div class="box-body"><!-- box-body-->
 
                                                           <div class="row"><!-- row entrada-->
@@ -554,46 +556,53 @@
                                                                             Incluir filhos sem cadastrar
                                                                        </button>
 
-                                                                       <br/>
-
-                                                                       <table class="table table-striped">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                <th>Nome Filho(a)</th>
-                                                                                <th>Sexo</th>
-                                                                                <th>Data Nasc.</th>
-                                                                                <th>Data Falecimento</th>
-                                                                                <th>Status</th>
-                                                                                <th>Estado Civil</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-
-                                                                            <tr>
-
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td></td>
-
-                                                                            </tr>
-
-                                                                        </tbody>
-                                                                        </table>
                                                                    </div>
                                                           </div>
 
-                                                          <!-- aqui juaquim-->
                                                           <div class="row">
-                                                              <!--
-                                                              <div class="col-xs-8">
-                                                              <a href="#" class="btn btn-default" onclick="criar_campos();">Adicionar</a>
-                                                              </div>
-                                                              -->
-                                                              <!-- Button trigger modal -->
+                                                               <br/>
 
+                                                                   <div class="col-xs-2">
+                                                                      <label for="inc_filhos[]" class="control-label">Nome</label>
+                                                                   </div>
+                                                                   <div class="col-xs-2">
+                                                                          <label for="inc_filhos2[]" class="control-label">Sexo</label>
+                                                                   </div>
+                                                                   <div class="col-xs-2">
+                                                                          <label for="inc_filhos3[]" class="control-label">Status</label>
+                                                                   </div>
+                                                                   <div class="col-xs-2">
+                                                                          <label for="inc_filhos4[]" class="control-label">Estado Civil</label>
+                                                                   </div>
+                                                                   <div class="col-xs-2">
+                                                                          <label for="inc_filhos5[]" class="control-label">Data Nascimento</label>
+                                                                   </div>
+                                                                   <div class="col-xs-2">
+                                                                          <label for="inc_filhos6[]" class="control-label">Data Falecimento</label>
+                                                                   </div>
+
+                                                               <div id="mais_filhos">
+
+                                                               </div>
+
+                                                               <table id="exibir_filhos" class="table">
+                                                                    <tr>
+                                                                          <td>Nome</td>
+                                                                          <td>Sexo</td>
+                                                                          <td>Status</td>
+                                                                          <td>Estado Civil</td>
+                                                                          <td>Data Nascimento</td>
+                                                                          <td>Data Falecimento</td>
+                                                                    </tr>
+
+                                                                    @foreach($filhos as $item)
+
+                                                                    @endforeach
+                                                               </table>
+
+                                                          </div>
+
+                                                          <div class="row">
 
                                                               <!-- Modal -->
                                                               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -612,8 +621,8 @@
                                                                                  </div>
 
                                                                                  <div class="col-xs-3">
-                                                                                        <label for="opSexoFilho" class="control-label">Sexo</label>
-                                                                                       <select name="opSexoFilho" class="form-control select2" style="width: 100%;">
+                                                                                       <label for="opSexoFilho" class="control-label">Sexo</label>
+                                                                                       <select id="opSexoFilho" name="opSexoFilho" class="form-control select2" style="width: 100%;">
                                                                                        <option  value="">(Selecionar)</option>
                                                                                              <option  value="M">Masculino</option>
                                                                                              <option  value="F">Feminino</option>
@@ -664,8 +673,8 @@
 
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                      <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                                                                      <button type="button" class="btn btn-primary">Salvar</button>
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                                                        <button type="button" class="btn btn-primary" onclick="incluir_filho();">Salvar</button>
                                                                     </div>
                                                                   </div>
                                                                 </div>
@@ -1209,14 +1218,34 @@
               }
         }
 
-      function criar_campos()
+
+      function incluir_filho()
       {
 
-              document.getElementById("mais_filhos").innerHTML=""; //APAGA O CONTEUDO DA DIV
+              var ind_sexo = document.getElementById("opSexoFilho").selectedIndex;
+              var texto_sexo = document.getElementById("opSexoFilho").options;
 
-              var sHtml = '<div class="row"><div class="col-xs-4"></div><div class="col-xs-3"><label for="nome_filho" class="control-label">ou Informar Nome</label><input id="nome_filho" name = "nome_conjuge" type="text" class="form-control" value=""></div><div class="col-xs-2"><label for="opSexoFilho" class="control-label">Sexo</label><select name="opSexoFilho" class="form-control select2" style="width: 100%;"><option value="">(Selecionar)</option><option value="M">Masculino</option><option value="F">Feminino</option></select></div> <div class="col-xs-2"><label for="datanascimento_filho" class="control-label">Data Nascimento</label><div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i></div><input id ="datanascimento_filho" onblur="validar_data(this)" name = "datanascimento_filho" type="text" class="form-control" data-inputmask=""mask": "99/99/9999"" data-maskvalue=""></div> </div></div><div class="row"><div class="col-xs-5"></div><div class="col-xs-4"></div> <div class="col-xs-2"><label for="datafalecimento_filho" class="control-label">Data Falecimento</label><div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i></div><input id ="datafalecimento_filho" name = "datafalecimento_filho" onblur="validar_data(this)" type="text" class="form-control" data-inputmask=""mask": "99/99/9999"" data-maskvalue=""></div></div></div>';
+              var ind_estado_civil_filho = document.getElementById("estado_civil_filho").selectedIndex;
+              var texto_estado_civil_filho = document.getElementById("estado_civil_filho").options;
 
-              $('#mais_filhos').append(sHtml);
+              var ind_status_filho = document.getElementById("status_filho").selectedIndex;
+              var texto_status_filho = document.getElementById("status_filho").options;
+
+              /*cria os inputs para exibicao ao usuario*/
+              var sFilho = '<div class="col-xs-2"><input id="inc_filhos[]" name = "inc_filhos[]" type="text" class="form-control" value="' + document.getElementById("nome_filho").value + '"></div>';
+              var sSexoFilho = '<div class="col-xs-2"><input id="inc_sexo[]" name = "inc_sexo[]" type="text" class="form-control" value="' + texto_sexo[ind_sexo].text + '"></div>';
+              var sStatusFilho = '<div class="col-xs-2"><input id="inc_status[]" name = "inc_status[]" type="text" class="form-control" value="' + texto_status_filho[ind_status_filho].text + '"></div>';
+              var sEstadoCivilFilho = '<div class="col-xs-2"><input id="inc_estadocivl[]" name = "inc_estadocivl[]" type="text" class="form-control" value="' + texto_estado_civil_filho[ind_estado_civil_filho].text + '"></div>';
+              var sDataNascFilho = '<div class="col-xs-2"><input id="inc_datanasc[]" name = "inc_datanasc[]" type="text" class="form-control" value="' + document.getElementById("datanascimento_filho").value + '"></div>';
+              var sDataFalecimentoFilho = '<div class="col-xs-2"><input id="inc_datafalec[]" name = "inc_datafalec[]" type="text" class="form-control" value="' + document.getElementById("datafalecimento_filho").value + '"></div>';
+
+              /*Salva os ID's*/
+              var sHiddenSexo = '<input id="hidden_sexo[]" name = "hidden_sexo[]" type="hidden" class="form-control" value="' + texto_sexo[ind_sexo].value + '">';
+              var sHiddenStatusFilho = '<input id="hidden_status[]" name = "hidden_status[]" type="hidden" class="form-control" value="' + texto_status_filho[ind_status_filho].value + '">';
+              var sHiddenEstadoCivilFilho = '<input id="hidden_estadocivl[]" name = "hidden_estadocivl[]" type="hidden" class="form-control" value="' + texto_estado_civil_filho[ind_estado_civil_filho].value + '">';
+
+              /*Gera codigo HTML*/
+              document.getElementById("mais_filhos").innerHTML = document.getElementById("mais_filhos").innerHTML + sFilho + sSexoFilho + sStatusFilho + sEstadoCivilFilho + sDataNascFilho + sDataFalecimentoFilho + sHiddenSexo + sHiddenStatusFilho + sHiddenEstadoCivilFilho;
 
       }
 
