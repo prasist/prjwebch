@@ -179,18 +179,19 @@ class PessoasController extends Controller
 */
 public function salvar($request, $id, $tipo_operacao) {
 
+    /*Clausula where padrao para as tabelas auxiliares*/
+    $where =
+    [
+        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+        'empresas_id' =>  $this->dados_login->empresas_id,
+        'pessoas_id' => $id
+    ];
+
     /*
         Se for UPDATE (houver conteudo variavel $id), exclui as tabelas auxiliares antes da TRANSACTION
     */
     if ($id!="")
     {
-            $where =
-            [
-                'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                'empresas_id' =>  $this->dados_login->empresas_id,
-                'pessoas_id' => $id
-            ];
-
             /*Excluir antes atualizar*/
             $excluir = \App\Models\membros_dons::where($where)->delete();
             $excluir = \App\Models\membros_profissionais::where($where)->delete();
@@ -723,11 +724,11 @@ public function salvar($request, $id, $tipo_operacao) {
                                     'complemento_igreja_anterior' => $input['complemento_igreja_anterior'],
                                     'cidade_igreja_anterior' => $input['cidade_igreja_anterior'],
                                     'estado_igreja_anterior' => $input['estado_igreja_anterior'],
-                                    'data_batismo' => $input['data_batismo'],
+                                    'data_batismo' => $formatador->FormatarData($input['data_batismo']),
                                     'igreja_batismo' => $input['igreja_batismo'],
                                     'celebrador' => $input['celebrador'],
-                                    'data_entrada' => $input['data_entrada'],
-                                    'data_saida'  => $input['data_saida'],
+                                    'data_entrada' => $formatador->FormatarData($input['data_entrada']),
+                                    'data_saida'  => $formatador->FormatarData($input['data_saida']),
                                     'ata_entrada' => $input['ata_entrada'],
                                     'ata_saida' => $input['ata_saida'],
                                      'motivos_saida_id' => ($input['motivosaida']=="" ? null : $input['motivosaida']),

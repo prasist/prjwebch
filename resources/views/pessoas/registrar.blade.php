@@ -14,7 +14,15 @@
         <form name="form_endereco" method="get" action=".">
         </form>
 
+
+
         <form name ="form_principal" method = 'POST' class="form-horizontal"  enctype="multipart/form-data" action = {{ url('/' . \Session::get('route') . '/gravar')}}>
+
+        <div class="box-footer">
+            <button class = 'btn btn-primary' type ='submit'>Gravar</button>
+            <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Cancelar</a>
+        </div>
+        <br/>
 
         {!! csrf_field() !!}
 
