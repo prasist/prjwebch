@@ -41,8 +41,8 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
-        <!--<link rel="stylesheet" href="{{ asset('/plugins/select2/select2.min.css') }}">-->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('/plugins/select2/select2.min.css') }}">
+        <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />-->
 
     </head>
 
@@ -127,8 +127,8 @@
 <!--<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>-->
 <script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
-<!--<script src="{{ asset('/plugins/select2/select2.full.min.js') }}"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+<script src="{{ asset('/plugins/select2/select2.full.min.js') }}"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>-->
 
 <script type="text/javascript">
 
