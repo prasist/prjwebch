@@ -581,6 +581,8 @@
                                                                           <label for="inc_filhos6[]" class="control-label">Data Falecimento</label>
                                                                    </div>
 
+                                                                <input type="hidden" name="inc_filhos[]" class="minimal" value="">
+
                                                                <div id="mais_filhos">
 
                                                                </div>

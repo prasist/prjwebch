@@ -8,8 +8,7 @@
 
  <label for={{$id_combo}} class="control-label">{{$titulo}}</label>
 
-<select id="{{$id_combo}}" name="{{$id_combo}}" {{$complemento}} placeholder="(Selecionar)" class="js-example-basic-multiple" style="width: 100%;">
-<option  value="">(Selecionar)</option>
+<select id="{{$id_combo}}" name="{{$id_combo}}" {{$complemento}} data-live-search="true" data-none-selected-text="Nenhum item selecionado"  placeholder="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
 
 @foreach($dados as $item)
 
