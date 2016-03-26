@@ -37,7 +37,6 @@
         <div class="col-md-12">
           <div class="box">
             <div class="box-header" data-original-title>
-
                 <div class="box-body table-responsive no-padding">
 
                     <table id="example2" class="table table-hover">
