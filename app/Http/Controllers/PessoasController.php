@@ -237,6 +237,7 @@ public function salvar($request, $id, $tipo_operacao) {
                      $pessoas = pessoas::findOrfail($id);
                 }
 
+
                 $pessoas->razaosocial = $input['razaosocial'];
                 $pessoas->nomefantasia = $input['nomefantasia'];
                 $pessoas->cnpj_cpf = $formatador->RetirarCaracteres(($input['cnpj']!="" ? $input['cnpj'] : $input['cpf']));
@@ -252,6 +253,7 @@ public function salvar($request, $id, $tipo_operacao) {
                 $pessoas->obs = $input['obs'];
                 $pessoas->fone_principal = $formatador->RetirarCaracteres($input['foneprincipal']); //preg_replace("/[^0-9]/", '', $input['foneprincipal']);
                 $pessoas->fone_secundario = $formatador->RetirarCaracteres($input['fonesecundario']);//preg_replace("/[^0-9]/", '', $input['fonesecundario']);
+
                 $pessoas->fone_recado = $input['fonerecado'];
                 $pessoas->fone_celular = $input['celular'];
                 $pessoas->emailprincipal = $input['emailprincipal'];
@@ -271,7 +273,6 @@ public function salvar($request, $id, $tipo_operacao) {
 
                 $pessoas->save();
                 /*------------------------------FIM  CADASTRO DE PESSOAS------------------- */
-
 
 
                 /*------------------------------DADOS FINANCEIROS------------------------------*/

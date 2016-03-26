@@ -142,9 +142,9 @@
 
                             //$(".select2").select2();
 
-                            $('select').select2();
+                            //$('select').select2();
 
-                            $(".js-example-basic-multiple").select2();
+                            //$(".js-example-basic-multiple").select2();
 
                             $("[data-mask]").inputmask();
 
