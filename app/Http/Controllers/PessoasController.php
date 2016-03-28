@@ -279,7 +279,15 @@ public function salvar($request, $id, $tipo_operacao) {
 
                 if ($input['banco']!="" || $input['endereco_cobranca']!="") {
 
-                        $financ = \App\Models\financpessoas::firstOrNew($where);
+                        if ($tipo_operacao=="create")  //novo registro
+                        {
+                            $financ = new \App\Models\financpessoas();
+                        }
+                        else //Alteracao
+                        {
+                            $financ = \App\Models\financpessoas::firstOrNew($where);
+                        }
+
 
                         $valores =
                                 [
@@ -319,7 +327,15 @@ public function salvar($request, $id, $tipo_operacao) {
                             || $input['facebook']!="" || $input['google']!="" || $input['instagram']!="" || $input['linkedin']!="")
 
                         {
-                                $eclesiasticos = \App\Models\membros_dados::firstOrNew($where);
+
+                                if ($tipo_operacao=="create")  //novo registro
+                                {
+                                    $eclesiasticos = new \App\Models\membros_dados();
+                                }
+                                else //Alteracao
+                                {
+                                    $eclesiasticos = \App\Models\membros_dados::firstOrNew($where);
+                                }
 
                                 $valores =
                                 [
@@ -379,7 +395,14 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'nome_filho' => $selected
                                                 ];
 
-                                                $filhos = \App\Models\membros_filhos::firstOrNew($whereForEach);
+                                                if ($tipo_operacao=="create")  //novo registro
+                                                {
+                                                    $filhos = new \App\Models\membros_filhos();
+                                                }
+                                                else //Alteracao
+                                                {
+                                                    $filhos = \App\Models\membros_filhos::firstOrNew($whereForEach);
+                                                }
 
                                                 $valores =
                                                 [
@@ -426,7 +449,14 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'filhos_id' => $selected
                                                 ];
 
-                                                $filhos = \App\Models\membros_filhos::firstOrNew($whereForEach);
+                                                if ($tipo_operacao=="create")  //novo registro
+                                                {
+                                                    $filhos = new \App\Models\membros_filhos();
+                                                }
+                                                else //Alteracao
+                                                {
+                                                    $filhos = \App\Models\membros_filhos::firstOrNew($whereForEach);
+                                                }
 
                                                 $valores =
                                                 [
@@ -457,7 +487,16 @@ public function salvar($request, $id, $tipo_operacao) {
                             || $input['profissoes']!="" || $input['emailprofissional']!="")
 
                         {
-                                $profissionais = \App\Models\membros_profissionais::firstOrNew($where);
+
+                                if ($tipo_operacao=="create")  //novo registro
+                                {
+                                    $profissionais = new \App\Models\membros_profissionais();
+                                }
+                                else //Alteracao
+                                {
+                                    $profissionais = \App\Models\membros_profissionais::firstOrNew($where);
+                                }
+
 
                                 $valores =
                                 [
@@ -494,7 +533,15 @@ public function salvar($request, $id, $tipo_operacao) {
                             || $input['nome_pai']!="" || $input['nome_mae']!="" || $input['status_pai']!="" || $input['status_mae']!=""  || $input['datafalecimento_pai']!="" || $input['datafalecimento_mae']!="")
 
                         {
-                                $familiares = \App\Models\membros_familiares::firstOrNew($where);
+
+                                if ($tipo_operacao=="create")  //novo registro
+                                {
+                                    $familiares = new \App\Models\membros_familiares();
+                                }
+                                else //Alteracao
+                                {
+                                    $familiares = \App\Models\membros_familiares::firstOrNew($where);
+                                }
 
                                 $valores =
                                 [
@@ -543,7 +590,15 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'situacoes_id' => $selected
                                                 ];
 
-                                                $situacoes = \App\Models\membros_situacoes::firstOrNew($whereForEach);
+                                                if ($tipo_operacao=="create")  //novo registro
+                                                {
+                                                    $situacoes = new \App\Models\membros_situacoes();
+                                                }
+                                                else //Alteracao
+                                                {
+                                                    $situacoes = \App\Models\membros_situacoes::firstOrNew($whereForEach);
+                                                }
+
 
                                                 $valores =
                                                 [
@@ -580,7 +635,15 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'formacoes_id' => $selected
                                                 ];
 
-                                                $formacoes = \App\Models\membros_formacoes::firstOrNew($whereForEach);
+                                                 if ($tipo_operacao=="create")  //novo registro
+                                                {
+                                                    $formacoes = new \App\Models\membros_formacoes();
+                                                }
+                                                else //Alteracao
+                                                {
+                                                    $formacoes = \App\Models\membros_formacoes::firstOrNew($whereForEach);
+                                                }
+
 
                                                 $valores =
                                                 [
@@ -617,7 +680,15 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'idiomas_id' => $selected
                                                 ];
 
-                                                $idiomas = \App\Models\membros_idiomas::firstOrNew($whereForEach);
+                                                if ($tipo_operacao=="create")  //novo registro
+                                                {
+                                                    $idiomas = new \App\Models\membros_idiomas();
+                                                }
+                                                else //Alteracao
+                                                {
+                                                    $idiomas = \App\Models\membros_idiomas::firstOrNew($whereForEach);
+                                                }
+
 
                                                 $valores =
                                                 [
@@ -655,7 +726,15 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'dons_id' => $selected
                                                 ];
 
-                                                $dons = \App\Models\membros_dons::firstOrNew($whereForEach);
+                                                if ($tipo_operacao=="create")  //novo registro
+                                                {
+                                                    $dons = new \App\Models\membros_dons();
+                                                }
+                                                else //Alteracao
+                                                {
+                                                    $dons = \App\Models\membros_dons::firstOrNew($whereForEach);
+                                                }
+
 
                                                 $valores =
                                                 [
@@ -694,7 +773,14 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'habilidades_id' => $selected
                                                 ];
 
-                                                $habilidades = \App\Models\membros_habilidades::firstOrNew($whereForEach);
+                                                if ($tipo_operacao=="create")  //novo registro
+                                                {
+                                                    $habilidades = new \App\Models\membros_habilidades();
+                                                }
+                                                else //Alteracao
+                                                {
+                                                    $habilidades = \App\Models\membros_habilidades::firstOrNew($whereForEach);
+                                                }
 
                                                 $valores =
                                                 [
@@ -732,7 +818,15 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'atividades_id' => $selected
                                                 ];
 
-                                                $atividades = \App\Models\membros_atividades::firstOrNew($whereForEach);
+                                                if ($tipo_operacao=="create")  //novo registro
+                                                {
+                                                    $atividades = new \App\Models\membros_atividades();
+                                                }
+                                                else //Alteracao
+                                                {
+                                                    $atividades = \App\Models\membros_atividades::firstOrNew($whereForEach);
+                                                }
+
 
                                                 $valores =
                                                 [
@@ -769,7 +863,14 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     'ministerios_id' => $selected
                                                 ];
 
-                                                $ministerios = \App\Models\membros_ministerios::firstOrNew($whereForEach);
+                                                if ($tipo_operacao=="create")  //novo registro
+                                                {
+                                                    $ministerios = new \App\Models\membros_ministerios();
+                                                }
+                                                else //Alteracao
+                                                {
+                                                    $ministerios = \App\Models\membros_ministerios::firstOrNew($whereForEach);
+                                                }
 
                                                 $valores =
                                                 [
@@ -797,7 +898,15 @@ public function salvar($request, $id, $tipo_operacao) {
                             || $input['igreja_batismo']!="" || $input['celebrador']!="" || $input['data_entrada']!="" || $input['data_saida']!="")
 
                         {
-                                $historico = \App\Models\membros_hist_eclesiasticos::firstOrNew($where);
+
+                                if ($tipo_operacao=="create")  //novo registro
+                                {
+                                    $historico = new \App\Models\membros_hist_eclesiasticos();
+                                }
+                                else //Alteracao
+                                {
+                                    $historico = \App\Models\membros_hist_eclesiasticos::firstOrNew($where);
+                                }
 
                                 $valores =
                                 [

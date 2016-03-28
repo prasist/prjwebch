@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <meta charset="UTF-8">
         <title>SIGMA3 - Sistema para Igrejas</title>
@@ -49,7 +49,7 @@
 
     </head>
 
-    <body class="hold-transition skin-green sidebar-mini">
+    <body class="hold-transition skin-green sidebar-mini" ng-app="staticSelect">
 
         <div class="wrapper">
             @include('includes.header')
@@ -170,6 +170,7 @@
 <!-- Adicionando JQuery -->
 
 
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
         <script src="{{ asset('/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.js') }}"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
@@ -188,7 +189,7 @@
         <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
         <script src="{{ asset('dist/js/hopscotch.min.js') }}"></script>
         <script src="{{ asset('js/tour_sigma3.js') }}"></script>
-
+        <script src="{{ asset('js/app_angular.js') }}"></script>
 
         @if (\Session::get('tour_visaogeral')==' ' || \Session::get('tour_visaogeral')!='S')
         <script type="text/javascript">

@@ -103,7 +103,7 @@
                                                   <div class="box box-default">
                                                         <div class="box-body">
 
-                                                                 <div class="col-xs-3">
+                                                                 <div class="col-xs-4">
                                                                           <label for="grpsangue" class="control-label">Grupo Sanguínio</label>
                                                                           <input id="grpsangue" name = "grpsangue" type="text" class="form-control"  value="{{ ($tipo_operacao=='inclusao' ? old('gruposanguinio') : $membros_dados_pessoais[0]->grupo_sanguinio) }}">
                                                                   </div>
@@ -140,7 +140,7 @@
                                                                           <input id="naturalidade" name = "naturalidade" type="text" class="form-control"  value="{{ ($tipo_operacao=='inclusao' ? old('naturalidade') : $membros_dados_pessoais[0]->naturalidade) }}">
                                                                 </div>
 
-                                                                <div class="col-xs-2">
+                                                                <div class="col-xs-3">
                                                                           <label for="ufnaturalidade" class="control-label">UF</label>
                                                                           <input id="ufnaturalidade" name = "ufnaturalidade" type="text" class="form-control"  value="{{ ($tipo_operacao=='inclusao' ? old('ufnaturalidade') : $membros_dados_pessoais[0]->uf_naturalidade) }}">
                                                                 </div>
@@ -451,12 +451,12 @@
                                                           <div class="row"><!-- row entrada-->
 
                                                                    <div class="col-xs-3">
-                                                                        @include('carregar_combos', array('dados'=>$familias, 'titulo' =>'Selecionar Conjuge já cadastrado', 'id_combo'=>'conjuge', 'complemento'=>'', 'comparar'=>$membros_familiares[0]->conjuge_id))
+                                                                        @include('carregar_combos', array('dados'=>$familias, 'titulo' =>'Selecionar Conjuge já cadastrado', 'id_combo'=>'conjuge', 'complemento'=>'onchange="validar_conjuge()"', 'comparar'=>$membros_familiares[0]->conjuge_id))
                                                                    </div>
 
                                                                    <div class="col-xs-3">
                                                                       <label for="nome_conjuge" class="control-label">ou Informar Nome Conjuge</label>
-                                                                      <input id="nome_conjuge" name = "nome_conjuge" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('nome_conjuge') : $membros_familiares[0]->nome_conjuge) }}">
+                                                                      <input id="nome_conjuge" name = "nome_conjuge" type="text" onblur="validar_conjuge();" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('nome_conjuge') : $membros_familiares[0]->nome_conjuge) }}">
                                                                    </div>
 
                                                                    <div class="col-xs-3">
@@ -464,7 +464,7 @@
                                                                       <input id="igrejacasamento" name = "igrejacasamento" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('igrejacasamento') : $membros_familiares[0]->igreja_casamento) }}">
                                                                    </div>
 
-                                                                   <div class="col-xs-2">
+                                                                   <div class="col-xs-3">
                                                                         <label for="datacasamento" class="control-label">Data Casamento</label>
 
                                                                         <div class="input-group">
@@ -479,17 +479,17 @@
 
                                                           </div>
 
-                                                          <div class="row">
+                                                          <div id="dados_conjuge" class="row" style="display: none">
 
-                                                               <div class="col-xs-4">
+                                                               <div class="col-xs-3">
                                                                         @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status_conjuge', 'complemento'=>'', 'comparar'=>$membros_familiares[0]->status_id))
                                                               </div>
 
-                                                              <div class="col-xs-4">
+                                                              <div class="col-xs-3">
                                                                       @include('carregar_combos', array('dados'=>$profissoes, 'titulo' =>'Profissão', 'id_combo'=>'profissao_conjuge', 'complemento'=>'', 'comparar'=>$membros_familiares[0]->profissoes_id))
                                                               </div>
 
-                                                                   <div class="col-xs-2">
+                                                                   <div class="col-xs-3">
                                                                         <label for="datanasc_conjuge" class="control-label">Data Nascimento</label>
 
                                                                         <div class="input-group">
@@ -502,7 +502,7 @@
 
                                                                    </div>
 
-                                                                   <div class="col-xs-2">
+                                                                   <div class="col-xs-3">
                                                                         <label for="datafalecimento" class="control-label">Data Falecimento</label>
 
                                                                         <div class="input-group">
@@ -1198,56 +1198,80 @@
 
    </div><!-- FIM - DADOS ECLISIASTICOS-->
 
-   <script type="text/javascript">
-        function validar_data(who)
+<script type="text/javascript">
+  function validar_data(who)
+  {
+        if (who.value!="")
         {
-              if (who.value!="")
-              {
-                  str=who.value;
-                  str=str.split('/');
-                  dte=new Date(str[1]+'/'+str[0]+'/'+str[2]);
-                  mStr=''+(dte.getMonth()+1);
-                  mStr=(mStr<10)?'0'+mStr:mStr;
+            str=who.value;
+            str=str.split('/');
+            dte=new Date(str[1]+'/'+str[0]+'/'+str[2]);
+            mStr=''+(dte.getMonth()+1);
+            mStr=(mStr<10)?'0'+mStr:mStr;
 
-                  if(mStr!=str[1]||isNaN(dte))
-                  {
-                      who.value="";
-                      alert('Data Inválida!');
-                      who.focus();
-                      return;
-                  }
-              }
+            if(mStr!=str[1]||isNaN(dte))
+            {
+                who.value="";
+                alert('Data Inválida!');
+                who.focus();
+                return;
+            }
         }
+  }
 
 
-      function incluir_filho()
-      {
+/*Quando selecionar um conjuge do cadastro desabilitar os campos para informação manual*/
+   function validar_conjuge()
+   {
 
-              var ind_sexo = document.getElementById("opSexoFilho").selectedIndex;
-              var texto_sexo = document.getElementById("opSexoFilho").options;
+      var ind_conjuge = document.getElementById("conjuge").selectedIndex;
+      var texto_conjuge = document.getElementById("conjuge").options;
 
-              var ind_estado_civil_filho = document.getElementById("estado_civil_filho").selectedIndex;
-              var texto_estado_civil_filho = document.getElementById("estado_civil_filho").options;
+       if (texto_conjuge[ind_conjuge].text != "")
+       {
+          document.getElementById("datanasc_conjuge").value = "";
+          document.getElementById("datafalecimento").value = "";
+          document.getElementById("nome_conjuge").value ="";
+          document.getElementById("status_conjuge").selectedIndex = -1;
+          document.getElementById("dados_conjuge").style.display = "none";
+       }
+       else
+       {
+          document.getElementById("dados_conjuge").style.display = "block";
+       }
 
-              var ind_status_filho = document.getElementById("status_filho").selectedIndex;
-              var texto_status_filho = document.getElementById("status_filho").options;
 
-              /*cria os inputs para exibicao ao usuario*/
-              var sFilho = '<div class="col-xs-2"><input id="inc_filhos[]" name = "inc_filhos[]" type="text" class="form-control" value="' + document.getElementById("nome_filho").value + '"></div>';
-              var sSexoFilho = '<div class="col-xs-2"><input id="inc_sexo[]" name = "inc_sexo[]" type="text" class="form-control" value="' + texto_sexo[ind_sexo].text + '"></div>';
-              var sStatusFilho = '<div class="col-xs-2"><input id="inc_status[]" name = "inc_status[]" type="text" class="form-control" value="' + texto_status_filho[ind_status_filho].text + '"></div>';
-              var sEstadoCivilFilho = '<div class="col-xs-2"><input id="inc_estadocivl[]" name = "inc_estadocivl[]" type="text" class="form-control" value="' + texto_estado_civil_filho[ind_estado_civil_filho].text + '"></div>';
-              var sDataNascFilho = '<div class="col-xs-2"><input id="inc_datanasc[]" name = "inc_datanasc[]" type="text" class="form-control" value="' + document.getElementById("datanascimento_filho").value + '"></div>';
-              var sDataFalecimentoFilho = '<div class="col-xs-2"><input id="inc_datafalec[]" name = "inc_datafalec[]" type="text" class="form-control" value="' + document.getElementById("datafalecimento_filho").value + '"></div>';
+   }
 
-              /*Salva os ID's*/
-              var sHiddenSexo = '<input id="hidden_sexo[]" name = "hidden_sexo[]" type="hidden" class="form-control" value="' + texto_sexo[ind_sexo].value + '">';
-              var sHiddenStatusFilho = '<input id="hidden_status[]" name = "hidden_status[]" type="hidden" class="form-control" value="' + texto_status_filho[ind_status_filho].value + '">';
-              var sHiddenEstadoCivilFilho = '<input id="hidden_estadocivl[]" name = "hidden_estadocivl[]" type="hidden" class="form-control" value="' + texto_estado_civil_filho[ind_estado_civil_filho].value + '">';
 
-              /*Gera codigo HTML*/
-              document.getElementById("mais_filhos").innerHTML = document.getElementById("mais_filhos").innerHTML + sFilho + sSexoFilho + sStatusFilho + sEstadoCivilFilho + sDataNascFilho + sDataFalecimentoFilho + sHiddenSexo + sHiddenStatusFilho + sHiddenEstadoCivilFilho;
+  function incluir_filho()
+  {
 
-      }
+          var ind_sexo = document.getElementById("opSexoFilho").selectedIndex;
+          var texto_sexo = document.getElementById("opSexoFilho").options;
+
+          var ind_estado_civil_filho = document.getElementById("estado_civil_filho").selectedIndex;
+          var texto_estado_civil_filho = document.getElementById("estado_civil_filho").options;
+
+          var ind_status_filho = document.getElementById("status_filho").selectedIndex;
+          var texto_status_filho = document.getElementById("status_filho").options;
+
+          /*cria os inputs para exibicao ao usuario*/
+          var sFilho = '<div class="col-xs-2"><input id="inc_filhos[]" name = "inc_filhos[]" type="text" class="form-control" value="' + document.getElementById("nome_filho").value + '"></div>';
+          var sSexoFilho = '<div class="col-xs-2"><input id="inc_sexo[]" name = "inc_sexo[]" type="text" class="form-control" value="' + texto_sexo[ind_sexo].text + '"></div>';
+          var sStatusFilho = '<div class="col-xs-2"><input id="inc_status[]" name = "inc_status[]" type="text" class="form-control" value="' + texto_status_filho[ind_status_filho].text + '"></div>';
+          var sEstadoCivilFilho = '<div class="col-xs-2"><input id="inc_estadocivl[]" name = "inc_estadocivl[]" type="text" class="form-control" value="' + texto_estado_civil_filho[ind_estado_civil_filho].text + '"></div>';
+          var sDataNascFilho = '<div class="col-xs-2"><input id="inc_datanasc[]" name = "inc_datanasc[]" type="text" class="form-control" value="' + document.getElementById("datanascimento_filho").value + '"></div>';
+          var sDataFalecimentoFilho = '<div class="col-xs-2"><input id="inc_datafalec[]" name = "inc_datafalec[]" type="text" class="form-control" value="' + document.getElementById("datafalecimento_filho").value + '"></div>';
+
+          /*Salva os ID's*/
+          var sHiddenSexo = '<input id="hidden_sexo[]" name = "hidden_sexo[]" type="hidden" class="form-control" value="' + texto_sexo[ind_sexo].value + '">';
+          var sHiddenStatusFilho = '<input id="hidden_status[]" name = "hidden_status[]" type="hidden" class="form-control" value="' + texto_status_filho[ind_status_filho].value + '">';
+          var sHiddenEstadoCivilFilho = '<input id="hidden_estadocivl[]" name = "hidden_estadocivl[]" type="hidden" class="form-control" value="' + texto_estado_civil_filho[ind_estado_civil_filho].value + '">';
+
+          /*Gera codigo HTML*/
+          document.getElementById("mais_filhos").innerHTML = document.getElementById("mais_filhos").innerHTML + sFilho + sSexoFilho + sStatusFilho + sEstadoCivilFilho + sDataNascFilho + sDataFalecimentoFilho + sHiddenSexo + sHiddenStatusFilho + sHiddenEstadoCivilFilho;
+
+  }
 
 </script>
