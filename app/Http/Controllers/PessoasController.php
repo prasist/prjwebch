@@ -1096,10 +1096,10 @@ public function salvar($request, $id, $tipo_operacao) {
             $membros_filhos = \DB::select($sQuery, [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
-            if ($membros_filhos==null)
-            {
-                $membros_filhos = $bancos; //Artificio para nao ter que tratar array vazia nas views
-            }
+            //if ($membros_filhos==null)
+            //{
+                //$membros_filhos = $bancos; //Artificio para nao ter que tratar array vazia nas views
+            //}
 
 
             /*Situacoes Membros*/

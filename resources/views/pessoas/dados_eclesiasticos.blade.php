@@ -586,16 +586,19 @@
                                                                           <label for="inc_filhos6[]" class="control-label">Data Falecimento</label>
                                                                    </div>
 
-
                                                                <div id="mais_filhos">
-
                                                                </div>
+
                                                           </div>
 
+                                                         @if ($membros_filhos==null)
+                                                              <input type="hidden" name="inc_filhos[]" class="minimal" value="">
+                                                         @endif
 
                                                           <div class="row">
 
                                                               <table id="tab_filhos" class="table table-bordered table-hover">
+
 
                                                                           @foreach($membros_filhos as $item)
 
