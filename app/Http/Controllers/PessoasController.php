@@ -85,24 +85,24 @@ class PessoasController extends Controller
             /*
             Para preencher combos Dados eclesiasticos
             */
-            $familias = \App\Models\pessoas::select('razaosocial as nome', 'id')->where(['empresas_id' => $this->dados_login->empresas_id, 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id])->get();
-            $igrejas = \App\Models\igrejas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $situacoes = \App\Models\situacoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $idiomas = \App\Models\idiomas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $status = \App\Models\status::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $profissoes = \App\Models\profissoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $ramos = \App\Models\ramos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $cargos = \App\Models\cargos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $graus = \App\Models\graus::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $formacoes = \App\Models\areas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $estadoscivis = \App\Models\civis::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $disponibilidades = \App\Models\disponibilidades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $dons = \App\Models\dons::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $habilidades = \App\Models\habilidades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $religioes = \App\Models\religioes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $atividades = \App\Models\atividades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $ministerios = \App\Models\ministerios::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-            $motivos = \App\Models\tiposmovimentacao::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+            $familias = \App\Models\pessoas::select('razaosocial as nome', 'id')->where(['empresas_id' => $this->dados_login->empresas_id, 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id])->orderBy('razaosocial','ASC')->get();
+            $igrejas = \App\Models\igrejas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $situacoes = \App\Models\situacoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $idiomas = \App\Models\idiomas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $status = \App\Models\status::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $profissoes = \App\Models\profissoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $ramos = \App\Models\ramos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $cargos = \App\Models\cargos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $graus = \App\Models\graus::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $formacoes = \App\Models\areas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $estadoscivis = \App\Models\civis::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $disponibilidades = \App\Models\disponibilidades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $dons = \App\Models\dons::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $habilidades = \App\Models\habilidades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $religioes = \App\Models\religioes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $atividades = \App\Models\atividades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $ministerios = \App\Models\ministerios::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $motivos = \App\Models\tiposmovimentacao::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
             /* FIM Para preencher combos Dados eclesiasticos*/
 
             /*Inicializa variaveis vazias dos dados eclesiasticos*/
@@ -113,6 +113,7 @@ class PessoasController extends Controller
             $membros_formacoes =  "";
             $membros_idiomas =  "";
             $membros_familiares = $religioes;
+            $membros_filhos = $religioes;
             $membros_atividades =  "";
             $membros_ministerios =  "";
             $membros_historico =  $religioes;
@@ -146,6 +147,7 @@ class PessoasController extends Controller
                 'membros_dados_pessoais' => $membros_dados_pessoais,
                 'membros_situacoes' => $membros_situacoes,
                 'membros_dons' => $membros_dons,
+                'membros_filhos' => $membros_filhos,
                 'membros_atividades' => $membros_atividades,
                 'membros_ministerios' => $membros_ministerios,
                 'membros_habilidades' => $membros_habilidades,
@@ -203,6 +205,7 @@ public function salvar($request, $id, $tipo_operacao) {
             $excluir = \App\Models\membros_idiomas::where($where)->delete();
             $excluir = \App\Models\membros_habilidades::where($where)->delete();
             $excluir = \App\Models\membros_atividades::where($where)->delete();
+            $excluir = \App\Models\membros_filhos::where($where)->delete();
             $excluir = \App\Models\membros_ministerios::where($where)->delete();
             $excluir = \App\Models\membros_hist_eclesiasticos::where($where)->delete();
     }
@@ -528,8 +531,7 @@ public function salvar($request, $id, $tipo_operacao) {
                         /*------------------------------ DADOS FAMILIARES ------------------------------*/
 
                         if ($input['conjuge']!="" || $input['nome_conjuge']!=""
-                            || $input['datanasc_conjuge']!="" || $input['datafalecimento']!="" || $input['datacasamento']!="" || $input['status_conjuge']!=""
-                            || $input['profissoes']!="" || $input['igrejacasamento']!="" || $input['pai']!="" || $input['mae']!=""
+                            || $input['datanasc_conjuge']!="" || $input['datafalecimento']!="" || $input['datacasamento']!="" || $input['igrejacasamento']!="" || $input['pai']!="" || $input['mae']!=""
                             || $input['nome_pai']!="" || $input['nome_mae']!="" || $input['status_pai']!="" || $input['status_mae']!=""  || $input['datafalecimento_pai']!="" || $input['datafalecimento_mae']!="")
 
                         {
@@ -1072,6 +1074,33 @@ public function salvar($request, $id, $tipo_operacao) {
                 $membros_historico = $bancos; //Artificio para nao ter que tratar array vazia nas views
             }
 
+            /*
+            $membros_filhos  = \App\Models\membros_filhos::select('filhos_id as id', 'filhos_id', 'nome_filho', 'sexo', 'data_nasc', 'data_falecimento', 'status_id', 'estadocivil_id')
+            ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('empresas_id', $this->dados_login->empresas_id)
+            ->where('pessoas_id', $id)
+            ->get();
+            */
+
+            /*Membros Filhos*/
+            $sQuery  = " select membros_filhos.id as id_seq,  filhos_id as id, filhos_id, nome_filho, sexo, status_id, estadocivil_id, estados_civis.id as id_estadocivil,  estados_civis.nome as desc_estcivil, status.id as id_status, status.nome as desc_status, ";
+            $sQuery .= " to_char(data_nasc, 'DD/MM/YYYY') AS data_nasc, ";
+            $sQuery .= " to_char(data_falecimento, 'DD/MM/YYYY') AS data_falecimento ";
+            $sQuery .= " from membros_filhos ";
+            $sQuery .= " left join estados_civis on estados_civis.id = membros_filhos.estadocivil_id and estados_civis.clientes_cloud_id = membros_filhos.empresas_clientes_cloud_id";
+            $sQuery .= " left join status on status.id = membros_filhos.status_id and status.clientes_cloud_id = membros_filhos.empresas_clientes_cloud_id";
+            $sQuery .= " where membros_filhos.pessoas_id = ? ";
+            $sQuery .= " and membros_filhos.empresas_id = ? ";
+            $sQuery .= " and membros_filhos.empresas_clientes_cloud_id = ? ";
+
+            $membros_filhos = \DB::select($sQuery, [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+            /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
+            if ($membros_filhos==null)
+            {
+                $membros_filhos = $bancos; //Artificio para nao ter que tratar array vazia nas views
+            }
+
 
             /*Situacoes Membros*/
             $membros_situacoes  = \App\Models\membros_situacoes::select('situacoes_id as id')
@@ -1228,6 +1257,7 @@ public function salvar($request, $id, $tipo_operacao) {
                     'membros_ministerios' =>$membros_ministerios,
                     'membros_familiares' =>$membros_familiares,
                     'membros_dons' =>$membros_dons,
+                    'membros_filhos' => $membros_filhos,
                     'membros_habilidades' =>$membros_habilidades,
                     'membros_profissionais' => $membros_profissionais
                 ]);

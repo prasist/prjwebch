@@ -24,6 +24,8 @@
     });
 
 
+    Route::post('filhos', 'FilhosController@destroy');
+
     Route::get('tutoriais/{id}', 'TutoriaisController@tutorial');
 
     Route::get('quicktour/{id}', 'TutoriaisController@index');

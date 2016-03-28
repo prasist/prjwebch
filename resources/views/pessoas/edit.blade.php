@@ -19,9 +19,10 @@
         {!! csrf_field() !!}
 
         <div class="box-footer">
-            <button class = 'btn btn-primary' type ='submit'>Gravar</button>
+            <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}>Gravar</button>
             <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Cancelar</a>
         </div>
+
         <br/>
 
 
@@ -207,7 +208,7 @@
                                                             <i class="fa fa-phone"></i>
                                                             </div>
 
-                                                            <input id="foneprincipal" placeholder="Campo Obrigatório" name = "foneprincipal" type="text" class="form-control" value="{{$pessoas[0]->fone_principal}}"  data-inputmask='"mask": "(99) 9999-9999"' data-mask >
+                                                            <input id="foneprincipal"  name = "foneprincipal" type="text" class="form-control" value="{{$pessoas[0]->fone_principal}}"  data-inputmask='"mask": "(99) 9999-9999"' data-mask >
 
                                                              <!-- se houver erros na validacao do form request -->
                                                              @if ($errors->has('foneprincipal'))

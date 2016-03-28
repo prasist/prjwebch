@@ -479,6 +479,11 @@
 
                                                           </div>
 
+                                                          <input type="hidden" name="status_conjuge" class="minimal" value="">
+                                                          <input type="hidden" name="profissao_conjuge" class="minimal" value="">
+                                                          <input type="hidden" name="datanasc_conjuge" class="minimal" value="">
+                                                          <input type="hidden" name="datafalecimento" class="minimal" value="">
+
                                                           <div id="dados_conjuge" class="row" style="display: none">
 
                                                                <div class="col-xs-3">
@@ -541,7 +546,7 @@
                                                           <div class="row"><!-- row entrada-->
 
                                                                    <div class="col-xs-10">
-                                                                        @include('carregar_combos_multiple', array('dados'=>$familias, 'titulo' =>'Filho(s) - Selecionar do cadastro (Um ou mais)', 'id_combo'=>'filhos[]', 'complemento'=>'multiple="multiple"', 'comparar'=>''))
+                                                                        @include('carregar_combos_multiple', array('dados'=>$familias, 'titulo' =>'Filho(s) - Selecionar do cadastro (Um ou mais)', 'id_combo'=>'filhos[]', 'complemento'=>'multiple="multiple"', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_filhos)))
                                                                    </div>
 
                                                           </div>
@@ -581,26 +586,42 @@
                                                                           <label for="inc_filhos6[]" class="control-label">Data Falecimento</label>
                                                                    </div>
 
-                                                                <input type="hidden" name="inc_filhos[]" class="minimal" value="">
 
                                                                <div id="mais_filhos">
 
                                                                </div>
+                                                          </div>
 
-                                                               <!--
-                                                               <table id="exibir_filhos" class="table">
-                                                                    <tr>
-                                                                          <td>Nome</td>
-                                                                          <td>Sexo</td>
-                                                                          <td>Status</td>
-                                                                          <td>Estado Civil</td>
-                                                                          <td>Data Nascimento</td>
-                                                                          <td>Data Falecimento</td>
-                                                                    </tr>
+
+                                                          <div class="row">
+
+                                                              <table id="tab_filhos" class="table table-bordered table-hover">
+
+                                                                          @foreach($membros_filhos as $item)
+
+                                                                                @if ($item->id==null)
+                                                                                      <tr id="{{$item->id_seq}}">
+                                                                                          <td class="col-xs-2"><input id="inc_filhos[]" name = "inc_filhos[]" type="text" class="form-control" readonly value="{{$item->nome_filho}}"></td>
+                                                                                          <td class="col-xs-2"><input id="inc_sexo[]" name = "inc_sexo[]" type="text" class="form-control" readonly value="{{$item->sexo}}"></td>
+                                                                                          <td class="col-xs-2"><input id="inc_status[]" name = "inc_status[]" type="text" class="form-control" readonly value="{{$item->desc_status}}"></td>
+                                                                                          <td class="col-xs-2"><input id="inc_estadocivl[]" name = "inc_estadocivl[]" type="text" class="form-control" readonly value="{{$item->desc_estcivil}}"></td>
+                                                                                          <td class="col-xs-2"><input id="inc_datanasc[]" name = "inc_datanasc[]" type="text" class="form-control" readonly value="{{$item->data_nasc}}"></td>
+                                                                                          <td class="col-xs-2"><input id="inc_datafalec[]" name = "inc_datafalec[]" type="text" class="form-control" readonly value="{{$item->data_falecimento}}"></td>
+                                                                                          <td class="col-xs-2">
+
+                                                                                                    <input id="hidden_sexo[]" name = "hidden_sexo[]" type="hidden" class="form-control" value="{{$item->sexo}}">
+                                                                                                    <input id="hidden_status[]" name = "hidden_status[]" type="hidden" class="form-control" value="{{$item->id_status}}">
+                                                                                                    <input id="hidden_estadocivl[]" name = "hidden_estadocivl[]" type="hidden" class="form-control" value="{{$item->id_estadocivil}}">
+
+                                                                                                    <a href="#" class="deleteLink">Remover</a>
+                                                                                         </td>
+                                                                                       </tr>
+                                                                                @else
+                                                                                    <input type="hidden" name="inc_filhos[]" class="minimal" value="">
+                                                                                @endif
+                                                                          @endforeach
 
                                                                </table>
-                                                               -->
-
                                                           </div>
 
                                                           <div class="row">
@@ -623,8 +644,8 @@
 
                                                                                  <div class="col-xs-3">
                                                                                        <label for="opSexoFilho" class="control-label">Sexo</label>
-                                                                                       <select id="opSexoFilho" name="opSexoFilho" class="form-control select2" style="width: 100%;">
-                                                                                       <option  value="">(Selecionar)</option>
+                                                                                       <select id="opSexoFilho" placeholder="(Selecionar)" name="opSexoFilho" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                                       <option  value=""></option>
                                                                                              <option  value="M">Masculino</option>
                                                                                              <option  value="F">Feminino</option>
                                                                                        </select>
@@ -675,7 +696,7 @@
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                                                                        <button type="button" class="btn btn-primary" onclick="incluir_filho();">Salvar</button>
+                                                                        <button type="button" class="btn btn-primary" onclick="incluir_filho();" data-dismiss="modal">Salvar</button>
                                                                     </div>
                                                                   </div>
                                                                 </div>
@@ -1247,6 +1268,12 @@
   function incluir_filho()
   {
 
+          if (document.getElementById("nome_filho").value == "")
+          {
+              alert("Informe o Nome");
+              return false;
+          }
+
           var ind_sexo = document.getElementById("opSexoFilho").selectedIndex;
           var texto_sexo = document.getElementById("opSexoFilho").options;
 
@@ -1257,12 +1284,12 @@
           var texto_status_filho = document.getElementById("status_filho").options;
 
           /*cria os inputs para exibicao ao usuario*/
-          var sFilho = '<div class="col-xs-2"><input id="inc_filhos[]" name = "inc_filhos[]" type="text" class="form-control" value="' + document.getElementById("nome_filho").value + '"></div>';
-          var sSexoFilho = '<div class="col-xs-2"><input id="inc_sexo[]" name = "inc_sexo[]" type="text" class="form-control" value="' + texto_sexo[ind_sexo].text + '"></div>';
-          var sStatusFilho = '<div class="col-xs-2"><input id="inc_status[]" name = "inc_status[]" type="text" class="form-control" value="' + texto_status_filho[ind_status_filho].text + '"></div>';
-          var sEstadoCivilFilho = '<div class="col-xs-2"><input id="inc_estadocivl[]" name = "inc_estadocivl[]" type="text" class="form-control" value="' + texto_estado_civil_filho[ind_estado_civil_filho].text + '"></div>';
-          var sDataNascFilho = '<div class="col-xs-2"><input id="inc_datanasc[]" name = "inc_datanasc[]" type="text" class="form-control" value="' + document.getElementById("datanascimento_filho").value + '"></div>';
-          var sDataFalecimentoFilho = '<div class="col-xs-2"><input id="inc_datafalec[]" name = "inc_datafalec[]" type="text" class="form-control" value="' + document.getElementById("datafalecimento_filho").value + '"></div>';
+          var sFilho = '<div class="col-xs-2"><input id="inc_filhos[]" readonly name = "inc_filhos[]" type="text" class="form-control" value="' + document.getElementById("nome_filho").value + '"></div>';
+          var sSexoFilho = '<div class="col-xs-2"><input id="inc_sexo[]" readonly name = "inc_sexo[]" type="text" class="form-control" value="' + texto_sexo[ind_sexo].text + '"></div>';
+          var sStatusFilho = '<div class="col-xs-2"><input id="inc_status[]" readonly name = "inc_status[]" type="text" class="form-control" value="' + texto_status_filho[ind_status_filho].text + '"></div>';
+          var sEstadoCivilFilho = '<div class="col-xs-2"><input id="inc_estadocivl[]" readonly name = "inc_estadocivl[]" type="text" class="form-control" value="' + texto_estado_civil_filho[ind_estado_civil_filho].text + '"></div>';
+          var sDataNascFilho = '<div class="col-xs-2"><input id="inc_datanasc[]" readonly name = "inc_datanasc[]" type="text" class="form-control" value="' + document.getElementById("datanascimento_filho").value + '"></div>';
+          var sDataFalecimentoFilho = '<div class="col-xs-2"><input id="inc_datafalec[]" readonly name = "inc_datafalec[]" type="text" class="form-control" value="' + document.getElementById("datafalecimento_filho").value + '"></div>';
 
           /*Salva os ID's*/
           var sHiddenSexo = '<input id="hidden_sexo[]" name = "hidden_sexo[]" type="hidden" class="form-control" value="' + texto_sexo[ind_sexo].value + '">';
@@ -1272,6 +1299,32 @@
           /*Gera codigo HTML*/
           document.getElementById("mais_filhos").innerHTML = document.getElementById("mais_filhos").innerHTML + sFilho + sSexoFilho + sStatusFilho + sEstadoCivilFilho + sDataNascFilho + sDataFalecimentoFilho + sHiddenSexo + sHiddenStatusFilho + sHiddenEstadoCivilFilho;
 
+          /*Limpar campos*/
+          document.getElementById("nome_filho").value = "";
+          document.getElementById("datanascimento_filho").value="";
+          document.getElementById("datafalecimento_filho").value="";
+          document.getElementById("opSexoFilho").selectedIndex=-1;
+          document.getElementById("estado_civil_filho").selectedIndex=-1;
+          document.getElementById("status_filho").selectedIndex=-1;
+
   }
+
+
+</script>
+
+<script type="text/javascript">
+
+
+  $(document).ready(function() {
+    $("#tab_filhos .deleteLink").on("click",function() {
+        var tr = $(this).closest('tr');
+        tr.css("background-color","#FF3700");
+
+        tr.fadeOut(400, function(){
+            tr.remove();
+        });
+      return false;
+    });
+});
 
 </script>
