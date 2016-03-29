@@ -268,9 +268,15 @@ public function salvar($request, $id, $tipo_operacao) {
                 $pessoas->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
                 $pessoas->empresas_id = $this->dados_login->empresas_id;
 
-                if ($image)
+                if ($image) //Imagem Enviada computador
                 {
                     $pessoas->caminhofoto = $image->getClientOriginalName();
+                }
+
+                if ($input['mydata']!="") //Imagem tirada pela webcam
+                {
+
+                    $pessoas->caminhofoto = str_replace(" ","", $input['razaosocial']) . '_webcam.jpg';
                 }
 
                 $pessoas->save();
@@ -973,6 +979,19 @@ public function salvar($request, $id, $tipo_operacao) {
                             }
                         }
                  }
+
+                 if ($input['mydata']!="")
+                 {
+                     $encoded_data = $input['mydata'];
+
+                     $binary_data = base64_decode($encoded_data);
+
+                     $destinationPath = base_path() . '/public/images/persons';   //caminho onde será gravado
+
+                     // save to server (beware of permissions)
+                     $result = file_put_contents( $destinationPath . '/' . str_replace(" ","", $input['razaosocial']) . '_webcam.jpg', $binary_data );
+                 }
+
                  /*-------------------------------------------------- FIM UPLOAD IMAGEM */
 
          });// ------------ FIM TRANSACTION

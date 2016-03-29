@@ -24,6 +24,20 @@
     });
 
 
+    Route::get('pdf', function ()
+    {
+
+        //Exemplo 1
+        //$pdf = App::make('dompdf.wrapper');
+        //$pdf->loadHTML('<h1>Test</h1>');
+        //return $pdf->stream();
+
+        //Exemplo 2
+        //$pdf = PDF::loadView('pessoas.index');
+        //return $pdf->download('invoice.pdf');
+
+    });
+
     Route::post('filhos', 'FilhosController@destroy');
 
     Route::get('tutoriais/{id}', 'TutoriaisController@tutorial');

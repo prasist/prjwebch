@@ -66,6 +66,12 @@
                                    </li>
                                    @endif
 
+                                   <li>
+                                        <a href="#foto" role="tab" data-toggle="tab">
+                                            <i class="fa fa-photo"></i> Foto
+                                        </a>
+                                   </li>
+
                           </ul>
 
                               <!-- Tab panes -->
@@ -292,11 +298,6 @@
                                                         <label for="website" class="control-label">Website</label>
                                                         <input id="website" maxlength="255" name = "website" type="text" class="form-control" value="{{old('website')}}">
                                                     </div>
-
-                                                    <div class="col-xs-5">
-                                                            <label for="caminhologo" class="control-label">Foto</label>
-                                                            <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" >
-                                                    </div>
                                         </div>
 
 
@@ -453,6 +454,39 @@
                                                 </div>
                                          </div>
                                 </div><!-- FIM - TAB OBSERVACOES -->
+
+
+                                <!-- TAB FOTO -->
+                                <div class="tab-pane fade" id="foto">
+                                      <input id="mydata" type="hidden" name="mydata" value=""/>
+                                      <div class="row">
+                                            <div class="col-xs-5">
+                                                      <label for="caminhologo" class="control-label">Enviar Foto do Computador...</label>
+                                                      <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" >
+                                            </div>
+                                       </div>
+                                       <br/>
+                                       <div class="row">
+                                            <div class="col-xs-4">
+                                                        <label class="control-label">Foto da WebCam</label>
+                                                        <a href="javascript:void(ativar_webcam())" class="btn btn-primary">Iniciar WebCam</a>
+                                                        <a href="javascript:void(take_snapshot())" class="btn btn-success">Tirar Foto</a>
+                                            </div>
+
+                                            <div class="col-xs-4">
+                                                  <label class="control-label">Preview</label>
+                                                  <div id="my_camera" style="width:320px; height:240px; border:dotted;"></div>
+                                            </div>
+
+                                            <div class="col-xs-4">
+                                                    <label class="control-label">Foto Tirada</label>
+                                                    <div id="my_result" class="row" style="width:320px; height:240px; border:dotted;"></div>
+                                            </div>
+
+                                       </div>
+                                </div><!-- FIM - TAB FOTO -->
+
+
 
 
                                <!--

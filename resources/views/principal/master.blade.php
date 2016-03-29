@@ -157,6 +157,7 @@
 
                             $("#example1").DataTable();
 
+
                      });
 
 </script>
@@ -195,6 +196,7 @@
         <script src="{{ asset('dist/js/hopscotch.min.js') }}"></script>
         <script src="{{ asset('js/tour_sigma3.js') }}"></script>
         <script src="{{ asset('js/app_angular.js') }}"></script>
+        <script src="{{ asset('dist/webcam.js') }}"></script>
 
         @if (\Session::get('tour_visaogeral')==' ' || \Session::get('tour_visaogeral')!='S')
         <script type="text/javascript">

@@ -37,9 +37,31 @@
                               $(".cnpj").show();
                         });
 
+
                    });
      </script>
 @endsection
+
+
+
+    <script type="text/javascript">
+
+            function ativar_webcam()
+            {
+                  Webcam.attach( '#my_camera' );
+            }
+
+            function take_snapshot() {
+                    Webcam.snap( function(data_uri)
+                    {
+                        document.getElementById('my_result').innerHTML = '<img name="caminhologo" id="caminhologo" src="'+data_uri+'"/>';
+                        var raw_image_data = data_uri.replace(/^data\:image\/\w+\;base64\,/, '');
+
+                        document.getElementById('mydata').value = raw_image_data;
+                    });
+                }
+    </script>
+
 
 @section('busca_endereco')
 <script type="text/javascript">

@@ -712,7 +712,8 @@
                                                                     </div>
                                                                   </div>
                                                                 </div>
-                                                              </div>
+                                                              </div> <!-- fim modal -->
+
                                                           </div>
 
                                                     </div> <!-- fim box-body-->
