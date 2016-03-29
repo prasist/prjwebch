@@ -49,7 +49,7 @@
 
     </head>
 
-    <body class="hold-transition skin-green sidebar-mini" ng-app="staticSelect">
+    <body class="hold-transition skin-green sidebar-mini">
 
         <div class="wrapper">
             @include('includes.header')
@@ -145,6 +145,11 @@
                             //$('select').select2();
 
                             //$(".js-example-basic-multiple").select2();
+
+                            $('.selectpicker').selectpicker({
+                                selectAllText: 'Selecionar Todos',
+                                deselectAllText: 'Desmarcar Todos'
+                            });
 
                             $("[data-mask]").inputmask();
 

@@ -36,8 +36,17 @@
                                                     <div class="box-body">
 
                                                           <div class="col-xs-12">
-                                                              @include('carregar_combos', array('dados'=>$familias, 'titulo' =>'Família', 'id_combo'=>'familia', 'complemento'=>'', 'comparar'=> ($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->familias_id) ))
+                                                              <label for="cep_prof" class="control-label">Resp. Família</label>
+                                                              <div class="input-group">
+                                                                  <div class="input-group-addon">
+                                                                        <a href="#" data-toggle="tooltip" title="Neste campo escolha a pessoa responsável  pela sua casa/família.">
+                                                                            <img src="{{ url('/images/help.png') }}" class="user-image" alt="Ajuda"  />
+                                                                        </a>
+                                                                  </div>
+                                                                  @include('carregar_combos', array('dados'=>$familias, 'titulo' =>'', 'id_combo'=>'familia', 'complemento'=>'', 'comparar'=> ($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->familias_id) ))
+                                                             </div>
                                                           </div><!-- col-xs-5-->
+
 
                                                            <div class="col-xs-6">
                                                                   @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status', 'complemento'=>'', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->status_id) ))

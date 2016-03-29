@@ -174,8 +174,8 @@
                                                     <div class="col-xs-3">
                                                            <label id="lb_cnpj_cpf" for="cnpj_cpf" class="control-label">{{ $pessoas[0]->tipopessoa=="F" ? 'CPF' : 'CNPJ'}}</label>
 
-                                                           <input id="cnpj" style='{{ $pessoas[0]->tipopessoa=='F' ? 'display:none' : '' }}' data-inputmask='"mask": "99.999.999/9999-99"' data-mask name="cnpj" type="text" class="cnpj form-control" value="{{$pessoas[0]->cnpj_cpf}}">
-                                                           <input id="cpf"  style='{{ $pessoas[0]->tipopessoa=='J' ? 'display:none' : '' }}' data-inputmask='"mask": "999.999.999-99"' data-mask name="cpf" type="text" class="cpf form-control" value="{{$pessoas[0]->cnpj_cpf}}">
+                                                           <input id="cnpj" style='{{ $pessoas[0]->tipopessoa=='F' ? 'display:none' : '' }}' data-inputmask='"mask": "99.999.999/9999-99"' data-mask name="cnpj" type="text" class="cnpj form-control" value="{{ $pessoas[0]->tipopessoa=='F' ? '' : $pessoas[0]->cnpj_cpf }}">
+                                                           <input id="cpf"  style='{{ $pessoas[0]->tipopessoa=='J' ? 'display:none' : '' }}' data-inputmask='"mask": "999.999.999-99"' data-mask name="cpf" type="text" class="cpf form-control" value="{{ $pessoas[0]->tipopessoa=='J' ? '' : $pessoas[0]->cnpj_cpf }}">
 
                                                     </div>
 
