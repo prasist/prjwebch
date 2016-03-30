@@ -481,45 +481,80 @@
                                 <!-- TAB FOTO -->
                                 <div class="tab-pane fade" id="foto">
                                       <input id="mydata" type="hidden" name="mydata" value=""/>
+
+
                                       <div class="row">
-                                            <div class="col-xs-5">
-                                                      <label for="caminhologo" class="control-label">Enviar Foto do Computador...</label>
-                                                      <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" >
-                                            </div>
-                                       </div>
-                                       <br/>
+                                         <div class="col-md-12">
+                                                <div class="box box-default">
+
+                                                      <div class="box-header">
+                                                              <h3 class="box-title">Enviar foto à partir do computador</h3>
+                                                      </div>
+
+                                                      <div class="box-body"><!-- box-body-->
+                                                            <div class="row"><!-- row entrada-->
+
+                                                                     <div class="col-xs-5">
+                                                                            <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" >
+                                                                     </div>
+                                                           </div>
+                                                      </div>
+
+                                               </div>
+                                         </div>
+                                   </div>
+
+
                                        <div class="row">
-                                            <div class="col-xs-4">
-                                                        <label class="control-label">Foto da WebCam</label>
-                                                        <a href="javascript:void(ativar_webcam())" class="btn btn-primary">Iniciar WebCam</a>
-                                                        <a href="javascript:void(take_snapshot())" class="btn btn-success">Tirar Foto</a>
-                                            </div>
+                                         <div class="col-md-12">
+                                                <div class="box box-default">
 
-                                            <div class="col-xs-4">
-                                                  <label class="control-label">Preview</label>
-                                                  <div id="my_camera" style="width:320px; height:240px; border:dotted;"></div>
-                                            </div>
+                                                      <div class="box-header">
+                                                              <h3 class="box-title">Tirar foto pela WebCam</h3>
+                                                      </div>
 
-                                            <div class="col-xs-4">
-                                                    <label class="control-label">Foto Tirada</label>
-                                                    <div id="my_result" class="row" style="width:320px; height:240px; border:dotted;"></div>
-                                            </div>
+                                                      <div class="box-body"><!-- box-body-->
+                                                            <div class="row"><!-- row entrada-->
+                                                                @if ($pessoas[0]->caminhofoto!="")
 
-                                       </div>
+                                                                        <div class="col-xs-4">
+                                                                              <center>
+                                                                              <label class="control-label">Foto Atual</label>
 
-                                        <div class="row">
-                                              @if ($pessoas[0]->caminhofoto!="")
-                                                    <p></p>
-                                                    <div class="col-xs-3">
-                                                          <img src="{{ url('/images/persons/' . $pessoas[0]->caminhofoto) }}" width="200px" height="100px">
+                                                                              <div  style="width:320px; height:240px; border:dotted;">
+                                                                                    <img src="{{ url('/images/persons/' . $pessoas[0]->caminhofoto) }}" width="315px" height="235px">
+                                                                              </div>
+                                                                              @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
+                                                                              <a href="{{ url('/pessoas/' . $pessoas[0]->id . '/remover')}}" class="btn btn-danger"><i class="fa fa-trash"></i> Remover Imagem</a></center>
 
-                                                          @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
-                                                          <a href="{{ url('/pessoas/' . $pessoas[0]->id . '/remover')}}"><i class="fa fa-remove"> Remover Imagem</i> </a>
-                                                          @endcan
-                                                    </div>
+                                                                              @endcan
+                                                                        </div>
 
-                                              @endif
-                                        </div>
+                                                                  @endif
+
+                                                                    <div class="col-xs-4">
+                                                                          <center>
+                                                                          <label class="control-label"></label>
+                                                                          <center><a href="javascript:void(ativar_webcam())" class="btn btn-primary"><i class="fa fa-power-off"></i> Iniciar WebCam</a></center>
+                                                                          <div id="my_camera" style="width:320px; height:240px; border:dotted;"></div>
+                                                                          <a href="javascript:void(take_snapshot())" class="btn btn-success"><i class="fa fa-camera"></i> Tirar Foto</a></center>
+                                                                    </div>
+
+                                                                    <div class="col-xs-4">
+                                                                            <center>
+                                                                                <label class="control-label">Foto Tirada</label>
+                                                                                <div id="my_result" class="row" style="width:320px; height:240px; border:dotted;"></div>
+                                                                            </center>
+                                                                    </div>
+
+                                                          </div>
+
+                                                   </div> <!-- fim body-->
+                                           </div>
+                                      </div>
+                                   </div>
+
+
                                 </div><!-- FIM - TAB FOTO -->
 
 

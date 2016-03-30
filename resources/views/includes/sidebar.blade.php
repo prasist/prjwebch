@@ -136,7 +136,8 @@
             <li>
               <a href="#"><i class="fa fa-angle-double-right"></i>Tutoriais</i></a>
               <ul class="treeview-menu">
-                <li><a href={{ url('/tutoriais/1')}}><i class="fa fa-flag-checkered"></i> Cadastro de Usuários</a></li>
+                <li><a href={{ url('/tutoriais/1')}}>Cadastro de Usuários</a></li>
+                <li><a href={{ url('/tutoriais/2')}}>Novo Usuário Administrador</a></li>
               </ul>
             </li>
           </ul>

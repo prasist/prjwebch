@@ -91,7 +91,7 @@ class TutoriaisController extends Controller
             }
             else if ($id==2)
             {
-
+                    return view('tutoriais.users_admin');
             }
 
     }
