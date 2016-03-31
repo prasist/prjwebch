@@ -37,6 +37,16 @@
                               $(".cnpj").show();
                         });
 
+                        $(".cpf").blur(function(){
+
+                            $.ajax({
+                              url: 'funcoes',
+                              success: function (response) {//response is value returned from php (for your example it's "bye bye"
+                                 alert(response);
+                              }
+                            });
+
+                       });
 
                    });
      </script>
@@ -60,6 +70,7 @@
                         document.getElementById('mydata').value = raw_image_data;
                     });
                 }
+
     </script>
 
 

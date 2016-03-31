@@ -24,6 +24,8 @@
     });
 
 
+    Route::get('funcoes', 'FuncoesController@index');
+
     Route::get('pdf', function ()
     {
 

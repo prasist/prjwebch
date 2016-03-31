@@ -224,6 +224,8 @@ public function salvar($request, $id, $tipo_operacao) {
                         'emailprincipal' => 'email',
                         'emailsecundario' => 'email',
                         'opPessoa' => 'required',
+                        'cpf'       => 'cpf',
+                        'cnpj'      => 'cnpj',
                  ]);
 
                 $image = $request->file('caminhologo'); //Imagem / Logo
@@ -270,7 +272,8 @@ public function salvar($request, $id, $tipo_operacao) {
 
                 if ($image) //Imagem Enviada computador
                 {
-                    $pessoas->caminhofoto = $image->getClientOriginalName();
+                    //$pessoas->caminhofoto = $image->getClientOriginalName();
+                    $pessoas->caminhofoto = str_replace(" ","", $input['razaosocial']) . '.' . $image->getClientOriginalExtension();
                 }
 
                 if ($input['mydata']!="") //Imagem tirada pela webcam
@@ -950,10 +953,10 @@ public function salvar($request, $id, $tipo_operacao) {
 
                   }
 
-
+                  dd(base_path());
 
                /*-------------------------------------------------- UPLOAD IMAGEM */
-               if ($image)
+               if ($image) //Imagem enviada
                {
                         /*Regras validação imagem*/
                         $rules = array (
@@ -972,23 +975,32 @@ public function salvar($request, $id, $tipo_operacao) {
                         }
                         else
                         {
-                            $destinationPath = base_path() . '/public/images/persons';   //caminho onde será gravado
-                            if(!$image->move($destinationPath, $image->getClientOriginalName()))    //move para pasta destino com nome fixo logo
-                            {
-                                \Session::flash('flash_message_erro', 'Os dados foram salvos, porém houve erro no envio da imagem.' . ['message' => 'Erro ao salvar imagem.', 'code' => 400]);
-                            }
+
+                            //caminho onde será gravado
+                            $destinationPath = base_path() . '/public/images/persons';
+
+                            // Cria uma instancia
+                            $img = \Image::make($image->getRealPath());
+
+                            //redimenciolna a imagem
+                            $img->resize(320, 240);
+
+                            //Salva a imagem no path definido, criando com nome da pessoa e a extencao original do arquivo
+                            $img->save($destinationPath . '/' . str_replace(" ","", $input['razaosocial']) . '.' . $image->getClientOriginalExtension());
+
                         }
                  }
 
-                 if ($input['mydata']!="")
+                 if ($input['mydata']!="") //Imagem da webcam
                  {
                      $encoded_data = $input['mydata'];
 
                      $binary_data = base64_decode($encoded_data);
 
-                     $destinationPath = base_path() . '/public/images/persons';   //caminho onde será gravado
+                     //caminho onde será gravado
+                     $destinationPath = base_path() . '/public/images/persons';
 
-                     // save to server (beware of permissions)
+                     // Salva no path definido, alterando o nome da imagem com o nome da pessoa
                      $result = file_put_contents( $destinationPath . '/' . str_replace(" ","", $input['razaosocial']) . '_webcam.jpg', $binary_data );
                  }
 

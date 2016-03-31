@@ -167,11 +167,25 @@
 
                                         <div class="row">
 
-                                                    <div class="col-xs-2">
+                                                    <div class="col-xs-2 {{ $errors->has('cpf') ? ' has-error' : '' }} {{ $errors->has('cnpj') ? ' has-error' : '' }}">
                                                            <label id="lb_cnpj_cpf" for="cnpj_cpf" class="control-label">{{ $interface->fisica==true ? 'CPF' : 'CNPJ'}}</label>
 
                                                            <input id="cnpj" style='{{ $interface->fisica==true ? 'display:none' : '' }}' data-inputmask='"mask": "99.999.999/9999-99"' data-mask name="cnpj" type="text" class="cnpj form-control" value="{{old('cnpj_cpf')}}">
                                                            <input id="cpf"  style='{{ $interface->juridica==true ? 'display:none' : '' }}' data-inputmask='"mask": "999.999.999-99"' data-mask name="cpf" type="text" class="cpf form-control" value="{{old('cnpj_cpf')}}">
+
+                                                         <!-- se houver erros na validacao do form request -->
+                                                         @if ($errors->has('cpf'))
+                                                          <span class="help-block">
+                                                              <strong>{{ $errors->first('cpf') }}</strong>
+                                                          </span>
+                                                         @endif
+
+                                                         @if ($errors->has('cnpj'))
+                                                          <span class="help-block">
+                                                              <strong>{{ $errors->first('cnpj') }}</strong>
+                                                          </span>
+                                                         @endif
+
 
                                                     </div>
 

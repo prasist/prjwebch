@@ -123,30 +123,18 @@
 
                                                 </div>
 
+                                                <div class="col-xs-3">
+                                                     @include('carregar_combos', array('dados'=>$grupos, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>$pessoas[0]->grupos_pessoas_id))
+                                                </div>
 
-                                             <div class="col-xs-5">
-
-                                                   <!--
-                                                    <label for="grupo" class="control-label">Grupo</label>
-
-                                                    <select name="grupo" class="form-control select2" style="width: 100%;">
-                                                    <option  value="">(Selecione um Grupo)</option>
-                                                    @foreach($grupos as $item)
-                                                          <option  value="{{$item->id}}" {{ $pessoas[0]->grupos_pessoas_id==$item->id ? 'selected' : '' }} >{{$item->nome}}</option>
-                                                    @endforeach
-                                                    </select>
-                                                    -->
-
-                                                  @include('carregar_combos', array('dados'=>$grupos, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>$pessoas[0]->grupos_pessoas_id))
-
-                                                    <!-- se houver erros na validacao do form request -->
-                                                       @if ($errors->has('grupo'))
-                                                        <span class="help-block">
-                                                            <strong>{{ $errors->first('grupo') }}</strong>
-                                                        </span>
-                                                       @endif
-
-                                             </div>
+                                                @if ($pessoas[0]->caminhofoto!="")
+                                                  <div class="col-xs-3">
+                                                      <label for="fotodocamarada" class="control-label">Foto</label>
+                                                       <div class="row" style="width:90px; height:80px; border:double;">
+                                                             <img id="fotodocamarada" src="{{ url('/images/persons/' . $pessoas[0]->caminhofoto) }}" width="85px" height="75px">
+                                                        </div>
+                                                  </div>
+                                                @endif
 
                                         </div>
 
@@ -306,28 +294,16 @@
                                                                      @endif
                                                             </div>
 
-                                                    </div>
+                                                 </div>
+
                                         </div>
 
-                                       <div class="row">
-                                            <div class="col-xs-6">
-                                                <label for="website" class="control-label">Website</label>
-                                                <input id="website" maxlength="255" name = "website" type="text" class="form-control" value="{{$pessoas[0]->website}}">
-                                            </div>
-
-                                            @if ($pessoas[0]->caminhofoto!="")
-                                                  <p></p>
-                                                  <div class="col-xs-3">
-                                                        <img src="{{ url('/images/persons/' . $pessoas[0]->caminhofoto) }}" width="200px" height="100px">
-
-                                                        @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
-                                                        <a href="{{ url('/pessoas/' . $pessoas[0]->id . '/remover')}}"><i class="fa fa-remove"> Remover Imagem</i> </a>
-                                                        @endcan
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                      <label for="website" class="control-label">Website</label>
+                                                      <input id="website" maxlength="255" name = "website" type="text" class="form-control" value="{{$pessoas[0]->website}}">
                                                   </div>
-
-                                            @endif
-
-                                       </div>
+                                        </div>
 
 
                                   </div> <!-- FIM DADOS CADASTRAIS-->

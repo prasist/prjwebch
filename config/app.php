@@ -90,6 +90,9 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
 
+        EltonInacio\ValidadorCpjCnpj\CpfCnpjServiceProvider::class,
+
+
         /*
          * Application Service Providers...
          */
