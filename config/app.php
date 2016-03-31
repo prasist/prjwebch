@@ -90,7 +90,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
 
-        EltonInacio\ValidadorCpjCnpj\CpfCnpjServiceProvider::class,
+        //EltonInacio\ValidadorCpjCnpj\CpfCnpjServiceProvider::class,
 
 
         /*
