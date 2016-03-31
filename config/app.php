@@ -90,7 +90,9 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
 
-        //EltonInacio\ValidadorCpjCnpj\CpfCnpjServiceProvider::class,
+        /*Validacao CPF e CNPJ*/
+        EltonInacio\ValidadorCpjCnpj\CpfCnpjServiceProvider::class,
+
 
 
         /*
