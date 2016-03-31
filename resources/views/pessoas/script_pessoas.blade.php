@@ -17,7 +17,7 @@
                             }
                         });
 
-                        $(".cpf").show();
+                        //$(".cpf").show();
 
                         $('.opFisica').click(function()
                         {
@@ -37,18 +37,74 @@
                               $(".cnpj").show();
                         });
 
-                        /*
-                        $(".cpf").blur(function() {
 
-                            $.ajax({
-                              url: 'funcoes',
-                              success: function (response) {//response is value returned from php (for your example it's "bye bye"
-                                 alert(response);
-                              }
-                            });
+                        //Verifica se cpf é único no banco de dados
+                        $(".cpf").blur(function()
+                        {
+
+                            if ($(this).val()!="") //se foi preenchido o campo
+                            {
+
+                                    var strValor = $(this).val(); //Pega conteudo campo cpf
+                                    var urlGetUser = '{!! url("/funcoes/' +  strValor +  '") !!}'; //Route funcoes = FuncoesController@index passando cpf como parametro
+
+                                    $.ajax(
+                                    {
+                                        url: urlGetUser,
+                                         success: function (response) { //Encontrando a rota e a funcao retornando dados, exibe alerta
+
+                                             if (response!="") //Só exibe mensagem se encontrar CPF para outra pessoa
+                                             {
+
+                                                /*Só exibir mensagem se realmente estiver sendo cadastrado uma nova pessoa*/
+                                                if ($("#razaosocial").val()!=response)
+                                                {
+                                                    alert('CPF já cadastrado para : ' + response);
+                                                    $(".cpf").val(""); //Limpa campo
+                                                }
+
+                                             }
+
+                                         }
+                                    });
+                            }
 
                        });
-                       */
+
+
+                        //Verifica se CNPJ é único no banco de dados
+                        $(".cnpj").blur(function()
+                        {
+
+                            if ($(this).val()!="") //se foi preenchido o campo
+                            {
+
+                                    var strValor = $(this).val(); //Pega conteudo campo cpf
+                                    var urlGetUser = '{!! url("/funcoes/' +  strValor.replace('/', '') +  '") !!}'; //Route funcoes = FuncoesController@index passando cpf como parametro
+
+                                    $.ajax(
+                                    {
+                                        url: urlGetUser,
+                                         success: function (response) { //Encontrando a rota e a funcao retornando dados, exibe alerta
+
+                                             if (response!="") //Só exibe mensagem se encontrar CPF para outra pessoa
+                                             {
+
+                                                /*Só exibir mensagem se realmente estiver sendo cadastrado uma nova pessoa*/
+                                                if ($("#razaosocial").val()!=response)
+                                                {
+                                                    alert('CNPJ já cadastrado para : ' + response);
+                                                    $(".cnpj").val(""); //Limpa campo
+                                                }
+
+                                             }
+
+                                         }
+                                    });
+                            }
+
+                       });
+
 
                    });
      </script>
@@ -56,11 +112,13 @@
 
     <script type="text/javascript">
 
+            /*Inicializa Webcam*/
             function ativar_webcam()
             {
                   Webcam.attach( '#my_camera' );
             }
 
+            /*Tirar foto pela webcam*/
             function take_snapshot() {
                     Webcam.snap( function(data_uri)
                     {
@@ -71,20 +129,27 @@
                     });
                 }
 
+                /*Validação da imagem que será enviada*/
                 function checkPhoto(target)
                 {
+
+                    /*Verificar formato*/
                     if(target.files[0].type.indexOf("image") == -1) {
                         document.getElementById("msg").innerHTML = "Formato não reconhecido";
                         document.getElementById("caminhologo").value = "";
                         alert("Formato não reconhecido, favor selecionar outra imagem.");
                         return false;
                     }
+
+                    /*Tamanho maximo 2Mg*/
                     if(target.files[0].size > 2000000) {
                         document.getElementById("msg").innerHTML = "Imagem muito grande (max 2000Kb)";
                         document.getElementById("caminhologo").value = "";
                         alert("Imagem muito grande (max 2000Kb), favor selecionar outra imagem.");
                         return false;
                     }
+
+                    /*Chegou ate aqui beleza...*/
                     document.getElementById("msg").innerHTML = "";
                     return true;
                 }

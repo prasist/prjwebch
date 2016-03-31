@@ -1,5 +1,5 @@
 <?php
 
-    echo "loalsld";
+    echo $_POST['cpf'];
 
  ?>
