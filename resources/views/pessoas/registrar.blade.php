@@ -7,6 +7,7 @@
 {{ \Session::put('route', 'pessoas') }}
 {{ \Session::put('id_pagina', '28') }}
 
+
 <div class = 'row'>
 
     <div class="col-md-12">

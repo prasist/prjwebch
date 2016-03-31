@@ -52,8 +52,6 @@
      </script>
 @endsection
 
-
-
     <script type="text/javascript">
 
             function ativar_webcam()
@@ -72,7 +70,6 @@
                 }
 
     </script>
-
 
 @section('busca_endereco')
 <script type="text/javascript">
