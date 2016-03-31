@@ -953,7 +953,6 @@ public function salvar($request, $id, $tipo_operacao) {
 
                   }
 
-                  dd(base_path());
 
                /*-------------------------------------------------- UPLOAD IMAGEM */
                if ($image) //Imagem enviada
