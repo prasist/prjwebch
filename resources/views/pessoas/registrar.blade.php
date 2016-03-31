@@ -487,7 +487,8 @@
                                                             <div class="row"><!-- row entrada-->
 
                                                                      <div class="col-xs-5">
-                                                                            <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" >
+                                                                            <input type="file" id="caminhologo"  name = "caminhologo" onchange="checkPhoto(this)">
+                                                                            <label id="msg" class="text-danger"></label>
                                                                      </div>
                                                            </div>
                                                       </div>
@@ -501,9 +502,11 @@
                                          <div class="col-md-12">
                                                 <div class="box box-default">
 
+                                                      <!--
                                                       <div class="box-header">
                                                               <h3 class="box-title">Tirar foto pela WebCam</h3>
                                                       </div>
+                                                      -->
 
                                                       <div class="box-body"><!-- box-body-->
                                                             <div class="row"><!-- row entrada-->
@@ -518,7 +521,7 @@
 
                                                                     <div class="col-xs-4">
                                                                             <center>
-                                                                                <label class="control-label">Foto Tirada</label>
+                                                                                <label class="control-label">Foto WebCam</label>
                                                                                 <div id="my_result" class="row" style="width:320px; height:240px; border:dotted;"></div>
                                                                             </center>
                                                                     </div>

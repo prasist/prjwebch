@@ -335,7 +335,7 @@ public function salvar($request, $id, $tipo_operacao) {
                         if ($input['opSexo']!="" || $input['status']!="" || $input['graus']!="" || $input['lingua']!="" || $input['igreja']!=""
                             || $input['familia']!="" || $input['opDoadorSangue']!="" || $input['opDoadorOrgaos']!="" || $input['naturalidade']!=""
                             || $input['ufnaturalidade']!="" || $input['nacionalidade']!="" || $input['grpsangue']!="" || $input['necessidades']!=""
-                            || $input['facebook']!="" || $input['google']!="" || $input['instagram']!="" || $input['linkedin']!="")
+                            || $input['facebook']!="" || $input['google']!="" || $input['instagram']!="" || $input['linkedin']!="" || $input['estadoscivis']!="")
 
                         {
 

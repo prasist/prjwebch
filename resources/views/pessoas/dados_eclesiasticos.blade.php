@@ -651,7 +651,7 @@
                                                                          <div class="row">
                                                                                     <div class="col-xs-5">
                                                                                     <label for="nome_filho" class="control-label">Nome</label>
-                                                                                    <input id="nome_filho" name = "nome_conjuge" type="text" class="form-control" value="">
+                                                                                    <input id="nome_filho" name = "nome_filho" type="text" class="form-control" value="">
                                                                                  </div>
 
                                                                                  <div class="col-xs-3">

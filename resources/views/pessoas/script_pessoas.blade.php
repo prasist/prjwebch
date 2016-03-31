@@ -37,7 +37,8 @@
                               $(".cnpj").show();
                         });
 
-                        $(".cpf").blur(function(){
+                        /*
+                        $(".cpf").blur(function() {
 
                             $.ajax({
                               url: 'funcoes',
@@ -47,6 +48,7 @@
                             });
 
                        });
+                       */
 
                    });
      </script>
@@ -67,6 +69,24 @@
 
                         document.getElementById('mydata').value = raw_image_data;
                     });
+                }
+
+                function checkPhoto(target)
+                {
+                    if(target.files[0].type.indexOf("image") == -1) {
+                        document.getElementById("msg").innerHTML = "Formato não reconhecido";
+                        document.getElementById("caminhologo").value = "";
+                        alert("Formato não reconhecido, favor selecionar outra imagem.");
+                        return false;
+                    }
+                    if(target.files[0].size > 2000000) {
+                        document.getElementById("msg").innerHTML = "Imagem muito grande (max 2000Kb)";
+                        document.getElementById("caminhologo").value = "";
+                        alert("Imagem muito grande (max 2000Kb), favor selecionar outra imagem.");
+                        return false;
+                    }
+                    document.getElementById("msg").innerHTML = "";
+                    return true;
                 }
 
     </script>

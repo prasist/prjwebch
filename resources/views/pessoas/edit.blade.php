@@ -166,11 +166,24 @@
 
                                         <div class="row">
 
-                                                    <div class="col-xs-3">
+                                                    <div class="col-xs-3  {{ $errors->has('cpf') ? ' has-error' : '' }} {{ $errors->has('cnpj') ? ' has-error' : '' }}">
                                                            <label id="lb_cnpj_cpf" for="cnpj_cpf" class="control-label">{{ $pessoas[0]->tipopessoa=="F" ? 'CPF' : 'CNPJ'}}</label>
 
                                                            <input id="cnpj" style='{{ $pessoas[0]->tipopessoa=='F' ? 'display:none' : '' }}' data-inputmask='"mask": "99.999.999/9999-99"' data-mask name="cnpj" type="text" class="cnpj form-control" value="{{ $pessoas[0]->tipopessoa=='F' ? '' : $pessoas[0]->cnpj_cpf }}">
                                                            <input id="cpf"  style='{{ $pessoas[0]->tipopessoa=='J' ? 'display:none' : '' }}' data-inputmask='"mask": "999.999.999-99"' data-mask name="cpf" type="text" class="cpf form-control" value="{{ $pessoas[0]->tipopessoa=='J' ? '' : $pessoas[0]->cnpj_cpf }}">
+
+                                                          <!-- se houver erros na validacao do form request -->
+                                                         @if ($errors->has('cpf'))
+                                                          <span class="help-block">
+                                                              <strong>{{ $errors->first('cpf') }}</strong>
+                                                          </span>
+                                                         @endif
+
+                                                         @if ($errors->has('cnpj'))
+                                                          <span class="help-block">
+                                                              <strong>{{ $errors->first('cnpj') }}</strong>
+                                                          </span>
+                                                         @endif
 
                                                     </div>
 
@@ -471,7 +484,8 @@
                                                             <div class="row"><!-- row entrada-->
 
                                                                      <div class="col-xs-5">
-                                                                            <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" >
+                                                                            <input type="file" id="caminhologo" name = "caminhologo"  onchange="checkPhoto(this)">
+                                                                            <label id="msg" class="text-danger"></label>
                                                                      </div>
                                                            </div>
                                                       </div>
@@ -485,9 +499,11 @@
                                          <div class="col-md-12">
                                                 <div class="box box-default">
 
+                                                <!--
                                                       <div class="box-header">
                                                               <h3 class="box-title">Tirar foto pela WebCam</h3>
                                                       </div>
+                                                      -->
 
                                                       <div class="box-body"><!-- box-body-->
                                                             <div class="row"><!-- row entrada-->
@@ -513,12 +529,12 @@
                                                                           <label class="control-label"></label>
                                                                           <center><a href="javascript:void(ativar_webcam())" class="btn btn-primary"><i class="fa fa-power-off"></i> Iniciar WebCam</a></center>
                                                                           <div id="my_camera" style="width:320px; height:240px; border:dotted;"></div>
-                                                                          <a href="javascript:void(take_snapshot())" class="btn btn-success"><i class="fa fa-camera"></i> Tirar Foto</a></center>
+                                                                          <a href="javascript:void(take_snapshot())" class="btn btn-success"><i class="fa fa-camera"></i> Tirar Foto pela WebCam</a></center>
                                                                     </div>
 
                                                                     <div class="col-xs-4">
                                                                             <center>
-                                                                                <label class="control-label">Foto Tirada</label>
+                                                                                <label class="control-label">Foto WebCam</label>
                                                                                 <div id="my_result" class="row" style="width:320px; height:240px; border:dotted;"></div>
                                                                             </center>
                                                                     </div>
