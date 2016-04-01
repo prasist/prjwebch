@@ -326,4 +326,31 @@
     Route::get('bancos/{id}/edit','BancosController@edit');
     Route::get('bancos/{id}/delete','BancosController@destroy');
 
+    /*Estrutura Celula - Nivel 1*/
+    Route::get('estruturas1', 'Estruturas1Controller@index');
+    Route::post('/estruturas1/gravar','Estruturas1Controller@store');
+    Route::get('/estruturas1/registrar','Estruturas1Controller@create');
+    Route::get('/estruturas1/{id}/preview','Estruturas1Controller@show');
+    Route::post('estruturas1/{id}/update','Estruturas1Controller@update');
+    Route::get('estruturas1/{id}/edit','Estruturas1Controller@edit');
+    Route::get('estruturas1/{id}/delete','Estruturas1Controller@destroy');
+
+    /*Estrutura Celula - Nivel 2*/
+    Route::get('estruturas2', 'Estruturas2Controller@index');
+    Route::post('/estruturas2/gravar','Estruturas2Controller@store');
+    Route::get('/estruturas2/registrar','Estruturas2Controller@create');
+    Route::get('/estruturas2/{id}/preview','Estruturas2Controller@show');
+    Route::post('estruturas2/{id}/update','Estruturas2Controller@update');
+    Route::get('estruturas2/{id}/edit','Estruturas2Controller@edit');
+    Route::get('estruturas2/{id}/delete','Estruturas2Controller@destroy');
+
+
+    /*configuracoes celulas*/
+    Route::get('config', 'ConfiguracoesController@index');
+    Route::post('/config/gravar','ConfiguracoesController@store');
+    Route::get('/config/{id}/preview','ConfiguracoesController@show');
+    Route::post('config/{id}/update','ConfiguracoesController@update');
+    Route::get('config/{id}/edit','ConfiguracoesController@edit');
+
+
 });

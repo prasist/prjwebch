@@ -115,6 +115,49 @@
                 <a href={{ url('/pessoas')}}><i class="fa fa-users"></i>Pessoas</a>
             </li>
 
+            <!-- Células -->
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-share"></i> <span>Gestão de Células</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+
+                  <ul class="treeview-menu">
+                    <a href={{ url('/config')}}><li><i class="fa fa-wrench"></i>Configurações</a></li>
+                    <li>
+                      <a href="#"><i class="fa fa-circle-o"></i> Estrutura <i class="fa fa-angle-left pull-right"></i></a>
+                          <ul class="treeview-menu">
+                            <li><a href={{ url('/estruturas1')}}> {{ Session::get('nivel1') }}</a></li>
+                            <li><a href={{ url('/estruturas2')}}> {{ Session::get('nivel2') }}</a></li>
+                            <li><a href={{ url('/estruturas3')}}> {{ Session::get('nivel3') }}</a></li>
+                            <li><a href={{ url('/estruturas4')}}> {{ Session::get('nivel4') }}</a></li>
+                            <li><a href={{ url('/estruturas5')}}> {{ Session::get('nivel5') }}</a></li>
+                          </ul>
+                    </li>
+                  </ul>
+
+                  <ul class="treeview-menu">
+                    <li>
+                      <a href="#"><i class="fa fa-circle-o"></i> Células <i class="fa fa-angle-left pull-right"></i></a>
+                          <ul class="treeview-menu">
+                            <li><a href="#"> Cadastro</a></li>
+                            <li><a href="#"> Relatórios</a></li>
+                          </ul>
+                    </li>
+                  </ul>
+
+                  <ul class="treeview-menu">
+                    <li>
+                      <a href="#"><i class="fa fa-circle-o"></i> Controle de Atividades <i class="fa fa-angle-left pull-right"></i></a>
+                          <ul class="treeview-menu">
+                            <li><a href="#"> Presença</a></li>
+                          </ul>
+                    </li>
+                  </ul>
+
+            </li>
+
+
 
           <li class="text">&nbsp;</li>
 

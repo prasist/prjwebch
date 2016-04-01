@@ -40,6 +40,12 @@ return [
     'validar' => '5',
     'home' => '34',
     'bancos' => '35',
+    'estruturas1' => '36',
+    'estruturas2' => '37',
+    'estruturas3' => '38',
+    'estruturas4' => '39',
+    'estruturas5' => '40',
+    'config' => '41',
 
     'env' => env('APP_ENV', 'production'),
 

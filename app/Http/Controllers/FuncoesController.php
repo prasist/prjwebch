@@ -13,7 +13,6 @@ use Gate;
 class FuncoesController extends Controller
 {
 
-
     public function __construct()
     {
 
@@ -55,7 +54,6 @@ class FuncoesController extends Controller
             {
                 return ""; //Retorna vazio
             }
-
 
     }
 
