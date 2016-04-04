@@ -58,11 +58,11 @@
 
                         <tr>
 
-                            <td>{{$value->razaosocial}}</td>
-                            <td>{{$value->nomefantasia}}</td>
-                            <td>{{$value->nome_tipo_pessoa}}</td>
-                            <td>{{$value->cnpj_cpf}}</td>
-                            <td>{{ "(".substr($value->fone_principal, 0, 2).") ".substr($value->fone_principal, 2, 10) }}</td>
+                            <td>{!!$value->razaosocial!!}</td>
+                            <td>{!!$value->nomefantasia!!}</td>
+                            <td>{!!$value->nome_tipo_pessoa!!}</td>
+                            <td>{!!$value->cnpj_cpf!!}</td>
+                            <td>{!! "(".substr($value->fone_principal, 0, 2).") ".substr($value->fone_principal, 2, 10) !!}</td>
 
                             <td class="col-xs-1">
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
@@ -83,7 +83,7 @@
                                               <button
                                                   data-toggle="tooltip" data-placement="top" title="Excluir Ítem" type="submit"
                                                   class="btn btn-danger btn-sm"
-                                                  onclick="return confirm('Confirma exclusão desse registro : {{ $value->nome }} ?');">
+                                                  onclick="return confirm('Confirma exclusão desse registro : {!! $value->nome !!} ?');">
                                                   <spam class="glyphicon glyphicon-trash"></spam></button>
 
                                         </form>

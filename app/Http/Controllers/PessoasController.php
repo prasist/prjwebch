@@ -48,6 +48,9 @@ class PessoasController extends Controller
         ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('empresas_id', $this->dados_login->empresas_id)
         ->join('tipos_pessoas', 'tipos_pessoas.id', '=' , 'pessoas.tipos_pessoas_id')
+        ->orderBy('pessoas.razaosocial')
+        ->skip(1000)
+        ->take(500)
         ->get();
 
         return view($this->rota . '.index', ['dados' => $dados, 'tipos' => $tipos]);
