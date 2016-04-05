@@ -226,6 +226,7 @@ public function salvar($request, $id, $tipo_operacao) {
                         'emailprincipal' => 'email',
                         'emailsecundario' => 'email',
                         'opPessoa' => 'required',
+                        'opStatus' => 'required',
                         'cpf'       => 'cpf',
                         'cnpj'      => 'cnpj',
                  ]);

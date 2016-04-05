@@ -84,7 +84,7 @@
 
                                         <div class="row">
 
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-3{{ $errors->has('opStatus') ? ' has-error' : '' }}">
 
                                                     <label for="opStatus" class="control-label">Status :</label>
                                                     <br/>
@@ -99,10 +99,17 @@
                                                               Inativo
                                                          </label>
 
+                                                         <!-- se houver erros na validacao do form request -->
+                                                         @if ($errors->has('opStatus'))
+                                                          <span class="help-block">
+                                                              <strong>{{ $errors->first('opStatus') }}</strong>
+                                                          </span>
+                                                         @endif
+
                                                 </div>
 
 
-                                                <div class="col-xs-3">
+                                                <div class="col-xs-3 {{ $errors->has('opPessoa') ? ' has-error' : '' }}">
 
                                                       <label for="opPessoa" class="control-label">Tipo Pessoa :</label>
                                                       <br/>
@@ -119,6 +126,13 @@
                                                               <input type="radio" id="opJuridica" name="opPessoa" value="J" class="opJuridica" {{ ( ($pessoas[0]->tipopessoa="J") ? 'checked' : '') }}>
                                                               Jurídica
                                                          </label>
+                                                         @endif
+
+                                                        <!-- se houver erros na validacao do form request -->
+                                                         @if ($errors->has('opPessoa'))
+                                                          <span class="help-block">
+                                                              <strong>{{ $errors->first('opPessoa') }}</strong>
+                                                          </span>
                                                          @endif
 
                                                 </div>

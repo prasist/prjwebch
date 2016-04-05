@@ -82,7 +82,7 @@
                                   <div class="tab-pane fade active in" id="home">
 
                                         <div class="row">
-                                                <div class="col-xs-3">
+                                                <div class="col-xs-3{{ $errors->has('opStatus') ? ' has-error' : '' }}">
                                                     <label for="opStatus" class="control-label">Status :</label>
                                                     <br/>
                                                          <label>
@@ -94,6 +94,13 @@
                                                               <input type="radio" name="opStatus" class="minimal">
                                                               Inativo
                                                          </label>
+
+                                                           <!-- se houver erros na validacao do form request -->
+                                                         @if ($errors->has('opStatus'))
+                                                          <span class="help-block">
+                                                              <strong>{{ $errors->first('opStatus') }}</strong>
+                                                          </span>
+                                                         @endif
                                                 </div>
 
                                                 <div class="col-xs-3 {{ $errors->has('opPessoa') ? ' has-error' : '' }}">
