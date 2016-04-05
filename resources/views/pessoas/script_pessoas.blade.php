@@ -17,7 +17,6 @@
                             }
                         });
 
-                        //$(".cpf").show();
 
                         $('.opFisica').click(function()
                         {

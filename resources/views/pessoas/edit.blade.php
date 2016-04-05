@@ -116,14 +116,14 @@
 
                                                         @if ($interface->fisica)
                                                          <label>
-                                                              <input type="radio" id="opFisica" name="opPessoa" value="F" class="opFisica" {{ ( ($pessoas[0]->tipopessoa="F") ? 'checked' : '') }}>
+                                                              <input type="radio" id="opFisica" name="opPessoa" value="F" class="opFisica" {{ ( ($pessoas[0]->tipopessoa=="F") ? 'checked' : '') }}>
                                                               Física
                                                          </label>
                                                          @endif
 
                                                          @if ($interface->juridica)
                                                          <label>
-                                                              <input type="radio" id="opJuridica" name="opPessoa" value="J" class="opJuridica" {{ ( ($pessoas[0]->tipopessoa="J") ? 'checked' : '') }}>
+                                                              <input type="radio" id="opJuridica" name="opPessoa" value="J" class="opJuridica" {{ ( ($pessoas[0]->tipopessoa=="J") ? 'checked' : '') }}>
                                                               Jurídica
                                                          </label>
                                                          @endif
@@ -202,12 +202,12 @@
                                                     </div>
 
                                                     <div class="col-xs-3">
-                                                         <label id="lb_inscricaoestadual_rg" for="inscricaoestadual_rg" class="control-label">{{ $interface->fisica==true ? 'RG' : 'Insc. Estadual'}}</label>
+                                                         <label id="lb_inscricaoestadual_rg" for="inscricaoestadual_rg" class="control-label">{{ $pessoas[0]->tipopessoa=='F' ? 'RG' : 'Insc. Estadual'}}</label>
                                                          <input id="inscricaoestadual_rg"  maxlength="15" name = "inscricaoestadual_rg" type="text" class="form-control" value="{{ $pessoas[0]->inscricaoestadual_rg }}">
                                                     </div>
 
                                                     <div class="col-xs-3">
-                                                              <label id="lb_datanasc" for="datanasc" class="control-label">{{ $interface->fisica==true ? 'Data Nasc.' : 'Data Fundação'}}</label>
+                                                              <label id="lb_datanasc" for="datanasc" class="control-label">{{ $pessoas[0]->tipopessoa=='F' ? 'Data Nasc.' : 'Data Fundação'}}</label>
 
                                                               <div class="input-group">
                                                                      <div class="input-group-addon">

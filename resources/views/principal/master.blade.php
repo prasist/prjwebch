@@ -190,13 +190,6 @@
 
                   $(function ()
                   {
-
-                            //$(".select2").select2();
-
-                            //$('select').select2();
-
-                            //$(".js-example-basic-multiple").select2();
-
                             $('.selectpicker').selectpicker({
                                 selectAllText: 'Selecionar Todos',
                                 deselectAllText: 'Desmarcar Todos'
@@ -213,7 +206,6 @@
                                 remote:'{!! url("/buscapessoa/%QUERY") !!}',
                                 limit : 50
                             });
-
 
                      });
 

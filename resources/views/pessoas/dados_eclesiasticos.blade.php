@@ -88,8 +88,8 @@
 
                                                              <select name="opDoadorSangue" class="form-control select2" style="width: 100%;">
                                                              <option  value="">(Selecionar)</option>
-                                                                   <option  value="1"  {{ ($tipo_operacao=='inclusao' ? '' : ($membros_dados_pessoais[0]->doador_sangue=='t' ? 'selected=selected' : '') )  }}>SIM</option>
-                                                                   <option  value="0" {{ ($tipo_operacao=='inclusao' ? '' : ($membros_dados_pessoais[0]->doador_sangue=='f' ? 'selected=selected' : '') )  }}>NÃO</option>
+                                                                   <option  value="1"  {{ ($tipo_operacao=='inclusao' ? '' : ($membros_dados_pessoais[0]->doador_sangue==true ? 'selected=selected' : '') )  }}>SIM</option>
+                                                                   <option  value="0" {{ ($tipo_operacao=='inclusao' ? '' : ($membros_dados_pessoais[0]->doador_sangue==false ? 'selected=selected' : '') )  }}>NÃO</option>
                                                              </select>
 
                                                        </div>
@@ -99,8 +99,8 @@
 
                                                                <select name="opDoadorOrgaos" class="form-control select2" style="width: 100%;">
                                                                <option  value="">(Selecionar)</option>
-                                                                     <option  value="1" {{ ($tipo_operacao=='inclusao' ? '' : ($membros_dados_pessoais[0]->doador_orgaos=='t' ? 'selected=selected' : '') )  }}>SIM</option>
-                                                                     <option  value="0" {{ ($tipo_operacao=='inclusao' ? '' : ($membros_dados_pessoais[0]->doador_orgaos=='f' ? 'selected=selected' : '') )  }}>NÃO</option>
+                                                                     <option  value="1" {{ ($tipo_operacao=='inclusao' ? '' : ($membros_dados_pessoais[0]->doador_orgaos==true ? 'selected=selected' : '') )  }}>SIM</option>
+                                                                     <option  value="0" {{ ($tipo_operacao=='inclusao' ? '' : ($membros_dados_pessoais[0]->doador_orgaos==false ? 'selected=selected' : '') )  }}>NÃO</option>
                                                                </select>
 
                                                        </div>
