@@ -49,8 +49,6 @@ class PessoasController extends Controller
         ->where('empresas_id', $this->dados_login->empresas_id)
         ->join('tipos_pessoas', 'tipos_pessoas.id', '=' , 'pessoas.tipos_pessoas_id')
         ->orderBy('pessoas.razaosocial')
-        ->skip(1000)
-        ->take(500)
         ->get();
 
         return view($this->rota . '.index', ['dados' => $dados, 'tipos' => $tipos]);
@@ -265,7 +263,7 @@ public function salvar($request, $id, $tipo_operacao) {
                 $pessoas->fone_celular = $input['celular'];
                 $pessoas->emailprincipal = $input['emailprincipal'];
                 $pessoas->emailsecundario = $input['emailsecundario'];
-                $pessoas->ativo = ($input['opStatus'] ? 1 : 0);
+                $pessoas->ativo = ($input['opStatus'] ? 'S' : 'N');
                 $pessoas->tipos_pessoas_id = $input['tipos_pessoas_id'];
                 $pessoas->datanasc = $formatador->FormatarData($input['datanasc']);
                 $pessoas->tipopessoa = $input['opPessoa'];
@@ -1058,7 +1056,7 @@ public function salvar($request, $id, $tipo_operacao) {
         $sQuery .= " where pessoas.id = ? ";
         $sQuery .= " and pessoas.empresas_id = ? ";
         $sQuery .= " and pessoas.empresas_clientes_cloud_id = ? ";
-        $sQuery .= " order by razaosocial";
+        $sQuery .= " order by razaosocial ";
 
         $pessoas = \DB::select($sQuery, [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
@@ -1085,6 +1083,7 @@ public function salvar($request, $id, $tipo_operacao) {
             {
                 $membros_dados_pessoais = $bancos; //Artificio para nao ter que tratar array vazia nas views
             }
+
 
             /* Membros Historico Eclesiastico */
             $sQuery  = " select pessoas_id, empresas_id, empresas_clientes_cloud_id, ";
@@ -1254,7 +1253,6 @@ public function salvar($request, $id, $tipo_operacao) {
                 $ministerios = \App\Models\ministerios::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 $motivos = \App\Models\tiposmovimentacao::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 /* FIM Para preencher combos Dados eclesiasticos*/
-
 
                 return view($this->rota . '.edit',
                 [

@@ -27,6 +27,8 @@
     /*Validacao do CPF / CNPJ - disparado pelo jquery*/
     Route::get('funcoes/{id}', 'FuncoesController@validar');
 
+    Route::get('buscapessoa/{id}', 'FuncoesController@buscarpessoa');
+
 
     Route::get('pdf', function ()
     {

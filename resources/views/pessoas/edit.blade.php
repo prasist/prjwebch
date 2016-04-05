@@ -90,12 +90,12 @@
                                                     <br/>
 
                                                          <label>
-                                                              <input type="radio" name="opStatus" class="minimal" {{ $pessoas[0]->ativo==1 ? 'checked' : '' }}>
+                                                              <input type="radio" name="opStatus" class="minimal" {{ $pessoas[0]->ativo=='S' ? 'checked' : '' }}>
                                                               Ativo
                                                          </label>
 
                                                          <label>
-                                                              <input type="radio" name="opStatus" class="minimal" {{ $pessoas[0]->ativo==0 ? 'checked' : '' }}>
+                                                              <input type="radio" name="opStatus" class="minimal" {{ $pessoas[0]->ativo=='N' ? 'checked' : '' }}>
                                                               Inativo
                                                          </label>
 
