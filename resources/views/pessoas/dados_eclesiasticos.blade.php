@@ -44,7 +44,7 @@
                                                                         </a>
                                                                   </div>
                                                                   @include('carregar_combos', array('dados'=>$familias, 'titulo' =>'', 'id_combo'=>'familia', 'complemento'=>'', 'comparar'=> ($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->familias_id) ))
-                                                                         <!-- <input type="text" name="typeahead" class="typeahead tt-query" autocomplete="off" spellcheck="false" placeholder="Type your Query">-->
+
                                                              </div>
                                                           </div><!-- col-xs-5-->
 
@@ -1339,14 +1339,6 @@
         });
       return false;
     });
-
-
-
-        $('input.typeahead').typeahead({
-            name: 'typeahead',
-            remote:'{!! url("/buscapessoa/%QUERY") !!}',
-            limit : 20
-        });
 
 
 });

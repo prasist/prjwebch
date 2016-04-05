@@ -2,10 +2,10 @@
 
 @section('content')
 
-{{ \Session::put('titulo', Session::get('nivel2')) }}
+{{ \Session::put('titulo', Session::get('nivel3')) }}
 {{ \Session::put('subtitulo', 'Listagem') }}
-{{ \Session::put('route', 'estruturas2') }}
-{{ \Session::put('id_pagina', '37') }}
+{{ \Session::put('route', 'estruturas3') }}
+{{ \Session::put('id_pagina', '38') }}
 
 
         <div>{{{ $errors->first('erros') }}}</div>

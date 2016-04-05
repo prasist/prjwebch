@@ -57,29 +57,31 @@ class FuncoesController extends Controller
 
     }
 
-
+ /*Pesquisa pessoas pelas iniciais da razaosocial passada por parametro*/
     public function buscarpessoa($id)
     {
 
             $buscar = \App\Models\pessoas::select('id', 'razaosocial')
             ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
             ->where('empresas_id', $this->dados_login->empresas_id)
-            ->where('razaosocial', 'like', '%' . $id . '%')
-            ->skip(20)
-            ->take(20)
+            ->where('razaosocial', 'ilike', '%' . $id . '%')
+            ->take(50)
             ->get()->toArray();
 
             if ($buscar)
             {
 
-                foreach ($buscar as $key => $value) {
-                    $array[] = $value['id'] . ' - ' . $value['razaosocial'];
-               }
+                foreach ($buscar as $key => $value)
+                {
+                    $array[] = str_repeat("0", (9-strlen($value['id']))) . $value['id'] . ' - ' . $value['razaosocial'];
+                }
+
                 echo json_encode($array);
+
             }
             else
             {
-                return "nada"; //Retorna vazio
+                return ""; //Retorna vazio
             }
 
     }

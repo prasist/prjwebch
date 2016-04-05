@@ -4,19 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\celulas_nivel2;
+use App\Models\celulas_nivel3;
 use URL;
 use Auth;
 use Input;
 use Gate;
 
-class Estruturas2Controller extends Controller
+class Estruturas3Controller extends Controller
 {
 
     public function __construct()
     {
 
-        $this->rota = "estruturas2"; //Define nome da rota que será usada na classe
+        $this->rota = "estruturas3"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
         //Validação de permissão de acesso a pagina
@@ -36,8 +36,8 @@ class Estruturas2Controller extends Controller
               return redirect('home');
         }
 
-        /*Busca NIVEL2*/
-        $dados = \DB::select('select * from view_celulas_nivel2 v2 where  v2.empresas_id = ? and v2.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        /*Busca NIVEL3*/
+        $dados = \DB::select('select * from view_celulas_nivel3 v3 where  v3.empresas_id = ? and v3.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         return view($this->rota . '.index',compact('dados'));
 
@@ -45,36 +45,39 @@ class Estruturas2Controller extends Controller
 
   public function salvar($request, $id, $tipo_operacao)
   {
+        $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-      $input = $request->except(array('_token', 'ativo')); //não levar o token
+        /*Validação de campos - request*/
+        if ($input['nome']=="" && $input['pessoas']=="")
+        {
+                $this->validate($request, [
+                    'nome' => 'required',
+                    'pessoas' => 'required',
+                    'nivel1' => 'required',
+                    'nivel2' => 'required',
+                ]);
+        }
+        else
+        {
+                $this->validate($request, [
+                    'nivel1' => 'required',
+                    'nivel2' => 'required',
+                ]);
+        }
 
-     /*Validação de campos - request*/
-      if ($input['nome']=="" && $input['pessoas']=="")
-      {
-              $this->validate($request, [
-                  'nome' => 'required',
-                  'pessoas' => 'required',
-                  'nivel1' => 'required',
-              ]);
-      }
-      else
-      {
-              $this->validate($request, [
-                  'nivel1' => 'required',
-              ]);
-      }
 
         if ($tipo_operacao=="create") //novo registro
         {
-             $dados = new celulas_nivel2();
+             $dados = new celulas_nivel3();
         }
         else //update
         {
-             $dados = celulas_nivel2::findOrfail($id);
+             $dados = celulas_nivel3::findOrfail($id);
         }
 
          $dados->nome = $input['nome'];
          $dados->celulas_nivel1_id  = ($input['nivel1']=="" ? null : $input['nivel1']);
+         $dados->celulas_nivel2_id  = ($input['nivel2']=="" ? null : $input['nivel2']);
          $dados->pessoas_id  = ($input['pessoas']=="" ? null : substr($input['pessoas'],0,9));
          $dados->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
          $dados->empresas_id  = $this->dados_login->empresas_id;
@@ -94,7 +97,10 @@ class Estruturas2Controller extends Controller
         /*Busca NIVEL1*/
         $view1 = \DB::select('select * from view_celulas_nivel1 v1 where v1.empresas_id = ? and v1.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        return view($this->rota . '.registrar', ['nivel1'=>$view1]);
+        /*Busca NIVEL2*/
+        $view2 = \DB::select('select * from view_celulas_nivel2 v2 where v2.empresas_id = ? and v2.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        return view($this->rota . '.registrar', ['nivel1'=>$view1, 'nivel2'=>$view2]);
 
     }
 
@@ -123,13 +129,16 @@ class Estruturas2Controller extends Controller
               return redirect('home');
         }
 
-        /*Busca NIVEL2*/
-        $dados = \DB::select('select * from view_celulas_nivel2 v2 where v2.id = ? and v2.empresas_id = ? and v2.empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-
         /*Busca NIVEL1*/
         $view1 = \DB::select('select * from view_celulas_nivel1 v1 where v1.empresas_id = ? and v1.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview, 'nivel1' =>$view1]);
+       /*Busca NIVEL2*/
+        $view2 = \DB::select('select * from view_celulas_nivel2 v2 where v2.empresas_id = ? and v2.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        /*Busca NIVEL3*/
+        $dados = \DB::select('select * from view_celulas_nivel3 v3 where v3.id = ? and v3.empresas_id = ? and v3.empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview, 'nivel1' =>$view1, 'nivel2' =>$view2]);
 
     }
 
@@ -176,7 +185,7 @@ class Estruturas2Controller extends Controller
     public function destroy($id)
     {
 
-            $dados = celulas_nivel2::findOrfail($id);
+            $dados = celulas_nivel3::findOrfail($id);
             $dados->delete();
 
             return redirect($this->rota);

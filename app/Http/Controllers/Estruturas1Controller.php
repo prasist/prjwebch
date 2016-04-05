@@ -36,11 +36,8 @@ class Estruturas1Controller extends Controller
               return redirect('home');
         }
 
-        $dados = celulas_nivel1::select('celulas_nivel1.id', 'celulas_nivel1.nome', 'pessoas.razaosocial')
-        ->leftjoin('pessoas', 'pessoas.id', '=', 'celulas_nivel1.pessoas_id')
-        ->where('celulas_nivel1.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->where('celulas_nivel1.empresas_id', $this->dados_login->empresas_id)
-        ->get();
+       /*Busca NIVEL1*/
+        $dados = \DB::select('select * from view_celulas_nivel1 v1 where  v1.empresas_id = ? and v1.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         return view($this->rota . '.index',compact('dados'));
 
@@ -55,14 +52,7 @@ class Estruturas1Controller extends Controller
               return redirect('home');
         }
 
-        //Listagem de pessoas
-        $pessoas = \App\Models\pessoas::select('pessoas.id', 'pessoas.razaosocial as nome')
-        ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->where('empresas_id', $this->dados_login->empresas_id)
-        ->orderBy('razaosocial')
-        ->get();
-
-        return view($this->rota . '.registrar', compact('pessoas'));
+        return view($this->rota . '.registrar');
 
     }
 
@@ -70,6 +60,16 @@ class Estruturas1Controller extends Controller
 public function salvar($request, $id, $tipo_operacao)
 {
     $input = $request->except(array('_token', 'ativo')); //não levar o token
+
+
+    if ($input['nome']=="" && $input['pessoas']=="")
+    {
+        /*Validação de campos - request*/
+            $this->validate($request, [
+                'nome' => 'required',
+                'pessoas' => 'required',
+            ]);
+    }
 
     if ($tipo_operacao=="create") //novo registro
     {
@@ -81,7 +81,7 @@ public function salvar($request, $id, $tipo_operacao)
     }
 
     $dados->nome  = $input['nome'];
-    $dados->pessoas_id  = ($input['pessoa']=="" ? null : $input['pessoa']);
+    $dados->pessoas_id  = ($input['pessoas']=="" ? null : substr($input['pessoas'],0,9));
     $dados->empresas_clientes_cloud_id  = $this->dados_login->empresas_clientes_cloud_id;
     $dados->empresas_id  = $this->dados_login->empresas_id;
     $dados->save();
@@ -111,23 +111,10 @@ public function salvar($request, $id, $tipo_operacao)
               return redirect('home');
         }
 
-        //preview = true, somente visualizacao, desabilita botao gravar
-        $dados = celulas_nivel1::select('celulas_nivel1.pessoas_id', 'celulas_nivel1.id', 'celulas_nivel1.nome', 'pessoas.razaosocial')
-        ->leftjoin('pessoas', 'pessoas.id', '=', 'celulas_nivel1.pessoas_id')
-        ->where('celulas_nivel1.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->where('celulas_nivel1.empresas_id', $this->dados_login->empresas_id)
-        ->where('celulas_nivel1.id', $id)
-        ->get();
+        /*Busca NIVEL1*/
+        $dados = \DB::select('select * from view_celulas_nivel1 v1 where v1.id = ? and  v1.empresas_id = ? and v1.empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-
-        //Listagem de pessoas
-        $pessoas = \App\Models\pessoas::select('pessoas.id', 'pessoas.razaosocial as nome')
-        ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->where('empresas_id', $this->dados_login->empresas_id)
-        ->orderBy('razaosocial')
-        ->get();
-
-        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview, 'pessoas' => $pessoas] );
+        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview] );
 
     }
 

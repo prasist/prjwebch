@@ -42,7 +42,7 @@
 
                         <tr>
 
-                            <td>{{($value->nome!="" ? $value->nome : $value->razaosocial)}}</td>
+                            <td>{!! $value->descricao . ($value->razaosocial!="" ? ' - ' : '') . $value->razaosocial !!}</td>
 
                             <td class="col-xs-1">
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
@@ -56,7 +56,6 @@
                                       @endcan
                             </td>
                             <td class="col-xs-1">
-                                        @if ($value->master != 1)
 
                                                 @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
                                                 <form id="excluir{{ $value->id }}" action="{{ URL::to(\Session::get('route') . '/' . $value->id . '/delete') }}" method="DELETE">
@@ -70,7 +69,7 @@
                                                 </form>
                                                 @endcan
 
-                                        @endif
+
                             </td>
 
 

@@ -56,7 +56,7 @@
 .typeahead, .tt-query, .tt-hint {
     border: 2px solid #CCCCCC;
     border-radius: 8px;
-    font-size: 18px;
+    font-size: 16px;
     height: 35px;
     line-height: 30px;
     outline: medium none;
@@ -85,8 +85,8 @@
     width: 422px;
 }
 .tt-suggestion {
-    font-size: 24px;
-    line-height: 24px;
+    font-size: 18px;
+    line-height: 18px;
     padding: 3px 20px;
 }
 .tt-suggestion.tt-is-under-cursor {
@@ -208,8 +208,25 @@
 
                             $("#example1").DataTable();
 
+                            $('input.typeahead').typeahead({
+                                name: 'typeahead',
+                                remote:'{!! url("/buscapessoa/%QUERY") !!}',
+                                limit : 50
+                            });
+
 
                      });
+
+</script>
+
+<script type="text/javascript">
+
+    /*Função usada para exibir no campo input pessoas[] a pessoa pesquisa da tela modal*/
+    function confirmar()
+    {
+        var pessoa_pesquisada = $(".typeahead").val();
+        document.getElementById("pessoas").value = pessoa_pesquisada;
+    }
 
 </script>
 

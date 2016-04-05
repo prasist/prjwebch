@@ -24,18 +24,66 @@
                  <div class="box-body">
 
                             <div class="row">
-                                    <div class="col-xs-5">
-                                          <label for="nome" class="control-label">Descrição</label>
-                                          <input id="nome" maxlength="60"  placeholder="Descrição Alternativa" name = "nome" type="text" class="form-control" value="{{ $dados[0]->nome }}">
+                                    <div class="col-xs-5{{ $errors->has('nivel1') ? ' has-error' : '' }}">
+                                          @include('carregar_combos', array('dados'=>$nivel1, 'titulo' =>Session::get('nivel1'), 'id_combo'=>'nivel1', 'complemento'=>'', 'comparar'=>$dados[0]->celulas_nivel1_id))
                                     </div>
 
-                                    <div class="col-xs-5">
-                                       @include('carregar_combos', array('dados'=>$nivel1, 'titulo' =>Session::get('nivel1'), 'id_combo'=>'nivel1', 'complemento'=>'', 'comparar'=>$dados[0]->celulas_nivel1_id))
-                                    </div><!-- col-xs-5-->
+                                    <!-- se houver erros na validacao do form request -->
+                                         @if ($errors->has('nivel1'))
+                                          <span class="help-block">
+                                              <strong>{{ $errors->first('nivel1') }}</strong>
+                                          </span>
+                                         @endif
+                            </div>
 
-                                    <div class="col-xs-5">
-                                       @include('carregar_combos', array('dados'=>$pessoas, 'titulo' =>'Pessoa', 'id_combo'=>'pessoa', 'complemento'=>'', 'comparar'=>$dados[0]->pessoas_id))
-                                    </div><!-- col-xs-5-->
+                            <div class="row">
+                              <div class="box-header with-border">
+
+                                <h5 class="box-title">
+                                 {!!Session::get('nivel2')!!}
+
+                               </h5>
+                               <p class="text-info">Preencher pelo menos uma das opções (Descrição / Pessoa) ou ambas se preferir.</p>
+                             </div>
+                           </div>
+
+                            <div class="row">
+
+                                    <div class="col-xs-4 {{ $errors->has('nome') ? ' has-error' : '' }}">
+                                          <label for="nome" class="control-label">Descrição</label>
+                                          <input id="nome" maxlength="60"  placeholder="Descrição Alternativa" name = "nome" type="text" class="form-control" value="{!! $dados[0]->descricao !!}">
+
+                                          <!-- se houver erros na validacao do form request -->
+                                         @if ($errors->has('nome'))
+                                          <span class="help-block">
+                                              <strong>{{ $errors->first('nome') }}</strong>
+                                          </span>
+                                         @endif
+
+                                    </div>
+
+                                    <div class="col-xs-6 {{ $errors->has('pessoas') ? ' has-error' : '' }}">
+                                                  <label for="pessoas" class="control-label">Pessoa</label>
+                                                  <div class="input-group">
+                                                           <div class="input-group-addon">
+                                                              <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#myModal" >
+                                                                     <i class="fa fa-search"></i> ...
+                                                               </button>
+                                                            </div>
+
+                                                            @include('modal_buscar_pessoas')
+
+                                                            <input id="pessoas"  name = "pessoas" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($dados[0]->pessoas_id!="" ? str_repeat('0', (9-strlen($dados[0]->pessoas_id))) . $dados[0]->pessoas_id . ' - ' . $dados[0]->razaosocial  : '') !!}" readonly >
+
+                                                            <!-- se houver erros na validacao do form request -->
+                                                             @if ($errors->has('pessoas'))
+                                                              <span class="help-block">
+                                                                  <strong>{{ $errors->first('pessoas') }}</strong>
+                                                              </span>
+                                                             @endif
+
+                                                    </div>
+                                   </div>
 
                             </div>
 

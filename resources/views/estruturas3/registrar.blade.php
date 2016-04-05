@@ -2,10 +2,10 @@
 
 @section('content')
 
-{{ \Session::put('titulo', Session::get('nivel1')) }}
+{{ \Session::put('titulo', Session::get('nivel3')) }}
 {{ \Session::put('subtitulo', 'Inclusão') }}
-{{ \Session::put('route', 'estruturas1') }}
-{{ \Session::put('id_pagina', '36') }}
+{{ \Session::put('route', 'estruturas3') }}
+{{ \Session::put('id_pagina', '38') }}
 
 <div class = 'row'>
 
@@ -23,17 +23,48 @@
 
                  <div class="box-body">
 
-                            <div class="row">
-                                    <div class="col-xs-12">
-                                            <p class="text-info">Preencher pelo menos uma das opções ou ambas se preferir.</p>
-                                    </div>
+                       <div class="row">
+
+                                <div class="col-xs-5{{ $errors->has('nivel2') ? ' has-error' : '' }}">
+                                       @include('carregar_combos', array('dados'=>$nivel2, 'titulo' =>Session::get('nivel2'), 'id_combo'=>'nivel2', 'complemento'=>'', 'comparar'=>''))
+                                </div><!-- col-xs-5-->
+
+                                <div class="col-xs-5{{ $errors->has('nivel1') ? ' has-error' : '' }}">
+                                       @include('carregar_combos', array('dados'=>$nivel1, 'titulo' =>Session::get('nivel1'), 'id_combo'=>'nivel1', 'complemento'=>'', 'comparar'=>''))
+                                </div>
+
+                                <!-- se houver erros na validacao do form request -->
+                                     @if ($errors->has('nivel1'))
+                                      <span class="help-block">
+                                          <strong>{{ $errors->first('nivel1') }}</strong>
+                                      </span>
+                                     @endif
+
+                                     <!-- se houver erros na validacao do form request -->
+                                     @if ($errors->has('nivel2'))
+                                      <span class="help-block">
+                                          <strong>{{ $errors->first('nivel2') }}</strong>
+                                      </span>
+                                     @endif
+
                             </div>
+
+                            <div class="row">
+                              <div class="box-header with-border">
+
+                                <h5 class="box-title">
+                                 {!!Session::get('nivel3')!!}
+
+                               </h5>
+                               <p class="text-info">Preencher pelo menos uma das opções (Descrição / Pessoa) ou ambas se preferir.</p>
+                             </div>
+                           </div>
 
                             <div class="row">
 
                                     <div class="col-xs-4 {{ $errors->has('nome') ? ' has-error' : '' }}">
                                           <label for="nome" class="control-label">Descrição</label>
-                                          <input id="nome" maxlength="60"  placeholder="Descrição Opcional" name = "nome" type="text" class="form-control" value="">
+                                          <input id="nome" maxlength="60"  placeholder="Descrição Alternativa" name = "nome" type="text" class="form-control" value="">
 
                                           <!-- se houver erros na validacao do form request -->
                                          @if ($errors->has('nome'))
@@ -68,8 +99,6 @@
                                    </div>
 
                             </div>
-
-
 
             </div><!-- fim box-body"-->
         </div><!-- box box-primary -->

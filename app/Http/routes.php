@@ -346,6 +346,15 @@
     Route::get('estruturas2/{id}/edit','Estruturas2Controller@edit');
     Route::get('estruturas2/{id}/delete','Estruturas2Controller@destroy');
 
+    /*Estrutura Celula - Nivel 3*/
+    Route::get('estruturas3', 'Estruturas3Controller@index');
+    Route::post('/estruturas3/gravar','Estruturas3Controller@store');
+    Route::get('/estruturas3/registrar','Estruturas3Controller@create');
+    Route::get('/estruturas3/{id}/preview','Estruturas3Controller@show');
+    Route::post('estruturas3/{id}/update','Estruturas3Controller@update');
+    Route::get('estruturas3/{id}/edit','Estruturas3Controller@edit');
+    Route::get('estruturas3/{id}/delete','Estruturas3Controller@destroy');
+
 
     /*configuracoes celulas*/
     Route::get('config', 'ConfiguracoesController@index');
