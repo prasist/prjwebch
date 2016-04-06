@@ -1290,15 +1290,16 @@
 
           var ind_sexo = document.getElementById("opSexoFilho").selectedIndex;
           var texto_sexo = document.getElementById("opSexoFilho").options;
-
           var ind_estado_civil_filho = document.getElementById("estado_civil_filho").selectedIndex;
           var texto_estado_civil_filho = document.getElementById("estado_civil_filho").options;
 
           var ind_status_filho = document.getElementById("status_filho").selectedIndex;
           var texto_status_filho = document.getElementById("status_filho").options;
 
+
           /*cria os inputs para exibicao ao usuario*/
           var sFilho = '<div class="col-xs-2"><input id="inc_filhos[]" readonly name = "inc_filhos[]" type="text" class="form-control" value="' + document.getElementById("nome_filho").value + '"></div>';
+
           var sSexoFilho = '<div class="col-xs-2"><input id="inc_sexo[]" readonly name = "inc_sexo[]" type="text" class="form-control" value="' + texto_sexo[ind_sexo].text + '"></div>';
           var sStatusFilho = '<div class="col-xs-2"><input id="inc_status[]" readonly name = "inc_status[]" type="text" class="form-control" value="' + texto_status_filho[ind_status_filho].text + '"></div>';
           var sEstadoCivilFilho = '<div class="col-xs-2"><input id="inc_estadocivl[]" readonly name = "inc_estadocivl[]" type="text" class="form-control" value="' + texto_estado_civil_filho[ind_estado_civil_filho].text + '"></div>';
@@ -1317,9 +1318,6 @@
           document.getElementById("nome_filho").value = "";
           document.getElementById("datanascimento_filho").value="";
           document.getElementById("datafalecimento_filho").value="";
-          document.getElementById("opSexoFilho").selectedIndex=-1;
-          document.getElementById("estado_civil_filho").selectedIndex=-1;
-          document.getElementById("status_filho").selectedIndex=-1;
 
   }
 
