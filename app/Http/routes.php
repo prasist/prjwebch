@@ -387,4 +387,13 @@
     Route::post('configuracoes/{id}/update','ConfiguracoesController@update');
     Route::get('configuracoes/{id}/edit','ConfiguracoesController@edit');
 
+    /*Células*/
+    Route::get('celulas', 'CelulasController@index');
+    Route::post('/celulas/gravar','CelulasController@store');
+    Route::get('/celulas/registrar','CelulasController@create');
+    Route::get('/celulas/{id}/preview','CelulasController@show');
+    Route::post('celulas/{id}/update','CelulasController@update');
+    Route::get('celulas/{id}/edit','CelulasController@edit');
+    Route::get('celulas/{id}/delete','CelulasController@destroy');
+
 });

@@ -4,19 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\celulas_nivel4;
+use App\Models\celulas;
 use URL;
 use Auth;
 use Input;
 use Gate;
 
-class Estruturas4Controller extends Controller
+class CelulasController extends Controller
 {
 
     public function __construct()
     {
 
-        $this->rota = "estruturas4"; //Define nome da rota que será usada na classe
+        $this->rota = "celulas"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
         //Validação de permissão de acesso a pagina
@@ -36,8 +36,7 @@ class Estruturas4Controller extends Controller
               return redirect('home');
         }
 
-        /*Busca NIVEL4*/
-        $dados = \DB::select('select * from view_celulas_nivel4 v4 where  v4.empresas_id = ? and v4.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $dados = \DB::select('select * from celulas where  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         return view($this->rota . '.index',compact('dados'));
 
@@ -53,35 +52,41 @@ class Estruturas4Controller extends Controller
                 $this->validate($request, [
                     'nome' => 'required',
                     'pessoas' => 'required',
-                    'nivel1' => 'required',
-                    'nivel2' => 'required',
-                    'nivel3' => 'required',
+                    'dia_encontro' => 'required',
                 ]);
         }
         else
         {
                 $this->validate($request, [
-                    'nivel1' => 'required',
-                    'nivel2' => 'required',
-                    'nivel3' => 'required',
+                    'dia_encontro' => 'required',
                 ]);
         }
 
 
         if ($tipo_operacao=="create") //novo registro
         {
-             $dados = new celulas_nivel4();
+             $dados = new celulas();
         }
         else //update
         {
-             $dados = celulas_nivel4::findOrfail($id);
+             $dados = celulas::findOrfail($id);
         }
 
+         $dados->dia_encontro = $input['dia_encontro'];
+         $dados->turno = $input['turno'];
+         $dados->regiao = $input['regiao'];
+         $dados->segundo_dia_encontro = $input['segundo_dia_encontro'];
+         $dados->obs = $input['obs'];
          $dados->nome = $input['nome'];
          $dados->celulas_nivel1_id  = ($input['nivel1']=="" ? null : $input['nivel1']);
          $dados->celulas_nivel2_id  = ($input['nivel2']=="" ? null : $input['nivel2']);
          $dados->celulas_nivel3_id  = ($input['nivel3']=="" ? null : $input['nivel3']);
-         $dados->pessoas_id  = ($input['pessoas']=="" ? null : substr($input['pessoas'],0,9));
+         $dados->celulas_nivel4_id  = ($input['nivel4']=="" ? null : $input['nivel4']);
+         $dados->celulas_nivel5_id  = ($input['nivel4']=="" ? null : $input['nivel4']);
+         $dados->lider_pessoas_id  = ($input['pessoas']=="" ? null : substr($input['pessoas'],0,9));
+         $dados->vicelider_pessoas_id  = ($input['vicelider_pessoas_id']=="" ? null : substr($input['vicelider_pessoas_id'],0,9));
+         $dados->suplente1_pessoas_id  = ($input['suplente1_pessoas_id']=="" ? null : substr($input['suplente1_pessoas_id'],0,9));
+         $dados->suplente2_pessoas_id  = ($input['suplente2_pessoas_id']=="" ? null : substr($input['suplente2_pessoas_id'],0,9));
          $dados->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
          $dados->empresas_id  = $this->dados_login->empresas_id;
          $dados->save();
@@ -97,10 +102,10 @@ class Estruturas4Controller extends Controller
               return redirect('home');
         }
 
-        /*Busca NIVEL3*/
-        $view3 = \DB::select('select * from view_celulas_nivel3 v3 where v3.empresas_id = ? and v3.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        /*Busca NIVEL5*/
+        $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        return view($this->rota . '.registrar', ['nivel3'=>$view3]);
+        return view($this->rota . '.registrar', ['nivel5'=>$view5]);
 
     }
 
@@ -129,13 +134,13 @@ class Estruturas4Controller extends Controller
               return redirect('home');
         }
 
-        /*Busca NIVEL3*/
-        $view3 = \DB::select('select * from view_celulas_nivel3 v3 where v3.empresas_id = ? and v3.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        /*Busca NIVEL5*/
+        $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         /*Busca NIVEL4*/
-        $dados = \DB::select('select * from view_celulas_nivel4 v4 where v4.id = ? and v4.empresas_id = ? and v4.empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $dados = \DB::select('select * from celulas  where id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview, 'nivel3' =>$view3]);
+        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview,  'nivel5' =>$view5]);
 
     }
 
@@ -182,7 +187,7 @@ class Estruturas4Controller extends Controller
     public function destroy($id)
     {
 
-            $dados = celulas_nivel4::findOrfail($id);
+            $dados = celulas::findOrfail($id);
             $dados->delete();
 
             return redirect($this->rota);

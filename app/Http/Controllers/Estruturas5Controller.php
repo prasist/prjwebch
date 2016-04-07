@@ -100,19 +100,10 @@ class Estruturas5Controller extends Controller
               return redirect('home');
         }
 
-        /*Busca NIVEL1*/
-        $view1 = \DB::select('select * from view_celulas_nivel1 v1 where v1.empresas_id = ? and v1.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-
-        /*Busca NIVEL2*/
-        $view2 = \DB::select('select * from view_celulas_nivel2 v2 where v2.empresas_id = ? and v2.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-
-        /*Busca NIVEL3*/
-        $view3 = \DB::select('select * from view_celulas_nivel3 v3 where v3.empresas_id = ? and v3.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-
         /*Busca NIVEL4*/
         $view4 = \DB::select('select * from view_celulas_nivel4 v4 where v4.empresas_id = ? and v4.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        return view($this->rota . '.registrar', ['nivel1'=>$view1, 'nivel2'=>$view2, 'nivel3'=>$view3, 'nivel4'=>$view4]);
+        return view($this->rota . '.registrar', ['nivel4'=>$view4]);
 
     }
 
@@ -141,22 +132,13 @@ class Estruturas5Controller extends Controller
               return redirect('home');
         }
 
-        /*Busca NIVEL1*/
-        $view1 = \DB::select('select * from view_celulas_nivel1 v1 where v1.empresas_id = ? and v1.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-
-       /*Busca NIVEL2*/
-        $view2 = \DB::select('select * from view_celulas_nivel2 v2 where v2.empresas_id = ? and v2.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-
-        /*Busca NIVEL3*/
-        $view3 = \DB::select('select * from view_celulas_nivel3 v3 where v3.empresas_id = ? and v3.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-
         /*Busca NIVEL4*/
         $view4 = \DB::select('select * from view_celulas_nivel4 v4 where v4.empresas_id = ? and v4.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         /*Busca NIVEL4*/
         $dados = \DB::select('select * from view_celulas_nivel5 v5 where v5.id = ? and v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview, 'nivel1' =>$view1, 'nivel2' =>$view2, 'nivel3' =>$view3, 'nivel4' =>$view4]);
+        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview, 'nivel4' =>$view4]);
 
     }
 

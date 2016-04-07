@@ -4,7 +4,7 @@
 
 {{ \Session::put('titulo', 'Configurações') }}
 {{ \Session::put('subtitulo', 'Inclusão') }}
-{{ \Session::put('route', 'config') }}
+{{ \Session::put('route', 'configuracoes') }}
 {{ \Session::put('id_pagina', '41') }}
 
 <div class = 'row'>

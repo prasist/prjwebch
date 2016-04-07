@@ -140,7 +140,7 @@
                     <li>
                       <a href="#"><i class="fa fa-circle-o"></i> Células <i class="fa fa-angle-left pull-right"></i></a>
                           <ul class="treeview-menu">
-                            <li><a href="#"> Cadastro</a></li>
+                            <li><a href={{ url('/celulas')}}> Cadastro</a></li>
                             <li><a href="#"> Relatórios</a></li>
                           </ul>
                     </li>

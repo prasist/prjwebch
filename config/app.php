@@ -46,6 +46,7 @@ return [
     'estruturas4' => '39',
     'estruturas5' => '40',
     'configuracoes' => '41',
+    'celulas' => '42',
 
     'env' => env('APP_ENV', 'production'),
 
