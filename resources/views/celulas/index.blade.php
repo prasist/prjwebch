@@ -31,7 +31,9 @@
                     <table id="example1" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                        <th>Descrição / Pessoa</th>
+                        <th>Líder / Nome</th>
+                        <th>Dia Encontro</th>
+                        <th>Região</th>
                          <th>Alterar</th>
                         <th>Visualizar</th>
                         <th>Excluir</th>
@@ -42,7 +44,9 @@
 
                         <tr>
 
-                            <td>{!! $value->descricao . ($value->razaosocial!="" ? ' - ' : '') . $value->razaosocial !!}</td>
+                            <td>{!! $value->razaosocial . ($value->nome!="" ? ' - ' : ''). $value->nome !!}</td>
+                            <td>{!! $value->dia_encontro !!}</td>
+                            <td>{!! $value->regiao !!}</td>
 
                             <td class="col-xs-1">
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])

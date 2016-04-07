@@ -214,10 +214,19 @@
 <script type="text/javascript">
 
     /*Função usada para exibir no campo input pessoas[] a pessoa pesquisa da tela modal*/
-    function confirmar()
+    function confirmar(objInput)
     {
-        var pessoa_pesquisada = $(".typeahead").val();
-        document.getElementById("pessoas").value = pessoa_pesquisada;
+
+        //Percorre array input (Pois podem existir n modals na mesma pagina)
+        $('input.typeahead').each(function()
+        {
+                if ($(this).val()!="") //Se encontrar valor
+                {
+                    var pessoa_pesquisada = $(this).val(); // Resultado pesquisa
+                    document.getElementById(objInput).value = pessoa_pesquisada;    // Joga no campo passado como parametro
+                    $(this).val(""); //Limpa campo após leitura
+                }
+        });
     }
 
 </script>

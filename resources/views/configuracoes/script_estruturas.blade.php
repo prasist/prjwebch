@@ -11,7 +11,6 @@
 
             $.getJSON(urlRoute, function(data)
             {
-
                 var $stations = $("#nivel4"); //Instancia o objeto combo nivel3
                 $stations.empty();
 

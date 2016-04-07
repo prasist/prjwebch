@@ -36,8 +36,9 @@ class CelulasController extends Controller
               return redirect('home');
         }
 
-        $dados = \DB::select('select * from celulas where  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $dados = \DB::select('select * from view_celulas_simples where  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
+        //Listagem de pessoas
         return view($this->rota . '.index',compact('dados'));
 
     }
@@ -82,7 +83,7 @@ class CelulasController extends Controller
          $dados->celulas_nivel2_id  = ($input['nivel2']=="" ? null : $input['nivel2']);
          $dados->celulas_nivel3_id  = ($input['nivel3']=="" ? null : $input['nivel3']);
          $dados->celulas_nivel4_id  = ($input['nivel4']=="" ? null : $input['nivel4']);
-         $dados->celulas_nivel5_id  = ($input['nivel4']=="" ? null : $input['nivel4']);
+         $dados->celulas_nivel5_id  = ($input['nivel5']=="" ? null : $input['nivel5']);
          $dados->lider_pessoas_id  = ($input['pessoas']=="" ? null : substr($input['pessoas'],0,9));
          $dados->vicelider_pessoas_id  = ($input['vicelider_pessoas_id']=="" ? null : substr($input['vicelider_pessoas_id'],0,9));
          $dados->suplente1_pessoas_id  = ($input['suplente1_pessoas_id']=="" ? null : substr($input['suplente1_pessoas_id'],0,9));

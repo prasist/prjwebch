@@ -71,7 +71,7 @@
                                                                </button>
                                                             </div>
 
-                                                            @include('modal_buscar_pessoas')
+                                                            @include('modal_buscar_pessoas', array('qual_campo'=>'pessoas', 'modal' => 'myModal'))
 
                                                             <input id="pessoas"  name = "pessoas" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
 
