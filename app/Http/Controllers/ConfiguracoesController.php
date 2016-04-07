@@ -16,7 +16,7 @@ class ConfiguracoesController extends Controller
     public function __construct()
     {
 
-        $this->rota = "config"; //Define nome da rota que será usada na classe
+        $this->rota = "configuracoes"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
         //Validação de permissão de acesso a pagina

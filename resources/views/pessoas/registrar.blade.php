@@ -391,7 +391,7 @@
 
                                       <div class="row">
                                             <div class="col-xs-8">
-                                                  @include('carregar_combos', array('dados'=>$bancos, 'titulo' =>'Banco Emissão Boleto', 'id_combo'=>'banco', 'complemento'=>'', 'comparar'=>''))
+                                                  @include('carregar_combos', array('dados'=>$bancos, 'titulo' =>'Banco Emissão Boleto', 'id_combo'=>'banco', 'complemento'=>'', 'comparar'=>old('banco')))
                                             </div>
                                       </div>
 

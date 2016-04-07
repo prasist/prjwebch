@@ -153,8 +153,6 @@
                     return true;
                 }
 
-
-
     </script>
 
 @section('busca_endereco')
@@ -409,4 +407,5 @@
 
                    });
 </script>
+
 @endsection

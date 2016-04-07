@@ -123,15 +123,15 @@
               </a>
 
                   <ul class="treeview-menu">
-                    <a href={{ url('/config')}}><li><i class="fa fa-wrench"></i>Configurações</a></li>
+                    <a href={{ url('/configuracoes')}}><li><i class="fa fa-wrench"></i>Configurações</a></li>
                     <li>
-                      <a href="#"><i class="fa fa-circle-o"></i> Estrutura <i class="fa fa-angle-left pull-right"></i></a>
+                      <a href="#"><i class="fa fa-circle-o"></i> Estruturas <i class="fa fa-angle-left pull-right"></i></a>
                           <ul class="treeview-menu">
-                            <li><a href={{ url('/estruturas1')}}> {{ Session::get('nivel1') }}</a></li>
-                            <li><a href={{ url('/estruturas2')}}> {{ Session::get('nivel2') }}</a></li>
-                            <li><a href={{ url('/estruturas3')}}> {{ Session::get('nivel3') }}</a></li>
-                            <li><a href={{ url('/estruturas4')}}> {{ Session::get('nivel4') }}</a></li>
-                            <li><a href={{ url('/estruturas5')}}> {{ Session::get('nivel5') }}</a></li>
+                            <li><a href={{ url('/estruturas1')}}> 1 - {{ Session::get('nivel1') }}</a></li>
+                            <li><a href={{ url('/estruturas2')}}> 2 - {{ Session::get('nivel2') }}</a></li>
+                            <li><a href={{ url('/estruturas3')}}> 3 - {{ Session::get('nivel3') }}</a></li>
+                            <li><a href={{ url('/estruturas4')}}> 4 - {{ Session::get('nivel4') }}</a></li>
+                            <li><a href={{ url('/estruturas5')}}> 5 - {{ Session::get('nivel5') }}</a></li>
                           </ul>
                     </li>
                   </ul>

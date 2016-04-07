@@ -2,10 +2,10 @@
 
 @section('content')
 
-{{ \Session::put('titulo', Session::get('nivel3')) }}
-{{ \Session::put('subtitulo', 'Alteração/Visualização') }}
-{{ \Session::put('route', 'estruturas3') }}
-{{ \Session::put('id_pagina', '38') }}
+{{ \Session::put('titulo', Session::get('nivel5')) }}
+{{ \Session::put('subtitulo', 'Inclusão') }}
+{{ \Session::put('route', 'estruturas5') }}
+{{ \Session::put('id_pagina', '40') }}
 
 <div class = 'row'>
 
@@ -15,7 +15,7 @@
             <a href={{ url('/' . \Session::get('route')) }} class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
     </div>
 
-    <form method = 'POST' class="form-horizontal"  action = {{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update')}}>
+    <form method = 'POST'  class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/gravar')}}>
 
        {!! csrf_field() !!}
 
@@ -23,14 +23,46 @@
 
                  <div class="box-body">
 
-
                         <div class="row">
-
-                                <div class="col-xs-5{{ $errors->has('nivel2') ? ' has-error' : '' }}">
-                                       @include('carregar_combos', array('dados'=>$nivel2, 'titulo' =>Session::get('nivel2'), 'id_combo'=>'nivel2', 'complemento'=>'', 'comparar'=>$dados[0]->celulas_nivel2_id))
+                                <div class="col-xs-4{{ $errors->has('nivel4') ? ' has-error' : '' }}">
+                                       @include('carregar_combos', array('dados'=>$nivel4, 'titulo' =>Session::get('nivel4'), 'id_combo'=>'nivel4', 'complemento'=>'', 'comparar'=>''))
                                 </div><!-- col-xs-5-->
 
-                                <div class="col-xs-5{{ $errors->has('nivel1') ? ' has-error' : '' }}">
+                                <div class="col-xs-4{{ $errors->has('nivel3') ? ' has-error' : '' }}">
+
+                                      <label for="nivel3" class="control-label">{{Session::get('nivel3')}}</label>
+                                      <select id="nivel3" placeholder="(Selecionar)" name="nivel3" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                      <option  value=""></option>
+                                      </select>
+
+                                </div><!-- col-xs-5-->
+
+                                     <!-- se houver erros na validacao do form request -->
+                                     @if ($errors->has('nivel4'))
+                                      <span class="help-block">
+                                          <strong>{{ $errors->first('nivel4') }}</strong>
+                                      </span>
+                                     @endif
+
+                                     <!-- se houver erros na validacao do form request -->
+                                     @if ($errors->has('nivel3'))
+                                      <span class="help-block">
+                                          <strong>{{ $errors->first('nivel3') }}</strong>
+                                      </span>
+                                     @endif
+
+                       </div>
+
+                       <div class="row">
+
+                                <div class="col-xs-4{{ $errors->has('nivel2') ? ' has-error' : '' }}">
+                                      <label for="nivel2" class="control-label">{{Session::get('nivel2')}}</label>
+                                      <select id="nivel2" placeholder="(Selecionar)" name="nivel2" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                      <option  value=""></option>
+                                      </select>
+                                </div><!-- col-xs-5-->
+
+                                <div class="col-xs-4{{ $errors->has('nivel1') ? ' has-error' : '' }}">
                                       <label for="nivel1" class="control-label">{{Session::get('nivel1')}}</label>
                                       <select id="nivel1" placeholder="(Selecionar)" name="nivel1" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                       <option  value=""></option>
@@ -51,14 +83,14 @@
                                       </span>
                                      @endif
 
+
                             </div>
 
                             <div class="row">
                               <div class="box-header with-border">
 
                                 <h5 class="box-title">
-                                 {!!Session::get('nivel3')!!}
-
+                                    {!!Session::get('nivel5')!!}
                                </h5>
                                <p class="text-info">Preencher pelo menos uma das opções (Descrição / Pessoa) ou ambas se preferir.</p>
                              </div>
@@ -68,7 +100,7 @@
 
                                     <div class="col-xs-4 {{ $errors->has('nome') ? ' has-error' : '' }}">
                                           <label for="nome" class="control-label">Descrição</label>
-                                          <input id="nome" maxlength="60"  placeholder="Descrição Alternativa" name = "nome" type="text" class="form-control" value="{!! $dados[0]->descricao !!}">
+                                          <input id="nome" maxlength="60"  placeholder="Descrição Alternativa" name = "nome" type="text" class="form-control" value="">
 
                                           <!-- se houver erros na validacao do form request -->
                                          @if ($errors->has('nome'))
@@ -90,7 +122,7 @@
 
                                                             @include('modal_buscar_pessoas')
 
-                                                            <input id="pessoas"  name = "pessoas" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($dados[0]->pessoas_id!="" ? str_repeat('0', (9-strlen($dados[0]->pessoas_id))) . $dados[0]->pessoas_id . ' - ' . $dados[0]->razaosocial  : '') !!}" readonly >
+                                                            <input id="pessoas"  name = "pessoas" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
 
                                                             <!-- se houver erros na validacao do form request -->
                                                              @if ($errors->has('pessoas'))
@@ -104,14 +136,11 @@
 
                             </div>
 
-
-
-
             </div><!-- fim box-body"-->
         </div><!-- box box-primary -->
 
         <div class="box-footer">
-            <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}>Gravar</button>
+            <button class = 'btn btn-primary' type ='submit'>Gravar</button>
             <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Cancelar</a>
         </div>
 
@@ -120,17 +149,6 @@
     </div>
 
 </div>
+
 @include('configuracoes.script_estruturas')
-
-<script type="text/javascript">
-    $(document).ready(function()
-    {
-            /*quando carregar a pagina e estiver preenchido o nivel4, dispara o evento que carrega as outras dropdows.*/
-            if ($("#nivel2").val()!="")
-            {
-                  $("#nivel2").trigger("change");
-            }
-
-    });
-</script>
 @endsection

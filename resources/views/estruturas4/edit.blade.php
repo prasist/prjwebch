@@ -2,10 +2,10 @@
 
 @section('content')
 
-{{ \Session::put('titulo', Session::get('nivel3')) }}
+{{ \Session::put('titulo', Session::get('nivel4')) }}
 {{ \Session::put('subtitulo', 'Alteração/Visualização') }}
-{{ \Session::put('route', 'estruturas3') }}
-{{ \Session::put('id_pagina', '38') }}
+{{ \Session::put('route', 'estruturas4') }}
+{{ \Session::put('id_pagina', '39') }}
 
 <div class = 'row'>
 
@@ -26,11 +26,19 @@
 
                         <div class="row">
 
-                                <div class="col-xs-5{{ $errors->has('nivel2') ? ' has-error' : '' }}">
-                                       @include('carregar_combos', array('dados'=>$nivel2, 'titulo' =>Session::get('nivel2'), 'id_combo'=>'nivel2', 'complemento'=>'', 'comparar'=>$dados[0]->celulas_nivel2_id))
+
+                                <div class="col-xs-4{{ $errors->has('nivel3') ? ' has-error' : '' }}">
+                                       @include('carregar_combos', array('dados'=>$nivel3, 'titulo' =>Session::get('nivel3'), 'id_combo'=>'nivel3', 'complemento'=>'', 'comparar'=>$dados[0]->celulas_nivel3_id))
                                 </div><!-- col-xs-5-->
 
-                                <div class="col-xs-5{{ $errors->has('nivel1') ? ' has-error' : '' }}">
+                                <div class="col-xs-4{{ $errors->has('nivel2') ? ' has-error' : '' }}">
+                                      <label for="nivel2" class="control-label">{{Session::get('nivel2')}}</label>
+                                      <select id="nivel2" placeholder="(Selecionar)" name="nivel2" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                      <option  value=""></option>
+                                      </select>
+                                </div><!-- col-xs-5-->
+
+                                <div class="col-xs-4{{ $errors->has('nivel1') ? ' has-error' : '' }}">
                                       <label for="nivel1" class="control-label">{{Session::get('nivel1')}}</label>
                                       <select id="nivel1" placeholder="(Selecionar)" name="nivel1" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                       <option  value=""></option>
@@ -41,6 +49,13 @@
                                      @if ($errors->has('nivel1'))
                                       <span class="help-block">
                                           <strong>{{ $errors->first('nivel1') }}</strong>
+                                      </span>
+                                     @endif
+
+                                     <!-- se houver erros na validacao do form request -->
+                                     @if ($errors->has('nivel3'))
+                                      <span class="help-block">
+                                          <strong>{{ $errors->first('nivel3') }}</strong>
                                       </span>
                                      @endif
 
@@ -57,7 +72,7 @@
                               <div class="box-header with-border">
 
                                 <h5 class="box-title">
-                                 {!!Session::get('nivel3')!!}
+                                 {!!Session::get('nivel4')!!}
 
                                </h5>
                                <p class="text-info">Preencher pelo menos uma das opções (Descrição / Pessoa) ou ambas se preferir.</p>
@@ -120,15 +135,16 @@
     </div>
 
 </div>
+
 @include('configuracoes.script_estruturas')
 
 <script type="text/javascript">
     $(document).ready(function()
     {
             /*quando carregar a pagina e estiver preenchido o nivel4, dispara o evento que carrega as outras dropdows.*/
-            if ($("#nivel2").val()!="")
+            if ($("#nivel3").val()!="")
             {
-                  $("#nivel2").trigger("change");
+                  $("#nivel3").trigger("change");
             }
 
     });

@@ -100,5 +100,5 @@
     </div>
 
 </div>
-
+@include('configuracoes.script_estruturas')
 @endsection

@@ -29,6 +29,12 @@
 
     Route::get('buscapessoa/{id}', 'FuncoesController@buscarpessoa');
 
+    Route::get('nivel5/{id}', 'CarregaEstruturasController@carregar_nivel5');
+    Route::get('nivel4/{id}', 'CarregaEstruturasController@carregar_nivel4');
+    Route::get('nivel3/{id}', 'CarregaEstruturasController@carregar_nivel3');
+    Route::get('nivel2/{id}', 'CarregaEstruturasController@carregar_nivel2');
+    Route::get('nivel1/{id}', 'CarregaEstruturasController@carregar_nivel1');
+
 
     Route::get('pdf', function ()
     {
@@ -355,13 +361,30 @@
     Route::get('estruturas3/{id}/edit','Estruturas3Controller@edit');
     Route::get('estruturas3/{id}/delete','Estruturas3Controller@destroy');
 
+    /*Estrutura Celula - Nivel 4*/
+    Route::get('estruturas4', 'Estruturas4Controller@index');
+    Route::post('/estruturas4/gravar','Estruturas4Controller@store');
+    Route::get('/estruturas4/registrar','Estruturas4Controller@create');
+    Route::get('/estruturas4/{id}/preview','Estruturas4Controller@show');
+    Route::post('estruturas4/{id}/update','Estruturas4Controller@update');
+    Route::get('estruturas4/{id}/edit','Estruturas4Controller@edit');
+    Route::get('estruturas4/{id}/delete','Estruturas4Controller@destroy');
+
+  /*Estrutura Celula - Nivel 5*/
+    Route::get('estruturas5', 'Estruturas5Controller@index');
+    Route::post('/estruturas5/gravar','Estruturas5Controller@store');
+    Route::get('/estruturas5/registrar','Estruturas5Controller@create');
+    Route::get('/estruturas5/{id}/preview','Estruturas5Controller@show');
+    Route::post('estruturas5/{id}/update','Estruturas5Controller@update');
+    Route::get('estruturas5/{id}/edit','Estruturas5Controller@edit');
+    Route::get('estruturas5/{id}/delete','Estruturas5Controller@destroy');
+
 
     /*configuracoes celulas*/
-    Route::get('config', 'ConfiguracoesController@index');
-    Route::post('/config/gravar','ConfiguracoesController@store');
-    Route::get('/config/{id}/preview','ConfiguracoesController@show');
-    Route::post('config/{id}/update','ConfiguracoesController@update');
-    Route::get('config/{id}/edit','ConfiguracoesController@edit');
-
+    Route::get('configuracoes', 'ConfiguracoesController@index');
+    Route::post('/configuracoes/gravar','ConfiguracoesController@store');
+    Route::get('/configuracoes/{id}/preview','ConfiguracoesController@show');
+    Route::post('configuracoes/{id}/update','ConfiguracoesController@update');
+    Route::get('configuracoes/{id}/edit','ConfiguracoesController@edit');
 
 });
