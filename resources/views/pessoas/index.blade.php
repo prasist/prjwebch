@@ -43,7 +43,7 @@
             <div class="box-header" data-original-title>
                 <div class="box-body table-responsive no-padding">
 
-                    <table id="example2" class="table table-hover">
+                    <table id="example1" class="table table-hover">
                     <thead>
                         <tr>
                         <th>Nome</th>

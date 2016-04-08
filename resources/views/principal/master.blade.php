@@ -199,7 +199,21 @@
 
                             $('div.alert').delay(3000).slideUp(300);
 
-                            $("#example1").DataTable();
+
+                          /*
+                           $('#example').dataTable( {
+                                 "paginate": false,
+                                 "sort": false,
+                                 "bSortClasses": false
+                           });
+                           */
+
+                           $('#example1').dataTable({
+                                "bSortClasses": false,
+                                "sort": false
+                           });
+
+                            //$("#example1").DataTable();
 
                             $('input.typeahead').typeahead({
                                 name: 'typeahead',
