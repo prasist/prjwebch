@@ -78,6 +78,11 @@ class CelulasController extends Controller
          $dados->regiao = $input['regiao'];
          $dados->segundo_dia_encontro = $input['segundo_dia_encontro'];
          $dados->obs = $input['obs'];
+         $dados->email_grupo = $input['email_grupo'];
+         $dados->celeiro = $input['celeiro'];
+         $dados->escaninho = $input['escaninho'];
+         $dados->faixa_etaria = $input['faixa_etaria'];
+         $dados->publico_alvo = $input['publico_alvo'];
          $dados->nome = $input['nome'];
          $dados->celulas_nivel1_id  = ($input['nivel1']=="" ? null : $input['nivel1']);
          $dados->celulas_nivel2_id  = ($input['nivel2']=="" ? null : $input['nivel2']);
@@ -139,7 +144,7 @@ class CelulasController extends Controller
         $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         /*Busca NIVEL4*/
-        $dados = \DB::select('select * from celulas  where id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $dados = \DB::select('select * from view_celulas  where id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview,  'nivel5' =>$view5]);
 

@@ -284,6 +284,7 @@
 
     /*Pessoas*/
     Route::get('pessoas', 'PessoasController@index');
+    Route::get('pessoas/{buscar_nome}/buscar_nome', 'PessoasController@listar_por_nome');
     Route::post('/pessoas/gravar','PessoasController@store');
     Route::get('/pessoas/registrar','PessoasController@create');
     Route::get('/pessoas/registrar/{id}','PessoasController@create');
