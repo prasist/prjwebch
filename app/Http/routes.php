@@ -283,6 +283,7 @@
     Route::get('situacoes/{id}/delete','SituacoesController@destroy');
 
     /*Pessoas*/
+    Route::post('pessoas/pesquisar', 'PessoasController@pesquisar');
     Route::get('pessoas', 'PessoasController@index');
     Route::get('pessoas/{buscar_nome}/buscar_nome', 'PessoasController@listar_por_nome');
     Route::post('/pessoas/gravar','PessoasController@store');

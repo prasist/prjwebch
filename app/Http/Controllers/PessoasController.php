@@ -8,6 +8,7 @@ use App\Models\pessoas;
 use App\Functions;
 use URL;
 use Auth;
+use DB;
 use Input;
 use Gate;
 
@@ -43,16 +44,12 @@ class PessoasController extends Controller
         //Lista tipos de pessoas, será usado no botão novo registro para indicar qual tipo de cadastro efetuar
         $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
 
-        //Listagem de pessoas
-        $dados = pessoas::select('pessoas.id', 'pessoas.razaosocial', 'pessoas.nomefantasia', 'pessoas.cnpj_cpf', 'pessoas.fone_principal', 'tipos_pessoas.id as id_tipo_pessoa', 'tipos_pessoas.nome as nome_tipo_pessoa')
-        ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        //Para carregar combo de grupos de pessoas
+        $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('empresas_id', $this->dados_login->empresas_id)
-        ->join('tipos_pessoas', 'tipos_pessoas.id', '=' , 'pessoas.tipos_pessoas_id')
-        ->orderBy('pessoas.razaosocial')
-        ->take(10)
         ->get();
 
-        return view($this->rota . '.index', ['dados' => $dados, 'tipos' => $tipos]);
+        return view($this->rota . '.inicial', ['grupos' => $grupos, 'tipos' => $tipos]);
 
     }
 
@@ -66,6 +63,11 @@ class PessoasController extends Controller
               return redirect('home');
         }
 
+        //Para carregar combo de grupos de pessoas
+        $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->get();
+
         //Lista tipos de pessoas, será usado no botão novo registro para indicar qual tipo de cadastro efetuar
         $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
 
@@ -78,9 +80,71 @@ class PessoasController extends Controller
         ->orderBy('pessoas.razaosocial')
         ->get();
 
-        return view($this->rota . '.index', ['dados' => $dados, 'tipos' => $tipos]);
+        return view($this->rota . '.index', ['dados' => $dados, 'tipos' => $tipos, 'grupos'=>$grupos]);
 
     }
+
+
+
+
+ public function pesquisar(\Illuminate\Http\Request  $request)
+ {
+
+    if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
+    {
+         return redirect('home');
+    }
+
+    /*Pega todos campos enviados no post*/
+    $input = $request->except(array('_token', 'ativo')); //não levar o token
+
+    //Para carregar combo de grupos de pessoas
+    $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+    ->where('empresas_id', $this->dados_login->empresas_id)
+    ->get();
+
+    //Lista tipos de pessoas, será usado no botão novo registro para indicar qual tipo de cadastro efetuar
+    $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+
+    /*Query para pesquisa conforme campos enviados*/
+    $sql = " select p.id, p.razaosocial, p.nomefantasia, p.cnpj_cpf, p.fone_principal, tp.id as id_tipo_pessoa, tp.nome as nome_tipo_pessoa ";
+    $sql .= " from pessoas p inner join tipos_pessoas tp on tp.id = p.tipos_pessoas_id";
+    $sql .= " where ";
+    $sql .= " p.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "";
+    $sql .= " and p.empresas_id = " . $this->dados_login->empresas_id . "";
+
+    if ($input["opStatus"]!="")
+    {
+        $sql .= " and ativo = '". $input["opStatus"] . "'";
+    }
+
+    if ($input["opPessoa"]!="")
+    {
+        $sql .= " and tipopessoa = '". $input["opPessoa"] . "'";
+    }
+
+    if ($input["razaosocial"]!="")
+    {
+        $sql .= " and razaosocial ilike '%" . $input["razaosocial"] . "%'";
+    }
+
+    if ($input["grupo"]!="")
+    {
+        $sql .= " and grupos_pessoas_id = " . $input["grupo"];
+    }
+
+    if ($input["tipos"]!="")
+    {
+        $sql .= " and tipos_pessoas_id = " . $input["tipos"];
+    }
+
+    $dados = DB::select($sql);
+
+    return view($this->rota . '.index', ['dados' => $dados, 'tipos' => $tipos, 'grupos'=>$grupos]);
+
+ }
+
+
 
 
     //Criar novo registro
@@ -95,7 +159,7 @@ class PessoasController extends Controller
        }
 
         //Para carregar combo de grupos de pessoas
-        $dados = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('empresas_id', $this->dados_login->empresas_id)
         ->get();
 
@@ -150,7 +214,7 @@ class PessoasController extends Controller
 
             return view($this->rota . '.registrar',
             [
-                'dados'=> $dados,
+                'grupos'=> $grupos,
                 'interface' => $habilitar_interface,
                 'bancos' => $bancos,
                 'igrejas' => $igrejas,
@@ -192,7 +256,7 @@ class PessoasController extends Controller
 
             return view($this->rota . '.registrar',
             [
-                'dados'=> $dados,
+                'grupos'=> $grupos,
                 'interface' => $habilitar_interface,
                 'bancos' => $bancos
             ]);
