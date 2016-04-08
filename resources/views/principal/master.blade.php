@@ -208,12 +208,15 @@
                            });
                            */
 
-                           $('#example1').dataTable({
+                           $('#tab_pessoas').dataTable({
                                 "bSortClasses": false,
-                                "sort": false
+                                "sort": false,
+                                "bDeferRender": true,
+                                "deferRender": true
                            });
 
-                            //$("#example1").DataTable();
+                            /*Tabelas simples */
+                            $("#example1").DataTable();
 
                             $('input.typeahead').typeahead({
                                 name: 'typeahead',
