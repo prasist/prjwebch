@@ -47,21 +47,10 @@ class CelulasController extends Controller
   {
         $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-        /*Validação de campos - request*/
-        if ($input['nome']=="" && $input['pessoas']=="")
-        {
-                $this->validate($request, [
-                    'nome' => 'required',
-                    'pessoas' => 'required',
-                    'dia_encontro' => 'required',
-                ]);
-        }
-        else
-        {
-                $this->validate($request, [
-                    'dia_encontro' => 'required',
-                ]);
-        }
+        $this->validate($request, [
+            'pessoas' => 'required',
+            'dia_encontro' => 'required',
+        ]);
 
 
         if ($tipo_operacao=="create") //novo registro

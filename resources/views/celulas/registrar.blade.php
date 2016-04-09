@@ -146,16 +146,9 @@
                                           </div>
                          </div>
 
-                         <div class="col-xs-6 {{ $errors->has('nome') ? ' has-error' : '' }}">
+                         <div class="col-xs-6">
                                 <label for="nome" class="control-label">Nome Célula</label>
                                 <input id="nome"  placeholder="(Opcional)" name = "nome" type="text" class="form-control" value="">
-
-                                <!-- se houver erros na validacao do form request -->
-                               @if ($errors->has('nome'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('nome') }}</strong>
-                                </span>
-                               @endif
 
                           </div>
 

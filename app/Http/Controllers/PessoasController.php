@@ -138,7 +138,7 @@ class PessoasController extends Controller
         $sql .= " and tipos_pessoas_id = " . $input["tipos"];
     }
 
-    $dados = DB::select($sql);
+    $dados = DB::select($sql . 'order by razaosocial');
 
     return view($this->rota . '.index', ['dados' => $dados, 'tipos' => $tipos, 'grupos'=>$grupos]);
 

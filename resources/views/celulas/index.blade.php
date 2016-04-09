@@ -45,7 +45,7 @@
                         <tr>
 
                             <td>{!! $value->razaosocial . ($value->nome!="" ? ' - ' : ''). $value->nome !!}</td>
-                            <td>{!! $value->dia_encontro !!}</td>
+                            <td>{!! $value->descricao_dia_encontro !!}</td>
                             <td>{!! $value->regiao !!}</td>
 
                             <td class="col-xs-1">
