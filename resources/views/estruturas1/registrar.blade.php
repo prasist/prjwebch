@@ -44,11 +44,13 @@
 
                                     </div>
 
-                                    <div class="col-xs-6 {{ $errors->has('pessoas') ? ' has-error' : '' }}">
+
+
+                                  <div class="col-xs-6 {{ $errors->has('pessoas') ? ' has-error' : '' }}">
                                                   <label for="nome" class="control-label">Pessoa</label>
                                                   <div class="input-group">
                                                            <div class="input-group-addon">
-                                                              <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#myModal" >
+                                                              <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#myModal">
                                                                      <i class="fa fa-search"></i> ...
                                                                </button>
                                                             </div>

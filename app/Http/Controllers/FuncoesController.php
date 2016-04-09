@@ -65,6 +65,7 @@ class FuncoesController extends Controller
             ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
             ->where('empresas_id', $this->dados_login->empresas_id)
             ->where('razaosocial', 'ilike', '%' . $id . '%')
+            ->orderBy('razaosocial')
             ->take(50)
             ->get()->toArray();
 

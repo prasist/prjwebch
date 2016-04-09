@@ -134,7 +134,7 @@
 
 
                                                <div class="col-xs-5">
-                                                  @include('carregar_combos', array('dados'=>$dados, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>''))
+                                                  @include('carregar_combos', array('dados'=>$grupos, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>''))
 
                                                   <!-- se houver erros na validacao do form request -->
                                                      @if ($errors->has('grupo'))

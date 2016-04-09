@@ -8,10 +8,10 @@
           <div class="modal-body">
 
            <div class="row">
-            <div class="col-xs-6">
+            <div class="col-xs-4">
               <p class="text-info">A pesquisa retornará apenas os 50 primeiros registros. Digite um termo para consulta o mais completo possível.</p>
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-6">
              <input type="text" name="typeahead[]" class="typeahead tt-query"  autocomplete="off" spellcheck="false" placeholder="Digite o nome ou parte dele...">
            </div>
          </div>
