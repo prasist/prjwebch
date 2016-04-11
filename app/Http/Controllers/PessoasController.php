@@ -177,7 +177,6 @@ class PessoasController extends Controller
             /*
             Para preencher combos Dados eclesiasticos
             */
-            $familias = \App\Models\pessoas::select('razaosocial as nome', 'id')->where(['empresas_id' => $this->dados_login->empresas_id, 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id])->orderBy('razaosocial','ASC')->take(100)->get();
             $igrejas = \App\Models\igrejas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
             $situacoes = \App\Models\situacoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
             $idiomas = \App\Models\idiomas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
@@ -220,8 +219,6 @@ class PessoasController extends Controller
                 'igrejas' => $igrejas,
                 'situacoes' => $situacoes,
                 'status' => $status,
-                'familias' => $familias,
-                'pessoas' => $familias,
                 'idiomas' => $idiomas,
                 'profissoes' => $profissoes,
                 'ramos' => $ramos,
@@ -452,7 +449,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                     'estadoscivis_id' => ($input['estadoscivis']=="" ? null : $input['estadoscivis']),
                                     'disponibilidades_id' => ($input['disponibilidades']=="" ? null : $input['disponibilidades']),
                                     'graus_id' => ($input['graus']=="" ? null : $input['graus']),
-                                    'familias_id' => ($input['familia']=="" ? null : $input['familia']),
+                                    'familias_id' => ($input['familia']=="" ? null : substr($input['familia'],0,9)),
                                     'sexo' => ($input['opSexo']=="" ? null : $input['opSexo']),
                                     'prefere_trabalhar_com' => ($input['prefere_trabalhar_com']=="" ? null : $input['prefere_trabalhar_com']),
                                     'considera_se' => ($input['considera_se']=="" ? null : $input['considera_se']),
@@ -478,7 +475,7 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
 
-                        /*------------------------------MEMBROS FILHOS (SEM CADASTRO)------------------------------*/
+                        /*------------------------------MEMBROS FILHOS------------------------------*/
 
                         if ($input['inc_filhos']!="") /*Se for inclusão sem cadastro vinculado*/
                         {
@@ -508,12 +505,23 @@ public function salvar($request, $id, $tipo_operacao) {
                                                     $filhos = \App\Models\membros_filhos::firstOrNew($whereForEach);
                                                 }
 
+                                                /*Se houver conteudo, significa que usuario adicionou mais de 1 filho do cadastro*/
+                                                if ($input['hidden_id_filhos'][$i_index]!="")
+                                                {
+                                                    $var_filhos_id = $input['hidden_id_filhos'][$i_index];
+                                                }
+                                                else
+                                                {
+                                                    $var_filhos_id = null;
+                                                }
+
                                                 $valores =
                                                 [
                                                     'pessoas_id' => $pessoas->id,
                                                     'empresas_id' =>  $this->dados_login->empresas_id,
                                                     'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
                                                     'nome_filho' => $input['inc_filhos'][$i_index],
+                                                    'filhos_id' => $var_filhos_id,
                                                     'status_id' => ($input['hidden_status'][$i_index]=="" ? null : $input['hidden_status'][$i_index]),
                                                     'estadocivil_id' => ($input['hidden_estadocivl'][$i_index]=="" ? null : $input['hidden_estadocivl'][$i_index]),
                                                     'sexo' => ($input['hidden_sexo'][$i_index]=="" ? null : $input['hidden_sexo'][$i_index]),
@@ -535,11 +543,11 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
 
-                        /*------------------------------FIM - MEMBROS FILHOS ------------------------------*/
-                        if ($input['filhos']!="") /*Se foi informado um ou varios na combo (do cadastro de pessoas)*/
+                      /*
+                        if ($input['filhos']!="") //Se foi informado um ou varios na combo (do cadastro de pessoas)
                         {
 
-                            /*Pode ser um ou vários, por isso percorre array de inputs gerados*/
+                            //Pode ser um ou vários, por isso percorre array de inputs gerados
                             foreach($input['filhos'] as $selected)
                                 {
                                         if ($selected!="")
@@ -578,7 +586,7 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                             }
-                        /*------------------------------FIM - MEMBROS FILHOS------------------------------*/
+                        */
 
 
 
@@ -651,7 +659,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                     'pessoas_id' => $pessoas->id,
                                     'empresas_id' =>  $this->dados_login->empresas_id,
                                     'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                    'conjuge_id'=> ($input['conjuge']=="" ? null : $input['conjuge']),
+                                    'conjuge_id'=> ($input['conjuge']=="" ? null : substr($input['conjuge'],0,9)),
                                     'nome_conjuge' => $input['nome_conjuge'],
                                     'data_nasc' => $formatador->FormatarData($input['datanasc_conjuge']),
                                     'data_falecimento' => $formatador->FormatarData($input['datafalecimento']),
@@ -661,8 +669,8 @@ public function salvar($request, $id, $tipo_operacao) {
                                     'status_id' => ($input['status_conjuge']=="" ? null : $input['status_conjuge']),
                                     'profissoes_id' => ($input['profissao_conjuge']=="" ? null : $input['profissao_conjuge']),
                                     'igreja_casamento' => $input['igrejacasamento'],
-                                    'pai_id' => ($input['pai']=="" ? null : $input['pai']),
-                                    'mae_id' => ($input['mae']=="" ? null : $input['mae']),
+                                    'pai_id' => ($input['pai']=="" ? null : substr($input['pai'],0,9)),
+                                    'mae_id' => ($input['mae']=="" ? null : substr($input['mae'],0,9)),
                                     'nome_pai' => $input['nome_pai'],
                                     'nome_mae' => $input['nome_mae'],
                                     'status_pai_id' => ($input['status_pai']=="" ? null : $input['status_pai']),
@@ -1148,8 +1156,7 @@ public function salvar($request, $id, $tipo_operacao) {
         $sQuery .= " where pessoas.id = ? ";
         $sQuery .= " and pessoas.empresas_id = ? ";
         $sQuery .= " and pessoas.empresas_clientes_cloud_id = ? ";
-        $sQuery .= " order by razaosocial limit 100";
-
+        $sQuery .= " order by razaosocial ";
         $pessoas = \DB::select($sQuery, [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         /* FORMA ANTERIOR
@@ -1164,10 +1171,15 @@ public function salvar($request, $id, $tipo_operacao) {
         /*Se for MEMBRO, busca informacoes em tabelas especificas*/
         if ($habilitar_interface->membro)
         {
+
             /*Dados complementares de membros*/
-            $membros_dados_pessoais  = \App\Models\membros_dados::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-            ->where('empresas_id', $this->dados_login->empresas_id)
-            ->where('pessoas_id', $id)
+            $membros_dados_pessoais  = \App\Models\membros_dados::select('membros_dados_pessoais.*', 'pessoas.razaosocial')
+            ->leftjoin('pessoas', 'pessoas.id', '=' , 'membros_dados_pessoais.familias_id')
+            ->where('membros_dados_pessoais.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('membros_dados_pessoais.empresas_id', $this->dados_login->empresas_id)
+            ->where('pessoas.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('pessoas.empresas_id', $this->dados_login->empresas_id)
+            ->where('membros_dados_pessoais.pessoas_id', $id)
             ->get();
 
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
@@ -1219,6 +1231,7 @@ public function salvar($request, $id, $tipo_operacao) {
 
             $membros_filhos = \DB::select($sQuery, [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
+
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
             //if ($membros_filhos==null)
             //{
@@ -1253,7 +1266,7 @@ public function salvar($request, $id, $tipo_operacao) {
             ->where('pessoas_id', $id)
             ->get();
             */
-            $sQuery = " select pessoas_id, empresas_id, empresas_clientes_cloud_id, conjuge_id, nome_conjuge, ";
+            $sQuery = " select p3.razaosocial as razaosocial_mae, p2.razaosocial as razaosocial_pai,  pessoas.razaosocial, pessoas_id, membros_familiares.empresas_id, membros_familiares.empresas_clientes_cloud_id, conjuge_id, nome_conjuge, ";
             $sQuery .= " to_char(data_falecimento, 'DD-MM-YYYY') AS data_falecimento, ";
             $sQuery .= " to_char(data_casamento, 'DD-MM-YYYY') AS data_casamento, ";
             $sQuery .= " to_char(data_nasc, 'DD-MM-YYYY') AS data_nasc,";
@@ -1261,6 +1274,9 @@ public function salvar($request, $id, $tipo_operacao) {
             $sQuery .= " to_char(data_falecimento_mae, 'DD-MM-YYYY') AS data_falecimento_mae, ";
             $sQuery .= " status_id, profissoes_id, igreja_casamento, pai_id, mae_id, nome_pai, nome_mae, status_pai_id, status_mae_id ";
             $sQuery .= " from membros_familiares";
+            $sQuery .= " left join pessoas on pessoas.id = membros_familiares.conjuge_id and pessoas.empresas_id = membros_familiares.empresas_id and pessoas.empresas_clientes_cloud_id = membros_familiares.empresas_clientes_cloud_id";
+            $sQuery .= " left join pessoas p2 on p2.id = membros_familiares.pai_id and p2.empresas_id = membros_familiares.empresas_id and p2.empresas_clientes_cloud_id = membros_familiares.empresas_clientes_cloud_id";
+            $sQuery .= " left join pessoas p3 on p3.id = membros_familiares.mae_id and p3.empresas_id = membros_familiares.empresas_id and p3.empresas_clientes_cloud_id = membros_familiares.empresas_clientes_cloud_id";
             $sQuery .= " where membros_familiares.pessoas_id = ? ";
             $sQuery .= " and membros_familiares.empresas_id = ? ";
             $sQuery .= " and membros_familiares.empresas_clientes_cloud_id = ? ";
@@ -1326,7 +1342,6 @@ public function salvar($request, $id, $tipo_operacao) {
                 /*
                 Para preencher combos Dados eclesiasticos
                 */
-                $familias = \App\Models\pessoas::select('razaosocial as nome', 'id')->where(['empresas_id' => $this->dados_login->empresas_id, 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id])->orderBy('razaosocial','ASC')->take(100)->get();
                 $igrejas = \App\Models\igrejas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 $situacoes = \App\Models\situacoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 $idiomas = \App\Models\idiomas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
@@ -1357,7 +1372,6 @@ public function salvar($request, $id, $tipo_operacao) {
                     'igrejas' => $igrejas,
                     'situacoes' => $situacoes,
                     'status' => $status,
-                    'familias' => $familias,
                     'idiomas' => $idiomas,
                     'profissoes' => $profissoes,
                     'ramos' => $ramos,

@@ -398,4 +398,31 @@
     Route::get('celulas/{id}/edit','CelulasController@edit');
     Route::get('celulas/{id}/delete','CelulasController@destroy');
 
+    /*Públicos Alvos*/
+    Route::get('publicos', 'PublicosController@index');
+    Route::post('/publicos/gravar','PublicosController@store');
+    Route::get('/publicos/registrar','PublicosController@create');
+    Route::get('/publicos/{id}/preview','PublicosController@show');
+    Route::post('publicos/{id}/update','PublicosController@update');
+    Route::get('publicos/{id}/edit','PublicosController@edit');
+    Route::get('publicos/{id}/delete','PublicosController@destroy');
+
+    /*Faixas Etárias*/
+    Route::get('faixas', 'FaixasController@index');
+    Route::post('/faixas/gravar','FaixasController@store');
+    Route::get('/faixas/registrar','FaixasController@create');
+    Route::get('/faixas/{id}/preview','FaixasController@show');
+    Route::post('faixas/{id}/update','FaixasController@update');
+    Route::get('faixas/{id}/edit','FaixasController@edit');
+    Route::get('faixas/{id}/delete','FaixasController@destroy');
+
+    /*Células / Pessoas*/
+    Route::get('celulaspessoas', 'CelulasPessoasController@index');
+    Route::post('/celulaspessoas/gravar','CelulasPessoasController@store');
+    Route::get('/celulaspessoas/registrar','CelulasPessoasController@create');
+    Route::get('/celulaspessoas/{id}/preview','CelulasPessoasController@show');
+    Route::post('celulaspessoas/{id}/update','CelulasPessoasController@update');
+    Route::get('celulaspessoas/{id}/edit','CelulasPessoasController@edit');
+    Route::get('celulaspessoas/{id}/delete','CelulasPessoasController@destroy');
+
 });

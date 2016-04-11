@@ -126,29 +126,29 @@
                   <div class="row">
 
                         <div class="col-xs-6 {{ $errors->has('pessoas') ? ' has-error' : '' }}">
-                                        <label for="nome" class="control-label">Líder</label>
-                                        <div class="input-group">
-                                                 <div class="input-group-addon">
-                                                    <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#modal_lider" >
-                                                           <i class="fa fa-search"></i> ...
-                                                     </button>
-                                                  </div>
+                                  <label for="nome" class="control-label">Líder</label>
+                                  <div class="input-group">
+                                           <div class="input-group-addon">
+                                              <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#modal_lider" >
+                                                     <i class="fa fa-search"></i> ...
+                                               </button>
+                                            </div>
 
-                                                  @include('modal_buscar_pessoas', array('qual_campo'=>'pessoas', 'modal' => 'modal_lider'))
+                                            @include('modal_buscar_pessoas', array('qual_campo'=>'pessoas', 'modal' => 'modal_lider'))
 
-                                                  <input id="pessoas"  name = "pessoas" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($dados[0]->lider_pessoas_id!="" ? str_repeat('0', (9-strlen($dados[0]->lider_pessoas_id))) . $dados[0]->lider_pessoas_id . ' - ' . $dados[0]->razaosocial  : '') !!}" readonly >
+                                            <input id="pessoas"  name = "pessoas" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($dados[0]->lider_pessoas_id!="" ? str_repeat('0', (9-strlen($dados[0]->lider_pessoas_id))) . $dados[0]->lider_pessoas_id . ' - ' . $dados[0]->razaosocial  : '') !!}" readonly >
 
-                                                  <!-- se houver erros na validacao do form request -->
-                                                   @if ($errors->has('pessoas'))
-                                                    <span class="help-block">
-                                                        <strong>{{ $errors->first('pessoas') }}</strong>
-                                                    </span>
-                                                   @endif
+                                            <!-- se houver erros na validacao do form request -->
+                                             @if ($errors->has('pessoas'))
+                                              <span class="help-block">
+                                                  <strong>{{ $errors->first('pessoas') }}</strong>
+                                              </span>
+                                             @endif
 
-                                          </div>
-                         </div>
+                                    </div>
+                        </div>
 
-                         <div class="col-xs-6 {{ $errors->has('nome') ? ' has-error' : '' }}">
+                        <div class="col-xs-6 {{ $errors->has('nome') ? ' has-error' : '' }}">
                                 <label for="nome" class="control-label">Nome Célula</label>
                                 <input id="nome"  placeholder="(Opcional)" name = "nome" type="text" class="form-control" value="{!! $dados[0]->nome !!}">
 
@@ -159,7 +159,7 @@
                                 </span>
                                @endif
 
-                          </div>
+                        </div>
 
 
                   </div>
@@ -356,24 +356,13 @@
                                              </div>
 
                                              <div class="row">
-                                                  <div class="col-xs-3">
-                                                        <label for="escaninho" class="control-label">N. Escaninho</label>
-                                                        <input id="escaninho"  placeholder="(Opcional)" name = "escaninho" type="text" class="form-control" value="{!! $dados[0]->escaninho!!}">
+
+                                                  <div class="col-xs-5">
+                                                        @include('carregar_combos', array('dados'=>$publicos, 'titulo' =>'Público Alvo', 'id_combo'=>'publico_alvo', 'complemento'=>'', 'comparar'=>$dados[0]->publico_alvo_id))
                                                   </div>
 
-                                                  <div class="col-xs-3">
-                                                        <label for="celeiro" class="control-label">Celeiro</label>
-                                                        <input id="celeiro"  placeholder="(Opcional)" name = "celeiro" type="text" class="form-control" value="{!! $dados[0]->celeiro!!}">
-                                                  </div>
-
-                                                  <div class="col-xs-3">
-                                                        <label for="publico_alvo" class="control-label">Público Alvo</label>
-                                                        <input id="publico_alvo"  placeholder="(Opcional)" name = "publico_alvo" type="text" class="form-control" value="{!! $dados[0]->publico_alvo!!}">
-                                                  </div>
-
-                                                  <div class="col-xs-3">
-                                                        <label for="faixa_etaria" class="control-label">Faixa Estária</label>
-                                                        <input id="faixa_etaria"  placeholder="(Opcional)" name = "faixa_etaria" type="text" class="form-control" value="{!! $dados[0]->faixa_etaria!!}">
+                                                  <div class="col-xs-5">
+                                                        @include('carregar_combos', array('dados'=>$faixas, 'titulo' =>'Faixas Etárias', 'id_combo'=>'faixa_etaria', 'complemento'=>'', 'comparar'=>$dados[0]->faixa_etaria_id))
                                                   </div>
 
                                              </div>

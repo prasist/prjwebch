@@ -90,6 +90,8 @@
                     <li><a href={{ url('/profissoes')}}><i class="fa fa-angle-double-right"></i>Profissões</a></li>
                     <li><a href={{ url('/grausparentesco')}}><i class="fa fa-angle-double-right"></i>Graus de Parentesco</a></li>
                     <li><a href={{ url('/disponibilidades')}}><i class="fa fa-angle-double-right"></i>Disponibilidades de Tempo</a></li>
+                    <li><a href={{ url('/publicos')}}><i class="fa fa-angle-double-right"></i>Públicos Alvos</a></li>
+                    <li><a href={{ url('/faixas')}}><i class="fa fa-angle-double-right"></i>Faixas Etárias</a></li>
 
                     <li class="text">&nbsp;</li>
                     <li><a href={{ url('/igrejas')}}><i class="fa fa-angle-double-right"></i>Igrejas</a></li>
@@ -141,6 +143,7 @@
                       <a href="#"><i class="fa fa-circle-o"></i> Células <i class="fa fa-angle-left pull-right"></i></a>
                           <ul class="treeview-menu">
                             <li><a href={{ url('/celulas')}}> Cadastro</a></li>
+                            <li><a href={{ url('/celulaspessoas')}}> Células / Pessoas</a></li>
                             <li><a href="#"> Relatórios</a></li>
                           </ul>
                     </li>

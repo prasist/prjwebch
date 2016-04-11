@@ -31,15 +31,15 @@ class CelulasController extends Controller
     public function index()
     {
 
-        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
-        {
-              return redirect('home');
-        }
+            if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
+            {
+                  return redirect('home');
+            }
 
-        $dados = \DB::select('select * from view_celulas_simples where  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+            $dados = \DB::select('select * from view_celulas_simples where  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        //Listagem de pessoas
-        return view($this->rota . '.index',compact('dados'));
+            //Listagem de pessoas
+            return view($this->rota . '.index',compact('dados'));
 
     }
 
@@ -68,10 +68,8 @@ class CelulasController extends Controller
          $dados->segundo_dia_encontro = $input['segundo_dia_encontro'];
          $dados->obs = $input['obs'];
          $dados->email_grupo = $input['email_grupo'];
-         $dados->celeiro = $input['celeiro'];
-         $dados->escaninho = $input['escaninho'];
-         $dados->faixa_etaria = $input['faixa_etaria'];
-         $dados->publico_alvo = $input['publico_alvo'];
+         $dados->faixa_etaria_id = ($input['faixa_etaria']=="" ? null : $input['faixa_etaria']);
+         $dados->publico_alvo_id = ($input['publico_alvo']=="" ? null : $input['publico_alvo']);
          $dados->nome = $input['nome'];
          $dados->celulas_nivel1_id  = ($input['nivel1']=="" ? null : $input['nivel1']);
          $dados->celulas_nivel2_id  = ($input['nivel2']=="" ? null : $input['nivel2']);
@@ -97,10 +95,13 @@ class CelulasController extends Controller
               return redirect('home');
         }
 
+        $publicos = \App\Models\publicos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $faixas = \App\Models\faixas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+
         /*Busca NIVEL5*/
         $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        return view($this->rota . '.registrar', ['nivel5'=>$view5]);
+        return view($this->rota . '.registrar', ['nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
 
     }
 
@@ -129,30 +130,29 @@ class CelulasController extends Controller
               return redirect('home');
         }
 
+        $publicos = \App\Models\publicos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $faixas = \App\Models\faixas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+
         /*Busca NIVEL5*/
         $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         /*Busca NIVEL4*/
         $dados = \DB::select('select * from view_celulas  where id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview,  'nivel5' =>$view5]);
+        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview,  'nivel5' =>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
 
     }
 
     //Visualizar registro
     public function show (\Illuminate\Http\Request $request, $id)
     {
-
-            return $this->exibir($request, $id, 'true');
-
+         return $this->exibir($request, $id, 'true');
     }
 
     //Direciona para tela de alteracao
     public function edit(\Illuminate\Http\Request $request, $id)
     {
-
-            return $this->exibir($request, $id, 'false');
-
+         return $this->exibir($request, $id, 'false');
     }
 
 
@@ -165,11 +165,9 @@ class CelulasController extends Controller
      */
     public function update(\Illuminate\Http\Request  $request, $id)
     {
-
            $this->salvar($request, $id,  "update");
            \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
            return redirect($this->rota);
-
     }
 
 
@@ -181,12 +179,9 @@ class CelulasController extends Controller
      */
     public function destroy($id)
     {
-
             $dados = celulas::findOrfail($id);
             $dados->delete();
-
             return redirect($this->rota);
-
     }
 
 }

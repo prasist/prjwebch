@@ -47,6 +47,9 @@ return [
     'estruturas5' => '40',
     'configuracoes' => '41',
     'celulas' => '42',
+    'publicos' => '43',
+    'faixas' => '44',
+    'celulaspessoas'=>'45',
 
     'env' => env('APP_ENV', 'production'),
 

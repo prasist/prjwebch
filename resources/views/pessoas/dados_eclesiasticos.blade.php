@@ -35,27 +35,29 @@
                                                 <div class="box box-default">
                                                     <div class="box-body">
 
-                                                          <div class="col-xs-12">
-                                                              <label for="cep_prof" class="control-label">Resp. Família</label>
-                                                              <div class="input-group">
-                                                                  <div class="input-group-addon">
-                                                                        <a href="#" data-toggle="tooltip" title="Neste campo escolha a pessoa responsável  pela sua casa/família.">
-                                                                            <img src="{{ url('/images/help.png') }}" class="user-image" alt="Ajuda"  />
-                                                                        </a>
-                                                                  </div>
-                                                                  @include('carregar_combos', array('dados'=>$familias, 'titulo' =>'', 'id_combo'=>'familia', 'complemento'=>'', 'comparar'=> ($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->familias_id) ))
+                                                         <div class="col-xs-6">
+                                                                      <label for="familia" class="control-label">Resp. Família</label>
+                                                                      <div class="input-group">
+                                                                               <div class="input-group-addon">
+                                                                                  <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#familia_myModal" >
+                                                                                         <i class="fa fa-search"></i> ...
+                                                                                   </button>
+                                                                                </div>
 
-                                                             </div>
-                                                          </div><!-- col-xs-5-->
+                                                                                @include('modal_buscar_pessoas', array('qual_campo'=>'familia', 'modal' => 'familia_myModal'))
 
+                                                                                <input id="familia"  name = "familia" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($membros_dados_pessoais[0]->familias_id!="" ? str_repeat('0', (9-strlen($membros_dados_pessoais[0]->familias_id))) . $membros_dados_pessoais[0]->familias_id . ' - ' . $membros_dados_pessoais[0]->razaosocial  : '') !!}" readonly >
 
-                                                           <div class="col-xs-6">
-                                                                  @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status', 'complemento'=>'', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->status_id) ))
-                                                           </div><!-- col-xs-5-->
+                                                                        </div>
+                                                         </div>
 
-                                                           <div class="col-xs-6">
-                                                                    @include('carregar_combos_multiple', array('dados'=>$situacoes, 'titulo' =>'Situações', 'id_combo'=>'situacoes[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_situacoes))
-                                                           </div><!-- col-xs-5-->
+                                                         <div class="col-xs-6">
+                                                                 @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status', 'complemento'=>'', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->status_id) ))
+                                                         </div><!-- col-xs-5-->
+
+                                                         <div class="col-xs-6">
+                                                                 @include('carregar_combos_multiple', array('dados'=>$situacoes, 'titulo' =>'Situações', 'id_combo'=>'situacoes[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_situacoes))
+                                                         </div><!-- col-xs-5-->
                                                    </div>
                                                 </div>
                                           </div>
@@ -460,9 +462,22 @@
 
                                                           <div class="row"><!-- row entrada-->
 
-                                                                   <div class="col-xs-3">
-                                                                        @include('carregar_combos', array('dados'=>$familias, 'titulo' =>'Selecionar Conjuge já cadastrado', 'id_combo'=>'conjuge', 'complemento'=>'onchange="validar_conjuge()"', 'comparar'=>$membros_familiares[0]->conjuge_id))
-                                                                   </div>
+                                                                  <div class="col-xs-3">
+                                                                      <label for="conjuge" class="control-label">Selecionar Conjuge já cadastrado</label>
+                                                                      <div class="input-group">
+                                                                               <div class="input-group-addon">
+                                                                                  <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#conjuge_myModal" >
+                                                                                         <i class="fa fa-search"></i> ...
+                                                                                   </button>
+                                                                                </div>
+
+                                                                                @include('modal_buscar_pessoas', array('qual_campo'=>'conjuge', 'modal' => 'conjuge_myModal'))
+
+                                                                                <input id="conjuge"  name = "conjuge" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($membros_familiares[0]->conjuge_id!="" ? str_repeat('0', (9-strlen($membros_familiares[0]->conjuge_id))) . $membros_familiares[0]->conjuge_id . ' - ' . $membros_familiares[0]->razaosocial  : '') !!}" readonly >
+
+                                                                        </div>
+                                                                  </div>
+
 
                                                                    <div class="col-xs-3">
                                                                       <label for="nome_conjuge" class="control-label">ou Informar Nome Conjuge</label>
@@ -498,11 +513,11 @@
 
                                                                <div class="col-xs-3">
                                                                         @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status_conjuge', 'complemento'=>'', 'comparar'=>$membros_familiares[0]->status_id))
-                                                              </div>
+                                                               </div>
 
-                                                              <div class="col-xs-3">
+                                                               <div class="col-xs-3">
                                                                       @include('carregar_combos', array('dados'=>$profissoes, 'titulo' =>'Profissão', 'id_combo'=>'profissao_conjuge', 'complemento'=>'', 'comparar'=>$membros_familiares[0]->profissoes_id))
-                                                              </div>
+                                                               </div>
 
                                                                    <div class="col-xs-3">
                                                                         <label for="datanasc_conjuge" class="control-label">Data Nascimento</label>
@@ -530,7 +545,7 @@
 
                                                                    </div>
 
-                                                                </div><!-- end row-->
+                                                           </div><!-- end row-->
 
 
 
@@ -553,22 +568,33 @@
 
                                                     <div class="box-body"><!-- box-body-->
 
-                                                          <div class="row"><!-- row entrada-->
-
-                                                                   <div class="col-xs-10">
-                                                                        @include('carregar_combos_multiple', array('dados'=>$familias, 'titulo' =>'Filho(s) - Selecionar do cadastro (Um ou mais)', 'id_combo'=>'filhos[]', 'complemento'=>'multiple="multiple"', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_filhos)))
-                                                                   </div>
-
-                                                          </div>
-
                                                           <div class="row">
+
+                                                               <div class="col-xs-10">
+                                                                    <label for="filho_cadastro" class="control-label">Selecionar filhos(as) do cadastrado</label>
+                                                                    <div class="input-group">
+                                                                             <div class="input-group-addon">
+                                                                                <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#filho_cadastro_myModal" >
+                                                                                       <i class="fa fa-search"></i> ...
+                                                                                 </button>
+                                                                              </div>
+
+                                                                              @include('modal_buscar_pessoas', array('qual_campo'=>'filho_cadastro', 'modal' => 'filho_cadastro_myModal'))
+
+                                                                              <input id="filho_cadastro"  name = "filho_cadastro" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
+
+                                                                      </div>
+                                                                      <a href="javascript: incluir_filho_cadastro();">Clique aqui para confirmar a seleção acima...</a>
+                                                                </div>
+
+
                                                                   <div class="col-xs-10">
 
-                                                                      <label for="datanasc_conjuge" class="control-label">Caso o filho(a) não seja membro, clicar no botão abaixo para informar os dados sem cadastrá-lo no sistema.</label>
+                                                                      <label for="novofilho" class="control-label">Inclusão Filhos(as) sem cadastro</label>
                                                                       <br/>
 
                                                                        <button  id="novofilho" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                                                            Incluir filhos sem cadastrar
+                                                                              Incluir dados...
                                                                        </button>
 
                                                                    </div>
@@ -605,37 +631,32 @@
                                                               <input type="hidden" name="inc_filhos[]" class="minimal" value="">
                                                          @endif
 
-                                                          <div class="row">
+                                                         <div class="row">
 
                                                               <table id="tab_filhos" class="table table-bordered table-hover">
 
-
                                                                           @foreach($membros_filhos as $item)
 
-                                                                                @if ($item->id==null)
-                                                                                      <tr id="{{$item->id_seq}}">
-                                                                                          <td class="col-xs-2"><input id="inc_filhos[]" name = "inc_filhos[]" type="text" class="form-control" readonly value="{{$item->nome_filho}}"></td>
-                                                                                          <td class="col-xs-2"><input id="inc_sexo[]" name = "inc_sexo[]" type="text" class="form-control" readonly value="{{$item->sexo}}"></td>
-                                                                                          <td class="col-xs-2"><input id="inc_status[]" name = "inc_status[]" type="text" class="form-control" readonly value="{{$item->desc_status}}"></td>
-                                                                                          <td class="col-xs-2"><input id="inc_estadocivl[]" name = "inc_estadocivl[]" type="text" class="form-control" readonly value="{{$item->desc_estcivil}}"></td>
-                                                                                          <td class="col-xs-2"><input id="inc_datanasc[]" name = "inc_datanasc[]" type="text" class="form-control" readonly value="{{$item->data_nasc}}"></td>
-                                                                                          <td class="col-xs-2"><input id="inc_datafalec[]" name = "inc_datafalec[]" type="text" class="form-control" readonly value="{{$item->data_falecimento}}"></td>
-                                                                                          <td class="col-xs-2">
+                                                                                <tr id="{{$item->id_seq}}">
+                                                                                    <td class="col-xs-2"><input id="inc_filhos[]" name = "inc_filhos[]" type="text" class="form-control" readonly value="{{$item->nome_filho}}"></td>
+                                                                                    <td class="col-xs-2"><input id="inc_sexo[]" name = "inc_sexo[]" type="text" class="form-control" readonly value="{{$item->sexo}}"></td>
+                                                                                    <td class="col-xs-2"><input id="inc_status[]" name = "inc_status[]" type="text" class="form-control" readonly value="{{$item->desc_status}}"></td>
+                                                                                    <td class="col-xs-2"><input id="inc_estadocivl[]" name = "inc_estadocivl[]" type="text" class="form-control" readonly value="{{$item->desc_estcivil}}"></td>
+                                                                                    <td class="col-xs-2"><input id="inc_datanasc[]" name = "inc_datanasc[]" type="text" class="form-control" readonly value="{{$item->data_nasc}}"></td>
+                                                                                    <td class="col-xs-2"><input id="inc_datafalec[]" name = "inc_datafalec[]" type="text" class="form-control" readonly value="{{$item->data_falecimento}}"></td>
+                                                                                    <td class="col-xs-2">
+                                                                                            <input id="hidden_id_filhos[]" name = "hidden_id_filhos[]" type="hidden" class="form-control" value="{{$item->id}}">
+                                                                                            <input id="hidden_sexo[]" name = "hidden_sexo[]" type="hidden" class="form-control" value="{{$item->sexo}}">
+                                                                                            <input id="hidden_status[]" name = "hidden_status[]" type="hidden" class="form-control" value="{{$item->id_status}}">
+                                                                                            <input id="hidden_estadocivl[]" name = "hidden_estadocivl[]" type="hidden" class="form-control" value="{{$item->id_estadocivil}}">
+                                                                                            <a href="#" class="deleteLink">Remover</a>
+                                                                                   </td>
+                                                                                </tr>
 
-                                                                                                    <input id="hidden_sexo[]" name = "hidden_sexo[]" type="hidden" class="form-control" value="{{$item->sexo}}">
-                                                                                                    <input id="hidden_status[]" name = "hidden_status[]" type="hidden" class="form-control" value="{{$item->id_status}}">
-                                                                                                    <input id="hidden_estadocivl[]" name = "hidden_estadocivl[]" type="hidden" class="form-control" value="{{$item->id_estadocivil}}">
-
-                                                                                                    <a href="#" class="deleteLink">Remover</a>
-                                                                                         </td>
-                                                                                       </tr>
-                                                                                @else
-                                                                                    <input type="hidden" name="inc_filhos[]" class="minimal" value="">
-                                                                                @endif
                                                                           @endforeach
 
                                                                </table>
-                                                          </div>
+                                                         </div>
 
                                                           <div class="row">
 
@@ -650,7 +671,8 @@
                                                                     <div class="modal-body">
 
                                                                          <div class="row">
-                                                                                    <div class="col-xs-5">
+
+                                                                                <div class="col-xs-5">
                                                                                     <label for="nome_filho" class="control-label">Nome</label>
                                                                                     <input id="nome_filho" name = "nome_filho" type="text" class="form-control" value="">
                                                                                  </div>
@@ -722,7 +744,6 @@
                                            </div>
                                </div><!-- end row-->
 
-
                                <div class="row">
 
                                        <div class="col-md-12">
@@ -738,8 +759,20 @@
                                                           <div class="row"><!-- row pai-->
 
                                                                    <div class="col-xs-3">
-                                                                        @include('carregar_combos', array('dados'=>$familias, 'titulo' =>'Pai - Selecionar do cadastro', 'id_combo'=>'pai', 'complemento'=>'', 'comparar'=>$membros_familiares[0]->pai_id))
-                                                                   </div>
+                                                                      <label for="pai" class="control-label">Pai - Selecionar do cadastro</label>
+                                                                      <div class="input-group">
+                                                                               <div class="input-group-addon">
+                                                                                  <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#pai_myModal">
+                                                                                         <i class="fa fa-search"></i> ...
+                                                                                   </button>
+                                                                                </div>
+
+                                                                                @include('modal_buscar_pessoas', array('qual_campo'=>'pai', 'modal' => 'pai_myModal'))
+
+                                                                                <input id="pai"  name = "pai" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($membros_familiares[0]->pai_id!="" ? str_repeat('0', (9-strlen($membros_familiares[0]->pai_id))) . $membros_familiares[0]->pai_id . ' - ' . $membros_familiares[0]->razaosocial_pai  : '') !!}" readonly >
+
+                                                                        </div>
+                                                                  </div>
 
                                                                    <div class="col-xs-3">
                                                                       <label for="nome_pai" class="control-label">ou Informar Nome Pai</label>
@@ -768,8 +801,20 @@
                                                           <div class="row"><!-- row mãe-->
 
                                                                    <div class="col-xs-3">
-                                                                        @include('carregar_combos', array('dados'=>$familias, 'titulo' =>'Mãe - Selecionar do cadastro', 'id_combo'=>'mae', 'complemento'=>'', 'comparar'=>$membros_familiares[0]->mae_id))
-                                                                   </div>
+                                                                          <label for="mae" class="control-label">Mãe - Selecionar do cadastro</label>
+                                                                          <div class="input-group">
+                                                                                 <div class="input-group-addon">
+                                                                                    <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#mae_myModal">
+                                                                                           <i class="fa fa-search"></i> ...
+                                                                                     </button>
+                                                                                  </div>
+
+                                                                                  @include('modal_buscar_pessoas', array('qual_campo'=>'mae', 'modal' => 'mae_myModal'))
+
+                                                                                  <input id="mae"  name = "mae" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($membros_familiares[0]->mae_id!="" ? str_repeat('0', (9-strlen($membros_familiares[0]->mae_id))) . $membros_familiares[0]->mae_id . ' - ' . $membros_familiares[0]->razaosocial_mae  : '') !!}" readonly >
+
+                                                                          </div>
+                                                                  </div>
 
                                                                    <div class="col-xs-3">
                                                                       <label for="nome_mae" class="control-label">ou Informar Nome Mãe</label>
@@ -797,8 +842,11 @@
                                                           </div><!-- end row-->
 
                                                     </div>
+
                                               </div>
-                                           </div>
+
+                                        </div>
+
                                </div><!-- end row-->
 
                             </div>
@@ -852,11 +900,9 @@
                                                                     </div>
                                                                 </div>
 
-
                                                                 <div class="col-xs-3">
                                                                           @include('carregar_combos', array('dados'=>$religioes, 'titulo' =>'Religião Anterior', 'id_combo'=>'religioes', 'complemento'=>'', 'comparar'=>$membros_historico[0]->religioes_id))
                                                                 </div><!-- col-xs-5-->
-
 
                                                            </div><!-- end row-->
 
@@ -912,7 +958,6 @@
                                                                     </div>
 
                                                             </div><!-- end row  -->
-
 
                                                      </div><!-- end box-body-->
 
@@ -1039,8 +1084,6 @@
                                          </div>
 
                                <!-- fim aqui-->
-
-
 
                             </div>
                           </div>
@@ -1278,9 +1321,35 @@
 
    }
 
+function incluir_filho_cadastro()
+{
+        if (document.getElementById("filho_cadastro").value != "")
+        {
+              /*cria os inputs para exibicao ao usuario*/
+              var sFilho = '<div class="col-xs-2"><input id="inc_filhos[]" readonly name = "inc_filhos[]" type="text" class="form-control" value="' + document.getElementById("filho_cadastro").value + '"></div>';
+              var sSexoFilho = '<div class="col-xs-2"><input id="inc_sexo[]" readonly name = "inc_sexo[]" type="text" class="form-control" value=""></div>';
+              var sStatusFilho = '<div class="col-xs-2"><input id="inc_status[]" readonly name = "inc_status[]" type="text" class="form-control" value=""></div>';
+              var sEstadoCivilFilho = '<div class="col-xs-2"><input id="inc_estadocivl[]" readonly name = "inc_estadocivl[]" type="text" class="form-control" value=""></div>';
+              var sDataNascFilho = '<div class="col-xs-2"><input id="inc_datanasc[]" readonly name = "inc_datanasc[]" type="text" class="form-control" value=""></div>';
+              var sDataFalecimentoFilho = '<div class="col-xs-2"><input id="inc_datafalec[]" readonly name = "inc_datafalec[]" type="text" class="form-control" value=""></div>';
+              var sFilhoHidden = '<input id="hidden_id_filhos[]" name = "hidden_id_filhos[]" type="hidden" class="form-control" value="' + document.getElementById("filho_cadastro").value.substring(0,9) + '">';
 
-  function incluir_filho()
-  {
+              /*Salva os ID's*/
+              var sHiddenSexo = '<input id="hidden_sexo[]" name = "hidden_sexo[]" type="hidden" class="form-control" value="">';
+              var sHiddenStatusFilho = '<input id="hidden_status[]" name = "hidden_status[]" type="hidden" class="form-control" value="">';
+              var sHiddenEstadoCivilFilho = '<input id="hidden_estadocivl[]" name = "hidden_estadocivl[]" type="hidden" class="form-control" value="">';
+
+              /*Gera codigo HTML*/
+              document.getElementById("mais_filhos").innerHTML = document.getElementById("mais_filhos").innerHTML + sFilho + sSexoFilho + sStatusFilho + sEstadoCivilFilho + sDataNascFilho + sDataFalecimentoFilho + sHiddenSexo + sHiddenStatusFilho + sHiddenEstadoCivilFilho + sFilhoHidden;
+
+              /*Limpar campos*/
+              document.getElementById("filho_cadastro").value = "";
+        }
+
+}
+
+function incluir_filho()
+{
 
           if (document.getElementById("nome_filho").value == "")
           {
@@ -1296,10 +1365,10 @@
           var ind_status_filho = document.getElementById("status_filho").selectedIndex;
           var texto_status_filho = document.getElementById("status_filho").options;
 
+          var sFilhoHidden = '<input id="hidden_id_filhos[]" name = "hidden_id_filhos[]" type="hidden" class="form-control" value="">';
 
           /*cria os inputs para exibicao ao usuario*/
           var sFilho = '<div class="col-xs-2"><input id="inc_filhos[]" readonly name = "inc_filhos[]" type="text" class="form-control" value="' + document.getElementById("nome_filho").value + '"></div>';
-
           var sSexoFilho = '<div class="col-xs-2"><input id="inc_sexo[]" readonly name = "inc_sexo[]" type="text" class="form-control" value="' + texto_sexo[ind_sexo].text + '"></div>';
           var sStatusFilho = '<div class="col-xs-2"><input id="inc_status[]" readonly name = "inc_status[]" type="text" class="form-control" value="' + texto_status_filho[ind_status_filho].text + '"></div>';
           var sEstadoCivilFilho = '<div class="col-xs-2"><input id="inc_estadocivl[]" readonly name = "inc_estadocivl[]" type="text" class="form-control" value="' + texto_estado_civil_filho[ind_estado_civil_filho].text + '"></div>';
@@ -1312,27 +1381,28 @@
           var sHiddenEstadoCivilFilho = '<input id="hidden_estadocivl[]" name = "hidden_estadocivl[]" type="hidden" class="form-control" value="' + texto_estado_civil_filho[ind_estado_civil_filho].value + '">';
 
           /*Gera codigo HTML*/
-          document.getElementById("mais_filhos").innerHTML = document.getElementById("mais_filhos").innerHTML + sFilho + sSexoFilho + sStatusFilho + sEstadoCivilFilho + sDataNascFilho + sDataFalecimentoFilho + sHiddenSexo + sHiddenStatusFilho + sHiddenEstadoCivilFilho;
+          document.getElementById("mais_filhos").innerHTML = document.getElementById("mais_filhos").innerHTML + sFilho + sSexoFilho + sStatusFilho + sEstadoCivilFilho + sDataNascFilho + sDataFalecimentoFilho + sHiddenSexo + sHiddenStatusFilho + sHiddenEstadoCivilFilho + sFilhoHidden;
 
           /*Limpar campos*/
           document.getElementById("nome_filho").value = "";
           document.getElementById("datanascimento_filho").value="";
           document.getElementById("datafalecimento_filho").value="";
-
-  }
+}
 
 
 </script>
 
 <script type="text/javascript">
 
-
-  $(document).ready(function() {
-    $("#tab_filhos .deleteLink").on("click",function() {
+  $(document).ready(function()
+  {
+    $("#tab_filhos .deleteLink").on("click",function()
+    {
         var tr = $(this).closest('tr');
         tr.css("background-color","#FF3700");
 
-        tr.fadeOut(400, function(){
+        tr.fadeOut(400, function()
+        {
             tr.remove();
         });
       return false;

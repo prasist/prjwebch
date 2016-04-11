@@ -124,26 +124,26 @@
                   <div class="row">
 
                         <div class="col-xs-6 {{ $errors->has('pessoas') ? ' has-error' : '' }}">
-                                        <label for="nome" class="control-label">Líder</label>
-                                        <div class="input-group">
-                                                 <div class="input-group-addon">
-                                                    <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#modal_lider" >
-                                                           <i class="fa fa-search"></i> ...
-                                                     </button>
-                                                  </div>
-
-                                                  @include('modal_buscar_pessoas', array('qual_campo'=>'pessoas', 'modal' => 'modal_lider'))
-
-                                                  <input id="pessoas"  name = "pessoas" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
-
-                                                  <!-- se houver erros na validacao do form request -->
-                                                   @if ($errors->has('pessoas'))
-                                                    <span class="help-block">
-                                                        <strong>{{ $errors->first('pessoas') }}</strong>
-                                                    </span>
-                                                   @endif
-
+                                <label for="nome" class="control-label">Líder</label>
+                                <div class="input-group">
+                                         <div class="input-group-addon">
+                                            <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#modal_lider" >
+                                                   <i class="fa fa-search"></i> ...
+                                             </button>
                                           </div>
+
+                                          @include('modal_buscar_pessoas', array('qual_campo'=>'pessoas', 'modal' => 'modal_lider'))
+
+                                          <input id="pessoas"  name = "pessoas" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
+
+                                          <!-- se houver erros na validacao do form request -->
+                                           @if ($errors->has('pessoas'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('pessoas') }}</strong>
+                                            </span>
+                                           @endif
+
+                                  </div>
                          </div>
 
                          <div class="col-xs-6">
@@ -158,72 +158,72 @@
                   <div class="row">
 
                         <div class="col-xs-4 {{ $errors->has('vicelider_pessoas_id') ? ' has-error' : '' }}">
-                                        <label for="vicelider_pessoas_id" class="control-label">Vice-Líder</label>
-                                        <div class="input-group">
-                                                 <div class="input-group-addon">
-                                                    <button  id="buscarpessoa2" type="button"  data-toggle="modal" data-target="#modal_vice" >
-                                                           <i class="fa fa-search"></i> ...
-                                                     </button>
-                                                  </div>
-
-                                                  @include('modal_buscar_pessoas', array('qual_campo'=>'vicelider_pessoas_id', 'modal' => 'modal_vice'))
-
-                                                  <input id="vicelider_pessoas_id"  name = "vicelider_pessoas_id" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
-
-                                                  <!-- se houver erros na validacao do form request -->
-                                                   @if ($errors->has('vicelider_pessoas_id'))
-                                                    <span class="help-block">
-                                                        <strong>{{ $errors->first('vicelider_pessoas_id') }}</strong>
-                                                    </span>
-                                                   @endif
-
+                                <label for="vicelider_pessoas_id" class="control-label">Vice-Líder</label>
+                                <div class="input-group">
+                                         <div class="input-group-addon">
+                                            <button  id="buscarpessoa2" type="button"  data-toggle="modal" data-target="#modal_vice" >
+                                                   <i class="fa fa-search"></i> ...
+                                             </button>
                                           </div>
+
+                                          @include('modal_buscar_pessoas', array('qual_campo'=>'vicelider_pessoas_id', 'modal' => 'modal_vice'))
+
+                                          <input id="vicelider_pessoas_id"  name = "vicelider_pessoas_id" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
+
+                                          <!-- se houver erros na validacao do form request -->
+                                           @if ($errors->has('vicelider_pessoas_id'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('vicelider_pessoas_id') }}</strong>
+                                            </span>
+                                           @endif
+
+                                  </div>
                          </div>
 
                          <div class="col-xs-4 {{ $errors->has('suplente1_pessoas_id') ? ' has-error' : '' }}">
-                                        <label for="suplente1_pessoas_id" class="control-label">Suplente I</label>
-                                        <div class="input-group">
-                                                 <div class="input-group-addon">
-                                                    <button  id="buscarpessoa3" type="button"  data-toggle="modal" data-target="#modal_suplente1" >
-                                                           <i class="fa fa-search"></i> ...
-                                                     </button>
-                                                  </div>
+                                  <label for="suplente1_pessoas_id" class="control-label">Suplente I</label>
+                                  <div class="input-group">
+                                           <div class="input-group-addon">
+                                              <button  id="buscarpessoa3" type="button"  data-toggle="modal" data-target="#modal_suplente1" >
+                                                     <i class="fa fa-search"></i> ...
+                                               </button>
+                                            </div>
 
-                                                  @include('modal_buscar_pessoas', array('qual_campo'=>'suplente1_pessoas_id', 'modal' => 'modal_suplente1'))
+                                            @include('modal_buscar_pessoas', array('qual_campo'=>'suplente1_pessoas_id', 'modal' => 'modal_suplente1'))
 
-                                                  <input id="suplente1_pessoas_id"  name = "suplente1_pessoas_id" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
+                                            <input id="suplente1_pessoas_id"  name = "suplente1_pessoas_id" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
 
-                                                  <!-- se houver erros na validacao do form request -->
-                                                   @if ($errors->has('suplente1_pessoas_id'))
-                                                    <span class="help-block">
-                                                        <strong>{{ $errors->first('suplente1_pessoas_id') }}</strong>
-                                                    </span>
-                                                   @endif
+                                            <!-- se houver erros na validacao do form request -->
+                                             @if ($errors->has('suplente1_pessoas_id'))
+                                              <span class="help-block">
+                                                  <strong>{{ $errors->first('suplente1_pessoas_id') }}</strong>
+                                              </span>
+                                             @endif
 
-                                          </div>
+                                    </div>
                          </div>
 
 
                          <div class="col-xs-4 {{ $errors->has('suplente1_pessoas_id') ? ' has-error' : '' }}">
-                                        <label for="suplente2_pessoas_id" class="control-label">Suplente II</label>
-                                        <div class="input-group">
-                                                 <div class="input-group-addon">
-                                                    <button  id="buscarpessoa4" type="button"  data-toggle="modal" data-target="#modal_suplente2" >
-                                                           <i class="fa fa-search"></i> ...
-                                                     </button>
-                                                  </div>
-
-                                                  @include('modal_buscar_pessoas', array('qual_campo'=>'suplente2_pessoas_id', 'modal' => 'modal_suplente2'))
-
-                                                  <input id="suplente2_pessoas_id"  name = "suplente2_pessoas_id" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
-                                                  <!-- se houver erros na validacao do form request -->
-                                                   @if ($errors->has('suplente2_pessoas_id'))
-                                                    <span class="help-block">
-                                                        <strong>{{ $errors->first('suplente2_pessoas_id') }}</strong>
-                                                    </span>
-                                                   @endif
-
+                                <label for="suplente2_pessoas_id" class="control-label">Suplente II</label>
+                                <div class="input-group">
+                                         <div class="input-group-addon">
+                                            <button  id="buscarpessoa4" type="button"  data-toggle="modal" data-target="#modal_suplente2" >
+                                                   <i class="fa fa-search"></i> ...
+                                             </button>
                                           </div>
+
+                                          @include('modal_buscar_pessoas', array('qual_campo'=>'suplente2_pessoas_id', 'modal' => 'modal_suplente2'))
+
+                                          <input id="suplente2_pessoas_id"  name = "suplente2_pessoas_id" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
+                                          <!-- se houver erros na validacao do form request -->
+                                           @if ($errors->has('suplente2_pessoas_id'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('suplente2_pessoas_id') }}</strong>
+                                            </span>
+                                           @endif
+
+                                  </div>
                          </div>
 
 
@@ -347,24 +347,13 @@
                                              </div>
 
                                              <div class="row">
-                                                  <div class="col-xs-3">
-                                                        <label for="escaninho" class="control-label">N. Escaninho</label>
-                                                        <input id="escaninho"  placeholder="(Opcional)" name = "escaninho" type="text" class="form-control" value="">
+
+                                                  <div class="col-xs-5">
+                                                        @include('carregar_combos', array('dados'=>$publicos, 'titulo' =>'Público Alvo', 'id_combo'=>'publico_alvo', 'complemento'=>'', 'comparar'=>''))
                                                   </div>
 
-                                                  <div class="col-xs-3">
-                                                        <label for="celeiro" class="control-label">Celeiro</label>
-                                                        <input id="celeiro"  placeholder="(Opcional)" name = "celeiro" type="text" class="form-control" value="">
-                                                  </div>
-
-                                                  <div class="col-xs-3">
-                                                        <label for="publico_alvo" class="control-label">Público Alvo</label>
-                                                        <input id="publico_alvo"  placeholder="(Opcional)" name = "publico_alvo" type="text" class="form-control" value="">
-                                                  </div>
-
-                                                  <div class="col-xs-3">
-                                                        <label for="faixa_etaria" class="control-label">Faixa Estária</label>
-                                                        <input id="faixa_etaria"  placeholder="(Opcional)" name = "faixa_etaria" type="text" class="form-control" value="">
+                                                  <div class="col-xs-5">
+                                                        @include('carregar_combos', array('dados'=>$faixas, 'titulo' =>'Faixa Etária', 'id_combo'=>'faixa_etaria', 'complemento'=>'', 'comparar'=>''))
                                                   </div>
 
                                              </div>
