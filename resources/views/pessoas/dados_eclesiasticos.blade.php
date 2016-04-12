@@ -154,7 +154,7 @@
 
                                                                 <div class="col-xs-3">
                                                                           <label for="ufnaturalidade" class="control-label">UF</label>
-                                                                          <input id="ufnaturalidade" name = "ufnaturalidade" type="text" class="form-control"  value="{{ ($tipo_operacao=='inclusao' ? old('ufnaturalidade') : $membros_dados_pessoais[0]->uf_naturalidade) }}">
+                                                                          <input id="ufnaturalidade" name = "ufnaturalidade" maxlength="2" type="text" class="form-control"  value="{{ ($tipo_operacao=='inclusao' ? old('ufnaturalidade') : $membros_dados_pessoais[0]->uf_naturalidade) }}">
                                                                 </div>
 
                                                                   <div class="col-xs-3">
@@ -1257,7 +1257,30 @@
                           </div>
                           <div id="tab10" class="panel-collapse collapse">
                             <div class="box-body">
-                                Em Breve
+
+                                  <div  class="row">
+                                       <div class="col-md-12">
+                                                <div class="box box-default">
+                                                      <div class="box-body"><!-- box-body-->
+                                                              <div class="row"><!-- row-->
+                                                                  <div class="col-xs-11">
+
+                                                                        <label for="celulas" class="control-label">Participa Célula</label>
+
+                                                                        <select id="celulas" name="celulas" placeholder="(Selecionar)" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                        <option  value=""></option>
+                                                                        @foreach($celulas as $item)
+                                                                               <option  value="{!! $item->id  . '|' . $item->nome !!}" {{$membros_celula[0]->celulas_id==$item->id ? 'selected' : '' }}>{{$item->nome}}</option>
+                                                                        @endforeach
+                                                                        </select>
+
+                                                                  </div><!-- col-xs-5-->
+                                                              </div>
+                                                      </div>
+                                                </div>
+                                       </div>
+                                  </div>
+
                             </div>
                           </div>
                       </div><!-- FIM TAB Células-->

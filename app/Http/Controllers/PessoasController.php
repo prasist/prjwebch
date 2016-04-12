@@ -170,6 +170,9 @@ class PessoasController extends Controller
         //Para carregar combo de bancos
         $bancos = \App\Models\bancos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
 
+        /*Busca */
+        $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
 
         if ($habilitar_interface->membro) //Somente se no cadastro de tipos de pessoas estiver marcado MEMBRO
         {
@@ -209,6 +212,7 @@ class PessoasController extends Controller
             $membros_ministerios =  "";
             $membros_historico =  $religioes;
             $membros_profissionais =  $religioes; //array('0' => ['0'  => 'membros_profissionais']);
+            $membros_celula="";
 
 
             return view($this->rota . '.registrar',
@@ -233,6 +237,7 @@ class PessoasController extends Controller
                 'atividades' => $atividades,
                 'ministerios' => $ministerios,
                 'cargos' => $cargos,
+                'celulas'=> $celulas,
                 'membros_dados_pessoais' => $membros_dados_pessoais,
                 'membros_situacoes' => $membros_situacoes,
                 'membros_dons' => $membros_dons,
@@ -278,31 +283,31 @@ public function salvar($request, $id, $tipo_operacao) {
         'pessoas_id' => $id
     ];
 
-    /*
-        Se for UPDATE (houver conteudo variavel $id), exclui as tabelas auxiliares antes da TRANSACTION
-    */
-    if ($id!="")
-    {
-            /*Excluir antes atualizar*/
-            $excluir = \App\Models\membros_dons::where($where)->delete();
-            $excluir = \App\Models\membros_profissionais::where($where)->delete();
-            $excluir = \App\Models\financpessoas::where($where)->delete();
-            $excluir = \App\Models\membros_dados::where($where)->delete();
-            $excluir = \App\Models\membros_familiares::where($where)->delete();
-            $excluir = \App\Models\membros_situacoes::where($where)->delete();
-            $excluir = \App\Models\membros_formacoes::where($where)->delete();
-            $excluir = \App\Models\membros_idiomas::where($where)->delete();
-            $excluir = \App\Models\membros_habilidades::where($where)->delete();
-            $excluir = \App\Models\membros_atividades::where($where)->delete();
-            $excluir = \App\Models\membros_filhos::where($where)->delete();
-            $excluir = \App\Models\membros_ministerios::where($where)->delete();
-            $excluir = \App\Models\membros_hist_eclesiasticos::where($where)->delete();
-    }
-
-
 /* ------------------ INICIA TRANSACTION -----------------------*/
         \DB::transaction(function() use ($request, $id, $tipo_operacao, $where)
         {
+
+
+            /*
+                Se for UPDATE (houver conteudo variavel $id), exclui as tabelas auxiliares antes da TRANSACTION
+            */
+            if ($id!="")
+            {
+                    /*Excluir antes atualizar*/
+                    $excluir = \App\Models\membros_dons::where($where)->delete();
+                    $excluir = \App\Models\membros_profissionais::where($where)->delete();
+                    $excluir = \App\Models\financpessoas::where($where)->delete();
+                    $excluir = \App\Models\membros_dados::where($where)->delete();
+                    $excluir = \App\Models\membros_familiares::where($where)->delete();
+                    $excluir = \App\Models\membros_situacoes::where($where)->delete();
+                    $excluir = \App\Models\membros_formacoes::where($where)->delete();
+                    $excluir = \App\Models\membros_idiomas::where($where)->delete();
+                    $excluir = \App\Models\membros_habilidades::where($where)->delete();
+                    $excluir = \App\Models\membros_atividades::where($where)->delete();
+                    $excluir = \App\Models\membros_filhos::where($where)->delete();
+                    $excluir = \App\Models\membros_ministerios::where($where)->delete();
+                    $excluir = \App\Models\membros_hist_eclesiasticos::where($where)->delete();
+            }
 
             /*Instancia biblioteca de funcoes globais*/
             $formatador = new  \App\Functions\FuncoesGerais();
@@ -419,6 +424,35 @@ public function salvar($request, $id, $tipo_operacao) {
               //Somente se for tipo MEMBRO
               if ($habilitar_interface->membro)
               {
+
+                       /*Se foi informado uma celula, associa o membro a celula*/
+                       if ($input['celulas']!="")
+                       {
+                                if ($tipo_operacao=="create")  //novo registro
+                                {
+                                    $dados = new \App\Models\celulaspessoas();
+                                }
+                                else //Alteracao
+                                {
+                                    $dados = \App\Models\celulaspessoas::firstOrNew($where);
+                                }
+
+                                /*input celulas vem com pipe separando celulas_id | lider_pessoas_id - nome*/
+                                $strCampos = explode("|", $input['celulas']);
+
+                                $valores =
+                                [
+                                    'pessoas_id' => $pessoas->id,
+                                    'empresas_id' =>  $this->dados_login->empresas_id,
+                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                    'celulas_id' => $strCampos[0],
+                                    'lider_pessoas_id' => substr($strCampos[1],0,9)
+                                ];
+
+                                $dados->fill($valores)->save();
+                                $dados->save();
+                        }
+
 
                         /*------------------------------DADOS ECLESIASTICOS------------------------------*/
 
@@ -1148,6 +1182,9 @@ public function salvar($request, $id, $tipo_operacao) {
         //Listagem de bancos (Para carregar dropdown )
         $bancos = \App\Models\bancos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome')->get();
 
+        /*Busca */
+        $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
 
         /*Pessoas e dados financeiros*/
         /*Usado dessa forma para formatar a data de nascimento */
@@ -1159,28 +1196,33 @@ public function salvar($request, $id, $tipo_operacao) {
         $sQuery .= " order by razaosocial ";
         $pessoas = \DB::select($sQuery, [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        /* FORMA ANTERIOR
-        $pessoas = pessoas::select('pessoas.*', 'financ_pessoas.id as id_financ', 'financ_pessoas.bancos_id', 'financ_pessoas.endereco as endereco_cobranca', 'financ_pessoas.numero as numero_cobranca', 'financ_pessoas.bairro as bairro_cobranca', 'financ_pessoas.cidade as cidade_cobranca', 'financ_pessoas.estado as estado_cobranca', 'financ_pessoas.cep as cep_cobranca', 'financ_pessoas.complemento as complemento_cobranca')
-        ->leftjoin('financ_pessoas', 'pessoas.id', '=', 'financ_pessoas.pessoas_id')
-        ->where('pessoas.id', $id)
-        ->where('pessoas.empresas_id', $this->dados_login->empresas_id)
-        ->where('pessoas.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->get();
-        */
 
         /*Se for MEMBRO, busca informacoes em tabelas especificas*/
         if ($habilitar_interface->membro)
         {
+
+            /*Busca célula que o membro participa*/
+            $membros_celula  = \App\Models\celulaspessoas::select('celulas_pessoas.celulas_id')
+            ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('empresas_id', $this->dados_login->empresas_id)
+            ->where('pessoas_id', $id)
+            ->get();
+
+            /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
+            if ($membros_celula->count()==0)
+            {
+                $membros_celula = $bancos; //Artificio para nao ter que tratar array vazia nas views
+            }
+
 
             /*Dados complementares de membros*/
             $membros_dados_pessoais  = \App\Models\membros_dados::select('membros_dados_pessoais.*', 'pessoas.razaosocial')
             ->leftjoin('pessoas', 'pessoas.id', '=' , 'membros_dados_pessoais.familias_id')
             ->where('membros_dados_pessoais.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
             ->where('membros_dados_pessoais.empresas_id', $this->dados_login->empresas_id)
-            ->where('pessoas.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-            ->where('pessoas.empresas_id', $this->dados_login->empresas_id)
             ->where('membros_dados_pessoais.pessoas_id', $id)
             ->get();
+
 
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
             if ($membros_dados_pessoais->count()==0)
@@ -1210,13 +1252,6 @@ public function salvar($request, $id, $tipo_operacao) {
                 $membros_historico = $bancos; //Artificio para nao ter que tratar array vazia nas views
             }
 
-            /*
-            $membros_filhos  = \App\Models\membros_filhos::select('filhos_id as id', 'filhos_id', 'nome_filho', 'sexo', 'data_nasc', 'data_falecimento', 'status_id', 'estadocivil_id')
-            ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-            ->where('empresas_id', $this->dados_login->empresas_id)
-            ->where('pessoas_id', $id)
-            ->get();
-            */
 
             /*Membros Filhos*/
             $sQuery  = " select membros_filhos.id as id_seq,  filhos_id as id, filhos_id, nome_filho, sexo, status_id, estadocivil_id, estados_civis.id as id_estadocivil,  estados_civis.nome as desc_estcivil, status.id as id_status, status.nome as desc_status, ";
@@ -1230,13 +1265,6 @@ public function salvar($request, $id, $tipo_operacao) {
             $sQuery .= " and membros_filhos.empresas_clientes_cloud_id = ? ";
 
             $membros_filhos = \DB::select($sQuery, [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-
-
-            /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
-            //if ($membros_filhos==null)
-            //{
-                //$membros_filhos = $bancos; //Artificio para nao ter que tratar array vazia nas views
-            //}
 
 
             /*Situacoes Membros*/
@@ -1259,13 +1287,7 @@ public function salvar($request, $id, $tipo_operacao) {
                 $membros_profissionais = $bancos; //Artificio para nao ter que tratar array vazia nas views
             }
 
-            /*Dados de Familiares*/
-            /*
-            $membros_familiares  = \App\Models\membros_familiares::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-            ->where('empresas_id', $this->dados_login->empresas_id)
-            ->where('pessoas_id', $id)
-            ->get();
-            */
+
             $sQuery = " select p3.razaosocial as razaosocial_mae, p2.razaosocial as razaosocial_pai,  pessoas.razaosocial, pessoas_id, membros_familiares.empresas_id, membros_familiares.empresas_clientes_cloud_id, conjuge_id, nome_conjuge, ";
             $sQuery .= " to_char(data_falecimento, 'DD-MM-YYYY') AS data_falecimento, ";
             $sQuery .= " to_char(data_casamento, 'DD-MM-YYYY') AS data_casamento, ";
@@ -1386,6 +1408,8 @@ public function salvar($request, $id, $tipo_operacao) {
                     'atividades' => $atividades,
                     'ministerios' => $ministerios,
                     'cargos' => $cargos,
+                    'celulas'=>$celulas,
+                    'membros_celula'=>$membros_celula,
                     'membros_situacoes' =>$membros_situacoes,
                     'membros_formacoes' =>$membros_formacoes,
                     'membros_idiomas' =>$membros_idiomas,

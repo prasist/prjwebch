@@ -25,7 +25,7 @@
 
                   <div class="row">
 
-                        <div class="col-xs-10 {{ $errors->has('celulas') ? ' has-error' : '' }}">
+                        <div class="col-xs-11 {{ $errors->has('celulas') ? ' has-error' : '' }}">
                                 @include('carregar_combos', array('dados'=>$celulas, 'titulo' =>'Célula', 'id_combo'=>'celulas', 'complemento'=>'', 'comparar'=>''))
                         </div>
 
@@ -40,7 +40,7 @@
 
                   <div class="row">
 
-                        <div class="col-xs-10 {{ $errors->has('pessoas') ? ' has-error' : '' }}">
+                        <div class="col-xs-11 {{ $errors->has('pessoas') ? ' has-error' : '' }}">
                                 <label for="pessoas" class="control-label">Pessoa</label>
                                 <div class="input-group">
                                          <div class="input-group-addon">
@@ -66,9 +66,11 @@
                   </div>
 
                   <div class="row">
-                     <div class="col-xs-10">
+                     <div class="col-xs-11">
+                     <br/>
+                        <button onclick="AddTableRow()" type="button" class="btn btn-info"><i class="fa fa-user-plus"></i> Adicionar</button>
                         <br/>
-                        <button onclick="AddTableRow()" type="button" class="btn btn-info">Adicionar</button>
+                        <br/>
                         <table id="example" class="table table-bordered table-hover">
                             <tbody>
                              <tr>
@@ -80,9 +82,6 @@
                                <td>&nbsp;</td>
                                <td>&nbsp;</td>
                                <td>&nbsp;</td>
-                               <td>
-
-                               </td>
                              </tr>
                             </tbody>
 
@@ -105,44 +104,47 @@
 </div>
 
 <script type="text/javascript">
-(function($) {
-  AddTableRow = function() {
+    (function($) {
+      AddTableRow = function() {
 
-    var newRow = $("<tr>");
-    var cols = "";
+        var newRow = $("<tr>");
+        var cols = "";
+        var strCampos="";
 
-    var ind_celula = document.getElementById("celulas").selectedIndex;
-    var texto_celula = document.getElementById("celulas").options;
+        var ind_celula = document.getElementById("celulas").selectedIndex;
+        var texto_celula = document.getElementById("celulas").options;
 
-    var str_celula = texto_celula[ind_celula].text;
+        var str_celula = texto_celula[ind_celula].text;
 
-    cols += '<td>' + str_celula + '</td>';
-    cols += '<td>' + document.getElementById("pessoas").value + '</td>';
-    cols += '<td>&nbsp;</td>';
-    cols += '<td>&nbsp;</td>';
-    cols += '<td>';
-    cols += '<button data-toggle="tooltip" data-placement="top" title="Remover" type="submit" class="btn btn-danger btn-sm" onclick="RemoveTableRow(this)"><spam class="glyphicon glyphicon-trash"></spam></button>';
-    cols += '</td>';
+        strCampos = '<input id="hidden_celulas[]"  name = "hidden_celulas[]" type="hidden" value="' + document.getElementById("celulas").value + '">';
+        strCampos += '<input id="hidden_pessoas[]"  name = "hidden_pessoas[]" type="hidden" value="' + document.getElementById("pessoas").value + '">';
+        strCampos += '<input id="hidden_lider_celulas[]"  name = "hidden_lider_celulas[]" type="hidden" value="' + str_celula + '">';
 
-    newRow.append(cols);
-    $("#example").append(newRow);
+        cols += '<td>' + str_celula + '</td>';
+        cols += '<td>' + document.getElementById("pessoas").value + '</td>';
+        cols += '<td>';
+        cols += '<button data-toggle="tooltip" data-placement="top" title="Remover" type="submit" class="btn btn-danger btn-sm" onclick="RemoveTableRow(this)"><spam class="glyphicon glyphicon-trash"></spam></button>' + strCampos;
+        cols += '</td>';
 
-    return false;
-  };
-})(jQuery);
+        newRow.append(cols);
+        $("#example").append(newRow);
+        document.getElementById("pessoas").value="";
+        return false;
+      };
+    })(jQuery);
 
-(function($) {
+    (function($) {
 
-  RemoveTableRow = function(handler) {
-    var tr = $(handler).closest('tr');
+      RemoveTableRow = function(handler) {
+        var tr = $(handler).closest('tr');
 
-    tr.fadeOut(400, function(){
-      tr.remove();
-    });
+        tr.fadeOut(400, function(){
+          tr.remove();
+        });
 
-    return false;
-  };
-})(jQuery);
+        return false;
+      };
+    })(jQuery);
 
 </script>
 

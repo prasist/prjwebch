@@ -36,9 +36,8 @@ class CelulasPessoasController extends Controller
               return redirect('home');
         }
 
-        $dados = celulaspessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->where('empresas_id', $this->dados_login->empresas_id)
-        ->get();
+        //$dados = \DB::select('select distinct celulas_id, lider_pessoas_id, descricao_lider  as nome from view_celulas_pessoas where  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $dados = \DB::select('select distinct celulas_id, lider_pessoas_id, descricao_lider  as nome, tot from view_celulas_pessoas_participantes where  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         return view($this->rota . '.index',compact('dados'));
 
@@ -61,6 +60,67 @@ class CelulasPessoasController extends Controller
     }
 
 
+public function salvar($request, $id, $tipo_operacao)
+{
+        /*Validação de campos - request*/
+        $this->validate($request, [
+                'celulas' => 'required',
+        ]);
+
+        //Pega dados do post
+        $input = $request->except(array('_token', 'ativo')); //não levar o token
+
+
+        //Se for alteração, exclui primeiro, para depois percorrer a tabela e inserir novamente
+        if ($id!="")
+        {
+              /*Clausula where padrao para as tabelas auxiliares*/
+             $where = ['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $this->dados_login->empresas_id, 'celulas_id' => $id];
+             $excluir = celulaspessoas::where($where)->delete();
+        }
+
+
+        $i_index=0; /*Inicia sequencia*/
+
+        foreach($input['hidden_celulas'] as $selected)
+         {
+
+              $whereForEach =
+              [
+                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                    'empresas_id' =>  $this->dados_login->empresas_id,
+                    'pessoas_id' => substr($input['hidden_pessoas'][$i_index],0,9),
+                    'celulas_id' => $selected
+              ];
+
+                if ($tipo_operacao=="create")  //novo registro
+                {
+                    $dados = new celulaspessoas();
+                }
+                else //Alteracao
+                {
+                    $dados = celulaspessoas::firstOrNew($whereForEach);
+                }
+
+                $valores =
+                [
+                    'pessoas_id' => substr($input['hidden_pessoas'][$i_index],0,9),
+                    'empresas_id' =>  $this->dados_login->empresas_id,
+                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                    'celulas_id' => $selected,
+                    'lider_pessoas_id' => substr($input['hidden_lider_celulas'][$i_index],0,9)
+                ];
+
+                $dados->fill($valores)->save();
+                $dados->save();
+
+                $i_index = $i_index + 1;
+         }
+
+}
+
+
+
 /*
 * Grava dados no banco
 *
@@ -68,21 +128,9 @@ class CelulasPessoasController extends Controller
     public function store(\Illuminate\Http\Request  $request)
     {
 
-            /*Validação de campos - request*/
-            $this->validate($request, [
-                    'nome' => 'required|max:60:min:3',
-            ]);
-
-           $input = $request->except(array('_token', 'ativo')); //não levar o token
-
-           $grupos = new celulaspessoas();
-           $grupos->nome  = $input['nome'];
-           $grupos->clientes_cloud_id  = $this->dados_login->empresas_clientes_cloud_id;
-           $grupos->save();
-
-           \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-
-            return redirect($this->rota);
+            $this->salvar($request, "", "create");
+            \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
+             return redirect($this->rota);
 
     }
 
@@ -99,9 +147,12 @@ class CelulasPessoasController extends Controller
               return redirect('home');
         }
 
-        //preview = true, somente visualizacao, desabilita botao gravar
-        $dados = celulaspessoas::findOrfail($id);
-        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview] );
+        /*Busca */
+        $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        $dados = \DB::select('select * from view_celulas_pessoas where celulas_id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview, 'celulas'=>$celulas]);
 
     }
 
@@ -131,22 +182,9 @@ class CelulasPessoasController extends Controller
      */
     public function update(\Illuminate\Http\Request  $request, $id)
     {
-
-        /*Validação de campos - request*/
-        $this->validate($request, [
-                'nome' => 'required|max:60:min:3',
-         ]);
-
-        $input = $request->except(array('_token', 'ativo')); //não levar o token
-
-        $dados = celulaspessoas::findOrfail($id);
-        $dados->nome  = $input['nome'];
-        $dados->save();
-
+        $this->salvar($request, $id,  "update");
         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-
         return redirect($this->rota);
-
     }
 
 
@@ -159,10 +197,21 @@ class CelulasPessoasController extends Controller
     public function destroy($id)
     {
 
-            $dados = celulaspessoas::findOrfail($id);
-            $dados->delete();
+         if ($id!="") //Se for alteração, exclui primeiro, para depois percorrer a tabela e inserir novamente
+         {
 
-            return redirect($this->rota);
+                /*Clausula where padrao para as tabelas auxiliares*/
+               $where =
+               [
+                  'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                  'empresas_id' =>  $this->dados_login->empresas_id,
+                  'celulas_id' => $id
+               ];
+
+               $excluir = celulaspessoas::where($where)->delete();
+         }
+
+         return redirect($this->rota);
 
     }
 
