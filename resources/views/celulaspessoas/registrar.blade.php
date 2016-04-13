@@ -106,4 +106,44 @@
 @include('celulaspessoas.script_table')
 
 
+<script type="text/javascript">
+$(function ()
+    {
+
+          //Verifica se cpf é único no banco de dados
+          $("#celulas").change(function()
+          {
+
+              if ($(this).val()!="") //se foi preenchido o campo
+              {
+
+                      var strValor = $(this).val(); //Pega conteudo campo cpf
+                      var urlGetUser = '{!! url("/funcoes/verificarcelulas/' +  strValor +  '") !!}'; //Route funcoes = FuncoesController@index passando cpf como parametro
+
+                      $.ajax(
+                      {
+                          url: urlGetUser,
+                           success: function (response) { //Encontrando a rota e a funcao retornando dados, exibe alerta
+
+                               if (response!="") //Só exibe mensagem se encontrar CPF para outra pessoa
+                               {
+
+                                  /*Só exibir mensagem se realmente estiver sendo cadastrado uma nova pessoa*/
+                                  if ($("#celulas").val()==response)
+                                  {
+                                      alert('Célula já cadastrada. Favor utilizar a função Alteração para incluir ou remover participantes.');
+                                      $("#celulas").val("").change(); //Desmarca a opção selecionada
+                                  }
+
+                               }
+
+                           }
+                      });
+              }
+
+         });
+
+     });
+</script>
+
 @endsection

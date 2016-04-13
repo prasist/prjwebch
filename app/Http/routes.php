@@ -27,6 +27,9 @@
     /*Validacao do CPF / CNPJ - disparado pelo jquery*/
     Route::get('funcoes/{id}', 'FuncoesController@validar');
 
+    /*Verificar se a célula que está sendo incluida  já existe*/
+    Route::get('funcoes/verificarcelulas/{id}', 'FuncoesController@validar_celulas');
+
     Route::get('buscapessoa/{id}', 'FuncoesController@buscarpessoa');
 
     Route::get('nivel5/{id}', 'CarregaEstruturasController@carregar_nivel5');

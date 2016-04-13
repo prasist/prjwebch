@@ -6,6 +6,7 @@
 
                        $('[data-toggle="tooltip"]').tooltip();
 
+                        /*checkbox se utiliza endereco de cobranca exibe a DIV*/
                         $('#endcobranca').click(function()
                         {
                             if ($(this).prop('checked'))
@@ -17,7 +18,7 @@
                             }
                         });
 
-
+                        /*Se clicar em pessoa fisica*/
                         $('.opFisica').click(function()
                         {
                               $("#lb_cnpj_cpf").text('CPF');
@@ -27,6 +28,7 @@
                               $(".cnpj").hide();
                         });
 
+                        /*Se clicar em pessoa juridica*/
                         $('.opJuridica').click(function()
                         {
                               $("#lb_cnpj_cpf").text('CNPJ');

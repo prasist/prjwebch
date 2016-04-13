@@ -57,6 +57,26 @@ class FuncoesController extends Controller
 
     }
 
+    public function validar_celulas($id)
+    {
+
+            //Verificar se célula existe
+            $buscar = \App\Models\celulaspessoas::select('celulas_id')
+            ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('empresas_id', $this->dados_login->empresas_id)
+            ->where('celulas_id', $id)
+            ->get();
+
+            if ($buscar)
+            {
+                return $buscar[0]->celulas_id; //Retorna o nome da pessoa
+            }
+            else
+            {
+                return ""; //Retorna vazio
+            }
+    }
+
  /*Pesquisa pessoas pelas iniciais da razaosocial passada por parametro*/
     public function buscarpessoa($id)
     {
