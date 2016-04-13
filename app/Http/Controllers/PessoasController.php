@@ -77,10 +77,45 @@ class PessoasController extends Controller
         ->where('empresas_id', $this->dados_login->empresas_id)
         ->where('razaosocial', 'ilike', $buscar_nome . '%')
         ->join('tipos_pessoas', 'tipos_pessoas.id', '=' , 'pessoas.tipos_pessoas_id')
+        ->orderBy('pessoas.razaosocial')->get();
+
+
+        return view($this->rota . '.index', ['dados' => $dados, 'tipos' => $tipos, 'grupos'=>$grupos]);
+
+    }
+
+
+
+/*Busca pela inicial do nome (alfabeto)*/
+    public function listar_por_nome_json($buscar_nome)
+    {
+
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
+        {
+              return redirect('home');
+        }
+
+        //Para carregar combo de grupos de pessoas
+        $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->get();
+
+        //Lista tipos de pessoas, será usado no botão novo registro para indicar qual tipo de cadastro efetuar
+        $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+
+        //$dados = pessoas::select('pessoas.id', 'pessoas.razaosocial', 'pessoas.nomefantasia', 'pessoas.cnpj_cpf', 'pessoas.fone_principal', 'tipos_pessoas.id as id_tipo_pessoa', 'tipos_pessoas.nome as nome_tipo_pessoa')
+        //Listagem de pessoas
+        $dados = pessoas::select('pessoas.id', 'pessoas.razaosocial')
+        ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->where('razaosocial', 'ilike', $buscar_nome . '%')
+        ->join('tipos_pessoas', 'tipos_pessoas.id', '=' , 'pessoas.tipos_pessoas_id')
         ->orderBy('pessoas.razaosocial')
         ->get();
 
-        return view($this->rota . '.index', ['dados' => $dados, 'tipos' => $tipos, 'grupos'=>$grupos]);
+        return \Datatables::of($dados)->make(true);
+        //return \Datatables::eloquent($dados)->make(true);
+        //return \Datatables::collection($dados)->make(true);
 
     }
 

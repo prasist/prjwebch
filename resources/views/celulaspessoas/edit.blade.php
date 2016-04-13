@@ -72,7 +72,7 @@
                         <br/>
                         <br/>
 
-                        <table id="example" class="table table-bordered table-hover">
+                        <table id="example1" class="table table-bordered table-hover">
                             <tbody>
                              <tr>
                                <th>Célula</th>

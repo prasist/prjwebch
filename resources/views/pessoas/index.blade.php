@@ -54,11 +54,13 @@
                         <th>Alterar</th>
                         <th>Visualizar</th>
                         <th>Excluir</th>
+
                         </tr>
                     </thead>
                     <tbody>
 
-                        @foreach($dados as $value)
+
+                         @foreach($dados as $value)
 
                         <tr>
 
@@ -106,20 +108,4 @@
          </div>
         </div>
 
-@endsection
-
-@section('data_table_custom')
-<script type="text/javascript">
-
-        $(function ()
-        {
-                  $("#example2").DataTable({
-                      language: {
-                      searchPlaceholder: "Nome, CNPJ, CPF, Telefone..."
-                      }
-                  });
-
-        });
-
-</script>
 @endsection

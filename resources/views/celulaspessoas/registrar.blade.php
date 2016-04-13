@@ -107,6 +107,12 @@
     (function($) {
       AddTableRow = function() {
 
+        /*Não deixa adicionar sem conteudo*/
+        if (document.getElementById("pessoas").value=="")
+        {
+            return false;
+        }
+
         var newRow = $("<tr>");
         var cols = "";
         var strCampos="";
@@ -115,6 +121,29 @@
         var texto_celula = document.getElementById("celulas").options;
 
         var str_celula = texto_celula[ind_celula].text;
+        var bEncontrou=false;
+
+
+        /*Verifica se a pessoa já não foi adicionada*/
+        $('input').each(function (index, value)
+        {
+               var nomecampo = $(this).attr('id');
+               if (nomecampo=="hidden_pessoas[]")
+               {
+                   if ($(this).attr('value')==document.getElementById("pessoas").value)
+                   {
+                        alert('Pessoa já adicionada a esta célula');
+                        bEncontrou=true;
+                   }
+               }
+
+        });
+
+        /*Se encontrou pessoa na listagem sai da rotina sem adicionar novamente*/
+        if (bEncontrou==true)
+        {
+            return false;
+        }
 
         strCampos = '<input id="hidden_celulas[]"  name = "hidden_celulas[]" type="hidden" value="' + document.getElementById("celulas").value + '">';
         strCampos += '<input id="hidden_pessoas[]"  name = "hidden_pessoas[]" type="hidden" value="' + document.getElementById("pessoas").value + '">';
