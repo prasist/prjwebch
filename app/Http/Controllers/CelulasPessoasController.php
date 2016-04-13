@@ -62,10 +62,6 @@ class CelulasPessoasController extends Controller
 
 public function salvar($request, $id, $tipo_operacao)
 {
-        /*Validação de campos - request*/
-        $this->validate($request, [
-                'celulas' => 'required',
-        ]);
 
         //Pega dados do post
         $input = $request->except(array('_token', 'ativo')); //não levar o token

@@ -50,7 +50,7 @@
         cols += '<td>' + str_celula + '</td>';
         cols += '<td>' + document.getElementById("pessoas").value + '</td>';
         cols += '<td>';
-        cols += '<button data-toggle="tooltip" data-placement="top" title="Remover" type="submit" class="btn btn-danger btn-sm" onclick="RemoveTableRow(this)"><spam class="glyphicon glyphicon-trash"></spam></button>' + strCampos;
+        cols += '<a href="#" class="btn btn-danger btn-sm" onclick="RemoveTableRow(this)"><spam class="glyphicon glyphicon-trash"></spam></a>' + strCampos;
         cols += '</td>';
 
         newRow.append(cols);
