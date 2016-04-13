@@ -103,7 +103,7 @@ return [
         /*Validacao CPF e CNPJ*/
         EltonInacio\ValidadorCpjCnpj\CpfCnpjServiceProvider::class,
 
-        //Yajra\Datatables\DatatablesServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
 
         /*
          * Application Service Providers...
