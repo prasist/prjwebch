@@ -26,7 +26,7 @@
                   <div class="row">
 
                         <div class="col-xs-11 {{ $errors->has('celulas') ? ' has-error' : '' }}">
-                                @include('carregar_combos', array('dados'=>$celulas, 'titulo' =>'Célula', 'id_combo'=>'celulas', 'complemento'=>'', 'comparar'=>$dados[0]->celulas_id))
+                                @include('carregar_combos', array('dados'=>$celulas, 'titulo' =>'Célula', 'id_combo'=>'celulas', 'complemento'=>'disabled=disabled', 'comparar'=>$dados[0]->celulas_id))
                         </div>
 
                         <!-- se houver erros na validacao do form request -->
@@ -72,7 +72,7 @@
                         <br/>
                         <br/>
 
-                        <table id="example1" class="table table-bordered table-hover">
+                        <table id="example" class="table table-bordered table-hover">
                             <tbody>
                              <tr>
                                <th>Célula</th>
@@ -112,50 +112,6 @@
 
 </div>
 
-<script type="text/javascript">
-    (function($) {
-      AddTableRow = function() {
-
-        var newRow = $("<tr>");
-        var cols = "";
-        var strCampos="";
-
-        var ind_celula = document.getElementById("celulas").selectedIndex;
-        var texto_celula = document.getElementById("celulas").options;
-
-        var str_celula = texto_celula[ind_celula].text;
-
-        strCampos = '<input id="hidden_celulas[]"  name = "hidden_celulas[]" type="hidden" value="' + document.getElementById("celulas").value + '">';
-        strCampos += '<input id="hidden_pessoas[]"  name = "hidden_pessoas[]" type="hidden" value="' + document.getElementById("pessoas").value + '">';
-        strCampos += '<input id="hidden_lider_celulas[]"  name = "hidden_lider_celulas[]" type="hidden" value="' + str_celula + '">';
-
-        cols += '<td>' + str_celula + '</td>';
-        cols += '<td>' + document.getElementById("pessoas").value + '</td>';
-        cols += '<td>';
-        cols += '<button data-toggle="tooltip" data-placement="top" title="Remover" type="submit" class="btn btn-danger btn-sm" onclick="RemoveTableRow(this)"><spam class="glyphicon glyphicon-trash"></spam></button>' + strCampos;
-        cols += '</td>';
-
-        newRow.append(cols);
-        $("#example").append(newRow);
-        document.getElementById("pessoas").value="";
-        return false;
-      };
-    })(jQuery);
-
-    (function($) {
-
-      RemoveTableRow = function(handler) {
-        var tr = $(handler).closest('tr');
-
-        tr.fadeOut(400, function(){
-          tr.remove();
-        });
-
-        return false;
-      };
-    })(jQuery);
-
-</script>
-
+@include('celulaspessoas.script_table')
 
 @endsection
