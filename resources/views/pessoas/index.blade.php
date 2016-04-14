@@ -83,7 +83,6 @@
                 var urlRoute = "{!! url('/pessoas/json/" + sDados + "') !!}"; //Rota para consulta
                 var rota = "{{$rota}}"; //Somente rota da pagina
 
-
                 /*Permissoes para saber se cria botao ou nao*/
                 var alterar = '{{$alterar}}';
                 var visualizar = '{{$visualizar}}';
@@ -155,4 +154,3 @@
               });
 </script>
 @endsection
-
