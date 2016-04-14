@@ -100,7 +100,6 @@ class PessoasController extends Controller
               return redirect('home');
         }
 
-
         $tipos_pessoas_id="";
         $status="";
         $tipopessoa="";
@@ -243,8 +242,12 @@ class PessoasController extends Controller
         }
      }
 
-    //return view($this->rota . '.index', ['dados' => $dados, 'tipos' => $tipos, 'grupos'=>$grupos, 'where'=>$where]);
-    return view($this->rota . '.index', ['tipos' => $tipos, 'grupos'=>$grupos, 'where'=>$where]);
+    /*Verifica permissoes do usuario para criar os botoes da consulta*/
+    $visualizar = Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'visualizar']);
+    $alterar = Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'alterar']);
+    $excluir = Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'excluir']);
+
+    return view($this->rota . '.index', ['tipos' => $tipos, 'grupos'=>$grupos, 'where'=>$where, 'visualizar'=>$visualizar, 'alterar'=>$alterar, 'excluir'=>$excluir]);
 
  }
 
