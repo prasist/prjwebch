@@ -119,7 +119,8 @@
                                   {"mRender": function(data, type, full) {
                                         if (alterar)
                                         {
-                                            return '<a class="btn  btn-info btn-sm" href="' + rota + '/' + full['id'] + '/edit/' + full['id_tipo_pessoa'] + '"><spam class="glyphicon glyphicon-pencil"></spam></a>';
+                                            //return '<a class="btn  btn-info btn-sm" href="' + rota + '/' + full['id'] + '/edit/' + full['id_tipo_pessoa'] + '"><spam class="glyphicon glyphicon-pencil"></spam></a>';
+                                            return '<a class="btn  btn-info btn-sm" href="/' + full['id'] + '/edit/' + full['id_tipo_pessoa'] + '"><spam class="glyphicon glyphicon-pencil"></spam></a>';
                                         }
                                         else
                                         {
@@ -129,7 +130,8 @@
                                     {"mRender": function(data, type, full) {
                                         if (visualizar)
                                         {
-                                              return '<a class="btn  btn-primary btn-sm" href="' + rota + '/' + full['id'] + '/preview/' + full['id_tipo_pessoa'] + '"><spam class="glyphicon glyphicon-zoom-in"></spam></a>';
+                                              //return '<a class="btn  btn-primary btn-sm" href="' + rota + '/' + full['id'] + '/preview/' + full['id_tipo_pessoa'] + '"><spam class="glyphicon glyphicon-zoom-in"></spam></a>';
+                                              return '<a class="btn  btn-primary btn-sm" href="/' + full['id'] + '/preview/' + full['id_tipo_pessoa'] + '"><spam class="glyphicon glyphicon-zoom-in"></spam></a>';
                                         }
                                         else
                                         {
@@ -140,7 +142,8 @@
                                     {"mRender": function(data, type, full) {
                                          if (excluir)
                                          {
-                                                return "<form id='excluir" + full['id'] + "' action='" + rota + "/" + full['id'] + "/delete' method='DELETE'><button data-toggle='tooltip' data-placement='top' title='Excluir Ítem' type='submit' class='btn btn-danger btn-sm' onclick='return confirm(\"Confirma a exclusão do registro ?\");'><spam class='glyphicon glyphicon-trash'></spam></button></form>";
+                                                //return "<form id='excluir" + full['id'] + "' action='" + rota + "/" + full['id'] + "/delete' method='DELETE'><button data-toggle='tooltip' data-placement='top' title='Excluir Ítem' type='submit' class='btn btn-danger btn-sm' onclick='return confirm(\"Confirma a exclusão do registro ?\");'><spam class='glyphicon glyphicon-trash'></spam></button></form>";
+                                                return "<form id='excluir" + full['id'] + "' action='/" + full['id'] + "/delete' method='DELETE'><button data-toggle='tooltip' data-placement='top' title='Excluir Ítem' type='submit' class='btn btn-danger btn-sm' onclick='return confirm(\"Confirma a exclusão do registro ?\");'><spam class='glyphicon glyphicon-trash'></spam></button></form>";
                                          }
                                          else
                                           {
