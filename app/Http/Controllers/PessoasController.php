@@ -105,6 +105,9 @@ class PessoasController extends Controller
         $tipopessoa="";
         $razaosocial="";
         $grupos_pessoas_id="";
+        $datanasc="";
+        $datanasc_ate="";
+        $mes="";
 
 
         if ($querystring!="")
@@ -113,38 +116,19 @@ class PessoasController extends Controller
                 //Exemplo : status|1&tipopessoa|F&nome|fulano&
                 $array_campos = explode("&", htmlspecialchars_decode($querystring));
 
-
                 //Percorre resultado da array
                 foreach ($array_campos as $key => $value)
                 {
-
                         $arraytemp = explode("|", $value);
 
-                        if ($arraytemp[0]=="ativo")
-                        {
-                            $status = $arraytemp[1];
-                        }
-
-                        if ($arraytemp[0]=="tipopessoa")
-                        {
-                            $tipopessoa = $arraytemp[1];
-                        }
-
-                        if ($arraytemp[0]=="razaosocial")
-                        {
-                            $razaosocial = $arraytemp[1];
-                        }
-
-                        if ($arraytemp[0]=="grupos_pessoas_id")
-                        {
-                            $grupos_pessoas_id = $arraytemp[1];
-                        }
-
-                        if ($arraytemp[0]=="tipos_pessoas_id")
-                        {
-                            $tipos_pessoas_id = $arraytemp[1];
-                        }
-
+                        if ($arraytemp[0]=="ativo") $status = $arraytemp[1];
+                        if ($arraytemp[0]=="tipopessoa") $tipopessoa = $arraytemp[1];
+                        if ($arraytemp[0]=="razaosocial") $razaosocial = $arraytemp[1];
+                        if ($arraytemp[0]=="grupos_pessoas_id") $grupos_pessoas_id = $arraytemp[1];
+                        if ($arraytemp[0]=="tipos_pessoas_id") $tipos_pessoas_id = $arraytemp[1];
+                        if ($arraytemp[0]=="datanasc") $datanasc = $arraytemp[1];
+                        if ($arraytemp[0]=="datanasc_ate") $datanasc_ate = $arraytemp[1];
+                        if ($arraytemp[0]=="mes") $mes = $arraytemp[1];
                 }
          }
 
@@ -155,6 +139,9 @@ class PessoasController extends Controller
         ->status($status)
         ->pessoa($tipopessoa)
         ->razaosocial($razaosocial)
+        ->datanasc($datanasc)
+        ->datanascfim($datanasc_ate)
+        ->mes($mes)
         ->grupo($grupos_pessoas_id)
         ->tipopessoa($tipos_pessoas_id)
         ->join('tipos_pessoas', 'tipos_pessoas.id', '=' , 'pessoas.tipos_pessoas_id')
@@ -204,6 +191,45 @@ class PessoasController extends Controller
            $where = "tipopessoa|" . $input["opPessoa"] . "&";
         }
     }
+
+
+    if ($input["datanasc"]!="")
+    {
+        if ($where!="")
+        {
+            $where .= "datanasc|" . $input["datanasc"] . "&";
+        }
+        else
+        {
+           $where = "datanasc|" . $input["datanasc"] . "&";
+        }
+    }
+
+    if ($input["datanasc_ate"]!="")
+    {
+        if ($where!="")
+        {
+            $where .= "datanasc_ate|" . $input["datanasc_ate"] . "&";
+        }
+        else
+        {
+           $where = "datanasc_ate|" . $input["datanasc_ate"] . "&";
+        }
+    }
+
+
+    if ($input["mes"]!="")
+    {
+        if ($where!="")
+        {
+            $where .= "mes|" . $input["mes"] . "&";
+        }
+        else
+        {
+           $where = "mes|" . $input["mes"] . "&";
+        }
+    }
+
 
     if ($input["razaosocial"]!="")
     {

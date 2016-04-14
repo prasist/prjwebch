@@ -25,14 +25,7 @@
 
                             <div class="row{{ $errors->has('nome') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
-                                          <label for="nome" class="control-label">Grupo</label>
-
-                                          <select name="nome" class="form-control select2" style="width: 100%;">
-
-                                          @foreach($dados as $item)
-                                                <option  value="{{$item->id}}">{{$item->nome}}</option>
-                                          @endforeach
-                                          </select>
+                                         @include('carregar_combos', array('dados'=>$dados, 'titulo' =>'Grupo', 'id_combo'=>'nome', 'complemento'=>'', 'comparar'=>''))
                                     </div>
                             </div>
 
@@ -45,7 +38,7 @@
                                                 <div id="tour6"></div>
                                                 <div id="tour4_1"></div>
 
-                                                 <p><input  id= "selecionar_todos" name="selecionar_todos" type="checkbox" checked />  Selecionar todos</p>
+                                                 <b><p><input  id= "selecionar_todos" name="selecionar_todos" type="checkbox" checked />  Selecionar todos</p></b>
 
                                                     <table id="paginas" class="table table-bordered table-hover">
                                                           <thead>

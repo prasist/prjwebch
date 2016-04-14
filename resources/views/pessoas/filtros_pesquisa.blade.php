@@ -29,8 +29,8 @@
                             -->
                             <div class="row">
                                   <div class="col-xs-10">
-                                        <label for="razaosocial" class="control-label">Nome</label>
-                                        <input id="razaosocial"  placeholder="(Digite um nome para pesquisar)" name = "razaosocial" type="text" class="form-control" value="">
+                                        <label for="razaosocial" class="control-label">Termo a pesquisar...</label>
+                                        <input id="razaosocial"  placeholder="(Pesquise por Nome, Nome Abreviado, CPF ou CNPJ)" name = "razaosocial" type="text" class="form-control" value="">
                                   </div>
                            </div>
 
@@ -52,31 +52,29 @@
                                 <div class="box-body">
 
                                    <div class="row">
-                                                        <div class="col-xs-3">
-                                                            <label for="opStatus" class="control-label">Status</label>
+                                          <div class="col-xs-3">
+                                              <label for="opStatus" class="control-label">Status</label>
 
-                                                            <select name="opStatus" class="form-control select2" style="width: 100%;">
-                                                                  <option  value="A">Ambos</option>
-                                                                   <option  value="S">Ativo</option>
-                                                                   <option  value="N">Inativo</option>
-                                                             </select>
+                                              <select name="opStatus" class="form-control select2" style="width: 100%;">
+                                                    <option  value="A">Ambos</option>
+                                                     <option  value="S">Ativo</option>
+                                                     <option  value="N">Inativo</option>
+                                               </select>
 
-                                                        </div>
+                                          </div>
 
-                                                        <div class="col-xs-3">
+                                          <div class="col-xs-3">
 
-                                                              <label for="opPessoa" class="control-label">Tipo Pessoa</label>
+                                                <label for="opPessoa" class="control-label">Tipo Pessoa</label>
 
-                                                              <select name="opPessoa" class="form-control select2" style="width: 100%;">
-                                                                   <option  value="">Ambos</option>
-                                                                   <option  value="F">Física</option>
-                                                                   <option  value="J">Jurídica</option>
-                                                              </select>
+                                                <select name="opPessoa" class="form-control select2" style="width: 100%;">
+                                                     <option  value="">Ambos</option>
+                                                     <option  value="F">Física</option>
+                                                     <option  value="J">Jurídica</option>
+                                                </select>
 
-                                                        </div>
-
-
-                                   </div>
+                                          </div>
+                                   </div> <!-- end row-->
 
                                    <div class="row">
                                         <div class="col-xs-5">
@@ -89,7 +87,56 @@
 
                                    </div>
 
+                                   <div class="row">
+                                        <div class="col-xs-3">
 
+                                                <label>Data Nascimento:</label>
+
+                                                 <div class="input-group">
+                                                   <div class="input-group-addon">
+                                                     <i class="fa fa-calendar"></i>
+                                                   </div>
+                                                   <input name="datanasc" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                                </div>
+                                                <!-- /.input group -->
+                                        </div>
+
+                                        <div class="col-xs-3">
+
+                                                <label>Até:</label>
+
+                                                <div class="input-group">
+                                                   <div class="input-group-addon">
+                                                     <i class="fa fa-calendar"></i>
+                                                   </div>
+                                                   <input name="datanasc_ate" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                                </div>
+                                                <!-- /.input group -->
+                                        </div>
+
+                                        <div class="col-xs-3">
+
+                                                <label for="mes" class="control-label">Aniversariante Mês</label>
+
+                                                <select name="mes" class="form-control select2" style="width: 100%;">
+                                                     <option  value=""></option>
+                                                     <option  value="1">Janeiro</option>
+                                                     <option  value="2">Fevereiro</option>
+                                                     <option  value="3">Março</option>
+                                                     <option  value="4">Abril</option>
+                                                     <option  value="5">Maio</option>
+                                                     <option  value="6">Junho</option>
+                                                     <option  value="7">Julho</option>
+                                                     <option  value="8">Agosto</option>
+                                                     <option  value="9">Setembro</option>
+                                                     <option  value="10">Outubro</option>
+                                                     <option  value="11">Novembro</option>
+                                                     <option  value="12">Dezembro</option>
+                                                </select>
+
+                                          </div>
+
+                                  </div>
                             </div> <!-- fim box body -->
 
                         </div>

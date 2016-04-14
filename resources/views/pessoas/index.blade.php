@@ -79,6 +79,7 @@
               $(function ()
               {
 
+
                 var sDados = '{{$where}}';  //Pega dados consulta
                 var urlRoute = "{!! url('/pessoas/json/" + sDados + "') !!}"; //Rota para consulta
                 var rota = "{{$rota}}"; //Somente rota da pagina
@@ -95,8 +96,11 @@
                           "bProcessing": true,
                           "processing": true,
                           "aaSorting": [[ 1, "asc" ]],
-                          language: {
-                          searchPlaceholder: "Nome, CNPJ, CPF, Telefone..."},
+                          language:
+                          {
+                              searchPlaceholder: "Nome, CNPJ, CPF, Telefone...",
+                              processing:     "Aguarde...Carregando"
+                          },
                           "serverSide": true,
                           "ajax": urlRoute,
                           "columnDefs":

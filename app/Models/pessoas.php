@@ -52,7 +52,7 @@ public function scopeRazaosocial($query, $nome)
 
         if ($nome)
         {
-           return $query->where('razaosocial', 'ilike', '%' . $nome . '%');
+           return $query->where('razaosocial', 'ilike', '%' . $nome . '%')->orWhere('nomefantasia', 'ilike', '%' . $nome . '%')->orWhere('cnpj_cpf', '=', $nome);
         }
 
         return $query;
@@ -89,6 +89,41 @@ public function scopePorletra($query, $letra)
         if ($tipopessoa)
         {
            return $query->where('tipos_pessoas_id', '=', $tipopessoa);
+        }
+
+        return $query;
+    }
+
+    public function scopeDatanasc($query, $datanasc)
+    {
+
+        if ($datanasc)
+        {
+           return $query->where('datanasc', '>=', $datanasc);
+        }
+
+        return $query;
+    }
+
+
+    public function scopeDatanascfim($query, $datanasc_ate)
+    {
+
+        if ($datanasc_ate)
+        {
+           return $query->where('datanasc', '<=', $datanasc_ate);
+        }
+
+        return $query;
+    }
+
+
+    public function scopeMes($query, $mes)
+    {
+
+        if ($mes)
+        {
+           return $query->whereMonth('datanasc', '=', $mes);
         }
 
         return $query;

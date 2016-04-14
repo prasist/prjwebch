@@ -230,7 +230,7 @@
                                                             <i class="fa fa-phone"></i>
                                                             </div>
 
-                                                            <input id="foneprincipal"  name = "foneprincipal" type="text" class="form-control" value="{{$pessoas[0]->fone_principal}}"  data-inputmask='"mask": "(99) 9999-9999"' data-mask >
+                                                            <input id="foneprincipal"  name = "foneprincipal" type="text" class="form-control" value="{{$pessoas[0]->fone_principal}}"  >
 
                                                              <!-- se houver erros na validacao do form request -->
                                                              @if ($errors->has('foneprincipal'))
@@ -251,7 +251,7 @@
                                                                 <i class="fa fa-phone"></i>
                                                                 </div>
 
-                                                                <input id="fonesecundario" name = "fonesecundario" type="text" class="form-control" data-inputmask='"mask": "(99) 9999-9999"' data-mask  value="{{$pessoas[0]->fone_secundario}}">
+                                                                <input id="fonesecundario" name = "fonesecundario" type="text" class="form-control"   value="{{$pessoas[0]->fone_secundario}}">
                                                         </div>
 
                                                  </div>
@@ -264,7 +264,7 @@
                                                                 <i class="fa fa-phone"></i>
                                                                 </div>
 
-                                                                <input id="fonerecado" name = "fonerecado" type="text" class="form-control" data-inputmask='"mask": "(99) 9999-9999"' data-mask  value="{{$pessoas[0]->fone_recado}}">
+                                                                <input id="fonerecado" name = "fonerecado" type="text" class="form-control"   value="{{$pessoas[0]->fone_recado}}">
                                                         </div>
 
                                                  </div>
@@ -276,7 +276,7 @@
                                                                <div class="input-group-addon">
                                                                 <i class="fa fa-phone"></i>
                                                                 </div>
-                                                                <input id="celular" data-inputmask='"mask": "(99) 9999-9999"' data-mask  name = "celular" type="text" class="form-control" value="{{$pessoas[0]->fone_celular}}">
+                                                                <input id="celular"   name = "celular" type="text" class="form-control" value="{{$pessoas[0]->fone_celular}}">
                                                     </div>
                                                 </div>
 

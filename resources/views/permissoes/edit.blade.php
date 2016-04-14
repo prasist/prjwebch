@@ -41,7 +41,7 @@
                                   <div class="box-header">
 
                                                 <div class="box-body">
-                                                 <p><input  id= "selecionar_todos" name="selecionar_todos" type="checkbox" class="selecionar_todos" />  Selecionar todos</p>
+                                                 <b><p><input  id= "selecionar_todos" name="selecionar_todos" type="checkbox" class="selecionar_todos" />  Selecionar todos</p></b>
 
                                                     <table id="paginas" class="table table-bordered table-hover">
                                                           <thead>

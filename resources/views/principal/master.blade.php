@@ -12,6 +12,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <!--<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>-->
 
+        <script src="{{ asset('/dist/js/bootstrap-datepicker.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+
         <link href="{{ asset('/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
@@ -24,8 +27,7 @@
 
         <!-- jvectormap -->
         <link href="{{ asset('/plugins/jvectormap/jquery-jvectormap-1.2.2.css') }}" rel="stylesheet" type="text/css" />
-        <!-- Date Picker -->
-        <link href="{{ asset('/plugins/datepicker/datepicker3.css') }}" rel="stylesheet" type="text/css" />
+
         <!-- Daterange picker -->
         <link href="{{ asset('/plugins/daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet" type="text/css" />
         <!-- bootstrap wysihtml5 - text editor -->
@@ -47,6 +49,8 @@
         <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />-->
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+        <!-- Date Picker -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" />
 
 
     </head>
@@ -141,6 +145,7 @@
 
                   $(function ()
                   {
+
                             $('.selectpicker').selectpicker({
                                 selectAllText: 'Selecionar Todos',
                                 deselectAllText: 'Desmarcar Todos'
@@ -205,7 +210,6 @@
 @yield('data_table_custom')
 
 <!-- Adicionando JQuery -->
-
 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
         <script src="{{ asset('/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
