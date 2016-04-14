@@ -116,7 +116,6 @@ public function salvar($request, $id, $tipo_operacao)
 }
 
 
-
 /*
 * Grava dados no banco
 *

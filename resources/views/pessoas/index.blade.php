@@ -36,7 +36,6 @@
 
 @include('pessoas.filtros_pesquisa')
 
-
         <div class="row">
         <div class="col-md-12">
           <div class="box">
@@ -46,59 +45,26 @@
                     <table id="tab_pessoas" class="table table-hover">
                     <thead>
                         <tr>
+                        <th>Código</th>
                         <th>Nome</th>
-                        <th>Abrev.</th>
+                        <th>Nome Abrev.</th>
                         <th>Tipo Pessoa</th>
                         <th>CNPJ/CPF</th>
                         <th>Telefone</th>
+                        <th>ID Tipo</th>
                         <th>Alterar</th>
                         <th>Visualizar</th>
                         <th>Excluir</th>
-
                         </tr>
                     </thead>
                     <tbody>
-
-
-                         @foreach($dados as $value)
-
-                        <tr>
-
-                            <td>{!!$value->razaosocial!!}</td>
-                            <td>{!!$value->nomefantasia!!}</td>
-                            <td>{!!$value->nome_tipo_pessoa!!}</td>
-                            <td>{!!$value->cnpj_cpf!!}</td>
-                            <td>{!! "(".substr($value->fone_principal, 0, 2).") ".substr($value->fone_principal, 2, 10) !!}</td>
-
-                            <td class="col-xs-1">
-                                      @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
-                                            <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit/' . $value->id_tipo_pessoa) }}" class = 'btn  btn-info btn-sm'><spam class="glyphicon glyphicon-pencil"></spam></a>
-                                      @endcan
-                            </td>
-
-                            <td class="col-xs-1">
-                                      @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
-                                               <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview/' . $value->id_tipo_pessoa) }}" class = 'btn btn-primary btn-sm'><span class="glyphicon glyphicon-zoom-in"></span></a>
-                                      @endcan
-                            </td>
-                            <td class="col-xs-1">
-
-                                        @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
-                                        <form id="excluir{{ $value->id }}" action="{{ URL::to(\Session::get('route') . '/' . $value->id . '/delete') }}" method="DELETE">
-
-                                              <button
-                                                  data-toggle="tooltip" data-placement="top" title="Excluir Ítem" type="submit"
-                                                  class="btn btn-danger btn-sm"
-                                                  onclick="return confirm('Confirma exclusão desse registro : {!! $value->razaosocial !!} ?');">
-                                                  <spam class="glyphicon glyphicon-trash"></spam></button>
-
-                                        </form>
-                                        @endcan
-
-                            </td>
-
-                        </tr>
-                        @endforeach
+                      <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                      </tr>
 
                     </tbody>
                     </table>
@@ -108,4 +74,82 @@
          </div>
         </div>
 
+<script type="text/javascript">
+
+              $(function ()
+              {
+
+                var sDados = '{{$where}}';  //Pega dados consulta
+                var urlRoute = "{!! url('/pessoas/json/" + sDados + "') !!}"; //Rota para consulta
+                var rota = "{!! \Session::get('route') !!}"; //Somente rota da pagina
+
+                /*Permissoes para saber se cria botao ou nao*/
+                var alterar = '{{$alterar}}';
+                var visualizar = '{{$visualizar}}';
+                var excluir = '{{$excluir}}';
+
+                    $('#tab_pessoas').dataTable({
+                          "bSortClasses": false,
+                          "sort": false,
+                          "bDeferRender": true,
+                          "deferRender": true,
+                          'iDisplayLength': 25,
+                          "bProcessing": true,
+                          "processing": true,
+                          language: {
+                          searchPlaceholder: "Nome, CNPJ, CPF, Telefone..."},
+                          "serverSide": true,
+                          "ajax": urlRoute,
+                          "columnDefs":
+                          [
+                              {
+                                  "targets": [6],
+                                  "visible": false,
+                                  "searchable": false
+                              }
+                            ],
+                          "columns": [
+                                  { data: "id" },
+                                  { data: "razaosocial" },
+                                  { data: "nomefantasia" },
+                                  { data: "nome_tipo_pessoa" },
+                                  { data: "cnpj_cpf" },
+                                  { data: "fone_principal" },
+                                  { data: "id_tipo_pessoa" },
+                                  {"mRender": function(data, type, full) {
+                                        if (alterar)
+                                        {
+                                            return '<a class="btn  btn-info btn-sm" href="' + rota + '/' + full['id'] + '/edit/' + full['id_tipo_pessoa'] + '"><spam class="glyphicon glyphicon-pencil"></spam></a>';
+                                        }
+                                        else
+                                        {
+                                              return '<p></p>';
+                                        }
+                                    }},
+                                    {"mRender": function(data, type, full) {
+                                        if (visualizar)
+                                        {
+                                              return '<a class="btn  btn-primary btn-sm" href="' + rota + '/' + full['id'] + '/preview/' + full['id_tipo_pessoa'] + '"><spam class="glyphicon glyphicon-zoom-in"></spam></a>';
+                                        }
+                                        else
+                                        {
+                                              return '<p></p>';
+                                        }
+
+                                    }},
+                                    {"mRender": function(data, type, full) {
+                                         if (excluir)
+                                         {
+                                                return "<form id='excluir" + full['id'] + "' action='" + rota + "/" + full['id'] + "/delete' method='DELETE'><button data-toggle='tooltip' data-placement='top' title='Excluir Ítem' type='submit' class='btn btn-danger btn-sm' onclick='return confirm(\"Confirma a exclusão do registro ?\");'><spam class='glyphicon glyphicon-trash'></spam></button></form>";
+                                         }
+                                         else
+                                          {
+                                                return '<p></p>';
+                                          }
+                                    }}
+                              ],
+                     });
+              });
+</script>
 @endsection
+

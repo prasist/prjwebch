@@ -150,42 +150,18 @@
 
                             $('div.alert').delay(2500).slideUp(300);
 
-
-                          /*
-                           $('#example').dataTable( {
-                                 "paginate": false,
-                                 "sort": false,
-                                 "bSortClasses": false
-                           });
-                          */
-                          /*
-                           $('#tab_pessoas').dataTable({
-                                "bSortClasses": false,
-                                "sort": false,
-                                "bDeferRender": true,
-                                "deferRender": true,
-                                'iDisplayLength': 25,
-                                "bProcessing": true,
-                                "processing": true,
-                                "serverSide": true,
-                                "ajax": "{!! url('/pessoas/B/json') !!}"
-                           });
+                            /*Tabelas simples
+                            Desabilita ordenacao da coluna dos botoes de ações
                             */
+                            $("#example1").DataTable({
 
-                           $('#tab_pessoas').dataTable({
-                                "bSortClasses": false,
-                                "sort": false,
-                                "bDeferRender": true,
-                                "deferRender": true,
-                                'iDisplayLength': 25,
-                                "bProcessing": true,
-                                "processing": true,
-                                language: {
-                                searchPlaceholder: "Nome, CNPJ, CPF, Telefone..."}
-                           });
-
-                            /*Tabelas simples */
-                            $("#example1").DataTable();
+                                "columnDefs":
+                                  [
+                                      {"targets": [1], "sortable": false},
+                                      {"targets": [2], "sortable": false},
+                                      {"targets": [3], "sortable": false}
+                                  ]
+                            });
 
                             $('input.typeahead').typeahead({
                                 name: 'typeahead',

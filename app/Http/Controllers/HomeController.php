@@ -51,6 +51,7 @@ class HomeController extends Controller
             \Session::put('route', '');
             \Session::put('dados_login', $this->dados_login);
             \Session::put('tour_rapido', $this->dados_login->tutorial);
+            \Session::put('tour_visaogeral', $this->dados_login->tutorial_visaogeral);
             \Session::put('admin', $this->dados_login->admin);
 
             /*
