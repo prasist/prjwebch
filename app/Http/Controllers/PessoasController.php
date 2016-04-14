@@ -55,7 +55,7 @@ class PessoasController extends Controller
         $alterar = Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'alterar']);
         $excluir = Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'excluir']);
 
-        return view($this->rota . '.index', ['grupos' => $grupos, 'tipos' => $tipos, 'where'=>$where, 'visualizar'=>$visualizar, 'alterar'=>$alterar, 'excluir'=>$excluir]);
+        return view($this->rota . '.index', ['grupos' => $grupos, 'tipos' => $tipos, 'where'=>$where, 'visualizar'=>$visualizar, 'alterar'=>$alterar, 'excluir'=>$excluir, 'rota'=>$this->rota]);
 
     }
 
@@ -247,7 +247,7 @@ class PessoasController extends Controller
     $alterar = Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'alterar']);
     $excluir = Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'excluir']);
 
-    return view($this->rota . '.index', ['tipos' => $tipos, 'grupos'=>$grupos, 'where'=>$where, 'visualizar'=>$visualizar, 'alterar'=>$alterar, 'excluir'=>$excluir]);
+    return view($this->rota . '.index', ['tipos' => $tipos, 'grupos'=>$grupos, 'where'=>$where, 'visualizar'=>$visualizar, 'alterar'=>$alterar, 'excluir'=>$excluir, 'rota'=>$this->rota]);
 
  }
 
