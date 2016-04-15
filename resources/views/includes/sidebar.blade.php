@@ -113,9 +113,18 @@
                 </ul>
             </li>
 
+
             <li class="treeview">
-                <a href={{ url('/pessoas')}}><i class="fa fa-users"></i>Pessoas</a>
-            </li>
+                <a href="#">
+                <i class="fa fa-users"></i><span>Pessoas</span>
+                <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                 <ul class="treeview-menu">
+                        <li><a href={{ url('/pessoas')}}><i class="fa fa-angle-double-right"></i> Cadastro</a></li>
+                        <li><a href={{ url('/relpessoas')}}><i class="fa fa-angle-double-right"></i> Relatórios</a></li>
+                 </ul>
+             </li>
+
 
             <!-- Células -->
             <li class="treeview">
@@ -144,8 +153,16 @@
                           <ul class="treeview-menu">
                             <li><a href={{ url('/celulas')}}> Cadastro</a></li>
                             <li><a href={{ url('/celulaspessoas')}}> Células / Pessoas</a></li>
-                            <li><a href="#"> Relatórios</a></li>
                           </ul>
+                    </li>
+                  </ul>
+
+                  <ul class="treeview-menu">
+                    <li>
+                        <a href="#"><i class="fa fa-print"></i> Relatórios<i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href={{ url('/relcelulas')}}><i class="fa fa-angle-double-right"></i> Listagem Células</a></li>
+                            </ul>
                     </li>
                   </ul>
 

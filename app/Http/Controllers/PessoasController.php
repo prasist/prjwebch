@@ -193,6 +193,7 @@ class PessoasController extends Controller
     }
 
 
+    /*
     if ($input["datanasc"]!="")
     {
         if ($where!="")
@@ -216,6 +217,7 @@ class PessoasController extends Controller
            $where = "datanasc_ate|" . $input["datanasc_ate"] . "&";
         }
     }
+    */
 
 
     if ($input["mes"]!="")
@@ -345,7 +347,7 @@ class PessoasController extends Controller
             $membros_ministerios =  "";
             $membros_historico =  $religioes;
             $membros_profissionais =  $religioes; //array('0' => ['0'  => 'membros_profissionais']);
-            $membros_celula="";
+            $membros_celula=$religioes;
 
 
             return view($this->rota . '.registrar',
@@ -374,6 +376,7 @@ class PessoasController extends Controller
                 'membros_dados_pessoais' => $membros_dados_pessoais,
                 'membros_situacoes' => $membros_situacoes,
                 'membros_dons' => $membros_dons,
+                'membros_celula' => $membros_celula,
                 'membros_filhos' => $membros_filhos,
                 'membros_atividades' => $membros_atividades,
                 'membros_ministerios' => $membros_ministerios,

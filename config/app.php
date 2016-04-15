@@ -50,6 +50,7 @@ return [
     'publicos' => '43',
     'faixas' => '44',
     'celulaspessoas'=>'45',
+    'relcelulas'=>'46',
 
     'env' => env('APP_ENV', 'production'),
 

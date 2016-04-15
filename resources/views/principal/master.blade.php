@@ -20,10 +20,6 @@
         <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <link href="{{ asset('/dist/css/AdminLTE.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('/dist/css/skins/skin-green.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('/plugins/iCheck/flat/green.css') }}" rel="stylesheet" type="text/css" />
-
-        <!-- iCheck for checkboxes and radio inputs -->
-        <link rel="stylesheet" href="{{ asset('/plugins/iCheck/all.css') }}">
 
         <!-- jvectormap -->
         <link href="{{ asset('/plugins/jvectormap/jquery-jvectormap-1.2.2.css') }}" rel="stylesheet" type="text/css" />
@@ -174,6 +170,7 @@
                                 limit : 50
                             });
 
+
                      });
 
 </script>
@@ -210,6 +207,7 @@
 @yield('data_table_custom')
 
 <!-- Adicionando JQuery -->
+
 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
         <script src="{{ asset('/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>

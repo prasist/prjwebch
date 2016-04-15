@@ -1,0 +1,160 @@
+@extends('principal.master')
+
+@section('content')
+
+{{ \Session::put('titulo', 'Pessoas') }}
+{{ \Session::put('subtitulo', 'Listagem') }}
+{{ \Session::put('route', 'pessoas') }}
+{{ \Session::put('id_pagina', '28') }}
+
+        <div>{{{ $errors->first('erros') }}}</div>
+
+        <div class="row">
+                <div class="col-xs-2">
+                @can('verifica_permissao', [ \Session::get('id_pagina'),'incluir'])
+
+              <div class="input-group margin">
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user-plus"></span>  Novo Registro
+                        <span class="fa fa-caret-down"></span></button>
+                        <ul class="dropdown-menu">
+
+                          <!-- Carrega todos os tipos de pessoas, cria uma rota passando o ID do tipo de pessoa. Com esse ID a interface habilitara ou nao campos -->
+                          @foreach($tipos as $item)
+                              <li><a href={{ url('/' . \Session::get('route') . '/registrar/' . $item->id )}}>{{ $item->nome }}</a></li>
+                          @endforeach
+
+                        </ul>
+                  </div>
+                  <br/>
+              </div>
+
+                @endcan
+                </div>
+        </div>
+
+
+@include('pessoas.filtros_pesquisa')
+
+        <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header" data-original-title>
+                <div class="box-body table-responsive no-padding">
+
+                    <table id="tab_pessoas" class="table table-hover">
+                    <thead>
+                        <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Nome Abrev.</th>
+                        <th>Tipo Pessoa</th>
+                        <th>CNPJ/CPF</th>
+                        <th>Telefone</th>
+                        <th>ID Tipo</th>
+                        <th>Alterar</th>
+                        <th>Visualizar</th>
+                        <th>Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                      </tr>
+
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+          </div>
+         </div>
+        </div>
+
+<script type="text/javascript">
+
+              $(function ()
+              {
+
+
+                var sDados = '{{$where}}';  //Pega dados consulta
+                var urlRoute = "{!! url('/pessoas/json/" + sDados + "') !!}"; //Rota para consulta
+                var rota = "{{$rota}}"; //Somente rota da pagina
+
+                /*Permissoes para saber se cria botao ou nao*/
+                var alterar = '{{$alterar}}';
+                var visualizar = '{{$visualizar}}';
+                var excluir = '{{$excluir}}';
+
+                    $('#tab_pessoas').dataTable({
+                          "bDeferRender": true,
+                          "deferRender": true,
+                          'iDisplayLength': 25,
+                          "bProcessing": true,
+                          "processing": true,
+                          "aaSorting": [[ 1, "asc" ]],
+                          language:
+                          {
+                              searchPlaceholder: "Nome, CNPJ, CPF, Telefone...",
+                              processing:     "Aguarde...Carregando"
+                          },
+                          "serverSide": true,
+                          "ajax": urlRoute,
+                          "columnDefs":
+                          [
+                              {
+                                  "targets": [6],
+                                  "visible": false,
+                                  "searchable": false
+                              }
+                            ],
+                          "columns": [
+                                  { data: "id" },
+                                  { data: "razaosocial" },
+                                  { data: "nomefantasia" },
+                                  { data: "nome_tipo_pessoa" },
+                                  { data: "cnpj_cpf" },
+                                  { data: "fone_principal" },
+                                  { data: "id_tipo_pessoa" },
+                                  {"mRender": function(data, type, full) {
+                                        if (alterar)
+                                        {
+                                            var urlGetUser = '{!! url("/' + rota + '/' +  full['id'] +  '/edit") !!}'; //Route
+                                            return '<a class="btn  btn-info btn-sm" href="' + urlGetUser + '/' + full['id_tipo_pessoa'] + '"><spam class="glyphicon glyphicon-pencil"></spam></a>';
+                                        }
+                                        else
+                                        {
+                                              return '<p></p>';
+                                        }
+                                    }},
+                                    {"mRender": function(data, type, full) {
+                                        if (visualizar)
+                                        {
+                                              var urlGetUser = '{!! url("/' + rota + '/' +  full['id'] +  '/preview") !!}'; //Route
+                                              return '<a class="btn  btn-primary btn-sm" href="' + urlGetUser + '/' + full['id_tipo_pessoa'] + '"><spam class="glyphicon glyphicon-zoom-in"></spam></a>';
+                                        }
+                                        else
+                                        {
+                                              return '<p></p>';
+                                        }
+
+                                    }},
+                                    {"mRender": function(data, type, full) {
+                                         if (excluir)
+                                         {
+                                                var urlGetUser = '{!! url("/' + rota + '/' +  full['id'] +  '/delete") !!}'; //Route
+                                                return "<form id='excluir" + full['id'] + "' action='" + urlGetUser + "' method='DELETE'><button data-toggle='tooltip' data-placement='top' title='Excluir Ítem' type='submit' class='btn btn-danger btn-sm' onclick='return confirm(\"Confirma a exclusão do registro ?\");'><spam class='glyphicon glyphicon-trash'></spam></button></form>";
+                                         }
+                                         else
+                                          {
+                                                return '<p></p>';
+                                          }
+                                    }}
+                              ],
+                     });
+              });
+</script>
+@endsection

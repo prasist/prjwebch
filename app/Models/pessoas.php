@@ -50,6 +50,7 @@ class pessoas extends Model
 public function scopeRazaosocial($query, $nome)
     {
 
+        /*busca por razaosocial, nomefantasia ou cnpj/cpf*/
         if ($nome)
         {
            return $query->where('razaosocial', 'ilike', '%' . $nome . '%')->orWhere('nomefantasia', 'ilike', '%' . $nome . '%')->orWhere('cnpj_cpf', '=', $nome);

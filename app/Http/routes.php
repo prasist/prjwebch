@@ -53,6 +53,11 @@
 
     });
 
+
+    Route::get('relcelulas', 'RelatorioCelulasController@index');
+    Route::get('relcelulas/pesquisar', 'RelatorioCelulasController@pesquisar');
+
+
     Route::post('filhos', 'FilhosController@destroy');
 
     Route::get('tutoriais/{id}', 'TutoriaisController@tutorial');

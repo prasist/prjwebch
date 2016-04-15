@@ -88,8 +88,33 @@
                                    </div>
 
                                    <div class="row">
+                                        <div class="col-xs-3">
 
-                                        <div class="col-xs-4">
+                                                <label>Data Nascimento:</label>
+
+                                                 <div class="input-group">
+                                                   <div class="input-group-addon">
+                                                     <i class="fa fa-calendar"></i>
+                                                   </div>
+                                                   <input name="datanasc" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                                </div>
+                                                <!-- /.input group -->
+                                        </div>
+
+                                        <div class="col-xs-3">
+
+                                                <label>Até:</label>
+
+                                                <div class="input-group">
+                                                   <div class="input-group-addon">
+                                                     <i class="fa fa-calendar"></i>
+                                                   </div>
+                                                   <input name="datanasc_ate" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                                </div>
+                                                <!-- /.input group -->
+                                        </div>
+
+                                        <div class="col-xs-3">
 
                                                 <label for="mes" class="control-label">Aniversariante Mês</label>
 
