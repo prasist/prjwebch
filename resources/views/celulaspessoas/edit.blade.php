@@ -82,13 +82,13 @@
 
                             @foreach($dados as $item)
                              <tr>
-                               <td>{!! $item->descricao_lider !!}</td>
+                               <td>{!! $item->descricao_concatenada !!}</td>
                                <td>{!! $item->descricao_pessoa !!}</td>
                                <td>
                                     <a href="#" class="btn btn-danger btn-sm" onclick="RemoveTableRow(this)" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><spam class="glyphicon glyphicon-trash"></spam></a>
                                     <input id="hidden_celulas[]"  name = "hidden_celulas[]" type="hidden" value="{!! $item->celulas_id !!}">
                                     <input id="hidden_pessoas[]"  name = "hidden_pessoas[]" type="hidden" value="{!! $item->pessoas_id !!}">
-                                    <input id="hidden_lider_celulas[]"  name = "hidden_lider_celulas[]" type="hidden" value="{!! $item->descricao_lider !!}">
+                                    <input id="hidden_lider_celulas[]"  name = "hidden_lider_celulas[]" type="hidden" value="{!! $item->descricao_concatenada !!}">
                                </td>
                              </tr>
                             @endforeach

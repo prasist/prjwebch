@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2016-04-20T17:26:11 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listagem_celulas" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="37fb6b81-4a3c-4f93-be6d-3a1e716b297c">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="dia_encontro" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="regiao" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="empresas_id" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="empresas_clientes_cloud_id" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="turno" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="segundo_dia_encontro" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="publico_alvo" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="faixa_etaria" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="lideres" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="id" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[select * from view_celulas_pessoas
+WHERE
+(dia_encontro = CASE WHEN $P{dia_encontro} <> '' THEN $P{dia_encontro} ELSE  dia_encontro END)
+and
+(turno = CASE WHEN $P{turno} <> '' THEN $P{turno} ELSE  turno END)
+and
+(regiao ilike CASE WHEN $P{regiao} <> '' THEN $P{regiao} ELSE  regiao END)
+and
+(segundo_dia_encontro = CASE WHEN $P{segundo_dia_encontro} <> '' THEN $P{segundo_dia_encontro} ELSE  segundo_dia_encontro END)
+and
+(empresas_id = CASE WHEN $P{empresas_id} <> 0 THEN $P{empresas_id} ELSE  empresas_id END)
+and
+(empresas_clientes_cloud_id = CASE WHEN $P{empresas_clientes_cloud_id} <> 0 THEN $P{empresas_clientes_cloud_id} ELSE  empresas_clientes_cloud_id END)
+and
+(publico_alvo_id = CASE WHEN $P{publico_alvo} <> 0 THEN $P{publico_alvo} ELSE publico_alvo_id END or publico_alvo_id is null)
+and
+(faixa_etaria_id = CASE WHEN $P{faixa_etaria} <> 0 THEN $P{faixa_etaria} ELSE  faixa_etaria_id END or faixa_etaria_id is null)
+and
+(lider_pessoas_id = CASE WHEN $P{lideres} <> 0 THEN $P{lideres} ELSE  lider_pessoas_id END)
+and
+(id = CASE WHEN $P{id} <> 0 THEN $P{id} ELSE  id END)]]>
+	</queryString>
+	<field name="empresas_id" class="java.lang.Long"/>
+	<field name="empresas_clientes_cloud_id" class="java.lang.Long"/>
+	<field name="id" class="java.lang.Long"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="dia_encontro" class="java.lang.String"/>
+	<field name="regiao" class="java.lang.String"/>
+	<field name="lider_pessoas_id" class="java.lang.Long"/>
+	<field name="turno" class="java.lang.String"/>
+	<field name="segundo_dia_encontro" class="java.lang.String"/>
+	<field name="obs" class="java.lang.String"/>
+	<field name="nome_publico" class="java.lang.String"/>
+	<field name="nome_faixa_etaria" class="java.lang.String"/>
+	<field name="publico_alvo_id" class="java.lang.Long"/>
+	<field name="faixa_etaria_id" class="java.lang.Long"/>
+	<field name="email_grupo" class="java.lang.String"/>
+	<field name="fone_principal" class="java.lang.String"/>
+	<field name="emailprincipal" class="java.lang.String"/>
+	<field name="fone_membro" class="java.lang.String"/>
+	<field name="email_membro" class="java.lang.String"/>
+	<field name="descricao_dia_encontro" class="java.lang.String"/>
+	<field name="celulas_id" class="java.lang.Long"/>
+	<field name="pessoas_id" class="java.lang.Long"/>
+	<field name="descricao_concatenada" class="java.lang.String"/>
+	<field name="descricao_pessoa" class="java.lang.String"/>
+	<variable name="descricao_concatenada1" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="Count">
+		<variableExpression><![CDATA[$F{descricao_concatenada}]]></variableExpression>
+	</variable>
+	<variable name="descricao_concatenada2" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="Count">
+		<variableExpression><![CDATA[$F{descricao_concatenada}]]></variableExpression>
+	</variable>
+	<variable name="descricao_concatenada3" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{descricao_concatenada}]]></variableExpression>
+	</variable>
+	<variable name="pessoas_id1" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="Count">
+		<variableExpression><![CDATA[$F{pessoas_id}]]></variableExpression>
+	</variable>
+	<group name="Group1" keepTogether="true">
+		<groupExpression><![CDATA[$F{descricao_concatenada}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<textField>
+					<reportElement x="0" y="8" width="234" height="14" uuid="01f83cf1-9812-4ceb-baf9-b0fb3df536d4"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{descricao_concatenada}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="234" y="7" width="81" height="15" uuid="66cc74c1-bf3b-484a-9054-65947e7b798d"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fone_principal}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="400" y="6" width="184" height="16" uuid="8fe940bb-c7ef-44ba-97aa-d21b6f9ca760"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{regiao}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="589" y="6" width="178" height="16" uuid="b7f3c76a-efcd-4244-aeff-8a377bdbc25d"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{emailprincipal}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="320" y="5" width="71" height="17" uuid="fc05b97a-cb02-4b7f-ae6f-f6d48bb828c8"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{descricao_dia_encontro}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="38">
+				<textField>
+					<reportElement x="103" y="8" width="100" height="18" uuid="6a3f86c8-8e21-4619-bf3f-c1fc333fbe7f"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{pessoas_id1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="8" width="100" height="18" uuid="f6452686-eb66-4512-8e5f-6f872da05be2"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total Participantes :"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement key="" stretchType="RelativeToBandHeight" x="0" y="5" width="750" height="30" uuid="81ca7814-0503-4db5-880a-f1f4f966e054"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relação de Células]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="-15" y="7" width="780" height="23" uuid="b772b7f0-2752-4705-ab3f-e909e1bc5e5f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Participantes - Sintético]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="22" width="194" height="20" uuid="f8b15e30-2753-417d-b7f8-5199f3e82e37"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Célula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="321" y="21" width="81" height="20" uuid="b2b875cc-3d76-4190-b8e7-c354e52b16b8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dia Encontro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="433" y="21" width="92" height="20" uuid="1799b7d4-43b1-4d9e-a0cd-63b70e25c46d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Região]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="236" y="22" width="60" height="20" uuid="d8bdb5fd-da2a-44dc-869c-8c6a1ccdaadc"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="590" y="20" width="92" height="20" uuid="aae4cf22-6414-49e2-a7ae-d92da1c084bb"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<textField>
+				<reportElement positionType="Float" x="0" y="3" width="309" height="16" uuid="53f15ecc-bf74-4c3f-9395-dca734ae48b2"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao_pessoa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="3" width="100" height="16" uuid="ed2ddbe9-c167-4d9f-93a0-3bb52998e0de"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fone_membro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="3" width="314" height="17" uuid="8288d8aa-877c-4c2c-a37e-71d95ecab6a9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email_membro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="11" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="665" y="4" width="100" height="18" uuid="a513aa50-e792-4282-8586-e5dc157bbae7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

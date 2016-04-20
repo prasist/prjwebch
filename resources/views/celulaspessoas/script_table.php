@@ -5,7 +5,17 @@
         /*Não deixa adicionar sem conteudo*/
         if (document.getElementById("pessoas").value=="")
         {
-            return false;
+            return false; //sai da funcao
+        }
+
+        /*Validar se usuario selecionou uma pessoa na pesquisa*/
+        var verifica_valor =  parseInt(document.getElementById("pessoas").value.substr(0,9));
+
+        if (isNaN(verifica_valor)) //Se não vier com o código da pessoa é porque ele não selecionou....
+        {
+            alert('Nenhuma Pessoa selecionada na pesquisa.');
+            document.getElementById("pessoas").value="";
+            return false; //sai da funcao
         }
 
         var newRow = $("<tr>");

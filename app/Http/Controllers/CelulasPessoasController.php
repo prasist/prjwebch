@@ -129,6 +129,37 @@ public function salvar($request, $id, $tipo_operacao)
 
     }
 
+
+public function imprimir($id)
+ {
+
+    include_once(__DIR__ . '/../../../public/relatorios/class/tcpdf/tcpdf.php');
+    include_once(__DIR__ . '/../../../public/relatorios/class/PHPJasperXML.inc.php');
+    include_once (__DIR__ . '/../../../public/relatorios/setting.php');
+
+    $PHPJasperXML = new \PHPJasperXML();
+
+    $PHPJasperXML->arrayParameter = array
+    (
+        "empresas_id"=> $this->dados_login->empresas_id,
+        "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
+        "dia_encontro"=>"'" . "" . "'",
+        "regiao"=>"'%" . "" . "%'",
+        "turno"=>"'" . "" . "'",
+        "segundo_dia_encontro"=>"'" . "" . "'",
+        "publico_alvo"=> 0,
+        "faixa_etaria"=> 0,
+        "lideres"=> 0,
+        "id"=> $id
+    );
+
+    //$PHPJasperXML->debugsql=true;
+    $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas.jrxml');
+    $PHPJasperXML->transferDBtoArray($server,$user,$pass,$db, "psql");
+    $PHPJasperXML->outpage("I");    //page output method I:standard output  D:Download file
+
+ }
+
     //Abre tela para edicao ou somente visualização dos registros
     private function exibir ($request, $id, $preview)
     {

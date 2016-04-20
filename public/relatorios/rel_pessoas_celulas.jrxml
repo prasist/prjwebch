@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rel_pessoas_celulas" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3f256eaf-7c5b-4246-8cdb-09f2dea4cfae">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[select * from view_celulas_pessoas]]>
+	</queryString>
+	<field name="descricao_concatenada" class="java.lang.String"/>
+	<field name="dia_encontro" class="java.lang.String"/>
+	<field name="regiao" class="java.lang.String"/>
+	<field name="turno" class="java.lang.String"/>
+	<field name="nome_publico" class="java.lang.String"/>
+	<field name="nome_faixa_etaria" class="java.lang.String"/>
+	<field name="descricao_pessoa" class="java.lang.String"/>
+	<group name="descricao_concatenada">
+		<groupExpression><![CDATA[$F{descricao_concatenada}]]></groupExpression>
+	</group>
+	<group name="descricao">
+		<groupExpression><![CDATA[$F{descricao_concatenada}]]></groupExpression>
+		<groupHeader>
+			<band height="65">
+				<staticText>
+					<reportElement x="12" y="5" width="100" height="20" uuid="33fdaeef-5d08-4d05-8a0a-1c1e45c4090e"/>
+					<text><![CDATA[Célula]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="128" y="5" width="429" height="20" uuid="e74c1a73-a61c-4e44-85c1-e2f08c7e1f76"/>
+					<textFieldExpression><![CDATA[$F{descricao_concatenada}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

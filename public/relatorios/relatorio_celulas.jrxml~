@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorio_celulas" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9f66d49e-bd1f-4a1f-a730-612e19a8cbea">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parameter1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select * from view_celulas_simples]]>
+	</queryString>
+	<field name="descricao_concatenada" class="java.lang.String"/>
+	<field name="descricao_dia_encontro" class="java.lang.String"/>
+	<field name="regiao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="10" width="100" height="20" uuid="364323ca-c985-400b-b883-1244e0cf0cd3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Célula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="394" y="10" width="100" height="20" uuid="9b519018-34ac-489c-9d20-1ac71736e121"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dia Encontro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="530" y="10" width="100" height="20" uuid="42c75b8d-b7dd-454f-b28e-3a24d50233a4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Região]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="11" y="11" width="365" height="20" uuid="9b56169d-f123-49ac-9b54-11c2d2488e7e"/>
+				<textFieldExpression><![CDATA[$F{descricao_concatenada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="11" width="100" height="20" uuid="5fb1b43d-ff71-4eac-89d7-b56aee85ccb2"/>
+				<textFieldExpression><![CDATA[$F{descricao_dia_encontro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="530" y="11" width="100" height="20" uuid="3c198356-45ea-42b5-9ce8-271498f77ab7"/>
+				<textFieldExpression><![CDATA[$F{regiao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

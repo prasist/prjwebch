@@ -19,13 +19,12 @@
 
   {!! csrf_field() !!}
 
-
     <div class="box box-default">
 
           <div class="box-body">
 
             <div class="row">
-                <div class="col-md-11">
+                <div class="col-md-12">
                   <!-- Custom Tabs -->
                   <div class="nav-tabs-custom">
 
@@ -38,13 +37,21 @@
                       <div class="tab-pane active" id="tab_1">
 
                           <div class="row">
-                                <div class="col-xs-8">
+                                <div class="col-xs-5">
                                         @include('carregar_combos', array('dados'=>$lideres, 'titulo' =>'Líder', 'id_combo'=>'lideres', 'complemento'=>'', 'comparar'=>''))
                                 </div>
 
-                                <div class="col-xs-4">
+                                <div class="col-xs-3">
                                       <br/>
                                       <input  id= "ckExibir" name="ckExibir" type="checkbox" class="minimal" checked />  Listar Participantes
+                                </div>
+
+                                <div class="col-xs-3">
+                                        <label for="tipo_relatorio" class="control-label">Tipo Relatório</label>
+                                        <select id="tipo_relatorio" name="tipo_relatorio" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                            <option  value="S">Sintético</option>
+                                            <option  value="A">Analítico</option>
+                                        </select>
                                 </div>
                           </div>
 

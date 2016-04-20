@@ -1,5 +1,62 @@
 <?php
 
+use JasperPHP\JasperPHP as JasperPHP;
+
+Route::get('/reports', function () {
+
+    $jasper = new JasperPHP;
+
+    // Compile a JRXML to Jasper
+    //$jasper->compile(__DIR__ . '/../../vendor/cossou/jasperphp/examples/hello_world.jrxml')->execute();
+    //$jasper->compile(__DIR__ . '/../../public/relatorios/listagem_pessoas_celulas_analitico.jrxml')->execute();
+
+
+    // Process a Jasper file to PDF and RTF (you can use directly the .jrxml)
+    //__DIR__ . '/../../vendor/cossou/jasperphp/examples/hello_world.jasper',
+    $jasper->process(
+        __DIR__ . '/../../public/relatorios/listagem_pessoas_celulas_analitico.jasper',
+        __DIR__ . '/../../public/relatorios/teste',
+        array("pdf"),
+        array("php_version" => phpversion()),
+        array(
+        'driver'=>'postgres',
+        'username' => 'postgres',
+        'password'=>'b1c0d3p4t044',
+        'host'=> '177.101.149.118',
+        'database'=>'webigrejas',
+        'port'=>'5432',
+        'jdbc_driver' => 'org.postgresql.Driver',
+        'jdbc_url'=>'jdbc:postgresql://177.101.149.118:5432/webigrejas',
+        )
+    )->execute();
+
+/*
+
+ array(
+      'driver' => 'postgres',
+      'username' => 'vagrant',
+      'host' => 'localhost',
+      'database' => 'samples',
+      'port' => '5433',
+    )
+
+array(
+        'jdbc_driver' => 'org.postgresql.Driver',
+        'jdbc_url'=>'jdbc:postgresql://177.101.149.118:5432/webigrejas',
+        'username' => 'postgres',
+        'database' => 'webigrejas',
+        'password'=>'b1c0d3p4t044',
+        'port' => '5432'
+        )
+*/
+    // List the parameters from a Jasper file.
+    //$array = $jasper->list_parameters(
+     //   __DIR__ . '/../../public/relatorios/listagem_pessoas_celulas_analitico.jasper'
+    //)->execute();
+
+    //return view('welcome');
+});
+
     Route::get('/', function ()
     {
         return view('home');
@@ -22,6 +79,7 @@
             return view('errors.404');
 
     });
+
 
 
     /*Validacao do CPF / CNPJ - disparado pelo jquery*/
@@ -53,10 +111,8 @@
 
     });
 
-
     Route::get('relcelulas', 'RelatorioCelulasController@index');
-    Route::get('relcelulas/pesquisar', 'RelatorioCelulasController@pesquisar');
-
+    Route::post('relcelulas/pesquisar', 'RelatorioCelulasController@pesquisar');
 
     Route::post('filhos', 'FilhosController@destroy');
 
@@ -431,6 +487,7 @@
     Route::post('/celulaspessoas/gravar','CelulasPessoasController@store');
     Route::get('/celulaspessoas/registrar','CelulasPessoasController@create');
     Route::get('/celulaspessoas/{id}/preview','CelulasPessoasController@show');
+    Route::get('/celulaspessoas/{id}/imprimir','CelulasPessoasController@imprimir');
     Route::post('celulaspessoas/{id}/update','CelulasPessoasController@update');
     Route::get('celulaspessoas/{id}/edit','CelulasPessoasController@edit');
     Route::get('celulaspessoas/{id}/delete','CelulasPessoasController@destroy');

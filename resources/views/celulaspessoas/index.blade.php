@@ -35,6 +35,7 @@
                         <th>Célula / Qtd. Participantes</th>
                         <th>Alterar</th>
                         <th>Visualizar</th>
+                        <th>Imprimir</th>
                         <th>Excluir</th>
                         </tr>
                     </thead>
@@ -58,6 +59,13 @@
                                                <a href = "{{ URL::to(\Session::get('route') .'/' . $value->celulas_id . '/preview') }}" class = 'btn btn-primary btn-sm'><span class="glyphicon glyphicon-zoom-in"></span></a>
                                       @endcan
                             </td>
+
+                            <td class="col-xs-1">
+                                      @can('verifica_permissao', [\Session::get('id_pagina') ,'imprimir'])
+                                               <a href = "{{ URL::to(\Session::get('route') .'/' . $value->celulas_id . '/imprimir') }}" class = 'btn btn-warning btn-sm'><span class="glyphicon glyphicon-print"></span></a>
+                                      @endcan
+                            </td>
+
                             <td class="col-xs-1">
 
                                     @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])

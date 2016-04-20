@@ -104,7 +104,9 @@ return [
         /*Validacao CPF e CNPJ*/
         EltonInacio\ValidadorCpjCnpj\CpfCnpjServiceProvider::class,
 
+        /*Utilizado para Jquery Datatable server-side*/
         Yajra\Datatables\DatatablesServiceProvider::class,
+
 
         /*
          * Application Service Providers...

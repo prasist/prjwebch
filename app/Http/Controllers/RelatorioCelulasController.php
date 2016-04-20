@@ -9,6 +9,7 @@ use URL;
 use Auth;
 use Input;
 use Gate;
+use JasperPHP\JasperPHP as JasperPHP;
 
 class RelatorioCelulasController extends Controller
 {
@@ -52,126 +53,82 @@ class RelatorioCelulasController extends Controller
  public function pesquisar(\Illuminate\Http\Request  $request)
  {
 
-    if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
-    {
-         return redirect('home');
-    }
+    include_once(__DIR__ . '/../../../public/relatorios/class/tcpdf/tcpdf.php');
+    include_once(__DIR__ . '/../../../public/relatorios/class/PHPJasperXML.inc.php');
+    include_once (__DIR__ . '/../../../public/relatorios/setting.php');
 
     /*Pega todos campos enviados no post*/
     $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-    $where="";
+    $PHPJasperXML = new \PHPJasperXML();
 
-    if ($input["lideres"]!="")
+    $PHPJasperXML->arrayParameter = array
+    (
+        "empresas_id"=> $this->dados_login->empresas_id,
+        "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
+        "dia_encontro"=>"'" . $input["dia_encontro"] . "'",
+        "regiao"=>"'%" . $input["regiao"] . "%'",
+        "turno"=>"'" . $input["turno"] . "'",
+        "segundo_dia_encontro"=>"'" . $input["segundo_dia_encontro"] . "'",
+        "publico_alvo"=> ($input["publico_alvo"]=="" ? 0 : $input["publico_alvo"]),
+        "faixa_etaria"=> ($input["faixa_etaria"]=="" ? 0 : $input["faixa_etaria"]),
+        "lideres"=> ($input["lideres"]=="" ? 0 : $input["lideres"]),
+        "id"=> 0
+    );
+
+    //$PHPJasperXML->debugsql=true;
+
+    if ($input["nivel5"]!="")
     {
-        $where = "ativo|" . $input["opStatus"] . "&";
+        $PHPJasperXML->arrayParameter=array("nivel5"=>"'" . $input["nivel5"] . "'");
     }
 
-    if ($input["opPessoa"]!="")
+    if ($input["nivel4"]!="")
     {
-        if ($where!="")
+        $PHPJasperXML->arrayParameter=array("nivel4"=>"'" . $input["nivel4"] . "'");
+    }
+
+    if ($input["nivel3"]!="")
+    {
+        $PHPJasperXML->arrayParameter=array("nivel3"=>"'" . $input["nivel3"] . "'");
+    }
+
+    if ($input["nivel2"]!="")
+    {
+        $PHPJasperXML->arrayParameter=array("nivel2"=>"'" . $input["nivel2"] . "'");
+    }
+
+    if ($input["nivel1"]!="")
+    {
+        $PHPJasperXML->arrayParameter=array("nivel1"=>"'" . $input["nivel1"] . "'");
+    }
+
+    if ($input["tipo_relatorio"]=="S") //Sintético
+    {
+      if ($input["ckExibir"]) //Exibir participantes
+      {
+            $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas.jrxml');
+      } else
+      {
+            $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas.jrxml');
+      }
+
+    }
+    else //Analítico
+    {
+        if ($input["ckExibir"]) //Exibir participantes
         {
-            $where .= "tipopessoa|" . $input["opPessoa"] . "&";
+            $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_celulas_analitico.jrxml');
         }
         else
         {
-           $where = "tipopessoa|" . $input["opPessoa"] . "&";
-        }
-    }
-
-
-    if ($input["datanasc"]!="")
-    {
-        if ($where!="")
-        {
-            $where .= "datanasc|" . $input["datanasc"] . "&";
-        }
-        else
-        {
-           $where = "datanasc|" . $input["datanasc"] . "&";
-        }
-    }
-
-    if ($input["datanasc_ate"]!="")
-    {
-        if ($where!="")
-        {
-            $where .= "datanasc_ate|" . $input["datanasc_ate"] . "&";
-        }
-        else
-        {
-           $where = "datanasc_ate|" . $input["datanasc_ate"] . "&";
-        }
-    }
-
-
-    if ($input["mes"]!="")
-    {
-        if ($where!="")
-        {
-            $where .= "mes|" . $input["mes"] . "&";
-        }
-        else
-        {
-           $where = "mes|" . $input["mes"] . "&";
-        }
-    }
-
-
-    if ($input["razaosocial"]!="")
-    {
-        if ($where!="")
-        {
-            $where .= "razaosocial|" . $input["razaosocial"] . "&";
-        }
-        else
-        {
-            $where = "razaosocial|" . $input["razaosocial"] . "&";
-        }
-    }
-
-    if ($input["grupo"]!="")
-    {
-        if ($where!="")
-        {
-             $where .= "grupos_pessoas_id|" . $input["grupo"] . "&";
-        }
-        else
-        {
-            $where = "grupos_pessoas_id|" . $input["grupo"] . "&";
+            $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_modelo2.jrxml');
         }
 
     }
 
-    if ($input["tipos"]!="")
-    {
-        if ($where!="")
-        {
-            $where .= "tipos_pessoas_id|" . $input["tipos"] . "&";
-        }
-        else
-        {
-             $where  = "tipos_pessoas_id|" . $input["tipos"] . "&";
-        }
-     }
-
-    $dados = pessoas::select('pessoas.id', 'pessoas.razaosocial', 'pessoas.nomefantasia', 'pessoas.cnpj_cpf', 'pessoas.fone_principal', 'tipos_pessoas.id as id_tipo_pessoa', 'tipos_pessoas.nome as nome_tipo_pessoa')
-        ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->where('empresas_id', $this->dados_login->empresas_id)
-        ->status($status)
-        ->pessoa($tipopessoa)
-        ->razaosocial($razaosocial)
-        ->datanasc($datanasc)
-        ->datanascfim($datanasc_ate)
-        ->mes($mes)
-        ->grupo($grupos_pessoas_id)
-        ->tipopessoa($tipos_pessoas_id)
-        ->join('tipos_pessoas', 'tipos_pessoas.id', '=' , 'pessoas.tipos_pessoas_id')
-        ->orderBy('pessoas.razaosocial')
-        ->get();
-
-
-    return view($this->rota . '.index', ['tipos' => $tipos, 'grupos'=>$grupos, 'where'=>$where, 'visualizar'=>$visualizar, 'alterar'=>$alterar, 'excluir'=>$excluir, 'rota'=>$this->rota]);
+    $PHPJasperXML->transferDBtoArray($server,$user,$pass,$db, "psql");
+    $PHPJasperXML->outpage("I");    //page output method I:standard output  D:Download file
 
  }
 
