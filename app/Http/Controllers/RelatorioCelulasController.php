@@ -128,7 +128,8 @@ class RelatorioCelulasController extends Controller
     }
 
     $PHPJasperXML->transferDBtoArray($server,$user,$pass,$db, "psql");
-    $PHPJasperXML->outpage("I");    //page output method I:standard output  D:Download file
+    $PHPJasperXML->outpage("D");    //page output method I:standard output  D:Download file
+
 
  }
 
