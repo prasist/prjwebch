@@ -29,6 +29,14 @@
         var bEncontrou=false;
 
 
+        /*Verifica se foi informado a celula*/
+        if (str_celula=="")
+        {
+            alert('Nenhuma Célula selecionada, campo obrigatório.');
+            return false; //sai da funcao
+        }
+
+
         /*Verifica se a pessoa já não foi adicionada*/
         $('input').each(function (index, value)
         {
