@@ -9,11 +9,7 @@
 
 <div class = 'row'>
 
-    <div class="col-md-12">
-
-    <div>
-            <a href={{ url('/' . \Session::get('route')) }} class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
-    </div>
+ <div class="col-md-12">
 
   <form method = 'POST'  class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/pesquisar')}}>
 
@@ -42,6 +38,7 @@
                                 </div>
 
                                 <div class="col-xs-3">
+                                      <input  id= "ckEstruturas" name="ckEstruturas" type="checkbox" class="minimal" checked />  Listar Estruturas Células
                                       <br/>
                                       <input  id= "ckExibir" name="ckExibir" type="checkbox" class="minimal" checked />  Listar Participantes
                                 </div>
@@ -195,7 +192,6 @@
 
         <div class="box-footer">
             <button class = 'btn btn-primary' type ='submit'>Pesquisar</button>
-            <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Cancelar</a>
         </div>
 
         </form>

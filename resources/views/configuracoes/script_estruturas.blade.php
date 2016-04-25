@@ -21,6 +21,8 @@
                     html += '<option value="' + index +'">' + value + '</option>';
                 });
 
+                html +='<option value=""></option>';
+
                 $stations.append(html);
                 $("#nivel4").trigger("change");
             });
@@ -46,6 +48,8 @@
                     html += '<option value="' + index +'">' + value + '</option>';
                 });
 
+                html +='<option value=""></option>';
+
                 $stations.append(html);
                 $("#nivel3").trigger("change");
             });
@@ -70,6 +74,8 @@
                     html += '<option value="' + index +'">' + value + '</option>';
                 });
 
+                html +='<option value=""></option>';
+
                 $stations.append(html);
                 $("#nivel2").trigger("change");
             });
@@ -93,6 +99,8 @@
                 {
                     html += '<option value="' + index +'">' + value + '</option>';
                 });
+
+                html +='<option value=""></option>';
 
                 $stations.append(html);
             });

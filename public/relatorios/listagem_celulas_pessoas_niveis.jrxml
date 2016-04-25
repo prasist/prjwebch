@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2016-04-25T10:47:11 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listagem_celulas" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="37fb6b81-4a3c-4f93-be6d-3a1e716b297c">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="dia_encontro" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="regiao" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="empresas_id" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="empresas_clientes_cloud_id" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="turno" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="segundo_dia_encontro" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="publico_alvo" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="faixa_etaria" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="lideres" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="id" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[select * from view_celulas_pessoas_niveis
+WHERE
+(dia_encontro = CASE WHEN $P{dia_encontro} <> '' THEN $P{dia_encontro} ELSE  dia_encontro END)
+and
+(turno = CASE WHEN $P{turno} <> '' THEN $P{turno} ELSE  turno END)
+and
+(regiao ilike CASE WHEN $P{regiao} <> '' THEN $P{regiao} ELSE  regiao END)
+and
+(segundo_dia_encontro = CASE WHEN $P{segundo_dia_encontro} <> '' THEN $P{segundo_dia_encontro} ELSE  segundo_dia_encontro END)
+and
+(empresas_id = CASE WHEN $P{empresas_id} <> 0 THEN $P{empresas_id} ELSE  empresas_id END)
+and
+(empresas_clientes_cloud_id = CASE WHEN $P{empresas_clientes_cloud_id} <> 0 THEN $P{empresas_clientes_cloud_id} ELSE  empresas_clientes_cloud_id END)
+and
+(publico_alvo_id = CASE WHEN $P{publico_alvo} <> 0 THEN $P{publico_alvo} ELSE publico_alvo_id END or publico_alvo_id is null)
+and
+(faixa_etaria_id = CASE WHEN $P{faixa_etaria} <> 0 THEN $P{faixa_etaria} ELSE  faixa_etaria_id END or faixa_etaria_id is null)
+and
+(lider_pessoas_id = CASE WHEN $P{lideres} <> 0 THEN $P{lideres} ELSE  lider_pessoas_id END)
+and
+(id = CASE WHEN $P{id} <> 0 THEN $P{id} ELSE  id END)]]>
+	</queryString>
+	<field name="empresas_id" class="java.lang.Long"/>
+	<field name="empresas_clientes_cloud_id" class="java.lang.Long"/>
+	<field name="id" class="java.lang.Long"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="dia_encontro" class="java.lang.String"/>
+	<field name="regiao" class="java.lang.String"/>
+	<field name="lider_pessoas_id" class="java.lang.Long"/>
+	<field name="turno" class="java.lang.String"/>
+	<field name="segundo_dia_encontro" class="java.lang.String"/>
+	<field name="obs" class="java.lang.String"/>
+	<field name="celulas_nivel5_id" class="java.lang.Long"/>
+	<field name="celulas_nivel4_id" class="java.lang.Long"/>
+	<field name="celulas_nivel3_id" class="java.lang.Long"/>
+	<field name="celulas_nivel2_id" class="java.lang.Long"/>
+	<field name="celulas_nivel1_id" class="java.lang.Long"/>
+	<field name="nome_nivel1" class="java.lang.String"/>
+	<field name="nome_nivel2" class="java.lang.String"/>
+	<field name="nome_nivel3" class="java.lang.String"/>
+	<field name="nome_nivel4" class="java.lang.String"/>
+	<field name="nome_nivel5" class="java.lang.String"/>
+	<field name="nome_publico" class="java.lang.String"/>
+	<field name="nome_faixa_etaria" class="java.lang.String"/>
+	<field name="publico_alvo_id" class="java.lang.Long"/>
+	<field name="faixa_etaria_id" class="java.lang.Long"/>
+	<field name="email_grupo" class="java.lang.String"/>
+	<field name="fone_principal" class="java.lang.String"/>
+	<field name="emailprincipal" class="java.lang.String"/>
+	<field name="fone_membro" class="java.lang.String"/>
+	<field name="email_membro" class="java.lang.String"/>
+	<field name="descricao_dia_encontro" class="java.lang.String"/>
+	<field name="celulas_id" class="java.lang.Long"/>
+	<field name="pessoas_id" class="java.lang.Long"/>
+	<field name="descricao_concatenada" class="java.lang.String"/>
+	<field name="descricao_pessoa" class="java.lang.String"/>
+	<variable name="descricao_concatenada1" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="Count">
+		<variableExpression><![CDATA[$F{descricao_concatenada}]]></variableExpression>
+	</variable>
+	<variable name="descricao_concatenada2" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="Count">
+		<variableExpression><![CDATA[$F{descricao_concatenada}]]></variableExpression>
+	</variable>
+	<variable name="descricao_concatenada3" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{descricao_concatenada}]]></variableExpression>
+	</variable>
+	<variable name="pessoas_id1" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="Count">
+		<variableExpression><![CDATA[$F{pessoas_id}]]></variableExpression>
+	</variable>
+	<variable name="pessoas_id2" class="java.lang.Integer" resetType="Group" resetGroup="Group6" calculation="Count">
+		<variableExpression><![CDATA[$F{pessoas_id}]]></variableExpression>
+	</variable>
+	<variable name="pessoas_id3" class="java.lang.Integer" resetType="Group" resetGroup="Group5" calculation="Count">
+		<variableExpression><![CDATA[$F{pessoas_id}]]></variableExpression>
+	</variable>
+	<variable name="pessoas_id4" class="java.lang.Integer" resetType="Group" resetGroup="Group4" calculation="Count">
+		<variableExpression><![CDATA[$F{pessoas_id}]]></variableExpression>
+	</variable>
+	<variable name="pessoas_id5" class="java.lang.Integer" resetType="Group" resetGroup="Group3" calculation="Count">
+		<variableExpression><![CDATA[$F{pessoas_id}]]></variableExpression>
+	</variable>
+	<variable name="pessoas_id6" class="java.lang.Integer" resetType="Group" resetGroup="Group2" calculation="Count">
+		<variableExpression><![CDATA[$F{pessoas_id}]]></variableExpression>
+	</variable>
+	<group name="Group2" keepTogether="true">
+		<groupExpression><![CDATA[$F{nome_nivel1}]]></groupExpression>
+		<groupHeader>
+			<band height="24">
+				<textField>
+					<reportElement x="0" y="2" width="500" height="19" uuid="fe6d0187-2e34-4db5-9b43-163104e60a4e"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_nivel1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="26">
+				<textField>
+					<reportElement x="647" y="4" width="100" height="15" uuid="97fd938f-a053-4f37-b17c-a876f6777f2a"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{pessoas_id6}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="428" y="4" width="209" height="15" uuid="9738fdbc-32c6-4940-862a-a19f4ca883cd"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_nivel1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="370" y="6" width="37" height="15" uuid="6c4281bb-7515-42e4-ab87-7d45f1797601"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total "]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Group3" keepTogether="true">
+		<groupExpression><![CDATA[$F{nome_nivel2}]]></groupExpression>
+		<groupHeader>
+			<band height="27">
+				<textField>
+					<reportElement x="0" y="3" width="498" height="21" uuid="6b96e175-a69b-438c-900b-b0eeb8f41786"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_nivel2}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<textField>
+					<reportElement x="647" y="5" width="100" height="10" uuid="fffcbfc0-9ed6-46c1-ac15-e482b799c70f"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{pessoas_id5}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="370" y="3" width="37" height="15" uuid="d0240e97-d10a-4b19-9b38-cd17e2baa91a"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total "]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="428" y="3" width="209" height="15" uuid="a863c67f-a089-4fde-9be5-40749474f6b4"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_nivel2}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Group4" keepTogether="true">
+		<groupExpression><![CDATA[$F{nome_nivel3}]]></groupExpression>
+		<groupHeader>
+			<band height="22">
+				<textField>
+					<reportElement x="0" y="2" width="500" height="19" uuid="5f47f6cf-f08b-4d3a-bad5-ed4064654ea2"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_nivel3}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<textField>
+					<reportElement x="647" y="4" width="100" height="10" uuid="37b97ab3-72d8-4aba-a3b2-a3b47fdada42"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{pessoas_id4}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="370" y="2" width="37" height="15" uuid="58bab1a8-b82c-4c08-920a-c9172a498ef2"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total "]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="427" y="5" width="210" height="14" uuid="e2e8f09f-5c36-46f6-854f-23dfd21ba021"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_nivel3}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Group5" keepTogether="true">
+		<groupExpression><![CDATA[$F{nome_nivel4}]]></groupExpression>
+		<groupHeader>
+			<band height="24">
+				<textField>
+					<reportElement x="0" y="2" width="498" height="20" uuid="7c87067d-67b4-4cd4-bf07-b4593e9c22a2"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_nivel4}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="22">
+				<textField>
+					<reportElement x="647" y="5" width="100" height="10" uuid="e21d5658-9726-4429-8078-171424c2eced"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{pessoas_id3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="370" y="3" width="37" height="15" uuid="b6a83a4b-abc2-4f8d-b7ca-6edf020d6853"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total "]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="428" y="5" width="210" height="13" uuid="38426a45-edc8-44d2-b2f2-b19929a04060"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_nivel4}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Group6" keepTogether="true">
+		<groupExpression><![CDATA[$F{nome_nivel5}]]></groupExpression>
+		<groupHeader>
+			<band height="22">
+				<textField>
+					<reportElement x="0" y="1" width="500" height="20" uuid="0dd405ae-95cb-439c-9576-0980a07e40f3"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_nivel5}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="25">
+				<textField>
+					<reportElement x="649" y="6" width="100" height="13" uuid="857755ca-0c7b-47c9-b61d-1b627eaffcf1"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{pessoas_id2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="370" y="5" width="37" height="15" uuid="8fa0f05e-3c39-4195-8273-002f03fcf200"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total "]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="427" y="6" width="211" height="14" uuid="adc1a415-abe3-44e8-b8b5-8e606e744dcb"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_nivel5}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Group1" keepTogether="true">
+		<groupExpression><![CDATA[$F{descricao_concatenada}]]></groupExpression>
+		<groupHeader>
+			<band height="51">
+				<textField>
+					<reportElement x="0" y="28" width="234" height="14" uuid="01f83cf1-9812-4ceb-baf9-b0fb3df536d4"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{descricao_concatenada}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="234" y="28" width="81" height="15" uuid="66cc74c1-bf3b-484a-9054-65947e7b798d"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fone_principal}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="400" y="26" width="184" height="16" uuid="8fe940bb-c7ef-44ba-97aa-d21b6f9ca760"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{regiao}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="589" y="26" width="178" height="16" uuid="b7f3c76a-efcd-4244-aeff-8a377bdbc25d"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{emailprincipal}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="320" y="28" width="71" height="17" uuid="fc05b97a-cb02-4b7f-ae6f-f6d48bb828c8"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{descricao_dia_encontro}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="4" width="194" height="20" uuid="f8b15e30-2753-417d-b7f8-5199f3e82e37"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Célula]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="243" y="4" width="60" height="20" uuid="d8bdb5fd-da2a-44dc-869c-8c6a1ccdaadc"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Telefone]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="324" y="3" width="81" height="20" uuid="b2b875cc-3d76-4190-b8e7-c354e52b16b8"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Dia Encontro]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="440" y="3" width="92" height="20" uuid="1799b7d4-43b1-4d9e-a0cd-63b70e25c46d"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Região]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="597" y="2" width="92" height="20" uuid="aae4cf22-6414-49e2-a7ae-d92da1c084bb"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Email]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="32">
+				<textField>
+					<reportElement x="650" y="7" width="100" height="18" uuid="6a3f86c8-8e21-4619-bf3f-c1fc333fbe7f"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{pessoas_id1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="323" y="5" width="100" height="18" uuid="f6452686-eb66-4512-8e5f-6f872da05be2"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total Participantes :"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="432" y="7" width="208" height="13" uuid="b1a440a4-455a-4b5a-a0b4-3dc07fa6b1df"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{descricao_concatenada}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement key="" stretchType="RelativeToBandHeight" x="0" y="5" width="750" height="30" uuid="81ca7814-0503-4db5-880a-f1f4f966e054"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relação de Células]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="-15" y="7" width="780" height="23" uuid="b772b7f0-2752-4705-ab3f-e909e1bc5e5f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Participantes - Sintético]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="46" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<textField>
+				<reportElement positionType="Float" x="0" y="3" width="309" height="16" uuid="53f15ecc-bf74-4c3f-9395-dca734ae48b2"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao_pessoa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="3" width="100" height="16" uuid="ed2ddbe9-c167-4d9f-93a0-3bb52998e0de"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fone_membro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="3" width="314" height="17" uuid="8288d8aa-877c-4c2c-a37e-71d95ecab6a9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email_membro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="11" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="665" y="4" width="100" height="18" uuid="a513aa50-e792-4282-8586-e5dc157bbae7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

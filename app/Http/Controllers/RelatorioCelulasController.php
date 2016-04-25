@@ -107,10 +107,27 @@ class RelatorioCelulasController extends Controller
     {
       if ($input["ckExibir"]) //Exibir participantes
       {
-            $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas.jrxml');
+
+            if ($input["ckEstruturas"])
+            {
+                $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas_niveis.jrxml');
+            }
+            else
+            {
+                $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas.jrxml');
+            }
+
       } else
       {
-            $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas.jrxml');
+            if ($input["ckEstruturas"])
+            {
+                $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas_niveis_sintetico.jrxml');
+            }
+            else
+            {
+                 $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas.jrxml');
+            }
+
       }
 
     }
@@ -128,7 +145,7 @@ class RelatorioCelulasController extends Controller
     }
 
     $PHPJasperXML->transferDBtoArray($server,$user,$pass,$db, "psql");
-    $PHPJasperXML->outpage("D");    //page output method I:standard output  D:Download file
+    $PHPJasperXML->outpage("I");    //page output method I:standard output  D:Download file
 
  }
 
