@@ -164,6 +164,16 @@
                                   ]
                             });
 
+
+                            $("#tab_simples").DataTable({
+
+                                "columnDefs":
+                                  [
+                                      {"targets": [1], "sortable": false},
+                                      {"targets": [2], "sortable": false}
+                                  ]
+                            });
+
                             $('input.typeahead').typeahead({
                                 name: 'typeahead',
                                 remote:'{!! url("/buscapessoa/%QUERY") !!}',

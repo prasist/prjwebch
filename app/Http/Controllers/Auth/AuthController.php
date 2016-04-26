@@ -63,10 +63,23 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+
+        //Gera token qualquer
+        $dados = str_random(30);
+
+        \Mail::send('emails.link_newuser', ['key' => $dados], function($message) use ($data)
+        {
+            $message->from('contato@sigma3sistemas.com.br', 'Sigma3');
+            $message->subject('Link para validação SIGMA3');
+            $message->to($data['email']);
+        });
+
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'confirmation_code' => $dados,
         ]);
     }
 }

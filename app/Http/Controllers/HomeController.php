@@ -10,6 +10,7 @@ use URL;
 use Auth;
 use Input;
 use Gate;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,32 @@ class HomeController extends Controller
         $this->middleware('auth');
         $this->rota = "home"; //Define nome da rota que será usada na classe
         //retirado gate
+    }
+
+
+     public function confirm($codigo)
+    {
+
+        if(!$codigo)
+        {
+            throw new InvalidConfirmationCodeException;
+        }
+
+        $user = User::whereConfirmationCode($codigo)->first();
+
+        if ( ! $user)
+        {
+            throw new InvalidConfirmationCodeException;
+        }
+
+        $user->confirmed = 1;
+        $user->confirmation_code = null;
+        $user->save();
+
+        \Session::flash('flash_message', 'Conta Verificada com Sucesso!');
+
+        return redirect('home');  //Ainda nao cadastrou, solicitar o cadastro
+
     }
 
     /**

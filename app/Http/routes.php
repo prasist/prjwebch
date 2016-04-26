@@ -26,7 +26,7 @@ use JasperPHP\JasperPHP as JasperPHP;
 
     });
 
-
+    Route::get('validacao/{codigo}', 'HomeController@confirm');
 
     /*Validacao do CPF / CNPJ - disparado pelo jquery*/
     Route::get('funcoes/{id}', 'FuncoesController@validar');

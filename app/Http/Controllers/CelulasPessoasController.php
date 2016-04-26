@@ -66,11 +66,6 @@ public function salvar($request, $id, $tipo_operacao)
         //Pega dados do post
         $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-        /*Validação de campos - request*/
-        $this->validate($request, [
-                'celulas' => 'required',
-         ]);
-
         //Se for alteração, exclui primeiro, para depois percorrer a tabela e inserir novamente
         if ($id!="")
         {

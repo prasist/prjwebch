@@ -26,6 +26,7 @@
 
                     Após o preenchimento do formulário você receberá um e-mail com o link de validação. Caso não receba,  verifique na caixa de SPAM do seu e-mail.<br/>
                 </p>
+
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
                         {!! csrf_field() !!}
 
@@ -96,6 +97,7 @@
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
