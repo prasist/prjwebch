@@ -89,7 +89,7 @@
                                                             <i class="fa fa-phone"></i>
                                                             </div>
 
-                                                            <input id="foneprincipal" placeholder="Campo Obrigatório" name = "foneprincipal" type="text" class="form-control" value="{{old('foneprincipal')}}"  data-inputmask='"mask": "(99) 9999-9999"' data-mask >
+                                                            <input id="foneprincipal" placeholder="Campo Obrigatório" name = "foneprincipal" type="text" class="form-control" value="{{old('foneprincipal')}}" >
 
                                                              <!-- se houver erros na validacao do form request -->
                                                              @if ($errors->has('foneprincipal'))
@@ -110,7 +110,7 @@
                                                                 <i class="fa fa-phone"></i>
                                                                 </div>
 
-                                                                <input id="fonesecundario" name = "fonesecundario" type="text" class="form-control" data-inputmask='"mask": "(99) 9999-9999"' data-mask  value="{{old('fonesecundario')}}">
+                                                                <input id="fonesecundario" name = "fonesecundario" type="text" class="form-control"  value="{{old('fonesecundario')}}">
                                                         </div>
 
                                                  </div>
