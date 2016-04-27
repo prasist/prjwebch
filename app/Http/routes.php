@@ -42,21 +42,11 @@ use JasperPHP\JasperPHP as JasperPHP;
     Route::get('nivel2/{id}', 'CarregaEstruturasController@carregar_nivel2');
     Route::get('nivel1/{id}', 'CarregaEstruturasController@carregar_nivel1');
 
+    /*Relatorio de pessoas*/
+    Route::get('relpessoas', 'RelatorioPessoasController@index');
+    Route::post('relpessoas/pesquisar', 'RelatorioPessoasController@pesquisar');
 
-    Route::get('pdf', function ()
-    {
-
-        //Exemplo 1
-        //$pdf = App::make('dompdf.wrapper');
-        //$pdf->loadHTML('<h1>Test</h1>');
-        //return $pdf->stream();
-
-        //Exemplo 2
-        //$pdf = PDF::loadView('pessoas.index');
-        //return $pdf->download('invoice.pdf');
-
-    });
-
+    /*Relatorio de Celulas*/
     Route::get('relcelulas', 'RelatorioCelulasController@index');
     Route::post('relcelulas/pesquisar', 'RelatorioCelulasController@pesquisar');
 

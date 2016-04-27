@@ -192,34 +192,6 @@ class PessoasController extends Controller
         }
     }
 
-
-    /*
-    if ($input["datanasc"]!="")
-    {
-        if ($where!="")
-        {
-            $where .= "datanasc|" . $input["datanasc"] . "&";
-        }
-        else
-        {
-           $where = "datanasc|" . $input["datanasc"] . "&";
-        }
-    }
-
-    if ($input["datanasc_ate"]!="")
-    {
-        if ($where!="")
-        {
-            $where .= "datanasc_ate|" . $input["datanasc_ate"] . "&";
-        }
-        else
-        {
-           $where = "datanasc_ate|" . $input["datanasc_ate"] . "&";
-        }
-    }
-    */
-
-
     if ($input["mes"]!="")
     {
         if ($where!="")
@@ -280,8 +252,6 @@ class PessoasController extends Controller
  }
 
 
-
-
     //Criar novo registro
     //parametros = $id (id do cadastro tipos de pessoas)
     //Buscar pelo ID o cadastro do tipo de pessoa e verificar quais abas e dados habilitar na página
@@ -315,6 +285,7 @@ class PessoasController extends Controller
             /*
             Para preencher combos Dados eclesiasticos
             */
+            $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
             $igrejas = \App\Models\igrejas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
             $situacoes = \App\Models\situacoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
             $idiomas = \App\Models\idiomas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
@@ -335,18 +306,18 @@ class PessoasController extends Controller
             /* FIM Para preencher combos Dados eclesiasticos*/
 
             /*Inicializa variaveis vazias dos dados eclesiasticos*/
-            $membros_dados_pessoais =  $religioes; //array('0' => ['0'  => 'membros_dados']);
+            $membros_dados_pessoais =  $tipos; //array('0' => ['0'  => 'membros_dados']);
             $membros_situacoes =  "";
             $membros_dons =  "";
             $membros_habilidades =  "";
             $membros_formacoes =  "";
             $membros_idiomas =  "";
-            $membros_familiares = $religioes;
-            $membros_filhos = $religioes;
+            $membros_familiares = $tipos;
+            $membros_filhos = $tipos;
             $membros_atividades =  "";
             $membros_ministerios =  "";
-            $membros_historico =  $religioes;
-            $membros_profissionais =  $religioes; //array('0' => ['0'  => 'membros_profissionais']);
+            $membros_historico =  $tipos;
+            $membros_profissionais =  $tipos; //array('0' => ['0'  => 'membros_profissionais']);
             $membros_celula=$religioes;
 
 

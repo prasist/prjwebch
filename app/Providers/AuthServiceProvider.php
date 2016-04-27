@@ -43,6 +43,7 @@ class AuthServiceProvider extends ServiceProvider
                     \Session::put('master_sede', $verifica_sede);
                     \Session::put('dados_login', $cadastrou);
                     \Session::put('tour_rapido', $cadastrou->tutorial);
+                    \Session::put('admin', $cadastrou->admin);
                     \Session::put('tour_visaogeral', $cadastrou->tutorial_visaogeral);
 
                     //Ler todas permissoes do usuarios

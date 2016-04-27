@@ -120,8 +120,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
                  <ul class="treeview-menu">
-                        <li><a href={{ url('/pessoas')}}><i class="fa fa-angle-double-right"></i> Cadastro</a></li>
-                        <li><a href={{ url('/relpessoas')}}><i class="fa fa-angle-double-right"></i> Relatórios</a></li>
+                        <li><a href={{ url('/pessoas')}}><i class="fa fa-file-text-o"></i> Cadastro</a></li>
+                        <li><a href={{ url('/relpessoas')}}><i class="fa fa-print"></i> Relatórios</a></li>
                  </ul>
              </li>
 

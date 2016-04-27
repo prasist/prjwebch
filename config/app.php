@@ -51,6 +51,7 @@ return [
     'faixas' => '44',
     'celulaspessoas'=>'45',
     'relcelulas'=>'46',
+    'relpessoas'=>'47',
 
     'env' => env('APP_ENV', 'production'),
 
