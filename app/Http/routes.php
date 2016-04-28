@@ -34,13 +34,23 @@ use JasperPHP\JasperPHP as JasperPHP;
     /*Verificar se a célula que está sendo incluida  já existe*/
     Route::get('funcoes/verificarcelulas/{id}', 'FuncoesController@validar_celulas');
 
+    /*Pesquisa de pessoas*/
     Route::get('buscapessoa/{id}', 'FuncoesController@buscarpessoa');
 
+    /*Hierarquia de celulas inverso, comecando pela ultima estrutura*/
     Route::get('nivel5/{id}', 'CarregaEstruturasController@carregar_nivel5');
     Route::get('nivel4/{id}', 'CarregaEstruturasController@carregar_nivel4');
     Route::get('nivel3/{id}', 'CarregaEstruturasController@carregar_nivel3');
     Route::get('nivel2/{id}', 'CarregaEstruturasController@carregar_nivel2');
     Route::get('nivel1/{id}', 'CarregaEstruturasController@carregar_nivel1');
+
+
+    /*hierarquia de celulas a partir do nivel 1*/
+    Route::get('nivel1_up/{id}', 'CarregaEstruturasController@carregar_nivel1_up');
+    Route::get('nivel2_up/{id}', 'CarregaEstruturasController@carregar_nivel2_up');
+    Route::get('nivel3_up/{id}', 'CarregaEstruturasController@carregar_nivel3_up');
+    Route::get('nivel4_up/{id}', 'CarregaEstruturasController@carregar_nivel4_up');
+    Route::get('nivel5_up/{id}', 'CarregaEstruturasController@carregar_nivel5_up');
 
     /*Relatorio de pessoas*/
     Route::get('relpessoas', 'RelatorioPessoasController@index');

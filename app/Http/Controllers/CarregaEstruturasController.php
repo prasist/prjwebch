@@ -129,4 +129,101 @@ class CarregaEstruturasController extends Controller
 
     }
 
+    public function carregar_nivel1_up($id)
+    {
+
+        /*Carregar todos registros do nivel 2 conforme ID encontrado do nivel 1*/
+        /*retirado : ->where('celulas_nivel2.celulas_nivel1_id', '=', $id) */
+        $nivel2 = \App\Models\celulas_nivel2::select('celulas_nivel2.id', 'nome', 'razaosocial')
+        ->celulasid($id)
+        ->where('celulas_nivel2.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('celulas_nivel2.empresas_id', $this->dados_login->empresas_id)
+        ->leftJoin('pessoas', 'pessoas.id', '=' , 'celulas_nivel2.pessoas_id')
+        ->get();
+
+        $options = array();
+
+        //enquanto houver registros
+        foreach ($nivel2 as $item)
+        {
+            $options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+        }
+
+        return \Response::json($options);
+
+    }
+
+
+    public function carregar_nivel2_up($id)
+    {
+
+        /*Carregar todos registros do nivel 2 conforme ID encontrado do nivel 1*/
+        /*retirado : ->where('celulas_nivel3.celulas_nivel2_id', '=', $id)*/
+        $nivel3 = \App\Models\celulas_nivel3::select('celulas_nivel3.id', 'nome', 'razaosocial')
+        ->celulasid($id)
+        ->where('celulas_nivel3.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('celulas_nivel3.empresas_id', $this->dados_login->empresas_id)
+        ->leftJoin('pessoas', 'pessoas.id', '=' , 'celulas_nivel3.pessoas_id')
+        ->get();
+
+        $options = array();
+
+        //enquanto houver registros
+        foreach ($nivel3 as $item)
+        {
+            $options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+        }
+
+        return \Response::json($options);
+
+    }
+
+
+    public function carregar_nivel3_up($id)
+    {
+
+        /*Retirado : ->where('celulas_nivel4.celulas_nivel3_id', '=', $id)*/
+        $nivel4 = \App\Models\celulas_nivel4::select('celulas_nivel4.id', 'nome', 'razaosocial')
+        ->celulasid($id)
+        ->where('celulas_nivel4.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('celulas_nivel4.empresas_id', $this->dados_login->empresas_id)
+        ->leftJoin('pessoas', 'pessoas.id', '=' , 'celulas_nivel4.pessoas_id')
+        ->get();
+
+        $options = array();
+
+        //enquanto houver registros
+        foreach ($nivel4 as $item)
+        {
+            $options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+        }
+
+        return \Response::json($options);
+
+    }
+
+
+    public function carregar_nivel4_up($id)
+    {
+
+        /*Retirado : ->where('celulas_nivel5.celulas_nivel4_id', '=', $id)*/
+        $nivel5 = \App\Models\celulas_nivel5::select('celulas_nivel5.id', 'nome', 'razaosocial')
+        ->celulasid($id)
+        ->where('celulas_nivel5.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('celulas_nivel5.empresas_id', $this->dados_login->empresas_id)
+        ->leftJoin('pessoas', 'pessoas.id', '=' , 'celulas_nivel5.pessoas_id')
+        ->get();
+
+        $options = array();
+
+        //enquanto houver registros
+        foreach ($nivel5 as $item)
+        {
+            $options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+        }
+
+        return \Response::json($options);
+
+    }
+
 }

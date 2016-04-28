@@ -122,12 +122,66 @@
 
                                     <div class="box-body">
 
-
+                                          <!-- NIVEL 1-->
                                       <div class="form-group">
-                                        <label for="nivel5" class="col-sm-2 control-label">{!!Session::get('nivel5') !!}</label>
+                                          <label for="nivel1_up" class="col-sm-2 control-label">{{Session::get('nivel1')}}</label>
+                                          <div class="col-sm-10">
+                                                <select id="nivel1_up" placeholder="(Selecionar)" name="nivel1_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                <option  value="0"></option>
+                                                @foreach($nivel1 as $item)
+                                                       <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                @endforeach
+                                                </select>
+                                          </div>
+                                      </div>
+
+
+                                      <!-- NIVEL 2 -->
+                                      <div class="form-group">
+                                          <label for="nivel2_up" class="col-sm-2 control-label">{{Session::get('nivel2')}}</label>
+                                          <div class="col-sm-10">
+                                                  <select id="nivel2_up" placeholder="(Selecionar)" name="nivel2_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                  <option  value="0"></option>
+                                                   @foreach($nivel2 as $item)
+                                                       <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                   @endforeach
+                                                  </select>
+                                          </div>
+                                      </div>
+
+                                      <!-- NIVEL 3-->
+                                      <div class="form-group">
+                                        <label for="nivel3_up" class="col-sm-2 control-label">{{Session::get('nivel3')}}</label>
                                         <div class="col-sm-10">
-                                                <select id="nivel5" placeholder="(Selecionar)" name="nivel5" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                                <option  value=""></option>
+                                              <select id="nivel3_up" placeholder="(Selecionar)" name="nivel3_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                              <option  value="0"></option>
+                                                @foreach($nivel3 as $item)
+                                                       <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                @endforeach
+                                              </select>
+                                        </div>
+                                      </div>
+
+                                      <!-- NIVEL 4-->
+                                      <div class="form-group">
+                                        <label for="nivel4_up" class="col-sm-2 control-label">{{Session::get('nivel4')}}</label>
+
+                                        <div class="col-sm-10">
+                                              <select id="nivel4_up" placeholder="(Selecionar)" name="nivel4_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                              <option  value="0"></option>
+                                                @foreach($nivel4 as $item)
+                                                       <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                @endforeach
+                                              </select>
+                                        </div>
+                                      </div>
+
+                                      <!-- NIVEL 5-->
+                                      <div class="form-group">
+                                        <label for="nivel5_up" class="col-sm-2 control-label">{!!Session::get('nivel5') !!}</label>
+                                        <div class="col-sm-10">
+                                                <select id="nivel5_up" placeholder="(Selecionar)" name="nivel5_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                <option  value="0"></option>
                                                 @foreach($nivel5 as $item)
                                                        <option  value="{{$item->id}}" >{{$item->nome}}</option>
                                                 @endforeach
@@ -135,44 +189,8 @@
                                         </div>
                                       </div>
 
-                                      <div class="form-group">
-                                        <label for="nivel4" class="col-sm-2 control-label">{{Session::get('nivel4')}}</label>
 
-                                        <div class="col-sm-10">
-                                              <select id="nivel4" placeholder="(Selecionar)" name="nivel4" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                              <option  value=""></option>
-                                              </select>
-                                        </div>
-                                      </div>
-
-                                      <div class="form-group">
-                                        <label for="nivel3" class="col-sm-2 control-label">{{Session::get('nivel3')}}</label>
-                                        <div class="col-sm-10">
-                                              <select id="nivel3" placeholder="(Selecionar)" name="nivel3" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                              <option  value=""></option>
-                                              </select>
-                                        </div>
-                                      </div>
-
-                                      <div class="form-group">
-                                          <label for="nivel2" class="col-sm-2 control-label">{{Session::get('nivel2')}}</label>
-                                          <div class="col-sm-10">
-                                                  <select id="nivel2" placeholder="(Selecionar)" name="nivel2" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                                  <option  value=""></option>
-                                                  </select>
-                                          </div>
-                                      </div>
-
-                                      <div class="form-group">
-                                          <label for="nivel1" class="col-sm-2 control-label">{{Session::get('nivel1')}}</label>
-                                          <div class="col-sm-10">
-                                                <select id="nivel1" placeholder="(Selecionar)" name="nivel1" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                                <option  value=""></option>
-                                                </select>
-                                          </div>
-                                      </div>
-
-                            </div>
+                                    </div>
 
                             <!-- FIM Horizontal Form -->
                       </div>

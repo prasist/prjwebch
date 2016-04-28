@@ -3,6 +3,113 @@
     $(document).ready(function()
     {
 
+
+        /*Hierarquia do primeiro nivel ao ultimo*/
+        /*Quando selecionar item no combo nivel1, carrega combo nivel2 com dados relacionados*/
+        $("#nivel1_up").change(function()
+        {
+            //route para chamada funcao passando ID do nivel 4
+            var urlRoute = "{!! url('/nivel1_up/" + $("#nivel1_up").val() + "') !!}";
+
+            $.getJSON(urlRoute, function(data)
+            {
+                var $stations = $("#nivel2_up"); //Instancia o objeto combo nivel3
+                $stations.empty();
+
+                var html='';
+
+                html += '<option value="0"></option>';
+
+                $.each(data, function(index, value)
+                {
+                    html += '<option value="' + index +'">' + value + '</option>';
+                });
+
+
+                $stations.append(html);
+                //$("#nivel2_up").trigger("change");
+            });
+        });
+
+        /*Quando selecionar item no combo nivel1, carrega combo nivel2 com dados relacionados*/
+        $("#nivel2_up").change(function()
+        {
+            //route para chamada funcao passando ID do nivel 4
+            var urlRoute = "{!! url('/nivel2_up/" + $("#nivel2_up").val() + "') !!}";
+
+            $.getJSON(urlRoute, function(data)
+            {
+                var $stations = $("#nivel3_up"); //Instancia o objeto combo nivel3
+                $stations.empty();
+
+                var html='';
+                html += '<option value="0"></option>';
+
+                $.each(data, function(index, value)
+                {
+                    html += '<option value="' + index +'">' + value + '</option>';
+                });
+
+
+                $stations.append(html);
+                //$("#nivel3_up").trigger("change");
+            });
+        });
+
+
+  /*Quando selecionar item no combo nivel1, carrega combo nivel2 com dados relacionados*/
+        $("#nivel3_up").change(function()
+        {
+            //route para chamada funcao passando ID do nivel 4
+            var urlRoute = "{!! url('/nivel3_up/" + $("#nivel3_up").val() + "') !!}";
+
+            $.getJSON(urlRoute, function(data)
+            {
+                var $stations = $("#nivel4_up"); //Instancia o objeto combo nivel3
+                $stations.empty();
+
+                var html='';
+                html += '<option value="0"></option>';
+
+                $.each(data, function(index, value)
+                {
+                    html += '<option value="' + index +'">' + value + '</option>';
+                });
+
+
+                $stations.append(html);
+                //$("#nivel4_up").trigger("change");
+            });
+        });
+
+
+         /*Quando selecionar item no combo nivel1, carrega combo nivel2 com dados relacionados*/
+        $("#nivel4_up").change(function()
+        {
+            //route para chamada funcao passando ID do nivel 4
+            var urlRoute = "{!! url('/nivel4_up/" + $("#nivel4_up").val() + "') !!}";
+
+            $.getJSON(urlRoute, function(data)
+            {
+                var $stations = $("#nivel5_up"); //Instancia o objeto combo nivel3
+                $stations.empty();
+
+                var html='';
+                html += '<option value="0"></option>';
+
+                $.each(data, function(index, value)
+                {
+                    html += '<option value="' + index +'">' + value + '</option>';
+                });
+
+
+                $stations.append(html);
+                //$("#nivel5_up").trigger("change");
+            });
+        });
+
+
+       /*Hierarquia inversa, do nivel 5 para baixo*/
        /*Quando selecionar item no combo nivel5, carrega combo nivel4 com dados relacionados*/
         $("#nivel5").change(function()
         {

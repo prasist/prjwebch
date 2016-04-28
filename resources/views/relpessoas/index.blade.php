@@ -41,60 +41,122 @@
 
                                                           <div class="row"><!-- row entrada-->
 
-                                                                <div class="col-xs-4">
+                                                                <div class="col-xs-3">
                                                                       <label for="mes" class="control-label">Mês Aniversário</label>
-                                                                      <select id="mes" name="status" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                      <select id="mes" name="mes" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
                                                                           <option  value=""></option>
-                                                                          <option  value="1">Janeiro</option>
-                                                                          <option  value="2">Fevereiro</option>
-                                                                          <option  value="3">Março</option>
-                                                                          <option  value="4">Abril</option>
-                                                                          <option  value="5">Maio</option>
-                                                                          <option  value="6">Junho</option>
-                                                                          <option  value="7">Julho</option>
-                                                                          <option  value="8">Agosto</option>
-                                                                          <option  value="9">Setembro</option>
+                                                                          <option  value="01">Janeiro</option>
+                                                                          <option  value="02">Fevereiro</option>
+                                                                          <option  value="03">Março</option>
+                                                                          <option  value="04">Abril</option>
+                                                                          <option  value="05">Maio</option>
+                                                                          <option  value="06">Junho</option>
+                                                                          <option  value="07">Julho</option>
+                                                                          <option  value="08">Agosto</option>
+                                                                          <option  value="09">Setembro</option>
                                                                           <option  value="10">Outubro</option>
                                                                           <option  value="11">Novembro</option>
                                                                           <option  value="12">Dezembro</option>
                                                                       </select>
                                                               </div>
 
-                                                              <div class="col-xs-4">
-                                                                      <label for="status" class="control-label">Status</label>
+                                                              <div class="col-xs-3">
+                                                                      <label for="status" class="control-label">Status Cadastro</label>
                                                                       <select id="status" name="status" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                                                          <option  value="A">Ambos</option>
+                                                                          <option  value="">Ambos</option>
                                                                           <option  value="S">Ativo</option>
                                                                           <option  value="N">Inativo</option>
                                                                       </select>
                                                               </div>
 
-                                                              <div class="col-xs-4">
-                                                                  @include('carregar_combos_multiple', array('dados'=>$situacoes, 'titulo' =>'Situação', 'id_combo'=>'situacoes[]', 'complemento'=>'multiple="multiple"', 'comparar'=>''))
+                                                              <div class="col-xs-3">
+
+                                                                    <label for="status_id" class="control-label">Status</label>
+
+                                                                    <select id="status_id" placeholder="(Selecionar)" name="status_id" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                    <option  value=""></option>
+
+                                                                    @foreach($status as $item)
+                                                                           <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                    @endforeach
+                                                                    </select>
+
                                                               </div><!-- col-xs-5-->
+
+                                                              <div class="col-xs-3">
+
+                                                                  <label for="situacoes" class="control-label">Situação</label>
+
+                                                                    <select id="situacoes" placeholder="(Selecionar)" name="situacoes" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                    <option  value=""></option>
+
+                                                                    @foreach($situacoes as $item)
+                                                                           <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                    @endforeach
+                                                                    </select>
+                                                              </div><!-- col-xs-5-->
+
 
                                                            </div><!-- end row -->
 
                                                            <div class="row">
-                                                                <div class="col-xs-4">
-                                                                    @include('carregar_combos_multiple', array('dados'=>$tipos, 'titulo' =>'Tipos Pessoas', 'id_combo'=>'tipos[]', 'complemento'=>'multiple="multiple"', 'comparar'=>''))
+                                                                <div class="col-xs-3">
+
+                                                                    <label for="tipos" class="control-label">Tipo Pessoa</label>
+
+                                                                    <select id="tipos" placeholder="(Selecionar)" name="tipos" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                    <option  value=""></option>
+
+                                                                    @foreach($tipos as $item)
+                                                                           <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                    @endforeach
+                                                                    </select>
                                                                 </div><!-- col-xs-5-->
 
-                                                                <div class="col-xs-4">
-                                                                    @include('carregar_combos_multiple', array('dados'=>$estadoscivis, 'titulo' =>'Estados Civis', 'id_combo'=>'estadoscivis[]', 'complemento'=>'multiple="multiple"', 'comparar'=>''))
+                                                                <div class="col-xs-3">
+                                                                    <label for="estadoscivis" class="control-label">Estado Civil</label>
+
+                                                                    <select id="estadoscivis" placeholder="(Selecionar)" name="estadoscivis" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                    <option  value=""></option>
+
+                                                                    @foreach($estadoscivis as $item)
+                                                                           <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                    @endforeach
+                                                                    </select>
                                                                 </div><!-- col-xs-5-->
 
-                                                                <div class="col-xs-4">
-                                                                    <label for="status" class="control-label">Sexo</label>
-                                                                      <select id="status" name="status" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                                                          <option  value="A">Ambos</option>
+                                                                <div class="col-xs-3">
+                                                                    <label for="sexo" class="control-label">Sexo</label>
+                                                                      <select id="sexo" name="sexo" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value="">Ambos</option>
                                                                           <option  value="M">Masculino</option>
                                                                           <option  value="F">Feminino</option>
                                                                       </select>
                                                                 </div>
 
+                                                                <div class="col-xs-3">
+                                                                      <label for="saida" class="control-label">Tipo de Saída</label>
+                                                                      <select id="saida" name="saida" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                           <option  value="I">Relatório</option>
+                                                                           <option  value="E" disabled="disabled">Gerar Lista de Emails</option>
+                                                                      </select>
+                                                              </div>
+
                                                            </div>
 
+                                                           <div class="row">
+                                                                <div class="col-xs-6">
+                                                                    <label for="grupo" class="control-label">Grupo</label>
+
+                                                                    <select id="grupo" placeholder="(Selecionar)" name="grupo" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                    <option  value=""></option>
+
+                                                                    @foreach($grupos as $item)
+                                                                           <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                    @endforeach
+                                                                    </select>
+                                                                </div><!-- col-xs-5-->
+                                                           </div>
                                                      </div>
                                                  </div>
                                              </div>
@@ -128,20 +190,28 @@
                                                          </div>
 
                                                          <div class="col-xs-3">
-                                                                  <label  for="data_entrada_fim" class="control-label">Até</label>
+                                                                  <label  for="data_entrada_ate" class="control-label">Até</label>
 
                                                                   <div class="input-group">
                                                                          <div class="input-group-addon">
                                                                           <i class="fa fa-calendar"></i>
                                                                           </div>
 
-                                                                          <input id ="data_entrada_fim" name = "data_entrada_fim" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                          <input id ="data_entrada_ate" name = "data_entrada_ate" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
                                                                   </div>
 
                                                          </div>
 
                                                           <div class="col-xs-4">
-                                                                  @include('carregar_combos', array('dados'=>$motivos, 'titulo' =>'Motivo Entrada', 'id_combo'=>'motivo_entrada', 'complemento'=>'', 'comparar'=>''))
+                                                                   <label for="motivoentrada" class="control-label">Motivo Entrada</label>
+
+                                                                    <select id="motivoentrada" placeholder="(Selecionar)" name="motivoentrada" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                    <option  value=""></option>
+
+                                                                    @foreach($motivos as $item)
+                                                                           <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                    @endforeach
+                                                                    </select>
                                                           </div><!-- col-xs-5-->
 
 
@@ -176,7 +246,15 @@
                                                          </div>
 
                                                           <div class="col-xs-4">
-                                                                  @include('carregar_combos', array('dados'=>$motivos, 'titulo' =>'Motivo Saída', 'id_combo'=>'motivosaida', 'complemento'=>'', 'comparar'=>''))
+                                                                    <label for="motivosaida" class="control-label">Motivo Saída</label>
+
+                                                                    <select id="motivosaida" placeholder="(Selecionar)" name="motivosaida" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                    <option  value=""></option>
+
+                                                                    @foreach($motivos as $item)
+                                                                           <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                    @endforeach
+                                                                    </select>
                                                           </div><!-- col-xs-5-->
 
 
@@ -232,54 +310,71 @@
 
                                     <div class="box-body">
 
-
+                                    <!-- NIVEL 1-->
                                       <div class="form-group">
-                                        <label for="nivel5" class="col-sm-2 control-label">{!!Session::get('nivel5') !!}</label>
+                                          <label for="nivel1_up" class="col-sm-2 control-label">{{Session::get('nivel1')}}</label>
+                                          <div class="col-sm-10">
+                                                <select id="nivel1_up" placeholder="(Selecionar)" name="nivel1_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                <option  value="0"></option>
+                                                @foreach($nivel1 as $item)
+                                                       <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                @endforeach
+                                                </select>
+                                          </div>
+                                      </div>
+
+
+                                      <!-- NIVEL 2 -->
+                                      <div class="form-group">
+                                          <label for="nivel2_up" class="col-sm-2 control-label">{{Session::get('nivel2')}}</label>
+                                          <div class="col-sm-10">
+                                                  <select id="nivel2_up" placeholder="(Selecionar)" name="nivel2_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                  <option  value="0"></option>
+                                                   @foreach($nivel2 as $item)
+                                                       <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                   @endforeach
+                                                  </select>
+                                          </div>
+                                      </div>
+
+                                      <!-- NIVEL 3-->
+                                      <div class="form-group">
+                                        <label for="nivel3_up" class="col-sm-2 control-label">{{Session::get('nivel3')}}</label>
                                         <div class="col-sm-10">
-                                                <select id="nivel5" placeholder="(Selecionar)" name="nivel5" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                                <option  value=""></option>
+                                              <select id="nivel3_up" placeholder="(Selecionar)" name="nivel3_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                              <option  value="0"></option>
+                                                @foreach($nivel3 as $item)
+                                                       <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                @endforeach
+                                              </select>
+                                        </div>
+                                      </div>
+
+                                      <!-- NIVEL 4-->
+                                      <div class="form-group">
+                                        <label for="nivel4_up" class="col-sm-2 control-label">{{Session::get('nivel4')}}</label>
+
+                                        <div class="col-sm-10">
+                                              <select id="nivel4_up" placeholder="(Selecionar)" name="nivel4_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                              <option  value="0"></option>
+                                                @foreach($nivel4 as $item)
+                                                       <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                @endforeach
+                                              </select>
+                                        </div>
+                                      </div>
+
+                                      <!-- NIVEL 5-->
+                                      <div class="form-group">
+                                        <label for="nivel5_up" class="col-sm-2 control-label">{!!Session::get('nivel5') !!}</label>
+                                        <div class="col-sm-10">
+                                                <select id="nivel5_up" placeholder="(Selecionar)" name="nivel5_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                <option  value="0"></option>
                                                 @foreach($nivel5 as $item)
                                                        <option  value="{{$item->id}}" >{{$item->nome}}</option>
                                                 @endforeach
                                                 </select>
                                         </div>
-                                      </div>
-
-                                      <div class="form-group">
-                                        <label for="nivel4" class="col-sm-2 control-label">{{Session::get('nivel4')}}</label>
-
-                                        <div class="col-sm-10">
-                                              <select id="nivel4" placeholder="(Selecionar)" name="nivel4" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                              <option  value=""></option>
-                                              </select>
-                                        </div>
-                                      </div>
-
-                                      <div class="form-group">
-                                        <label for="nivel3" class="col-sm-2 control-label">{{Session::get('nivel3')}}</label>
-                                        <div class="col-sm-10">
-                                              <select id="nivel3" placeholder="(Selecionar)" name="nivel3" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                              <option  value=""></option>
-                                              </select>
-                                        </div>
-                                      </div>
-
-                                      <div class="form-group">
-                                          <label for="nivel2" class="col-sm-2 control-label">{{Session::get('nivel2')}}</label>
-                                          <div class="col-sm-10">
-                                                  <select id="nivel2" placeholder="(Selecionar)" name="nivel2" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                                  <option  value=""></option>
-                                                  </select>
-                                          </div>
-                                      </div>
-
-                                      <div class="form-group">
-                                          <label for="nivel1" class="col-sm-2 control-label">{{Session::get('nivel1')}}</label>
-                                          <div class="col-sm-10">
-                                                <select id="nivel1" placeholder="(Selecionar)" name="nivel1" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                                <option  value=""></option>
-                                                </select>
-                                          </div>
                                       </div>
 
                             </div>
