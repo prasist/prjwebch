@@ -92,9 +92,9 @@ class RelatorioCelulasController extends Controller
     if ($descricao_publico_alvo!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Publico Alvo : " . $descricao_publico_alvo[1];
     if ($descricao_faixa_etaria!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Faixa Etária : " . $descricao_faixa_etaria[1];
     if ($descricao_lider!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Líder : " . $descricao_lider[1];
-    if ($input["nivel1_up"]!="0")  $filtros .= "<br/>" . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
+    if ($input["nivel1_up"]!="0")  $filtros .= "<br/>&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
     if ($input["nivel2_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel2') . " : " . $descricao_nivel2[1];
-    if ($input["nivel3_up"]!="0")  $filtros .= "<br/>" . \Session::get('nivel3') . " : " . $descricao_nivel3[1];
+    if ($input["nivel3_up"]!="0")  $filtros .= "<br/>&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel3') . " : " . $descricao_nivel3[1];
     if ($input["nivel4_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel4') . " : " . $descricao_nivel4[1];
     if ($input["nivel5_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel5') . " : " . $descricao_nivel5[1];
 
@@ -120,8 +120,8 @@ class RelatorioCelulasController extends Controller
 
     //$PHPJasperXML->debugsql=true;
 
-    if ($input["tipo_relatorio"]=="S") //Sintético
-    {
+    //if ($input["tipo_relatorio"]=="S") //Sintético
+    //{
       if ($input["ckExibir"]) //Exibir participantes
       {
 
@@ -147,7 +147,9 @@ class RelatorioCelulasController extends Controller
 
       }
 
-    }
+    //}
+
+    /*
     else //Analítico
     {
         if ($input["ckExibir"]) //Exibir participantes
@@ -160,6 +162,7 @@ class RelatorioCelulasController extends Controller
         }
 
     }
+*/
 
     $PHPJasperXML->transferDBtoArray($server,$user,$pass,$db, "psql");
     $PHPJasperXML->outpage("I");    //page output method I:standard output  D:Download file

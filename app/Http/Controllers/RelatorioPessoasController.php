@@ -109,9 +109,9 @@ class RelatorioPessoasController extends Controller
     if ($input["data_entrada"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Entrada : " . $input["data_entrada"] . " até " . $input["data_entrada_ate"] ;
     if ($input["data_saida"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Saída : " . $input["data_saida"] . " até " . $input["data_saida_ate"] ;
     if ($input["data_batismo"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Batismo : " . $input["data_batismo"] . " até " . $input["data_batismo_ate"] ;
-    if ($input["nivel1_up"]!="0")  $filtros .= "<br/>" . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
+    if ($input["nivel1_up"]!="0")  $filtros .= "<br/>&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
     if ($input["nivel2_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel2') . " : " . $descricao_nivel2[1];
-    if ($input["nivel3_up"]!="0")  $filtros .= "<br/>" . \Session::get('nivel3') . " : " . $descricao_nivel3[1];
+    if ($input["nivel3_up"]!="0")  $filtros .= "<br/>&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel3') . " : " . $descricao_nivel3[1];
     if ($input["nivel4_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel4') . " : " . $descricao_nivel4[1];
     if ($input["nivel5_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel5') . " : " . $descricao_nivel5[1];
 

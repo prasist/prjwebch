@@ -129,7 +129,7 @@
                                                 <select id="nivel1_up" placeholder="(Selecionar)" name="nivel1_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                                 <option  value="0"></option>
                                                 @foreach($nivel1 as $item)
-                                                       <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                       <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
                                                 @endforeach
                                                 </select>
                                           </div>
@@ -143,7 +143,7 @@
                                                   <select id="nivel2_up" placeholder="(Selecionar)" name="nivel2_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                                   <option  value="0"></option>
                                                    @foreach($nivel2 as $item)
-                                                       <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                       <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
                                                    @endforeach
                                                   </select>
                                           </div>
@@ -156,7 +156,7 @@
                                               <select id="nivel3_up" placeholder="(Selecionar)" name="nivel3_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                               <option  value="0"></option>
                                                 @foreach($nivel3 as $item)
-                                                       <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                       <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
                                                 @endforeach
                                               </select>
                                         </div>
@@ -170,7 +170,7 @@
                                               <select id="nivel4_up" placeholder="(Selecionar)" name="nivel4_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                               <option  value="0"></option>
                                                 @foreach($nivel4 as $item)
-                                                       <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                       <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
                                                 @endforeach
                                               </select>
                                         </div>
@@ -183,7 +183,7 @@
                                                 <select id="nivel5_up" placeholder="(Selecionar)" name="nivel5_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                                 <option  value="0"></option>
                                                 @foreach($nivel5 as $item)
-                                                       <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                       <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
                                                 @endforeach
                                                 </select>
                                         </div>

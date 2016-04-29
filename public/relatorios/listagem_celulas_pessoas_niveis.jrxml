@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-04-29T11:49:57 -->
+<!-- 2016-04-29T15:16:26 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listagem_celulas" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="37fb6b81-4a3c-4f93-be6d-3a1e716b297c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
@@ -22,6 +22,7 @@
 	<parameter name="nivel3" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="nivel4" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="nivel5" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="filtros" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[select * from view_celulas_pessoas_niveis
 WHERE
@@ -124,16 +125,18 @@ and
 	<group name="Group2" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel1}]]></groupExpression>
 		<groupHeader>
-			<band height="23">
+			<band height="20">
 				<textField>
-					<reportElement x="180" y="2" width="320" height="19" uuid="fe6d0187-2e34-4db5-9b43-163104e60a4e"/>
+					<reportElement x="180" y="1" width="320" height="18" uuid="fe6d0187-2e34-4db5-9b43-163104e60a4e">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel1}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="3" width="170" height="18" uuid="5de69aa0-89c5-41f3-87be-8c4cf9aeb98c"/>
+					<reportElement x="0" y="2" width="170" height="18" uuid="5de69aa0-89c5-41f3-87be-8c4cf9aeb98c"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -170,16 +173,18 @@ and
 	<group name="Group3" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel2}]]></groupExpression>
 		<groupHeader>
-			<band height="24">
+			<band height="20">
 				<textField>
-					<reportElement x="180" y="3" width="318" height="17" uuid="6b96e175-a69b-438c-900b-b0eeb8f41786"/>
+					<reportElement x="180" y="1" width="318" height="18" uuid="6b96e175-a69b-438c-900b-b0eeb8f41786">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel2}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="2" width="170" height="18" uuid="4ff5b317-fa19-4459-b5c6-95286c7e95e3"/>
+					<reportElement x="0" y="1" width="170" height="18" uuid="4ff5b317-fa19-4459-b5c6-95286c7e95e3"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -216,16 +221,18 @@ and
 	<group name="Group4" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel3}]]></groupExpression>
 		<groupHeader>
-			<band height="24">
+			<band height="20">
 				<textField>
-					<reportElement x="180" y="2" width="320" height="19" uuid="5f47f6cf-f08b-4d3a-bad5-ed4064654ea2"/>
+					<reportElement x="180" y="1" width="320" height="18" uuid="5f47f6cf-f08b-4d3a-bad5-ed4064654ea2">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel3}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="3" width="170" height="18" uuid="0bfc0493-d129-4fe8-a70a-4909139fe3e7"/>
+					<reportElement x="0" y="1" width="170" height="18" uuid="0bfc0493-d129-4fe8-a70a-4909139fe3e7"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -262,16 +269,20 @@ and
 	<group name="Group5" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel4}]]></groupExpression>
 		<groupHeader>
-			<band height="22">
+			<band height="20">
 				<textField>
-					<reportElement x="180" y="2" width="318" height="20" uuid="7c87067d-67b4-4cd4-bf07-b4593e9c22a2"/>
+					<reportElement x="180" y="1" width="318" height="18" uuid="7c87067d-67b4-4cd4-bf07-b4593e9c22a2">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel4}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="3" width="170" height="19" uuid="bac68e76-1e92-4140-b582-34cad46c3bde"/>
+					<reportElement x="0" y="1" width="170" height="18" uuid="bac68e76-1e92-4140-b582-34cad46c3bde">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -308,16 +319,20 @@ and
 	<group name="Group6" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel5}]]></groupExpression>
 		<groupHeader>
-			<band height="26">
+			<band height="20">
 				<textField>
-					<reportElement x="180" y="2" width="320" height="20" uuid="0dd405ae-95cb-439c-9576-0980a07e40f3"/>
+					<reportElement x="180" y="1" width="320" height="18" uuid="0dd405ae-95cb-439c-9576-0980a07e40f3">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel5}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="2" width="170" height="20" uuid="377d53bd-c653-4d4f-a848-49a51e6cf9d8"/>
+					<reportElement x="0" y="1" width="170" height="18" uuid="377d53bd-c653-4d4f-a848-49a51e6cf9d8">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -354,74 +369,119 @@ and
 	<group name="Group1" keepTogether="true">
 		<groupExpression><![CDATA[$F{descricao_concatenada}]]></groupExpression>
 		<groupHeader>
-			<band height="51">
+			<band height="63">
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="39" width="681" height="11" forecolor="#9E9595" uuid="584bf82d-4ef9-4a2c-849b-6418e897883c"/>
+				</rectangle>
 				<textField>
-					<reportElement x="0" y="28" width="234" height="14" uuid="01f83cf1-9812-4ceb-baf9-b0fb3df536d4"/>
-					<textElement>
+					<reportElement x="81" y="3" width="234" height="15" uuid="01f83cf1-9812-4ceb-baf9-b0fb3df536d4">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descricao_concatenada}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="234" y="28" width="81" height="15" uuid="66cc74c1-bf3b-484a-9054-65947e7b798d"/>
-					<textElement>
+					<reportElement x="80" y="19" width="81" height="16" uuid="66cc74c1-bf3b-484a-9054-65947e7b798d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{fone_principal}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="400" y="26" width="184" height="16" uuid="8fe940bb-c7ef-44ba-97aa-d21b6f9ca760"/>
-					<textElement>
+					<reportElement x="394" y="20" width="184" height="16" uuid="8fe940bb-c7ef-44ba-97aa-d21b6f9ca760"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{regiao}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="589" y="26" width="178" height="16" uuid="b7f3c76a-efcd-4244-aeff-8a377bdbc25d"/>
-					<textElement>
+					<reportElement x="513" y="4" width="252" height="16" uuid="b7f3c76a-efcd-4244-aeff-8a377bdbc25d"/>
+					<textElement verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{emailprincipal}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="320" y="28" width="71" height="17" uuid="fc05b97a-cb02-4b7f-ae6f-f6d48bb828c8"/>
-					<textElement>
+					<reportElement x="394" y="3" width="71" height="16" uuid="fc05b97a-cb02-4b7f-ae6f-f6d48bb828c8">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descricao_dia_encontro}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="4" width="194" height="20" uuid="f8b15e30-2753-417d-b7f8-5199f3e82e37"/>
-					<textElement>
+					<reportElement x="0" y="3" width="80" height="16" uuid="f8b15e30-2753-417d-b7f8-5199f3e82e37">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
 						<font size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Célula]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="243" y="4" width="60" height="20" uuid="d8bdb5fd-da2a-44dc-869c-8c6a1ccdaadc"/>
+					<reportElement x="0" y="20" width="60" height="16" uuid="d8bdb5fd-da2a-44dc-869c-8c6a1ccdaadc">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement verticalAlignment="Middle">
 						<font size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Telefone]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="324" y="3" width="81" height="20" uuid="b2b875cc-3d76-4190-b8e7-c354e52b16b8"/>
+					<reportElement x="319" y="3" width="70" height="16" uuid="b2b875cc-3d76-4190-b8e7-c354e52b16b8">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement verticalAlignment="Middle">
 						<font size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Dia Encontro]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="440" y="3" width="92" height="20" uuid="1799b7d4-43b1-4d9e-a0cd-63b70e25c46d"/>
+					<reportElement x="320" y="20" width="51" height="16" uuid="1799b7d4-43b1-4d9e-a0cd-63b70e25c46d">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Região]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="597" y="2" width="92" height="20" uuid="aae4cf22-6414-49e2-a7ae-d92da1c084bb"/>
+					<reportElement x="468" y="4" width="40" height="16" uuid="aae4cf22-6414-49e2-a7ae-d92da1c084bb"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Email]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="4" y="41" width="100" height="16" uuid="d15aeb28-c198-421c-a29e-07ad041b8c87">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Membro]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="315" y="41" width="100" height="16" uuid="fd6bcd46-8871-494b-97fa-d0eaf8fbf9f5">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Fone]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="427" y="41" width="100" height="16" uuid="746be7da-2782-48a9-9e1e-384740edbe2d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true" isItalic="true"/>
 					</textElement>
 					<text><![CDATA[Email]]></text>
 				</staticText>
@@ -468,7 +528,7 @@ and
 		</band>
 	</title>
 	<pageHeader>
-		<band height="37" splitType="Stretch">
+		<band height="81" splitType="Stretch">
 			<staticText>
 				<reportElement x="-15" y="7" width="780" height="23" uuid="b772b7f0-2752-4705-ab3f-e909e1bc5e5f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -476,31 +536,40 @@ and
 				</textElement>
 				<text><![CDATA[Participantes - Sintético]]></text>
 			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="36" width="750" height="41" uuid="a7e5fdd8-32a3-4fc3-844a-19c5533467fb"/>
+				<textElement markup="html">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{filtros}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="46" splitType="Stretch"/>
+		<band height="6" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="19" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<textField>
-				<reportElement positionType="Float" x="0" y="3" width="309" height="16" uuid="53f15ecc-bf74-4c3f-9395-dca734ae48b2"/>
-				<textElement>
+				<reportElement positionType="Float" x="0" y="1" width="309" height="16" uuid="53f15ecc-bf74-4c3f-9395-dca734ae48b2"/>
+				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{descricao_pessoa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="318" y="3" width="100" height="16" uuid="ed2ddbe9-c167-4d9f-93a0-3bb52998e0de"/>
-				<textElement>
+				<reportElement x="318" y="1" width="100" height="16" uuid="ed2ddbe9-c167-4d9f-93a0-3bb52998e0de"/>
+				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fone_membro}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="436" y="3" width="314" height="17" uuid="8288d8aa-877c-4c2c-a37e-71d95ecab6a9"/>
-				<textElement>
+				<reportElement x="427" y="1" width="322" height="16" uuid="8288d8aa-877c-4c2c-a37e-71d95ecab6a9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{email_membro}]]></textFieldExpression>

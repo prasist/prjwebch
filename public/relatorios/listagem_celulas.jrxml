@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-04-19T17:07:28 -->
+<!-- 2016-04-29T14:56:27 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listagem_celulas" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="37fb6b81-4a3c-4f93-be6d-3a1e716b297c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
@@ -16,28 +16,49 @@
 	<parameter name="publico_alvo" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="faixa_etaria" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="lideres" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="filtros" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="nivel1" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="nivel2" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="nivel3" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="nivel4" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="nivel5" class="java.lang.Integer" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT *
 FROM view_celulas_completo
 WHERE
-(dia_encontro = CASE WHEN $P{dia_encontro} <> '' THEN $P{dia_encontro} ELSE  dia_encontro END)
+(isnull(dia_encontro,'') = CASE WHEN $P{dia_encontro} <> '' THEN $P{dia_encontro} ELSE  isnull(dia_encontro,'') END)
 and
-(turno = CASE WHEN $P{turno} <> '' THEN $P{turno} ELSE  turno END)
+(isnull(turno,'') = CASE WHEN $P{turno} <> '' THEN $P{turno} ELSE  isnull(turno,'') END)
 and
 (regiao ilike CASE WHEN $P{regiao} <> '' THEN $P{regiao} ELSE  regiao END)
 and
-(segundo_dia_encontro = CASE WHEN $P{segundo_dia_encontro} <> '' THEN $P{segundo_dia_encontro} ELSE  segundo_dia_encontro END)
+(isnull(segundo_dia_encontro,'') = CASE WHEN $P{segundo_dia_encontro} <> '' THEN $P{segundo_dia_encontro} ELSE  isnull(segundo_dia_encontro,'') END)
 and
 (empresas_id = CASE WHEN $P{empresas_id} <> 0 THEN $P{empresas_id} ELSE  empresas_id END)
 and
 (empresas_clientes_cloud_id = CASE WHEN $P{empresas_clientes_cloud_id} <> 0 THEN $P{empresas_clientes_cloud_id} ELSE  empresas_clientes_cloud_id END)
 and
-(publico_alvo_id = CASE WHEN $P{publico_alvo} <> 0 THEN $P{publico_alvo} ELSE publico_alvo_id END or publico_alvo_id is null)
+(isnull_int(publico_alvo_id,0) = CASE WHEN $P{publico_alvo} <> 0 THEN $P{publico_alvo} ELSE  isnull_int(publico_alvo_id,0) END)
 and
-(faixa_etaria_id = CASE WHEN $P{faixa_etaria} <> 0 THEN $P{faixa_etaria} ELSE  faixa_etaria_id END or faixa_etaria_id is null)
+(isnull_int(faixa_etaria_id,0) = CASE WHEN $P{faixa_etaria} <> 0 THEN $P{faixa_etaria} ELSE  isnull_int(faixa_etaria_id,0) END)
 and
-(lider_pessoas_id = CASE WHEN $P{lideres} <> 0 THEN $P{lideres} ELSE  lider_pessoas_id END)]]>
+(lider_pessoas_id = CASE WHEN $P{lideres} <> 0 THEN $P{lideres} ELSE  lider_pessoas_id END)
+and
+(isnull_int(celulas_nivel1_id,0) = CASE WHEN $P{nivel1} <> 0 THEN $P{nivel1} ELSE  isnull_int(celulas_nivel1_id,0) END)
+and
+(isnull_int(celulas_nivel2_id,0) = CASE WHEN $P{nivel2} <> 0 THEN $P{nivel2} ELSE  isnull_int(celulas_nivel2_id,0) END)
+and
+(isnull_int(celulas_nivel3_id,0) = CASE WHEN $P{nivel3} <> 0 THEN $P{nivel3} ELSE  isnull_int(celulas_nivel3_id,0) END)
+and
+(isnull_int(celulas_nivel4_id,0) = CASE WHEN $P{nivel4} <> 0 THEN $P{nivel4} ELSE  isnull_int(celulas_nivel4_id,0) END)
+and
+(isnull_int(celulas_nivel5_id,0) = CASE WHEN $P{nivel5} <> 0 THEN $P{nivel5} ELSE  isnull_int(celulas_nivel5_id,0) END)]]>
 	</queryString>
+	<field name="celulas_nivel1_id" class="java.lang.Long"/>
+	<field name="celulas_nivel2_id" class="java.lang.Long"/>
+	<field name="celulas_nivel3_id" class="java.lang.Long"/>
+	<field name="celulas_nivel4_id" class="java.lang.Long"/>
+	<field name="celulas_nivel5_id" class="java.lang.Long"/>
 	<field name="empresas_id" class="java.lang.Long"/>
 	<field name="empresas_clientes_cloud_id" class="java.lang.Long"/>
 	<field name="id" class="java.lang.Long"/>
@@ -74,7 +95,7 @@ and
 		</band>
 	</title>
 	<pageHeader>
-		<band height="37" splitType="Stretch">
+		<band height="85" splitType="Stretch">
 			<staticText>
 				<reportElement x="-15" y="7" width="780" height="23" uuid="b772b7f0-2752-4705-ab3f-e909e1bc5e5f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -82,6 +103,13 @@ and
 				</textElement>
 				<text><![CDATA[Sintético]]></text>
 			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="-15" y="36" width="765" height="41" uuid="bcd9c396-b05c-42d5-828e-d9bfcfaeeb39"/>
+				<textElement markup="html">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{filtros}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -115,7 +143,7 @@ and
 				<text><![CDATA[Telefone]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="571" y="20" width="92" height="20" uuid="aae4cf22-6414-49e2-a7ae-d92da1c084bb"/>
+				<reportElement x="571" y="21" width="92" height="20" uuid="aae4cf22-6414-49e2-a7ae-d92da1c084bb"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -124,38 +152,38 @@ and
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="24" splitType="Stretch">
+		<band height="19" splitType="Stretch">
 			<textField>
-				<reportElement x="-15" y="4" width="235" height="17" uuid="ec27b7ae-ee0b-4161-ab1e-3c5e2e2d21b8"/>
-				<textElement>
+				<reportElement x="-15" y="2" width="235" height="17" uuid="ec27b7ae-ee0b-4161-ab1e-3c5e2e2d21b8"/>
+				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{descricao_concatenada}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="309" y="4" width="59" height="16" uuid="19cd1d0e-c7e1-49f0-bc27-7eb2b801c759"/>
+				<reportElement x="309" y="2" width="59" height="16" uuid="19cd1d0e-c7e1-49f0-bc27-7eb2b801c759"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{descricao_dia_encontro}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="375" y="4" width="185" height="17" uuid="7bdb07c0-8503-43f4-93ca-5b32e473268a"/>
+				<reportElement x="375" y="2" width="185" height="17" uuid="7bdb07c0-8503-43f4-93ca-5b32e473268a"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{regiao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="224" y="4" width="76" height="18" uuid="4b35ae86-afbc-4278-9f72-043283649af4"/>
+				<reportElement x="224" y="1" width="76" height="18" uuid="4b35ae86-afbc-4278-9f72-043283649af4"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fone_principal}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="570" y="4" width="195" height="16" uuid="a8fb0687-8b53-4b49-a5c6-e6daa3f58004"/>
-				<textElement>
+				<reportElement x="570" y="2" width="195" height="16" uuid="a8fb0687-8b53-4b49-a5c6-e6daa3f58004"/>
+				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{emailprincipal}]]></textFieldExpression>
