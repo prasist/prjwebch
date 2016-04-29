@@ -159,10 +159,8 @@
 
                   <ul class="treeview-menu">
                     <li>
-                        <a href="#"><i class="fa fa-print"></i> Relatórios<i class="fa fa-angle-left pull-right"></i></a>
-                            <ul class="treeview-menu">
-                                <li><a href={{ url('/relcelulas')}}><i class="fa fa-angle-double-right"></i> Listagem Células</a></li>
-                            </ul>
+                        <a href={{ url('/relcelulas')}}><i class="fa fa-print"></i> Relatórios<i class="fa fa-angle-left pull-right"></i></a>
+
                     </li>
                   </ul>
 

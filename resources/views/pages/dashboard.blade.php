@@ -62,4 +62,76 @@
     </div><!-- ./col -->
 </div><!-- /.row -->
 
+<div class="row">
+        <div class="col-md-4">
+          <!-- Widget: user widget style 1 -->
+          <div class="box box-widget widget-user-2">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-yellow">
+              <!-- /.widget-user-image -->
+              <h3 class="widget-user-username">Pessoas</h3>
+              <h5 class="widget-user-desc"></h5>
+            </div>
+            <div class="box-footer no-padding">
+              <ul class="nav nav-stacked">
+                <li><a href="#">Membros <span class="pull-right badge bg-blue">31</span></a></li>
+                <li><a href="#">Clientes <span class="pull-right badge bg-aqua">5</span></a></li>
+                <li><a href="#">Fornecedores <span class="pull-right badge bg-green">12</span></a></li>
+                <li><a href="#">Outros <span class="pull-right badge bg-red">842</span></a></li>
+
+              </ul>
+            </div>
+          </div>
+          <!-- /.widget-user -->
+        </div>
+
+        <div class="col-md-4">
+          <!-- Widget: user widget style 1 -->
+          <div class="box box-widget widget-user-2">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-green">
+              <!-- /.widget-user-image -->
+              <h3 class="widget-user-username">Famílias</h3>
+              <h5 class="widget-user-desc"></h5>
+            </div>
+            <div class="box-footer no-padding">
+              <ul class="nav nav-stacked">
+                <li><a href="#">Total <span class="pull-right badge bg-blue">31</span></a></li>
+                <li><a href="#">Chefe de Família <span class="pull-right badge bg-aqua">5</span></a></li>
+                <li><a href="#">Crianças <span class="pull-right badge bg-green">12</span></a></li>
+                <li><a href="#">Outros <span class="pull-right badge bg-red">842</span></a></li>
+
+              </ul>
+            </div>
+          </div>
+          <!-- /.widget-user -->
+        </div>
+
+        <div class="col-md-4">
+          <!-- Widget: user widget style 1 -->
+          <div class="box box-widget widget-user-2">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-blue">
+              <!-- /.widget-user-image -->
+              <h3 class="widget-user-username">Células</h3>
+              <h5 class="widget-user-desc"></h5>
+            </div>
+            <div class="box-footer no-padding">
+              <ul class="nav nav-stacked">
+                <li><a href="#">Total <span class="pull-right badge bg-blue">31</span></a></li>
+                <li><a href="#">Participantes <span class="pull-right badge bg-aqua">5</span></a></li>
+                <li><a href="#">Visitantes <span class="pull-right badge bg-green">12</span></a></li>
+
+              </ul>
+            </div>
+          </div>
+          <!-- /.widget-user -->
+        </div>
+
+   </div>
+
+<div class="row">
+
+   </div>
+
 @endsection

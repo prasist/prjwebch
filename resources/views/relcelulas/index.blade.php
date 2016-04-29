@@ -43,6 +43,7 @@
                                       <input  id= "ckExibir" name="ckExibir" type="checkbox" class="minimal" checked />  Listar Participantes
                                 </div>
 
+                                <!--
                                 <div class="col-xs-3">
                                         <label for="tipo_relatorio" class="control-label">Tipo Relatório</label>
                                         <select id="tipo_relatorio" name="tipo_relatorio" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
@@ -50,6 +51,8 @@
                                             <option  value="A">Analítico</option>
                                         </select>
                                 </div>
+                                -->
+
                           </div>
 
                           <div class="row">
