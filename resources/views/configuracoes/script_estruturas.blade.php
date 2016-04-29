@@ -8,8 +8,12 @@
         /*Quando selecionar item no combo nivel1, carrega combo nivel2 com dados relacionados*/
         $("#nivel1_up").change(function()
         {
+
+            //Pegar codigo, pois conteudo vem "1|EXEMPLO"
+            var campo = $("#nivel1_up").val().split('|');
+
             //route para chamada funcao passando ID do nivel 4
-            var urlRoute = "{!! url('/nivel1_up/" + $("#nivel1_up").val() + "') !!}";
+            var urlRoute = "{!! url('/nivel1_up/" + campo[0] + "') !!}";
 
             $.getJSON(urlRoute, function(data)
             {
@@ -22,7 +26,7 @@
 
                 $.each(data, function(index, value)
                 {
-                    html += '<option value="' + index +'">' + value + '</option>';
+                    html += '<option value="' + index +'|' + value +'">' + value + '</option>';
                 });
 
 
@@ -34,8 +38,12 @@
         /*Quando selecionar item no combo nivel1, carrega combo nivel2 com dados relacionados*/
         $("#nivel2_up").change(function()
         {
+
+            //Pegar codigo, pois conteudo vem "1|EXEMPLO"
+            var campo = $("#nivel2_up").val().split('|');
+
             //route para chamada funcao passando ID do nivel 4
-            var urlRoute = "{!! url('/nivel2_up/" + $("#nivel2_up").val() + "') !!}";
+            var urlRoute = "{!! url('/nivel2_up/" + campo[0] + "') !!}";
 
             $.getJSON(urlRoute, function(data)
             {
@@ -47,7 +55,7 @@
 
                 $.each(data, function(index, value)
                 {
-                    html += '<option value="' + index +'">' + value + '</option>';
+                    html += '<option value="' + index +'|' + value +'">' + value + '</option>';
                 });
 
 
@@ -60,8 +68,11 @@
   /*Quando selecionar item no combo nivel1, carrega combo nivel2 com dados relacionados*/
         $("#nivel3_up").change(function()
         {
+            //Pegar codigo, pois conteudo vem "1|EXEMPLO"
+            var campo = $("#nivel3_up").val().split('|');
+
             //route para chamada funcao passando ID do nivel 4
-            var urlRoute = "{!! url('/nivel3_up/" + $("#nivel3_up").val() + "') !!}";
+            var urlRoute = "{!! url('/nivel3_up/" + campo[0] + "') !!}";
 
             $.getJSON(urlRoute, function(data)
             {
@@ -73,7 +84,7 @@
 
                 $.each(data, function(index, value)
                 {
-                    html += '<option value="' + index +'">' + value + '</option>';
+                    html += '<option value="' + index +'|' + value +'">' + value + '</option>';
                 });
 
 
@@ -86,8 +97,11 @@
          /*Quando selecionar item no combo nivel1, carrega combo nivel2 com dados relacionados*/
         $("#nivel4_up").change(function()
         {
+            //Pegar codigo, pois conteudo vem "1|EXEMPLO"
+            var campo = $("#nivel4_up").val().split('|');
+
             //route para chamada funcao passando ID do nivel 4
-            var urlRoute = "{!! url('/nivel4_up/" + $("#nivel4_up").val() + "') !!}";
+            var urlRoute = "{!! url('/nivel4_up/" + campo[0] + "') !!}";
 
             $.getJSON(urlRoute, function(data)
             {
@@ -99,7 +113,7 @@
 
                 $.each(data, function(index, value)
                 {
-                    html += '<option value="' + index +'">' + value + '</option>';
+                    html += '<option value="' + index +'|' + value +'">' + value + '</option>';
                 });
 
 
@@ -107,6 +121,8 @@
                 //$("#nivel5_up").trigger("change");
             });
         });
+
+
 
 
        /*Hierarquia inversa, do nivel 5 para baixo*/

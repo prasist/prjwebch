@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-04-25T10:47:11 -->
+<!-- 2016-04-29T11:49:57 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listagem_celulas" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="37fb6b81-4a3c-4f93-be6d-3a1e716b297c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
@@ -17,29 +17,49 @@
 	<parameter name="faixa_etaria" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="lideres" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="id" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="nivel1" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="nivel2" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="nivel3" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="nivel4" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="nivel5" class="java.lang.Integer" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[select * from view_celulas_pessoas_niveis
 WHERE
-(dia_encontro = CASE WHEN $P{dia_encontro} <> '' THEN $P{dia_encontro} ELSE  dia_encontro END)
+(isnull(dia_encontro,'') = CASE WHEN $P{dia_encontro} <> '' THEN $P{dia_encontro} ELSE  isnull(dia_encontro,'') END)
 and
-(turno = CASE WHEN $P{turno} <> '' THEN $P{turno} ELSE  turno END)
+(isnull(turno,'') = CASE WHEN $P{turno} <> '' THEN $P{turno} ELSE  isnull(turno,'') END)
 and
 (regiao ilike CASE WHEN $P{regiao} <> '' THEN $P{regiao} ELSE  regiao END)
 and
-(segundo_dia_encontro = CASE WHEN $P{segundo_dia_encontro} <> '' THEN $P{segundo_dia_encontro} ELSE  segundo_dia_encontro END)
+(isnull(segundo_dia_encontro,'') = CASE WHEN $P{segundo_dia_encontro} <> '' THEN $P{segundo_dia_encontro} ELSE  isnull(segundo_dia_encontro,'') END)
 and
 (empresas_id = CASE WHEN $P{empresas_id} <> 0 THEN $P{empresas_id} ELSE  empresas_id END)
 and
 (empresas_clientes_cloud_id = CASE WHEN $P{empresas_clientes_cloud_id} <> 0 THEN $P{empresas_clientes_cloud_id} ELSE  empresas_clientes_cloud_id END)
 and
-(publico_alvo_id = CASE WHEN $P{publico_alvo} <> 0 THEN $P{publico_alvo} ELSE publico_alvo_id END or publico_alvo_id is null)
+(isnull_int(publico_alvo_id,0) = CASE WHEN $P{publico_alvo} <> 0 THEN $P{publico_alvo} ELSE  isnull_int(publico_alvo_id,0) END)
 and
-(faixa_etaria_id = CASE WHEN $P{faixa_etaria} <> 0 THEN $P{faixa_etaria} ELSE  faixa_etaria_id END or faixa_etaria_id is null)
+(isnull_int(faixa_etaria_id,0) = CASE WHEN $P{faixa_etaria} <> 0 THEN $P{faixa_etaria} ELSE  isnull_int(faixa_etaria_id,0) END)
 and
 (lider_pessoas_id = CASE WHEN $P{lideres} <> 0 THEN $P{lideres} ELSE  lider_pessoas_id END)
 and
-(id = CASE WHEN $P{id} <> 0 THEN $P{id} ELSE  id END)]]>
+(id = CASE WHEN $P{id} <> 0 THEN $P{id} ELSE  id END)
+and
+(isnull_int(celulas_nivel1_id,0) = CASE WHEN $P{nivel1} <> 0 THEN $P{nivel1} ELSE  isnull_int(celulas_nivel1_id,0) END)
+and
+(isnull_int(celulas_nivel2_id,0) = CASE WHEN $P{nivel2} <> 0 THEN $P{nivel2} ELSE  isnull_int(celulas_nivel2_id,0) END)
+and
+(isnull_int(celulas_nivel3_id,0) = CASE WHEN $P{nivel3} <> 0 THEN $P{nivel3} ELSE  isnull_int(celulas_nivel3_id,0) END)
+and
+(isnull_int(celulas_nivel4_id,0) = CASE WHEN $P{nivel4} <> 0 THEN $P{nivel4} ELSE  isnull_int(celulas_nivel4_id,0) END)
+and
+(isnull_int(celulas_nivel5_id,0) = CASE WHEN $P{nivel5} <> 0 THEN $P{nivel5} ELSE  isnull_int(celulas_nivel5_id,0) END)]]>
 	</queryString>
+	<field name="celulas_nivel1_label" class="java.lang.String"/>
+	<field name="celulas_nivel2_label" class="java.lang.String"/>
+	<field name="celulas_nivel3_label" class="java.lang.String"/>
+	<field name="celulas_nivel4_label" class="java.lang.String"/>
+	<field name="celulas_nivel5_label" class="java.lang.String"/>
 	<field name="empresas_id" class="java.lang.Long"/>
 	<field name="empresas_clientes_cloud_id" class="java.lang.Long"/>
 	<field name="id" class="java.lang.Long"/>
@@ -104,13 +124,20 @@ and
 	<group name="Group2" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel1}]]></groupExpression>
 		<groupHeader>
-			<band height="24">
+			<band height="23">
 				<textField>
-					<reportElement x="0" y="2" width="500" height="19" uuid="fe6d0187-2e34-4db5-9b43-163104e60a4e"/>
+					<reportElement x="180" y="2" width="320" height="19" uuid="fe6d0187-2e34-4db5-9b43-163104e60a4e"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="3" width="170" height="18" uuid="5de69aa0-89c5-41f3-87be-8c4cf9aeb98c"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{celulas_nivel1_label}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -143,13 +170,20 @@ and
 	<group name="Group3" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel2}]]></groupExpression>
 		<groupHeader>
-			<band height="27">
+			<band height="24">
 				<textField>
-					<reportElement x="0" y="3" width="498" height="21" uuid="6b96e175-a69b-438c-900b-b0eeb8f41786"/>
+					<reportElement x="180" y="3" width="318" height="17" uuid="6b96e175-a69b-438c-900b-b0eeb8f41786"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="2" width="170" height="18" uuid="4ff5b317-fa19-4459-b5c6-95286c7e95e3"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{celulas_nivel2_label}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -182,13 +216,20 @@ and
 	<group name="Group4" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel3}]]></groupExpression>
 		<groupHeader>
-			<band height="22">
+			<band height="24">
 				<textField>
-					<reportElement x="0" y="2" width="500" height="19" uuid="5f47f6cf-f08b-4d3a-bad5-ed4064654ea2"/>
+					<reportElement x="180" y="2" width="320" height="19" uuid="5f47f6cf-f08b-4d3a-bad5-ed4064654ea2"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="3" width="170" height="18" uuid="0bfc0493-d129-4fe8-a70a-4909139fe3e7"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{celulas_nivel3_label}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -221,13 +262,20 @@ and
 	<group name="Group5" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel4}]]></groupExpression>
 		<groupHeader>
-			<band height="24">
+			<band height="22">
 				<textField>
-					<reportElement x="0" y="2" width="498" height="20" uuid="7c87067d-67b4-4cd4-bf07-b4593e9c22a2"/>
+					<reportElement x="180" y="2" width="318" height="20" uuid="7c87067d-67b4-4cd4-bf07-b4593e9c22a2"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel4}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="3" width="170" height="19" uuid="bac68e76-1e92-4140-b582-34cad46c3bde"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{celulas_nivel4_label}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -260,13 +308,20 @@ and
 	<group name="Group6" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel5}]]></groupExpression>
 		<groupHeader>
-			<band height="22">
+			<band height="26">
 				<textField>
-					<reportElement x="0" y="1" width="500" height="20" uuid="0dd405ae-95cb-439c-9576-0980a07e40f3"/>
+					<reportElement x="180" y="2" width="320" height="20" uuid="0dd405ae-95cb-439c-9576-0980a07e40f3"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel5}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="2" width="170" height="20" uuid="377d53bd-c653-4d4f-a848-49a51e6cf9d8"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{celulas_nivel5_label}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>

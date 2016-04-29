@@ -66,6 +66,38 @@ class RelatorioCelulasController extends Controller
 
     $PHPJasperXML = new \PHPJasperXML();
 
+    $filtros = "";
+    $descricao_publico_alvo="";
+    $descricao_faixa_etaria="";
+    $descricao_lider="";
+    $descricao_nivel1="";
+    $descricao_nivel2="";
+    $descricao_nivel3="";
+    $descricao_nivel4="";
+    $descricao_nivel5="";
+
+    if ($input["publico_alvo"]!="") $descricao_publico_alvo = explode("|", $input["publico_alvo"]);
+    if ($input["faixa_etaria"]!="") $descricao_faixa_etaria = explode("|", $input["faixa_etaria"]);
+    if ($input["lideres"]!="") $descricao_lider = explode("|", $input["lideres"]);
+    if ($input["nivel1_up"]!="") $descricao_nivel1 = explode("|", $input["nivel1_up"]);
+    if ($input["nivel2_up"]!="") $descricao_nivel2 = explode("|", $input["nivel2_up"]);
+    if ($input["nivel3_up"]!="") $descricao_nivel3 = explode("|", $input["nivel3_up"]);
+    if ($input["nivel4_up"]!="") $descricao_nivel4 = explode("|", $input["nivel4_up"]);
+    if ($input["nivel5_up"]!="") $descricao_nivel5 = explode("|", $input["nivel5_up"]);
+
+    if ($input["dia_encontro"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Dia Encontro : " . $input["dia_encontro"];
+    if ($input["regiao"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Região : " . $input["regiao"];
+    if ($input["turno"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Turno : " . $input["turno"];
+    if ($input["segundo_dia_encontro"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Segundo dia encontro : " . $input["segundo_dia_encontro"];
+    if ($descricao_publico_alvo!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Publico Alvo : " . $descricao_publico_alvo[1];
+    if ($descricao_faixa_etaria!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Faixa Etária : " . $descricao_faixa_etaria[1];
+    if ($descricao_lider!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Líder : " . $descricao_lider[1];
+    if ($input["nivel1_up"]!="0")  $filtros .= "<br/>" . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
+    if ($input["nivel2_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel2') . " : " . $descricao_nivel2[1];
+    if ($input["nivel3_up"]!="0")  $filtros .= "<br/>" . \Session::get('nivel3') . " : " . $descricao_nivel3[1];
+    if ($input["nivel4_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel4') . " : " . $descricao_nivel4[1];
+    if ($input["nivel5_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel5') . " : " . $descricao_nivel5[1];
+
     $PHPJasperXML->arrayParameter = array
     (
         "empresas_id"=> $this->dados_login->empresas_id,
@@ -77,35 +109,16 @@ class RelatorioCelulasController extends Controller
         "publico_alvo"=> ($input["publico_alvo"]=="" ? 0 : $input["publico_alvo"]),
         "faixa_etaria"=> ($input["faixa_etaria"]=="" ? 0 : $input["faixa_etaria"]),
         "lideres"=> ($input["lideres"]=="" ? 0 : $input["lideres"]),
+        "nivel1"=> ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]),
+        "nivel2"=> ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]),
+        "nivel3"=> ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]),
+        "nivel4"=> ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]),
+        "nivel5"=> ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]),
+        "filtros"=> $filtros,
         "id"=> 0
     );
 
     //$PHPJasperXML->debugsql=true;
-
-    if ($input["nivel5"]!="")
-    {
-        $PHPJasperXML->arrayParameter=array("nivel5"=>"'" . $input["nivel5"] . "'");
-    }
-
-    if ($input["nivel4"]!="")
-    {
-        $PHPJasperXML->arrayParameter=array("nivel4"=>"'" . $input["nivel4"] . "'");
-    }
-
-    if ($input["nivel3"]!="")
-    {
-        $PHPJasperXML->arrayParameter=array("nivel3"=>"'" . $input["nivel3"] . "'");
-    }
-
-    if ($input["nivel2"]!="")
-    {
-        $PHPJasperXML->arrayParameter=array("nivel2"=>"'" . $input["nivel2"] . "'");
-    }
-
-    if ($input["nivel1"]!="")
-    {
-        $PHPJasperXML->arrayParameter=array("nivel1"=>"'" . $input["nivel1"] . "'");
-    }
 
     if ($input["tipo_relatorio"]=="S") //Sintético
     {

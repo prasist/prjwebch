@@ -79,6 +79,11 @@ class RelatorioPessoasController extends Controller
     $descricao_motivo_ent="";
     $descricao_motivo_sai="";
     $descricao_grupo="";
+    $descricao_nivel1="";
+    $descricao_nivel2="";
+    $descricao_nivel3="";
+    $descricao_nivel4="";
+    $descricao_nivel5="";
 
     if ($input["estadoscivis"]!="") $descricao_estado_civil = explode("|", $input["estadoscivis"]);
     if ($input["tipos"]!="") $descricao_tipos = explode("|", $input["tipos"]);
@@ -86,73 +91,68 @@ class RelatorioPessoasController extends Controller
     if ($input["motivoentrada"]!="") $descricao_motivo_ent = explode("|", $input["motivoentrada"]);
     if ($input["motivosaida"]!="") $descricao_motivo_sai = explode("|", $input["motivosaida"]);
     if ($input["grupo"]!="") $descricao_grupo = explode("|", $input["grupo"]);
+    if ($input["nivel1_up"]!="") $descricao_nivel1 = explode("|", $input["nivel1_up"]);
+    if ($input["nivel2_up"]!="") $descricao_nivel2 = explode("|", $input["nivel2_up"]);
+    if ($input["nivel3_up"]!="") $descricao_nivel3 = explode("|", $input["nivel3_up"]);
+    if ($input["nivel4_up"]!="") $descricao_nivel4 = explode("|", $input["nivel4_up"]);
+    if ($input["nivel5_up"]!="") $descricao_nivel5 = explode("|", $input["nivel5_up"]);
 
-    if ($input["status"]!="")  $filtros .= "          Status Cadastro : " . ($input["status"]=="S" ? "Ativo" : "Inativo");
-    if ($input["mes"]!="")  $filtros .= "         Mês Aniversário : " . $input["mes"];
-    if ($input["sexo"]!="")  $filtros .= "        Sexo : " . ($input["sexo"]=="M" ? "Masculino" : "Feminino");
-    if ($descricao_estado_civil!="")  $filtros .= "       Estado Civil : " . $descricao_estado_civil[1];
-    if ($descricao_grupo!="")  $filtros .= "         Grupo : " . $descricao_grupo[1];
-    if ($descricao_tipos!="")  $filtros .= "          Tipo Pessoa : " . $descricao_tipos[1];
-    if ($descricao_status!="")  $filtros .= "         Status : " . $descricao_status[1];
-    if ($descricao_motivo_ent!="")  $filtros .= "         Motivo Entrada : " . $descricao_motivo_ent[1];
-    if ($descricao_motivo_sai!="")  $filtros .= "         Motivo Saída : " . $descricao_motivo_sai[1];
-    if ($input["data_entrada"]!="")  $filtros .= "        Entrada : " . $input["data_entrada"] . " até " . $input["data_entrada_ate"] ;
-    if ($input["data_saida"]!="")  $filtros .= "          Saída : " . $input["data_saida"] . " até " . $input["data_saida_ate"] ;
-    if ($input["data_batismo"]!="")  $filtros .= "        Batismo : " . $input["data_batismo"] . " até " . $input["data_batismo_ate"] ;
+    if ($input["status"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Status Cadastro : " . ($input["status"]=="S" ? "Ativo" : "Inativo");
+    if ($input["mes"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Mês Aniversário : " . $input["mes"];
+    if ($input["sexo"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Sexo : " . ($input["sexo"]=="M" ? "Masculino" : "Feminino");
+    if ($descricao_estado_civil!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Estado Civil : " . $descricao_estado_civil[1];
+    if ($descricao_grupo!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Grupo : " . $descricao_grupo[1];
+    if ($descricao_tipos!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Tipo Pessoa : " . $descricao_tipos[1];
+    if ($descricao_status!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Status : " . $descricao_status[1];
+    if ($descricao_motivo_ent!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Motivo Entrada : " . $descricao_motivo_ent[1];
+    if ($descricao_motivo_sai!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Motivo Saída : " . $descricao_motivo_sai[1];
+    if ($input["data_entrada"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Entrada : " . $input["data_entrada"] . " até " . $input["data_entrada_ate"] ;
+    if ($input["data_saida"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Saída : " . $input["data_saida"] . " até " . $input["data_saida_ate"] ;
+    if ($input["data_batismo"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Batismo : " . $input["data_batismo"] . " até " . $input["data_batismo_ate"] ;
+    if ($input["nivel1_up"]!="0")  $filtros .= "<br/>" . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
+    if ($input["nivel2_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel2') . " : " . $descricao_nivel2[1];
+    if ($input["nivel3_up"]!="0")  $filtros .= "<br/>" . \Session::get('nivel3') . " : " . $descricao_nivel3[1];
+    if ($input["nivel4_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel4') . " : " . $descricao_nivel4[1];
+    if ($input["nivel5_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel5') . " : " . $descricao_nivel5[1];
 
-    /*Se for filtrada alguma data, direcionara para relatorio especifico*/
-    if ($input["data_entrada"]!="" || $input["data_saida"]!="" || $input["data_batismo"]!="" || $input["motivoentrada"]!="" || $input["motivosaida"]!="")
+    $PHPJasperXML->arrayParameter = array
+    (
+        "empresas_id"=> $this->dados_login->empresas_id,
+        "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
+        "status"=>"'" . $input["status"] . "'",
+        "mes"=>"'" . $input["mes"] . "'",
+        "sexo"=>"'" . $input["sexo"] . "'",
+        "nivel1"=> ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]),
+        "nivel2"=> ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]),
+        "nivel3"=> ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]),
+        "nivel4"=> ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]),
+        "nivel5"=> ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]),
+        "estadoscivis"=> ($descricao_estado_civil=="" ? 0 : $descricao_estado_civil[0]),
+        "tipos"=> ($descricao_tipos=="" ? 0 : $descricao_tipos[0]),
+        "grupo"=> ($descricao_grupo=="" ? 0 : $descricao_grupo[0]),
+        "status_id"=> ($descricao_status=="" ? 0 : $descricao_status[0]),
+        "motivo_entrada"=> ($descricao_motivo_ent=="" ? 0 : $descricao_motivo_ent[0]),
+        "motivo_saida"=> ($descricao_motivo_sai=="" ? 0 : $descricao_motivo_sai[0]),
+        "data_entrada_inicial"=>"'" . ($input["data_entrada"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_entrada"])) . "'",
+        "data_entrada_final"=>"'" . ($input["data_entrada_ate"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_entrada_ate"])) . "'",
+        "data_saida_inicial"=>"'" . ($input["data_saida"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_saida"])) . "'",
+        "data_saida_final"=>"'" . ($input["data_saida_ate"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_saida_ate"])) . "'",
+        "data_batismo_inicial"=>"'" . ($input["data_batismo"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_batismo"])) . "'",
+        "data_batismo_final"=>"'" . ($input["data_batismo_ate"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_batismo_ate"])) . "'",
+        "filtros"=> $filtros,
+    );
+
+    //$PHPJasperXML->debugsql=true;
+
+    /*Exibir quebras por estrutura de celulas*/
+    if ($input["ckEstruturas"])
     {
-            $PHPJasperXML->arrayParameter = array
-            (
-                "empresas_id"=> $this->dados_login->empresas_id,
-                "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
-                "status"=>"'" . $input["status"] . "'",
-                "mes"=>"'" . $input["mes"] . "'",
-                "sexo"=>"'" . $input["sexo"] . "'",
-                "estadoscivis"=> ($descricao_estado_civil=="" ? 0 : $descricao_estado_civil[0]),
-                "tipos"=> ($descricao_tipos=="" ? 0 : $descricao_tipos[0]),
-                "grupo"=> ($descricao_grupo=="" ? 0 : $descricao_grupo[0]),
-                "status_id"=> ($descricao_status=="" ? 0 : $descricao_status[0]),
-                "motivo_entrada"=> ($descricao_motivo_ent=="" ? 0 : $descricao_motivo_ent[0]),
-                "motivo_saida"=> ($descricao_motivo_sai=="" ? 0 : $descricao_motivo_sai[0]),
-                "data_entrada_inicial"=>"'" . ($input["data_entrada"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_entrada"])) . "'",
-                "data_entrada_final"=>"'" . ($input["data_entrada_ate"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_entrada_ate"])) . "'",
-                "data_saida_inicial"=>"'" . ($input["data_saida"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_saida"])) . "'",
-                "data_saida_final"=>"'" . ($input["data_saida_ate"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_saida_ate"])) . "'",
-                "data_batismo_inicial"=>"'" . ($input["data_batismo"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_batismo"])) . "'",
-                "data_batismo_final"=>"'" . ($input["data_batismo_ate"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_batismo_ate"])) . "'",
-                "filtros"=> $filtros,
-            );
-
-            $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_datas.jrxml');
+        $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral_celulas.jrxml');
     }
     else
     {
-            $PHPJasperXML->arrayParameter = array
-            (
-                "empresas_id"=> $this->dados_login->empresas_id,
-                "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
-                "status"=>"'" . $input["status"] . "'",
-                "mes"=>"'" . $input["mes"] . "'",
-                "sexo"=>"'" . $input["sexo"] . "'",
-                "grupo"=> ($descricao_grupo=="" ? 0 : $descricao_grupo[0]),
-                "estadoscivis"=> ($descricao_estado_civil=="" ? 0 : $descricao_estado_civil[0]),
-                "tipos"=> ($descricao_tipos=="" ? 0 : $descricao_tipos[0]),
-                "status_id"=> ($descricao_status=="" ? 0 : $descricao_status[0]),
-                "filtros"=> $filtros,
-            );
-
-            $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas.jrxml');
+        $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral.jrxml');
     }
-
-   //$PHPJasperXML->debugsql=true;
-
-    if ($input["nivel5_up"]!="0" || $input["nivel4_up"]!="0" || $input["nivel3_up"]!="0" || $input["nivel2_up"]!="0" || $input["nivel1_up"]!="0")
-    {
-        //$PHPJasperXML->arrayParameter=array("nivel5"=>"'" . $input["nivel5"] . "'");
-    }
-
 
     $PHPJasperXML->transferDBtoArray($server,$user,$pass,$db, "psql");
     $PHPJasperXML->outpage("I");    //page output method I:standard output  D:Download file
