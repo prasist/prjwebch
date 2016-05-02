@@ -1,5 +1,3 @@
-<?php \Session::flush()?>
-
 @extends('layouts.app')
 
 @section('content')
@@ -23,6 +21,15 @@
                 <div class="panel-heading">Mensagens</div>
 
                 <div class="panel-body">
+
+
+                <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Atenção!</h4>
+                {{$erros}}
+                <br/>
+                Ao tentar logar novamente a outra conexão será finalizada.
+                </div>
 
                 <ul>
                         <li>

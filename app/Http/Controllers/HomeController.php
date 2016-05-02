@@ -52,6 +52,12 @@ class HomeController extends Controller
 
     }
 
+    public function jalogado()
+    {
+            Auth::logout();
+            \Session::flush();
+            return view('home', ['erros'=>'Usuário já logado em outra máquina']);
+    }
     /**
      * Show the application dashboard.
      *
@@ -89,7 +95,7 @@ class HomeController extends Controller
                else if (\Session::get('token')!=$log->token)
                {
                     //dd('já logado :' . \Session::get('token'));
-                    return redirect('logout');
+                    return redirect('userlogged')->withErrors(['msg', 'Usuário já logado em outra máquina.']);
                }
 
                $log->data_acesso =  date('Y-m-d H:i:s');
