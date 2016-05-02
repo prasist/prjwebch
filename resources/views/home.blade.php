@@ -1,6 +1,9 @@
+<?php \Session::flush()?>
+
 @extends('layouts.app')
 
 @section('content')
+
 <!-- retirdado composer.json "barryvdh/laravel-debugbar": "^2.1",-->
 <div class="container">
 
