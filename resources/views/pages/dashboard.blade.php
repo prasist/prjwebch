@@ -64,12 +64,28 @@
 
 <div class="row">
         <div class="col-md-12">
-          <!-- Widget: user widget style 1 -->
-          <div class="box box-widget">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-gray">
-              <center><h4>Visão Geral</h4></center>
+
+
+   <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Visão Geral</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
             </div>
+
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-12">
+                        <!-- Widget: user widget style 1 -->
+          <div class="box box-widget">
+
             <div class="box-footer no-padding">
 
                 <div class="row">
@@ -185,6 +201,24 @@
             </div>
           </div>
           <!-- /.widget-user -->
+                </div>
+
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+
+
+
+
         </div>
 
    </div>
