@@ -120,14 +120,29 @@ class HomeController extends Controller
             $retorno = \DB::select('select  fn_total_inativos(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
             $total_inativos = $retorno[0]->fn_total_inativos;
 
+            $retorno = \DB::select('select  fn_total_celulas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
+            $total_celulas = $retorno[0]->fn_total_celulas;
+
+            $retorno = \DB::select('select  fn_total_participantes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
+            $total_participantes = $retorno[0]->fn_total_participantes;
+
+            $retorno = \DB::select('select  fn_total_familias(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
+            $total_familias = $retorno[0]->fn_total_familias;
+
             //----------------- FIM Functions POSTGRES
+
+            $pessoas_tipos = \DB::select('select * from view_total_pessoas_tipo vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
             return view('pages.dashboard',
                 [
                     'total_pessoas' => $total_pessoas,
                     'total_membros' => $total_membros,
                     'total_aniversariantes' => $total_aniversariantes,
-                    'total_inativos' => $total_inativos
+                    'total_inativos' => $total_inativos,
+                    'pessoas_tipos'=>$pessoas_tipos,
+                    'total_celulas'=>$total_celulas,
+                    'total_participantes'=>$total_participantes,
+                    'total_familias'=>$total_familias
                 ]);
 
         }

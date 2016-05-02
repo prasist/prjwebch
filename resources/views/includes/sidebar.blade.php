@@ -159,7 +159,7 @@
 
                   <ul class="treeview-menu">
                     <li>
-                        <a href={{ url('/relcelulas')}}><i class="fa fa-print"></i> Relatórios<i class="fa fa-angle-left pull-right"></i></a>
+                        <a href={{ url('/relcelulas')}}><i class="fa fa-print"></i> Relatórios</a>
 
                     </li>
                   </ul>

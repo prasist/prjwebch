@@ -120,6 +120,7 @@ class RelatorioCelulasController extends Controller
 
     //$PHPJasperXML->debugsql=true;
 
+
     //if ($input["tipo_relatorio"]=="S") //Sintético
     //{
       if ($input["ckExibir"]) //Exibir participantes

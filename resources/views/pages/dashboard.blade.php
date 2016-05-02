@@ -63,66 +63,55 @@
 </div><!-- /.row -->
 
 <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-10">
           <!-- Widget: user widget style 1 -->
-          <div class="box box-widget widget-user-2">
+          <div class="box box-widget">
             <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-yellow">
-              <!-- /.widget-user-image -->
-              <h3 class="widget-user-username">Pessoas</h3>
-              <h5 class="widget-user-desc"></h5>
+            <div class="widget-user-header bg-gray">
+              <h4 class="widget-user-username">Resumo Geral</h4>
             </div>
             <div class="box-footer no-padding">
+            <h4>&nbsp;&nbsp;&nbsp;&nbsp;Pessoas</h4>
               <ul class="nav nav-stacked">
-                <li><a href="#">Membros <span class="pull-right badge bg-blue">31</span></a></li>
-                <li><a href="#">Clientes <span class="pull-right badge bg-aqua">5</span></a></li>
-                <li><a href="#">Fornecedores <span class="pull-right badge bg-green">12</span></a></li>
-                <li><a href="#">Outros <span class="pull-right badge bg-red">842</span></a></li>
+
+               @foreach($pessoas_tipos as $item)
+                <li>
+                    <a href="#">&nbsp;{!! $item->nome !!}
+                        <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
+                    </a>
+                </li>
+                @endforeach
 
               </ul>
-            </div>
-          </div>
-          <!-- /.widget-user -->
-        </div>
 
-        <div class="col-md-4">
-          <!-- Widget: user widget style 1 -->
-          <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-green">
-              <!-- /.widget-user-image -->
-              <h3 class="widget-user-username">Famílias</h3>
-              <h5 class="widget-user-desc"></h5>
-            </div>
-            <div class="box-footer no-padding">
+              <h4>&nbsp;&nbsp;&nbsp;&nbsp;Células</h4>
               <ul class="nav nav-stacked">
-                <li><a href="#">Total <span class="pull-right badge bg-blue">31</span></a></li>
-                <li><a href="#">Chefe de Família <span class="pull-right badge bg-aqua">5</span></a></li>
-                <li><a href="#">Crianças <span class="pull-right badge bg-green">12</span></a></li>
-                <li><a href="#">Outros <span class="pull-right badge bg-red">842</span></a></li>
+
+                <li>
+                    <a href="#">&nbsp;Células Ativas
+                        <span class="pull-left badge bg-blue">{!! $total_celulas !!}</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">&nbsp;Participantes
+                        <span class="pull-left badge bg-blue">{!! $total_participantes !!}</span>
+                    </a>
+                </li>
 
               </ul>
-            </div>
-          </div>
-          <!-- /.widget-user -->
-        </div>
 
-        <div class="col-md-4">
-          <!-- Widget: user widget style 1 -->
-          <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-blue">
-              <!-- /.widget-user-image -->
-              <h3 class="widget-user-username">Células</h3>
-              <h5 class="widget-user-desc"></h5>
-            </div>
-            <div class="box-footer no-padding">
+              <h4>&nbsp;&nbsp;&nbsp;&nbsp;Famílias</h4>
               <ul class="nav nav-stacked">
-                <li><a href="#">Total <span class="pull-right badge bg-blue">31</span></a></li>
-                <li><a href="#">Participantes <span class="pull-right badge bg-aqua">5</span></a></li>
-                <li><a href="#">Visitantes <span class="pull-right badge bg-green">12</span></a></li>
+
+                <li>
+                    <a href="#">&nbsp;Total
+                        <span class="pull-left badge bg-blue">{!! $total_familias !!}</span>
+                    </a>
+                </li>
 
               </ul>
+
             </div>
           </div>
           <!-- /.widget-user -->
