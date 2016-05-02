@@ -19,8 +19,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-
-                      @if ($filtros)
+                     @if ($emails)
                       <div class="row">
                             <div class="col-xs-12">
                             <p>

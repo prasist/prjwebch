@@ -239,6 +239,7 @@ class RelatorioPessoasController extends Controller
     if ($input["saida"]=="E")
     {
         $emails = \DB::select('select distinct razaosocial, emailprincipal from view_pessoas_geral_celulas' . $where . ' order by razaosocial');
+        //dd('select distinct razaosocial, emailprincipal from view_pessoas_geral_celulas' . $where . ' order by razaosocial');
         return view($this->rota . '.listaremails', ['emails'=>$emails, 'filtros'=>$filtros]);
     }
      else
