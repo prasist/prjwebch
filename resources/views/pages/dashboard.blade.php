@@ -63,7 +63,7 @@
 </div><!-- /.row -->
 
 <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-12">
           <!-- Widget: user widget style 1 -->
           <div class="box box-widget">
             <!-- Add the bg color to the header using any of the bg-* classes -->
@@ -71,7 +71,7 @@
               <h4 class="widget-user-username">Resumo Geral</h4>
             </div>
             <div class="box-footer no-padding">
-            <h4>&nbsp;&nbsp;&nbsp;&nbsp;Pessoas</h4>
+            <h4>&nbsp;&nbsp;&nbsp;&nbsp;Tipos de Pessoas</h4>
               <ul class="nav nav-stacked">
 
                @foreach($pessoas_tipos as $item)
@@ -116,6 +116,7 @@
           </div>
           <!-- /.widget-user -->
         </div>
+
 
    </div>
 
