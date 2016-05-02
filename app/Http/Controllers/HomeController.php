@@ -132,6 +132,14 @@ class HomeController extends Controller
             //----------------- FIM Functions POSTGRES
 
             $pessoas_tipos = \DB::select('select * from view_total_pessoas_tipo vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+            $pessoas_sexo = \DB::select('select * from view_total_pessoas_sexo vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+            $pessoas_status = \DB::select('select * from view_total_pessoas_status vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+            $pessoas_estadoscivis = \DB::select('select * from view_total_pessoas_estadoscivis vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+            $celulas_faixas = \DB::select('select * from view_total_celulas_faixa_etaria vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+            $celulas_publicos = \DB::select('select * from view_total_celulas_publico_alvo vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
 
             return view('pages.dashboard',
                 [
@@ -142,7 +150,12 @@ class HomeController extends Controller
                     'pessoas_tipos'=>$pessoas_tipos,
                     'total_celulas'=>$total_celulas,
                     'total_participantes'=>$total_participantes,
-                    'total_familias'=>$total_familias
+                    'total_familias'=>$total_familias,
+                    'pessoas_sexo'=>$pessoas_sexo,
+                    'pessoas_status'=>$pessoas_status,
+                    'pessoas_estadoscivis'=>$pessoas_estadoscivis,
+                    'celulas_faixas'=>$celulas_faixas,
+                    'celulas_publicos'=>$celulas_publicos
                 ]);
 
         }
