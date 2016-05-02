@@ -70,8 +70,45 @@ class HomeController extends Controller
         //Verificar se foi cadastrado os dados da igreja
         if (usuario::find(Auth::user()->id))
        {
+
             //Busca ID do cliente cloud e ID da empresa
             $this->dados_login = usuario::find(Auth::user()->id);
+
+
+            $log = \App\Models\log_users::find(Auth::user()->id);
+
+            if($log) //Achou
+            {
+
+               if (\Session::get('token')=="")
+               {
+                   $token_acesso = str_random(30);
+                   $log->token = $token_acesso;
+                   \Session::put('token', $token_acesso);
+               }
+               else if (\Session::get('token')!=$log->token)
+               {
+                    dd('já logado :' . \Session::get('token'));
+               }
+
+               $log->data_acesso =  date('Y-m-d H:i:s');
+               $log->save();
+
+            }
+            else //Primeiro acesso
+            {
+                $token_acesso = str_random(30);
+
+                $log = new \App\Models\log_users();
+                $log->id = Auth::user()->id;
+                $log->token = $token_acesso;
+                $log->data_acesso =  date('Y-m-d H:i:s');
+                $log->empresas_id = $this->dados_login->empresas_id;
+                $log->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
+                $log->save();
+                \Session::put('token', $token_acesso);
+            }
+
 
             \Session::put('titulo', 'Home | Dashboard');
             \Session::put('subtitulo', '');

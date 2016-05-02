@@ -71,7 +71,7 @@ class AuthController extends Controller
         {
             $message->from('contato@sigma3sistemas.com.br', 'Sigma3');
             $message->subject('Link para validação SIGMA3');
-            $message->to($data['email']);
+            $message->to($data['email'], 'contato@sigma3sistemas');
         });
 
 
