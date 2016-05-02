@@ -88,7 +88,8 @@ class HomeController extends Controller
                }
                else if (\Session::get('token')!=$log->token)
                {
-                    dd('já logado :' . \Session::get('token'));
+                    //dd('já logado :' . \Session::get('token'));
+                    return redirect('logout');
                }
 
                $log->data_acesso =  date('Y-m-d H:i:s');
