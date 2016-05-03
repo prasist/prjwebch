@@ -74,6 +74,7 @@ class RelatorioPessoasController extends Controller
 
     $filtros = "";
     $descricao_status="";
+    $descricao_situacoes="";
     $descricao_tipos="";
     $descricao_estado_civil="";
     $descricao_motivo_ent="";
@@ -86,6 +87,7 @@ class RelatorioPessoasController extends Controller
     $descricao_nivel5="";
     $where="";
 
+    if ($input["situacoes"]!="") $descricao_situacoes = explode("|", $input["situacoes"]);
     if ($input["estadoscivis"]!="") $descricao_estado_civil = explode("|", $input["estadoscivis"]);
     if ($input["tipos"]!="") $descricao_tipos = explode("|", $input["tipos"]);
     if ($input["status_id"]!="") $descricao_status = explode("|", $input["status_id"]);
@@ -130,6 +132,12 @@ class RelatorioPessoasController extends Controller
     {
         $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Grupo : " . $descricao_grupo[1];
         $where .= " and grupos_pessoas_id = " . $descricao_grupo[0];
+    }
+
+    if ($descricao_situacoes!="")
+    {
+        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;?Situação : " . $descricao_situacoes[1];
+        $where .= " and situacoes_id = " . $descricao_situacoes[0];
     }
 
     if ($descricao_tipos!="")
@@ -220,6 +228,7 @@ class RelatorioPessoasController extends Controller
         "nivel4"=> ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]),
         "nivel5"=> ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]),
         "estadoscivis"=> ($descricao_estado_civil=="" ? 0 : $descricao_estado_civil[0]),
+        "situacoes"=> ($descricao_situacoes=="" ? 0 : $descricao_situacoes[0]),
         "tipos"=> ($descricao_tipos=="" ? 0 : $descricao_tipos[0]),
         "grupo"=> ($descricao_grupo=="" ? 0 : $descricao_grupo[0]),
         "status_id"=> ($descricao_status=="" ? 0 : $descricao_status[0]),
