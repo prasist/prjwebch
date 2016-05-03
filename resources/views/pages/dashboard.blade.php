@@ -57,7 +57,7 @@
 
         </div>
 
-
+        <p>Token : {!! \Session::get('token')!!}</p>
     </div><!-- ./col -->
 </div><!-- /.row -->
 
