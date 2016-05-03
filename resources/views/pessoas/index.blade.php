@@ -36,7 +36,8 @@
          <div class="alert2 callout callout-info">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <h4><i class="icon fa fa-info"></i> Dica!</h4>
-                Antes de iniciar o cadastro de Pessoas, verifique quais tabelas auxiliares serão necessárias e as cadastre previamente. Exemplo : Grupos, Status, Estados Civis, Graus de Instrução, Idiomas, etc...
+                Antes de iniciar o cadastro de Pessoas, verifique quais tabelas auxiliares serão necessárias e as cadastre previamente (Menu : Cadastro Base).
+                <br/>Exemplos : Grupos, Status, Estados Civis, Graus de Instrução, Idiomas, etc...
          </div>
 
 

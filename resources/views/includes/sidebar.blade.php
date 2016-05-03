@@ -176,7 +176,6 @@
             </li>
 
 
-
           <li class="text">&nbsp;</li>
 
           <li class="treeview">
@@ -205,6 +204,14 @@
           <div id="tour5_visaogeral"></div>
 
         </li>
+
+        <li class="text">&nbsp;</li>
+
+          <li class="treeview">
+          <a href="#">
+            <i class="fa fa-question-circle"></i> <span>Suporte</span>
+          </a>
+
 
             <!--
             <li>
