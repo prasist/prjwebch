@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-04-29T14:56:27 -->
+<!-- 2016-05-03T14:25:24 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listagem_celulas" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="37fb6b81-4a3c-4f93-be6d-3a1e716b297c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
@@ -113,37 +113,47 @@ and
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="46" splitType="Stretch">
+		<band height="23" splitType="Stretch">
 			<staticText>
-				<reportElement x="-15" y="22" width="194" height="20" uuid="f8b15e30-2753-417d-b7f8-5199f3e82e37"/>
-				<textElement>
+				<reportElement x="-15" y="5" width="194" height="16" uuid="f8b15e30-2753-417d-b7f8-5199f3e82e37">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Célula]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="309" y="21" width="81" height="20" uuid="b2b875cc-3d76-4190-b8e7-c354e52b16b8"/>
+				<reportElement x="309" y="4" width="66" height="16" uuid="b2b875cc-3d76-4190-b8e7-c354e52b16b8">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Dia Encontro]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="433" y="21" width="92" height="20" uuid="1799b7d4-43b1-4d9e-a0cd-63b70e25c46d"/>
+				<reportElement x="378" y="4" width="92" height="16" uuid="1799b7d4-43b1-4d9e-a0cd-63b70e25c46d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Região]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="223" y="22" width="60" height="20" uuid="d8bdb5fd-da2a-44dc-869c-8c6a1ccdaadc"/>
+				<reportElement x="223" y="5" width="60" height="16" uuid="d8bdb5fd-da2a-44dc-869c-8c6a1ccdaadc">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Telefone]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="571" y="21" width="92" height="20" uuid="aae4cf22-6414-49e2-a7ae-d92da1c084bb"/>
+				<reportElement x="571" y="4" width="92" height="16" uuid="aae4cf22-6414-49e2-a7ae-d92da1c084bb">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -168,7 +178,7 @@ and
 				<textFieldExpression><![CDATA[$F{descricao_dia_encontro}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="375" y="2" width="185" height="17" uuid="7bdb07c0-8503-43f4-93ca-5b32e473268a"/>
+				<reportElement x="378" y="2" width="185" height="17" uuid="7bdb07c0-8503-43f4-93ca-5b32e473268a"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>

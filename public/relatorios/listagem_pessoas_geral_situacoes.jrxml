@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-05-03T11:51:57 -->
+<!-- 2016-05-03T14:07:03 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listagem_pessoas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="64e0bc66-588c-46d1-8c80-4e0aea9c90b2">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
@@ -55,7 +55,7 @@
 	<parameter name="nivel4" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="nivel5" class="java.lang.Integer" isForPrompting="false"/>
 	<queryString>
-		<![CDATA[select * from view_pessoas_geral
+		<![CDATA[select * from view_pessoas_geral_sit
 WHERE
 (isnull(sexo,'') = CASE WHEN $P{sexo} <> '' THEN $P{sexo} ELSE  isnull(sexo,'') END)
 and
@@ -100,7 +100,8 @@ and
 (isnull_int(celulas_nivel4_id,0) = CASE WHEN $P{nivel4} <> 0 THEN $P{nivel4} ELSE  isnull_int(celulas_nivel4_id,0) END)
 and
 (isnull_int(celulas_nivel5_id,0) = CASE WHEN $P{nivel5} <> 0 THEN $P{nivel5} ELSE  isnull_int(celulas_nivel5_id,0) END)
-]]>
+and
+(isnull_int(id_situacoes,0) = CASE WHEN $P{situacoes} <> 0 THEN $P{situacoes} ELSE  isnull_int(id_situacoes,0) END)]]>
 	</queryString>
 	<field name="celulas_nivel1_id" class="java.lang.Long"/>
 	<field name="celulas_nivel2_id" class="java.lang.Long"/>
@@ -130,6 +131,48 @@ and
 	<field name="motivos_saida_id" class="java.lang.Long"/>
 	<field name="id_situacoes" class="java.lang.Long"/>
 	<field name="desc_situacoes" class="java.lang.String"/>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{razaosocial}]]></groupExpression>
+		<groupHeader>
+			<band height="19">
+				<textField>
+					<reportElement x="0" y="0" width="189" height="16" uuid="da27a871-db8f-439e-a015-843b55b0c59a"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{razaosocial}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="191" y="0" width="49" height="16" uuid="a5944171-9b90-4f93-b95a-fc17a54cdc1d"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{datanasc}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="244" y="0" width="66" height="16" uuid="a01e004b-1ea2-48d7-9072-b88d1c7169e2"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fone_principal}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="310" y="0" width="61" height="16" uuid="34ec9ee3-7faf-4394-a039-6e87ef9879d0"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fone_celular}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="379" y="0" width="191" height="16" uuid="5f1a1f9c-3b1d-408b-a882-e785756fd70c"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{emailprincipal}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -185,7 +228,7 @@ and
 				<text><![CDATA[Telefones]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="384" y="0" width="100" height="16" uuid="c86b6c41-e720-4970-900a-92e0f07bde44">
+				<reportElement x="381" y="0" width="100" height="16" uuid="c86b6c41-e720-4970-900a-92e0f07bde44">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -196,42 +239,8 @@ and
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="19" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="1" width="189" height="16" uuid="da27a871-db8f-439e-a015-843b55b0c59a"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{razaosocial}]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="191" y="1" width="49" height="16" uuid="a5944171-9b90-4f93-b95a-fc17a54cdc1d"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{datanasc}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="247" y="1" width="66" height="16" uuid="a01e004b-1ea2-48d7-9072-b88d1c7169e2"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{fone_principal}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="318" y="1" width="61" height="16" uuid="34ec9ee3-7faf-4394-a039-6e87ef9879d0"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{fone_celular}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="384" y="1" width="191" height="16" uuid="5f1a1f9c-3b1d-408b-a882-e785756fd70c"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{emailprincipal}]]></textFieldExpression>
-			</textField>
+		<band height="3">
+			<printWhenExpression><![CDATA[$F{id_situacoes} != null]]></printWhenExpression>
 		</band>
 	</detail>
 	<columnFooter>

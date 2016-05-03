@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-05-03T11:51:57 -->
+<!-- 2016-05-03T14:12:39 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listagem_pessoas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="64e0bc66-588c-46d1-8c80-4e0aea9c90b2">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
@@ -55,7 +55,7 @@
 	<parameter name="nivel4" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="nivel5" class="java.lang.Integer" isForPrompting="false"/>
 	<queryString>
-		<![CDATA[select * from view_pessoas_geral
+		<![CDATA[select * from view_pessoas_geral_celulas_sit
 WHERE
 (isnull(sexo,'') = CASE WHEN $P{sexo} <> '' THEN $P{sexo} ELSE  isnull(sexo,'') END)
 and
@@ -100,8 +100,15 @@ and
 (isnull_int(celulas_nivel4_id,0) = CASE WHEN $P{nivel4} <> 0 THEN $P{nivel4} ELSE  isnull_int(celulas_nivel4_id,0) END)
 and
 (isnull_int(celulas_nivel5_id,0) = CASE WHEN $P{nivel5} <> 0 THEN $P{nivel5} ELSE  isnull_int(celulas_nivel5_id,0) END)
+and
+(isnull_int(id_situacoes,0) = CASE WHEN $P{situacoes} <> 0 THEN $P{situacoes} ELSE  isnull_int(id_situacoes,0) END)
 ]]>
 	</queryString>
+	<field name="celulas_nivel1_label" class="java.lang.String"/>
+	<field name="celulas_nivel2_label" class="java.lang.String"/>
+	<field name="celulas_nivel3_label" class="java.lang.String"/>
+	<field name="celulas_nivel4_label" class="java.lang.String"/>
+	<field name="celulas_nivel5_label" class="java.lang.String"/>
 	<field name="celulas_nivel1_id" class="java.lang.Long"/>
 	<field name="celulas_nivel2_id" class="java.lang.Long"/>
 	<field name="celulas_nivel3_id" class="java.lang.Long"/>
@@ -130,6 +137,210 @@ and
 	<field name="motivos_saida_id" class="java.lang.Long"/>
 	<field name="id_situacoes" class="java.lang.Long"/>
 	<field name="desc_situacoes" class="java.lang.String"/>
+	<field name="nome_nivel1" class="java.lang.String"/>
+	<field name="nome_nivel2" class="java.lang.String"/>
+	<field name="nome_nivel3" class="java.lang.String"/>
+	<field name="nome_nivel4" class="java.lang.String"/>
+	<field name="nome_nivel5" class="java.lang.String"/>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{nome_nivel1}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="140" y="1" width="420" height="16" uuid="356de434-3780-4da2-a87d-2f57f0ce8401">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_nivel1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="1" width="130" height="16" uuid="1b8dfc1e-a2f0-4456-908f-39320ca2e81b"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{celulas_nivel1_label}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[$F{nome_nivel2}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="140" y="1" width="420" height="16" uuid="a98ffaac-c843-46a9-ab04-a249d03c735d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_nivel2}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="1" width="130" height="16" uuid="96d42b32-9192-4050-bb56-1780dfb96c6f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{celulas_nivel2_label}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Group3">
+		<groupExpression><![CDATA[$F{nome_nivel3}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="140" y="1" width="420" height="16" uuid="5a826399-f293-4c89-b3c1-c2769ae188ec">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_nivel3}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="1" width="127" height="16" uuid="5fe8a199-7111-46bc-b698-0d847e454904"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{celulas_nivel3_label}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Group4">
+		<groupExpression><![CDATA[$F{nome_nivel4}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="140" y="1" width="420" height="16" uuid="9b5c3ebc-6130-448f-aff2-45de5bfe99b1">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_nivel4}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="1" width="128" height="16" uuid="8c95ea3a-e25b-49bb-a181-2c447975b0b0">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{celulas_nivel4_label}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Group5">
+		<groupExpression><![CDATA[$F{nome_nivel5}]]></groupExpression>
+		<groupHeader>
+			<band height="37">
+				<staticText>
+					<reportElement x="0" y="20" width="100" height="16" uuid="318a84e4-c35b-4331-adef-bc88fff35a07">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nome]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="191" y="20" width="49" height="16" uuid="d8d048fa-8f9d-4db5-8abb-b586e631e92c">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Dt. Nasc.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="248" y="20" width="76" height="16" uuid="6f6e3a0c-43fd-44d0-b7a9-9ff3ba49fd6d">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Telefones]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="383" y="20" width="100" height="16" uuid="c86b6c41-e720-4970-900a-92e0f07bde44">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Email]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="140" y="1" width="420" height="16" uuid="117d7c94-edeb-4efd-9f96-02b7af85c8af">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_nivel5}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="1" width="130" height="16" uuid="2e292813-191f-4a37-a341-2608267f6c80"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{celulas_nivel5_label}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Group6">
+		<groupExpression><![CDATA[$F{razaosocial}]]></groupExpression>
+		<groupHeader>
+			<band height="17">
+				<textField>
+					<reportElement x="0" y="1" width="189" height="16" uuid="da27a871-db8f-439e-a015-843b55b0c59a"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{razaosocial}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="191" y="1" width="49" height="16" uuid="a5944171-9b90-4f93-b95a-fc17a54cdc1d"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{datanasc}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="244" y="1" width="66" height="16" uuid="a01e004b-1ea2-48d7-9072-b88d1c7169e2"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fone_principal}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="317" y="1" width="61" height="16" uuid="34ec9ee3-7faf-4394-a039-6e87ef9879d0"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fone_celular}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="380" y="1" width="188" height="16" uuid="5f1a1f9c-3b1d-408b-a882-e785756fd70c"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{emailprincipal}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -147,7 +358,7 @@ and
 	<pageHeader>
 		<band height="47" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="5" width="561" height="41" uuid="3ae5a4a2-5122-43e4-b6c0-68ce45dac6c4"/>
+				<reportElement x="0" y="6" width="561" height="41" uuid="3ae5a4a2-5122-43e4-b6c0-68ce45dac6c4"/>
 				<textElement markup="html">
 					<font size="8"/>
 				</textElement>
@@ -156,83 +367,10 @@ and
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="19" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="100" height="16" uuid="318a84e4-c35b-4331-adef-bc88fff35a07">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Nome]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="191" y="0" width="48" height="16" uuid="d8d048fa-8f9d-4db5-8abb-b586e631e92c">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Dt. Nasc.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="247" y="0" width="76" height="16" uuid="6f6e3a0c-43fd-44d0-b7a9-9ff3ba49fd6d">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Telefones]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="384" y="0" width="100" height="16" uuid="c86b6c41-e720-4970-900a-92e0f07bde44">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Email]]></text>
-			</staticText>
-		</band>
+		<band height="22" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="19" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="1" width="189" height="16" uuid="da27a871-db8f-439e-a015-843b55b0c59a"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{razaosocial}]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="191" y="1" width="49" height="16" uuid="a5944171-9b90-4f93-b95a-fc17a54cdc1d"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{datanasc}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="247" y="1" width="66" height="16" uuid="a01e004b-1ea2-48d7-9072-b88d1c7169e2"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{fone_principal}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="318" y="1" width="61" height="16" uuid="34ec9ee3-7faf-4394-a039-6e87ef9879d0"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{fone_celular}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="384" y="1" width="191" height="16" uuid="5f1a1f9c-3b1d-408b-a882-e785756fd70c"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{emailprincipal}]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="2" splitType="Stretch"/>
 	</detail>
 	<columnFooter>
 		<band height="21" splitType="Stretch"/>

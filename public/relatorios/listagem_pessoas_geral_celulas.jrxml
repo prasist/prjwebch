@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-05-03T11:01:13 -->
+<!-- 2016-05-03T11:52:36 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listagem_pessoas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="64e0bc66-588c-46d1-8c80-4e0aea9c90b2">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
@@ -100,8 +100,7 @@ and
 (isnull_int(celulas_nivel4_id,0) = CASE WHEN $P{nivel4} <> 0 THEN $P{nivel4} ELSE  isnull_int(celulas_nivel4_id,0) END)
 and
 (isnull_int(celulas_nivel5_id,0) = CASE WHEN $P{nivel5} <> 0 THEN $P{nivel5} ELSE  isnull_int(celulas_nivel5_id,0) END)
-and
-(isnull_int(id_situacoes,0) = CASE WHEN $P{situacoes} <> 0 THEN $P{situacoes} ELSE  isnull_int(id_situacoes,0) END)]]>
+]]>
 	</queryString>
 	<field name="celulas_nivel1_label" class="java.lang.String"/>
 	<field name="celulas_nivel2_label" class="java.lang.String"/>
@@ -134,8 +133,6 @@ and
 	<field name="data_batismo" class="java.sql.Date"/>
 	<field name="motivos_entrada_id" class="java.lang.Long"/>
 	<field name="motivos_saida_id" class="java.lang.Long"/>
-	<field name="id_situacoes" class="java.lang.Long"/>
-	<field name="desc_situacoes" class="java.lang.String"/>
 	<field name="nome_nivel1" class="java.lang.String"/>
 	<field name="nome_nivel2" class="java.lang.String"/>
 	<field name="nome_nivel3" class="java.lang.String"/>

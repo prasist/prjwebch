@@ -136,7 +136,7 @@ class RelatorioPessoasController extends Controller
 
     if ($descricao_situacoes!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;?Situação : " . $descricao_situacoes[1];
+        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Situação : " . $descricao_situacoes[1];
         $where .= " and situacoes_id = " . $descricao_situacoes[0];
     }
 
@@ -256,11 +256,26 @@ class RelatorioPessoasController extends Controller
         /*Exibir quebras por estrutura de celulas*/
             if ($input["ckEstruturas"])
             {
-                $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral_celulas.jrxml');
+                if ($descricao_situacoes!="")
+                {
+                    $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral_celulas_situacoes.jrxml');
+                }
+                else
+                {
+                    $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral_celulas.jrxml');
+                }
+
+
             }
             else
             {
-                $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral.jrxml');
+                if ($descricao_situacoes!="")
+                {
+                    $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral_situacoes.jrxml');
+                } else
+                {
+                    $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral.jrxml');
+                }
             }
 
             $PHPJasperXML->transferDBtoArray($server,$user,$pass,$db, "psql");
