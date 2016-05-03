@@ -18,6 +18,14 @@ use JasperPHP\JasperPHP as JasperPHP;
 
         Route::auth();
 
+        Route::get('logout', function() {
+
+            Auth::logout();
+            \Session::flush();
+            return view('home', ['erros'=>'']);
+
+        });
+
         Route::get('userlogged', 'HomeController@jalogado');
 
         Route::get('/home', 'HomeController@index');

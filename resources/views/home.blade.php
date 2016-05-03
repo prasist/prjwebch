@@ -22,7 +22,7 @@
 
                 <div class="panel-body">
 
-
+                 @if ($erros)
                 <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <h4><i class="icon fa fa-ban"></i> Atenção!</h4>
@@ -30,6 +30,7 @@
                 <br/>
                 Ao tentar logar novamente a outra conexão será finalizada.
                 </div>
+                @endif
 
                 <ul>
                         <li>

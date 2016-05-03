@@ -94,7 +94,11 @@
 
                             <p>
                             {{ Auth::user()->name }}
-                            <small>{{ Auth::user()->created_at }}</small>
+                            <small>
+                                Último Acesso : {!! \Session::get('ultimo_acesso') !!}
+                                <br/>
+                                I.P. : {!! \Session::get('ip') !!}
+                            </small>
                             </p>
                         </li>
 

@@ -63,7 +63,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(\Illuminate\Http\Request  $request)
     {
 
         //retirado da construct
@@ -77,14 +77,19 @@ class HomeController extends Controller
         if (usuario::find(Auth::user()->id))
        {
 
+
             //Busca ID do cliente cloud e ID da empresa
             $this->dados_login = usuario::find(Auth::user()->id);
 
 
+            /*VALIDAÇÃO PARA LOGIN UNICO.*/
             $log = \App\Models\log_users::find(Auth::user()->id);
 
             if($log) //Achou
             {
+
+               \Session::put('ultimo_acesso', $log->data_acesso);
+               \Session::put('ip', $log->ip);
 
                if (\Session::get('token')=="")
                {
@@ -98,7 +103,8 @@ class HomeController extends Controller
                     return redirect('userlogged')->withErrors(['msg', 'Usuário já logado em outra máquina.']);
                }
 
-               $log->data_acesso =  date('Y-m-d H:i:s');
+               $log->data_acesso =  date('Y-m-d h:i:s');
+               $log->ip = $request->ip();
                $log->save();
 
             }
@@ -109,11 +115,14 @@ class HomeController extends Controller
                 $log = new \App\Models\log_users();
                 $log->id = Auth::user()->id;
                 $log->token = $token_acesso;
-                $log->data_acesso =  date('Y-m-d H:i:s');
+                $log->data_acesso =  date('Y-m-d h:i:s');
                 $log->empresas_id = $this->dados_login->empresas_id;
                 $log->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
+                $log->ip = $request->ip();
                 $log->save();
                 \Session::put('token', $token_acesso);
+                \Session::put('ultimo_acesso', $log->data_acesso);
+                \Session::put('ip', $log->ip);
             }
 
 
