@@ -265,7 +265,6 @@ class RelatorioPessoasController extends Controller
                     $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral_celulas.jrxml');
                 }
 
-
             }
             else
             {

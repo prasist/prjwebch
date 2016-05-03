@@ -149,7 +149,9 @@
 
                             $("[data-mask]").inputmask();
 
-                            $('div.alert').delay(2500).slideUp(300);
+                            $('div.alert').delay(3500).slideUp(300);
+
+                            $('div.alert2').delay(8000).slideUp(300);
 
                             /*Tabelas simples
                             Desabilita ordenacao da coluna dos botoes de ações
@@ -243,11 +245,13 @@
         <script src="{{ asset('dist/webcam.js') }}"></script>
 
         @if (\Session::get('tour_visaogeral')==' ' || \Session::get('tour_visaogeral')!='S')
-        <script type="text/javascript">
+            @if (Auth::user()->confirmed==1 && \Session::get('dados_login')!='')
+            <script type="text/javascript">
 
-                hopscotch.startTour(tour_visao_geral);
+                    hopscotch.startTour(tour_visao_geral);
 
-        </script>
+            </script>
+            @endif
         @endif
 
         @if (\Session::get('tour_rapido')==' ' || \Session::get('tour_rapido')!='S')

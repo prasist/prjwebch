@@ -168,7 +168,7 @@
         },
         {
           title: "Parabéns! Você concluiu o Guia Rápido.",
-          content: "O Tour poderá se acessado a qualquer momento no menu 'Ajuda / Documentação', opção 'Visão Geral do Sigma3'." ,
+          content: "O Tour poderá ser acessado a qualquer momento no menu 'Ajuda / Documentação', opção 'Visão Geral do Sigma3'." ,
           target: document.querySelector("#tour6_visaogeral"),
           placement: "bottom"
         }
