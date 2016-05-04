@@ -1,4 +1,5 @@
   // Define the tour!
+
     var tour = {
       id: "tour_novousuario",
       steps: [
@@ -119,7 +120,7 @@
 
         {
           title: "Parabéns",
-          content: "Você concluiu o guia rápido!!! <br/> O Tour poderá ser acessado a qualquer momento na opção 'Ajuda/Documentação', opção 'Tour - Cadastro de Usuários'.",
+          content: "Você concluiu o guia rápido!!! <br/> O Tour pode ser acessado a qualquer momento na opção 'Ajuda/Documentação', opção 'Tour - Cadastro de Usuários'.",
           target: document.querySelector("#tour9"),
           placement: "bottom"
         }

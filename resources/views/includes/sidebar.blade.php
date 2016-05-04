@@ -208,7 +208,7 @@
         <li class="text">&nbsp;</li>
 
           <li class="treeview">
-          <a href="#">
+          <a href={{ url('/suporte')}}>
             <i class="fa fa-question-circle"></i> <span>Suporte</span>
           </a>
 

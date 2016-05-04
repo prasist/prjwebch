@@ -207,12 +207,15 @@
                 <!-- /.col -->
             </div><!-- /.row -->
 
+        <div class="overlay modal" style="display: none">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
 
          </div><!-- fim box-body"-->
      </div><!-- box box-primary -->
 
         <div class="box-footer">
-            <button class = 'btn btn-primary' type ='submit'>Pesquisar</button>
+            <button class = 'btn btn-primary' type ='submit' onclick="myApp.showPleaseWait();">Pesquisar</button>
         </div>
 
         </form>
@@ -220,6 +223,21 @@
     </div>
 
 </div>
+
+
+<script type="text/javascript">
+
+      var myApp;
+      myApp = myApp || (function () {
+
+          return {
+              showPleaseWait: function() {
+                  $(".overlay").show();
+              }
+          };
+      })();
+
+</script>
 
 @include('configuracoes.script_estruturas')
 @endsection
