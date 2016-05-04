@@ -3493,6 +3493,8 @@ foreach($this->arrayVariable as $name=>$value){
                                 $this->group_count[$this->grouplist[1]["name"]]++;
                                 $this->group_count[$this->grouplist[2]["name"]]++;
                                 $this->group_count[$this->grouplist[3]["name"]]++;
+                                $this->group_count[$this->grouplist[4]["name"]]++;
+                                $this->group_count[$this->grouplist[5]["name"]]++;
 		if(isset($this->arrayVariable))	//if self define variable existing, go to do the calculation
                                     $this->variable_calculation($rownum, $this->arraysqltable[$this->global_pointer][$this->group_pointer]);
 
@@ -4677,6 +4679,8 @@ foreach($this->arrayVariable as $name=>$value){
                  $fm=str_replace('$V_'.$this->grouplist[1]["name"].'_COUNT'.$backcurl,($this->group_count[$this->grouplist[1]["name"]]-1),$fm);
                  $fm=str_replace('$V_'.$this->grouplist[2]["name"].'_COUNT'.$backcurl,($this->group_count[$this->grouplist[2]["name"]]-1),$fm);
                  $fm=str_replace('$V_'.$this->grouplist[3]["name"].'_COUNT'.$backcurl,($this->group_count[$this->grouplist[3]["name"]]-1),$fm);
+                 $fm=str_replace('$V_'.$this->grouplist[4]["name"].'_COUNT'.$backcurl,($this->group_count[$this->grouplist[4]["name"]]-1),$fm);
+                 $fm=str_replace('$V_'.$this->grouplist[5]["name"].'_COUNT'.$backcurl,($this->group_count[$this->grouplist[5]["name"]]-1),$fm);
 
 
              }

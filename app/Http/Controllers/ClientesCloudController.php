@@ -79,7 +79,7 @@ class ClientesCloudController extends Controller
         //Validação de campos - request
         $this->validate($request, [
                 'razaosocial' => 'required|max:255:min:3',
-                'foneprincipal' => 'required|min:10',
+                'foneprincipal' => 'required|min:8',
                 'emailprincipal' => 'email',
                 'emailsecundario' => 'email',
          ]);

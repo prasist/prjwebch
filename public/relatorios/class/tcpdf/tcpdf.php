@@ -446,7 +446,7 @@ class TCPDF {
         //protected $FontSizePt;
         public $FontSizePt;
         //end customize for phpjasperxml
-        
+
 
 	/**
 	 * Current font size in user unit.
@@ -7980,7 +7980,7 @@ class TCPDF {
 						curl_setopt($cs, CURLOPT_FOLLOWLOCATION, true);
 					}
 					curl_setopt($cs, CURLOPT_CONNECTTIMEOUT, 5);
-					curl_setopt($cs, CURLOPT_TIMEOUT, 30);
+					curl_setopt($cs, CURLOPT_TIMEOUT, 60);
 					curl_setopt($cs, CURLOPT_SSL_VERIFYPEER, false);
 					curl_setopt($cs, CURLOPT_SSL_VERIFYHOST, false);
 					curl_setopt($cs, CURLOPT_USERAGENT, 'TCPDF');

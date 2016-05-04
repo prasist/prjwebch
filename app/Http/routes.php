@@ -1,7 +1,5 @@
 <?php
 
-use JasperPHP\JasperPHP as JasperPHP;
-
 
     Route::get('/', function ()
     {
@@ -12,6 +10,7 @@ use JasperPHP\JasperPHP as JasperPHP;
     {
         //
     });
+
 
     Route::group(['middleware' => 'web'], function ()
     {
