@@ -1,6 +1,7 @@
 <?php
 
 //version 0.9d
+//Correcao grupos
 class PHPJasperXML {
     private $adjust=1.2;
     public $version="0.9d";
