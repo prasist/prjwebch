@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-05-04T10:22:51 -->
+<!-- 2016-05-04T11:31:58 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listagem_celulas" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="37fb6b81-4a3c-4f93-be6d-3a1e716b297c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
@@ -54,7 +54,8 @@ and
 and
 (isnull_int(celulas_nivel4_id,0) = CASE WHEN $P{nivel4} <> 0 THEN $P{nivel4} ELSE  isnull_int(celulas_nivel4_id,0) END)
 and
-(isnull_int(celulas_nivel5_id,0) = CASE WHEN $P{nivel5} <> 0 THEN $P{nivel5} ELSE  isnull_int(celulas_nivel5_id,0) END)]]>
+(isnull_int(celulas_nivel5_id,0) = CASE WHEN $P{nivel5} <> 0 THEN $P{nivel5} ELSE  isnull_int(celulas_nivel5_id,0) END)
+order by nome_nivel1, nome_nivel2, nome_nivel3, nome_nivel4, nome_nivel5, descricao_concatenada, descricao_pessoa_scod]]>
 	</queryString>
 	<field name="celulas_nivel1_label" class="java.lang.String"/>
 	<field name="celulas_nivel2_label" class="java.lang.String"/>
@@ -96,9 +97,6 @@ and
 	<field name="descricao_concatenada" class="java.lang.String"/>
 	<field name="descricao_pessoa" class="java.lang.String"/>
 	<field name="descricao_pessoa_scod" class="java.lang.String"/>
-	<sortField name="nome"/>
-	<sortField name="descricao_concatenada"/>
-	<sortField name="descricao_pessoa_scod"/>
 	<variable name="descricao_concatenada1" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="Count">
 		<variableExpression><![CDATA[$F{descricao_concatenada}]]></variableExpression>
 	</variable>
@@ -126,21 +124,27 @@ and
 	<variable name="pessoas_id6" class="java.lang.Integer" resetType="Group" resetGroup="Group2" calculation="Count">
 		<variableExpression><![CDATA[$F{pessoas_id}]]></variableExpression>
 	</variable>
+	<variable name="pessoas_id7" class="java.lang.Long" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{pessoas_id}]]></variableExpression>
+	</variable>
+	<variable name="pessoas_id8" class="java.lang.Long" resetType="Group" resetGroup="Group6" calculation="Sum">
+		<variableExpression><![CDATA[$F{pessoas_id}]]></variableExpression>
+	</variable>
 	<group name="Group2" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel1}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="18">
 				<textField>
-					<reportElement x="180" y="1" width="320" height="18" uuid="fe6d0187-2e34-4db5-9b43-163104e60a4e">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					</reportElement>
+					<reportElement x="180" y="1" width="320" height="14" uuid="fe6d0187-2e34-4db5-9b43-163104e60a4e"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel1}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="2" width="170" height="18" uuid="5de69aa0-89c5-41f3-87be-8c4cf9aeb98c"/>
+					<reportElement x="0" y="2" width="170" height="14" uuid="5de69aa0-89c5-41f3-87be-8c4cf9aeb98c">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -149,13 +153,13 @@ and
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="26">
+			<band height="22">
 				<textField>
 					<reportElement x="647" y="4" width="100" height="15" uuid="97fd938f-a053-4f37-b17c-a876f6777f2a"/>
 					<textElement verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{pessoas_id6}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Group2_COUNT}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="428" y="4" width="209" height="15" uuid="9738fdbc-32c6-4940-862a-a19f4ca883cd"/>
@@ -177,18 +181,18 @@ and
 	<group name="Group3" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel2}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="16">
 				<textField>
-					<reportElement x="180" y="1" width="318" height="18" uuid="6b96e175-a69b-438c-900b-b0eeb8f41786">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					</reportElement>
+					<reportElement x="180" y="1" width="318" height="14" uuid="6b96e175-a69b-438c-900b-b0eeb8f41786"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel2}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="1" width="170" height="18" uuid="4ff5b317-fa19-4459-b5c6-95286c7e95e3"/>
+					<reportElement x="0" y="1" width="170" height="14" uuid="4ff5b317-fa19-4459-b5c6-95286c7e95e3">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -197,13 +201,13 @@ and
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="24">
+			<band height="21">
 				<textField>
 					<reportElement x="647" y="5" width="100" height="10" uuid="fffcbfc0-9ed6-46c1-ac15-e482b799c70f"/>
 					<textElement verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{pessoas_id5}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Group3_COUNT}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="370" y="3" width="37" height="15" uuid="d0240e97-d10a-4b19-9b38-cd17e2baa91a"/>
@@ -225,18 +229,18 @@ and
 	<group name="Group4" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel3}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="19">
 				<textField>
-					<reportElement x="180" y="1" width="320" height="18" uuid="5f47f6cf-f08b-4d3a-bad5-ed4064654ea2">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					</reportElement>
+					<reportElement x="180" y="2" width="320" height="14" uuid="5f47f6cf-f08b-4d3a-bad5-ed4064654ea2"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel3}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="1" width="170" height="18" uuid="0bfc0493-d129-4fe8-a70a-4909139fe3e7"/>
+					<reportElement x="0" y="2" width="170" height="14" uuid="0bfc0493-d129-4fe8-a70a-4909139fe3e7">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -245,13 +249,13 @@ and
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="24">
+			<band height="22">
 				<textField>
 					<reportElement x="647" y="4" width="100" height="10" uuid="37b97ab3-72d8-4aba-a3b2-a3b47fdada42"/>
 					<textElement verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{pessoas_id4}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Group4_COUNT}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="370" y="2" width="37" height="15" uuid="58bab1a8-b82c-4c08-920a-c9172a498ef2"/>
@@ -273,20 +277,16 @@ and
 	<group name="Group5" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel4}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="19">
 				<textField>
-					<reportElement x="180" y="1" width="318" height="18" uuid="7c87067d-67b4-4cd4-bf07-b4593e9c22a2">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					</reportElement>
+					<reportElement x="180" y="1" width="318" height="14" uuid="7c87067d-67b4-4cd4-bf07-b4593e9c22a2"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel4}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="1" width="170" height="18" uuid="bac68e76-1e92-4140-b582-34cad46c3bde">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					</reportElement>
+					<reportElement x="0" y="1" width="170" height="14" uuid="bac68e76-1e92-4140-b582-34cad46c3bde"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -301,7 +301,7 @@ and
 					<textElement verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{pessoas_id3}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Group5_COUNT}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="370" y="3" width="37" height="15" uuid="b6a83a4b-abc2-4f8d-b7ca-6edf020d6853"/>
@@ -323,20 +323,16 @@ and
 	<group name="Group6" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel5}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="19">
 				<textField>
-					<reportElement x="180" y="1" width="320" height="18" uuid="0dd405ae-95cb-439c-9576-0980a07e40f3">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					</reportElement>
+					<reportElement x="180" y="1" width="320" height="14" uuid="0dd405ae-95cb-439c-9576-0980a07e40f3"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel5}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="1" width="170" height="18" uuid="377d53bd-c653-4d4f-a848-49a51e6cf9d8">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					</reportElement>
+					<reportElement x="0" y="1" width="170" height="14" uuid="377d53bd-c653-4d4f-a848-49a51e6cf9d8"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -345,27 +341,29 @@ and
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="25">
+			<band height="21">
 				<textField>
-					<reportElement x="649" y="6" width="100" height="13" uuid="857755ca-0c7b-47c9-b61d-1b627eaffcf1"/>
-					<textElement verticalAlignment="Middle">
-						<font size="8"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{pessoas_id2}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="370" y="5" width="37" height="15" uuid="8fa0f05e-3c39-4195-8273-002f03fcf200"/>
+					<reportElement x="370" y="3" width="37" height="15" uuid="8fa0f05e-3c39-4195-8273-002f03fcf200"/>
 					<textElement verticalAlignment="Middle">
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Total "]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="427" y="6" width="211" height="14" uuid="adc1a415-abe3-44e8-b8b5-8e606e744dcb"/>
+					<reportElement x="427" y="4" width="211" height="14" uuid="adc1a415-abe3-44e8-b8b5-8e606e744dcb"/>
 					<textElement>
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome_nivel5}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="648" y="4" width="100" height="14" uuid="c1439def-aea2-4862-8087-71e061a1f001">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Group6_COUNT}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -492,27 +490,31 @@ and
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="33">
+			<band height="19">
 				<textField>
-					<reportElement x="650" y="7" width="100" height="18" uuid="6a3f86c8-8e21-4619-bf3f-c1fc333fbe7f"/>
-					<textElement verticalAlignment="Middle">
-						<font size="8"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{pessoas_id1}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="323" y="5" width="100" height="18" uuid="f6452686-eb66-4512-8e5f-6f872da05be2"/>
+					<reportElement x="323" y="5" width="100" height="14" uuid="f6452686-eb66-4512-8e5f-6f872da05be2">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement verticalAlignment="Middle">
 						<font size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Total Participantes :"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="432" y="7" width="208" height="13" uuid="b1a440a4-455a-4b5a-a0b4-3dc07fa6b1df"/>
+					<reportElement x="432" y="6" width="208" height="13" uuid="b1a440a4-455a-4b5a-a0b4-3dc07fa6b1df"/>
 					<textElement verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descricao_concatenada}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="647" y="5" width="100" height="14" uuid="a994eb8d-3a9e-4546-b34f-f0671bfbfcb3">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Group1_COUNT}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>

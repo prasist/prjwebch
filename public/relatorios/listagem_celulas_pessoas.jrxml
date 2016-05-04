@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-04-29T15:29:23 -->
+<!-- 2016-05-04T11:00:33 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listagem_celulas" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="37fb6b81-4a3c-4f93-be6d-3a1e716b297c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
@@ -54,7 +54,8 @@ and
 and
 (isnull_int(celulas_nivel4_id,0) = CASE WHEN $P{nivel4} <> 0 THEN $P{nivel4} ELSE  isnull_int(celulas_nivel4_id,0) END)
 and
-(isnull_int(celulas_nivel5_id,0) = CASE WHEN $P{nivel5} <> 0 THEN $P{nivel5} ELSE  isnull_int(celulas_nivel5_id,0) END)]]>
+(isnull_int(celulas_nivel5_id,0) = CASE WHEN $P{nivel5} <> 0 THEN $P{nivel5} ELSE  isnull_int(celulas_nivel5_id,0) END)
+order by descricao_concatenada, descricao_pessoa]]>
 	</queryString>
 	<field name="celulas_nivel1_id" class="java.lang.Long"/>
 	<field name="celulas_nivel2_id" class="java.lang.Long"/>

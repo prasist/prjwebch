@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-05-03T14:12:39 -->
+<!-- 2016-05-04T11:21:13 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listagem_pessoas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="64e0bc66-588c-46d1-8c80-4e0aea9c90b2">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
@@ -102,7 +102,7 @@ and
 (isnull_int(celulas_nivel5_id,0) = CASE WHEN $P{nivel5} <> 0 THEN $P{nivel5} ELSE  isnull_int(celulas_nivel5_id,0) END)
 and
 (isnull_int(id_situacoes,0) = CASE WHEN $P{situacoes} <> 0 THEN $P{situacoes} ELSE  isnull_int(id_situacoes,0) END)
-]]>
+order by nome_nivel1, nome_nivel2, nome_nivel3, nome_nivel4, nome_nivel5, razaosocial]]>
 	</queryString>
 	<field name="celulas_nivel1_label" class="java.lang.String"/>
 	<field name="celulas_nivel2_label" class="java.lang.String"/>
@@ -145,9 +145,9 @@ and
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{nome_nivel1}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="19">
 				<textField>
-					<reportElement x="140" y="1" width="420" height="16" uuid="356de434-3780-4da2-a87d-2f57f0ce8401">
+					<reportElement x="140" y="1" width="420" height="14" uuid="356de434-3780-4da2-a87d-2f57f0ce8401">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement>
@@ -156,7 +156,9 @@ and
 					<textFieldExpression><![CDATA[$F{nome_nivel1}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="1" width="130" height="16" uuid="1b8dfc1e-a2f0-4456-908f-39320ca2e81b"/>
+					<reportElement x="0" y="1" width="130" height="14" uuid="1b8dfc1e-a2f0-4456-908f-39320ca2e81b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -168,9 +170,9 @@ and
 	<group name="Group2">
 		<groupExpression><![CDATA[$F{nome_nivel2}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="18">
 				<textField>
-					<reportElement x="140" y="1" width="420" height="16" uuid="a98ffaac-c843-46a9-ab04-a249d03c735d">
+					<reportElement x="140" y="1" width="420" height="14" uuid="a98ffaac-c843-46a9-ab04-a249d03c735d">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement>
@@ -179,7 +181,7 @@ and
 					<textFieldExpression><![CDATA[$F{nome_nivel2}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="1" width="130" height="16" uuid="96d42b32-9192-4050-bb56-1780dfb96c6f">
+					<reportElement x="0" y="1" width="130" height="14" uuid="96d42b32-9192-4050-bb56-1780dfb96c6f">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement>
@@ -193,9 +195,9 @@ and
 	<group name="Group3">
 		<groupExpression><![CDATA[$F{nome_nivel3}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="18">
 				<textField>
-					<reportElement x="140" y="1" width="420" height="16" uuid="5a826399-f293-4c89-b3c1-c2769ae188ec">
+					<reportElement x="140" y="1" width="420" height="14" uuid="5a826399-f293-4c89-b3c1-c2769ae188ec">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement>
@@ -204,7 +206,9 @@ and
 					<textFieldExpression><![CDATA[$F{nome_nivel3}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="1" width="127" height="16" uuid="5fe8a199-7111-46bc-b698-0d847e454904"/>
+					<reportElement x="0" y="1" width="127" height="14" uuid="5fe8a199-7111-46bc-b698-0d847e454904">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -216,9 +220,9 @@ and
 	<group name="Group4">
 		<groupExpression><![CDATA[$F{nome_nivel4}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="19">
 				<textField>
-					<reportElement x="140" y="1" width="420" height="16" uuid="9b5c3ebc-6130-448f-aff2-45de5bfe99b1">
+					<reportElement x="140" y="1" width="420" height="14" uuid="9b5c3ebc-6130-448f-aff2-45de5bfe99b1">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement>
@@ -227,7 +231,7 @@ and
 					<textFieldExpression><![CDATA[$F{nome_nivel4}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="1" width="128" height="16" uuid="8c95ea3a-e25b-49bb-a181-2c447975b0b0">
+					<reportElement x="0" y="1" width="128" height="14" uuid="8c95ea3a-e25b-49bb-a181-2c447975b0b0">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<textElement>
@@ -280,7 +284,7 @@ and
 					<text><![CDATA[Email]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="140" y="1" width="420" height="16" uuid="117d7c94-edeb-4efd-9f96-02b7af85c8af">
+					<reportElement x="140" y="1" width="420" height="14" uuid="117d7c94-edeb-4efd-9f96-02b7af85c8af">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -290,7 +294,9 @@ and
 					<textFieldExpression><![CDATA[$F{nome_nivel5}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="1" width="130" height="16" uuid="2e292813-191f-4a37-a341-2608267f6c80"/>
+					<reportElement x="0" y="1" width="130" height="14" uuid="2e292813-191f-4a37-a341-2608267f6c80">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>

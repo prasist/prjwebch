@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-04-29T15:01:28 -->
+<!-- 2016-05-04T11:26:23 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listagem_celulas" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="37fb6b81-4a3c-4f93-be6d-3a1e716b297c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
@@ -125,9 +125,11 @@ and
 	<group name="Group2" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel1}]]></groupExpression>
 		<groupHeader>
-			<band height="21">
+			<band height="18">
 				<textField>
-					<reportElement x="0" y="1" width="500" height="18" uuid="fe6d0187-2e34-4db5-9b43-163104e60a4e"/>
+					<reportElement x="0" y="1" width="500" height="14" uuid="fe6d0187-2e34-4db5-9b43-163104e60a4e">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -142,7 +144,7 @@ and
 					<textElement verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{pessoas_id6}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Group2_COUNT}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="428" y="1" width="209" height="15" uuid="9738fdbc-32c6-4940-862a-a19f4ca883cd"/>
@@ -164,11 +166,9 @@ and
 	<group name="Group3" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel2}]]></groupExpression>
 		<groupHeader>
-			<band height="21">
+			<band height="19">
 				<textField>
-					<reportElement x="0" y="2" width="498" height="18" uuid="6b96e175-a69b-438c-900b-b0eeb8f41786">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					</reportElement>
+					<reportElement x="0" y="2" width="498" height="14" uuid="6b96e175-a69b-438c-900b-b0eeb8f41786"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -183,7 +183,7 @@ and
 					<textElement verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{pessoas_id5}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Group3_COUNT}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="370" y="1" width="37" height="15" uuid="d0240e97-d10a-4b19-9b38-cd17e2baa91a"/>
@@ -205,11 +205,9 @@ and
 	<group name="Group4" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel3}]]></groupExpression>
 		<groupHeader>
-			<band height="21">
+			<band height="19">
 				<textField>
-					<reportElement x="0" y="1" width="500" height="18" uuid="5f47f6cf-f08b-4d3a-bad5-ed4064654ea2">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					</reportElement>
+					<reportElement x="0" y="1" width="500" height="14" uuid="5f47f6cf-f08b-4d3a-bad5-ed4064654ea2"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -224,7 +222,7 @@ and
 					<textElement verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{pessoas_id4}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Group4_COUNT}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="370" y="1" width="37" height="15" uuid="58bab1a8-b82c-4c08-920a-c9172a498ef2"/>
@@ -246,11 +244,9 @@ and
 	<group name="Group5" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel4}]]></groupExpression>
 		<groupHeader>
-			<band height="21">
+			<band height="18">
 				<textField>
-					<reportElement x="0" y="1" width="498" height="18" uuid="7c87067d-67b4-4cd4-bf07-b4593e9c22a2">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					</reportElement>
+					<reportElement x="0" y="1" width="498" height="14" uuid="7c87067d-67b4-4cd4-bf07-b4593e9c22a2"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -265,7 +261,7 @@ and
 					<textElement verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{pessoas_id3}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Group5_COUNT}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="370" y="1" width="37" height="15" uuid="b6a83a4b-abc2-4f8d-b7ca-6edf020d6853"/>
@@ -287,11 +283,9 @@ and
 	<group name="Group6" keepTogether="true">
 		<groupExpression><![CDATA[$F{nome_nivel5}]]></groupExpression>
 		<groupHeader>
-			<band height="21">
+			<band height="19">
 				<textField>
-					<reportElement x="0" y="1" width="500" height="18" uuid="0dd405ae-95cb-439c-9576-0980a07e40f3">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					</reportElement>
+					<reportElement x="0" y="1" width="500" height="14" uuid="0dd405ae-95cb-439c-9576-0980a07e40f3"/>
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
@@ -302,11 +296,11 @@ and
 		<groupFooter>
 			<band height="20">
 				<textField>
-					<reportElement x="649" y="3" width="100" height="13" uuid="857755ca-0c7b-47c9-b61d-1b627eaffcf1"/>
+					<reportElement x="648" y="3" width="100" height="13" uuid="857755ca-0c7b-47c9-b61d-1b627eaffcf1"/>
 					<textElement verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{pessoas_id2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Group6_COUNT}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="370" y="2" width="37" height="15" uuid="8fa0f05e-3c39-4195-8273-002f03fcf200"/>
@@ -348,11 +342,11 @@ and
 		<groupFooter>
 			<band height="20">
 				<textField>
-					<reportElement x="650" y="0" width="100" height="18" uuid="6a3f86c8-8e21-4619-bf3f-c1fc333fbe7f"/>
+					<reportElement x="648" y="0" width="100" height="18" uuid="6a3f86c8-8e21-4619-bf3f-c1fc333fbe7f"/>
 					<textElement verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{pessoas_id1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{Group1_COUNT}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="370" y="0" width="100" height="18" uuid="f6452686-eb66-4512-8e5f-6f872da05be2"/>
