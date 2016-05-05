@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-05-05T17:16:01 -->
+<!-- 2016-05-05T17:19:42 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listagem_celulas" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="37fb6b81-4a3c-4f93-be6d-3a1e716b297c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
@@ -623,7 +623,7 @@ order by nome_nivel1, nome_nivel2, nome_nivel3, nome_nivel4, nome_nivel5, descri
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Participantes - Sintético]]></text>
+				<text><![CDATA[Participantes]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="0" y="36" width="750" height="41" uuid="a7e5fdd8-32a3-4fc3-844a-19c5533467fb"/>
