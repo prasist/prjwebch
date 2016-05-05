@@ -391,7 +391,7 @@
             <i class="fa fa-refresh fa-spin"></i>
         </div>
 
-         </div><!-- fim box-body"-->
+        </div><!-- fim box-body"-->
 
 
      </div><!-- box box-primary -->
