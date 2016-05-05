@@ -149,7 +149,13 @@ public function imprimir($id)
         "publico_alvo"=> 0,
         "faixa_etaria"=> 0,
         "lideres"=> 0,
-        "id"=> $id
+        "id"=> $id,
+        "nivel1"=> 0,
+        "nivel2"=> 0,
+        "nivel3"=> 0,
+        "nivel4"=> 0,
+        "nivel5"=> 0,
+        "filtros"=> ''
     );
 
     //$PHPJasperXML->debugsql=true;

@@ -158,6 +158,13 @@
                             */
                             $("#example1").DataTable({
 
+                                 language: {
+                                            paginate: {
+                                                first:      "Primeira",
+                                                previous:   "Anterior",
+                                                next:       "Próxima",
+                                                last:       "Última"}
+                                        },
                                 "columnDefs":
                                   [
                                       {"targets": [1], "sortable": false},
@@ -168,7 +175,13 @@
 
 
                             $("#tab_simples").DataTable({
-
+                                       language: {
+                                            paginate: {
+                                                first:      "Primeira",
+                                                previous:   "Anterior",
+                                                next:       "Próxima",
+                                                last:       "Última"}
+                                        },
                                 "columnDefs":
                                   [
                                       {"targets": [1], "sortable": false},

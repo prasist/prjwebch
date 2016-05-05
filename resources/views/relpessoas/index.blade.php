@@ -25,9 +25,10 @@
                      <!-- Custom Tabs -->
                       <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                          <li class="active"><a href="#tab_1" data-toggle="tab">Fitros Básicos</a></li>
+                          <li class="active"><a href="#tab_1" data-toggle="tab">Filtros Básicos</a></li>
                           <li><a href="#tab_2" data-toggle="tab">Por Períodos</a></li>
                           <li><a href="#tab_3" data-toggle="tab">Estrutura de Células</a></li>
+                          <li><a href="#tab_4" data-toggle="tab">Pesquisa Avançada</a></li>
                         </ul>
                         <div class="tab-content">
 
@@ -373,6 +374,11 @@
                                      </div>
                           </div>
                           <!-- /.tab-pane -->
+
+                          <div class="tab-pane" id="tab_4">
+                          Em Breve...
+                          </div>
+
                         </div>
                         <!-- /.tab-content -->
                      </div>

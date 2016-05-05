@@ -99,6 +99,7 @@
                     $('#tab_pessoas').dataTable({
                           "bDeferRender": true,
                           "deferRender": true,
+                          "pagingType": "full_numbers",
                           'iDisplayLength': 25,
                           "bProcessing": true,
                           "processing": true,
@@ -106,8 +107,14 @@
                           language:
                           {
                               searchPlaceholder: "Nome, CNPJ, CPF, Telefone...",
-                              processing:     "Aguarde...Carregando"
+                              processing:     "Aguarde...Carregando",
+                              paginate: {
+                                                first:      "Primeira",
+                                                previous:   "Anterior",
+                                                next:       "Próxima",
+                                                last:       "Última"}
                           },
+
                           "serverSide": true,
                           "ajax": urlRoute,
                           "columnDefs":

@@ -17,6 +17,7 @@
 
         Route::auth();
 
+        /*Logout do sistema*/
         Route::get('logout', function() {
 
             Auth::logout();
@@ -25,23 +26,27 @@
 
         });
 
+        /*Validacao de login em outra maquina*/
         Route::get('userlogged', 'HomeController@jalogado');
 
+        /*Rota inicial*/
         Route::get('/home', 'HomeController@index');
+
 
         Route::get('errors.404', function() {
 
             return view('errors.404');
 
-    });
+       });
 
-
+    /*Canais de suporte*/
     Route::get('suporte', function () {
 
         return view('suporte.suporte');
 
     });
 
+    /*Validação do cadastro de novos usuarios*/
     Route::get('validacao/{codigo}', 'HomeController@confirm');
 
     /*Validacao do CPF / CNPJ - disparado pelo jquery*/
