@@ -216,6 +216,7 @@
 
         <div class="box-footer">
             <button class = 'btn btn-primary' type ='submit' onclick="myApp.showPleaseWait();">Pesquisar</button>
+            <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Limpar</a>
         </div>
 
         </form>
