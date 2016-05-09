@@ -7,32 +7,25 @@
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.css" rel="stylesheet" type="text/css" />
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <!--<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>-->
-
         <script src="{{ asset('/dist/js/bootstrap-datepicker.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-
         <link href="{{ asset('/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <link href="{{ asset('/dist/css/AdminLTE.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('/dist/css/skins/skin-green.min.css') }}" rel="stylesheet" type="text/css" />
-
         <!-- jvectormap -->
         <link href="{{ asset('/plugins/jvectormap/jquery-jvectormap-1.2.2.css') }}" rel="stylesheet" type="text/css" />
-
         <!-- Daterange picker -->
         <link href="{{ asset('/plugins/daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet" type="text/css" />
         <!-- bootstrap wysihtml5 - text editor -->
         <link href="{{ asset('/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}" rel="stylesheet" type="text/css" />
           <!-- DataTables -->
         <link rel="stylesheet" href="{{ asset('/plugins/datatables/dataTables.bootstrap.css') }}">
-
         <link rel="stylesheet" href="{{ asset('dist/css/hopscotch.min.css') }}">
-
         <link rel="stylesheet" href="{{ asset('dist/css/buscapessoas.css') }}">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -261,9 +254,7 @@
         @if (\Session::get('tour_visaogeral')==' ' || \Session::get('tour_visaogeral')!='S')
             @if (Auth::user()->confirmed==1 && \Session::get('dados_login')!='')
             <script type="text/javascript">
-
                     hopscotch.startTour(tour_visao_geral);
-
             </script>
             @endif
         @endif
@@ -271,9 +262,7 @@
         @if (\Session::get('tour_rapido')==' ' || \Session::get('tour_rapido')!='S')
             @if (\Session::get('admin')==1)
                 <script type="text/javascript">
-
                         hopscotch.startTour(tour);
-
                 </script>
             @endif
         @endif

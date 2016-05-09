@@ -36,6 +36,12 @@ class RelatorioPessoasController extends Controller
               return redirect('home');
         }
 
+        $ramos = \App\Models\ramos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+        $cargos = \App\Models\cargos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+        $profissoes = \App\Models\profissoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+        $graus = \App\Models\graus::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+        $idiomas = \App\Models\idiomas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+        $formacoes = \App\Models\areas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
         $motivos = \App\Models\tiposmovimentacao::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
         $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
         $situacoes = \App\Models\situacoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
@@ -52,7 +58,26 @@ class RelatorioPessoasController extends Controller
         $view4 = \DB::select('select * from view_celulas_nivel4 v4 where v4.empresas_id = ? and v4.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
         $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        return view($this->rota . '.index', ['nivel1'=>$view1, 'nivel2'=>$view2, 'nivel3'=>$view3, 'nivel4'=>$view4, 'nivel5'=>$view5, 'motivos'=>$motivos, 'tipos'=>$tipos, 'situacoes'=>$situacoes, 'estadoscivis'=>$estadoscivis, 'status'=>$status, 'grupos'=>$grupos, 'emails'=>'', 'filtros'=>'']);
+        return view($this->rota . '.index',
+            [
+                'nivel1'=>$view1,
+                'nivel2'=>$view2,
+                'nivel3'=>$view3,
+                'nivel4'=>$view4,
+                'nivel5'=>$view5,
+                'motivos'=>$motivos,
+                'ramos'=>$ramos,
+                'cargos'=>$cargos,
+                'profissoes'=>$profissoes,
+                'graus'=>$graus,
+                'idiomas'=>$idiomas,
+                'formacoes'=>$formacoes,
+                'tipos'=>$tipos,
+                'situacoes'=>$situacoes,
+                'estadoscivis'=>$estadoscivis,
+                'status'=>$status,
+                'grupos'=>$grupos,
+                'emails'=>'', 'filtros'=>'']);
 
     }
 
@@ -85,12 +110,16 @@ class RelatorioPessoasController extends Controller
     $descricao_nivel3="";
     $descricao_nivel4="";
     $descricao_nivel5="";
+    $descricao_idiomas="";
+    $descricao_graus="";
     $where="";
 
     if ($input["situacoes"]!="") $descricao_situacoes = explode("|", $input["situacoes"]);
     if ($input["estadoscivis"]!="") $descricao_estado_civil = explode("|", $input["estadoscivis"]);
     if ($input["tipos"]!="") $descricao_tipos = explode("|", $input["tipos"]);
     if ($input["status_id"]!="") $descricao_status = explode("|", $input["status_id"]);
+    if ($input["idiomas_id"]!="") $descricao_idiomas = explode("|", $input["idiomas_id"]);
+    if ($input["graus_id"]!="") $descricao_graus = explode("|", $input["graus_id"]);
     if ($input["motivoentrada"]!="") $descricao_motivo_ent = explode("|", $input["motivoentrada"]);
     if ($input["motivosaida"]!="") $descricao_motivo_sai = explode("|", $input["motivosaida"]);
     if ($input["grupo"]!="") $descricao_grupo = explode("|", $input["grupo"]);
@@ -104,10 +133,41 @@ class RelatorioPessoasController extends Controller
     $where = " where (emailprincipal is not null and emailprincipal<> '') ";
 
     /*Filtros utilizados*/
+
+    if ($input["possui_necessidades_especiais"]!="")
+    {
+        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Possui Necessidades Esp.: " . ($input["possui_necessidades_especiais"]=="1" ? "Sim" : "Não");
+        $where .= " and possui_necessidades_especiais = " . $input["possui_necessidades_especiais"] ;
+    }
+
+    if ($input["doador_orgaos"]!="")
+    {
+        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Doador Orgãos: " . ($input["doador_orgaos"]=="1" ? "Sim" : "Não");
+        $where .= " and doador_orgaos = " . $input["doador_orgaos"] ;
+    }
+
+    if ($input["doador_sangue"]!="")
+    {
+        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Doador Sangue : " . ($input["doador_sangue"]=="1" ? "Sim" : "Não");
+        $where .= " and doador_sangue = " . $input["doador_sangue"] ;
+    }
+
     if ($input["status"]!="")
     {
         $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Status Cadastro : " . ($input["status"]=="S" ? "Ativo" : "Inativo");
         $where .= " and ativo = '" . $input["status"] . "'";
+    }
+
+    if ($input["graus_id"]!="")
+    {
+        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Grau Instrução : " . $descricao_graus[1];
+        $where .= " and graus_id = " . $descricao_graus[0];
+    }
+
+    if ($input["idiomas_id"]!="")
+    {
+        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Idioma : " . $descricao_idiomas[1];
+        $where .= " and idiomas_id = " . $descricao_idiomas[0];
     }
 
     if ($input["mes"]!="")
@@ -215,6 +275,7 @@ class RelatorioPessoasController extends Controller
         $where .= " and celulas_nivel5_id = " . $descricao_nivel5[0];
     }
 
+
     $PHPJasperXML->arrayParameter = array
     (
         "empresas_id"=> $this->dados_login->empresas_id,
@@ -227,6 +288,11 @@ class RelatorioPessoasController extends Controller
         "nivel3"=> ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]),
         "nivel4"=> ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]),
         "nivel5"=> ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]),
+        "doador_sangue" => ($input["doador_sangue"]=="1" ? "true" : "false"),
+        "doador_orgaos" => ($input["doador_orgaos"]=="1" ? "true" : "false"),
+        "possui_necessidades_especiais" => ($input["possui_necessidades_especiais"]==true ? "true" : "false"),
+        "idiomas_id" => ($descricao_idiomas=="" ? 0 : $descricao_idiomas[0]),
+        "graus_id" => ($descricao_graus=="" ? 0 : $descricao_graus[0]),
         "estadoscivis"=> ($descricao_estado_civil=="" ? 0 : $descricao_estado_civil[0]),
         "situacoes"=> ($descricao_situacoes=="" ? 0 : $descricao_situacoes[0]),
         "tipos"=> ($descricao_tipos=="" ? 0 : $descricao_tipos[0]),
@@ -243,7 +309,7 @@ class RelatorioPessoasController extends Controller
         "filtros"=> $filtros,
     );
 
-    //$PHPJasperXML->debugsql=true;
+   //$PHPJasperXML->debugsql=true;
 
     if ($input["saida"]=="E")
     {
@@ -282,6 +348,5 @@ class RelatorioPessoasController extends Controller
     }
 
  }
-
 
 }

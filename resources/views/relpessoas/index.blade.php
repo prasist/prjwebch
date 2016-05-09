@@ -376,7 +376,78 @@
                           <!-- /.tab-pane -->
 
                           <div class="tab-pane" id="tab_4">
-                          Em Breve...
+
+                              <div  class="row">
+                                      <div class="col-md-12">
+                                            <div class="box box-default">
+                                                  <div class="box-body"><!-- box-body-->
+
+                                                         <div class="row">
+                                                              <div class="col-xs-4">
+                                                                   <label for="doador_sangue" class="control-label">Doador Sangue</label>
+
+                                                                   <select name="doador_sangue" class="form-control select2" style="width: 100%;">
+                                                                   <option  value="">(Selecionar)</option>
+                                                                         <option  value="1">SIM</option>
+                                                                         <option  value="0">NÃO</option>
+                                                                   </select>
+
+                                                             </div>
+
+                                                             <div class="col-xs-4">
+                                                                     <label for="doador_orgaos" class="control-label">Doador Orgãos</label>
+
+                                                                     <select name="doador_orgaos" class="form-control select2" style="width: 100%;">
+                                                                     <option  value="">(Selecionar)</option>
+                                                                           <option  value="1">SIM</option>
+                                                                           <option  value="0">NÃO</option>
+                                                                     </select>
+
+                                                             </div>
+
+                                                            <div class="col-xs-4">
+                                                                      <label for="possui_necessidades_especiais">Possui Necessidades Especiais ?</label>
+                                                                      <div class="input-group">
+                                                                           <div class="input-group-addon">
+                                                                                    <input  id="possui_necessidades_especiais" name="possui_necessidades_especiais" type="checkbox" class="minimal-red" value="true" />
+                                                                            </div>
+                                                                      </div>
+                                                             </div>
+
+                                                         </div>
+
+                                                         <div class="row"><!-- row-->
+
+                                                                   <div class="col-xs-4">
+                                                                          <label for="graus_id" class="control-label">Grau de Instrução</label>
+                                                                          <select id="graus_id" placeholder="(Selecionar)" name="graus_id" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+                                                                          @foreach($graus as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                   </div><!-- col-xs-5-->
+
+                                                                   <div class="col-xs-4">
+                                                                          <label for="idiomas_id" class="control-label">Idioma</label>
+                                                                          <select id="idiomas_id" placeholder="(Selecionar)" name="idiomas_id" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+                                                                          @foreach($idiomas as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                   </div><!-- col-xs-5-->
+
+                                                          </div><!-- end row-->
+
+                                                  </div><!-- end row -->
+
+                                             </div>
+                                     </div>
+                               </div>
+
+                          </div>
+
                           </div>
 
                         </div>

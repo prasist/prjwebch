@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-05-03T14:07:03 -->
+<!-- 2016-05-09T15:47:31 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listagem_pessoas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="64e0bc66-588c-46d1-8c80-4e0aea9c90b2">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
@@ -54,6 +54,11 @@
 	<parameter name="nivel3" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="nivel4" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="nivel5" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="doador_sangue" class="java.lang.Boolean" isForPrompting="false"/>
+	<parameter name="doador_orgaos" class="java.lang.Boolean" isForPrompting="false"/>
+	<parameter name="possui_necessidades_especiais" class="java.lang.Boolean" isForPrompting="false"/>
+	<parameter name="idiomas_id" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="graus_id" class="java.lang.Integer" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[select * from view_pessoas_geral_sit
 WHERE
@@ -101,7 +106,18 @@ and
 and
 (isnull_int(celulas_nivel5_id,0) = CASE WHEN $P{nivel5} <> 0 THEN $P{nivel5} ELSE  isnull_int(celulas_nivel5_id,0) END)
 and
-(isnull_int(id_situacoes,0) = CASE WHEN $P{situacoes} <> 0 THEN $P{situacoes} ELSE  isnull_int(id_situacoes,0) END)]]>
+(isnull_int(id_situacoes,0) = CASE WHEN $P{situacoes} <> 0 THEN $P{situacoes} ELSE  isnull_int(id_situacoes,0) END)
+and
+(isnull_bool(doador_orgaos,false) = CASE WHEN $P{doador_orgaos} <> false THEN $P{doador_orgaos} ELSE  isnull_bool(doador_orgaos,false) END)
+and
+(isnull_bool(doador_sangue,false) = CASE WHEN $P{doador_sangue} <> false THEN $P{doador_sangue} ELSE  isnull_bool(doador_sangue,false) END)
+and
+(isnull_bool(possui_necessidades_especiais,false) = CASE WHEN $P{possui_necessidades_especiais} <> false THEN $P{possui_necessidades_especiais} ELSE  isnull_bool(possui_necessidades_especiais,false) END)
+and
+(isnull_int(graus_id,0) = CASE WHEN $P{graus_id} <> 0 THEN $P{graus_id} ELSE  isnull_int(graus_id,0) END)
+and
+(isnull_int(idiomas_id,0) = CASE WHEN $P{idiomas_id} <> 0 THEN $P{idiomas_id} ELSE  isnull_int(idiomas_id,0) END)
+]]>
 	</queryString>
 	<field name="celulas_nivel1_id" class="java.lang.Long"/>
 	<field name="celulas_nivel2_id" class="java.lang.Long"/>
@@ -131,6 +147,11 @@ and
 	<field name="motivos_saida_id" class="java.lang.Long"/>
 	<field name="id_situacoes" class="java.lang.Long"/>
 	<field name="desc_situacoes" class="java.lang.String"/>
+	<field name="doador_orgaos" class="java.lang.Boolean"/>
+	<field name="doador_sangue" class="java.lang.Boolean"/>
+	<field name="possui_necessidades_especiais" class="java.lang.Boolean"/>
+	<field name="idiomas_id" class="java.lang.Long"/>
+	<field name="graus_id" class="java.lang.Long"/>
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{razaosocial}]]></groupExpression>
 		<groupHeader>
