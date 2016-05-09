@@ -108,7 +108,7 @@ class RelatorioCelulasController extends Controller
         "segundo_dia_encontro"=>"'" . $input["segundo_dia_encontro"] . "'",
         "publico_alvo"=> ($input["publico_alvo"]=="" ? 0 : $input["publico_alvo"]),
         "faixa_etaria"=> ($input["faixa_etaria"]=="" ? 0 : $input["faixa_etaria"]),
-        "lideres"=> ($input["lideres"]=="" ? 0 : $input["lideres"]),
+        "lideres"=> ($descricao_lider=="" ? 0 : $descricao_lider[0]),
         "nivel1"=> ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]),
         "nivel2"=> ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]),
         "nivel3"=> ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]),

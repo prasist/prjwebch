@@ -34,7 +34,13 @@
 
                           <div class="row">
                                 <div class="col-xs-5">
-                                        @include('carregar_combos', array('dados'=>$lideres, 'titulo' =>'Líder', 'id_combo'=>'lideres', 'complemento'=>'', 'comparar'=>''))
+                                        <label for="lideres" class="control-label">Líder</label>
+                                        <select id="lideres" placeholder="(Selecionar)" name="lideres" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                              <option  value="0"></option>
+                                                @foreach($lideres as $item)
+                                                       <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
+                                                @endforeach
+                                        </select>
                                 </div>
 
                                 <div class="col-xs-3">
