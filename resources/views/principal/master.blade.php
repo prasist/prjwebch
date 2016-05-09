@@ -257,6 +257,7 @@
         <script src="{{ asset('js/typeahead.min.js') }}"></script>
         <script src="{{ asset('dist/webcam.js') }}"></script>
 
+        <!-- tour rápido-->
         @if (\Session::get('tour_visaogeral')==' ' || \Session::get('tour_visaogeral')!='S')
             @if (Auth::user()->confirmed==1 && \Session::get('dados_login')!='')
             <script type="text/javascript">

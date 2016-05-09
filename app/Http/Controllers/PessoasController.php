@@ -1281,6 +1281,8 @@ public function salvar($request, $id, $tipo_operacao) {
         //Ex; Pessoa fisica, habilita cpf e rg, juridica habilita CNPJ,  MEMBRO habilita dados especificos de membresia.
         $habilitar_interface = \App\Models\tipospessoas::findOrfail($id_tipo_pessoa);
 
+        $vazio = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+
         //Listagem grupos de pessoas (Para carregar dropdown )
         $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('empresas_id', $this->dados_login->empresas_id)
@@ -1288,10 +1290,6 @@ public function salvar($request, $id, $tipo_operacao) {
 
         //Listagem de bancos (Para carregar dropdown )
         $bancos = \App\Models\bancos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome')->get();
-
-        /*Busca */
-        $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-
 
         /*Pessoas e dados financeiros*/
         /*Usado dessa forma para formatar a data de nascimento */
@@ -1302,6 +1300,16 @@ public function salvar($request, $id, $tipo_operacao) {
         $sQuery .= " and pessoas.empresas_clientes_cloud_id = ? ";
         $sQuery .= " order by razaosocial ";
         $pessoas = \DB::select($sQuery, [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        /*Busca */
+        $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
+         if ($celulas==null)
+        {
+             $celulas = $vazio; //Artificio para nao ter que tratar array vazia nas views
+        }
+
 
 
         /*Se for MEMBRO, busca informacoes em tabelas especificas*/
@@ -1318,7 +1326,7 @@ public function salvar($request, $id, $tipo_operacao) {
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
             if ($membros_celula->count()==0)
             {
-                $membros_celula = $bancos; //Artificio para nao ter que tratar array vazia nas views
+                $membros_celula = $vazio; //Artificio para nao ter que tratar array vazia nas views
             }
 
 
@@ -1330,11 +1338,10 @@ public function salvar($request, $id, $tipo_operacao) {
             ->where('membros_dados_pessoais.pessoas_id', $id)
             ->get();
 
-
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
             if ($membros_dados_pessoais->count()==0)
             {
-                $membros_dados_pessoais = $bancos; //Artificio para nao ter que tratar array vazia nas views
+                $membros_dados_pessoais = $vazio; //Artificio para nao ter que tratar array vazia nas views
             }
 
 
@@ -1356,7 +1363,7 @@ public function salvar($request, $id, $tipo_operacao) {
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
             if ($membros_historico==null)
             {
-                $membros_historico = $bancos; //Artificio para nao ter que tratar array vazia nas views
+                $membros_historico = $vazio; //Artificio para nao ter que tratar array vazia nas views
             }
 
 
@@ -1373,6 +1380,12 @@ public function salvar($request, $id, $tipo_operacao) {
 
             $membros_filhos = \DB::select($sQuery, [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
+            /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
+            if ($membros_filhos==null)
+            {
+                $membros_filhos = $vazio; //Artificio para nao ter que tratar array vazia nas views
+            }
+
 
             /*Situacoes Membros*/
             $membros_situacoes  = \App\Models\membros_situacoes::select('situacoes_id as id')
@@ -1381,6 +1394,11 @@ public function salvar($request, $id, $tipo_operacao) {
             ->where('pessoas_id', $id)
             ->get();
 
+            /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
+            if ($membros_situacoes->count()==0)
+            {
+                $membros_situacoes = $vazio; //Artificio para nao ter que tratar array vazia nas views
+            }
 
             /*Dados Profissionais Membros*/
             $membros_profissionais  = \App\Models\membros_profissionais::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
@@ -1391,7 +1409,7 @@ public function salvar($request, $id, $tipo_operacao) {
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
             if ($membros_profissionais->count()==0)
             {
-                $membros_profissionais = $bancos; //Artificio para nao ter que tratar array vazia nas views
+                $membros_profissionais = $vazio; //Artificio para nao ter que tratar array vazia nas views
             }
 
 
@@ -1415,7 +1433,7 @@ public function salvar($request, $id, $tipo_operacao) {
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
             if ($membros_familiares==null)
             {
-                $membros_familiares = $bancos; //Artificio para nao ter que tratar array vazia nas views
+                $membros_familiares = $vazio; //Artificio para nao ter que tratar array vazia nas views
             }
 
             /*Dados Formacoes*/
@@ -1425,6 +1443,7 @@ public function salvar($request, $id, $tipo_operacao) {
             ->where('pessoas_id', $id)
             ->get();
 
+            if ($membros_formacoes->count()==0) $membros_formacoes = $vazio;
 
             /*Dados idiomas*/
             $membros_idiomas  = \App\Models\membros_idiomas::select('idiomas_id as id')
@@ -1432,6 +1451,8 @@ public function salvar($request, $id, $tipo_operacao) {
             ->where('empresas_id', $this->dados_login->empresas_id)
             ->where('pessoas_id', $id)
             ->get();
+
+            if ($membros_idiomas->count()==0) $membros_idiomas = $vazio;
 
 
            /*Dons*/
@@ -1441,6 +1462,8 @@ public function salvar($request, $id, $tipo_operacao) {
             ->where('pessoas_id', $id)
             ->get();
 
+            if ($membros_dons->count()==0) $membros_dons = $vazio;
+
 
             /*habilidades*/
             $membros_habilidades  = \App\Models\membros_habilidades::select('habilidades_id as id')
@@ -1449,6 +1472,8 @@ public function salvar($request, $id, $tipo_operacao) {
             ->where('pessoas_id', $id)
             ->get();
 
+            if ($membros_habilidades->count()==0) $membros_habilidades = $vazio;
+
             /*atividades*/
             $membros_atividades  = \App\Models\membros_atividades::select('atividades_id as id')
             ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
@@ -1456,12 +1481,16 @@ public function salvar($request, $id, $tipo_operacao) {
             ->where('pessoas_id', $id)
             ->get();
 
+            if ($membros_atividades->count()==0) $membros_atividades = $vazio;
+
             /*ministerios*/
             $membros_ministerios  = \App\Models\membros_ministerios::select('ministerios_id as id')
             ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
             ->where('empresas_id', $this->dados_login->empresas_id)
             ->where('pessoas_id', $id)
             ->get();
+
+            if ($membros_ministerios->count()==0) $membros_ministerios = $vazio;
 
         }
 
