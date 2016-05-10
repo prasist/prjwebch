@@ -74,7 +74,7 @@
 
            <li class="treeview">
                 <a href="#">
-                <i class="fa fa-edit"></i> <span>Cadastro Base</span>
+                <i class="fa fa-edit"></i> <span>Cadastros Base</span>
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
@@ -133,7 +133,7 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
 
-                  <ul class="treeview-menu">
+                 <ul class="treeview-menu">
                     <a href={{ url('/configuracoes')}}><li><i class="fa fa-wrench"></i>Configurações</a></li>
                     <li>
                       <a href="#"><i class="fa fa-sitemap"></i> Estruturas <i class="fa fa-angle-left pull-right"></i></a>
@@ -145,7 +145,7 @@
                             <li><a href={{ url('/estruturas5')}}> 5 - {{ Session::get('nivel5') }}</a></li>
                           </ul>
                     </li>
-                  </ul>
+                </ul>
 
                   <ul class="treeview-menu">
                     <li>
@@ -176,59 +176,83 @@
             </li>
 
 
-          <li class="text">&nbsp;</li>
-
           <li class="treeview">
-          <a href="#">
-            <i class="fa fa-book"></i> <span>Ajuda / Documentação</span>
-            <i class="fa fa-angle-left pull-right"></i>
-          </a>
+                <a href="#">
+                <i class="fa fa-usd"></i><span>Financeiro</span>
+                <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                 <ul class="treeview-menu">
+                  <li>
+                    <a href="#"><i class="fa fa-file-text-o"></i>Cadastros Base <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                      <li><a href="{!! url('/bancos') !!}">Bancos</a></li>
+                      <li><a href="#"> Categorias</a></li>
+                      <li><a href="#"> Centros de Custos</a></li>
+                      <li><a href="#"> Contas Correntes</a></li>
+                    </ul>
+                  </li>
 
-          <ul class="treeview-menu">
-            <li>
-              <a href="#"><i class="fa fa-angle-double-right"></i>Tour Rápido</i></a>
-              <ul class="treeview-menu">
-                <li><a href={{ url('/quicktour/reload/2')}}><i class="fa fa-flag-checkered"></i> Visão Geral do SIGMA3</a></li>
-                <li><a href={{ url('/quicktour/reload/1')}}><i class="fa fa-flag-checkered"></i> Cadastrar Novo Usuário</a></li>
+                  <li>
+                    <a href="#"><i class="fa fa-calendar-plus-o"></i>Contas a Pagar <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                      <li><a href="#">Lançamentos</a></li>
+                    </ul>
+                  </li>
+
+                  <li>
+                    <a href="#"><i class="fa fa-money"></i>Contas a Receber <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                      <li><a href="#">Lançamentos</a></li>
+                    </ul>
+                  </li>
+
+                  <li>
+                    <a href="#"><i class="fa fa-angle-double-right"></i>Fluxo de Caixa</i></a>
+                  </li>
+
+                  <li>
+                    <a href="#"><i class="fa fa-angle-double-right"></i>Transferências</i></a>
+                  </li>
+
               </ul>
-            </li>
 
-            <li>
-              <a href="#"><i class="fa fa-angle-double-right"></i>Tutoriais</i></a>
-              <ul class="treeview-menu">
-                <li><a href={{ url('/tutoriais/1')}}>Cadastro de Usuários</a></li>
-                <li><a href={{ url('/tutoriais/2')}}>Novo Usuário Administrador</a></li>
-              </ul>
-            </li>
-          </ul>
-          <div id="tour5_visaogeral"></div>
+         </li>
 
-        </li>
-
-        <li class="text">&nbsp;</li>
-
+          <li class="header">Precisa de Ajuda ?</li>
           <li class="treeview">
-          <a href={{ url('/suporte')}}>
-            <i class="fa fa-question-circle"></i> <span>Suporte</span>
-          </a>
+                  <a href="#">
+                    <i class="fa fa-book"></i> <span>Ajuda / Documentação</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </a>
 
+                    <ul class="treeview-menu">
+                        <li>
+                          <a href="#"><i class="fa fa-angle-double-right"></i>Tour Rápido </i></a>
+                          <ul class="treeview-menu">
+                            <li><a href={{ url('/quicktour/reload/2')}}><i class="fa fa-flag-checkered"></i> Visão Geral do SIGMA3</a></li>
+                            <li><a href={{ url('/quicktour/reload/1')}}><i class="fa fa-flag-checkered"></i> Cadastrar Novo Usuário</a></li>
+                          </ul>
+                        </li>
 
-            <!--
-            <li>
-                <a href="pages/calendar.html">
-                <i class="fa fa-calendar"></i> <span>Calendar</span>
-                <small class="label pull-right bg-red">3</small>
-                </a>
-            </li>
-            <li>
-                <a href="pages/mailbox/mailbox.html">
-                <i class="fa fa-envelope"></i> <span>Mailbox</span>
-                <small class="label pull-right bg-yellow">12</small>
-                </a>
-            </li>
-            -->
+                        <li>
+                          <a href="#"><i class="fa fa-angle-double-right"></i>Tutoriais</i></a>
+                          <ul class="treeview-menu">
+                            <li><a href={{ url('/tutoriais/1')}}>Cadastro de Usuários</a></li>
+                            <li><a href={{ url('/tutoriais/2')}}>Novo Usuário Administrador</a></li>
+                          </ul>
+                        </li>
+                    </ul>
 
-        </ul>
+                    <div id="tour5_visaogeral"></div>
+
+               </li>
+
+              <li class="treeview">
+                  <a href={{ url('/suporte')}}>
+                      <i class="fa fa-question-circle"></i> <span>Suporte</span>
+                  </a>
+              </li>
+
     </section>
     <!-- /.sidebar -->
 </aside>

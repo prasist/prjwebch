@@ -226,7 +226,6 @@
 
 <!-- Adicionando JQuery -->
 
-
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
         <script src="{{ asset('/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.js') }}"></script>

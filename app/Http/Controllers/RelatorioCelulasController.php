@@ -145,7 +145,6 @@ class RelatorioCelulasController extends Controller
             {
                  $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas.jrxml');
             }
-
       }
 
     //}
