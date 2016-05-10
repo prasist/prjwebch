@@ -137,19 +137,19 @@ class RelatorioPessoasController extends Controller
     if ($input["possui_necessidades_especiais"]!="")
     {
         $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Possui Necessidades Esp.: " . ($input["possui_necessidades_especiais"]=="1" ? "Sim" : "Não");
-        $where .= " and possui_necessidades_especiais = " . $input["possui_necessidades_especiais"] ;
+        $where .= " and possui_necessidades_especiais = " . ($input["possui_necessidades_especiais"]=="true" ? "true" : "false");
     }
 
     if ($input["doador_orgaos"]!="")
     {
         $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Doador Orgãos: " . ($input["doador_orgaos"]=="1" ? "Sim" : "Não");
-        $where .= " and doador_orgaos = " . $input["doador_orgaos"] ;
+        $where .= " and doador_orgaos = " . ($input["doador_orgaos"]=="1" ? "true" : "false");
     }
 
     if ($input["doador_sangue"]!="")
     {
         $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Doador Sangue : " . ($input["doador_sangue"]=="1" ? "Sim" : "Não");
-        $where .= " and doador_sangue = " . $input["doador_sangue"] ;
+        $where .= " and doador_sangue = " . ($input["doador_sangue"]=="1" ? "true" : "false");
     }
 
     if ($input["status"]!="")

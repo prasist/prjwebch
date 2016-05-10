@@ -7,7 +7,7 @@
 
          <br/>
         <center>
-        <img src="{{ url('/images/clients/logo.png') }}" class="user-image" alt="Usuário Logado" width="100" height="30" />
+        <a href={{ url('/home')}} class="logo"><img src="{{ url('/images/clients/logo.png') }}" class="user-image" alt="Usuário Logado" width="100" height="30" /></a>
         <p>Sistema de Gestão para Igrejas</p>
         </center>
 

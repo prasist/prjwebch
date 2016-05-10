@@ -44,6 +44,8 @@
                            @endif
                             </div>
                       </div>
+                      @else
+                          <b>Nenhum Registro Encontrado ou Email não preenchido no cadastro da Pessoa.</b>
                       @endif
 
                 </div><!-- /.col -->
@@ -53,9 +55,9 @@
          </div><!-- fim box-body"-->
      </div><!-- box box-primary -->
 
-        <div class="box-footer">
-            <button class = 'btn btn-primary' type ='button' onclick="javascript: history.back();">Voltar</button>
-        </div>
+      <div class="box-footer">
+          <button class = 'btn btn-primary' type ='button' onclick="javascript: history.back();">Voltar</button>
+      </div>
 
     </div>
 
