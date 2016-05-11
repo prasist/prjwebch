@@ -119,8 +119,8 @@ class GruposController extends Controller
         }
 
         //preview = true, somente visualizacao, desabilita botao gravar
-        $grupos = grupos::findOrfail($id);
-        return view('grupos.edit', ['grupos' =>$grupos, 'preview' => $preview] );
+        $dados = grupos::findOrfail($id);
+        return view('grupos.edit', ['dados' =>$dados, 'preview' => $preview] );
 
     }
 

@@ -57,18 +57,19 @@
                            </div>
 
                           <!--Somente usuário MASTER poderá criar usuários ADMIN-->
-                          <input  name="admin" type="hidden"  value="0" />
+                          <input  class="check_hidden" name="admin" type="hidden"  value="{{$dados_login->master==1 ? 1 : 0 }}" />
+                           <div id="ocultar_check">
                            @if ($dados_login->master==1)
                            <div class="row">
                                     <div class="col-xs-10">
                                           <label for="admin" class="control-label">É Administrador ?</label>
 
-                                          <input  name="admin" type="checkbox" class="acessar" value="1" {{ ($grupo_do_usuario[0]->admin==1 ? 'checked' : '') }} />
+                                          <input  name="admin" type="checkbox" class="acessar"  value="1" {{ ($grupo_do_usuario[0]->admin==1 ? 'checked' : '') }} disabled />
 
                                     </div>
                             </div>
                             @endif
-
+                            </div>
 
                             <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">

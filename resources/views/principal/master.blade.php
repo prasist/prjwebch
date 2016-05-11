@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
     <head>
         <meta charset="UTF-8">
         <title>SIGMA3 - Sistema para Igrejas</title>
@@ -44,7 +44,7 @@
 
     </head>
 
-    <body class="hold-transition skin-green sidebar-mini">
+    <body class="hold-transition skin-green sidebar-mini" ng-controller="ctrl">
 
         <div class="wrapper">
             @include('includes.header')
@@ -226,7 +226,8 @@
 
 <!-- Adicionando JQuery -->
 
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+        <script src="{{ asset('js/controller.js') }}"></script>
         <script src="{{ asset('/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.js') }}"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>

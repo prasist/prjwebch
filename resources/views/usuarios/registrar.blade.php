@@ -79,7 +79,7 @@
 
                            <div id="tour8"></div>
 
-                           <input  class="check_hidden" name="admin" type="hidden"  value="0" />
+                           <input  class="check_hidden" name="admin" type="hidden"  value="{{$dados_login->master==1 ? 1 : 0 }}" />
                            <div id="ocultar_check">
                                 <!--Somente usuário MASTER poderá criar usuários ADMIN-->
                                 @if ($dados_login->master==1)
@@ -87,7 +87,7 @@
                                           <div class="col-xs-5">
                                                 <label for="admin" class="control-label">É Administrador ?</label>
 
-                                                <input  id="chkAdmin" name="admin" type="checkbox" class="checkbox" value="1" />
+                                                <input  id="chkAdmin" name="admin" type="checkbox" class="checkbox" value="1" disabled />
 
                                           </div>
                                 </div>

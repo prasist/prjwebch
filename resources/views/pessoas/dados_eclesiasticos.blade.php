@@ -77,12 +77,10 @@
 
                                                        <div class="col-xs-4">
                                                              <label for="opSexo" class="control-label">Sexo</label>
-                                                             <select name="opSexo" class="form-control select2" style="width: 100%;">
                                                              <option  value="">(Selecionar)</option>
                                                                    <option  value="M"  {{ ($tipo_operacao=='inclusao' ? '' : ($membros_dados_pessoais[0]->sexo=='M' ? 'selected=selected' : '') )  }}>Masculino</option>
                                                                    <option  value="F" {{ ($tipo_operacao=='inclusao' ? '' : ($membros_dados_pessoais[0]->sexo=='F' ? 'selected=selected' : '') )  }}>Feminino</option>
                                                              </select>
-
                                                        </div>
 
                                                        <div class="col-xs-4">
@@ -178,7 +176,7 @@
                                                           <div class="box-body">
 
                                                                  <div class="col-xs-7">
-                                                                         @include('carregar_combos', array('dados'=>$igrejas, 'titulo' =>'Igreja', 'id_combo'=>'igreja', 'complemento'=>'', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->igrejas_id) ))
+                                                                          @include('carregar_combos', array('dados'=>$igrejas, 'titulo' =>'Igreja', 'id_combo'=>'igreja', 'complemento'=>'', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->igrejas_id) ))
                                                                  </div>
 
                                                           </div>
@@ -437,11 +435,9 @@
                                 <div class="col-md-12">
                                     <div class="box box-default">
                                         <div class="box-body"><!-- box-body-->
-
                                                   <div class="col-xs-3">
-                                                          @include('carregar_combos', array('dados'=>$estadoscivis, 'titulo' =>'Estado Civil', 'id_combo'=>'estadoscivis', 'complemento'=>'', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->estadoscivis_id) ))
+                                                        @include('carregar_combos', array('dados'=>$estadoscivis, 'titulo' =>'Estado Civil', 'id_combo'=>'estadoscivis', 'complemento'=>'', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->estadoscivis_id) ))
                                                   </div><!-- col-xs-->
-
                                         </div>
                                     </div>
                                    </div>
