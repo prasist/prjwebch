@@ -77,6 +77,7 @@
 
                                                        <div class="col-xs-4">
                                                              <label for="opSexo" class="control-label">Sexo</label>
+                                                             <select name="opSexo" id="opSexo" class="form-control select2" style="width: 100%;">
                                                              <option  value="">(Selecionar)</option>
                                                                    <option  value="M"  {{ ($tipo_operacao=='inclusao' ? '' : ($membros_dados_pessoais[0]->sexo=='M' ? 'selected=selected' : '') )  }}>Masculino</option>
                                                                    <option  value="F" {{ ($tipo_operacao=='inclusao' ? '' : ($membros_dados_pessoais[0]->sexo=='F' ? 'selected=selected' : '') )  }}>Feminino</option>
