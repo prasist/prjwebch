@@ -79,7 +79,8 @@
 
                            <div id="tour8"></div>
 
-                           <input  class="check_hidden" name="admin" type="hidden"  value="{{$dados_login->master==1 ? 1 : 0 }}" />
+                           <input  id="sera_admin" name="sera_admin" type="hidden"  value="0" />
+
                            <div id="ocultar_check">
                                 <!--Somente usuário MASTER poderá criar usuários ADMIN-->
                                 @if ($dados_login->master==1)
@@ -201,12 +202,15 @@
                                         $.get('./../validar/' + empresa_id + '/user',  function (data)
                                         {
 
+                                            $("#sera_admin").attr('value','0');
+
                                             if (data==0) //Não existe ADMIN ainda...
                                             {
                                                 $('#mensagem').html('<span class="alert alert-warning alert-dismissible">Este será o primeiro usuário para a Igreja/Instituição selecionada. Por padrão será cadastrado como Administrador.</span>');
                                                 $("#ocultar_grupo").hide();
                                                 $("#ocultar_check").show();
                                                 $("#chkAdmin").attr('checked','checked');
+                                                $("#sera_admin").attr('value','1');
                                             }
                                             else if (data==1) //Já existe ADMIN, nao deixa criar mais usuarios
                                             {

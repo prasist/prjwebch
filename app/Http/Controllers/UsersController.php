@@ -114,6 +114,7 @@ class UsersController extends Controller
 
             $input = $request->except(array('_token', 'ativo')); //não levar o token
 
+
             //----------------------Grava novo usuario (Tabela USERS)
             $dados = new users();
             $dados->name  = $input['name'];
@@ -140,7 +141,7 @@ class UsersController extends Controller
             $usuarios->empresas_clientes_cloud_id  =  $usuario_master['empresas_clientes_cloud_id'];
 
 
-            if ($input['admin']) //Se estiver criando usuário ADMIN
+            if ($input['sera_admin']==1) //Se estiver criando usuário ADMIN
             {
                 //Se este for de outra empresa, cria como MASTER
                 //if ($input['empresa']!=$this->dados_login->empresas_id)
@@ -158,13 +159,13 @@ class UsersController extends Controller
                 $usuarios->master = 0;
             }
 
-            $usuarios->admin = $input['admin'];
+            $usuarios->admin = $input['sera_admin'];
             $usuarios->save();
             //-----------------FIM - Cria registro na tabela usuarios para associar com a tabela users
 
 
             //Se usuário master estiver criando um admin para outras igrejas/instituições, cria um usuario como admin.
-            if ($input['admin'])
+            if ($input['sera_admin']==1)
             {
 
                     //Cria o novo grupo somente se o usuário for pertencer a outra empresa
@@ -393,7 +394,7 @@ class UsersController extends Controller
          //-----------------Cria registro na tabela usuarios para associar com a tabela users
          $where = ['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $input['empresa'], 'id' => $id];
 
-         $update = \DB::table('usuarios')->where($where)->update(array('empresas_id'    =>  $input['empresa'],'admin' =>  $input['admin']));
+         $update = \DB::table('usuarios')->where($where)->update(array('empresas_id'    =>  $input['empresa'],'admin' =>  $input['sera_admin']));
          //-----------------FIM - Cria registro na tabela usuarios para associar com a tabela users
 
 
