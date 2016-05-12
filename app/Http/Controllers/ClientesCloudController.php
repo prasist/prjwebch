@@ -27,20 +27,22 @@ class ClientesCloudController extends Controller
     {
         $this->middleware('auth');
         $this->rota = "clientes"; //Define nome da rota que será usada na classe
+
+          //Validação de permissão de acesso a pagina
+        if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
+        {
+            $this->dados_login = \Session::get('dados_login');
+        }
+
     }
 
 
     public function index()
     {
 
-        //Validação regras permissão
-        if (Gate::allows('verifica_permissao', [\Config::get('app.clientes'),'acessar']))
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
         {
-            $this->dados_login = \Session::get('dados_login');
-        }
-        else
-        {
-             return redirect('home');
+              return redirect('home');
         }
 
 

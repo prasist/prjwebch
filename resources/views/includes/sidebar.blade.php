@@ -182,6 +182,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
                  <ul class="treeview-menu">
+
+                 <li><a href="#"><i class="fa fa-bar-chart"></i>Visão Geral</a></li>
                   <li>
                     <a href="#"><i class="fa fa-file-text-o"></i>Cadastros Base <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
