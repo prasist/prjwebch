@@ -211,6 +211,27 @@
         });
     }
 
+    /*Função usada para exibir no campo input pessoas[] a pessoa pesquisa da tela modal*/
+    function confirmar_cadastro(objInput)
+    {
+
+        //Percorre array input (Pois podem existir n modals na mesma pagina)
+        $('input.novo_valor').each(function()
+        {
+
+            alert('aq');
+                if ($(this).val()!="") //Se encontrar valor
+                {
+                    var var_conteudo = $(this).val(); // Resultado pesquisa
+                    //document.getElementById(objInput).value = var_conteudo;    // Joga no campo passado como parametro
+
+                    $("#things").append($("<option></option>").val(1).html(var_conteudo));
+
+                    $(this).val(""); //Limpa campo após leitura
+                }
+        });
+    }
+
 </script>
 
 
