@@ -268,6 +268,8 @@ class PessoasController extends Controller
         ->where('empresas_id', $this->dados_login->empresas_id)
         ->get();
 
+        $vazio = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+
         //Verificar qual o tipo de pessoa para habilitar ou não abas e campos conforme o tipo
         //Ex; Pessoa fisica, habilita cpf e rg, juridica habilita CNPJ,  membros habilita dados especificos de membresia.
         $habilitar_interface = \App\Models\tipospessoas::findOrfail($id);
@@ -306,19 +308,19 @@ class PessoasController extends Controller
             /* FIM Para preencher combos Dados eclesiasticos*/
 
             /*Inicializa variaveis vazias dos dados eclesiasticos*/
-            $membros_dados_pessoais =  $tipos; //array('0' => ['0'  => 'membros_dados']);
+            $membros_dados_pessoais =  $vazio; //array('0' => ['0'  => 'membros_dados']);
             $membros_situacoes =  "";
             $membros_dons =  "";
             $membros_habilidades =  "";
             $membros_formacoes =  "";
             $membros_idiomas =  "";
-            $membros_familiares = $tipos;
+            $membros_familiares = $vazio;
             $membros_filhos = $tipos;
             $membros_atividades =  "";
             $membros_ministerios =  "";
-            $membros_historico =  $tipos;
-            $membros_profissionais =  $tipos; //array('0' => ['0'  => 'membros_profissionais']);
-            $membros_celula=$religioes;
+            $membros_historico =  $vazio;
+            $membros_profissionais =  $vazio; //array('0' => ['0'  => 'membros_profissionais']);
+            $membros_celula=$vazio;
 
 
             return view($this->rota . '.registrar',
