@@ -45,6 +45,9 @@ class ClientesCloudController extends Controller
         if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
         {
               return redirect('home');
+        } else
+        {
+            $this->dados_login = \Session::get('dados_login');
         }
 
 
