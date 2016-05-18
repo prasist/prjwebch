@@ -130,7 +130,7 @@ class RelatorioPessoasController extends Controller
     if ($input["nivel5_up"]!="") $descricao_nivel5 = explode("|", $input["nivel5_up"]);
 
 
-    $where = " where (emailprincipal is not null and emailprincipal<> '') ";
+    $where = " where empresas_id = " . $this->dados_login->empresas_id . "  and empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " and (emailprincipal is not null and emailprincipal<> '') ";
 
     /*Filtros utilizados*/
 
@@ -309,12 +309,11 @@ class RelatorioPessoasController extends Controller
         "filtros"=> $filtros,
     );
 
-   //$PHPJasperXML->debugsql=true;
+   $PHPJasperXML->debugsql=true;
 
     if ($input["saida"]=="E")
     {
         $emails = \DB::select('select distinct razaosocial, emailprincipal from view_pessoas_geral_celulas' . $where . ' order by razaosocial');
-        //dd('select distinct razaosocial, emailprincipal from view_pessoas_geral_celulas' . $where . ' order by razaosocial');
         return view($this->rota . '.listaremails', ['emails'=>$emails, 'filtros'=>$filtros]);
     }
      else
