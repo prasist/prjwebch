@@ -215,19 +215,62 @@
     function confirmar_cadastro(objInput)
     {
 
+        var_parametros = objInput.split(","); //Recebe dois parametros separados por virgula (Nome combo, tabela)
+
         //Percorre array input (Pois podem existir n modals na mesma pagina)
         $('input.novo_valor').each(function()
         {
-
-            alert('aq');
                 if ($(this).val()!="") //Se encontrar valor
                 {
                     var var_conteudo = $(this).val(); // Resultado pesquisa
-                    //document.getElementById(objInput).value = var_conteudo;    // Joga no campo passado como parametro
 
-                    $("#things").append($("<option></option>").val(1).html(var_conteudo));
+                    //Adiciona novo item na combo
+                    $('#' + var_parametros[0]).append($('<option>', {value: 0,text: var_conteudo}));
 
-                    $(this).val(""); //Limpa campo após leitura
+                    //Limpa campo após leitura
+                    $(this).val("");
+
+                    //informa tabela e conteudo a ser inserido
+                    var_query = var_parametros[1] + '&' + var_conteudo;
+
+                    //Rota a ser disparada
+                    var urlRoute = "{!! url('/cadastrar/json/" + var_query + "') !!}";
+
+                    //Gravar novo registro
+                    $.ajax({
+                        type: 'GET',
+                        url: urlRoute,
+                        success: function (data){
+                            alert('Registro Incluído com Sucesso!!!');
+                        },
+                        error: function (data) {
+                            alert('Erro ao inserir o registro.');
+                        }
+                    });
+
+
+                        //Carregar novamente a combo com o item recem incluido já selecionado
+                        var urlRoute = "{!! url('/carregar_tabela/" + var_parametros[1] + "') !!}";
+
+                        $.getJSON(urlRoute, function(data)
+                        {
+                            var $stations = $('#' + var_parametros[0]); //Instancia o objeto combo nivel3
+                            $stations.empty();
+
+                            var html='';
+
+                            html += '<option value="0"></option>';
+
+                            $.each(data, function(index, value)
+                            {
+                                html += '<option value="' + index +'|' + value +'" ' + (var_conteudo==value ? 'selected' : '')+ '>' + value + '</option>';
+                            });
+
+                            $stations.append(html);
+                            $('#' + var_parametros[0]).trigger("change");
+                        });
+
+
                 }
         });
     }

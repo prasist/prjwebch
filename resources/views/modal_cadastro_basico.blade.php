@@ -9,14 +9,14 @@
 
            <div class="row">
                <div class="col-xs-4">
-                   <input type="text" id="novo_valor[]" name="novo_valor[]" class="typeahead tt-query"  autocomplete="off" spellcheck="false" placeholder="Preencha a Descrição / Nome">
+                   <input type="text" id="novo_valor[]" name="novo_valor[]" class="novo_valor tt-query"  autocomplete="off" spellcheck="false" placeholder="Preencha a Descrição / Nome">
                </div>
          </div>
 
        </div>
        <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" onclick="confirmar_cadastro('{!!$qual_campo!!}');" data-dismiss="modal">Confirmar</button>
+        <button type="button" class="btn btn-primary" onclick="confirmar_cadastro('{!!$qual_campo!!}, {!!$tabela!!}');" data-dismiss="modal">Confirmar</button>
       </div>
     </div>
   </div>

@@ -134,7 +134,9 @@
 
 
                                                <div class="col-xs-5">
-                                                  @include('carregar_combos', array('dados'=>$grupos, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>''))
+
+                                                  @include('carregar_combos', array('dados'=>$grupos, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>'', 'novo_registro'=>''))
+                                                  @include('modal_cadastro_basico', array('qual_campo'=>'grupo', 'modal' => 'modal_basico1', 'tabela' => 'grupos_pessoas'))
 
                                                   <!-- se houver erros na validacao do form request -->
                                                      @if ($errors->has('grupo'))
@@ -575,6 +577,17 @@
     </div>
 
 </div>
+
+<script type="text/javascript">
+    $('select[name=grupo]').change(function() {
+      if ($(this).val() == '')
+      {
+          //Abre modal para cadastrar novo item no combo
+          $('#modal_basico1').modal('show');
+
+      }
+  });
+</script>
 
 @endsection
 

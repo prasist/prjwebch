@@ -309,7 +309,7 @@ class RelatorioPessoasController extends Controller
         "filtros"=> $filtros,
     );
 
-   $PHPJasperXML->debugsql=true;
+   //$PHPJasperXML->debugsql=true;
 
     if ($input["saida"]=="E")
     {

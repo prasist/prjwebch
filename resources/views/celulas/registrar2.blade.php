@@ -28,6 +28,18 @@
         <div class="box-body">
 
 
+      <select name="things" id="things">
+          <option value="1">Thing One</option>
+          <option value="2">Thing Two</option>
+          <option value="3">Thing Three</option>
+          <option value="">New Thing&hellip;</option>
+      </select>
+      @include('modal_cadastro_basico', array('qual_campo'=>'things', 'modal' => 'modal_basico1', 'tabela' => 'idiomas'))
+
+      <div id="mensagem" name="mensagem">
+
+      </div>
+
           <div class="form-group">
             <label for="nivel5" class="col-sm-2 control-label">{!!Session::get('nivel5') !!}</label>
             <div class="col-sm-10{{ $errors->has('nivel5') ? ' has-error' : '' }}">
@@ -384,5 +396,16 @@
 
 </div>
 
+<script type="text/javascript">
+  $('select[name=things]').change(function() {
+    if ($(this).val() == '')
+    {
+        //Abre modal para cadastrar novo item no combo
+        $('#modal_basico1').modal('show');
+
+    }
+});
+
+</script>
 @include('configuracoes.script_estruturas')
 @endsection

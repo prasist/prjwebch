@@ -46,6 +46,12 @@
 
     });
 
+
+    Route::get('carregar_tabela/{tabela}', 'CadastrarController@carregar_tabela');
+
+    //Criar novo registro através da combobox
+    Route::get('cadastrar/json/{conteudo}', 'CadastrarController@cadastrar');
+
     /*Validação do cadastro de novos usuarios*/
     Route::get('validacao/{codigo}', 'HomeController@confirm');
 
@@ -426,6 +432,7 @@
     Route::get('celulas', 'CelulasController@index');
     Route::post('/celulas/gravar','CelulasController@store');
     Route::get('/celulas/registrar','CelulasController@create');
+    Route::get('/celulas/registrar2','CelulasController@create2'); //somente para fins de testes
     Route::get('/celulas/{id}/preview','CelulasController@show');
     Route::post('celulas/{id}/update','CelulasController@update');
     Route::get('celulas/{id}/edit','CelulasController@edit');

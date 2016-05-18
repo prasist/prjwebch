@@ -106,6 +106,26 @@ class CelulasController extends Controller
     }
 
 
+ //Criar novo registro -SOMENTE PARA FINS DE TESTES
+    public function create2()
+    {
+
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
+        {
+              return redirect('home');
+        }
+
+        $publicos = \App\Models\publicos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $faixas = \App\Models\faixas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+
+        /*Busca NIVEL5*/
+        $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        return view($this->rota . '.registrar2', ['nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
+
+    }
+
+
 /*
 * Grava dados no banco
 *
