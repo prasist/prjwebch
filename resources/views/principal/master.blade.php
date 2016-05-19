@@ -204,6 +204,13 @@
             {
                 //Abre modal para cadastrar novo item no combo
                 $('#modal_' + objInput).modal('show');
+
+                //Foco no campo
+                $('#modal_' + objInput).on('shown.bs.modal', function ()
+                {
+                    $('#novo_valor_' + objInput).focus()
+                })
+
             }
         });
     }
@@ -289,6 +296,7 @@
                                     $stations.append(html);
                                     $('#' + var_parametros[0].trim()).trigger("change");
                                     alert('Registro Incluído com Sucesso!!!');
+                                    //jAlert('Registro Incluído com Sucesso!!!', 'Alert Dialog');
 
                                 });
 
