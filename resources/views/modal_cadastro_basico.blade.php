@@ -3,12 +3,12 @@
         <div class="modal-content">
           <div class="modal-header">
             <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-            <h4 class="modal-title" id="id_modal_base">Cadastro</h4>
+            <h4 class="modal-title" id="id_modal_base">Inclusão de Novo Registro</h4>
           </div>
           <div class="modal-body">
 
            <div class="row">
-               <div class="col-xs-4">
+               <div class="col-xs-10">
                <!-- autocomplete="off" autofocus spellcheck="false   tt-query" -->
                    <input type="text" id="novo_valor_{!!$qual_campo!!}" name="novo_valor_{!!$qual_campo!!}" autofocus class="novo_valor_{!!$qual_campo!!} tt-query"  placeholder="Preencha a Descrição / Nome">
                </div>

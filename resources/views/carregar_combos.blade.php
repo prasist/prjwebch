@@ -6,15 +6,28 @@
     comparar = quando for edicao, enviar o id gravado no banco para ele selecionar o item correspondente quando carregar a combo
 -->
 
- <label for={{$id_combo}} class="control-label">{{$titulo}}</label>
+<label for={{$id_combo}} class="control-label">{{$titulo}}</label>
+<div class="input-group">
+       <div class="input-group-addon">
+          <a href="#" data-toggle="tooltip" title="Clique em 'Incluir Novo Registro' para cadastrar sem sair da página.">
+                <img src="{{ url('/images/help.png') }}" class="user-image" alt="Ajuda"  />
+           </a>
+        </div>
 
-<!-- class="form-control selectpicker" -->
-<select id="{!!$id_combo!!}" onchange="incluir_registro_combo('{!!$id_combo!!}');" placeholder="(Selecionar)" name="{!!$id_combo!!}" {!!$complemento!!} data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-<option  value=""></option>
-<option  value="" data-icon="glyphicon-pencil">(+ Incluir Novo Registro)</option>
-<option data-divider="true">-------------------------</option>
+        <!-- class="form-control selectpicker" -->
+        <select id="{!!$id_combo!!}" onchange="incluir_registro_combo('{!!$id_combo!!}');" placeholder="(Selecionar)" name="{!!$id_combo!!}" {!!$complemento!!} data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+        <option  value=""></option>
+        <optgroup label="Ação">
+        <option  value="" data-icon="glyphicon-pencil">(+ Incluir Novo Registro)</option>
+        <option data-divider="true"></option>
+        </optgroup>
 
-@foreach($dados as $item)
-       <option  value="{{$item->id}}" {{$comparar==$item->id ? 'selected' : '' }}>{{$item->nome}}</option>
-@endforeach
-</select>
+        <optgroup label="Registros">
+        @foreach($dados as $item)
+               <option  value="{{$item->id}}" {{$comparar==$item->id ? 'selected' : '' }}>{{$item->nome}}</option>
+        @endforeach
+        </select>
+        </optgroup>
+
+</div>
+
