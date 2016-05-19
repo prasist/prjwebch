@@ -196,6 +196,20 @@
 <script type="text/javascript">
 
     /*Função usada para exibir no campo input pessoas[] a pessoa pesquisa da tela modal*/
+    function incluir_registro_combo(objInput)
+    {
+          $('select[name=' + objInput + ']').change(function() {
+
+            if ($('select[name=' + objInput + '] option:selected').text() == '(+ Incluir Novo Registro)')
+            {
+                //Abre modal para cadastrar novo item no combo
+                $('#modal_' + objInput).modal('show');
+            }
+        });
+    }
+
+
+    /*Função usada para exibir no campo input pessoas[] a pessoa pesquisa da tela modal*/
     function confirmar(objInput)
     {
 
@@ -211,6 +225,13 @@
         });
     }
 
+    //Se não cadatrar nada no MODAL, seleciona vazio no combobox
+    function cancelou(objInput)
+    {
+        $('#' + objInput).prop('selectedIndex', 0);
+        $('#' + objInput).trigger("change");
+    }
+
     /*Função usada para exibir no campo input pessoas[] a pessoa pesquisa da tela modal*/
     function confirmar_cadastro(objInput)
     {
@@ -218,20 +239,23 @@
         var_parametros = objInput.split(","); //Recebe dois parametros separados por virgula (Nome combo, tabela)
 
         //Percorre array input (Pois podem existir n modals na mesma pagina)
-        $('input.novo_valor').each(function()
+        $('input.novo_valor_' + objInput).each(function()
         {
+
+                var_qtd=0;
+
                 if ($(this).val()!="") //Se encontrar valor
                 {
-                    var var_conteudo = $(this).val(); // Resultado pesquisa
 
-                    //Adiciona novo item na combo
-                    $('#' + var_parametros[0]).append($('<option>', {value: 0,text: var_conteudo}));
+                    var_qtd++;
+
+                    var var_conteudo = $(this).val(); // Resultado pesquisa
 
                     //Limpa campo após leitura
                     $(this).val("");
 
                     //informa tabela e conteudo a ser inserido
-                    var_query = var_parametros[1] + '&' + var_conteudo;
+                    var_query = var_parametros[1].trim() + '&' + var_conteudo.trim();
 
                     //Rota a ser disparada
                     var urlRoute = "{!! url('/cadastrar/json/" + var_query + "') !!}";
@@ -241,42 +265,45 @@
                         type: 'GET',
                         url: urlRoute,
                         success: function (data){
-                            alert('Registro Incluído com Sucesso!!!');
+
+                                //Carregar novamente a combo com o item recem incluido já selecionado
+                                var urlRouteCarregar = "{!! url('/carregar_tabela/" + var_parametros[1].trim() + "') !!}";
+
+                                $.getJSON(urlRouteCarregar, function(data)
+                                {
+                                    var $stations = $('#' + var_parametros[0].trim()); //Instancia o objeto combo
+                                    $stations.empty();
+
+                                    var html='';
+
+                                    html += '<option value=""></option>';
+                                    html += '<option  value="" data-icon="glyphicon-pencil">(+ Incluir Novo Registro)</option>';
+                                    html += '<option data-divider="true"></option>';
+
+
+                                    $.each(data, function(index, value)
+                                    {
+                                        html += '<option value="' + index +'" ' + (var_conteudo.trim()==value.trim() ? 'selected' : '')+ '>' + value + '</option>';
+                                    });
+
+                                    $stations.append(html);
+                                    $('#' + var_parametros[0].trim()).trigger("change");
+                                    alert('Registro Incluído com Sucesso!!!');
+
+                                });
+
                         },
                         error: function (data) {
                             alert('Erro ao inserir o registro.');
                         }
                     });
 
-
-                        //Carregar novamente a combo com o item recem incluido já selecionado
-                        var urlRoute = "{!! url('/carregar_tabela/" + var_parametros[1] + "') !!}";
-
-                        $.getJSON(urlRoute, function(data)
-                        {
-                            var $stations = $('#' + var_parametros[0]); //Instancia o objeto combo nivel3
-                            $stations.empty();
-
-                            var html='';
-
-                            html += '<option value="0"></option>';
-
-                            $.each(data, function(index, value)
-                            {
-                                html += '<option value="' + index +'|' + value +'" ' + (var_conteudo==value ? 'selected' : '')+ '>' + value + '</option>';
-                            });
-
-                            $stations.append(html);
-                            $('#' + var_parametros[0]).trigger("change");
-                        });
-
-
                 }
+
         });
     }
 
 </script>
-
 
 @yield('tela_permissoes')
 

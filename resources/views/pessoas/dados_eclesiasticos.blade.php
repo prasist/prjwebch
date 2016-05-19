@@ -53,6 +53,7 @@
 
                                                          <div class="col-xs-6">
                                                                  @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status', 'complemento'=>'', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->status_id) ))
+                                                                 @include('modal_cadastro_basico', array('qual_campo'=>'status', 'modal' => 'modal_status', 'tabela' => 'status'))
                                                          </div><!-- col-xs-5-->
 
                                                          <div class="col-xs-6">
@@ -161,8 +162,9 @@
                                                                             <input id="nacionalidade" name = "nacionalidade" type="text" class="form-control"  value="{{ ($tipo_operacao=='inclusao' ? old('nacionalidade') : $membros_dados_pessoais[0]->nacionalidade) }}">
                                                                   </div>
 
-                                                                  <div class="col-xs-3">
+                                                                  <div class="col-xs-4">
                                                                           @include('carregar_combos', array('dados'=>$idiomas, 'titulo' =>'Lingua Oficial', 'id_combo'=>'lingua', 'complemento'=>'', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->idiomas_id) ))
+                                                                          @include('modal_cadastro_basico', array('qual_campo'=>'lingua', 'modal' => 'modal_lingua', 'tabela' => 'idiomas'))
                                                                   </div>
 
                                                           </div>
@@ -178,6 +180,7 @@
 
                                                                  <div class="col-xs-7">
                                                                           @include('carregar_combos', array('dados'=>$igrejas, 'titulo' =>'Igreja', 'id_combo'=>'igreja', 'complemento'=>'', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->igrejas_id) ))
+                                                                          @include('modal_cadastro_basico', array('qual_campo'=>'igreja', 'modal' => 'modal_igreja', 'tabela' => 'igrejas'))
                                                                  </div>
 
                                                           </div>
@@ -337,14 +340,17 @@
 
                                                                    <div class="col-xs-4">
                                                                           @include('carregar_combos', array('dados'=>$cargos, 'titulo' =>'Cargo/Função', 'id_combo'=>'cargos', 'complemento'=>'', 'comparar'=>$membros_profissionais[0]->cargos_id))
+                                                                          @include('modal_cadastro_basico', array('qual_campo'=>'cargos', 'modal' => 'modal_cargos', 'tabela' => 'cargos'))
                                                                    </div><!-- col-xs-5-->
 
                                                                    <div class="col-xs-4">
                                                                           @include('carregar_combos', array('dados'=>$ramos, 'titulo' =>'Ramos de Atividade', 'id_combo'=>'ramos', 'complemento'=>'', 'comparar'=>$membros_profissionais[0]->ramos_id))
+                                                                          @include('modal_cadastro_basico', array('qual_campo'=>'ramos', 'modal' => 'modal_ramos', 'tabela' => 'ramos_atividades'))
                                                                    </div><!-- col-xs-5-->
 
                                                                    <div class="col-xs-4">
                                                                           @include('carregar_combos', array('dados'=>$profissoes, 'titulo' =>'Profissão', 'id_combo'=>'profissoes', 'complemento'=>'', 'comparar'=>$membros_profissionais[0]->profissoes_id))
+                                                                          @include('modal_cadastro_basico', array('qual_campo'=>'profissoes', 'modal' => 'modal_profissoes', 'tabela' => 'profissoes'))
                                                                    </div><!-- col-xs-5-->
 
                                                             </div><!-- end row-->
@@ -389,6 +395,7 @@
 
                                                                    <div class="col-xs-4">
                                                                           @include('carregar_combos', array('dados'=>$graus, 'titulo' =>'Grau de Instrução', 'id_combo'=>'graus', 'complemento'=>'', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->graus_id) ))
+                                                                          @include('modal_cadastro_basico', array('qual_campo'=>'graus', 'modal' => 'modal_graus', 'tabela' => 'graus_instrucao'))
 
                                                                    </div><!-- col-xs-5-->
 
@@ -438,6 +445,7 @@
                                         <div class="box-body"><!-- box-body-->
                                                   <div class="col-xs-3">
                                                         @include('carregar_combos', array('dados'=>$estadoscivis, 'titulo' =>'Estado Civil', 'id_combo'=>'estadoscivis', 'complemento'=>'', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->estadoscivis_id) ))
+                                                        @include('modal_cadastro_basico', array('qual_campo'=>'estadoscivis', 'modal' => 'modal_estadoscivis', 'tabela' => 'estados_civis'))
                                                   </div><!-- col-xs-->
                                         </div>
                                     </div>
@@ -510,10 +518,12 @@
 
                                                                <div class="col-xs-3">
                                                                         @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status_conjuge', 'complemento'=>'', 'comparar'=>$membros_familiares[0]->status_id))
+                                                                        @include('modal_cadastro_basico', array('qual_campo'=>'status_conjuge', 'modal' => 'modal_status_conjuge', 'tabela' => 'status'))
                                                                </div>
 
                                                                <div class="col-xs-3">
                                                                       @include('carregar_combos', array('dados'=>$profissoes, 'titulo' =>'Profissão', 'id_combo'=>'profissao_conjuge', 'complemento'=>'', 'comparar'=>$membros_familiares[0]->profissoes_id))
+                                                                      @include('modal_cadastro_basico', array('qual_campo'=>'profissao_conjuge', 'modal' => 'modal_profissao_conjuge', 'tabela' => 'profissoes'))
                                                                </div>
 
                                                                    <div class="col-xs-3">
@@ -703,10 +713,12 @@
 
                                                                             <div class="col-xs-4">
                                                                                       @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status_filho', 'complemento'=>'', 'comparar'=>''))
+                                                                                      @include('modal_cadastro_basico', array('qual_campo'=>'status_filho', 'modal' => 'modal_status_filho', 'tabela' => 'status'))
                                                                             </div>
 
                                                                             <div class="col-xs-4">
                                                                                       @include('carregar_combos', array('dados'=>$estadoscivis, 'titulo' =>'Estado Civil', 'id_combo'=>'estado_civil_filho', 'complemento'=>'', 'comparar'=>''))
+                                                                                      @include('modal_cadastro_basico', array('qual_campo'=>'estado_civil_filho', 'modal' => 'modal_estado_civil_filho', 'tabela' => 'estados_civis'))
                                                                             </div>
 
 
@@ -778,6 +790,7 @@
 
                                                                    <div class="col-xs-3">
                                                                         @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status_pai', 'complemento'=>'', 'comparar'=>$membros_familiares[0]->status_pai_id))
+                                                                        @include('modal_cadastro_basico', array('qual_campo'=>'status_pai', 'modal' => 'modal_status_pai', 'tabela' => 'status'))
                                                                     </div>
 
                                                                     <div class="col-xs-2">
@@ -821,6 +834,7 @@
 
                                                                    <div class="col-xs-3">
                                                                         @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status_mae', 'complemento'=>'', 'comparar'=>$membros_familiares[0]->status_mae_id))
+                                                                        @include('modal_cadastro_basico', array('qual_campo'=>'status_mae', 'modal' => 'modal_status_mae', 'tabela' => 'status'))
                                                                     </div>
 
                                                                     <div class="col-xs-2">
@@ -899,6 +913,7 @@
 
                                                                 <div class="col-xs-3">
                                                                           @include('carregar_combos', array('dados'=>$religioes, 'titulo' =>'Religião Anterior', 'id_combo'=>'religioes', 'complemento'=>'', 'comparar'=>$membros_historico[0]->religioes_id))
+                                                                          @include('modal_cadastro_basico', array('qual_campo'=>'religioes', 'modal' => 'modal_religioes', 'tabela' => 'religioes'))
                                                                 </div><!-- col-xs-5-->
 
                                                            </div><!-- end row-->
@@ -1034,6 +1049,7 @@
 
                                                                 <div class="col-xs-4">
                                                                         @include('carregar_combos', array('dados'=>$motivos, 'titulo' =>'Motivo Entrada', 'id_combo'=>'motivo_entrada', 'complemento'=>'', 'comparar'=>$membros_historico[0]->motivos_entrada_id))
+                                                                        @include('modal_cadastro_basico', array('qual_campo'=>'motivo_entrada', 'modal' => 'modal_motivo_entrada', 'tabela' => 'tipos_movimentacao'))
                                                                 </div><!-- col-xs-5-->
 
                                                                 <div class="col-xs-4">
@@ -1060,6 +1076,7 @@
 
                                                                 <div class="col-xs-4">
                                                                         @include('carregar_combos', array('dados'=>$motivos, 'titulo' =>'Motivo Saída', 'id_combo'=>'motivosaida', 'complemento'=>'', 'comparar'=>$membros_historico[0]->motivos_saida_id))
+                                                                        @include('modal_cadastro_basico', array('qual_campo'=>'motivosaida', 'modal' => 'modal_motivosaida', 'tabela' => 'tipos_movimentacao'))
                                                                 </div><!-- col-xs-5-->
 
                                                                 <div class="col-xs-4">
@@ -1141,6 +1158,7 @@
 
                                                                    <div class="col-xs-4">
                                                                           @include('carregar_combos', array('dados'=>$disponibilidades, 'titulo' =>'Disponibilidade de Tempo', 'id_combo'=>'disponibilidades', 'complemento'=>'', 'comparar'=> ($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->disponibilidades_id) ))
+                                                                          @include('modal_cadastro_basico', array('qual_campo'=>'disponibilidades', 'modal' => 'modal_disponibilidades', 'tabela' => 'disponibilidades'))
                                                                    </div><!-- col-xs-5-->
 
                                                                    <div class="col-xs-4">

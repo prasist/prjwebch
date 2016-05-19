@@ -49,16 +49,6 @@
                                       <input  id= "ckExibir" name="ckExibir" type="checkbox" class="minimal" checked />  Listar Participantes
                                 </div>
 
-                                <!--
-                                <div class="col-xs-3">
-                                        <label for="tipo_relatorio" class="control-label">Tipo Relatório</label>
-                                        <select id="tipo_relatorio" name="tipo_relatorio" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                            <option  value="S">Sintético</option>
-                                            <option  value="A">Analítico</option>
-                                        </select>
-                                </div>
-                                -->
-
                           </div>
 
                           <div class="row">
@@ -111,10 +101,12 @@
 
                               <div class="col-xs-5">
                                     @include('carregar_combos', array('dados'=>$publicos, 'titulo' =>'Público Alvo', 'id_combo'=>'publico_alvo', 'complemento'=>'', 'comparar'=>''))
+                                    @include('modal_cadastro_basico', array('qual_campo'=>'publico_alvo', 'modal' => 'modal_publico_alvo', 'tabela' => 'publicos_alvos'))
                               </div>
 
                               <div class="col-xs-5">
                                     @include('carregar_combos', array('dados'=>$faixas, 'titulo' =>'Faixa Etária', 'id_combo'=>'faixa_etaria', 'complemento'=>'', 'comparar'=>''))
+                                    @include('modal_cadastro_basico', array('qual_campo'=>'faixa_etaria', 'modal' => 'modal_faixa_etaria', 'tabela' => 'faixas_etarias'))
                               </div>
 
                          </div>

@@ -8,8 +8,11 @@
 
  <label for={{$id_combo}} class="control-label">{{$titulo}}</label>
 
-<select id="{!!$id_combo!!}" placeholder="(Selecionar)" name="{!!$id_combo!!}" {!!$complemento!!} data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+<!-- class="form-control selectpicker" -->
+<select id="{!!$id_combo!!}" onchange="incluir_registro_combo('{!!$id_combo!!}');" placeholder="(Selecionar)" name="{!!$id_combo!!}" {!!$complemento!!} data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
 <option  value=""></option>
+<option  value="" data-icon="glyphicon-pencil">(+ Incluir Novo Registro)</option>
+<option data-divider="true">-------------------------</option>
 
 @foreach($dados as $item)
        <option  value="{{$item->id}}" {{$comparar==$item->id ? 'selected' : '' }}>{{$item->nome}}</option>

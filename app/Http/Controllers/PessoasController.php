@@ -44,11 +44,14 @@ class PessoasController extends Controller
         $where = "ativo|A&"; //Ambos
 
         //Lista tipos de pessoas, será usado no botão novo registro para indicar qual tipo de cadastro efetuar
-        $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->orderBy('nome','ASC')
+        ->get();
 
         //Para carregar combo de grupos de pessoas
         $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('empresas_id', $this->dados_login->empresas_id)
+        ->orderBy('nome','ASC')
         ->get();
 
         $visualizar = Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'visualizar']);
@@ -72,10 +75,13 @@ class PessoasController extends Controller
         //Para carregar combo de grupos de pessoas
         $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('empresas_id', $this->dados_login->empresas_id)
+        ->orderBy('nome','ASC')
         ->get();
 
         //Lista tipos de pessoas, será usado no botão novo registro para indicar qual tipo de cadastro efetuar
-        $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->orderBy('nome','ASC')
+        ->get();
 
         //Listagem de pessoas
         $dados = pessoas::select('pessoas.id', 'pessoas.razaosocial', 'pessoas.nomefantasia', 'pessoas.cnpj_cpf', 'pessoas.fone_principal', 'tipos_pessoas.id as id_tipo_pessoa', 'tipos_pessoas.nome as nome_tipo_pessoa')
@@ -168,10 +174,13 @@ class PessoasController extends Controller
     //Para carregar combo de grupos de pessoas
     $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
     ->where('empresas_id', $this->dados_login->empresas_id)
+    ->orderBy('nome','ASC')
     ->get();
 
     //Lista tipos de pessoas, será usado no botão novo registro para indicar qual tipo de cadastro efetuar
-    $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+    $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+    ->orderBy('nome','ASC')
+    ->get();
 
     $where="";
 
@@ -266,6 +275,7 @@ class PessoasController extends Controller
         //Para carregar combo de grupos de pessoas
         $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('empresas_id', $this->dados_login->empresas_id)
+        ->orderBy('nome','ASC')
         ->get();
 
         $vazio = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
@@ -275,7 +285,9 @@ class PessoasController extends Controller
         $habilitar_interface = \App\Models\tipospessoas::findOrfail($id);
 
         //Para carregar combo de bancos
-        $bancos = \App\Models\bancos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $bancos = \App\Models\bancos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->orderBy('nome','ASC')
+        ->get();
 
         /*Busca */
         $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
@@ -1288,6 +1300,7 @@ public function salvar($request, $id, $tipo_operacao) {
         //Listagem grupos de pessoas (Para carregar dropdown )
         $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('empresas_id', $this->dados_login->empresas_id)
+        ->orderBy('nome','ASC')
         ->get();
 
         //Listagem de bancos (Para carregar dropdown )
