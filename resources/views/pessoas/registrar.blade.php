@@ -134,7 +134,7 @@
 
                                                <div class="col-xs-5">
 
-                                                  @include('carregar_combos', array('dados'=>$grupos, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>''))
+                                                  @include('carregar_combos', array('dados'=>$grupos, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '31'))
                                                   @include('modal_cadastro_basico', array('qual_campo'=>'grupo', 'modal' => 'modal_grupo', 'tabela' => 'grupos_pessoas'))
 
                                                   <!-- se houver erros na validacao do form request -->
@@ -392,7 +392,7 @@
 
                                       <div class="row">
                                             <div class="col-xs-8">
-                                                  @include('carregar_combos', array('dados'=>$bancos, 'titulo' =>'Banco Emissão Boleto', 'id_combo'=>'banco', 'complemento'=>'', 'comparar'=>old('banco')))
+                                                  @include('carregar_combos', array('dados'=>$bancos, 'titulo' =>'Banco Emissão Boleto', 'id_combo'=>'banco', 'complemento'=>'', 'comparar'=>old('banco'), 'id_pagina'=>'35'))
                                             </div>
                                       </div>
 
@@ -541,12 +541,7 @@
                                       </div>
                                    </div>
 
-
-
                                 </div><!-- FIM - TAB FOTO -->
-
-
-
 
                                <!--
                                Somente se estiver cadastrado no tipo de pessoa para exibir MEMBROS

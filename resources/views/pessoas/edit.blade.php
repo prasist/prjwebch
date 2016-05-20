@@ -138,7 +138,7 @@
                                                 </div>
 
                                                 <div class="col-xs-3">
-                                                     @include('carregar_combos', array('dados'=>$grupos, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>$pessoas[0]->grupos_pessoas_id))
+                                                     @include('carregar_combos', array('dados'=>$grupos, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>$pessoas[0]->grupos_pessoas_id, 'id_pagina'=> '31'))
                                                      @include('modal_cadastro_basico', array('qual_campo'=>'grupo', 'modal' => 'modal_grupo', 'tabela' => 'grupos_pessoas'))
                                                 </div>
 
@@ -404,7 +404,7 @@
 
                                       <div class="row">
                                             <div class="col-xs-8">
-                                                  @include('carregar_combos', array('dados'=>$bancos, 'titulo' =>'Banco Emissão Boleto', 'id_combo'=>'banco', 'complemento'=>'', 'comparar'=>$pessoas[0]->bancos_id))
+                                                  @include('carregar_combos', array('dados'=>$bancos, 'titulo' =>'Banco Emissão Boleto', 'id_combo'=>'banco', 'complemento'=>'', 'comparar'=>$pessoas[0]->bancos_id, 'id_pagina'=>'35'))
                                             </div>
                                       </div>
 
@@ -532,8 +532,7 @@
                                                                                     <img src="{{ url('/images/persons/' . $pessoas[0]->caminhofoto) }}" width="315px" height="235px">
                                                                               </div>
                                                                               @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
-                                                                              <a href="{{ url('/pessoas/' . $pessoas[0]->id . '/remover')}}" class="btn btn-danger"><i class="fa fa-trash"></i> Remover Imagem</a></center>
-
+                                                                                 <a href="{{ url('/pessoas/' . $pessoas[0]->id . '/remover')}}" class="btn btn-danger"><i class="fa fa-trash"></i> Remover Imagem</a></center>
                                                                               @endcan
                                                                         </div>
 

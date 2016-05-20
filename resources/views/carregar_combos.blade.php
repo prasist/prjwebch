@@ -17,10 +17,18 @@
         <!-- class="form-control selectpicker" -->
         <select id="{!!$id_combo!!}" onchange="incluir_registro_combo('{!!$id_combo!!}');" placeholder="(Selecionar)" name="{!!$id_combo!!}" {!!$complemento!!} data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
         <option  value=""></option>
-        <optgroup label="Ação">
+
+        <!-- Verifica permissão de inclusao da pagina/tabela-->
+        @can('verifica_permissao', [$id_pagina ,'incluir'])
+            <optgroup label="Ação">
+        @else
+            <optgroup label="Ação" disabled>
+        @endcan
+
         <option  value="" data-icon="glyphicon-pencil">(+ Incluir Novo Registro)</option>
         <option data-divider="true"></option>
         </optgroup>
+
 
         <optgroup label="Registros">
         @foreach($dados as $item)

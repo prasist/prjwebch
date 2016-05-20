@@ -69,12 +69,12 @@
 
                                    <div class="row">
                                         <div class="col-xs-5">
-                                              @include('carregar_combos', array('dados'=>$tipos, 'titulo' =>'Tipos de Pessoa', 'id_combo'=>'tipos', 'complemento'=>'', 'comparar'=>''))
+                                              @include('carregar_combos', array('dados'=>$tipos, 'titulo' =>'Tipos de Pessoa', 'id_combo'=>'tipos', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '29'))
                                               @include('modal_cadastro_basico', array('qual_campo'=>'tipos', 'modal' => 'modal_tipos', 'tabela' => 'tipos_pessoas'))
                                         </div><!-- col-xs-5-->
 
                                         <div class="col-xs-5">
-                                              @include('carregar_combos', array('dados'=>$grupos, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>''))
+                                              @include('carregar_combos', array('dados'=>$grupos, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '31'))
                                               @include('modal_cadastro_basico', array('qual_campo'=>'grupo', 'modal' => 'modal_grupo', 'tabela' => 'grupos_pessoas'))
                                         </div><!-- col-xs-5-->
 
