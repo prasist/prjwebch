@@ -76,6 +76,7 @@ class RelatorioCelulasController extends Controller
     $descricao_nivel4="";
     $descricao_nivel5="";
 
+
     if ($input["publico_alvo"]!="") $descricao_publico_alvo = explode("|", $input["publico_alvo"]);
     if ($input["faixa_etaria"]!="") $descricao_faixa_etaria = explode("|", $input["faixa_etaria"]);
     if ($input["lideres"]!="") $descricao_lider = explode("|", $input["lideres"]);
@@ -91,7 +92,7 @@ class RelatorioCelulasController extends Controller
     if ($input["segundo_dia_encontro"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Segundo dia encontro : " . $input["segundo_dia_encontro"];
     if ($descricao_publico_alvo!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Publico Alvo : " . $descricao_publico_alvo[1];
     if ($descricao_faixa_etaria!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Faixa Etária : " . $descricao_faixa_etaria[1];
-    if ($descricao_lider!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Líder : " . $descricao_lider[1];
+    if ($descricao_lider[1]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Líder : " . $descricao_lider[1];
     if ($input["nivel1_up"]!="0")  $filtros .= "<br/>&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
     if ($input["nivel2_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel2') . " : " . $descricao_nivel2[1];
     if ($input["nivel3_up"]!="0")  $filtros .= "<br/>&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel3') . " : " . $descricao_nivel3[1];
