@@ -278,7 +278,9 @@ class PessoasController extends Controller
         ->orderBy('nome','ASC')
         ->get();
 
-        $vazio = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+        $vazio = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('nome', 'Membros')
+        ->get();
 
         //Verificar qual o tipo de pessoa para habilitar ou não abas e campos conforme o tipo
         //Ex; Pessoa fisica, habilita cpf e rg, juridica habilita CNPJ,  membros habilita dados especificos de membresia.
@@ -1266,7 +1268,6 @@ public function salvar($request, $id, $tipo_operacao) {
 }
 
 
-
     //Criar novo registro
     public function store(\Illuminate\Http\Request  $request)
     {
@@ -1295,7 +1296,9 @@ public function salvar($request, $id, $tipo_operacao) {
         //Ex; Pessoa fisica, habilita cpf e rg, juridica habilita CNPJ,  MEMBRO habilita dados especificos de membresia.
         $habilitar_interface = \App\Models\tipospessoas::findOrfail($id_tipo_pessoa);
 
-        $vazio = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+        $vazio = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('nome', 'Membros')
+        ->get();
 
         //Listagem grupos de pessoas (Para carregar dropdown )
         $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
