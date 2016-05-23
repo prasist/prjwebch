@@ -29,7 +29,6 @@ class PessoasController extends Controller
 
     }
 
-
     /**//**
      * Description = Listagem de Pessoas cadastradas
      */
@@ -1266,7 +1265,6 @@ public function salvar($request, $id, $tipo_operacao) {
          });// ------------ FIM TRANSACTION
 
 }
-
 
     //Criar novo registro
     public function store(\Illuminate\Http\Request  $request)
