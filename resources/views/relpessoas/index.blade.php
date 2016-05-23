@@ -175,19 +175,23 @@
                                                                     <option  value="email" data-icon="fa fa-envelope-o">Listagem de E-mails</option>
                                                                     </select>
 
-                                                                        @if ($var_download!="")
-                                                                        <br/>
-                                                                      <br/>
-                                                                       <div class="alert2 alert-info">
-                                                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                                                        <h4><i class="icon fa fa-check"></i> Relatório gerado com Sucesso!</h4>
-                                                                        Clique no link abaixo para baixar o arquivo.
-                                                                      </div>
-                                                                      <a href="{!! url($var_download) !!}" class="text" target="_blank">
-                                                                       <img src="{{ url('/images/Download-Button-Icon.jpg') }}" alt="Baixar Arquivo" />
-                                                                       CLIQUE AQUI PARA VISUALIZAR / BAIXAR</a>
-
-                                                                  @endif
+                                                                   @if ($var_download!="")
+                                                                    <br/>
+                                                                    <br/>
+                                                                     <div class="alert2 alert-info">
+                                                                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                                      <h4><i class="icon fa fa-check"></i> Relatório gerado com Sucesso!</h4>
+                                                                      Clique no link abaixo para baixar o arquivo.
+                                                                    </div>
+                                                                    <a href="{!! url($var_download) !!}" class="text" target="_blank">
+                                                                    CLIQUE AQUI PARA VISUALIZAR / BAIXAR
+                                                                    @if (substr($var_download,-3)=="pdf")
+                                                                        <img src="{{ url('/images/pdf.png') }}" alt="Baixar Arquivo" />
+                                                                     @else
+                                                                        <img src="{{ url('/images/excel.png') }}" alt="Baixar Arquivo" />
+                                                                     @endif
+                                                                     </a>
+                                                                   @endif
 
 
                                                               </div>
