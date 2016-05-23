@@ -134,8 +134,13 @@
                                         Clique no link abaixo para baixar o arquivo.
                                       </div>
                                       <a href="{!! url($var_download) !!}" class="text" target="_blank">
-                                       <img src="{{ url('/images/Download-Button-Icon.jpg') }}" alt="Baixar Arquivo" />
-                                       CLIQUE AQUI PARA VISUALIZAR / BAIXAR</a>
+                                      CLIQUE AQUI PARA VISUALIZAR / BAIXAR
+                                      @if (substr($var_download,-3)=="pdf")
+                                          <img src="{{ url('/images/pdf.png') }}" alt="Baixar Arquivo" />
+                                       @else
+                                          <img src="{{ url('/images/excel.png') }}" alt="Baixar Arquivo" />
+                                       @endif
+                                       </a>
                                      @endif
 
 
