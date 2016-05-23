@@ -15,6 +15,14 @@
 
             <ul class="nav navbar-nav">
 
+               <li class="dropdown messages-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <spam><b>{!! \Session::get('nome_igreja') !!}</b></spam>
+                    <span class="label label-success"></span>
+                    </a>
+                </li>
+
+
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-envelope-o"></i>

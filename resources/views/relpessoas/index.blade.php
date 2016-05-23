@@ -43,6 +43,9 @@
 
                                                                 <div class="row"><!-- row entrada-->
 
+                                                                    <input  id="possui_necessidades_especiais" name="possui_necessidades_especiais" type="hidden" value="" />
+                                                                    <input  id= "ckEstruturas" name="ckEstruturas" type="hidden" class="minimal" />
+
                                                                       <div class="col-xs-3">
                                                                             <label for="mes" class="control-label">Mês Aniversário</label>
                                                                             <select id="mes" name="mes" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
@@ -136,13 +139,12 @@
                                                                             </select>
                                                                       </div>
 
-                                                                      <div class="col-xs-3">
-                                                                            <label for="saida" class="control-label">Tipo de Saída</label>
-                                                                            <select id="saida" name="saida" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                                                                 <option  value="I">Relatório</option>
-                                                                                 <option  value="E" >Gerar Lista de Emails</option>
-                                                                            </select>
-                                                                    </div>
+                                                                       <div class="col-xs-3">
+                                                                            <br/>
+                                                                            <input  id= "ckEstruturas" name="ckEstruturas" type="checkbox" class="minimal" />  Listar Estruturas Células
+                                                                      </div>
+
+
 
                                                                  </div> <!-- end row -->
 
@@ -158,11 +160,38 @@
                                                                           </select>
                                                                       </div><!-- col-xs-5-->
 
-                                                                      <div class="col-xs-3">
-                                                                            <br/>
-                                                                            <input  id= "ckEstruturas" name="ckEstruturas" type="checkbox" class="minimal" />  Listar Estruturas Células
-                                                                      </div>
+
                                                                 </div> <!-- end row -->
+
+                                                          <div class="row">
+
+                                                              <div class="col-xs-6">
+
+
+                                                                    <label for="resultado" class="control-label">Formato de Sáida : </label>
+                                                                    <select id="resultado" name="resultado" class="form-control selectpicker">
+                                                                    <option  value="pdf" data-icon="fa fa-file-pdf-o" selected>PDF (.pdf)</option>
+                                                                    <option  value="xls" data-icon="fa fa-file-excel-o">Planilha Excel (.xls)</option>
+                                                                    <option  value="email" data-icon="fa fa-envelope-o">Listagem de E-mails</option>
+                                                                    </select>
+
+                                                                        @if ($var_download!="")
+                                                                        <br/>
+                                                                      <br/>
+                                                                       <div class="alert2 alert-info">
+                                                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                                        <h4><i class="icon fa fa-check"></i> Relatório gerado com Sucesso!</h4>
+                                                                        Clique no link abaixo para baixar o arquivo.
+                                                                      </div>
+                                                                      <a href="{!! url($var_download) !!}" class="text" target="_blank">
+                                                                       <img src="{{ url('/images/Download-Button-Icon.jpg') }}" alt="Baixar Arquivo" />
+                                                                       CLIQUE AQUI PARA VISUALIZAR / BAIXAR</a>
+
+                                                                  @endif
+
+
+                                                              </div>
+                                                          </div>
 
                                                            </div> <!-- enb box-body-->
                                                        </div> <!-- end box box-default -->
@@ -440,6 +469,7 @@
 
                                                           </div><!-- end row-->
 
+
                                                   </div><!-- end row -->
 
                                              </div>
@@ -453,22 +483,25 @@
                         </div>
                         <!-- /.tab-content -->
                      </div>
+
+                 </div>
                       <!-- nav-tabs-custom -->
 
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-
-        <div class="overlay modal" style="display: none">
-            <i class="fa fa-refresh fa-spin"></i>
-        </div>
-
-        </div><!-- fim box-body"-->
 
 
-     </div><!-- box box-primary -->
+                  <div class="overlay modal" style="display: none">
+                      <i class="fa fa-refresh fa-spin"></i>
+                  </div>
+
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+
+    </div><!-- fim box-body"-->
+
+ </div><!-- box box-primary -->
 
         <div class="box-footer">
-            <button class = 'btn btn-primary' type ='submit' onclick="myApp.showPleaseWait();">Pesquisar</button>
+            &nbsp;&nbsp;<button class = 'btn btn-primary' type ='submit' onclick="myApp.showPleaseWait();">Pesquisar</button>
             <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Limpar</a>
         </div>
 

@@ -1734,9 +1734,7 @@ $font=$data->textElement->font["fontName"];
             }
             elseif($this->pdflib=="XLS"){
 
-
-
-                 include dirname(__FILE__)."/ExportXLS.inc.php";
+                include dirname(__FILE__)."/ExportXLS.inc.php";
                 $xls= new ExportXLS($this,$filename, 'Excel5',$out_method);
                 die;
 

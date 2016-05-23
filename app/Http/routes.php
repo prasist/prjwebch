@@ -1,4 +1,5 @@
 <?php
+use JasperPHP\JasperPHP as JasperPHP;
 
 
     Route::get('/', function ()
@@ -11,6 +12,38 @@
         //
     });
 
+
+    Route::get('relatorio', function() {
+
+
+            $database =   [
+            'driver'   => 'postgres',
+            'host'     => env('DB_HOST', '177.101.149.118'),
+            'database' => env('DB_DATABASE', 'webigrejas'),
+            'username' => env('DB_USERNAME', 'postgres'),
+            'password' => env('DB_PASSWORD', 'b1c0d3p4t044'),
+            'charset'  => 'utf8',
+            'prefix'   => '',
+            'schema'   => 'public'
+        ];
+
+            $output = __DIR__ . '/../../vendor/cossou/jasperphp/examples/listagem_celulas';
+
+            $ext = "pdf";
+
+              \JasperPHP::process(
+                    __DIR__ . '/../../vendor/cossou/jasperphp/examples/listagem_celulas.jasper',
+                    $output,
+                    array("pdf", "xls"),
+                    array(),
+                    $database,
+                    false,
+                    false
+                )->execute();
+
+
+
+    });
 
     Route::group(['middleware' => 'web'], function ()
     {

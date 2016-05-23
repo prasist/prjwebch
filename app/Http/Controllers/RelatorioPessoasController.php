@@ -28,13 +28,8 @@ class RelatorioPessoasController extends Controller
 
     }
 
-    public function index()
+    public function CarregarView($var_download)
     {
-
-        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
-        {
-              return redirect('home');
-        }
 
         $ramos = \App\Models\ramos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
         $cargos = \App\Models\cargos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
@@ -77,7 +72,21 @@ class RelatorioPessoasController extends Controller
                 'estadoscivis'=>$estadoscivis,
                 'status'=>$status,
                 'grupos'=>$grupos,
-                'emails'=>'', 'filtros'=>'']);
+                'emails'=>'', 'filtros'=>'',
+                'var_download' => $var_download
+                ]);
+    }
+
+
+    public function index()
+    {
+
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
+        {
+              return redirect('home');
+        }
+
+        return $this->CarregarView('');
 
     }
 
@@ -85,14 +94,25 @@ class RelatorioPessoasController extends Controller
   public function pesquisar(\Illuminate\Http\Request  $request)
  {
 
-    include_once(__DIR__ . '/../../../public/relatorios/class/tcpdf/tcpdf.php');
-    include_once(__DIR__ . '/../../../public/relatorios/class/PHPJasperXML.inc.php');
-    include_once (__DIR__ . '/../../../public/relatorios/setting.php');
+    //include_once(__DIR__ . '/../../../public/relatorios/class/tcpdf/tcpdf.php');
+    //include_once(__DIR__ . '/../../../public/relatorios/class/PHPJasperXML.inc.php');
+    //include_once (__DIR__ . '/../../../public/relatorios/setting.php');
+
 
     /*Pega todos campos enviados no post*/
     $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-    $PHPJasperXML = new \PHPJasperXML();
+
+    //$PHPJasperXML = new \PHPJasperXML();
+
+    /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
+    //Pega dados de conexao com o banco para o JASPER REPORT
+    $database = \Config::get('database.connections.jasper_report');
+    $ext = $input["resultado"]; //Tipo saída (PDF, XLS)
+    $output = public_path() . '/relatorios/resultados/' . $ext . '/relatorio_' . $this->dados_login->empresas_id . '_' . Auth::user()->id; //Path para cada tipo de relatorio
+    $path_download = '/relatorios/resultados/' . $ext . '/relatorio_' . $this->dados_login->empresas_id . '_' .  Auth::user()->id; //Path para cada tipo de relatorio
+    /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
+
 
     /*Instancia biblioteca de funcoes globais*/
     $formatador = new  \App\Functions\FuncoesGerais();
@@ -136,146 +156,146 @@ class RelatorioPessoasController extends Controller
 
     if ($input["possui_necessidades_especiais"]!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Possui Necessidades Esp.: " . ($input["possui_necessidades_especiais"]=="1" ? "Sim" : "Não");
+        $filtros .= "   Possui Necessidades Esp.: " . ($input["possui_necessidades_especiais"]=="1" ? "Sim" : "Não");
         $where .= " and possui_necessidades_especiais = " . ($input["possui_necessidades_especiais"]=="true" ? "true" : "false");
     }
 
     if ($input["doador_orgaos"]!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Doador Orgãos: " . ($input["doador_orgaos"]=="1" ? "Sim" : "Não");
+        $filtros .= "   Doador Orgãos: " . ($input["doador_orgaos"]=="1" ? "Sim" : "Não");
         $where .= " and doador_orgaos = " . ($input["doador_orgaos"]=="1" ? "true" : "false");
     }
 
     if ($input["doador_sangue"]!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Doador Sangue : " . ($input["doador_sangue"]=="1" ? "Sim" : "Não");
+        $filtros .= "   Doador Sangue : " . ($input["doador_sangue"]=="1" ? "Sim" : "Não");
         $where .= " and doador_sangue = " . ($input["doador_sangue"]=="1" ? "true" : "false");
     }
 
     if ($input["status"]!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Status Cadastro : " . ($input["status"]=="S" ? "Ativo" : "Inativo");
+        $filtros .= "   Status Cadastro : " . ($input["status"]=="S" ? "Ativo" : "Inativo");
         $where .= " and ativo = '" . $input["status"] . "'";
     }
 
     if ($input["graus_id"]!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Grau Instrução : " . $descricao_graus[1];
+        $filtros .= "   Grau Instrução : " . $descricao_graus[1];
         $where .= " and graus_id = " . $descricao_graus[0];
     }
 
     if ($input["idiomas_id"]!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Idioma : " . $descricao_idiomas[1];
+        $filtros .= "   Idioma : " . $descricao_idiomas[1];
         $where .= " and idiomas_id = " . $descricao_idiomas[0];
     }
 
     if ($input["mes"]!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Mês Aniversário : " . $input["mes"];
+        $filtros .= "   Mes Aniversario : " . $input["mes"];
         $where .= " and mes = '" . $input["mes"] . "'";
     }
 
     if ($input["sexo"]!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Sexo : " . ($input["sexo"]=="M" ? "Masculino" : "Feminino");
+        $filtros .= "   Sexo : " . ($input["sexo"]=="M" ? "Masculino" : "Feminino");
         $where .= " and sexo = '" . $input["sexo"] . "'";
     }
 
     if ($descricao_estado_civil!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Estado Civil : " . $descricao_estado_civil[1];
+        $filtros .= "   Estado Civil : " . $descricao_estado_civil[1];
         $where .= " and estadoscivis_id = " . $descricao_estado_civil[0];
     }
 
     if ($descricao_grupo!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Grupo : " . $descricao_grupo[1];
+        $filtros .= "   Grupo : " . $descricao_grupo[1];
         $where .= " and grupos_pessoas_id = " . $descricao_grupo[0];
     }
 
     if ($descricao_situacoes!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Situação : " . $descricao_situacoes[1];
+        $filtros .= "   Situação : " . $descricao_situacoes[1];
         $where .= " and situacoes_id = " . $descricao_situacoes[0];
     }
 
     if ($descricao_tipos!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Tipo Pessoa : " . $descricao_tipos[1];
+        $filtros .= "   Tipo Pessoa : " . $descricao_tipos[1];
         $where .= " and tipos_pessoas_id = " . $descricao_tipos[0];
     }
 
     if ($descricao_status!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Status : " . $descricao_status[1];
+        $filtros .= "   Status : " . $descricao_status[1];
         $where .= " and status_id = " . $descricao_status[0];
     }
 
     if ($descricao_motivo_ent!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Motivo Entrada : " . $descricao_motivo_ent[1];
+        $filtros .= "   Motivo Entrada : " . $descricao_motivo_ent[1];
         $where .= " and motivos_entrada_id = " . $descricao_motivo_ent[0];
     }
 
     if ($descricao_motivo_sai!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Motivo Saída : " . $descricao_motivo_sai[1];
+        $filtros .= "   Motivo Saída : " . $descricao_motivo_sai[1];
         $where .= " and motivos_saida_id = " . $descricao_motivo_sai[0];
     }
 
     if ($input["data_entrada"]!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Entrada : " . $input["data_entrada"] . " até " . $input["data_entrada_ate"] ;
+        $filtros .= "   Entrada : " . $input["data_entrada"] . " até " . $input["data_entrada_ate"] ;
         $where .= " and data_entrada >= '" . $formatador->FormatarData($input["data_entrada"]) . "'";
         $where .= " and data_entrada <= '" . $formatador->FormatarData($input["data_entrada_ate"]) . "'";
     }
 
     if ($input["data_saida"]!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Saída : " . $input["data_saida"] . " até " . $input["data_saida_ate"] ;
+        $filtros .= "   Saída : " . $input["data_saida"] . " até " . $input["data_saida_ate"] ;
         $where .= " and data_saida >= '" . $formatador->FormatarData($input["data_saida"]) . "'";
         $where .= " and data_saida < '" . $formatador->FormatarData($input["data_saida_ate"]) . "'";
     }
 
     if ($input["data_batismo"]!="")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Batismo : " . $input["data_batismo"] . " até " . $input["data_batismo_ate"] ;
+        $filtros .= "   Batismo : " . $input["data_batismo"] . " até " . $input["data_batismo_ate"] ;
         $where .= " and data_batismo >= '" . $formatador->FormatarData($input["data_batismo"]) . "'";
         $where .= " and data_batismo <= '" . $formatador->FormatarData($input["data_batismo_ate"]) . "'";
     }
 
     if ($input["nivel1_up"]!="0")
     {
-        $filtros .= "<br/>&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
+        $filtros .= "<br/>" . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
         $where .= " and celulas_nivel1_id = " . $descricao_nivel1[0];
     }
 
     if ($input["nivel2_up"]!="0")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel2') . " : " . $descricao_nivel2[1];
+        $filtros .= "" . \Session::get('nivel2') . " : " . $descricao_nivel2[1];
         $where .= " and celulas_nivel2_id = " . $descricao_nivel2[0];
     }
 
     if ($input["nivel3_up"]!="0")
     {
-        $filtros .= "<br/>&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel3') . " : " . $descricao_nivel3[1];
+        $filtros .= "<br/>" . \Session::get('nivel3') . " : " . $descricao_nivel3[1];
         $where .= " and celulas_nivel3_id = " . $descricao_nivel3[0];
     }
 
     if ($input["nivel4_up"]!="0")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel4') . " : " . $descricao_nivel4[1];
+        $filtros .= "" . \Session::get('nivel4') . " : " . $descricao_nivel4[1];
         $where .= " and celulas_nivel4_id = " . $descricao_nivel4[0];
     }
 
     if ($input["nivel5_up"]!="0")
     {
-        $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel5') . " : " . $descricao_nivel5[1];
+        $filtros .= "" . \Session::get('nivel5') . " : " . $descricao_nivel5[1];
         $where .= " and celulas_nivel5_id = " . $descricao_nivel5[0];
     }
 
-
+/*
     $PHPJasperXML->arrayParameter = array
     (
         "empresas_id"=> $this->dados_login->empresas_id,
@@ -300,18 +320,75 @@ class RelatorioPessoasController extends Controller
         "status_id"=> ($descricao_status=="" ? 0 : $descricao_status[0]),
         "motivo_entrada"=> ($descricao_motivo_ent=="" ? 0 : $descricao_motivo_ent[0]),
         "motivo_saida"=> ($descricao_motivo_sai=="" ? 0 : $descricao_motivo_sai[0]),
-        "data_entrada_inicial"=>"'" . ($input["data_entrada"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_entrada"])) . "'",
-        "data_entrada_final"=>"'" . ($input["data_entrada_ate"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_entrada_ate"])) . "'",
-        "data_saida_inicial"=>"'" . ($input["data_saida"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_saida"])) . "'",
-        "data_saida_final"=>"'" . ($input["data_saida_ate"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_saida_ate"])) . "'",
-        "data_batismo_inicial"=>"'" . ($input["data_batismo"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_batismo"])) . "'",
-        "data_batismo_final"=>"'" . ($input["data_batismo_ate"]=="" ? '1900/01/01' : $formatador->FormatarData($input["data_batismo_ate"])) . "'",
+        "data_entrada_inicial"=>"'" . ($input["data_entrada"]=="" ? '' : $formatador->FormatarData($input["data_entrada"])) . "'",
+        "data_entrada_final"=>"'" . ($input["data_entrada_ate"]=="" ? '' : $formatador->FormatarData($input["data_entrada_ate"])) . "'",
+        "data_saida_inicial"=>"'" . ($input["data_saida"]=="" ? '' : $formatador->FormatarData($input["data_saida"])) . "'",
+        "data_saida_final"=>"'" . ($input["data_saida_ate"]=="" ? '' : $formatador->FormatarData($input["data_saida_ate"])) . "'",
+        "data_batismo_inicial"=>"'" . ($input["data_batismo"]=="" ? '' : $formatador->FormatarData($input["data_batismo"])) . "'",
+        "data_batismo_final"=>"'" . ($input["data_batismo_ate"]=="" ? '' : $formatador->FormatarData($input["data_batismo_ate"])) . "'",
         "filtros"=> $filtros,
     );
+    */
 
+
+
+    //Parametros JASPER REPORT
+    $parametros = array
+    (
+        "empresas_id"=> $this->dados_login->empresas_id,
+        "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
+        "sexo"=>"'" . $input["sexo"] . "'",
+        "mes"=>"'" . $input["mes"] . "'",
+        "status"=>"'" . $input["status"] . "'",
+        "nivel1"=> ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]),
+        "nivel2"=> ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]),
+        "nivel3"=> ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]),
+        "nivel4"=> ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]),
+        "nivel5"=> ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]),
+        "doador_sangue" => ($input["doador_sangue"]=="1" ? "true" : "false"),
+        "doador_orgaos" => ($input["doador_orgaos"]=="1" ? "true" : "false"),
+        "possui_necessidades_especiais" => ($input["possui_necessidades_especiais"]==true ? "true" : "false"),
+        "idiomas_id" => ($descricao_idiomas=="" ? 0 : $descricao_idiomas[0]),
+        "graus_id" => ($descricao_graus=="" ? 0 : $descricao_graus[0]),
+        "estadoscivis"=> ($descricao_estado_civil=="" ? 0 : $descricao_estado_civil[0]),
+        "situacoes"=> ($descricao_situacoes=="" ? 0 : $descricao_situacoes[0]),
+        "tipos"=> ($descricao_tipos=="" ? 0 : $descricao_tipos[0]),
+        "grupo"=> ($descricao_grupo=="" ? 0 : $descricao_grupo[0]),
+        "status_id"=> ($descricao_status=="" ? 0 : $descricao_status[0]),
+        "motivo_entrada"=> ($descricao_motivo_ent=="" ? 0 : $descricao_motivo_ent[0]),
+        "motivo_saida"=> ($descricao_motivo_sai=="" ? 0 : $descricao_motivo_sai[0]),
+        "data_entrada_inicial"=>"'" . ($input["data_entrada"]=="" ? '' : $formatador->FormatarData($input["data_entrada"])) . "'",
+        "data_entrada_final"=>"'" . ($input["data_entrada_ate"]=="" ? '' : $formatador->FormatarData($input["data_entrada_ate"])) . "'",
+        "filtros"=> "'" . ($filtros) . "'",
+    );
+
+
+/*
+
+    "data_saida_inicial"=>"'" . ($input["data_saida"]=="" ? '' : $formatador->FormatarData($input["data_saida"])) . "'",
+    "data_saida_final"=>"'" . ($input["data_saida_ate"]=="" ? '' : $formatador->FormatarData($input["data_saida_ate"])) . "'",
+    "data_batismo_inicial"=>"'" . ($input["data_batismo"]=="" ? '': $formatador->FormatarData($input["data_batismo"])) . "'",
+    "data_batismo_final"=>"'" . ($input["data_batismo_ate"]=="" ? '' : $formatador->FormatarData($input["data_batismo_ate"])) . "'",
+
+    update membros_historicos set data_batismo = '' where data_batismo is null
+    update membros_historicos set data_entrada = '' where data_entrada is null
+    update membros_historicos set data_saida = '' where data_saida is null
+
+    update membros_historicos set data_batismo = null where data_batismo = ''
+    update membros_historicos set data_entrada = null where data_entrada = ''
+    update membros_historicos set data_saida = null where data_saida = ''
+
+    "data_entrada_inicial"=>"'" . ($input["data_entrada"]=="" ? '' : $formatador->FormatarData($input["data_entrada"])) . "'",
+    "data_entrada_final"=>"'" . ($input["data_entrada_ate"]=="" ? '' : $formatador->FormatarData($input["data_entrada_ate"])) . "'",
+    "data_saida_inicial"=>"'" . ($input["data_saida"]=="" ? '' : $formatador->FormatarData($input["data_saida"])) . "'",
+    "data_saida_final"=>"'" . ($input["data_saida_ate"]=="" ? '' : $formatador->FormatarData($input["data_saida_ate"])) . "'",
+    "data_batismo_inicial"=>"'" . ($input["data_batismo"]=="" ? '' : $formatador->FormatarData($input["data_batismo"])) . "'",
+    "data_batismo_final"=>"'" . ($input["data_batismo_ate"]=="" ? '' : $formatador->FormatarData($input["data_batismo_ate"])) . "'",
+
+*/
    //$PHPJasperXML->debugsql=true;
 
-    if ($input["saida"]=="E")
+    if ($input["resultado"]=="email")
     {
         $emails = \DB::select('select distinct razaosocial, emailprincipal from view_pessoas_geral_celulas' . $where . ' order by razaosocial');
         return view($this->rota . '.listaremails', ['emails'=>$emails, 'filtros'=>$filtros]);
@@ -323,11 +400,13 @@ class RelatorioPessoasController extends Controller
             {
                 if ($descricao_situacoes!="")
                 {
-                    $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral_celulas_situacoes.jrxml');
+                    //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral_celulas_situacoes.jrxml');
+                    $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_celulas_situacoes.jasper';
                 }
                 else
                 {
-                    $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral_celulas.jrxml');
+                    //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral_celulas.jrxml');
+                    $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_celulas.jasper';
                 }
 
             }
@@ -335,15 +414,66 @@ class RelatorioPessoasController extends Controller
             {
                 if ($descricao_situacoes!="")
                 {
-                    $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral_situacoes.jrxml');
+                    //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral_situacoes.jrxml');
+                    $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_situacoes.jasper';
                 } else
                 {
-                    $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral.jrxml');
+                    //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral.jrxml');
+                    $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral.jasper';
+                    //$nome_relatorio = public_path() . '/relatorios/teste_datas.jasper';
                 }
             }
 
-            $PHPJasperXML->transferDBtoArray($server,$user,$pass,$db, "psql");
-            $PHPJasperXML->outpage("I");    //page output method I:standard output  D:Download file
+
+           //$PHPJasperXML->transferDBtoArray($server,$user,$pass,$db, "psql");
+           //$PHPJasperXML->outpage("I");    //page output method I:standard output  D:Download file
+
+
+            \JasperPHP::process(
+                    $nome_relatorio,
+                    $output,
+                    array($ext),
+                    $parametros,
+                    $database,
+                    false,
+                    false
+                )->execute();
+
+/*
+             // List the parameters from a Jasper file.
+            $array =  \JasperPHP::list_parameters(
+                $nome_relatorio
+            )->execute();
+
+            dd($array);
+            */
+
+
+/*
+            if ($ext=="pdf")
+            {
+                header("Content-type: application/pdf");
+                header("Content-Disposition: inline; filename=" . $output . ".pdf");
+                //header("Cache-control: private"); //use this to open files directly
+                //header('Content-Transfer-Encoding: binary');
+                //header('Content-Length: ' . filesize($output . ".pdf"));
+                //header('Accept-Ranges: bytes');
+
+                @readfile($output . '.pdf');
+
+
+
+            }
+            else if ($ext=="xls")
+            {
+
+                return $this->CarregarView($path_download . ".xls");
+
+            }
+*/
+
+             return $this->CarregarView($path_download . '.' . $ext);
+
     }
 
  }

@@ -21,7 +21,11 @@
 
             <div class="row">
                 <div class="col-md-12">
-                  <!-- Custom Tabs -->
+
+                <input  id= "ckEstruturas" name="ckEstruturas" type="hidden" class="minimal" />
+                <input  id= "ckExibir" name="ckExibir" type="hidden" class="minimal"  />
+
+                 <!-- Custom Tabs -->
                   <div class="nav-tabs-custom">
 
                     <ul class="nav nav-tabs">
@@ -110,6 +114,33 @@
                               </div>
 
                          </div>
+
+                          <div class="row">
+
+                              <div class="col-xs-5">
+
+                                    <label for="resultado" class="control-label">Formato de Sáida : </label>
+                                    <select id="resultado" name="resultado" class="form-control selectpicker">
+                                    <option  value="pdf" data-icon="fa fa-file-pdf-o" selected>PDF (.pdf)</option>
+                                    <option  value="xls" data-icon="fa fa-file-excel-o">Planilha Excel (.xls)</option>
+                                    </select>
+
+                                     @if ($var_download!="")
+                                      <br/>
+                                      <br/>
+                                       <div class="alert2 alert-info">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        <h4><i class="icon fa fa-check"></i> Relatório gerado com Sucesso!</h4>
+                                        Clique no link abaixo para baixar o arquivo.
+                                      </div>
+                                      <a href="{!! url($var_download) !!}" class="text" target="_blank">
+                                       <img src="{{ url('/images/Download-Button-Icon.jpg') }}" alt="Baixar Arquivo" />
+                                       CLIQUE AQUI PARA VISUALIZAR / BAIXAR</a>
+                                     @endif
+
+
+                              </div>
+                          </div>
 
                       </div>
                       <!-- /.tab-pane -->

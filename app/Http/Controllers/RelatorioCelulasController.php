@@ -28,13 +28,8 @@ class RelatorioCelulasController extends Controller
 
     }
 
-    public function index()
+    public function CarregarView($var_download)
     {
-
-        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
-        {
-              return redirect('home');
-        }
 
         $publicos = \App\Models\publicos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         $faixas = \App\Models\faixas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
@@ -49,7 +44,19 @@ class RelatorioCelulasController extends Controller
         $view4 = \DB::select('select * from view_celulas_nivel4 v4 where v4.empresas_id = ? and v4.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
         $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        return view($this->rota . '.index', ['nivel1'=>$view1, 'nivel2'=>$view2, 'nivel3'=>$view3, 'nivel4'=>$view4, 'nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'lideres'=>$lideres]);
+        return view($this->rota . '.index', ['nivel1'=>$view1, 'nivel2'=>$view2, 'nivel3'=>$view3, 'nivel4'=>$view4, 'nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'lideres'=>$lideres, 'var_download' => $var_download]);
+
+    }
+
+    public function index()
+    {
+
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
+        {
+              return redirect('home');
+        }
+
+        return $this->CarregarView('');
 
     }
 
@@ -57,14 +64,22 @@ class RelatorioCelulasController extends Controller
  public function pesquisar(\Illuminate\Http\Request  $request)
  {
 
-    include_once(__DIR__ . '/../../../public/relatorios/class/tcpdf/tcpdf.php');
-    include_once(__DIR__ . '/../../../public/relatorios/class/PHPJasperXML.inc.php');
-    include_once (__DIR__ . '/../../../public/relatorios/setting.php');
+    //include_once(__DIR__ . '/../../../public/relatorios/class/tcpdf/tcpdf.php');
+    //include_once(__DIR__ . '/../../../public/relatorios/class/PHPJasperXML.inc.php');
+    //include_once (__DIR__ . '/../../../public/relatorios/setting.php');
 
     /*Pega todos campos enviados no post*/
     $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-    $PHPJasperXML = new \PHPJasperXML();
+    //$PHPJasperXML = new \PHPJasperXML();
+
+    /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
+    //Pega dados de conexao com o banco para o JASPER REPORT
+    $database = \Config::get('database.connections.jasper_report');
+    $ext = $input["resultado"]; //Tipo saída (PDF, XLS)
+    $output = public_path() . '/relatorios/resultados/' . $ext . '/celulas_' . $this->dados_login->empresas_id . '_' . Auth::user()->id; //Path para cada tipo de relatorio
+    $path_download = '/relatorios/resultados/' . $ext . '/celulas_' . $this->dados_login->empresas_id . '_' .  Auth::user()->id; //Path para cada tipo de relatorio
+    /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
 
     $filtros = "";
     $descricao_publico_alvo="";
@@ -86,20 +101,20 @@ class RelatorioCelulasController extends Controller
     if ($input["nivel4_up"]!="") $descricao_nivel4 = explode("|", $input["nivel4_up"]);
     if ($input["nivel5_up"]!="") $descricao_nivel5 = explode("|", $input["nivel5_up"]);
 
-    if ($input["dia_encontro"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Dia Encontro : " . $input["dia_encontro"];
-    if ($input["regiao"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Região : " . $input["regiao"];
-    if ($input["turno"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Turno : " . $input["turno"];
-    if ($input["segundo_dia_encontro"]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Segundo dia encontro : " . $input["segundo_dia_encontro"];
-    if ($descricao_publico_alvo!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Publico Alvo : " . $descricao_publico_alvo[1];
-    if ($descricao_faixa_etaria!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Faixa Etária : " . $descricao_faixa_etaria[1];
-    if ($descricao_lider[1]!="")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;Líder : " . $descricao_lider[1];
-    if ($input["nivel1_up"]!="0")  $filtros .= "<br/>&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
-    if ($input["nivel2_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel2') . " : " . $descricao_nivel2[1];
-    if ($input["nivel3_up"]!="0")  $filtros .= "<br/>&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel3') . " : " . $descricao_nivel3[1];
-    if ($input["nivel4_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel4') . " : " . $descricao_nivel4[1];
-    if ($input["nivel5_up"]!="0")  $filtros .= "&nbsp;&nbsp;&nbsp;&nbsp;" . \Session::get('nivel5') . " : " . $descricao_nivel5[1];
+    if ($input["dia_encontro"]!="")  $filtros .= "      Dia Encontro : " . $input["dia_encontro"];
+    if ($input["regiao"]!="")  $filtros .= "        Região : " . $input["regiao"];
+    if ($input["turno"]!="")  $filtros .= "         Turno : " . $input["turno"];
+    if ($input["segundo_dia_encontro"]!="")  $filtros .= "      Segundo dia encontro : " . $input["segundo_dia_encontro"];
+    if ($descricao_publico_alvo!="")  $filtros .= "     Publico Alvo : " . $descricao_publico_alvo[1];
+    if ($descricao_faixa_etaria!="")  $filtros .= "     Faixa Etária : " . $descricao_faixa_etaria[1];
+    if ($descricao_lider[0]!="0")  $filtros .= "     Líder : " . $descricao_lider[1];
+    if ($input["nivel1_up"]!="0")  $filtros .= "        " . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
+    if ($input["nivel2_up"]!="0")  $filtros .= "        " . \Session::get('nivel2') . " : " . $descricao_nivel2[1];
+    if ($input["nivel3_up"]!="0")  $filtros .= "        " . \Session::get('nivel3') . " : " . $descricao_nivel3[1];
+    if ($input["nivel4_up"]!="0")  $filtros .= "        " . \Session::get('nivel4') . " : " . $descricao_nivel4[1];
+    if ($input["nivel5_up"]!="0")  $filtros .= "        " . \Session::get('nivel5') . " : " . $descricao_nivel5[1];
 
-    $PHPJasperXML->arrayParameter = array
+    $parametros = array
     (
         "empresas_id"=> $this->dados_login->empresas_id,
         "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
@@ -115,7 +130,7 @@ class RelatorioCelulasController extends Controller
         "nivel3"=> ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]),
         "nivel4"=> ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]),
         "nivel5"=> ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]),
-        "filtros"=> $filtros,
+        "filtros"=> "'" . ($filtros) . "'",
         "id"=> 0
     );
 
@@ -129,22 +144,26 @@ class RelatorioCelulasController extends Controller
 
             if ($input["ckEstruturas"])
             {
-                $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas_niveis.jrxml');
+                //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas_niveis.jrxml');
+                $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_niveis.jasper';
             }
             else
             {
-                $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas.jrxml');
+                //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas.jrxml');
+                $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas.jasper';
             }
 
       } else
       {
             if ($input["ckEstruturas"])
             {
-                $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas_niveis_sintetico.jrxml');
+                //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas_niveis_sintetico.jrxml');
+                $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_niveis_sintetico.jasper';
             }
             else
             {
-                 $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas.jrxml');
+                 //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas.jrxml');
+                 $nome_relatorio = public_path() . '/relatorios/listagem_celulas.jasper';
             }
       }
 
@@ -165,8 +184,23 @@ class RelatorioCelulasController extends Controller
     }
 */
 
-    $PHPJasperXML->transferDBtoArray($server,$user,$pass,$db, "psql");
-    $PHPJasperXML->outpage("I");    //page output method I:standard output  D:Download file
+    //$PHPJasperXML->transferDBtoArray($server,$user,$pass,$db, "psql");
+    //$PHPJasperXML->outpage("I");    //page output method I:standard output  D:Download file
+
+
+    \JasperPHP::process(
+            $nome_relatorio,
+            $output,
+            array($ext),
+            $parametros,
+            $database,
+            false,
+            false
+        )->execute();
+
+     /*Gera link para abrir o relatório*/
+     return $this->CarregarView($path_download . '.' . $ext);
+
 
  }
 

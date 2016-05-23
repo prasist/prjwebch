@@ -11,6 +11,7 @@
         "barryvdh/laravel-dompdf": "0.6.*",
         "intervention/image": "dev-master",
         "eltoninacio/cpfcnpj-laravel": "1.0.*",
+        "cossou/jasperphp": "dev-master",
         "yajra/laravel-datatables-oracle": "~6.0"
     },
     "require-dev": {

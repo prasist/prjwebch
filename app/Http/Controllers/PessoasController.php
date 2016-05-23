@@ -1365,9 +1365,9 @@ public function salvar($request, $id, $tipo_operacao) {
             $sQuery .= " igreja_anterior, fone_igreja_anterior, religioes_id, cep_igreja_anterior, endereco_igreja_anterior, ";
             $sQuery .= " numero_igreja_anterior, bairro_igreja_anterior, complemento_igreja_anterior, cidade_igreja_anterior, estado_igreja_anterior, ";
             $sQuery .= " igreja_batismo, celebrador, ata_entrada, ata_saida, motivos_saida_id, motivos_entrada_id, observacoes_hist, ";
-            $sQuery .= " to_char(data_entrada, 'DD-MM-YYYY') AS data_entrada, ";
-            $sQuery .= " to_char(data_saida, 'DD-MM-YYYY') AS data_saida, ";
-            $sQuery .= " to_char(data_batismo, 'DD-MM-YYYY') AS data_batismo ";
+            $sQuery .= " to_char(to_date(data_entrada, 'yyyy-MM-dd'), 'DD-MM-YYYY') AS data_entrada, ";
+            $sQuery .= " to_char(to_date(data_saida, 'yyyy-MM-dd'), 'DD-MM-YYYY') AS data_saida, ";
+            $sQuery .= " to_char(to_date(data_batismo, 'yyyy-MM-dd'), 'DD-MM-YYYY') AS data_batismo ";
             $sQuery .= " from membros_historicos ";
             $sQuery .= " where membros_historicos.pessoas_id = ? ";
             $sQuery .= " and membros_historicos.empresas_id = ? ";

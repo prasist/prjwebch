@@ -108,6 +108,9 @@ return [
         /*Utilizado para Jquery Datatable server-side*/
         Yajra\Datatables\DatatablesServiceProvider::class,
 
+        //Jasper Report
+        'JasperPHP\JasperPHPServiceProvider',
+
 
         /*
          * Application Service Providers...
