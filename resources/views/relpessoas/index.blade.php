@@ -193,13 +193,21 @@
                                                                      </a>
                                                                    @endif
 
-
                                                               </div>
+
+                                                              <div class="col-xs-3">
+                                                                    <label for="ordem" class="control-label">Ordem</label>
+                                                                    <select id="ordem" name="ordem" class="form-control selectpicker">
+                                                                    <option  value="razaosocial"  selected>Nome</option>
+                                                                    <option  value="" >Data Nasc. (Dia/Mês)</option>
+                                                                    </select>
+                                                             </div>
+
                                                           </div>
 
-                                                           </div> <!-- enb box-body-->
-                                                       </div> <!-- end box box-default -->
-                                                   </div>
+                                                       </div> <!-- enb box-body-->
+                                                     </div> <!-- end box box-default -->
+                                               </div>
                                 </div><!-- end row -->
 
                           </div>

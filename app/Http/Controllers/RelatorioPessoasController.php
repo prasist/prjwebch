@@ -362,30 +362,13 @@ class RelatorioPessoasController extends Controller
         "filtros"=> "'" . ($filtros) . "'",
     );
 
+    //A ordem DEFAULT do relatório é DIA/MES da data de nascimento. Se não for relatório de aniversariantes, altera a ordem
+    if ($input["ordem"]=="razaosocial")
+    {
+        $parametros = array_add($parametros, 'ordem', 'razaosocial');
+    }
 
-/*
-
-    "data_saida_inicial"=>"'" . ($input["data_saida"]=="" ? '' : $formatador->FormatarData($input["data_saida"])) . "'",
-    "data_saida_final"=>"'" . ($input["data_saida_ate"]=="" ? '' : $formatador->FormatarData($input["data_saida_ate"])) . "'",
-    "data_batismo_inicial"=>"'" . ($input["data_batismo"]=="" ? '': $formatador->FormatarData($input["data_batismo"])) . "'",
-    "data_batismo_final"=>"'" . ($input["data_batismo_ate"]=="" ? '' : $formatador->FormatarData($input["data_batismo_ate"])) . "'",
-
-    update membros_historicos set data_batismo = '' where data_batismo is null
-    update membros_historicos set data_entrada = '' where data_entrada is null
-    update membros_historicos set data_saida = '' where data_saida is null
-
-    update membros_historicos set data_batismo = null where data_batismo = ''
-    update membros_historicos set data_entrada = null where data_entrada = ''
-    update membros_historicos set data_saida = null where data_saida = ''
-
-    "data_entrada_inicial"=>"'" . ($input["data_entrada"]=="" ? '' : $formatador->FormatarData($input["data_entrada"])) . "'",
-    "data_entrada_final"=>"'" . ($input["data_entrada_ate"]=="" ? '' : $formatador->FormatarData($input["data_entrada_ate"])) . "'",
-    "data_saida_inicial"=>"'" . ($input["data_saida"]=="" ? '' : $formatador->FormatarData($input["data_saida"])) . "'",
-    "data_saida_final"=>"'" . ($input["data_saida_ate"]=="" ? '' : $formatador->FormatarData($input["data_saida_ate"])) . "'",
-    "data_batismo_inicial"=>"'" . ($input["data_batismo"]=="" ? '' : $formatador->FormatarData($input["data_batismo"])) . "'",
-    "data_batismo_final"=>"'" . ($input["data_batismo_ate"]=="" ? '' : $formatador->FormatarData($input["data_batismo_ate"])) . "'",
-
-*/
+    //dd($parametros);
    //$PHPJasperXML->debugsql=true;
 
     if ($input["resultado"]=="email")
