@@ -26,7 +26,14 @@
                   <div class="row">
 
                         <div class="col-xs-11 {{ $errors->has('celulas') ? ' has-error' : '' }}">
-                                @include('carregar_combos', array('dados'=>$celulas, 'titulo' =>'Célula', 'id_combo'=>'celulas', 'complemento'=>'disabled=disabled', 'comparar'=>$dados[0]->celulas_id))
+
+                                <label for="celulas" class="control-label">Célula</label>
+                                <select id="celulas" placeholder="(Selecionar)" name="celulas" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;" disabled=disabled>
+                                <option  value="0"></option>
+                                @foreach($celulas as $item)
+                                       <option  value="{{$item->id}}" {{ ($dados[0]->celulas_id== $item->id ? 'selected' : '') }}>{{$item->nome}}</option>
+                                @endforeach
+                                </select>
                         </div>
 
                         <!-- se houver erros na validacao do form request -->

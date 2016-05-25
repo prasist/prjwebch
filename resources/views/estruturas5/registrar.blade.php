@@ -25,7 +25,13 @@
 
                         <div class="row">
                                 <div class="col-xs-4{{ $errors->has('nivel4') ? ' has-error' : '' }}">
-                                       @include('carregar_combos', array('dados'=>$nivel4, 'titulo' =>Session::get('nivel4'), 'id_combo'=>'nivel4', 'complemento'=>'', 'comparar'=>''))
+                                        <label for="nivel4" class="control-label">{!!Session::get('nivel4') !!}</label>
+                                          <select id="nivel4" placeholder="(Selecionar)" name="nivel4" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                          <option  value=""></option>
+                                          @foreach($nivel4 as $item)
+                                                 <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                          @endforeach
+                                          </select>
                                 </div><!-- col-xs-5-->
 
                                 <div class="col-xs-4{{ $errors->has('nivel3') ? ' has-error' : '' }}">

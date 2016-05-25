@@ -186,8 +186,6 @@ public function imprimir($id)
 
 
 
-
-
     //Abre tela para edicao ou somente visualização dos registros
     private function exibir ($request, $id, $preview)
     {

@@ -358,12 +358,15 @@
                                              <div class="row">
 
                                                   <div class="col-xs-5">
-                                                        @include('carregar_combos', array('dados'=>$publicos, 'titulo' =>'Público Alvo', 'id_combo'=>'publico_alvo', 'complemento'=>'', 'comparar'=>$dados[0]->publico_alvo_id))
+                                                        @include('carregar_combos', array('dados'=>$publicos, 'titulo' =>'Público Alvo', 'id_combo'=>'publico_alvo', 'complemento'=>'', 'comparar'=>$dados[0]->publico_alvo_id, 'id_pagina'=> '43'))
+                                                        @include('modal_cadastro_basico', array('qual_campo'=>'publico_alvo', 'modal' => 'modal_publico_alvo', 'tabela' => 'publicos_alvos'))
                                                   </div>
 
                                                   <div class="col-xs-5">
-                                                        @include('carregar_combos', array('dados'=>$faixas, 'titulo' =>'Faixas Etárias', 'id_combo'=>'faixa_etaria', 'complemento'=>'', 'comparar'=>$dados[0]->faixa_etaria_id))
+                                                        @include('carregar_combos', array('dados'=>$faixas, 'titulo' =>'Faixas Etárias', 'id_combo'=>'faixa_etaria', 'complemento'=>'', 'comparar'=>$dados[0]->faixa_etaria_id, 'id_pagina'=> '44'))
+                                                        @include('modal_cadastro_basico', array('qual_campo'=>'faixa_etaria', 'modal' => 'modal_faixa_etaria', 'tabela' => 'faixas_etarias'))
                                                   </div>
+
 
                                              </div>
 

@@ -1,6 +1,4 @@
 <?php
-use JasperPHP\JasperPHP as JasperPHP;
-
 
     Route::get('/', function ()
     {
