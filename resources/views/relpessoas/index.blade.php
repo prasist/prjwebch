@@ -229,8 +229,9 @@
                                                                                        <div class="input-group-addon">
                                                                                         <i class="fa fa-calendar"></i>
                                                                                         </div>
-                                                                                        <input id ="data_entrada" name = "data_entrada" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                                        <input id ="data_entrada" name = "data_entrada" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
                                                                                 </div>
+
                                                                        </div>
 
                                                                        <div class="col-xs-3">

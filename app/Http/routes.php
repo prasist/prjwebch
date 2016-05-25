@@ -12,39 +12,6 @@ use JasperPHP\JasperPHP as JasperPHP;
         //
     });
 
-
-    Route::get('relatorio', function() {
-
-
-            $database =   [
-            'driver'   => 'postgres',
-            'host'     => env('DB_HOST', '177.101.149.118'),
-            'database' => env('DB_DATABASE', 'webigrejas'),
-            'username' => env('DB_USERNAME', 'postgres'),
-            'password' => env('DB_PASSWORD', 'b1c0d3p4t044'),
-            'charset'  => 'utf8',
-            'prefix'   => '',
-            'schema'   => 'public'
-        ];
-
-            $output = __DIR__ . '/../../vendor/cossou/jasperphp/examples/listagem_celulas';
-
-            $ext = "pdf";
-
-              \JasperPHP::process(
-                    __DIR__ . '/../../vendor/cossou/jasperphp/examples/listagem_celulas.jasper',
-                    $output,
-                    array("pdf", "xls"),
-                    array(),
-                    $database,
-                    false,
-                    false
-                )->execute();
-
-
-
-    });
-
     Route::group(['middleware' => 'web'], function ()
     {
 
@@ -78,6 +45,55 @@ use JasperPHP\JasperPHP as JasperPHP;
         return view('suporte.suporte');
 
     });
+
+    /*Financeiro*/
+    Route::get('financeiro', 'FinanceiroController@index');
+
+    //Contas a Pagar ou receber
+    Route::get('titulos/{tipo}', 'TitulosController@index');
+    Route::post('/titulos/gravar','TitulosController@store');
+    Route::get('/titulos/registrar/{tipo}','TitulosController@create');
+    Route::get('/titulos/{id}/preview','TitulosController@show');
+    Route::post('titulos/{id}/update','TitulosController@update');
+    Route::get('titulos/{id}/edit','TitulosController@edit');
+    Route::get('titulos/{id}/delete','TitulosController@destroy');
+
+
+    /*Contas Correntes*/
+    Route::get('contas', 'ContasController@index');
+    Route::post('/contas/gravar','ContasController@store');
+    Route::get('/contas/registrar','ContasController@create');
+    Route::get('/contas/{id}/preview','ContasController@show');
+    Route::post('contas/{id}/update','ContasController@update');
+    Route::get('contas/{id}/edit','ContasController@edit');
+    Route::get('contas/{id}/delete','ContasController@destroy');
+
+    /*Plano de Contas*/
+    Route::get('planos_contas', 'PlanosContasController@index');
+    Route::post('/planos_contas/gravar','PlanosContasController@store');
+    Route::get('/planos_contas/registrar','PlanosContasController@create');
+    Route::get('/planos_contas/{id}/preview','PlanosContasController@show');
+    Route::post('planos_contas/{id}/update','PlanosContasController@update');
+    Route::get('planos_contas/{id}/edit','PlanosContasController@edit');
+    Route::get('planos_contas/{id}/delete','PlanosContasController@destroy');
+
+    /*Centros de Custo*/
+    Route::get('centros_custos', 'CentrosCustosController@index');
+    Route::post('/centros_custos/gravar','CentrosCustosController@store');
+    Route::get('/centros_custos/registrar','CentrosCustosController@create');
+    Route::get('/centros_custos/{id}/preview','CentrosCustosController@show');
+    Route::post('centros_custos/{id}/update','CentrosCustosController@update');
+    Route::get('centros_custos/{id}/edit','CentrosCustosController@edit');
+    Route::get('centros_custos/{id}/delete','CentrosCustosController@destroy');
+
+     /*Grupos titulos*/
+    Route::get('grupos_titulos', 'GruposTitulosController@index');
+    Route::post('/grupos_titulos/gravar','GruposTitulosController@store');
+    Route::get('/grupos_titulos/registrar','GruposTitulosController@create');
+    Route::get('/grupos_titulos/{id}/preview','GruposTitulosController@show');
+    Route::post('grupos_titulos/{id}/update','GruposTitulosController@update');
+    Route::get('grupos_titulos/{id}/edit','GruposTitulosController@edit');
+    Route::get('grupos_titulos/{id}/delete','GruposTitulosController@destroy');
 
 
     Route::get('carregar_tabela/{tabela}', 'CadastrarController@carregar_tabela');

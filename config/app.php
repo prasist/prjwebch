@@ -52,6 +52,11 @@ return [
     'celulaspessoas'=>'45',
     'relcelulas'=>'46',
     'relpessoas'=>'47',
+    'contas'=>'48',
+    'planos_contas'=>'49',
+    'centros_custos'=>'50',
+    'grupos_titulos'=>'51',
+    'titulos'=>'52',
 
     'env' => env('APP_ENV', 'production'),
 
@@ -70,7 +75,6 @@ return [
     'cipher' => 'AES-256-CBC',
 
     'log' => env('APP_LOG', 'single'),
-
 
     'providers' => [
 
@@ -100,7 +104,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         Barryvdh\Debugbar\ServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
+        //Barryvdh\DomPDF\ServiceProvider::class,
 
         /*Validacao CPF e CNPJ*/
         EltonInacio\ValidadorCpjCnpj\CpfCnpjServiceProvider::class,

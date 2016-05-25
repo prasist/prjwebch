@@ -9,6 +9,7 @@ use URL;
 use Auth;
 use Input;
 use Gate;
+use JasperPHP\JasperPHP as JasperPHP;
 
 class CelulasPessoasController extends Controller
 {
@@ -132,13 +133,16 @@ public function salvar($request, $id, $tipo_operacao)
 public function imprimir($id)
  {
 
-    include_once(__DIR__ . '/../../../public/relatorios/class/tcpdf/tcpdf.php');
-    include_once(__DIR__ . '/../../../public/relatorios/class/PHPJasperXML.inc.php');
-    include_once (__DIR__ . '/../../../public/relatorios/setting.php');
 
-    $PHPJasperXML = new \PHPJasperXML();
+/*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
+    //Pega dados de conexao com o banco para o JASPER REPORT
+    $database = \Config::get('database.connections.jasper_report');
+    $ext = "pdf"; //Tipo saída (PDF, XLS)
+    $output = public_path() . '/relatorios/resultados/' . $ext . '/celulaspessoas_' . $this->dados_login->empresas_id . '_' . Auth::user()->id; //Path para cada tipo de relatorio
+    $path_download = '/relatorios/resultados/' . $ext . '/celulaspessoas_' . $this->dados_login->empresas_id . '_' .  Auth::user()->id; //Path para cada tipo de relatorio
+    /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
 
-    $PHPJasperXML->arrayParameter = array
+    $parametros = array
     (
         "empresas_id"=> $this->dados_login->empresas_id,
         "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
@@ -158,12 +162,31 @@ public function imprimir($id)
         "filtros"=> ''
     );
 
-    //$PHPJasperXML->debugsql=true;
-    $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas.jrxml');
-    $PHPJasperXML->transferDBtoArray($server,$user,$pass,$db, "psql");
-    $PHPJasperXML->outpage("I");    //page output method I:standard output  D:Download file
+    $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas.jasper';
+
+    \JasperPHP::process(
+            $nome_relatorio,
+            $output,
+            array($ext),
+            $parametros,
+            $database,
+            false,
+            false
+        )->execute();
+
+
+      header('Content-type: application/pdf');
+      header('Content-Disposition: download; filename="' . $output . "." . $ext . '"');
+      header('Content-Transfer-Encoding: binary');
+      header('Accept-Ranges: bytes');
+      @readfile($output . ".pdf");
 
  }
+
+
+
+
+
 
     //Abre tela para edicao ou somente visualização dos registros
     private function exibir ($request, $id, $preview)

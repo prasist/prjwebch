@@ -25,7 +25,15 @@
 
                             <div class="row{{ $errors->has('nome') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
-                                         @include('carregar_combos', array('dados'=>$dados, 'titulo' =>'Grupo', 'id_combo'=>'nome', 'complemento'=>'', 'comparar'=>''))
+
+                                        <label for="nome" class="control-label">Grupo</label>
+                                        <select id="nome" placeholder="(Selecionar)" name="nome" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                              <option  value="0"></option>
+                                                @foreach($dados as $item)
+                                                       <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                @endforeach
+                                        </select>
+
                                     </div>
                             </div>
 

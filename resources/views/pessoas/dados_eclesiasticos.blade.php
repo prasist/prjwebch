@@ -502,7 +502,7 @@
                                                                                 <i class="fa fa-calendar"></i>
                                                                                 </div>
 
-                                                                                <input id ="datacasamento" name = "datacasamento" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('datacasamento') : $membros_familiares[0]->data_casamento) }}">
+                                                                                <input id ="datacasamento" name = "datacasamento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ ($tipo_operacao=='inclusao' ? old('datacasamento') : $membros_familiares[0]->data_casamento) }}">
                                                                         </div>
 
                                                                    </div>

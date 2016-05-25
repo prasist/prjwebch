@@ -71,10 +71,17 @@
 
                                         <div class="row">
 
-                                                <div class="col-xs-3">
+                                                <div class="col-xs-3 {{ $errors->has('cnpj') ? ' has-error' : '' }}">
                                                        <label for="cnpj" class="control-label">CNPJ</label>
                                                        <input id="cnpj" data-inputmask='"mask": "99.999.999/9999-99"' data-mask name = "cnpj" type="text" class="form-control" value="{{old('cnpj')}}">
+
+                                                       @if ($errors->has('cnpj'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('cnpj') }}</strong>
+                                                        </span>
+                                                       @endif
                                                 </div>
+
 
                                                 <div class="col-xs-3">
                                                      <label for="inscricaoestadual" class="control-label">Inscr. Estadual</label>

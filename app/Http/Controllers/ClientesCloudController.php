@@ -89,6 +89,7 @@ class ClientesCloudController extends Controller
                 'foneprincipal' => 'required|min:8',
                 'emailprincipal' => 'email',
                 'emailsecundario' => 'email',
+                'cnpj'      => 'cnpj',
          ]);
 
         //---------------------------------Cadastro do cliente cloud
@@ -247,6 +248,7 @@ class ClientesCloudController extends Controller
                 'foneprincipal' => 'required|min:10',
                 'emailprincipal' => 'email',
                 'emailsecundario' => 'email',
+                'cnpj' => 'cnpj',
          ]);
 
         $image = $request->file('caminhologo');

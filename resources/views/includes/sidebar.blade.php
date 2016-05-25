@@ -177,27 +177,28 @@
 
 
           <li class="treeview">
-                <a href="#">
+                <a href="{!! url('/financeiro') !!}">
                 <i class="fa fa-usd"></i><span>Financeiro</span>
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
                  <ul class="treeview-menu">
 
-                 <li><a href="#"><i class="fa fa-bar-chart"></i>Visão Geral</a></li>
+                 <li><a href="{!! url('/financeiro') !!}"><i class="fa fa-bar-chart"></i>Visão Geral</a></li>
                   <li>
                     <a href="#"><i class="fa fa-file-text-o"></i>Cadastros Base <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                       <li><a href="{!! url('/bancos') !!}">Bancos</a></li>
-                      <li><a href="#"> Categorias</a></li>
-                      <li><a href="#"> Centros de Custos</a></li>
-                      <li><a href="#"> Contas Correntes</a></li>
+                      <li><a href="{!! url('/grupos_titulos') !!}"> Grupos de Títulos</a></li>
+                      <li><a href="{!! url('/planos_contas') !!}"> Planos de Contas</a></li>
+                      <li><a href="{!! url('/centros_custos') !!}"> Centros de Custos</a></li>
+                      <li><a href="{!! url('/contas') !!}"> Contas Correntes</a></li>
                     </ul>
                   </li>
 
                   <li>
                     <a href="#"><i class="fa fa-calendar-plus-o"></i>Contas a Pagar <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                      <li><a href="#">Lançamentos</a></li>
+                      <li><a href="{!! url('/titulos/P') !!}">Lançamentos</a></li>
                     </ul>
                   </li>
 
