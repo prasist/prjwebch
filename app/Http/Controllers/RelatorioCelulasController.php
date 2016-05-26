@@ -101,12 +101,13 @@ class RelatorioCelulasController extends Controller
     if ($input["nivel4_up"]!="") $descricao_nivel4 = explode("|", $input["nivel4_up"]);
     if ($input["nivel5_up"]!="") $descricao_nivel5 = explode("|", $input["nivel5_up"]);
 
+
     if ($input["dia_encontro"]!="")  $filtros .= "      Dia Encontro : " . $input["dia_encontro"];
     if ($input["regiao"]!="")  $filtros .= "        Região : " . $input["regiao"];
     if ($input["turno"]!="")  $filtros .= "         Turno : " . $input["turno"];
     if ($input["segundo_dia_encontro"]!="")  $filtros .= "      Segundo dia encontro : " . $input["segundo_dia_encontro"];
-    if ($descricao_publico_alvo!="")  $filtros .= "     Publico Alvo : " . $descricao_publico_alvo[1];
-    if ($descricao_faixa_etaria!="")  $filtros .= "     Faixa Etária : " . $descricao_faixa_etaria[1];
+    if ($descricao_publico_alvo[0]!="0")  $filtros .= "     Publico Alvo : " . $descricao_publico_alvo[1];
+    if ($descricao_faixa_etaria[0]!="0")  $filtros .= "     Faixa Etária : " . $descricao_faixa_etaria[1];
     if ($descricao_lider[0]!="0")  $filtros .= "     Líder : " . $descricao_lider[1];
     if ($input["nivel1_up"]!="0")  $filtros .= "        " . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
     if ($input["nivel2_up"]!="0")  $filtros .= "        " . \Session::get('nivel2') . " : " . $descricao_nivel2[1];
@@ -122,8 +123,8 @@ class RelatorioCelulasController extends Controller
         "regiao"=>"'%" . $input["regiao"] . "%'",
         "turno"=>"'" . $input["turno"] . "'",
         "segundo_dia_encontro"=>"'" . $input["segundo_dia_encontro"] . "'",
-        "publico_alvo"=> ($input["publico_alvo"]=="" ? 0 : $input["publico_alvo"]),
-        "faixa_etaria"=> ($input["faixa_etaria"]=="" ? 0 : $input["faixa_etaria"]),
+        "publico_alvo"=> ($descricao_publico_alvo[0]=="" ? 0 : $descricao_publico_alvo[0]),
+        "faixa_etaria"=> ($descricao_faixa_etaria[0]=="" ? 0 : $descricao_faixa_etaria[0]),
         "lideres"=> ($descricao_lider=="" ? 0 : $descricao_lider[0]),
         "nivel1"=> ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]),
         "nivel2"=> ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]),
