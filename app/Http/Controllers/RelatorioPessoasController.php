@@ -16,7 +16,6 @@ class RelatorioPessoasController extends Controller
 
     public function __construct()
     {
-
         $this->rota = "relpessoas"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
@@ -25,7 +24,6 @@ class RelatorioPessoasController extends Controller
         {
             $this->dados_login = \Session::get('dados_login');
         }
-
     }
 
     public function CarregarView($var_download)
@@ -94,16 +92,8 @@ class RelatorioPessoasController extends Controller
   public function pesquisar(\Illuminate\Http\Request  $request)
  {
 
-    //include_once(__DIR__ . '/../../../public/relatorios/class/tcpdf/tcpdf.php');
-    //include_once(__DIR__ . '/../../../public/relatorios/class/PHPJasperXML.inc.php');
-    //include_once (__DIR__ . '/../../../public/relatorios/setting.php');
-
-
     /*Pega todos campos enviados no post*/
     $input = $request->except(array('_token', 'ativo')); //não levar o token
-
-
-    //$PHPJasperXML = new \PHPJasperXML();
 
     /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
     //Pega dados de conexao com o banco para o JASPER REPORT
@@ -112,7 +102,6 @@ class RelatorioPessoasController extends Controller
     $output = public_path() . '/relatorios/resultados/' . $ext . '/relatorio_' . $this->dados_login->empresas_id . '_' . Auth::user()->id; //Path para cada tipo de relatorio
     $path_download = '/relatorios/resultados/' . $ext . '/relatorio_' . $this->dados_login->empresas_id . '_' .  Auth::user()->id; //Path para cada tipo de relatorio
     /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
-
 
     /*Instancia biblioteca de funcoes globais*/
     $formatador = new  \App\Functions\FuncoesGerais();
@@ -153,7 +142,6 @@ class RelatorioPessoasController extends Controller
     $where = " where empresas_id = " . $this->dados_login->empresas_id . "  and empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " and (emailprincipal is not null and emailprincipal<> '') ";
 
     /*Filtros utilizados*/
-
     if ($input["possui_necessidades_especiais"]!="")
     {
         $filtros .= "   Possui Necessidades Esp.: " . ($input["possui_necessidades_especiais"]=="1" ? "Sim" : "Não");
@@ -295,42 +283,6 @@ class RelatorioPessoasController extends Controller
         $where .= " and celulas_nivel5_id = " . $descricao_nivel5[0];
     }
 
-/*
-    $PHPJasperXML->arrayParameter = array
-    (
-        "empresas_id"=> $this->dados_login->empresas_id,
-        "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
-        "status"=>"'" . $input["status"] . "'",
-        "mes"=>"'" . $input["mes"] . "'",
-        "sexo"=>"'" . $input["sexo"] . "'",
-        "nivel1"=> ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]),
-        "nivel2"=> ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]),
-        "nivel3"=> ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]),
-        "nivel4"=> ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]),
-        "nivel5"=> ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]),
-        "doador_sangue" => ($input["doador_sangue"]=="1" ? "true" : "false"),
-        "doador_orgaos" => ($input["doador_orgaos"]=="1" ? "true" : "false"),
-        "possui_necessidades_especiais" => ($input["possui_necessidades_especiais"]==true ? "true" : "false"),
-        "idiomas_id" => ($descricao_idiomas=="" ? 0 : $descricao_idiomas[0]),
-        "graus_id" => ($descricao_graus=="" ? 0 : $descricao_graus[0]),
-        "estadoscivis"=> ($descricao_estado_civil=="" ? 0 : $descricao_estado_civil[0]),
-        "situacoes"=> ($descricao_situacoes=="" ? 0 : $descricao_situacoes[0]),
-        "tipos"=> ($descricao_tipos=="" ? 0 : $descricao_tipos[0]),
-        "grupo"=> ($descricao_grupo=="" ? 0 : $descricao_grupo[0]),
-        "status_id"=> ($descricao_status=="" ? 0 : $descricao_status[0]),
-        "motivo_entrada"=> ($descricao_motivo_ent=="" ? 0 : $descricao_motivo_ent[0]),
-        "motivo_saida"=> ($descricao_motivo_sai=="" ? 0 : $descricao_motivo_sai[0]),
-        "data_entrada_inicial"=>"'" . ($input["data_entrada"]=="" ? '' : $formatador->FormatarData($input["data_entrada"])) . "'",
-        "data_entrada_final"=>"'" . ($input["data_entrada_ate"]=="" ? '' : $formatador->FormatarData($input["data_entrada_ate"])) . "'",
-        "data_saida_inicial"=>"'" . ($input["data_saida"]=="" ? '' : $formatador->FormatarData($input["data_saida"])) . "'",
-        "data_saida_final"=>"'" . ($input["data_saida_ate"]=="" ? '' : $formatador->FormatarData($input["data_saida_ate"])) . "'",
-        "data_batismo_inicial"=>"'" . ($input["data_batismo"]=="" ? '' : $formatador->FormatarData($input["data_batismo"])) . "'",
-        "data_batismo_final"=>"'" . ($input["data_batismo_ate"]=="" ? '' : $formatador->FormatarData($input["data_batismo_ate"])) . "'",
-        "filtros"=> $filtros,
-    );
-    */
-
-
 
     //Parametros JASPER REPORT
     $parametros = array
@@ -367,9 +319,11 @@ class RelatorioPessoasController extends Controller
     {
         $parametros = array_add($parametros, 'ordem', 'razaosocial');
     }
+    else if ($input["ordem"]=="idade")
+    {
+        $parametros = array_add($parametros, 'ordem', 'idade');
+    }
 
-    //dd($parametros);
-   //$PHPJasperXML->debugsql=true;
 
     if ($input["resultado"]=="email")
     {
@@ -383,12 +337,10 @@ class RelatorioPessoasController extends Controller
             {
                 if ($descricao_situacoes!="")
                 {
-                    //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral_celulas_situacoes.jrxml');
                     $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_celulas_situacoes.jasper';
                 }
                 else
                 {
-                    //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral_celulas.jrxml');
                     $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_celulas.jasper';
                 }
 
@@ -397,20 +349,24 @@ class RelatorioPessoasController extends Controller
             {
                 if ($descricao_situacoes!="")
                 {
-                    //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral_situacoes.jrxml');
                     $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_situacoes.jasper';
-                } else
+                }
+                else
                 {
-                    //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_geral.jrxml');
-                    $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral.jasper';
-                    //$nome_relatorio = public_path() . '/relatorios/teste_datas.jasper';
+
+                    if ($input["mes"]!="")
+                    {
+                        $nome_relatorio = public_path() . '/relatorios/listagem_aniversariantes.jasper';
+                    }
+                    else
+                    {
+                        $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral.jasper';
+                    }
+
                 }
             }
 
-           //$PHPJasperXML->transferDBtoArray($server,$user,$pass,$db, "psql");
-           //$PHPJasperXML->outpage("I");    //page output method I:standard output  D:Download file
-
-
+            //Executa JasperReport
             \JasperPHP::process(
                     $nome_relatorio,
                     $output,
@@ -421,39 +377,7 @@ class RelatorioPessoasController extends Controller
                     false
                 )->execute();
 
-/*
-             // List the parameters from a Jasper file.
-            $array =  \JasperPHP::list_parameters(
-                $nome_relatorio
-            )->execute();
-
-            dd($array);
-            */
-
-
-/*
-            if ($ext=="pdf")
-            {
-                header("Content-type: application/pdf");
-                header("Content-Disposition: inline; filename=" . $output . ".pdf");
-                //header("Cache-control: private"); //use this to open files directly
-                //header('Content-Transfer-Encoding: binary');
-                //header('Content-Length: ' . filesize($output . ".pdf"));
-                //header('Accept-Ranges: bytes');
-
-                @readfile($output . '.pdf');
-
-
-
-            }
-            else if ($ext=="xls")
-            {
-
-                return $this->CarregarView($path_download . ".xls");
-
-            }
-*/
-
+             //Recarrega a tela com o link do relatorio gerado
              return $this->CarregarView($path_download . '.' . $ext);
 
     }

@@ -200,6 +200,7 @@
                                                                     <select id="ordem" name="ordem" class="form-control selectpicker">
                                                                     <option  value="razaosocial"  selected>Nome</option>
                                                                     <option  value="" >Data Nasc. (Dia/Mês)</option>
+                                                                    <option  value="idade" >Idade</option>
                                                                     </select>
                                                              </div>
 
