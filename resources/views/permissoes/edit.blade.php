@@ -43,7 +43,7 @@
                                                 <div class="box-body">
                                                  <b>
                                                  <p>
-                                                 Selecionar todos&nbsp;&nbsp;<input  id= "selecionar_todos" name="selecionar_todos" type="checkbox" checked />
+                                                 <i class="fa fa-refresh"></i>&nbsp;&nbsp;Selecionar Tudo&nbsp;&nbsp;<input  id= "selecionar_todos" name="selecionar_todos" type="checkbox" checked />
                                                  </p>
                                                  </b>
 
@@ -52,13 +52,13 @@
                                                               <tr>
                                                               <th>ID</th>
                                                               <th>Página</th>
-                                                              <th><input  id= "selecionar_acessar" name="selecionar_acessar" type="checkbox" class="selecionar_acessar" data-group-cls="btn-group-sm" /> Acessar</th>
-                                                              <th><input  id= "selecionar_incluir" name="selecionar_incluir" type="checkbox"  class="selecionar_incluir" data-group-cls="btn-group-sm" /> Incluir</th>
-                                                              <th><input  id= "selecionar_alterar" name="selecionar_alterar" type="checkbox" class="selecionar_alterar" data-group-cls="btn-group-sm"/> Alterar</th>
-                                                              <th><input  id= "selecionar_excluir" name="selecionar_excluir" type="checkbox" class="selecionar_excluir" data-group-cls="btn-group-sm"/> Excluir</th>
-                                                              <th><input  id= "selecionar_visualizar" name="selecionar_visualizar" type="checkbox" class="selecionar_visualizar" data-group-cls="btn-group-sm"/> Visualizar</th>
-                                                              <th><input  id= "selecionar_exportar" name="selecionar_exportar" type="checkbox" class="selecionar_exportar" data-group-cls="btn-group-sm"/> Exportar</th>
-                                                              <th><input  id= "selecionar_imprimir" name="selecionar_imprimir" type="checkbox" class="selecionar_imprimir" data-group-cls="btn-group-sm"/> Imprimir</th>
+                                                              <th><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_acessar" name="selecionar_acessar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_acessar" checked/> Acessar</th>
+                                                              <th><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_incluir" name="selecionar_incluir" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_incluir" checked/> Incluir</th>
+                                                              <th><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_alterar" name="selecionar_alterar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_alterar" checked/> Alterar</th>
+                                                              <th><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_excluir" name="selecionar_excluir" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_excluir" checked/> Excluir</th>
+                                                              <th><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_visualizar" name="selecionar_visualizar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_visualizar" checked/> Visualizar</th>
+                                                              <th><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_exportar" name="selecionar_exportar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_exportar" checked/> Exportar</th>
+                                                              <th><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_imprimir" name="selecionar_imprimir" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_imprimir" checked/> Imprimir</th>
                                                               </tr>
                                                           </thead>
                                                           <tbody>
