@@ -80,15 +80,13 @@
                 <li class="dropdown user user-menu">
                     <div id="tour2_visaogeral"></div>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-
-                    <!--<img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image"/>-->
-                    @if (Auth::user()->path_foto!="")
-                            <img src="{{ url('/images/users/' . Auth::user()->path_foto) }}" class="user-image" alt="Usuário Logado" />
-                    @else
-                            <img src="{{ url('/images/users/user.png') }}" class="user-image" alt="Usuário Logado" />
-                    @endif
-
-                    <span class="hidden-xs">{{ Auth::user()->name }}</span>
+                        <!--<img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image"/>-->
+                        @if (Auth::user()->path_foto!="")
+                                <img src="{{ url('/images/users/' . Auth::user()->path_foto) }}" class="user-image" alt="Usuário Logado" />
+                        @else
+                                <img src="{{ url('/images/users/user.png') }}" class="user-image" alt="Usuário Logado" />
+                        @endif
+                            {!!Auth::user()->name!!}
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->

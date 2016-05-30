@@ -41,20 +41,24 @@
                                   <div class="box-header">
 
                                                 <div class="box-body">
-                                                 <b><p><input  id= "selecionar_todos" name="selecionar_todos" type="checkbox" class="selecionar_todos" />  Selecionar todos</p></b>
+                                                 <b>
+                                                 <p>
+                                                 Selecionar todos&nbsp;&nbsp;<input  id= "selecionar_todos" name="selecionar_todos" type="checkbox" checked />
+                                                 </p>
+                                                 </b>
 
                                                     <table id="paginas" class="table table-bordered table-hover">
                                                           <thead>
                                                               <tr>
                                                               <th>ID</th>
                                                               <th>Página</th>
-                                                              <th><input  id= "selecionar_acessar" name="selecionar_acessar" type="checkbox" class="selecionar_acessar" /> Acessar</th>
-                                                              <th><input  id= "selecionar_incluir" name="selecionar_incluir" type="checkbox"  class="selecionar_incluir" /> Incluir</th>
-                                                              <th><input  id= "selecionar_alterar" name="selecionar_alterar" type="checkbox" class="selecionar_alterar"/> Alterar</th>
-                                                              <th><input  id= "selecionar_excluir" name="selecionar_excluir" type="checkbox" class="selecionar_excluir"/> Excluir</th>
-                                                              <th><input  id= "selecionar_visualizar" name="selecionar_visualizar" type="checkbox" class="selecionar_visualizar"/> Visualizar</th>
-                                                              <th><input  id= "selecionar_exportar" name="selecionar_exportar" type="checkbox" class="selecionar_exportar"/> Exportar</th>
-                                                              <th><input  id= "selecionar_imprimir" name="selecionar_imprimir" type="checkbox" class="selecionar_imprimir"/> Imprimir</th>
+                                                              <th><input  id= "selecionar_acessar" name="selecionar_acessar" type="checkbox" class="selecionar_acessar" data-group-cls="btn-group-sm" /> Acessar</th>
+                                                              <th><input  id= "selecionar_incluir" name="selecionar_incluir" type="checkbox"  class="selecionar_incluir" data-group-cls="btn-group-sm" /> Incluir</th>
+                                                              <th><input  id= "selecionar_alterar" name="selecionar_alterar" type="checkbox" class="selecionar_alterar" data-group-cls="btn-group-sm"/> Alterar</th>
+                                                              <th><input  id= "selecionar_excluir" name="selecionar_excluir" type="checkbox" class="selecionar_excluir" data-group-cls="btn-group-sm"/> Excluir</th>
+                                                              <th><input  id= "selecionar_visualizar" name="selecionar_visualizar" type="checkbox" class="selecionar_visualizar" data-group-cls="btn-group-sm"/> Visualizar</th>
+                                                              <th><input  id= "selecionar_exportar" name="selecionar_exportar" type="checkbox" class="selecionar_exportar" data-group-cls="btn-group-sm"/> Exportar</th>
+                                                              <th><input  id= "selecionar_imprimir" name="selecionar_imprimir" type="checkbox" class="selecionar_imprimir" data-group-cls="btn-group-sm"/> Imprimir</th>
                                                               </tr>
                                                           </thead>
                                                           <tbody>
@@ -65,27 +69,27 @@
                                                                             <td>{{ $value->nome }}</td>
                                                                             <td>
                                                                                 <input  name="acessar[{{ $value->id }}]" type="hidden"  value="0" />
-                                                                                <input  name="acessar[{{ $value->id }}]" type="checkbox" class="acessar" value="1" {{ ($value->acessar != 0 ? 'checked' : '') }} />
+                                                                                <input  name="acessar[{{ $value->id }}]" type="checkbox" class="acessar" data-group-cls="btn-group-sm" value="1" {{ ($value->acessar != 0 ? 'checked' : '') }} />
                                                                             </td>
                                                                             <td>
                                                                                 <input  name="incluir[{{ $value->id }}]" type="hidden" value="0" />
-                                                                                <input  name="incluir[{{ $value->id }}]" type="checkbox" class="incluir" value="1" {{ ($value->incluir != 0 ? 'checked' : '') }} />
+                                                                                <input  name="incluir[{{ $value->id }}]" type="checkbox" class="incluir" data-group-cls="btn-group-sm" value="1" {{ ($value->incluir != 0 ? 'checked' : '') }} />
                                                                             </td>
                                                                             <td>
                                                                             <input  name="alterar[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="alterar[{{ $value->id }}]" type="checkbox" class="alterar"  value="1" {{ ($value->alterar == 0 ? '' : 'checked') }} /></td>
+                                                                            <input  name="alterar[{{ $value->id }}]" type="checkbox" class="alterar" data-group-cls="btn-group-sm" value="1" {{ ($value->alterar == 0 ? '' : 'checked') }} /></td>
                                                                             <td>
                                                                             <input  name="excluir[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="excluir[{{ $value->id }}]" type="checkbox" class="excluir" value="1" {{ ($value->excluir != 0 ? 'checked' : '') }} /></td>
+                                                                            <input  name="excluir[{{ $value->id }}]" type="checkbox" class="excluir" data-group-cls="btn-group-sm" value="1" {{ ($value->excluir != 0 ? 'checked' : '') }} /></td>
                                                                             <td>
                                                                             <input  name="visualizar[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="visualizar[{{ $value->id }}]" type="checkbox" class="visualizar"  value="1"  {{ ($value->visualizar != 0 ? 'checked' : '') }}/></td>
+                                                                            <input  name="visualizar[{{ $value->id }}]" type="checkbox" class="visualizar"  data-group-cls="btn-group-sm" value="1"  {{ ($value->visualizar != 0 ? 'checked' : '') }}/></td>
                                                                             <td>
                                                                             <input  name="exportar[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="exportar[{{ $value->id }}]" type="checkbox" class="exportar" value="1" {{ ($value->exportar != 0 ? 'checked' : '') }}/></td>
+                                                                            <input  name="exportar[{{ $value->id }}]" type="checkbox" class="exportar" data-group-cls="btn-group-sm" value="1" {{ ($value->exportar != 0 ? 'checked' : '') }}/></td>
                                                                             <td>
                                                                             <input  name="imprimir[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="imprimir[{{ $value->id }}]" type="checkbox" class="imprimir" value="1" {{ ($value->imprimir != 0 ? 'checked' : '') }} /></td>
+                                                                            <input  name="imprimir[{{ $value->id }}]" type="checkbox" class="imprimir" data-group-cls="btn-group-sm" value="1" {{ ($value->imprimir != 0 ? 'checked' : '') }} /></td>
 
                                                                </tr>
 
@@ -121,7 +125,10 @@
 
                   $(function () {
 
-                          $('#selecionar_todos').click(function() {
+
+                          $('#selecionar_todos').checkboxpicker();
+                          $('#selecionar_todos').change(function() {
+                          //$('#selecionar_todos').click(function() {
 
                             if ($(this).prop('checked')) {
                                 $('.acessar').prop('checked', true);
@@ -209,7 +216,10 @@
 
                         });
 
-                        $('#selecionar_acessar').click(function() {
+
+                        $('#selecionar_acessar').checkboxpicker();
+
+                        $('#selecionar_acessar').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.acessar').prop('checked', true);
                             } else {
@@ -217,7 +227,9 @@
                             }
                         });
 
-                        $('#selecionar_incluir').click(function() {
+                        $('#selecionar_incluir').checkboxpicker();
+                        //$('#selecionar_incluir').click(function() {
+                        $('#selecionar_incluir').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.incluir').prop('checked', true);
                             } else {
@@ -225,7 +237,8 @@
                             }
                         });
 
-                        $('#selecionar_alterar').click(function() {
+                        $('#selecionar_alterar').checkboxpicker();
+                        $('#selecionar_alterar').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.alterar').prop('checked', true);
                             } else {
@@ -233,7 +246,8 @@
                             }
                         });
 
-                        $('#selecionar_excluir').click(function() {
+                        $('#selecionar_excluir').checkboxpicker();
+                        $('#selecionar_excluir').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.excluir').prop('checked', true);
                             } else {
@@ -241,7 +255,8 @@
                             }
                         });
 
-                        $('#selecionar_visualizar').click(function() {
+                        $('#selecionar_visualizar').checkboxpicker();
+                        $('#selecionar_visualizar').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.visualizar').prop('checked', true);
                             } else {
@@ -249,7 +264,8 @@
                             }
                         });
 
-                        $('#selecionar_exportar').click(function() {
+                        $('#selecionar_exportar').checkboxpicker();
+                        $('#selecionar_exportar').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.exportar').prop('checked', true);
                             } else {
@@ -257,7 +273,8 @@
                             }
                         });
 
-                        $('#selecionar_imprimir').click(function() {
+                        $('#selecionar_imprimir').checkboxpicker();
+                        $('#selecionar_imprimir').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.imprimir').prop('checked', true);
                             } else {

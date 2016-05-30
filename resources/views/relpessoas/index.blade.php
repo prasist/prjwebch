@@ -41,40 +41,9 @@
 
                                                           <div class="box-body"><!-- box-body-->
 
-                                                                <div class="row"><!-- row entrada-->
+                                                             <div class="row">
 
-                                                                    <input  id="possui_necessidades_especiais" name="possui_necessidades_especiais" type="hidden" value="" />
-                                                                    <input  id= "ckEstruturas" name="ckEstruturas" type="hidden" class="minimal" />
-
-                                                                      <div class="col-xs-3">
-                                                                            <label for="mes" class="control-label">Mês Aniversário</label>
-                                                                            <select id="mes" name="mes" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                                                                <option  value=""></option>
-                                                                                <option  value="01">Janeiro</option>
-                                                                                <option  value="02">Fevereiro</option>
-                                                                                <option  value="03">Março</option>
-                                                                                <option  value="04">Abril</option>
-                                                                                <option  value="05">Maio</option>
-                                                                                <option  value="06">Junho</option>
-                                                                                <option  value="07">Julho</option>
-                                                                                <option  value="08">Agosto</option>
-                                                                                <option  value="09">Setembro</option>
-                                                                                <option  value="10">Outubro</option>
-                                                                                <option  value="11">Novembro</option>
-                                                                                <option  value="12">Dezembro</option>
-                                                                            </select>
-                                                                    </div>
-
-                                                                    <div class="col-xs-3">
-                                                                            <label for="status" class="control-label">Status Cadastro</label>
-                                                                            <select id="status" name="status" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                                                                <option  value="">Ambos</option>
-                                                                                <option  value="S">Ativo</option>
-                                                                                <option  value="N">Inativo</option>
-                                                                            </select>
-                                                                    </div>
-
-                                                                    <div class="col-xs-3">
+                                                                 <div class="col-xs-3">
 
                                                                           <label for="status_id" class="control-label">Status</label>
 
@@ -88,23 +57,6 @@
 
                                                                     </div><!-- col-xs-5-->
 
-                                                                    <div class="col-xs-3">
-
-                                                                        <label for="situacoes" class="control-label">Situação</label>
-
-                                                                          <select id="situacoes" placeholder="(Selecionar)" name="situacoes" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                                                          <option  value=""></option>
-
-                                                                          @foreach($situacoes as $item)
-                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
-                                                                          @endforeach
-                                                                          </select>
-                                                                    </div><!-- col-xs-5-->
-
-
-                                                                 </div><!-- end row -->
-
-                                                                 <div class="row">
                                                                       <div class="col-xs-3">
 
                                                                           <label for="tipos" class="control-label">Tipo Pessoa</label>
@@ -139,17 +91,11 @@
                                                                             </select>
                                                                       </div>
 
-                                                                       <div class="col-xs-3">
-                                                                            <br/>
-                                                                            <input  id= "ckEstruturas" name="ckEstruturas" type="checkbox" class="minimal" />  Listar Estruturas Células
-                                                                      </div>
-
-
 
                                                                  </div> <!-- end row -->
 
                                                                  <div class="row">
-                                                                      <div class="col-xs-6">
+                                                                      <div class="col-xs-3">
                                                                           <label for="grupo" class="control-label">Grupo</label>
 
                                                                           <select id="grupo" placeholder="(Selecionar)" name="grupo" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
@@ -160,13 +106,70 @@
                                                                           </select>
                                                                       </div><!-- col-xs-5-->
 
+                                                                      <div class="col-xs-3">
 
-                                                                </div> <!-- end row -->
+                                                                        <label for="situacoes" class="control-label">Situação</label>
+
+                                                                          <select id="situacoes" placeholder="(Selecionar)" name="situacoes" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+
+                                                                          @foreach($situacoes as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                    </div><!-- col-xs-5-->
+
+                                                                    <div class="col-xs-3">
+                                                                            <label for="status" class="control-label">Status Cadastro</label>
+                                                                            <select id="status" name="status" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                                <option  value="">Ambos</option>
+                                                                                <option  value="S">Ativo</option>
+                                                                                <option  value="N">Inativo</option>
+                                                                            </select>
+                                                                    </div>
+
+
+                                                             </div> <!-- end row -->
+
+                                                        <div class="row"><!-- row entrada-->
+
+                                                                    <input  id="possui_necessidades_especiais" name="possui_necessidades_especiais" type="hidden" value="" />
+                                                                    <input  id= "ckEstruturas" name="ckEstruturas" type="hidden" class="minimal" />
+
+                                                                      <div class="col-xs-3">
+                                                                            <label for="mes" class="control-label">Mês Aniversário</label>
+                                                                            <select id="mes" name="mes" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                                <option  value=""></option>
+                                                                                <option  value="01">Janeiro</option>
+                                                                                <option  value="02">Fevereiro</option>
+                                                                                <option  value="03">Março</option>
+                                                                                <option  value="04">Abril</option>
+                                                                                <option  value="05">Maio</option>
+                                                                                <option  value="06">Junho</option>
+                                                                                <option  value="07">Julho</option>
+                                                                                <option  value="08">Agosto</option>
+                                                                                <option  value="09">Setembro</option>
+                                                                                <option  value="10">Outubro</option>
+                                                                                <option  value="11">Novembro</option>
+                                                                                <option  value="12">Dezembro</option>
+                                                                            </select>
+                                                                    </div>
+
+                                                                    <div class="col-xs-3">
+                                                                        <label for="ano_inicial" class="control-label">Ano Nascimento Inicial :</label>
+                                                                        <input type="text" id="ano_inicial" name="ano_inicial" class="form-control" placeholder="Ano Inicial"  data-inputmask='"mask": "9999"' data-mask>
+                                                                    </div><!-- col-xs-5-->
+
+                                                                    <div class="col-xs-3">
+                                                                        <label for="ano_final" class="control-label">Ano Nascimento Final :</label>
+                                                                        <input type="text" id="ano_final" name="ano_final" placeholder="Ano Final" class="form-control"  data-inputmask='"mask": "9999"' data-mask>
+                                                                    </div><!-- col-xs-5-->
+
+                                                                 </div><!-- end row -->
 
                                                           <div class="row">
 
-                                                              <div class="col-xs-6">
-
+                                                              <div class="col-xs-3">
 
                                                                     <label for="resultado" class="control-label">Formato de Sáida : </label>
                                                                     <select id="resultado" name="resultado" class="form-control selectpicker">
@@ -199,10 +202,15 @@
                                                                     <label for="ordem" class="control-label">Ordem</label>
                                                                     <select id="ordem" name="ordem" class="form-control selectpicker">
                                                                     <option  value="razaosocial"  selected>Nome</option>
-                                                                    <option  value="" >Data Nasc. (Dia/Mês)</option>
+                                                                    <option  value="aniversariante" >Data Nasc. (Dia/Mês)</option>
                                                                     <option  value="idade" >Idade</option>
                                                                     </select>
                                                              </div>
+
+                                                             <div class="col-xs-3">
+                                                                    <br/>
+                                                                    Listar Estruturas Células &nbsp;&nbsp;<input  id= "ckEstruturas" name="ckEstruturas" type="checkbox" data-group-cls="btn-group-sm" class="minimal" />
+                                                              </div>
 
                                                           </div>
 
@@ -449,10 +457,10 @@
                                                              </div>
 
                                                             <div class="col-xs-4">
-                                                                      <label for="possui_necessidades_especiais">Possui Necessidades Especiais ?</label>
+                                                                      <label for="possui_necessidades_especiais">Listar Pessoas com Necessidades Especiais ?</label>
                                                                       <div class="input-group">
                                                                            <div class="input-group-addon">
-                                                                                    <input  id="possui_necessidades_especiais" name="possui_necessidades_especiais" type="checkbox" class="minimal-red" value="true" />
+                                                                                    <input  id="possui_necessidades_especiais" data-group-cls="btn-group-sm" name="possui_necessidades_especiais" type="checkbox" class="minimal-red" value="true" />
                                                                             </div>
                                                                       </div>
                                                              </div>
@@ -500,8 +508,6 @@
 
                  </div>
                       <!-- nav-tabs-custom -->
-
-
 
                   <div class="overlay modal" style="display: none">
                       <i class="fa fa-refresh fa-spin"></i>

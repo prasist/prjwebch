@@ -81,8 +81,8 @@ class GruposController extends Controller
             */
 
            $input = $request->except(array('_token', 'ativo')); //não levar o token
-           $grupos = new grupos();
 
+           $grupos = new grupos();
            $grupos->nome  = $input['nome'];
            $grupos->empresas_id  = $this->dados_login->empresas_id;
            $grupos->empresas_clientes_cloud_id  = $this->dados_login->empresas_clientes_cloud_id;
@@ -154,7 +154,6 @@ class GruposController extends Controller
         /*Validação de campos - request*/
         $this->validate($request, [
                 'nome' => 'required|max:45:min:3',
-
          ]);
 
         $input = $request->except(array('_token', 'ativo')); //não levar o token
@@ -172,6 +171,16 @@ class GruposController extends Controller
     }
 
 
+    public function update_inline(\Illuminate\Http\Request  $request, $id)
+    {
+        $input = $request->except(array('_token', 'ativo')); //não levar o token
+        $grupos = grupos::findOrfail($id);
+        $grupos->nome  = $input["value"];
+        $grupos->save();
+        return response()->json([ 'code'=>200], 200);
+    }
+
+
     /**
      * Excluir registro do banco.
      *
@@ -180,12 +189,9 @@ class GruposController extends Controller
      */
     public function destroy($id)
     {
-
             $grupos = grupos::findOrfail($id);
             $grupos->delete();
-
             return redirect('grupos');
-
     }
 
 }

@@ -48,9 +48,21 @@
                                 </div>
 
                                 <div class="col-xs-3">
-                                      <input  id= "ckEstruturas" name="ckEstruturas" type="checkbox" class="minimal" checked />  Listar Estruturas Células
-                                      <br/>
-                                      <input  id= "ckExibir" name="ckExibir" type="checkbox" class="minimal" checked />  Listar Participantes
+                                      <label for="ckEstruturas" class="control-label">Listar Estruturas Células</label>
+                                      <div class="input-group">
+                                             <div class="input-group-addon">
+                                                  <input  id= "ckEstruturas" name="ckEstruturas" data-group-cls="btn-group-sm" type="checkbox" class="minimal" checked />
+                                             </div>
+                                      </div>
+                                </div>
+
+                                <div class="col-xs-3">
+                                      <label for="ckExibir" class="control-label">Listar Participantes</label>
+                                      <div class="input-group">
+                                             <div class="input-group-addon">
+                                                  <input  id= "ckExibir" name="ckExibir" type="checkbox" class="minimal" data-group-cls="btn-group-sm" checked />
+                                             </div>
+                                      </div>
                                 </div>
 
                           </div>

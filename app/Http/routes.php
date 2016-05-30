@@ -168,6 +168,7 @@
     Route::get('/grupos/registrar','GruposController@create');
     Route::get('/grupos/{id}/preview','GruposController@show');
     Route::post('grupos/{id}/update','GruposController@update');
+    Route::post('grupos/{id}/update_inline','GruposController@update_inline');
     Route::get('grupos/{id}/edit','GruposController@edit');
     Route::get('grupos/{id}/delete','GruposController@destroy');
 

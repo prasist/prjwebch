@@ -324,6 +324,13 @@ class RelatorioPessoasController extends Controller
         $parametros = array_add($parametros, 'ordem', 'idade');
     }
 
+    /*Se foi passado filtro por ano de nascimento*/
+    if ($input["ano_inicial"]!="" && $input["ano_final"]!="")
+    {
+        $parametros = array_add($parametros, 'ano_inicial', $input["ano_inicial"]);
+        $parametros = array_add($parametros, 'ano_final', $input["ano_final"]);
+    }
+
 
     if ($input["resultado"]=="email")
     {
@@ -354,7 +361,7 @@ class RelatorioPessoasController extends Controller
                 else
                 {
 
-                    if ($input["mes"]!="")
+                    if ($input["ordem"]!="razaosocial" || $input["mes"]!="" || $input["ano_inicial"]!="" || $input["ano_final"]!="")
                     {
                         $nome_relatorio = public_path() . '/relatorios/listagem_aniversariantes.jasper';
                     }
@@ -362,7 +369,6 @@ class RelatorioPessoasController extends Controller
                     {
                         $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral.jasper';
                     }
-
                 }
             }
 

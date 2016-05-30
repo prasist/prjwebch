@@ -46,7 +46,11 @@
                                                 <div id="tour6"></div>
                                                 <div id="tour4_1"></div>
 
-                                                 <b><p><input  id= "selecionar_todos" name="selecionar_todos" type="checkbox" checked />  Selecionar todos</p></b>
+                                                 <b>
+                                                 <p>
+                                                 Selecionar todos&nbsp;&nbsp;<input  id= "selecionar_todos" name="selecionar_todos" type="checkbox" checked />
+                                                 </p>
+                                                 </b>
 
                                                     <table id="paginas" class="table table-bordered table-hover">
                                                           <thead>
@@ -70,27 +74,27 @@
                                                                             <td>{{ $value->nome }}</td>
                                                                             <td>
                                                                                 <input  name="acessar[{{ $value->id }}]" type="hidden"  value="0" />
-                                                                                <input  name="acessar[{{ $value->id }}]" type="checkbox" class="acessar" value="1" checked />
+                                                                                <input  name="acessar[{{ $value->id }}]" type="checkbox" data-group-cls="btn-group-sm" class="acessar" value="1" checked />
                                                                             </td>
                                                                             <td>
                                                                                 <input  name="incluir[{{ $value->id }}]" type="hidden" value="0" />
-                                                                                <input  name="incluir[{{ $value->id }}]" type="checkbox" class="incluir" value="1" checked />
+                                                                                <input  name="incluir[{{ $value->id }}]" type="checkbox" data-group-cls="btn-group-sm" class="incluir" value="1" checked />
                                                                             </td>
                                                                             <td>
                                                                             <input  name="alterar[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="alterar[{{ $value->id }}]" type="checkbox" class="alterar"  value="1" checked /></td>
+                                                                            <input  name="alterar[{{ $value->id }}]" type="checkbox" data-group-cls="btn-group-sm" class="alterar"  value="1" checked /></td>
                                                                             <td>
                                                                             <input  name="excluir[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="excluir[{{ $value->id }}]" type="checkbox" class="excluir" value="1" checked /></td>
+                                                                            <input  name="excluir[{{ $value->id }}]" type="checkbox" data-group-cls="btn-group-sm" class="excluir" value="1" checked /></td>
                                                                             <td>
                                                                             <input  name="visualizar[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="visualizar[{{ $value->id }}]" type="checkbox" class="visualizar"  value="1"  checked /></td>
+                                                                            <input  name="visualizar[{{ $value->id }}]" type="checkbox" data-group-cls="btn-group-sm" class="visualizar"  value="1"  checked /></td>
                                                                             <td>
                                                                             <input  name="exportar[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="exportar[{{ $value->id }}]" type="checkbox" class="exportar" value="1" checked /></td>
+                                                                            <input  name="exportar[{{ $value->id }}]" type="checkbox" data-group-cls="btn-group-sm" class="exportar" value="1" checked /></td>
                                                                             <td>
                                                                             <input  name="imprimir[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="imprimir[{{ $value->id }}]" type="checkbox" class="imprimir" value="1" checked /></td>
+                                                                            <input  name="imprimir[{{ $value->id }}]" type="checkbox" data-group-cls="btn-group-sm" class="imprimir" value="1" checked /></td>
 
                                                                </tr>
 
@@ -125,7 +129,9 @@
 
                   $(function () {
 
-                          $('#selecionar_todos').click(function() {
+                          $('#selecionar_todos').checkboxpicker();
+
+                          $('#selecionar_todos').change(function() {
 
                             if ($(this).prop('checked')) {
                                 $('.acessar').prop('checked', true);
@@ -213,7 +219,7 @@
 
                         });
 
-                        $('#selecionar_acessar').click(function() {
+                        $('#selecionar_acessar').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.acessar').prop('checked', true);
                             } else {
@@ -221,7 +227,7 @@
                             }
                         });
 
-                        $('#selecionar_incluir').click(function() {
+                        $('#selecionar_incluir').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.incluir').prop('checked', true);
                             } else {
@@ -229,7 +235,7 @@
                             }
                         });
 
-                        $('#selecionar_alterar').click(function() {
+                        $('#selecionar_alterar').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.alterar').prop('checked', true);
                             } else {
@@ -237,7 +243,7 @@
                             }
                         });
 
-                        $('#selecionar_excluir').click(function() {
+                        $('#selecionar_excluir').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.excluir').prop('checked', true);
                             } else {
@@ -245,7 +251,7 @@
                             }
                         });
 
-                        $('#selecionar_visualizar').click(function() {
+                        $('#selecionar_visualizar').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.visualizar').prop('checked', true);
                             } else {
@@ -253,7 +259,7 @@
                             }
                         });
 
-                        $('#selecionar_exportar').click(function() {
+                        $('#selecionar_exportar').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.exportar').prop('checked', true);
                             } else {
@@ -261,7 +267,7 @@
                             }
                         });
 
-                        $('#selecionar_imprimir').click(function() {
+                        $('#selecionar_imprimir').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.imprimir').prop('checked', true);
                             } else {
