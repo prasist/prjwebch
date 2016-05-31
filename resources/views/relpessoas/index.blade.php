@@ -174,7 +174,9 @@
                                                                     <label for="resultado" class="control-label">Formato de Sáida : </label>
                                                                     <select id="resultado" name="resultado" class="form-control selectpicker">
                                                                     <option  value="pdf" data-icon="fa fa-file-pdf-o" selected>PDF (.pdf)</option>
-                                                                    <option  value="xls" data-icon="fa fa-file-excel-o">Planilha Excel (.xls)</option>
+                                                                    <option  value="xlsx" data-icon="fa fa-file-excel-o">Planilha Excel (.xls)</option>
+                                                                    <option  value="csv" data-icon="fa fa-file-excel-o">CSV (.csv)</option>
+                                                                    <option  value="docx" data-icon="fa fa-file-word-o">Microsoft Word (.docx)</option>
                                                                     <option  value="email" data-icon="fa fa-envelope-o">Listagem de E-mails</option>
                                                                     </select>
 
@@ -190,8 +192,12 @@
                                                                     CLIQUE AQUI PARA VISUALIZAR / BAIXAR
                                                                     @if (substr($var_download,-3)=="pdf")
                                                                         <img src="{{ url('/images/pdf.png') }}" alt="Baixar Arquivo" />
-                                                                     @else
+                                                                     @elseif (substr($var_download,-4)=="xlsx")
                                                                         <img src="{{ url('/images/excel.png') }}" alt="Baixar Arquivo" />
+                                                                     @elseif (substr($var_download,-3)=="csv")
+                                                                        <img src="{{ url('/images/csv.jpg') }}" alt="Baixar Arquivo" />
+                                                                     @elseif (substr($var_download,-4)=="docx")
+                                                                         <img src="{{ url('/images/microsoft-word-icon.png') }}" alt="Baixar Arquivo" />
                                                                      @endif
                                                                      </a>
                                                                    @endif
