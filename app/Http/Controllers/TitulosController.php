@@ -36,12 +36,15 @@ class TitulosController extends Controller
               return redirect('home');
         }
 
-        $dados = titulos::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->where('empresas_id', $this->dados_login->empresas_id)
-        ->get();
+        $sQuery = "select id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, valor, acrescimo, desconto, descricao, tipo, status";
+        $sQuery .= " from titulos ";
+        $sQuery .= " where tipo = ? ";
+        $sQuery .= " and empresas_id = ? ";
+        $sQuery .= " and empresas_clientes_cloud_id = ? ";
+        $sQuery .= " order by id ";
+        $dados = \DB::select($sQuery, [$tipo, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         return view($this->rota . '.index',compact('dados'));
-
     }
 
     //Criar novo registro

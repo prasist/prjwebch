@@ -125,10 +125,48 @@
 
                   $(function () {
 
+                         $('.acessar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
 
-                          $('#selecionar_todos').checkboxpicker();
+                         $('.incluir').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
+                         $('.excluir').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
+                         $('.visualizar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
+                         $('.exportar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
+                         $('.imprimir').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
+                         $('.alterar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
+
+                          $('#selecionar_todos').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
                           $('#selecionar_todos').change(function() {
-                          //$('#selecionar_todos').click(function() {
 
                             if ($(this).prop('checked')) {
                                 $('.acessar').prop('checked', true);
@@ -216,8 +254,10 @@
 
                         });
 
-
-                        $('#selecionar_acessar').checkboxpicker();
+                        $('.selecionar_acessar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
 
                         $('#selecionar_acessar').change(function() {
                             if ($(this).prop('checked')) {
@@ -227,8 +267,11 @@
                             }
                         });
 
-                        $('#selecionar_incluir').checkboxpicker();
-                        //$('#selecionar_incluir').click(function() {
+                        $('.selecionar_incluir').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
                         $('#selecionar_incluir').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.incluir').prop('checked', true);
@@ -237,7 +280,12 @@
                             }
                         });
 
-                        $('#selecionar_alterar').checkboxpicker();
+
+                        $('.selecionar_alterar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
                         $('#selecionar_alterar').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.alterar').prop('checked', true);
@@ -246,7 +294,12 @@
                             }
                         });
 
-                        $('#selecionar_excluir').checkboxpicker();
+
+                        $('.selecionar_excluir').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
                         $('#selecionar_excluir').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.excluir').prop('checked', true);
@@ -255,7 +308,12 @@
                             }
                         });
 
-                        $('#selecionar_visualizar').checkboxpicker();
+
+                        $('.selecionar_visualizar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
                         $('#selecionar_visualizar').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.visualizar').prop('checked', true);
@@ -264,7 +322,12 @@
                             }
                         });
 
-                        $('#selecionar_exportar').checkboxpicker();
+
+                        $('.selecionar_exportar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
                         $('#selecionar_exportar').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.exportar').prop('checked', true);
@@ -273,7 +336,12 @@
                             }
                         });
 
-                        $('#selecionar_imprimir').checkboxpicker();
+
+                        $('.selecionar_imprimir').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
                         $('#selecionar_imprimir').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.imprimir').prop('checked', true);

@@ -51,7 +51,7 @@
                                       <label for="ckEstruturas" class="control-label">Listar Estruturas Células</label>
                                       <div class="input-group">
                                              <div class="input-group-addon">
-                                                  <input  id= "ckEstruturas" name="ckEstruturas" data-group-cls="btn-group-sm" type="checkbox" class="minimal" checked />
+                                                  <input  id= "ckEstruturas" name="ckEstruturas" data-group-cls="btn-group-sm" type="checkbox" class="ckEstruturas" checked />
                                              </div>
                                       </div>
                                 </div>
@@ -60,7 +60,7 @@
                                       <label for="ckExibir" class="control-label">Listar Participantes</label>
                                       <div class="input-group">
                                              <div class="input-group-addon">
-                                                  <input  id= "ckExibir" name="ckExibir" type="checkbox" class="minimal" data-group-cls="btn-group-sm" checked />
+                                                  <input  id= "ckExibir" name="ckExibir" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm" checked />
                                              </div>
                                       </div>
                                 </div>
@@ -293,6 +293,22 @@
               }
           };
       })();
+
+            /*Prepara checkbox bootstrap*/
+       $(function () {
+
+            $('.ckEstruturas').checkboxpicker({
+                offLabel : 'Não',
+                onLabel : 'Sim',
+            });
+
+            $('.ckExibir').checkboxpicker({
+                offLabel : 'Não',
+                onLabel : 'Sim',
+            });
+
+      });
+
 
 </script>
 

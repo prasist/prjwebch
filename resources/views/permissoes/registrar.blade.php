@@ -129,7 +129,46 @@
 
                   $(function () {
 
-                          $('#selecionar_todos').checkboxpicker();
+                         $('.acessar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
+                         $('.incluir').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
+                         $('.excluir').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
+                         $('.visualizar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
+                         $('.exportar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
+                         $('.imprimir').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
+                         $('.alterar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
+
+                          $('#selecionar_todos').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
 
                           $('#selecionar_todos').change(function() {
 
@@ -219,6 +258,11 @@
 
                         });
 
+                        $('.selecionar_acessar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
                         $('#selecionar_acessar').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.acessar').prop('checked', true);
@@ -226,6 +270,11 @@
                                 $('.acessar').prop('checked', false);
                             }
                         });
+
+                        $('.selecionar_incluir').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
 
                         $('#selecionar_incluir').change(function() {
                             if ($(this).prop('checked')) {
@@ -235,6 +284,12 @@
                             }
                         });
 
+
+                        $('.selecionar_alterar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
                         $('#selecionar_alterar').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.alterar').prop('checked', true);
@@ -242,6 +297,12 @@
                                 $('.alterar').prop('checked', false);
                             }
                         });
+
+
+                        $('.selecionar_excluir').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
 
                         $('#selecionar_excluir').change(function() {
                             if ($(this).prop('checked')) {
@@ -251,6 +312,12 @@
                             }
                         });
 
+
+                        $('.selecionar_visualizar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
                         $('#selecionar_visualizar').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.visualizar').prop('checked', true);
@@ -259,6 +326,12 @@
                             }
                         });
 
+
+                        $('.selecionar_exportar').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
+
                         $('#selecionar_exportar').change(function() {
                             if ($(this).prop('checked')) {
                                 $('.exportar').prop('checked', true);
@@ -266,6 +339,12 @@
                                 $('.exportar').prop('checked', false);
                             }
                         });
+
+
+                        $('.selecionar_imprimir').checkboxpicker({
+                              offLabel : 'Não',
+                              onLabel : 'Sim',
+                         });
 
                         $('#selecionar_imprimir').change(function() {
                             if ($(this).prop('checked')) {

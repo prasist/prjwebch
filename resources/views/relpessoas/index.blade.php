@@ -204,12 +204,13 @@
                                                                     <option  value="razaosocial"  selected>Nome</option>
                                                                     <option  value="aniversariante" >Data Nasc. (Dia/Mês)</option>
                                                                     <option  value="idade" >Idade</option>
+                                                                    <option  value="ano" >Ano</option>
                                                                     </select>
                                                              </div>
 
                                                              <div class="col-xs-3">
                                                                     <br/>
-                                                                    Listar Estruturas Células &nbsp;&nbsp;<input  id= "ckEstruturas" name="ckEstruturas" type="checkbox" data-group-cls="btn-group-sm" class="minimal" />
+                                                                    Listar Estruturas Células &nbsp;&nbsp;<input  id= "ckEstruturas" name="ckEstruturas" type="checkbox" data-group-cls="btn-group-sm" class="ckEstruturas" />
                                                               </div>
 
                                                           </div>
@@ -460,7 +461,7 @@
                                                                       <label for="possui_necessidades_especiais">Listar Pessoas com Necessidades Especiais ?</label>
                                                                       <div class="input-group">
                                                                            <div class="input-group-addon">
-                                                                                    <input  id="possui_necessidades_especiais" data-group-cls="btn-group-sm" name="possui_necessidades_especiais" type="checkbox" class="minimal-red" value="true" />
+                                                                                    <input  id="possui_necessidades_especiais" data-group-cls="btn-group-sm" name="possui_necessidades_especiais" type="checkbox" class="possui_necessidades_especiais" value="true" />
                                                                             </div>
                                                                       </div>
                                                              </div>
@@ -542,6 +543,21 @@
               }
           };
       })();
+
+      /*Prepara checkbox bootstrap*/
+       $(function () {
+
+            $('.ckEstruturas').checkboxpicker({
+                offLabel : 'Não',
+                onLabel : 'Sim',
+            });
+
+            $('.possui_necessidades_especiais').checkboxpicker({
+                offLabel : 'Não',
+                onLabel : 'Sim',
+            });
+
+      });
 
 </script>
 @include('configuracoes.script_estruturas')

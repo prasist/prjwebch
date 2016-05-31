@@ -141,11 +141,6 @@
                   $(function ()
                   {
 
-                            $(':checkbox').checkboxpicker({
-                                offLabel : 'Não',
-                                onLabel : 'Sim',
-                            });
-
                             $('.selectpicker').selectpicker({
                                 selectAllText: 'Selecionar Todos',
                                 deselectAllText: 'Desmarcar Todos'
