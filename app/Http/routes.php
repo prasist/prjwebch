@@ -48,13 +48,15 @@
     Route::get('financeiro', 'FinanceiroController@index');
 
     //Contas a Pagar ou receber
+    Route::post('titulos/{id}/update_inline/{campo}/{tipo}','TitulosController@update_inline');
     Route::get('titulos/{tipo}', 'TitulosController@index');
-    Route::post('/titulos/gravar','TitulosController@store');
+    Route::post('titulos/filtrar/{tipo}', 'TitulosController@pesquisar');
+    Route::post('/titulos/gravar/{tipo}','TitulosController@store');
     Route::get('/titulos/registrar/{tipo}','TitulosController@create');
-    Route::get('/titulos/{id}/preview','TitulosController@show');
-    Route::post('titulos/{id}/update','TitulosController@update');
-    Route::get('titulos/{id}/edit','TitulosController@edit');
-    Route::get('titulos/{id}/delete','TitulosController@destroy');
+    Route::get('/titulos/{id}/preview/{tipo}','TitulosController@show');
+    Route::post('titulos/{id}/update/{tipo}','TitulosController@update');
+    Route::get('titulos/{id}/edit/{tipo}','TitulosController@edit');
+    Route::get('titulos/{id}/delete/{tipo}','TitulosController@destroy');
 
 
     /*Contas Correntes*/
@@ -168,7 +170,6 @@
     Route::get('/grupos/registrar','GruposController@create');
     Route::get('/grupos/{id}/preview','GruposController@show');
     Route::post('grupos/{id}/update','GruposController@update');
-    Route::post('grupos/{id}/update_inline','GruposController@update_inline');
     Route::get('grupos/{id}/edit','GruposController@edit');
     Route::get('grupos/{id}/delete','GruposController@destroy');
 

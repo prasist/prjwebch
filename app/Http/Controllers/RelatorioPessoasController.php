@@ -184,6 +184,13 @@ class RelatorioPessoasController extends Controller
         $where .= " and mes = '" . $input["mes"] . "'";
     }
 
+    if ($input["ano_inicial"]!="" && $input["ano_final"]!="" )
+    {
+        $filtros .= "   Periodo Ano : " . $input["ano_inicial"] . " - " . $input["ano_final"];
+        $where .= " and ano >= '" . $input["ano_inicial"] . "'";
+        $where .= " and ano <= '" . $input["ano_final"] . "'";
+    }
+
     if ($input["sexo"]!="")
     {
         $filtros .= "   Sexo : " . ($input["sexo"]=="M" ? "Masculino" : "Feminino");

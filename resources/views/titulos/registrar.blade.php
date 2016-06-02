@@ -2,7 +2,11 @@
 
 @section('content')
 
-{{ \Session::put('titulo', 'Contas à Receber/Pagar') }}
+@if ($tipo=="P")
+    {{ \Session::put('titulo', 'Contas à Pagar') }}
+@else
+    {{ \Session::put('titulo', 'Contas à Receber') }}
+@endif
 {{ \Session::put('subtitulo', 'Inclusão') }}
 {{ \Session::put('route', 'titulos') }}
 {{ \Session::put('id_pagina', '52') }}
@@ -11,228 +15,246 @@
 
     <div class="col-md-12">
 
-        <div>
-            <a href="{{ url('/usuarios')}}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
-        </div>
+    <div>
+            <a href={{ url('/' . \Session::get('route')) . '/' . $tipo }} class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+    </div>
 
-        <form method = 'POST' class="form-horizontal" enctype="multipart/form-data"  action = {{ url('/usuarios/gravar')}}>
+     <form method = 'POST'  class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/gravar/' . $tipo)}}>
 
-        {!! csrf_field() !!}
+       {!! csrf_field() !!}
 
-            <div class="box box-primary">
+        <div class="box box-primary">
+            <!--  status, descricao, valor, data_vencimento, data_emissao) -->
+             <div class="box-body">
 
-                 <div class="box-body"> <!--anterior box-body-->
+                    <div class="row">
+                          <div class="col-xs-4 {{ $errors->has('descricao') ? ' has-error' : '' }}">
+                                <label for="descricao" class="control-label">Descrição</label>
+                                <input id="descricao" maxlength="60"  placeholder="Campo Obrigatório" name = "nome" type="text" class="form-control" value="{{ old('descricao') }}">
+                                   <!-- se houver erros na validacao do form request -->
+                                   @if ($errors->has('descricao'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('descricao') }}</strong>
+                                    </span>
+                                   @endif
+                          </div>
 
-                            <div class="row{{ $errors->has('empresa') ? ' has-error' : '' }}">
-                                    <div class="col-xs-10">
-                                          <label for="empresa" class="control-label">Igreja / Instituição</label>
+                          <div class="col-xs-2 {{ $errors->has('valor') ? ' has-error' : '' }}">
+                                <label for="valor" class="control-label">Valor</label>
+                                <input id="valor" maxlength="60"  placeholder="R$" name = "valor" type="text" class="form-control" value="{{ old('valor') }}">
+                                   @if ($errors->has('valor'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('valor') }}</strong>
+                                    </span>
+                                   @endif
+                          </div>
 
-                                          <select id="empresa" name="empresa" class="form-control select2" style="width: 100%;">
-                                          <option  selected="selected" value="">(Selecione uma Igreja/Instituição</option>
 
-                                          @foreach($empresas as $item)
-                                                <option  value="{{$item->id}}">{{$item->razaosocial}}</option>
-                                          @endforeach
-                                          </select>
+                          <div class="col-xs-2">
+                              <label for="data_emissao" class="control-label">Data Emissão</label>
 
-                                          <!-- se houver erros na validacao do form request -->
-                                             @if ($errors->has('empresa'))
-                                              <span class="help-block">
-                                                  <strong>{{ $errors->first('empresa') }}</strong>
-                                              </span>
-                                             @endif
+                              <div class="input-group">
+                                     <div class="input-group-addon">
+                                      <i class="fa fa-calendar"></i>
+                                      </div>
 
-                                    </div>
-                            </div>
+                                      <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                              </div>
 
-                            <!-- Usado para exibir mensagem de validação-->
-                            <div class="row">
-                                  <div class="col-xs-11">
-                                          <p>&nbsp;</p>
-                                          <div id="mensagem"></div>
-                                          <p></p>
-                                   </div>
-                            </div>
+                         </div>
 
-                            <div id="ocultar_grupo">
+                         <div class="col-xs-2">
+                              <label for="data_vencimento" class="control-label">Data Vencimento</label>
 
-                                  <div class="row{{ $errors->has('grupo') ? ' has-error' : '' }}">
-                                          <div class="col-xs-10">
-                                                <label for="grupo" class="control-label">Grupo</label>
+                              <div class="input-group">
+                                     <div class="input-group-addon">
+                                      <i class="fa fa-calendar"></i>
+                                      </div>
 
-                                                <select name="grupo" class="form-control select2" style="width: 100%;">
+                                      <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                              </div>
 
-                                                @foreach($dados as $item)
-                                                      <option  value="{{$item->id}}">{{$item->nome}}</option>
-                                                @endforeach
-                                                </select>
+                         </div>
 
-                                                <!-- se houver erros na validacao do form request -->
-                                                   @if ($errors->has('grupo'))
-                                                    <span class="help-block">
-                                                        <strong>{{ $errors->first('grupo') }}</strong>
-                                                    </span>
-                                                   @endif
+                    </div> <!-- row -->
 
-                                          </div>
+                    <div class="row">
+                          <div class="col-xs-4">
+                                @include('carregar_combos', array('dados'=>$contas, 'titulo' =>'Conta', 'id_combo'=>'conta', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '48'))
+                                @include('modal_cadastro_basico', array('qual_campo'=>'conta', 'modal' => 'modal_conta', 'tabela' => 'contas'))
+                          </div><!-- col-xs-->
+
+                          <div class="col-xs-4">
+                                @include('carregar_combos', array('dados'=>$plano_contas, 'titulo' =>'Plano de Contas', 'id_combo'=>'plano', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '49'))
+                                @include('modal_cadastro_basico', array('qual_campo'=>'plano', 'modal' => 'modal_plano', 'tabela' => 'planos_contas'))
+                          </div><!-- col-xs-->
+
+                          <div class="col-xs-4">
+                                @include('carregar_combos', array('dados'=>$centros_custos, 'titulo' =>'Centro de Custo', 'id_combo'=>'centros_custos', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '50'))
+                                @include('modal_cadastro_basico', array('qual_campo'=>'centros_custos', 'modal' => 'modal_centros_custos', 'tabela' => 'centros_custos'))
+                          </div><!-- col-xs-->
+
+                    </div>
+
+                    <div class="row">
+                            <div class="col-xs-4">
+                                  <label for="ckpago" class="control-label">Pago ?</label>
+                                  <div class="input-group">
+                                         <div class="input-group-addon">
+                                              <input  id= "ckpago" name="ckpago" type="checkbox" class="ckpago" data-group-cls="btn-group-sm" />
+                                         </div>
                                   </div>
+                            </div>
+
+                          <div id="esconder" style="display: none" >
+                                <div class="col-xs-2">
+                                    <label for="data_pagamento" class="control-label">Data Pagamento</label>
+
+                                    <div class="input-group">
+                                           <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input id ="data_pagamento" name = "data_pagamento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                    </div>
+
+                               </div>
+
+                                 <div class="col-xs-2">
+                                      <label for="acrescimo" class="control-label">Acréscimo</label>
+                                      <input id="acrescimo" maxlength="10"  placeholder="R$" name = "acrescimo" type="text" class="form-control" value="">
+                                 </div>
+
+                                  <div class="col-xs-2">
+                                      <label for="desconto" class="control-label">Desconto</label>
+                                      <input id="desconto" maxlength="10"  placeholder="R$" name = "desconto" type="text" class="form-control" value="">
+                                 </div>
+
+                                 <div class="col-xs-2">
+                                      <label for="valor_pago" class="control-label">Valor Pago</label>
+                                      <input id="valor_pago" maxlength="10"  placeholder="R$" name = "valor_pago" type="text" class="form-control" value="">
+                                 </div>
                            </div>
 
-                           <div id="tour8"></div>
+                    </div>
 
-                           <input  id="sera_admin" name="sera_admin" type="hidden"  value="0" />
 
-                           <div id="ocultar_check">
-                                <!--Somente usuário MASTER poderá criar usuários ADMIN-->
-                                @if ($dados_login->master==1)
-                                <div class="row">
-                                          <div class="col-xs-5">
-                                                <label for="admin" class="control-label">É Administrador ?</label>
+                        <br/>
+                      <div class="row">
+                          <div class="col-md-12">
+                            <div class="box box-solid">
 
-                                                <input  id="chkAdmin" name="admin" type="checkbox" class="checkbox" value="1" disabled />
-
-                                          </div>
-                                </div>
-                                @endif
-                          </div>
-
-                            <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
-                                    <div class="col-xs-10">
-                                          <label for="name" class="control-label">Nome</label>
-
-                                          <input id="name" maxlength="50"  placeholder = "Campo Obrigatório" name = "name" type="text" class="form-control" value="{{ old('name') }}">
-
-                                             <!-- se houver erros na validacao do form request -->
-                                             @if ($errors->has('name'))
-                                              <span class="help-block">
-                                                  <strong>{{ $errors->first('name') }}</strong>
-                                              </span>
-                                             @endif
-
+                              <!-- /.box-header -->
+                              <div class="box-body">
+                                <div class="box-group" id="accordion">
+                                  <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+                                  <div class="panel box box-default">
+                                    <div class="box-header with-border">
+                                      <h5 class="box-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                          ( + ) Mais Informações
+                                        </a>
+                                      </h5>
                                     </div>
-                            </div>
+                                    <div id="collapseOne" class="panel-collapse collapse">
+                                      <div class="box-body">
 
-                            <div class="row{{ $errors->has('email') ? ' has-error' : '' }}">
-                                    <div class="col-xs-10">
-                                          <label for="email" class="control-label">Email</label>
+                                                 <div class="row">
+                                                       <div class="col-xs-7">
+                                                            <label for="fornecedor" class="control-label">Fornecedor / Cliente</label>
+                                                            <div class="input-group">
+                                                                     <div class="input-group-addon">
+                                                                        <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#modal_fornecedor" >
+                                                                               <i class="fa fa-search"></i> ...
+                                                                         </button>
+                                                                      </div>
 
-                                          <input id="email" maxlength="255"  placeholder = "Campo Obrigatório" name = "email" type="text" class="form-control" value="{{ old('email') }}">
+                                                                      @include('modal_buscar_pessoas', array('qual_campo'=>'fornecedor', 'modal' => 'modal_fornecedor'))
 
-                                             <!-- se houver erros na validacao do form request -->
-                                             @if ($errors->has('email'))
-                                              <span class="help-block">
-                                                  <strong>{{ $errors->first('email') }}</strong>
-                                              </span>
-                                             @endif
+                                                                      <input id="fornecedor"  name = "fornecedor" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
 
+                                                              </div>
+                                                     </div>
+
+                                                      <div class="col-xs-5">
+                                                            <label for="obs" class="control-label">Observação</label>
+                                                            <input id="obs"  placeholder="(Opcional)" name = "obs" type="text" class="form-control" value="">
+                                                      </div>
+
+                                                </div>
+
+                                                 <div class="row">
+                                                      <div class="col-xs-2">
+                                                            <label for="parcelas" class="control-label">Qtd. Parcelas</label>
+                                                            <input id="parcelas"  placeholder="(Opcional)" name = "parcelas" type="text" class="form-control" value="1">
+                                                      </div>
+
+                                                      <div class="col-xs-2">
+                                                            <label for="numdoc" class="control-label">N. Documento</label>
+                                                            <input id="numdoc"  placeholder="(Opcional)" name = "numdoc" type="text" class="form-control" value="">
+                                                      </div>
+
+                                                      <div class="col-xs-2">
+                                                            <label for="serie" class="control-label">Série</label>
+                                                            <input id="serie"  placeholder="(Opcional)" name = "serie" type="text" class="form-control" value="">
+                                                      </div>
+
+                                                      <div class="col-xs-6">
+                                                            @include('carregar_combos', array('dados'=>$grupos_titulos, 'titulo' =>'Grupo Título', 'id_combo'=>'grupos_titulos', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '51'))
+                                                            @include('modal_cadastro_basico', array('qual_campo'=>'grupos_titulos', 'modal' => 'modal_grupos_titulos', 'tabela' => 'grupos_titulos'))
+                                                      </div><!-- col-xs-->
+
+                                                 </div>
+
+                                      </div>
                                     </div>
-                            </div>
-
-                            <div class="row">
-                                    <div class="col-xs-5 {{ $errors->has('password') ? ' has-error' : '' }}">
-                                          <label for="password" class="control-label">Senha</label>
-
-                                          <input id="password" maxlength="60" placeholder = "Campo Obrigatório" name = "password" type="password" class="form-control" value="">
-
-                                             <!-- se houver erros na validacao do form request -->
-                                             @if ($errors->has('password'))
-                                              <span class="help-block">
-                                                  <strong>{{ $errors->first('password') }}</strong>
-                                              </span>
-                                             @endif
-
-                                    </div>
-
-                                    <div class="col-xs-5 {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                          <label for="password_confirmation" class="control-label">Confirmação Senha</label>
-
-                                          <input id="password_confirmation" placeholder = "Campo Obrigatório" maxlength="60"  name = "password_confirmation" type="password" class="form-control" value="">
-
-                                             <!-- se houver erros na validacao do form request -->
-                                             @if ($errors->has('password_confirmation'))
-                                              <span class="help-block">
-                                                  <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                              </span>
-                                             @endif
-
-                                    </div>
-
-                            </div>
-
-
-                            <div class="row">
-                                  <div class="col-xs-5">
-                                          <label for="caminhologo" class="control-label">Foto</label>
-                                          <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" >
                                   </div>
+
+                                </div>
+                              </div>
+
+                            </div>
+
                           </div>
 
-            </div><!-- fim box-body"-->
+                        </div>
+
+
+             </div><!-- fim box-body"-->
         </div><!-- box box-primary -->
 
         <div class="box-footer">
-            <button class = 'btn btn-primary' type ='submit' id='gravar'>Gravar</button>
-            <a href="{{ url('/usuarios')}}" class="btn btn-default">Cancelar</a>
+            <button class = 'btn btn-primary' type ='submit'>Gravar</button>
+            <a href="{{ url('/' . \Session::get('route') . '/' . $tipo)}}" class="btn btn-default">Cancelar</a>
         </div>
 
-       </form>
+        </form>
 
-    </div><!-- <col-md-12 -->
 
-</div><!-- row -->
-@endsection
+    </div>
 
-@section('tela_usuarios')
+</div>
 
 <script type="text/javascript">
+ /*Prepara checkbox bootstrap*/
+       $(function () {
 
-                  $(function () {
-
-            //TELA USUARIOS
-                            //----Quando abrir a pagina
-                            $("#ocultar_check").hide();     //Por padrao ocultar a DIV do check ADMIN
-                            //-----------------------------------------------------
+            $('.ckpago').checkboxpicker({
+                offLabel : 'Não',
+                onLabel : 'Sim',
+            });
 
 
-                            //------ Quando selecionar uma igreja/instituicao
-                            //  Se for diferente da sede, verifica se já existe ou não o ADMIN para aquela igreja...
-                                    $('#empresa').change(function () {
+            $('#ckpago').change(function()
+            {
+                  if ($(this).prop('checked'))
+                     $("#esconder").show();
+                  else
+                    $("#esconder").hide();
+            });
 
-                                        var empresa_id = $(this).val();
 
-                                        $.get('./../validar/' + empresa_id + '/user',  function (data)
-                                        {
+      });
 
-                                            $("#sera_admin").attr('value','0');
-
-                                            if (data==0) //Não existe ADMIN ainda...
-                                            {
-                                                $('#mensagem').html('<span class="alert alert-warning alert-dismissible">Este será o primeiro usuário para a Igreja/Instituição selecionada. Por padrão será cadastrado como Administrador.</span>');
-                                                $("#ocultar_grupo").hide();
-                                                $("#ocultar_check").show();
-                                                $("#chkAdmin").attr('checked','checked');
-                                                $("#sera_admin").attr('value','1');
-                                            }
-                                            else if (data==1) //Já existe ADMIN, nao deixa criar mais usuarios
-                                            {
-                                                $('#mensagem').html('<span class="alert alert-warning alert-dismissible">Já existe usuário Administrador cadastrado para essa Igreja/Instituição. Somente o Administrador poderá cadastrar novos usuários.</span>');
-                                                $("#ocultar_grupo").hide();
-                                                $("#ocultar_check").hide();
-                                                $("#gravar").hide();
-                                            }
-                                            else if (data==2) //Igreja Sede, pode criar usuarios a vontade, porem esconde a check de ADMIN
-                                            {
-                                                $('#mensagem').html('<span class="mensagem"></span>');
-                                                $("#ocultar_check").hide();
-                                                $("#chkAdmin").attr('checked','unchecked');
-                                            }
-
-                                        });
-
-                                    });
-
-                                            });
-
-   </script>
+</script>
 
 @endsection

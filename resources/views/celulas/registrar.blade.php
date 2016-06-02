@@ -373,6 +373,7 @@
                       </div>
 
             </div><!-- fim box-body"-->
+
         </div><!-- box box-primary -->
 
         <div class="box-footer">

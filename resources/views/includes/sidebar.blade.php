@@ -205,7 +205,7 @@
                   <li>
                     <a href="#"><i class="fa fa-money"></i>Contas a Receber <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                      <li><a href="#">Lançamentos</a></li>
+                      <li><a href="{!! url('/titulos/R') !!}">Lançamentos</a></li>
                     </ul>
                   </li>
 

@@ -33,7 +33,8 @@ class CadastrarController extends Controller
             {
                 $array_parametros = explode("&", htmlspecialchars_decode($conteudo));
 
-                if (trim($array_parametros[0])=="grupos_pessoas")
+                /*Tabelas com estrutura de empresa e clientes cloud*/
+                if (trim($array_parametros[0])=="grupos_pessoas" || trim($array_parametros[0])=="planos_contas" || trim($array_parametros[0])=="centros_custos" || trim($array_parametros[0])=="contas")
                 {
                      \DB::insert("insert into " . $array_parametros[0] . " (nome, empresas_id, empresas_clientes_cloud_id) values('" . $array_parametros[1] . "', " . $this->dados_login->empresas_id . ", " . $this->dados_login->empresas_clientes_cloud_id . " ) ");
                 }
@@ -49,7 +50,7 @@ class CadastrarController extends Controller
        public function carregar_tabela($tabela)
        {
 
-                if (trim($tabela)=="grupos_pessoas")
+                if (trim($tabela)=="grupos_pessoas" || trim($tabela)=="centros_custos" || trim($tabela)=="planos_contas" || trim($tabela)=="contas")
                 {
                     $view = \DB::select('select * from ' . $tabela . ' where  empresas_id = ? and empresas_clientes_cloud_id = ? order by nome', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
                 }

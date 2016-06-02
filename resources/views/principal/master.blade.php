@@ -8,7 +8,12 @@
 
         <!-- bootstrap -->
         <!--<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">-->
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">-->
+
+
+        <!--<link href="{{ asset('/dist/css/bootstrap.css')}}" rel="stylesheet">-->
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
         <script src="//vitalets.github.io/x-editable/assets/mockjax/jquery.mockjax.js"></script>
@@ -18,8 +23,9 @@
         <!-- antigo -->
 
         <!-- x-editable (bootstrap version) -->
-        <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.6/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+        <!--<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.6/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet"/>-->
         <!--<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.6/bootstrap-editable/js/bootstrap-editable.min.js"></script>-->
+        <link href="{{ asset('/dist/css/bootstrap-editable.css')}}" rel="stylesheet" type="text/css" />
         <script src="{{ asset('/dist/js/bootstrap-editable.js')}}"></script>
 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.css" rel="stylesheet" type="text/css" />
@@ -200,12 +206,33 @@
 
 <script type="text/javascript">
 
+    function validar_data(who)
+    {
+        if (who.value!="")
+        {
+            str=who.value;
+            str=str.split('/');
+            dte=new Date(str[1]+'/'+str[0]+'/'+str[2]);
+            mStr=''+(dte.getMonth()+1);
+            mStr=(mStr<10)?'0'+mStr:mStr;
+
+            if(mStr!=str[1]||isNaN(dte))
+            {
+                who.value="";
+                alert('Data Inválida!');
+                who.focus();
+                return;
+            }
+        }
+    }
+
+
     /*Função usada para exibir no campo input pessoas[] a pessoa pesquisa da tela modal*/
     function incluir_registro_combo(objInput)
     {
           $('select[name=' + objInput + ']').change(function() {
 
-            if ($('select[name=' + objInput + '] option:selected').text() == '(+ Incluir Novo Registro)')
+            if ($('select[name=' + objInput + '] option:selected').text() == '(Incluir Novo Registro)')
             {
                 //Abre modal para cadastrar novo item no combo
                 $('#modal_' + objInput).modal('show');
@@ -289,7 +316,7 @@
                                     var html='';
 
                                     html += '<option value=""></option>';
-                                    html += '<option  value="" data-icon="glyphicon-pencil">(+ Incluir Novo Registro)</option>';
+                                    html += '<option  value="" data-icon="glyphicon-pencil">(Incluir Novo Registro)</option>';
                                     html += '<option data-divider="true"></option>';
 
 

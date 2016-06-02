@@ -1315,26 +1315,6 @@
    </div><!-- FIM - DADOS ECLISIASTICOS-->
 
 <script type="text/javascript">
-  function validar_data(who)
-  {
-        if (who.value!="")
-        {
-            str=who.value;
-            str=str.split('/');
-            dte=new Date(str[1]+'/'+str[0]+'/'+str[2]);
-            mStr=''+(dte.getMonth()+1);
-            mStr=(mStr<10)?'0'+mStr:mStr;
-
-            if(mStr!=str[1]||isNaN(dte))
-            {
-                who.value="";
-                alert('Data Inválida!');
-                who.focus();
-                return;
-            }
-        }
-  }
-
 
 /*Quando selecionar um conjuge do cadastro desabilitar os campos para informação manual*/
    function validar_conjuge()

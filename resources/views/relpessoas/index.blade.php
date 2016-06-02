@@ -177,6 +177,7 @@
                                                                     <option  value="xlsx" data-icon="fa fa-file-excel-o">Planilha Excel (.xls)</option>
                                                                     <option  value="csv" data-icon="fa fa-file-excel-o">CSV (.csv)</option>
                                                                     <option  value="docx" data-icon="fa fa-file-word-o">Microsoft Word (.docx)</option>
+                                                                    <option  value="html" data-icon="fa fa-file-word-o">HTML (.html)</option>
                                                                     <option  value="email" data-icon="fa fa-envelope-o">Listagem de E-mails</option>
                                                                     </select>
 

@@ -63,4 +63,17 @@ class FuncoesGerais extends Controller
             return $data_formatada->format('d/m/Y'); //Retorna data preparada para insert
     }
 
+    public function GravarCurrency($valor)
+    {
+            $converterValor = str_replace('.','',$valor);
+            $converterValor = str_replace(',','.',$valor);
+            return $converterValor;
+    }
+
+    public function ExibirCurrency($valor)
+    {
+            //number_format($valor,0,",",".");
+            return number_format($valor, 2, ',', '.'); // retorna R$100,000.50
+    }
+
 }

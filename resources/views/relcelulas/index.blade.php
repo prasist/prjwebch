@@ -144,27 +144,34 @@
                                     <label for="resultado" class="control-label">Formato de Sáida : </label>
                                     <select id="resultado" name="resultado" class="form-control selectpicker">
                                     <option  value="pdf" data-icon="fa fa-file-pdf-o" selected>PDF (.pdf)</option>
-                                    <option  value="xls" data-icon="fa fa-file-excel-o">Planilha Excel (.xls)</option>
+                                    <option  value="xlsx" data-icon="fa fa-file-excel-o">Planilha Excel (.xls)</option>
+                                    <option  value="csv" data-icon="fa fa-file-excel-o">CSV (.csv)</option>
+                                    <option  value="docx" data-icon="fa fa-file-word-o">Microsoft Word (.docx)</option>
+                                    <option  value="html" data-icon="fa fa-file-word-o">HTML (.html)</option>
+                                    <option  value="email" data-icon="fa fa-envelope-o">Listagem de E-mails</option>
                                     </select>
 
                                      @if ($var_download!="")
-                                      <br/>
-                                      <br/>
-                                       <div class="alert2 alert-info">
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                        <h4><i class="icon fa fa-check"></i> Relatório gerado com Sucesso!</h4>
-                                        Clique no link abaixo para baixar o arquivo.
-                                      </div>
-                                      <a href="{!! url($var_download) !!}" class="text" target="_blank">
-                                      CLIQUE AQUI PARA VISUALIZAR / BAIXAR
-                                      @if (substr($var_download,-3)=="pdf")
-                                          <img src="{{ url('/images/pdf.png') }}" alt="Baixar Arquivo" />
-                                       @else
-                                          <img src="{{ url('/images/excel.png') }}" alt="Baixar Arquivo" />
-                                       @endif
-                                       </a>
-                                     @endif
-
+                                        <br/>
+                                        <br/>
+                                        <div class="alert2 alert-info">
+                                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                          <h4><i class="icon fa fa-check"></i> Relatório gerado com Sucesso!</h4>
+                                          Clique no link abaixo para baixar o arquivo.
+                                        </div>
+                                        <a href="{!! url($var_download) !!}" class="text" target="_blank">
+                                          CLIQUE AQUI PARA VISUALIZAR / BAIXAR
+                                          @if (substr($var_download,-3)=="pdf")
+                                            <img src="{{ url('/images/pdf.png') }}" alt="Baixar Arquivo" />
+                                          @elseif (substr($var_download,-4)=="xlsx")
+                                            <img src="{{ url('/images/excel.png') }}" alt="Baixar Arquivo" />
+                                          @elseif (substr($var_download,-3)=="csv")
+                                            <img src="{{ url('/images/csv.jpg') }}" alt="Baixar Arquivo" />
+                                          @elseif (substr($var_download,-4)=="docx")
+                                             <img src="{{ url('/images/microsoft-word-icon.png') }}" alt="Baixar Arquivo" />
+                                          @endif
+                                        </a>
+                                      @endif
 
                               </div>
                           </div>
@@ -181,7 +188,7 @@
 
                                     <div class="box-body">
 
-                                          <!-- NIVEL 1-->
+                                      <!-- NIVEL 1-->
                                       <div class="form-group">
                                           <label for="nivel1_up" class="col-sm-2 control-label">{{Session::get('nivel1')}}</label>
                                           <div class="col-sm-10">
@@ -193,7 +200,6 @@
                                                 </select>
                                           </div>
                                       </div>
-
 
                                       <!-- NIVEL 2 -->
                                       <div class="form-group">
@@ -248,7 +254,6 @@
                                         </div>
                                       </div>
 
-
                                     </div>
 
                             <!-- FIM Horizontal Form -->
@@ -294,7 +299,7 @@
           };
       })();
 
-            /*Prepara checkbox bootstrap*/
+        /*Prepara checkbox bootstrap*/
        $(function () {
 
             $('.ckEstruturas').checkboxpicker({
