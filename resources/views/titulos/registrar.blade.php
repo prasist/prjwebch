@@ -254,7 +254,7 @@
             });
 
 
-            $('#ckpago').change(function()
+            $('.ckpago').change(function()
             {
                   if ($(this).prop('checked'))
                      $("#esconder").show();
