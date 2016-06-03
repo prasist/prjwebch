@@ -26,11 +26,12 @@
         <div class="box box-primary">
             <!--  status, descricao, valor, data_vencimento, data_emissao) -->
              <div class="box-body">
+                    <input  id= "ckpago" name="ckpago" type="hidden" value=""/>
 
                     <div class="row">
                           <div class="col-xs-4 {{ $errors->has('descricao') ? ' has-error' : '' }}">
                                 <label for="descricao" class="control-label">Descrição</label>
-                                <input id="descricao" maxlength="60"  placeholder="Campo Obrigatório" name = "nome" type="text" class="form-control" value="{{ old('descricao') }}">
+                                <input id="descricao"  placeholder="Campo Obrigatório" name = "descricao" type="text" class="form-control" value="{{ old('descricao') }}">
                                    <!-- se houver erros na validacao do form request -->
                                    @if ($errors->has('descricao'))
                                     <span class="help-block">
@@ -63,7 +64,7 @@
 
                          </div>
 
-                         <div class="col-xs-2">
+                         <div class="col-xs-2 {{ $errors->has('data_vencimento') ? ' has-error' : '' }}">
                               <label for="data_vencimento" class="control-label">Data Vencimento</label>
 
                               <div class="input-group">
@@ -72,6 +73,12 @@
                                       </div>
 
                                       <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                      <!-- se houver erros na validacao do form request -->
+                                       @if ($errors->has('data_vencimento'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('data_vencimento') }}</strong>
+                                        </span>
+                                       @endif
                               </div>
 
                          </div>
@@ -101,7 +108,7 @@
                                   <label for="ckpago" class="control-label">Pago ?</label>
                                   <div class="input-group">
                                          <div class="input-group-addon">
-                                              <input  id= "ckpago" name="ckpago" type="checkbox" class="ckpago" data-group-cls="btn-group-sm" />
+                                              <input  id= "ckpago" name="ckpago" type="checkbox" class="ckpago" data-group-cls="btn-group-sm" value="true"/>
                                          </div>
                                   </div>
                             </div>
@@ -114,7 +121,10 @@
                                            <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input id ="data_pagamento" name = "data_pagamento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                            <input id ="data_pagamento" name = "data_pagamento"
+                                            onblur="validar_data(this);" type="text"
+                                            class="form-control"
+                                            data-inputmask='"mask": "99/99/9999"' data-mask  value="">
                                     </div>
 
                                </div>

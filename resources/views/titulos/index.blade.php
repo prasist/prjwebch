@@ -108,9 +108,17 @@
 
                             <td><input  id="check_id" name="check_id" type="checkbox" /></td>
                             <td>
-                                    <a href="#" class="data_venc"  data-type="text" data-column="data_venc" data-url="{{ url('/titulos/' . $value->id . '/update_inline/data_venc/' . $tipo)}}" data-pk="{!!$value->id!!}" data-title="change" data-name="data_venc">
-                                        {{$value->data_vencimento}}
+                                    <a href="#"
+                                    class="data_venc"
+                                    data-type="text"
+                                    data-column="data_venc"
+                                    data-url="{{ url('/titulos/' . $value->id . '/update_inline/data_venc/' . $tipo)}}"
+                                    data-pk="{!!$value->id!!}"
+                                    data-title="change"
+                                    data-name="data_venc">
+                                    {{$value->data_vencimento}}
                                     </a>
+
                             </td>
                             <td>
                                     <a href="#" class="descricao"  data-type="text" data-column="descricao" data-url="{{ url('/titulos/' . $value->id . '/update_inline/descricao/' . $tipo)}}" data-pk="{!!$value->id!!}" data-title="change" data-name="descricao">
@@ -245,6 +253,11 @@
 
 
             $('.descricao').editable({
+                validate: function(value) {
+                    if($.trim(value) == '') {
+                        return 'Campo Obrigatório';
+                    }
+                },
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
                     params.name = $(this).editable().data('descricao');
@@ -263,6 +276,12 @@
 
             /*Tabela editavel - colunas*/
             $('.data_venc').editable({
+                validate: function(value) {
+                    alert($.trim(value));
+                    if($.trim(value) == '') {
+                        return 'Campo Obrigatório';
+                    }
+                },
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
                     params.name = $(this).editable().data('data_venc');
@@ -300,6 +319,11 @@
 
             /*Tabela editavel - colunas*/
             $('.valor').editable({
+                validate: function(value) {
+                    if($.trim(value) == '') {
+                        return 'Campo Obrigatório';
+                    }
+                },
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
                     params.name = $(this).editable().data('valor');

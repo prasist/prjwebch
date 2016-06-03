@@ -19,6 +19,9 @@ class TitulosController extends Controller
         $this->rota = "titulos"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
+        /*Instancia a classe de funcoes (Data, valor, etc)*/
+        $this->formatador = new  \App\Functions\FuncoesGerais();
+
         //Validação de permissão de acesso a pagina
         if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
         {
@@ -47,7 +50,8 @@ class TitulosController extends Controller
         return view($this->rota . '.index',['dados'=>$dados, 'post_status'=>'', 'tipo'=>$tipo, 'post_mes'=>'']);
     }
 
-    //Criar novo registro
+
+    //Exibe pagina (view) para insercao de dados
     public function create($tipo)
     {
 
@@ -80,10 +84,9 @@ class TitulosController extends Controller
 
     }
 
+    /*Pesquisa */
     public function pesquisar(\Illuminate\Http\Request  $request, $tipo)
     {
-
-        $formatador = new  \App\Functions\FuncoesGerais();
 
           $input = $request->except(array('_token')); //não levar o token
 
@@ -99,8 +102,8 @@ class TitulosController extends Controller
           }
           else if ($input["mes"]=="E") //Mes especifico
           {
-               $data_inicial = $formatador->FormatarData($input["data_inicial"]);
-               $data_final = $formatador->FormatarData($input["data_final"]);
+               $data_inicial = $this->formatador->FormatarData($input["data_inicial"]);
+               $data_final = $this->formatador->FormatarData($input["data_final"]);
           }
 
 
@@ -129,6 +132,57 @@ class TitulosController extends Controller
 
     }
 
+
+    /*Update ou insert*/
+    public function salvar($request, $id, $tipo, $tipo_operacao)
+    {
+
+           /*Validação de campos - request*/
+           $this->validate($request, [
+                    'descricao' => 'required',
+                    'data_vencimento' => 'required|date',
+                    'valor' => 'required',
+           ]);
+
+           $input = $request->except(array('_token', 'ativo')); //não levar o token
+
+          if ($tipo_operacao=="create") //novo registro
+          {
+               $dados = new titulos();
+          }
+          else //update
+          {
+               $dados = titulos::findOrfail($id);
+          }
+
+           $dados->descricao  = $input['descricao'];
+           $dados->empresas_id  = $this->dados_login->empresas_id;
+           $dados->empresas_clientes_cloud_id  = $this->dados_login->empresas_clientes_cloud_id;
+           $dados->valor  = $this->formatador->GravarCurrency($input["valor"]);
+           $dados->data_vencimento  = $this->formatador->FormatarData($input["data_vencimento"]);
+           $dados->data_emissao  = $this->formatador->FormatarData($input["data_emissao"]);
+           $dados->data_pagamento  = $this->formatador->FormatarData($input["data_pagamento"]);
+           $dados->tipo  = $tipo;
+           $dados->status  = ($input['ckpago']  ? "B" : "A");
+           $dados->desconto  = ($input["desconto"]!="" ? $this->formatador->GravarCurrency($input["desconto"]) : null);
+           $dados->acrescimo  = ($input["acrescimo"]!="" ? $this->formatador->GravarCurrency($input["acrescimo"]) : null);
+           $dados->valor_pago  = ($input["valor_pago"]!="" ? $this->formatador->GravarCurrency($input["valor_pago"]) : null);
+           $dados->grupos_titulos_id  = ($input['grupos_titulos']=="" ? null : $input['grupos_titulos']);
+           $dados->pessoas_id  = ($input['fornecedor']=="" ? null : $input['fornecedor']);
+           $dados->contas_id  =  ($input['conta']=="" ? null : $input['conta']);
+           $dados->planos_contas_id  =  ($input['plano']=="" ? null : $input['plano']);
+           $dados->centros_custos_id  =  ($input['centros_custos']=="" ? null : $input['centros_custos']);
+           $dados->obs  = $input['obs'];
+           $dados->numdoc  = $input['numdoc'];
+           $dados->serie  = $input['serie'];
+           $dados->numpar  = $input['parcelas'];
+           $dados->users_id  = Auth::user()->id;
+
+           $dados->save();
+
+    }
+
+
 /*
 * Grava dados no banco
 *
@@ -136,30 +190,20 @@ class TitulosController extends Controller
     public function store(\Illuminate\Http\Request  $request, $tipo)
     {
 
-            /*Validação de campos - request*/
-            $this->validate($request, [
-                    'nome' => 'required|max:60:min:3',
-            ]);
-
-           $input = $request->except(array('_token', 'ativo')); //não levar o token
-
-           $grupos = new titulos();
-           $grupos->nome  = $input['nome'];
-           $grupos->clientes_cloud_id  = $this->dados_login->empresas_clientes_cloud_id;
-           $grupos->save();
-
-           \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-
-            return redirect($this->rota);
+            $this->salvar($request, "", $tipo, "create");
+            \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
+            return redirect($this->rota . '/' . $tipo);
 
     }
+
+
 
     //Abre tela para edicao ou somente visualização dos registros
     private function exibir ($request, $id, $preview, $tipo)
     {
         if($request->ajax())
         {
-            return URL::to($this->rota . '/'. $id . '/edit');
+            return URL::to($this->rota . '/'. $id . '/edit/' . $tipo);
         }
 
         if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
@@ -169,34 +213,35 @@ class TitulosController extends Controller
 
         //preview = true, somente visualizacao, desabilita botao gravar
         $dados = titulos::findOrfail($id);
-        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview] );
+        return view($this->rota . '.edit/' . $tipo, ['dados' =>$dados, 'preview' => $preview] );
 
     }
+
+
+
 
     /*Update pela table editavel*/
     public function update_inline(\Illuminate\Http\Request  $request, $id, $campo, $tipo)
     {
 
-        $formatador = new  \App\Functions\FuncoesGerais();
-
         $input = $request->except(array('_token', 'ativo')); //não levar o token
         $titulos = titulos::findOrfail($id);
 
-        if ($campo=="data_venc") $titulos->data_vencimento  = $formatador->FormatarData($input["value"]);
+        if ($campo=="data_venc") $titulos->data_vencimento  = $this->formatador->FormatarData($input["value"]);
 
-        if ($campo=="data_pagto")  $titulos->data_pagamento  = $formatador->FormatarData($input["value"]);
+        if ($campo=="data_pagto")  $titulos->data_pagamento  = $this->formatador->FormatarData($input["value"]);
 
         if ($campo=="descricao") $titulos->descricao  = $input["value"];
 
         if ($campo=="status")  $titulos->status  = $input["value"];
 
-        if ($campo=="valor") $titulos->valor  = $formatador->GravarCurrency($input["value"]);
+        if ($campo=="valor") $titulos->valor  = $this->formatador->GravarCurrency($input["value"]);
 
-        if ($campo=="valor_pago")  $titulos->valor_pago  = $formatador->GravarCurrency($input["value"]);
+        if ($campo=="valor_pago")  $titulos->valor_pago  = $this->formatador->GravarCurrency($input["value"]);
 
-        if ($campo=="acrescimo") $titulos->acrescimo  = $formatador->GravarCurrency($input["value"]);
+        if ($campo=="acrescimo") $titulos->acrescimo  = $this->formatador->GravarCurrency($input["value"]);
 
-        if ($campo=="desconto")  $titulos->desconto  = $formatador->GravarCurrency($input["value"]);
+        if ($campo=="desconto")  $titulos->desconto  = $this->formatador->GravarCurrency($input["value"]);
 
         if ($campo=="check_pago")
         {
@@ -219,20 +264,17 @@ class TitulosController extends Controller
         return response()->json([ 'code'=>200], 200);
     }
 
+
     //Visualizar registro
     public function show (\Illuminate\Http\Request $request, $id, $tipo)
     {
-
             return $this->exibir($request, $id, 'true', $tipo);
-
     }
 
     //Direciona para tela de alteracao
     public function edit(\Illuminate\Http\Request $request, $id, $tipo)
     {
-
             return $this->exibir($request, $id, 'false', $tipo);
-
     }
 
 
@@ -246,22 +288,11 @@ class TitulosController extends Controller
     public function update(\Illuminate\Http\Request  $request, $id, $tipo)
     {
 
-        /*Validação de campos - request*/
-        $this->validate($request, [
-                'nome' => 'required|max:60:min:3',
-         ]);
-
-        $input = $request->except(array('_token', 'ativo')); //não levar o token
-
-        $dados = titulos::findOrfail($id);
-        $dados->nome  = $input['nome'];
-        $dados->save();
-
+        $this->salvar($request, $id,  $tipo, "update");
         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-
-        return redirect($this->rota);
-
+        return redirect($this->rota . '/' . $tipo);
     }
+
 
     /**
      * Excluir registro do banco.
@@ -271,12 +302,9 @@ class TitulosController extends Controller
      */
     public function destroy($id, $tipo)
     {
-
             $dados = titulos::findOrfail($id);
             $dados->delete();
-
-            return redirect($this->rota);
-
+            return redirect($this->rota . '/' . $tipo);
     }
 
 }
