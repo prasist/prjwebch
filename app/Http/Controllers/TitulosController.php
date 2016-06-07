@@ -168,14 +168,14 @@ class TitulosController extends Controller
            $dados->acrescimo  = ($input["acrescimo"]!="" ? $this->formatador->GravarCurrency($input["acrescimo"]) : null);
            $dados->valor_pago  = ($input["valor_pago"]!="" ? $this->formatador->GravarCurrency($input["valor_pago"]) : null);
            $dados->grupos_titulos_id  = ($input['grupos_titulos']=="" ? null : $input['grupos_titulos']);
-           $dados->pessoas_id  = ($input['fornecedor']=="" ? null : $input['fornecedor']);
+           $dados->pessoas_id  = ($input['fornecedor']=="" ? null : substr($input['fornecedor'],0,9));
            $dados->contas_id  =  ($input['conta']=="" ? null : $input['conta']);
            $dados->planos_contas_id  =  ($input['plano']=="" ? null : $input['plano']);
            $dados->centros_custos_id  =  ($input['centros_custos']=="" ? null : $input['centros_custos']);
            $dados->obs  = $input['obs'];
            $dados->numdoc  = $input['numdoc'];
            $dados->serie  = $input['serie'];
-           $dados->numpar  = $input['parcelas'];
+           $dados->numpar  = ($input['parcelas']=="" ? 1 : $input['parcelas']);
            $dados->users_id  = Auth::user()->id;
 
            $dados->save();
@@ -189,11 +189,9 @@ class TitulosController extends Controller
 */
     public function store(\Illuminate\Http\Request  $request, $tipo)
     {
-
             $this->salvar($request, "", $tipo, "create");
             \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
             return redirect($this->rota . '/' . $tipo);
-
     }
 
 
@@ -206,14 +204,41 @@ class TitulosController extends Controller
             return URL::to($this->rota . '/'. $id . '/edit/' . $tipo);
         }
 
-        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
-        {
-              return redirect('home');
-        }
+        $contas = \App\Models\contas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->OrderBy('nome')
+        ->get();
 
-        //preview = true, somente visualizacao, desabilita botao gravar
-        $dados = titulos::findOrfail($id);
-        return view($this->rota . '.edit/' . $tipo, ['dados' =>$dados, 'preview' => $preview] );
+        $plano_contas = \App\Models\planos_contas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->OrderBy('nome')
+        ->get();
+
+        $centros_custos = \App\Models\centros_custos::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->OrderBy('nome')
+        ->get();
+
+        $grupos_titulos = \App\Models\grupos_titulos::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->OrderBy('nome')
+        ->get();
+
+        /*Log historico do titulo*/
+        $sQuery = "select data_ocorrencia, name, descricao, valor, tipo, status, acao, ip, id_titulo from log_financeiro inner join users  on users.id = log_financeiro.users_id";
+        $sQuery .= " where id_titulo = ? ";
+        $log = \DB::select($sQuery,[$id]);
+
+
+        $sQuery = "select pessoas.razaosocial, titulos.id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, to_char(to_date(data_emissao, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_emissao, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, pessoas_id, contas_id, planos_contas_id, centros_custos_id, titulos.obs, numpar, numdoc, serie, grupos_titulos_id ";
+        $sQuery .= " from titulos left join pessoas on pessoas.id = titulos.pessoas_id";
+        $sQuery .= " where titulos.tipo = ? ";
+        $sQuery .= " and titulos.empresas_id = ? ";
+        $sQuery .= " and titulos.empresas_clientes_cloud_id = ? ";
+        $sQuery .= " and titulos.id = ? ";
+        $dados = \DB::select($sQuery,[$tipo, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id, $id]);
+
+        return view($this->rota . '.edit', ['log'=>$log, 'preview' => $preview, 'dados'=>$dados, 'contas' => $contas,'tipo'=>$tipo, 'plano_contas'=>$plano_contas, 'centros_custos'=>$centros_custos, 'grupos_titulos'=>$grupos_titulos]);
 
     }
 
