@@ -215,7 +215,6 @@
 
         $(document).ready(function() {
 
-
             $('#mes').change(function()
             {
                   if ($(this).prop('value')=="E")
@@ -250,7 +249,6 @@
                     }
                 }
             });
-
 
             $('.descricao').editable({
                 validate: function(value) {
