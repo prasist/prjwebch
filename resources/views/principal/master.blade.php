@@ -384,6 +384,8 @@
         <script src="{{ asset('/js/typeahead.min.js')}}"></script>
         <script src="{{ asset('/dist/webcam.js')}}"></script>
         <script src="{{ asset('/dist/js/bootstrap-checkbox.min.js')}}" defer></script>
+        <script src="{{ asset('/dist/js/moment.min.js')}}"></script> <!-- datas-->
+        <script src="{{ asset('/dist/js/autoNumeric-min.js')}}"></script> <!-- monetarios-->
 
 
         <!-- tour rápido-->
