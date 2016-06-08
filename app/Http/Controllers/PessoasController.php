@@ -277,9 +277,8 @@ class PessoasController extends Controller
         ->orderBy('nome','ASC')
         ->get();
 
-        $vazio = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->where('nome', 'Membros')
-        ->get();
+        //Artificio para tabelas vazias com objetos collection
+        $vazio = \App\Models\tabela_vazia::get();
 
         //Verificar qual o tipo de pessoa para habilitar ou não abas e campos conforme o tipo
         //Ex; Pessoa fisica, habilita cpf e rg, juridica habilita CNPJ,  membros habilita dados especificos de membresia.
@@ -1293,9 +1292,8 @@ public function salvar($request, $id, $tipo_operacao) {
         //Ex; Pessoa fisica, habilita cpf e rg, juridica habilita CNPJ,  MEMBRO habilita dados especificos de membresia.
         $habilitar_interface = \App\Models\tipospessoas::findOrfail($id_tipo_pessoa);
 
-        $vazio = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->where('nome', 'Membros')
-        ->get();
+        //Artificio para tabelas vazias com objetos collection
+        $vazio = \App\Models\tabela_vazia::get();
 
         //Listagem grupos de pessoas (Para carregar dropdown )
         $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
@@ -1459,6 +1457,7 @@ public function salvar($request, $id, $tipo_operacao) {
             ->get();
 
             if ($membros_formacoes->count()==0) $membros_formacoes = $vazio;
+
 
             /*Dados idiomas*/
             $membros_idiomas  = \App\Models\membros_idiomas::select('idiomas_id as id')

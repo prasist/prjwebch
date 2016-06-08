@@ -144,43 +144,69 @@ class TitulosController extends Controller
                     'valor' => 'required',
            ]);
 
-           $input = $request->except(array('_token', 'ativo')); //não levar o token
+          $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-          if ($tipo_operacao=="create") //novo registro
-          {
-               $dados = new titulos();
-          }
-          else //update
-          {
-               $dados = titulos::findOrfail($id);
-          }
+          $qtd_parcelas = ($input['parcelas']=="" ? 1 : $input['parcelas']); /*Qtd de parcelas*/
+          $vencimento = $this->formatador->FormatarData($input["data_vencimento"]); //Primeiro vencimento
+          $date = new \DateTime($vencimento);
 
-           $dados->descricao  = $input['descricao'];
-           $dados->empresas_id  = $this->dados_login->empresas_id;
-           $dados->empresas_clientes_cloud_id  = $this->dados_login->empresas_clientes_cloud_id;
-           $dados->valor  = $this->formatador->GravarCurrency($input["valor"]);
-           $dados->data_vencimento  = $this->formatador->FormatarData($input["data_vencimento"]);
-           $dados->data_emissao  = $this->formatador->FormatarData($input["data_emissao"]);
-           $dados->data_pagamento  = $this->formatador->FormatarData($input["data_pagamento"]);
-           $dados->tipo  = $tipo;
-           $dados->status  = ($input['ckpago']  ? "B" : "A");
-           $dados->desconto  = ($input["desconto"]!="" ? $this->formatador->GravarCurrency($input["desconto"]) : null);
-           $dados->acrescimo  = ($input["acrescimo"]!="" ? $this->formatador->GravarCurrency($input["acrescimo"]) : null);
-           $dados->valor_pago  = ($input["valor_pago"]!="" ? $this->formatador->GravarCurrency($input["valor_pago"]) : null);
-           $dados->grupos_titulos_id  = ($input['grupos_titulos']=="" ? null : $input['grupos_titulos']);
-           $dados->pessoas_id  = ($input['fornecedor']=="" ? null : substr($input['fornecedor'],0,9));
-           $dados->contas_id  =  ($input['conta']=="" ? null : $input['conta']);
-           $dados->planos_contas_id  =  ($input['plano']=="" ? null : $input['plano']);
-           $dados->centros_custos_id  =  ($input['centros_custos']=="" ? null : $input['centros_custos']);
-           $dados->obs  = $input['obs'];
-           $dados->numdoc  = $input['numdoc'];
-           $dados->serie  = $input['serie'];
-           $dados->numpar  = ($input['parcelas']=="" ? 1 : $input['parcelas']);
-           $dados->users_id  = Auth::user()->id;
+            if ($tipo_operacao=="create") //novo registro
+            {
+                for ($i=1; $i <= $qtd_parcelas; $i++) //Se for passado parcela maior que 1
+                {
+                     $dados = new titulos();
+                     $this->persisteDados($tipo, $dados, $input, $i, $vencimento, $qtd_parcelas, $date);
 
-           $dados->save();
+                     //Acrescenta um mes na data de vencimento
+                     $interval = new \DateInterval('P1M');
+                     $vencimento = $date->add($interval);
+
+                }
+            }
+            else //update
+            {
+                 $dados = titulos::findOrfail($id);
+                 $this->persisteDados($tipo, $dados, $input, 1, $vencimento, 1, $date);
+            }
+
 
     }
+
+
+  private function persisteDados($tipo, $dados, $input, $seq, $vencimento, $qtd_parcelas, $date)
+  {
+
+      if ($qtd_parcelas>1) {
+        $dados->descricao  = $input['descricao'] . ' - (' . $seq . '/' . $qtd_parcelas . ')';
+      }else {
+        $dados->descricao  = $input['descricao'];
+      }
+
+      $dados->empresas_id  = $this->dados_login->empresas_id;
+      $dados->empresas_clientes_cloud_id  = $this->dados_login->empresas_clientes_cloud_id;
+      $dados->valor  = $this->formatador->GravarCurrency($input["valor"]);
+      $dados->data_vencimento  = $date->format('Y-m-d'); //Data vencimento (acrescida se mais de uma parcela)
+      $dados->data_emissao  = $this->formatador->FormatarData($input["data_emissao"]);
+      $dados->data_pagamento  = $this->formatador->FormatarData($input["data_pagamento"]);
+      $dados->tipo  = $tipo;
+      $dados->status  = ($input['ckpago']  ? "B" : "A");
+      $dados->desconto  = ($input["desconto"]!="" ? $this->formatador->GravarCurrency($input["desconto"]) : null);
+      $dados->acrescimo  = ($input["acrescimo"]!="" ? $this->formatador->GravarCurrency($input["acrescimo"]) : null);
+      $dados->valor_pago  = ($input["valor_pago"]!="" ? $this->formatador->GravarCurrency($input["valor_pago"]) : null);
+      $dados->grupos_titulos_id  = ($input['grupos_titulos']=="" ? null : $input['grupos_titulos']);
+      $dados->pessoas_id  = ($input['fornecedor']=="" ? null : substr($input['fornecedor'],0,9));
+      $dados->contas_id  =  ($input['conta']=="" ? null : $input['conta']);
+      $dados->planos_contas_id  =  ($input['plano']=="" ? null : $input['plano']);
+      $dados->centros_custos_id  =  ($input['centros_custos']=="" ? null : $input['centros_custos']);
+      $dados->obs  = $input['obs'];
+      $dados->numdoc  = $input['numdoc'];
+      $dados->serie  = $input['serie'];
+      $dados->numpar  = $seq;
+      $dados->users_id  = Auth::user()->id;
+      $dados->save();
+
+    }
+
 
 
 /*

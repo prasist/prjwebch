@@ -35,8 +35,8 @@
                             <span class="sr-only">Toggle Dropdown</span>
                           </button>
                           <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Baixar</a></li>
-                            <li><a href="#">Estornar</a></li>
+                            <li><a href="#">Definir como Pago</a></li>
+                            <li><a href="#">Definir como Não Pago</a></li>
                             <li><a href="#">Excluir</a></li>
                           </ul>
                         </div>
@@ -162,12 +162,12 @@
                                     data-title="change"
                                     data-name="check_pago">
                                         @if ($value->status =="B")
-                                        <i class='fa fa-thumbs-o-up'></i>
+                                        <!--<i class='fa fa-thumbs-o-up text-green'></i>-->
+                                        <p class='fa fa-thumbs-o-up text-green'> {{($value->status =="B" ? "SIm" : "Não")}}</p>
                                         @else
-                                        <i class='fa fa-thumbs-o-down'></i>
+                                        <!--<i class='fa fa-thumbs-o-down text-red'></i>-->
+                                        <p class='fa fa-thumbs-o-down text-red'> {{($value->status =="B" ? "SIm" : "Não")}}</p>
                                         @endif
-
-                                        {{($value->status =="B" ? "SIm" : "Não")}}
                                     </a>
 
                             </td>
