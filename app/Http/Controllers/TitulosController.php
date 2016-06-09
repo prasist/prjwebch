@@ -39,13 +39,22 @@ class TitulosController extends Controller
               return redirect('home');
         }
 
+        //Mes corrente
+        $mes =date("m"); // mes atual
+        $ano = date("Y"); // Ano atual
+        $ultimo_dia = date("t", mktime(0,0,0,$mes,'01',$ano)); // pegar ultimo dia do mes corrente
+        $data_inicial = $ano . '-' . $mes . '-01'; //Monta data inicial do mes corrente
+        $data_final = $ano . '-' . $mes . '-' . $ultimo_dia; //até último dia mes corrente
+
         $sQuery = "select id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, valor, acrescimo, desconto, descricao, tipo, status, valor_pago";
         $sQuery .= " from titulos ";
         $sQuery .= " where tipo = ? ";
         $sQuery .= " and empresas_id = ? ";
         $sQuery .= " and empresas_clientes_cloud_id = ? ";
+        $sQuery .= " and data_vencimento >= ? ";
+        $sQuery .= " and data_vencimento <= ? ";
         $sQuery .= " order by id ";
-        $dados = \DB::select($sQuery, [$tipo, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $dados = \DB::select($sQuery, [$tipo, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id, $data_inicial, $data_final]);
 
         return view($this->rota . '.index',['dados'=>$dados, 'post_status'=>'', 'tipo'=>$tipo, 'post_mes'=>'']);
     }
@@ -176,10 +185,13 @@ class TitulosController extends Controller
   private function persisteDados($tipo, $dados, $input, $seq, $vencimento, $qtd_parcelas, $date)
   {
 
-      if ($qtd_parcelas>1) {
-        $dados->descricao  = $input['descricao'] . ' - (' . $seq . '/' . $qtd_parcelas . ')';
-      }else {
-        $dados->descricao  = $input['descricao'];
+      if ($qtd_parcelas>1)
+      {
+          $dados->descricao  = $input['descricao'] . ' - (' . $seq . '/' . $qtd_parcelas . ')';
+      }
+      else
+      {
+          $dados->descricao  = $input['descricao'];
       }
 
       $dados->empresas_id  = $this->dados_login->empresas_id;
@@ -251,7 +263,7 @@ class TitulosController extends Controller
         ->get();
 
         /*Log historico do titulo*/
-        $sQuery = "select data_ocorrencia, name, descricao, valor, tipo, status, acao, ip, id_titulo from log_financeiro inner join users  on users.id = log_financeiro.users_id";
+        $sQuery = "select to_char(data_ocorrencia, 'DD/MM/YYYY  HH24:MI:SS') AS data_ocorrencia, name, descricao, valor, tipo, status, acao, ip, id_titulo from log_financeiro inner join users  on users.id = log_financeiro.users_id";
         $sQuery .= " where id_titulo = ? ";
         $log = \DB::select($sQuery,[$id]);
 

@@ -24,14 +24,16 @@
                   if ($(this).prop('checked'))
                   {
                       $("#esconder").show();
-                      $("#data_pagamento").val(moment().format('L')); //Data de pagamento dia
+                      $("#data_pagamento").val(moment().format('DD/MM/YYYY')); //Data de pagamento dia
                       $('#valor_pago').val($('#valor').val()); //Mesmo valor do titulo
+                      $('.ckpago').val('true'); //Mesmo valor do titulo
                   }
                   else
                   {
                     $("#data_pagamento").val(''); //Data de pagamento dia
                     $('#valor_pago').val(''); //Mesmo valor do titulo
                     $("#esconder").hide();
+                    $('.ckpago').val(''); //Mesmo valor do titulo
                   }
             });
 

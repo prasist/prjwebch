@@ -26,7 +26,7 @@
         <div class="box box-default">
 
              <div class="box-body">
-                    <input  id= "ckpago" name="ckpago" type="hidden" value=""/>
+
 
                             <!-- Custom Tabs -->
                       <div class="nav-tabs-custom">
@@ -117,6 +117,7 @@
 
                                         </div>
 
+                                        <input  id= "ckpago" name="ckpago" type="hidden" value=""/>
                                         <div class="row">
                                                 <div class="col-xs-4">
                                                       <label for="ckpago" class="control-label">Pago ?</label>
@@ -262,14 +263,30 @@
                           <!-- /.tab-pane -->
 
                           <div class="tab-pane" id="tab_2">
+                                    <table class="table">
+                                    <tr>
+                                        <td>Data Ocorrência</td>
+                                        <td>Usuário</td>
+                                        <td>Descrição Título</td>
+                                        <td>Valor</td>
+                                        <td>Tipo</td>
+                                        <td>Status</td>
+                                        <td>Ação</td>
+                                        <td>IP</td>
+                                    </tr>
                                     @foreach($log as $item)
-                                          <ul>
-                                          <li>
-                                               {!! $item->data_ocorrencia . ' - ' . $item->name . ' - ' . $item->descricao . ' - ' . $item->valor . ' - ' . $item->tipo . ' - ' . $item->status . ' - ' . $item->acao . ' - ' . $item->ip !!}
-                                          </li>
-                                          </ul>
-
+                                          <tr>
+                                              <td>{{$item->data_ocorrencia}}</td>
+                                              <td>{{$item->name}}</td>
+                                              <td>{{$item->descricao}}</td>
+                                              <td>{{$item->valor}}</td>
+                                              <td>{{$item->tipo}}</td>
+                                              <td>{{$item->status}}</td>
+                                              <td>{{$item->acao}}</td>
+                                              <td>{{$item->ip}}</td>
+                                          </tr>
                                     @endforeach
+                                    </table>
                           </div>
                           <!-- /.tab-pane -->
 

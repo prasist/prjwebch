@@ -14,7 +14,6 @@
         <div id="_token" class="hidden" data-token="{{ csrf_token() }}"></div>
         <div>{{{ $errors->first('erros') }}}</div>
 
-
         <div class="row">
                 <div class="col-xs-2">
                 @can('verifica_permissao', [ \Session::get('id_pagina'),'incluir'])
@@ -35,9 +34,9 @@
                             <span class="sr-only">Toggle Dropdown</span>
                           </button>
                           <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Definir como Pago</a></li>
-                            <li><a href="#">Definir como Não Pago</a></li>
-                            <li><a href="#">Excluir</a></li>
+                              <li><a href="#" onclick="if(confirm('Confirma o Pagamento dos Títulos Selecionados ?')) baixar_todos(event);"><i class="fa fa-thumbs-o-up"></i> Definir como Pago</a></li>
+                              <li><a href="#" onclick="if(confirm('Deseja marcar os Títulos Selecionados como NÃO PAGO ?')) baixar_todos(event);"><i class="fa fa-thumbs-o-down"></i> Definir como NÃO Pago</a></li>
+                              <li><a href="#" onclick="if(confirm('ATENÇÃO !!! Confirma a exclusão dos Títulos Selecionados ? Essa ação não tem reversão')) baixar_todos(event);"><i class="glyphicon glyphicon-trash"></i> Excluir</a></li>
                           </ul>
                         </div>
                 </div>
@@ -121,7 +120,7 @@
 
                         <tr>
 
-                            <td><input  id="check_id" name="check_id" type="checkbox" /></td>
+                            <td><input  id="check_id" name="check_id" type="checkbox" class="check_id" /></td>
                             <td>
                                     <a href="#"
                                     class="data_venc"
@@ -226,7 +225,21 @@
 
 <script type="text/javascript">
 
+       $('#check_todos').change(function() {
+            if ($(this).prop('checked')) {
+                $('.check_id').prop('checked', true);
+            } else {
+                $('.check_id').prop('checked', false);
+            }
+        });
+
         $.fn.editable.defaults.mode = 'inline';
+
+        //Baixar todos titulos selecionados
+        function baixar_todos()
+        {
+            alert("Baixar Todos");
+        }
 
         $(document).ready(function() {
 
