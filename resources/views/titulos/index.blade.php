@@ -19,7 +19,7 @@
                 <div class="col-xs-2">
                 @can('verifica_permissao', [ \Session::get('id_pagina'),'incluir'])
                   <form method = 'get' class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/registrar/' . $tipo)}}>
-                        <button class = 'btn btn-success btn-flat' type ='submit'><span class="glyphicon glyphicon-new-window"></span> Nova Despesa</button>
+                        <button class = 'btn btn-success btn-flat' type ='submit'><span class="fa fa-plus"></span> {!! ($tipo=="P" ? "Nova Despesa" : "Nova Receita")!!}</button>
                   </form>
                 @endcan
                 </div>
@@ -29,7 +29,7 @@
 
                 <div class="col-xs-3">
                         <div class="btn-group">
-                          <button type="button" class="btn btn-success">Ações (Selecionados)</button>
+                          <button type="button" class="btn btn-default">Ações (Selecionados)</button>
                           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
@@ -42,7 +42,6 @@
                         </div>
                 </div>
 
-
                 <div class="col-xs-2">
                          <select name="status" id="status" class="form-control selectpicker" data-style="btn-primary" style="width: 100%;">
                          <option  style="background: #2A4F6E; color: #fff;" value="T" {{ $post_status == 'T' ? 'selected' : ''}}>Mostrar Todos</option>
@@ -51,21 +50,37 @@
                          </select>
                 </div>
 
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                          <select name="mes" id="mes" class="form-control selectpicker" data-style="btn-info" style="width: 100%;">
                          <option  value="C" {{ $post_mes == 'C' ? 'selected' : ''}}>Mês Corrente</option>
                          <option  value="E" {{ $post_mes == 'E' ? 'selected' : ''}}>Período Específico...</option>
+                         <option  value="M" {{ $post_mes == 'M' ? 'selected' : ''}}>Mais opções...</option>
                          </select>
                          <div id="div_periodo" style="display: none">
                                 <div class="input-group">
                                      <div class="input-group-addon">
                                       <i class="fa fa-calendar"></i>
                                       </div>
-
                                       <input id ="data_inicial" name = "data_inicial" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
                                       <input id ="data_final" name = "data_final" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
                               </div>
                          </div>
+
+                         <div id="div_opcoes" style="display: none">
+                                 <div class="row">
+                                         <input id="categoria"   name = "categoria" type="text" class="form-control" value="" placeholder="Plano de Contas">
+                                 </div>
+                                 <div class="row">
+                                         <input id="centrocusto"   name = "centrocusto" type="text" class="form-control" value="" placeholder="Centro de Custo">
+                                 </div>
+                                 <div class="row">
+                                         <input id="fornecedor"   name = "fornecedor" type="text" class="form-control" value="" placeholder="Fornecedor">
+                                 </div>
+                                 <div class="row">
+                                         <input id="valor"   name = "valor" type="text" class="form-control" value="" placeholder="Valor">
+                                 </div>
+                         </div>
+
                 </div>
 
                 <div class="col-xs-2">
@@ -163,10 +178,10 @@
                                     data-name="check_pago">
                                         @if ($value->status =="B")
                                         <!--<i class='fa fa-thumbs-o-up text-green'></i>-->
-                                        <p class='fa fa-thumbs-o-up text-green'> {{($value->status =="B" ? "SIm" : "Não")}}</p>
+                                        <p class='fa fa-thumbs-o-up text-green'> {{($value->status =="B" ? "Sim" : "Não")}}</p>
                                         @else
                                         <!--<i class='fa fa-thumbs-o-down text-red'></i>-->
-                                        <p class='fa fa-thumbs-o-down text-red'> {{($value->status =="B" ? "SIm" : "Não")}}</p>
+                                        <p class='fa fa-thumbs-o-down text-red'> {{($value->status =="B" ? "Sim" : "Não")}}</p>
                                         @endif
                                     </a>
 
@@ -221,6 +236,13 @@
                      $("#div_periodo").show();
                   else
                     $("#div_periodo").hide();
+
+
+                  if ($(this).prop('value')=="M")
+                    $("#div_opcoes").show();
+                  else
+                    $("#div_opcoes").hide();
+
             });
 
             $('.chkpago').checkboxpicker({

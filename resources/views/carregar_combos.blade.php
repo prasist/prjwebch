@@ -25,6 +25,7 @@
             <optgroup label="Ação" disabled>
         @endcan
 
+        <option  value=""  data-icon="fa fa-eraser">(Nenhum)</option>
         <option  value=""  data-icon="fa fa-plus-circle">(Incluir Novo Registro)</option>
         <option data-divider="true"></option>
         </optgroup>
