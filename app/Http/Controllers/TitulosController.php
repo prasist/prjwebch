@@ -93,6 +93,48 @@ class TitulosController extends Controller
 
     }
 
+
+    /*Quando clicado botao de acao em lote (Pega checkbox selecionados)*/
+    public function acao_lote(\Illuminate\Http\Request  $request, $tipo)
+    {
+
+          $input = $request->except(array('_token')); //não levar o token
+
+          foreach($input['check_id'] as $key => $value) //Percorre somente checkbox selecionados
+          {
+
+                  $dados = titulos::findOrfail($key);
+
+                  if ($input['quero_fazer']=="baixar") //Baixar selecionados
+                  {
+                        $dados->descricao  = $input['campo_descricao'][$key];
+                        $dados->data_vencimento  = $this->formatador->FormatarData($input["campo_data_vencimento"][$key]);
+                        $dados->data_pagamento  = $this->formatador->FormatarData($input["campo_data_pagto"][$key]);
+                        $dados->status  = "B";
+                        $dados->desconto  = ($input["campo_desconto"][$key]!="" ? $this->formatador->GravarCurrency($input["campo_desconto"][$key]) : null);
+                        $dados->acrescimo  = ($input["campo_acrescimo"][$key]!="" ? $this->formatador->GravarCurrency($input["campo_acrescimo"][$key]) : null);
+                        $dados->valor_pago  = ($input["campo_valor_pago"][$key]>0 ? $this->formatador->GravarCurrency($input["campo_valor_pago"][$key]) : $this->formatador->GravarCurrency($input["campo_valor"][$key]));
+                        $dados->users_id  = Auth::user()->id;
+
+                  }
+                  else if ($input['quero_fazer']=="estornar") //Estornar selecionados
+                  {
+                        $dados->status  = "A";
+                        $dados->desconto  = ($input["campo_desconto"][$key]!="" ? $this->formatador->GravarCurrency($input["campo_desconto"][$key]) : null);
+                        $dados->acrescimo  = ($input["campo_acrescimo"][$key]!="" ? $this->formatador->GravarCurrency($input["campo_acrescimo"][$key]) : null);
+                        $dados->valor_pago  = 0;
+                  }
+
+                  $dados->users_id  = Auth::user()->id;
+                  $dados->save();
+
+          }
+
+          return redirect($this->rota . '/' . $tipo);
+
+    }
+
+
     /*Pesquisa */
     public function pesquisar(\Illuminate\Http\Request  $request, $tipo)
     {
@@ -110,6 +152,11 @@ class TitulosController extends Controller
                $data_final = $ano . '-' . $mes . '-' . $ultimo_dia; //até último dia mes corrente
           }
           else if ($input["mes"]=="E") //Mes especifico
+          {
+               $data_inicial = $this->formatador->FormatarData($input["data_inicial"]);
+               $data_final = $this->formatador->FormatarData($input["data_final"]);
+          }
+          else if ($input["mes"]=="M") //Mais opcoes
           {
                $data_inicial = $this->formatador->FormatarData($input["data_inicial"]);
                $data_final = $this->formatador->FormatarData($input["data_final"]);
@@ -264,7 +311,7 @@ class TitulosController extends Controller
 
         /*Log historico do titulo*/
         $sQuery = "select to_char(data_ocorrencia, 'DD/MM/YYYY  HH24:MI:SS') AS data_ocorrencia, name, descricao, valor, tipo, status, acao, ip, id_titulo from log_financeiro inner join users  on users.id = log_financeiro.users_id";
-        $sQuery .= " where id_titulo = ? ";
+        $sQuery .= " where id_titulo = ? Order by data_ocorrencia desc";
         $log = \DB::select($sQuery,[$id]);
 
 

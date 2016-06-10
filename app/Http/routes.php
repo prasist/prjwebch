@@ -50,8 +50,9 @@
     //Contas a Pagar ou receber
     Route::post('titulos/{id}/update_inline/{campo}/{tipo}','TitulosController@update_inline');
     Route::get('titulos/{tipo}', 'TitulosController@index');
-    Route::post('titulos/filtrar/{tipo}', 'TitulosController@pesquisar');
-    Route::post('/titulos/gravar/{tipo}','TitulosController@store');
+    Route::post('titulos/filtrar/{tipo}', 'TitulosController@pesquisar'); //Filtrar pesquisa
+    Route::post('titulos/acao_lote/{tipo}', 'TitulosController@acao_lote'); //Botao para acao em lote
+    Route::post('/titulos/gravar/{tipo}','TitulosController@store'); //Gravar titulo
     Route::get('/titulos/registrar/{tipo}','TitulosController@create');
     Route::get('/titulos/{id}/preview/{tipo}','TitulosController@show');
     Route::post('titulos/{id}/update/{tipo}','TitulosController@update');

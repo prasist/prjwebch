@@ -65,7 +65,7 @@
                                                   <i class="fa fa-calendar"></i>
                                                   </div>
 
-                                                  <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{!! date('dd/MM/YYYY') !!}">
+                                                  <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
                                           </div>
 
                                      </div>
@@ -78,7 +78,7 @@
                                                   <i class="fa fa-calendar"></i>
                                                   </div>
 
-                                                  <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{!! date('dd/MM/YYYY') !!}">
+                                                  <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
                                                   <!-- se houver erros na validacao do form request -->
                                                    @if ($errors->has('data_vencimento'))
                                                     <span class="help-block">
@@ -257,6 +257,17 @@
 
 </div>
 @include('titulos.script_titulos')
+
+<script type="text/javascript">
+        /*Prepara checkbox bootstrap*/
+       $(function () {
+
+            $("#data_emissao").val(moment().format('DD/MM/YYYY')); //Data de pagamento dia
+            $("#data_vencimento").val(moment().format('DD/MM/YYYY')); //Data de pagamento dia
+
+      });
+
+</script>
 
 @endsection
 

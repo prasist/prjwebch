@@ -23,25 +23,11 @@
                 @endcan
                 </div>
 
-               <form method = 'post' class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/filtrar/' . $tipo)}}>
+
+              <form method = 'post' class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/filtrar/' . $tipo)}}>
                {!! csrf_field() !!}
 
                 <div class="col-xs-3">
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-default">Ações (Selecionados)</button>
-                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                          </button>
-                          <ul class="dropdown-menu" role="menu">
-                              <li><a href="#" onclick="if(confirm('Confirma o Pagamento dos Títulos Selecionados ?')) baixar_todos(event);"><i class="fa fa-thumbs-o-up"></i> Definir como Pago</a></li>
-                              <li><a href="#" onclick="if(confirm('Deseja marcar os Títulos Selecionados como NÃO PAGO ?')) baixar_todos(event);"><i class="fa fa-thumbs-o-down"></i> Definir como NÃO Pago</a></li>
-                              <li><a href="#" onclick="if(confirm('ATENÇÃO !!! Confirma a exclusão dos Títulos Selecionados ? Essa ação não tem reversão')) baixar_todos(event);"><i class="glyphicon glyphicon-trash"></i> Excluir</a></li>
-                          </ul>
-                        </div>
-                </div>
-
-                <div class="col-xs-2">
                          <select name="status" id="status" class="form-control selectpicker" data-style="btn-primary" style="width: 100%;">
                          <option  style="background: #2A4F6E; color: #fff;" value="T" {{ $post_status == 'T' ? 'selected' : ''}}>Mostrar Todos</option>
                          <option  style="background: #F1E8B8; color: #000;" value="A" {{ $post_status == 'A' ? 'selected' : ''}}>Somente em Aberto</option>
@@ -92,7 +78,29 @@
         </div>
 
         <p></p>
+
+      <form id="lote" method = 'post' class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/acao_lote/' . $tipo)}}>
+        {!! csrf_field() !!}
+
+        <input type="hidden" id="quero_fazer" name="quero_fazer" value="">
+
         <div class="row">
+
+          <div class="col-xs-3">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default">Ações (Selecionados)</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                      <li><a href="#" onclick="if(confirm('Confirma o Pagamento dos Títulos Selecionados ?')) acao('baixar');"><i class="fa fa-thumbs-o-up"></i> Definir como Pago</a></li>
+                      <li><a href="#" onclick="if(confirm('Deseja marcar os Títulos Selecionados como NÃO PAGO ?')) acao('estornar');"><i class="fa fa-thumbs-o-down"></i> Definir como NÃO Pago</a></li>
+                      <!--<li><a href="#" onclick="if(confirm('ATENÇÃO !!! Confirma a exclusão dos Títulos Selecionados ? Essa ação não tem reversão')) baixar_todos(event);"><i class="glyphicon glyphicon-trash"></i> Excluir</a></li>-->
+                  </ul>
+                </div>
+        </div>
+
         <div class="col-md-12">
           <div class="box">
             <div class="box-header">
@@ -120,8 +128,9 @@
 
                         <tr>
 
-                            <td><input  id="check_id" name="check_id" type="checkbox" class="check_id" /></td>
+                            <td><input  id="check_id[{!!$value->id!!}]" name="check_id[{!!$value->id!!}]" type="checkbox" class="check_id"  /></td>
                             <td>
+
                                     <a href="#"
                                     class="data_venc"
                                     data-type="text"
@@ -133,37 +142,44 @@
                                     {{$value->data_vencimento}}
                                     </a>
 
+                                    <input type="hidden" id = "campo_data_vencimento[{!!$value->id!!}]" name="campo_data_vencimento[{!!$value->id!!}]" value="{{$value->data_vencimento}}">
+
                             </td>
                             <td>
-                                    <a href="#" class="descricao"  data-type="text" data-column="descricao" data-url="{{ url('/titulos/' . $value->id . '/update_inline/descricao/' . $tipo)}}" data-pk="{!!$value->id!!}" data-title="change" data-name="descricao">
+                                    <a href="#" id="descricao" name="descricao" class="descricao"  data-type="text" data-column="descricao" data-url="{{ url('/titulos/' . $value->id . '/update_inline/descricao/' . $tipo)}}" data-pk="{!!$value->id!!}" data-title="change" data-name="descricao">
                                         {{$value->descricao}}
                                     </a>
+                                    <input type="hidden" id = "campo_descricao[{!!$value->id!!}]" name="campo_descricao[{!!$value->id!!}]" value="{{$value->descricao}}">
                             </td>
                             <td>
                                     <a href="#" id="valor[{!!$value->id!!}]" class="valor"  data-type="text" data-column="valor" data-url="{{ url('/titulos/' . $value->id . '/update_inline/valor/' . $tipo)}}" data-pk="{!!$value->id!!}" data-title="change" data-name="valor">
-                                        {{$value->valor}}
+                                        {{ str_replace(".", ",", $value->valor) }}
                                     </a>
+                                    <input type="hidden" id = "campo_valor[{!!$value->id!!}]" name="campo_valor[{!!$value->id!!}]" value='{{ str_replace(".", ",", $value->valor) }}'>
                             </td>
                             <td>
                                     <a href="#" id="data_pagto[{!!$value->id!!}]" name="data_pagto[{!!$value->id!!}]" class="data_pagto"  data-type="text" data-column="data_pagto" data-url="{{ url('/titulos/' . $value->id . '/update_inline/data_pagto/' . $tipo)}}" data-pk="{!!$value->id!!}" data-title="change" data-name="data_pagto">
                                          {{$value->data_pagamento}}
                                     </a>
-
+                                    <input type="hidden" id = "campo_data_pagto[{!!$value->id!!}]" name="campo_data_pagto[{!!$value->id!!}]" value="{{$value->data_pagamento}}">
                             </td>
                             <td>
                                     <a href="#" class="acrescimo"  data-type="text" data-column="acrescimo" data-url="{{ url('/titulos/' . $value->id . '/update_inline/acrescimo/' . $tipo)}}" data-pk="{!!$value->id!!}" data-title="change" data-name="acrescimo">
-                                        {{$value->acrescimo}}
+                                        {{ str_replace(".", ",", $value->acrescimo) }}
                                     </a>
+                                    <input type="hidden" id = "campo_acrescimo[{!!$value->id!!}]" name="campo_acrescimo[{!!$value->id!!}]" value='{{ str_replace(".", ",", $value->acrescimo) }}'>
                             </td>
                             <td>
                                     <a href="#" class="desconto"  data-type="text" data-column="desconto" data-url="{{ url('/titulos/' . $value->id . '/update_inline/desconto/' . $tipo)}}" data-pk="{!!$value->id!!}" data-title="change" data-name="desconto">
-                                        {{$value->desconto}}
+                                        {{ str_replace(".", ",", $value->desconto) }}
                                     </a>
+                                    <input type="hidden" id = "campo_desconto[{!!$value->id!!}]" name="campo_desconto[{!!$value->id!!}]" value='{{ str_replace(".", ",", $value->desconto) }}'>
                             </td>
                             <td>
                                     <a href="#" id="valor_pago[{!!$value->id!!}]" class="valor_pago"  data-type="text" data-column="valor_pago" data-url="{{ url('/titulos/' . $value->id . '/update_inline/valor_pago/' . $tipo)}}" data-pk="{!!$value->id!!}" data-title="change" data-name="valor_pago">
-                                        {{$value->valor_pago}}
+                                        {{ str_replace(".", ",", $value->valor_pago) }}
                                     </a>
+                                     <input type="hidden" id = "campo_valor_pago[{!!$value->id!!}]" name="campo_valor_pago[{!!$value->id!!}]" value='{{ str_replace(".", ",", $value->valor_pago) }}'>
                             </td>
 
                             <td>
@@ -222,6 +238,8 @@
          </div>
         </div>
 
+    </form>
+
 
 <script type="text/javascript">
 
@@ -235,12 +253,16 @@
 
         $.fn.editable.defaults.mode = 'inline';
 
-        //Baixar todos titulos selecionados
-        function baixar_todos()
+        //Submit dos dados quando selecionado botão de açao em lote.
+        function acao(e)
         {
-            alert("Baixar Todos");
+
+             $('#quero_fazer').val(e);
+             $('#lote')[0].submit();
+
         }
 
+        /*Validacao dos campos alterados inline */
         $(document).ready(function() {
 
             $('#mes').change(function()
@@ -256,6 +278,12 @@
                   else
                     $("#div_opcoes").hide();
 
+            });
+
+              /*Monetarios - class*/
+            $('.formata_valor').autoNumeric("init",{
+                aSep: '.',
+                aDec: ','
             });
 
             $('.chkpago').checkboxpicker({
@@ -287,9 +315,14 @@
 
             $('.descricao').editable({
                 validate: function(value) {
+
                     if($.trim(value) == '') {
                         return 'Campo Obrigatório';
                     }
+
+                    //Atualiza o campo input hidden com novo valor....
+                    $("input[name='campo_descricao[" + $(this).editable().data('pk') + "]']").val(value);
+
                 },
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
@@ -310,10 +343,14 @@
             /*Tabela editavel - colunas*/
             $('.data_venc').editable({
                 validate: function(value) {
-                    alert($.trim(value));
+
                     if($.trim(value) == '') {
                         return 'Campo Obrigatório';
                     }
+
+                    //Atualiza o campo input hidden com novo valor....
+                    $("input[name='campo_data_vencimento[" + $(this).editable().data('pk') + "]']").val(value);
+
                 },
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
@@ -333,6 +370,13 @@
 
                 /*Tabela editavel - colunas*/
             $('.data_pagto').editable({
+
+               validate: function(value) {
+
+                    //Atualiza o campo input hidden com novo valor....
+                    $("input[name='campo_data_pagto[" + $(this).editable().data('pk') + "]']").val(value);
+
+                },
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
                     params.name = $(this).editable().data('data_pagto');
@@ -356,6 +400,10 @@
                     if($.trim(value) == '') {
                         return 'Campo Obrigatório';
                     }
+
+                    //Atualiza o campo input hidden com novo valor....
+                    $("input[name='campo_valor[" + $(this).editable().data('pk') + "]']").val(value);
+
                 },
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
@@ -375,10 +423,17 @@
 
 
             $('.valor_pago').editable({
+              validate: function(value) {
+
+                    //Atualiza o campo input hidden com novo valor....
+                    $("input[name='campo_valor_pago[" + $(this).editable().data('pk') + "]']").val(value);
+
+                },
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
                     params.name = $(this).editable().data('valor_pago');
                     params._token = $("#_token").data("token");
+
                     return params;
                 },
                 error: function(response, newValue) {
@@ -393,6 +448,12 @@
 
 
             $('.acrescimo').editable({
+                validate: function(value) {
+
+                    //Atualiza o campo input hidden com novo valor....
+                    $("input[name='campo_acrescimo[" + $(this).editable().data('pk') + "]']").val(value);
+
+                },
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
                     params.name = $(this).editable().data('acrescimo');
@@ -410,6 +471,12 @@
             });
 
             $('.desconto').editable({
+                validate: function(value) {
+
+                    //Atualiza o campo input hidden com novo valor....
+                    $("input[name='campo_desconto[" + $(this).editable().data('pk') + "]']").val(value);
+
+                },
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
                     params.name = $(this).editable().data('desconto');
