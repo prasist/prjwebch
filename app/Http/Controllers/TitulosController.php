@@ -196,8 +196,9 @@ class TitulosController extends Controller
            /*Validação de campos - request*/
            $this->validate($request, [
                     'descricao' => 'required',
-                    'data_vencimento' => 'required|date',
+                    'data_vencimento' => 'required',
                     'valor' => 'required',
+                    'conta' => 'required',
            ]);
 
           $input = $request->except(array('_token', 'ativo')); //não levar o token
@@ -248,10 +249,25 @@ class TitulosController extends Controller
       $dados->data_emissao  = $this->formatador->FormatarData($input["data_emissao"]);
       $dados->data_pagamento  = $this->formatador->FormatarData($input["data_pagamento"]);
       $dados->tipo  = $tipo;
-      $dados->status  = ($input['ckpago']  ? "B" : "A");
-      $dados->desconto  = ($input["desconto"]!="" ? $this->formatador->GravarCurrency($input["desconto"]) : null);
-      $dados->acrescimo  = ($input["acrescimo"]!="" ? $this->formatador->GravarCurrency($input["acrescimo"]) : null);
+
+      /*Valores Pagos*/
+      $dados->desconto     = ($input["desconto"]!="" ? $this->formatador->GravarCurrency($input["desconto"]) : null);
+      $dados->acrescimo   = ($input["acrescimo"]!="" ? $this->formatador->GravarCurrency($input["acrescimo"]) : null);
       $dados->valor_pago  = ($input["valor_pago"]!="" ? $this->formatador->GravarCurrency($input["valor_pago"]) : null);
+
+      //Calcula valor pago com desconto / acrescimo
+      $dados->valor_pago =  ($dados->valor_pago + $dados->acrescimo - $dados->desconto);
+      $dados->saldo           = ($dados->valor - $dados->valor_pago);
+
+      if ($dados->saldo<=0)
+      { //Se nao houver saldo, deixa colocar o status normalmente
+          $dados->status  = ($input['ckpago']  ? "B" : "A");
+      }
+      else
+      { //Baixa Parcial, deixar titulo em aberto
+          $dados->status = "A";
+      }
+
       $dados->grupos_titulos_id  = ($input['grupos_titulos']=="" ? null : $input['grupos_titulos']);
       $dados->pessoas_id  = ($input['fornecedor']=="" ? null : substr($input['fornecedor'],0,9));
       $dados->contas_id  =  ($input['conta']=="" ? null : $input['conta']);
@@ -310,12 +326,12 @@ class TitulosController extends Controller
         ->get();
 
         /*Log historico do titulo*/
-        $sQuery = "select to_char(data_ocorrencia, 'DD/MM/YYYY  HH24:MI:SS') AS data_ocorrencia, name, descricao, valor, tipo, status, acao, ip, id_titulo from log_financeiro inner join users  on users.id = log_financeiro.users_id";
+        $sQuery = "select to_char(data_ocorrencia, 'DD/MM/YYYY  HH24:MI:SS') AS data_ocorrencia, name, descricao, valor, valor_pago, acrescimo, desconto, tipo, status, acao, ip, id_titulo from log_financeiro inner join users  on users.id = log_financeiro.users_id";
         $sQuery .= " where id_titulo = ? Order by data_ocorrencia desc";
         $log = \DB::select($sQuery,[$id]);
 
 
-        $sQuery = "select pessoas.razaosocial, titulos.id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, to_char(to_date(data_emissao, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_emissao, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, pessoas_id, contas_id, planos_contas_id, centros_custos_id, titulos.obs, numpar, numdoc, serie, grupos_titulos_id ";
+        $sQuery = "select titulos.saldo_a_pagar, pessoas.razaosocial, titulos.id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, to_char(to_date(data_emissao, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_emissao, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, pessoas_id, contas_id, planos_contas_id, centros_custos_id, titulos.obs, numpar, numdoc, serie, grupos_titulos_id ";
         $sQuery .= " from titulos left join pessoas on pessoas.id = titulos.pessoas_id";
         $sQuery .= " where titulos.tipo = ? ";
         $sQuery .= " and titulos.empresas_id = ? ";
@@ -349,16 +365,24 @@ class TitulosController extends Controller
 
         if ($campo=="valor_pago")  $titulos->valor_pago  = $this->formatador->GravarCurrency($input["value"]);
 
-        if ($campo=="acrescimo") $titulos->acrescimo  = $this->formatador->GravarCurrency($input["value"]);
+        if ($campo=="acrescimo") //Recalcula valor pago
+        {
+           $titulos->acrescimo  = $this->formatador->GravarCurrency($input["value"]);
+           $titulos->valor_pago  = ($titulos->valor + ($titulos->acrescimo!="" ? $titulos->acrescimo : 0) - ($titulos->desconto!="" ? $titulos->desconto : 0));
+        }
 
-        if ($campo=="desconto")  $titulos->desconto  = $this->formatador->GravarCurrency($input["value"]);
+        if ($campo=="desconto") //Recalcula valor pago
+        {
+            $titulos->desconto  = $this->formatador->GravarCurrency($input["value"]);
+            $titulos->valor_pago  = ($titulos->valor + ($titulos->acrescimo!="" ? $titulos->acrescimo : 0) - ($titulos->desconto!="" ? $titulos->desconto : 0));
+        }
 
         if ($campo=="check_pago")
         {
           //Criar trigger historico
              if ($input["value"]=="0")
              { //Sim
-                $titulos->valor_pago  = $titulos->valor;
+                $titulos->valor_pago  = ($titulos->valor + ($titulos->acrescimo!="" ? $titulos->acrescimo : 0) - ($titulos->desconto!="" ? $titulos->desconto : 0));
                 $titulos->data_pagamento  = $titulos->data_vencimento;
                 $titulos->status = "B";
               }

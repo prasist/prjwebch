@@ -64,28 +64,22 @@
                                                    </div>
                                               </div>
 
-
                                               <div class="col-xs-2">
                                                   <label for="data_emissao" class="control-label">Data Emissão</label>
-
                                                   <div class="input-group">
                                                          <div class="input-group-addon">
                                                           <i class="fa fa-calendar"></i>
                                                           </div>
-
                                                           <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ $dados[0]->data_emissao }}">
                                                   </div>
-
                                              </div>
 
                                              <div class="col-xs-2 {{ $errors->has('data_vencimento') ? ' has-error' : '' }}">
                                                   <label for="data_vencimento" class="control-label">Data Vencimento</label>
-
                                                   <div class="input-group">
                                                          <div class="input-group-addon">
                                                           <i class="fa fa-calendar"></i>
                                                           </div>
-
                                                           <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ $dados[0]->data_vencimento }}">
                                                           <!-- se houver erros na validacao do form request -->
                                                            @if ($errors->has('data_vencimento'))
@@ -94,15 +88,20 @@
                                                             </span>
                                                            @endif
                                                   </div>
-
                                              </div>
 
                                         </div> <!-- row -->
 
                                         <div class="row">
-                                              <div class="col-xs-4">
+                                              <div class="col-xs-4  {{ $errors->has('conta') ? ' has-error' : '' }}">
                                                     @include('carregar_combos', array('dados'=>$contas, 'titulo' =>'Conta', 'id_combo'=>'conta', 'complemento'=>'', 'comparar'=>$dados[0]->contas_id, 'id_pagina'=> '48'))
                                                     @include('modal_cadastro_basico', array('qual_campo'=>'conta', 'modal' => 'modal_conta', 'tabela' => 'contas'))
+                                                     <!-- se houver erros na validacao do form request -->
+                                                     @if ($errors->has('conta'))
+                                                     <span class="help-block">
+                                                          <strong>{{ $errors->first('conta') }}</strong>
+                                                     </span>
+                                                     @endif
                                               </div><!-- col-xs-->
 
                                               <div class="col-xs-4">
@@ -148,7 +147,7 @@
                                                           <label for="acrescimo" class="control-label">Acréscimo</label>
                                                           <div class="input-group">
                                                              <span class="input-group-addon">R$</span>
-                                                               <input id="acrescimo" maxlength="10"   name = "acrescimo" type="text" class="formata_valor form-control" value="{{$dados[0]->acrescimo}}">
+                                                               <input id="acrescimo" maxlength="10"   name = "acrescimo" type="text" class="formata_valor form-control" onblur="recalcula();" value="{{$dados[0]->acrescimo}}">
                                                           </div>
                                                      </div>
 
@@ -156,7 +155,7 @@
                                                           <label for="desconto" class="control-label">Desconto</label>
                                                           <div class="input-group">
                                                              <span class="input-group-addon">R$</span>
-                                                               <input id="desconto" maxlength="10"   name = "desconto" type="text" class="formata_valor form-control" value="{{$dados[0]->desconto}}">
+                                                               <input id="desconto" maxlength="10"   name = "desconto" type="text" class="formata_valor form-control" onblur="recalcula();" value="{{$dados[0]->desconto}}">
                                                           </div>
                                                      </div>
 
@@ -167,7 +166,34 @@
                                                                <input id="valor_pago" maxlength="10"   name = "valor_pago" type="text" class="formata_valor form-control" value="{{$dados[0]->valor_pago}}">
                                                           </div>
                                                      </div>
+
                                                </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                              <div class="col-xs-8">
+                                                <label for="" class="control-label text-info">Esse Título está parcialmente baixado. Você pode efetuar novas baixas informando o valor no campo abaixo</label>
+                                              </div>
+                                        </div>
+
+                                        <div class="row">
+
+                                              <div class="col-xs-2">
+                                                          <label for="saldo" class="control-label">Saldo à Pagar</label>
+                                                          <div class="input-group">
+                                                               <span class="input-group-addon">R$</span>
+                                                               <input id="saldo" maxlength="10"   name = "saldo" type="text" class="formata_valor form-control" value="{{$dados[0]->saldo_a_pagar}}">
+                                                          </div>
+                                              </div>
+
+                                              <div class="col-xs-2">
+                                                          <label for="novo_pagto" class="control-label">Novo Pagamento</label>
+                                                          <div class="input-group">
+                                                               <span class="input-group-addon">R$</span>
+                                                               <input id="novo_pagto" maxlength="10"   name = "novo_pagto" type="text" class="formata_valor form-control" value="">
+                                                          </div>
+                                              </div>
                                         </div>
 
 
@@ -268,11 +294,13 @@
                                         <td>Data Ocorrência</td>
                                         <td>Usuário</td>
                                         <td>Descrição Título</td>
-                                        <td>Valor</td>
+                                        <td>Valor Título</td>
+                                        <td>Valor Pago</td>
+                                        <td>Acréscimo</td>
+                                        <td>Desconto</td>
                                         <td>Tipo</td>
                                         <td>Status</td>
                                         <td>Ação</td>
-                                        <td>IP</td>
                                     </tr>
                                     @foreach($log as $item)
                                           <tr>
@@ -280,10 +308,12 @@
                                               <td>{{$item->name}}</td>
                                               <td>{{$item->descricao}}</td>
                                               <td>{{$item->valor}}</td>
+                                              <td>{{$item->valor_pago}}</td>
+                                              <td>{{$item->acrescimo}}</td>
+                                              <td>{{$item->desconto}}</td>
                                               <td>{{$item->tipo}}</td>
                                               <td>{{$item->status}}</td>
                                               <td>{{$item->acao}}</td>
-                                              <td>{{$item->ip}}</td>
                                           </tr>
                                     @endforeach
                                     </table>
@@ -294,9 +324,6 @@
                         <!-- /.tab-content -->
                       </div>
                       <!-- nav-tabs-custom -->
-
-
-
 
 
              </div><!-- fim box-body"-->

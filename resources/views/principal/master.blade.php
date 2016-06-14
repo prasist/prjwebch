@@ -147,6 +147,12 @@
                   $(function ()
                   {
 
+                            /*Monetarios - class*/
+                            $('.formata_valor').autoNumeric("init",{
+                                aSep: '.',
+                                aDec: ','
+                            });
+
                             $('.selectpicker').selectpicker({
                                 selectAllText: 'Selecionar Todos',
                                 deselectAllText: 'Desmarcar Todos'

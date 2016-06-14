@@ -56,10 +56,8 @@
 
                                       </div>
 
-
                                       <div class="col-xs-2">
                                           <label for="data_emissao" class="control-label">Data Emissão</label>
-
                                           <div class="input-group">
                                                  <div class="input-group-addon">
                                                   <i class="fa fa-calendar"></i>
@@ -67,7 +65,6 @@
 
                                                   <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
                                           </div>
-
                                      </div>
 
                                      <div class="col-xs-2 {{ $errors->has('data_vencimento') ? ' has-error' : '' }}">
@@ -78,7 +75,7 @@
                                                   <i class="fa fa-calendar"></i>
                                                   </div>
 
-                                                  <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                  <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask value="">
                                                   <!-- se houver erros na validacao do form request -->
                                                    @if ($errors->has('data_vencimento'))
                                                     <span class="help-block">
@@ -92,9 +89,16 @@
                                 </div> <!-- row -->
 
                                 <div class="row">
-                                      <div class="col-xs-4">
+                                      <div class="col-xs-4  {{ $errors->has('conta') ? ' has-error' : '' }}">
                                             @include('carregar_combos', array('dados'=>$contas, 'titulo' =>'Conta', 'id_combo'=>'conta', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '48'))
                                             @include('modal_cadastro_basico', array('qual_campo'=>'conta', 'modal' => 'modal_conta', 'tabela' => 'contas'))
+
+                                                 <!-- se houver erros na validacao do form request -->
+                                                 @if ($errors->has('conta'))
+                                                 <span class="help-block">
+                                                      <strong>{{ $errors->first('conta') }}</strong>
+                                                 </span>
+                                                 @endif
                                       </div><!-- col-xs-->
 
                                       <div class="col-xs-4">
@@ -256,18 +260,21 @@
     </div>
 
 </div>
-@include('titulos.script_titulos')
-
 <script type="text/javascript">
         /*Prepara checkbox bootstrap*/
-       $(function () {
+
+       $(document).ready(function(){
+            $("#data_vencimento").val(moment().format('DD/MM/YYYY')); //Data de pagamento dia
+            $("#data_vencimento").trigger( "change" );
 
             $("#data_emissao").val(moment().format('DD/MM/YYYY')); //Data de pagamento dia
-            $("#data_vencimento").val(moment().format('DD/MM/YYYY')); //Data de pagamento dia
-
+            $("#data_emissao").trigger( "change" );
       });
 
+
 </script>
+
+@include('titulos.script_titulos')
 
 @endsection
 

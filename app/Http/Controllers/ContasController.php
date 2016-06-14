@@ -19,6 +19,9 @@ class ContasController extends Controller
         $this->rota = "contas"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
+        /*Instancia a classe de funcoes (Data, valor, etc)*/
+        $this->formatador = new  \App\Functions\FuncoesGerais();
+
         //Validação de permissão de acesso a pagina
         if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
         {
@@ -36,7 +39,10 @@ class ContasController extends Controller
               return redirect('home');
         }
 
-        $dados = contas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $dados = contas::select('contas.nome', 'contas.id', 'contas.saldo', 'contas.data_alteracao' , 'users.name as nome_usuario')
+        ->where('contas.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->join('users', 'users.id' , '=' , 'contas.users_id')
+        ->get();
 
         return view($this->rota . '.index',compact('dados'));
 
@@ -65,11 +71,14 @@ class ContasController extends Controller
 
            $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-           $grupos = new contas();
-           $grupos->nome  = $input['nome'];
-           $grupos->empresas_id  = $this->dados_login->empresas_id;
-           $grupos->empresas_clientes_cloud_id  = $this->dados_login->empresas_clientes_cloud_id;
-           $grupos->save();
+           $dados = new contas();
+           $dados->nome  = $input['nome'];
+           $dados->saldo  = ($input["saldo"]!="" ? $this->formatador->GravarCurrency($input["saldo"]) : null);
+           $dados->users_id = Auth::user()->id;
+           $dados->data_alteracao = date("Y-m-d H:i:s");
+           $dados->empresas_id  = $this->dados_login->empresas_id;
+           $dados->empresas_clientes_cloud_id  = $this->dados_login->empresas_clientes_cloud_id;
+           $dados->save();
 
            \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
 
@@ -127,6 +136,9 @@ class ContasController extends Controller
 
         $dados = contas::findOrfail($id);
         $dados->nome  = $input['nome'];
+        $dados->saldo  = ($input["saldo"]!="" ? $this->formatador->GravarCurrency($input["saldo"]) : null);
+        $dados->users_id = Auth::user()->id;
+        $dados->data_alteracao = date("Y-m-d H:i:s");
         $dados->save();
 
         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
