@@ -372,7 +372,7 @@ class TitulosController extends Controller
         $var_desconto = ($titulos->desconto!="" ? $titulos->desconto :0);
         $var_valor_pago = ($titulos->valor_pago!="" ? $titulos->valor_pago :0);
         $var_valor_liq = ($var_valor_pago - $var_acrescimo + $var_desconto);
-
+        $titulos->alteracao_status = ""; //Servirá para filtras o log de titulos somente com baixas e estornos. Padrão vazio, apenas alteracao simples
 
         if ($campo=="data_venc") $titulos->data_vencimento  = $this->formatador->FormatarData($input["value"]);
 
@@ -408,6 +408,7 @@ class TitulosController extends Controller
             $titulos->alteracao_status = "S"; //Servirá para filtras o log de titulos somente com baixas e estornos
         }
 
+        //Se marcou PAGO ou NÃO PAGO
         if ($campo=="check_pago")
        {
              if ($input["value"]=="0")

@@ -176,11 +176,13 @@
             </li>
 
 
-          <li class="treeview">
-                <a href="{!! url('/financeiro') !!}">
-                <i class="fa fa-usd"></i><span>Financeiro</span>
-                <i class="fa fa-angle-left pull-right"></i>
+          <li class="treeview" id="financ">
+
+                <a href="#" onclick="redirecionar();">
+                    <i class="fa fa-usd"></i><span>Financeiro</span>
+                    <i class="fa fa-angle-left pull-right"></i>
                 </a>
+
                  <ul class="treeview-menu">
 
                  <li><a href="{!! url('/financeiro') !!}"><i class="fa fa-bar-chart"></i>Visão Geral</a></li>
@@ -259,3 +261,13 @@
     </section>
     <!-- /.sidebar -->
 </aside>
+<script type="text/javascript">
+
+function redirecionar()
+{
+
+  var_pagina = "{!! url('/financeiro') !!}";
+  window.location=var_pagina;
+
+}
+</script>

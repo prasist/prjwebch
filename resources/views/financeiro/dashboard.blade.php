@@ -46,5 +46,15 @@
 
 </div><!-- /.row -->
 
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+       $("#financ").addClass("treeview active");
+
+    });
+
+</script>
 
 @endsection
+

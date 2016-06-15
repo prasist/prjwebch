@@ -365,10 +365,6 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
         <script src="{{ asset('/js/controller.js')}}"></script>
-
-        <!-- teste -->
-        <!--<script src="{{ asset('/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>-->
-
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.js')}}"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
@@ -392,7 +388,6 @@
         <script src="{{ asset('/dist/js/bootstrap-checkbox.min.js')}}" defer></script>
         <script src="{{ asset('/dist/js/moment.min.js')}}"></script> <!-- datas-->
         <script src="{{ asset('/dist/js/autoNumeric-min.js')}}"></script> <!-- monetarios-->
-
 
         <!-- tour rápido-->
         @if (\Session::get('tour_visaogeral')==' ' || \Session::get('tour_visaogeral')!='S')
