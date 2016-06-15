@@ -83,6 +83,7 @@
         {!! csrf_field() !!}
 
         <input type="hidden" id="quero_fazer" name="quero_fazer" value="">
+        <input type="hidden" id="data_pagto_lote" name="data_pagto_lote" value="">
 
         <div class="row">
 
@@ -117,8 +118,9 @@
                         <th>Data Pagto.</th>
                         <th>Acrésc.</th>
                         <th>Desc.</th>
-                        <th>Valor Pago.</th>
+                        <th>Valor Pago</th>
                         <th>Pago</th>
+                        <th>Saldo</th>
                         <th>Editar</th>
                         <th>Excluir</th>
                         </tr>
@@ -193,13 +195,31 @@
                                     data-name="check_pago">
                                         @if ($value->status =="B")
                                         <!--<i class='fa fa-thumbs-o-up text-green'></i>-->
-                                        <p class='fa fa-thumbs-o-up text-green'> {{($value->status =="B" ? "Sim" : "Não")}}</p>
+                                        <p class='fa fa-thumbs-o-up text-green'> Sim</p>
                                         @else
                                         <!--<i class='fa fa-thumbs-o-down text-red'></i>-->
-                                        <p class='fa fa-thumbs-o-down text-red'> {{($value->status =="B" ? "Sim" : "Não")}}</p>
+                                        <p class='fa fa-thumbs-o-down text-red'>
+
+                                              @if (trim($value->alteracao_status)!="")
+                                                  @if ($value->saldo_a_pagar==0)
+                                                        Sim
+                                                  @elseif ($value->saldo_a_pagar==$value->valor)
+                                                        Não
+                                                  @else
+                                                        Parcial
+                                                  @endif
+                                              @else
+                                                  Não
+                                              @endif
+
+                                        </p>
                                         @endif
                                     </a>
 
+                            </td>
+
+                            <td>
+                                     <p class="text-info"> {{ str_replace(".", ",", $value->saldo_a_pagar) }}</p>
                             </td>
 
                             <td class="col-xs-1">
@@ -208,10 +228,12 @@
                                       @endcan
                             </td>
 
+                           </form>
+
                             <td class="col-xs-1">
 
                                     @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
-                                    <form id="excluir{{ $value->id }}" action="{{ URL::to(\Session::get('route') . '/' . $value->id . '/delete/' . $tipo) }}" method="DELETE">
+                                    <form id="excluir{{$value->id}}" class="excluir" action="{{ URL::to(\Session::get('route') . '/' . $value->id . '/delete/' . $tipo) }}" method="DELETE">
 
                                           <button
                                               data-toggle="tooltip"
@@ -219,7 +241,7 @@
                                               title="Excluir Ítem"
                                               type="submit"
                                               class="btn btn-danger btn-sm"
-                                              onclick="return confirm('Confirma exclusão desse registro : {{ $value->descricao }} ?');">
+                                              onclick="if(confirm('Confirma a exclusão do Título ?'));">
                                               <spam class="glyphicon glyphicon-trash"></spam>
                                           </button>
 
@@ -238,12 +260,12 @@
          </div>
         </div>
 
-    </form>
+
 
 
 <script type="text/javascript">
 
-
+        /*Quando informar um valor de acrescimo ou desconto, atualiza o valor pago*/
         function recalcula()
         {
 
@@ -282,7 +304,7 @@
 
        }
 
-
+       //Selecionar todos titulos
        $('#check_todos').change(function() {
             if ($(this).prop('checked')) {
                 $('.check_id').prop('checked', true);
@@ -291,16 +313,59 @@
             }
         });
 
+        //Forma da edicao no table'
         $.fn.editable.defaults.mode = 'inline';
 
         //Submit dos dados quando selecionado botão de açao em lote.
         function acao(e)
         {
 
+             if (e=="baixar") //Solicita data baixa, informando a data atual
+             {
+                var var_data=window.prompt("Informe a Data para Pagamento dos Títulos : ", moment().format('DD/MM/YYYY'));
+
+                 if (var_data!="")
+                 {
+                     //Validar data
+                     if (validar_data_prompt(var_data)=="")
+                     {
+                          return;
+                     }
+                     else //Ok, lets do it
+                     {
+                        $('#data_pagto_lote').val(var_data);
+                     }
+                 }
+                 else //Deixou em branco
+                 {
+                    alert("Data Inválida.");
+                    return;
+                 }
+
+             }
+
              $('#quero_fazer').val(e);
              $('#lote')[0].submit();
-
         }
+
+        function validar_data_prompt(who)
+            {
+                if (who!="")
+                {
+                    str=who;
+                    str=str.split('/');
+                    dte=new Date(str[1]+'/'+str[0]+'/'+str[2]);
+                    mStr=''+(dte.getMonth()+1);
+                    mStr=(mStr<10)?'0'+mStr:mStr;
+
+                    if(mStr!=str[1]||isNaN(dte))
+                    {
+                        alert('Data Inválida!');
+                        return "";
+                    }
+                }
+            }
+
 
         /*Validacao dos campos alterados inline */
         $(document).ready(function() {
@@ -337,6 +402,10 @@
                     {value: 0, text: 'Sim'},
                     {value: 1, text: 'Não'}
                 ],
+               validate: function(value)
+               {
+                      location.reload(); //Reflesh na pagina para recarregar valores atualizados apos update
+               },
                 params: function(params) {
                     // add additional params from data-attributes of trigger element
                     params.name = $(this).editable().data('check_pago');
@@ -467,6 +536,7 @@
 
                     //Atualiza o campo input hidden com novo valor....
                     $("input[name='campo_valor_pago[" + $(this).editable().data('pk') + "]']").val(value);
+                    location.reload(); //Reflesh na pagina para recarregar valores atualizados apos update
 
                 },
                 params: function(params) {

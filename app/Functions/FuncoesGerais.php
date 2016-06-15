@@ -65,6 +65,9 @@ class FuncoesGerais extends Controller
 
     public function GravarCurrency($valor)
     {
+
+            if ($valor=="") return "0";
+
             $converterValor = str_replace('.','',$valor);
             $converterValor = str_replace(',','.',$converterValor);
             return $converterValor;

@@ -46,7 +46,7 @@ class TitulosController extends Controller
         $data_inicial = $ano . '-' . $mes . '-01'; //Monta data inicial do mes corrente
         $data_final = $ano . '-' . $mes . '-' . $ultimo_dia; //até último dia mes corrente
 
-        $sQuery = "select id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, valor, acrescimo, desconto, descricao, tipo, status, valor_pago";
+        $sQuery = "select id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, saldo_a_pagar, alteracao_status";
         $sQuery .= " from titulos ";
         $sQuery .= " where tipo = ? ";
         $sQuery .= " and empresas_id = ? ";
@@ -107,12 +107,8 @@ class TitulosController extends Controller
 
                   if ($input['quero_fazer']=="baixar") //Baixar selecionados
                   {
-                        $dados->descricao  = $input['campo_descricao'][$key];
-                        $dados->data_vencimento  = $this->formatador->FormatarData($input["campo_data_vencimento"][$key]);
-                        $dados->data_pagamento  = $this->formatador->FormatarData($input["campo_data_pagto"][$key]);
+                        $dados->data_pagamento  = $this->formatador->FormatarData($input["data_pagto_lote"]);
                         $dados->status  = "B";
-                        $dados->desconto  = ($input["campo_desconto"][$key]!="" ? $this->formatador->GravarCurrency($input["campo_desconto"][$key]) : null);
-                        $dados->acrescimo  = ($input["campo_acrescimo"][$key]!="" ? $this->formatador->GravarCurrency($input["campo_acrescimo"][$key]) : null);
                         $dados->valor_pago  = ($input["campo_valor_pago"][$key]>0 ? $this->formatador->GravarCurrency($input["campo_valor_pago"][$key]) : $this->formatador->GravarCurrency($input["campo_valor"][$key]));
                         $dados->users_id  = Auth::user()->id;
 
@@ -120,11 +116,13 @@ class TitulosController extends Controller
                   else if ($input['quero_fazer']=="estornar") //Estornar selecionados
                   {
                         $dados->status  = "A";
-                        $dados->desconto  = ($input["campo_desconto"][$key]!="" ? $this->formatador->GravarCurrency($input["campo_desconto"][$key]) : null);
-                        $dados->acrescimo  = ($input["campo_acrescimo"][$key]!="" ? $this->formatador->GravarCurrency($input["campo_acrescimo"][$key]) : null);
-                        $dados->valor_pago  = 0;
+                        $dados->desconto  = null;
+                        $dados->acrescimo  = null;
+                        $dados->valor_pago  = null;
+                        $dados->data_pagamento=null;
                   }
 
+                  $dados->alteracao_status = "S"; //Servirá para filtras o log de titulos somente com baixas e estornors
                   $dados->users_id  = Auth::user()->id;
                   $dados->save();
 
@@ -163,7 +161,7 @@ class TitulosController extends Controller
           }
 
 
-          $sQuery = "select id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, valor, acrescimo, desconto, descricao, tipo, status, valor_pago";
+          $sQuery = "select id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, saldo_a_pagar";
           $sQuery .= " from titulos ";
           $sQuery .= " where tipo = ? ";
           $sQuery .= " and empresas_id = ? ";
@@ -250,18 +248,35 @@ class TitulosController extends Controller
       $dados->data_pagamento  = $this->formatador->FormatarData($input["data_pagamento"]);
       $dados->tipo  = $tipo;
 
+      //Pega valor já pago (Pagamento parcial)
+      $var_valor_pago = ($input["total_pago"]!="" ? $this->formatador->GravarCurrency($input["total_pago"]) : 0);
+
       /*Valores Pagos*/
       $dados->desconto     = ($input["desconto"]!="" ? $this->formatador->GravarCurrency($input["desconto"]) : null);
       $dados->acrescimo   = ($input["acrescimo"]!="" ? $this->formatador->GravarCurrency($input["acrescimo"]) : null);
-      $dados->valor_pago  = ($input["valor_pago"]!="" ? $this->formatador->GravarCurrency($input["valor_pago"]) : null);
+      $dados->valor_pago  = $var_valor_pago + ($input["valor_pago"]!="" ? $this->formatador->GravarCurrency($input["valor_pago"]) : null);
 
       //Calcula valor pago com desconto / acrescimo
-      $dados->valor_pago =  ($dados->valor_pago + $dados->acrescimo - $dados->desconto);
-      $dados->saldo           = ($dados->valor - $dados->valor_pago);
+      $dados->valor_pago      = ($dados->valor_pago + $dados->acrescimo - $dados->desconto);
+      $dados->saldo_a_pagar = ($dados->valor - $dados->valor_pago);
 
-      if ($dados->saldo<=0)
+      $var_status  = ($input['ckpago']  ? "B" : "A");
+
+      //Verificar se houve alteracao do STATUS, para marcar se é alteracao do status do titulos A Ou B.
+      //Alteracoes simples como descricao, valor, fornecedor ou qualquer outro tipo de alteracao sem alterar o status não aparecerá em relatórios de conta corrente (baixas e estornos)
+      if ($var_status != $dados->status && $dados->status!="")
+      {
+          $dados->alteracao_status = "S"; //Servirá para filtras o log de titulos somente com baixas e estornors
+      }
+      else
+      {
+          $dados->alteracao_status = ""; //Servirá para filtras o log de titulos somente com baixas e estornors
+      }
+
+      //Se houver saldo, será baixa parcial
+      if ($dados->saldo_a_pagar<=0)
       { //Se nao houver saldo, deixa colocar o status normalmente
-          $dados->status  = ($input['ckpago']  ? "B" : "A");
+          $dados->status  = $var_status;
       }
       else
       { //Baixa Parcial, deixar titulo em aberto
@@ -326,12 +341,12 @@ class TitulosController extends Controller
         ->get();
 
         /*Log historico do titulo*/
-        $sQuery = "select to_char(data_ocorrencia, 'DD/MM/YYYY  HH24:MI:SS') AS data_ocorrencia, name, descricao, valor, valor_pago, acrescimo, desconto, tipo, status, acao, ip, id_titulo from log_financeiro inner join users  on users.id = log_financeiro.users_id";
+        $sQuery = "select to_char(data_ocorrencia, 'DD/MM/YYYY  HH24:MI:SS') AS data_ocorrencia, name, descricao, valor, valor_pago, acrescimo, desconto, tipo, status, acao, ip, id_titulo, saldo_a_pagar, alteracao_status from log_financeiro inner join users  on users.id = log_financeiro.users_id";
         $sQuery .= " where id_titulo = ? Order by data_ocorrencia desc";
         $log = \DB::select($sQuery,[$id]);
 
 
-        $sQuery = "select titulos.saldo_a_pagar, pessoas.razaosocial, titulos.id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, to_char(to_date(data_emissao, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_emissao, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, pessoas_id, contas_id, planos_contas_id, centros_custos_id, titulos.obs, numpar, numdoc, serie, grupos_titulos_id ";
+        $sQuery = "select titulos.saldo_a_pagar, pessoas.razaosocial, titulos.id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, to_char(to_date(data_emissao, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_emissao, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, pessoas_id, contas_id, planos_contas_id, centros_custos_id, titulos.obs, numpar, numdoc, serie, grupos_titulos_id, alteracao_status ";
         $sQuery .= " from titulos left join pessoas on pessoas.id = titulos.pessoas_id";
         $sQuery .= " where titulos.tipo = ? ";
         $sQuery .= " and titulos.empresas_id = ? ";
@@ -353,6 +368,12 @@ class TitulosController extends Controller
         $input = $request->except(array('_token', 'ativo')); //não levar o token
         $titulos = titulos::findOrfail($id);
 
+        $var_acrescimo = ($titulos->acrescimo!="" ? $titulos->acrescimo :0);
+        $var_desconto = ($titulos->desconto!="" ? $titulos->desconto :0);
+        $var_valor_pago = ($titulos->valor_pago!="" ? $titulos->valor_pago :0);
+        $var_valor_liq = ($var_valor_pago - $var_acrescimo + $var_desconto);
+
+
         if ($campo=="data_venc") $titulos->data_vencimento  = $this->formatador->FormatarData($input["value"]);
 
         if ($campo=="data_pagto")  $titulos->data_pagamento  = $this->formatador->FormatarData($input["value"]);
@@ -363,35 +384,63 @@ class TitulosController extends Controller
 
         if ($campo=="valor") $titulos->valor  = $this->formatador->GravarCurrency($input["value"]);
 
-        if ($campo=="valor_pago")  $titulos->valor_pago  = $this->formatador->GravarCurrency($input["value"]);
+        if ($campo=="valor_pago")
+        {
+            //Calcula valor pago com desconto / acrescimo
+            $titulos->valor_pago      = ($this->formatador->GravarCurrency($input["value"]) + $var_acrescimo - $var_desconto);
+            $titulos->saldo_a_pagar = ($titulos->valor - $titulos->valor_pago);
+            $titulos->alteracao_status = "S"; //Servirá para filtras o log de titulos somente com baixas e estornos
+        }
 
         if ($campo=="acrescimo") //Recalcula valor pago
         {
            $titulos->acrescimo  = $this->formatador->GravarCurrency($input["value"]);
-           $titulos->valor_pago  = ($titulos->valor + ($titulos->acrescimo!="" ? $titulos->acrescimo : 0) - ($titulos->desconto!="" ? $titulos->desconto : 0));
+           $titulos->valor_pago  = ($var_valor_liq + $titulos->acrescimo - $var_desconto);
+           $titulos->saldo_a_pagar = ($titulos->valor - $titulos->valor_pago);
+           $titulos->alteracao_status = "S"; //Servirá para filtras o log de titulos somente com baixas e estornos
         }
 
         if ($campo=="desconto") //Recalcula valor pago
         {
             $titulos->desconto  = $this->formatador->GravarCurrency($input["value"]);
-            $titulos->valor_pago  = ($titulos->valor + ($titulos->acrescimo!="" ? $titulos->acrescimo : 0) - ($titulos->desconto!="" ? $titulos->desconto : 0));
+            $titulos->valor_pago  = ($var_valor_liq + $var_acrescimo - $titulos->desconto);
+            $titulos->saldo_a_pagar = ($titulos->valor - $titulos->valor_pago);
+            $titulos->alteracao_status = "S"; //Servirá para filtras o log de titulos somente com baixas e estornos
         }
 
         if ($campo=="check_pago")
-        {
-          //Criar trigger historico
+       {
              if ($input["value"]=="0")
-             { //Sim
-                $titulos->valor_pago  = ($titulos->valor + ($titulos->acrescimo!="" ? $titulos->acrescimo : 0) - ($titulos->desconto!="" ? $titulos->desconto : 0));
+             { //PAGOU
+
+                $titulos->valor_pago  = (($var_valor_pago + $titulos->saldo_a_pagar) + $var_acrescimo - $var_desconto);
+                $titulos->saldo_a_pagar = ($titulos->valor - $titulos->valor_pago);
                 $titulos->data_pagamento  = $titulos->data_vencimento;
                 $titulos->status = "B";
+                $titulos->alteracao_status = "S"; //Servirá para filtras o log de titulos somente com baixas e estornors
               }
               else
-              {
+              {//ESTORNOU
+
+                  //Se foi baixado integralmente, estorna integralmente. Caso contrário deixa o saldo a pagar parcial
+                  if ($titulos->status=="B")
+                  {
+                      $titulos->saldo_a_pagar = $titulos->valor; //Valor original titulo
+                  }
+
                   $titulos->valor_pago  = null;
+                  $titulos->desconto  = null;
+                  $titulos->acrescimo  = null;
                   $titulos->data_pagamento  = null;
                   $titulos->status = "A";
+                  $titulos->alteracao_status = "S"; //Servirá para filtras o log de titulos somente com baixas e estornors
               }
+        }
+
+        //Se ficou negativo, zera
+        if (($titulos->valor - $titulos->valor_pago)<0)
+        {
+             $titulos->saldo_a_pagar=0;
         }
 
         $titulos->save();

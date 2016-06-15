@@ -119,81 +119,90 @@
                                         <input  id= "ckpago" name="ckpago" type="hidden" value=""/>
                                         <div class="row">
                                                 <div class="col-xs-4">
-                                                      <label for="ckpago" class="control-label">Pago ?</label>
+                                                      <label for="ckpago" class="control-label">Marcar como pago ?</label>
                                                       <div class="input-group">
                                                              <div class="input-group-addon">
                                                                   <input  id= "ckpago" name="ckpago" type="checkbox" class="ckpago" data-group-cls="btn-group-sm" value="{{ ($dados[0]->status=='B' ? true : '') }}"  {{ ($dados[0]->status=='B' ? 'checked' : '') }} />
                                                              </div>
                                                       </div>
                                                 </div>
-
-                                              <div id="esconder" style="display: none" >
-                                                    <div class="col-xs-2">
-                                                        <label for="data_pagamento" class="control-label">Data Pagamento</label>
-
-                                                        <div class="input-group">
-                                                               <div class="input-group-addon">
-                                                                <i class="fa fa-calendar"></i>
-                                                                </div>
-                                                                <input id ="data_pagamento" name = "data_pagamento"
-                                                                onblur="validar_data(this);" type="text"
-                                                                class="form-control"
-                                                                data-inputmask='"mask": "99/99/9999"' data-mask  value="{{$dados[0]->data_pagamento}}">
-                                                        </div>
-
-                                                   </div>
-
-                                                     <div class="col-xs-2">
-                                                          <label for="acrescimo" class="control-label">Acréscimo</label>
-                                                          <div class="input-group">
-                                                             <span class="input-group-addon">R$</span>
-                                                               <input id="acrescimo" maxlength="10"   name = "acrescimo" type="text" class="formata_valor form-control" onblur="recalcula();" value="{{$dados[0]->acrescimo}}">
-                                                          </div>
-                                                     </div>
-
-                                                      <div class="col-xs-2">
-                                                          <label for="desconto" class="control-label">Desconto</label>
-                                                          <div class="input-group">
-                                                             <span class="input-group-addon">R$</span>
-                                                               <input id="desconto" maxlength="10"   name = "desconto" type="text" class="formata_valor form-control" onblur="recalcula();" value="{{$dados[0]->desconto}}">
-                                                          </div>
-                                                     </div>
-
-                                                     <div class="col-xs-2">
-                                                          <label for="valor_pago" class="control-label">Valor Pago</label>
-                                                          <div class="input-group">
-                                                               <span class="input-group-addon">R$</span>
-                                                               <input id="valor_pago" maxlength="10"   name = "valor_pago" type="text" class="formata_valor form-control" value="{{$dados[0]->valor_pago}}">
-                                                          </div>
-                                                     </div>
-
-                                               </div>
+                                                <div class="col-xs-7">
+                                                    <p>&nbsp;</p>
+                                                    <p class="text-warning">- Em caso de pagamentos parciais, o título aparecerá como NÃO PAGO, pois existirá saldo à pagar.</p>
+                                                </div>
                                         </div>
 
 
+                                        <!-- Somente para titulos parciais-->
+                                        @if ($dados[0]->saldo_a_pagar>0 && $dados[0]->saldo_a_pagar <> $dados[0]->valor)
                                         <div class="row">
-                                              <div class="col-xs-8">
+                                              <div class="col-xs-10">
                                                 <label for="" class="control-label text-info">Esse Título está parcialmente baixado. Você pode efetuar novas baixas informando o valor no campo abaixo</label>
                                               </div>
                                         </div>
+                                        @endif
+                                        <!-- FIM - Somente para titulos parciais-->
 
                                         <div class="row">
 
                                               <div class="col-xs-2">
-                                                          <label for="saldo" class="control-label">Saldo à Pagar</label>
-                                                          <div class="input-group">
-                                                               <span class="input-group-addon">R$</span>
-                                                               <input id="saldo" maxlength="10"   name = "saldo" type="text" class="formata_valor form-control" value="{{$dados[0]->saldo_a_pagar}}">
-                                                          </div>
+                                                      <label for="total_pago" class="control-label">Total Pago</label>
+                                                      <div class="input-group">
+                                                           <span class="input-group-addon">R$</span>
+                                                           <input id="total_pago" readonly="true"  name = "total_pago" type="text" class="formata_valor form-control" value="{{$dados[0]->valor - $dados[0]->saldo_a_pagar}}">
+                                                      </div>
                                               </div>
 
                                               <div class="col-xs-2">
-                                                          <label for="novo_pagto" class="control-label">Novo Pagamento</label>
-                                                          <div class="input-group">
-                                                               <span class="input-group-addon">R$</span>
-                                                               <input id="novo_pagto" maxlength="10"   name = "novo_pagto" type="text" class="formata_valor form-control" value="">
-                                                          </div>
+                                                      <label for="saldo" class="control-label">Saldo à Pagar</label>
+                                                      <div class="input-group">
+                                                           <span class="input-group-addon">R$</span>
+                                                           <input id="saldo" readonly="true"  name = "saldo" type="text" class="formata_valor form-control" value="{{$dados[0]->saldo_a_pagar}}">
+                                                      </div>
                                               </div>
+
+
+                                              <div id="esconder" style="display: none" >
+                                                    <div class="col-xs-2">
+                                                          <label for="data_pagamento" class="control-label">Data Pagamento</label>
+
+                                                          <div class="input-group">
+                                                                 <div class="input-group-addon">
+                                                                  <i class="fa fa-calendar"></i>
+                                                                  </div>
+                                                                  <input id ="data_pagamento" name = "data_pagamento"
+                                                                  onblur="validar_data(this);" type="text"
+                                                                  class="form-control"
+                                                                  data-inputmask='"mask": "99/99/9999"' data-mask  value="{{$dados[0]->data_pagamento}}">
+                                                          </div>
+                                                      </div>
+
+
+                                                      <div class="col-xs-2">
+                                                            <label for="acrescimo" class="control-label">Acréscimo</label>
+                                                            <div class="input-group">
+                                                               <span class="input-group-addon">R$</span>
+                                                                 <input id="acrescimo" maxlength="10"   name = "acrescimo" type="text" class="formata_valor form-control" onblur="recalcula();" value="{{$dados[0]->acrescimo}}">
+                                                            </div>
+                                                       </div>
+
+                                                        <div class="col-xs-2">
+                                                            <label for="desconto" class="control-label">Desconto</label>
+                                                            <div class="input-group">
+                                                               <span class="input-group-addon">R$</span>
+                                                                 <input id="desconto" maxlength="10"   name = "desconto" type="text" class="formata_valor form-control" onblur="recalcula();" value="{{$dados[0]->desconto}}">
+                                                            </div>
+                                                       </div>
+
+                                                       <div class="col-xs-2">
+                                                            <label for="valor_pago" class="control-label">Valor Pagamento</label>
+                                                            <div class="input-group">
+                                                                 <span class="input-group-addon">R$</span>
+                                                                 <input id="valor_pago" maxlength="10"   name = "valor_pago" type="text" class="formata_valor form-control" onblur="recalcula();" value="">
+                                                            </div>
+                                                       </div>
+                                                </div>
+
                                         </div>
 
 
@@ -270,12 +279,14 @@
                                                                           </div><!-- col-xs-->
 
                                                                      </div>
-
                                                           </div>
+
                                                         </div>
+
                                                       </div>
 
                                                     </div>
+
                                                   </div>
 
                                                 </div>
@@ -283,7 +294,6 @@
                                               </div>
 
                                             </div>
-
 
                           </div>
                           <!-- /.tab-pane -->
@@ -295,10 +305,10 @@
                                         <td>Usuário</td>
                                         <td>Descrição Título</td>
                                         <td>Valor Título</td>
-                                        <td>Valor Pago</td>
                                         <td>Acréscimo</td>
                                         <td>Desconto</td>
-                                        <td>Tipo</td>
+                                        <td>Valor Pago</td>
+                                        <td>Saldo</td>
                                         <td>Status</td>
                                         <td>Ação</td>
                                     </tr>
@@ -308,12 +318,26 @@
                                               <td>{{$item->name}}</td>
                                               <td>{{$item->descricao}}</td>
                                               <td>{{$item->valor}}</td>
-                                              <td>{{$item->valor_pago}}</td>
                                               <td>{{$item->acrescimo}}</td>
                                               <td>{{$item->desconto}}</td>
-                                              <td>{{$item->tipo}}</td>
+                                              <td>{{$item->valor_pago}}</td>
+                                              <td>{{$item->saldo_a_pagar}}</td>
                                               <td>{{$item->status}}</td>
-                                              <td>{{$item->acao}}</td>
+                                              <td>
+                                              <!-- Se houve alteracao de status, poderá ser baixa, estorno ou baixa parcial-->
+                                              @if (trim($item->alteracao_status)!="")
+                                                  @if ($item->saldo_a_pagar==0)
+                                                        <p>Baixa Integral</p>
+                                                  @elseif ($item->saldo_a_pagar==$item->valor)
+                                                        <p>Estorno</p>
+                                                  @else
+                                                        <p>Baixa Parcial</p>
+                                                  @endif
+                                              @else
+                                                  {{$item->acao}}
+                                              @endif
+
+                                              </td>
                                           </tr>
                                     @endforeach
                                     </table>

@@ -27,7 +27,7 @@
             <!--  status, descricao, valor, data_vencimento, data_emissao) -->
              <div class="box-body">
                     <input  id= "ckpago" name="ckpago" type="hidden" value=""/>
-
+                    <input type="hidden" name="total_pago" id='total_pago' value="0">
 
                                   <div class="row">
                                       <div class="col-xs-4 {{ $errors->has('descricao') ? ' has-error' : '' }}">
