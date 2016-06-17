@@ -46,7 +46,7 @@
                                             <label for="valor" class="control-label">Valor</label>
                                             <div class="input-group">
                                              <span class="input-group-addon">R$</span>
-                                             <input id="valor" maxlength="60"  placeholder="" name = "valor" type="text" class="formata_valor form-control" value="{{ old('valor') }}">
+                                             <input id="valor" maxlength="60"  placeholder="" name = "valor" type="text" class="formata_valor form-control" onblur="atualizar_valor_rateio();" value="{{ old('valor') }}">
                                                @if ($errors->has('valor'))
                                                 <span class="help-block">
                                                     <strong>{{ $errors->first('valor') }}</strong>
@@ -106,12 +106,147 @@
                                             @include('modal_cadastro_basico', array('qual_campo'=>'plano', 'modal' => 'modal_plano', 'tabela' => 'planos_contas'))
                                       </div><!-- col-xs-->
 
-                                      <div class="col-xs-4">
-                                            @include('carregar_combos', array('dados'=>$centros_custos, 'titulo' =>'Centro de Custo', 'id_combo'=>'centros_custos', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '50'))
+
+                                      <div class="col-xs-3">
+
+                                          <label for="centros_custos" class="control-label">Centro de Custo</label>
+                                            <div class="input-group">
+                                                   <div class="input-group-addon">
+                                                      <a href="#" data-toggle="tooltip" title="Clique em 'Incluir Novo Registro' para cadastrar sem sair da página.">
+                                                            <img src="{{ url('/images/help.png') }}" class="user-image" alt="Ajuda"  />
+                                                       </a>
+                                                    </div>
+
+                                                    <select id="centros_custos" onchange="incluir_registro_combo('centros_custos');" placeholder="(Selecionar)"
+                                                    name="centros_custos" data-live-search="true" data-none-selected-text="Nenhum item selecionado"
+                                                    class="form-control selectpicker" style="width: 100%;">
+                                                    <option  value=""></option>
+
+                                                    <!-- Verifica permissão de inclusao da pagina/tabela-->
+                                                    @can('verifica_permissao', [52 ,'incluir'])
+                                                        <optgroup label="Ação">
+                                                    @else
+                                                        <optgroup label="Ação" disabled>
+                                                    @endcan
+
+                                                    <option  value=""  data-icon="fa fa-eraser">(Nenhum)</option>
+                                                    <option  value=""  data-icon="fa fa-plus-circle">(Incluir Novo Registro)</option>
+                                                    <option data-divider="true"></option>
+                                                    </optgroup>
+
+                                                    <optgroup label="Registros">
+                                                    @foreach($centros_custos as $item)
+                                                           <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                    @endforeach
+                                                    </select>
+                                                    </optgroup>
+
+                                                    <span class="input-group-addon">
+                                                          <button  id="novorateio" type="button" data-toggle="modal" data-target="#myModal" onclick="calcular_rateio();">
+                                                              Rateio...
+                                                          </button>
+                                                    </span>
+
+                                           </div>
+
+
                                             @include('modal_cadastro_basico', array('qual_campo'=>'centros_custos', 'modal' => 'modal_centros_custos', 'tabela' => 'centros_custos'))
-                                      </div><!-- col-xs-->
+                                      </div>
+
 
                                 </div>
+
+                                          <!-- vai ratear ? -->
+                                          <!-- Modal -->
+                                              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog  modal-lg" role="document">
+                                                      <div class="modal-content">
+                                                        <div class="modal-header">
+                                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                          <h4 class="modal-title" id="myModalLabel">Rateio por Centro de Custo</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                             <div class="row">
+                                                                      <div class="col-xs-2">
+                                                                       <i class="text-info"> Valor Total Título :</i> <input type="text" id="valor_original" readonly="true" name="valor_original" value="" class="form-control">
+                                                                      </div>
+                                                                      <div class="col-xs-2">
+                                                                       <i class="text-info"> Soma do Rateio :</i> <input type="text" id="soma_rateio" readonly="true" name="soma_rateio" value="" class="form-control">
+                                                                      </div>
+                                                                      <div class="col-xs-2">
+                                                                       <i class="text-info"> Valor Restante : </i><input type="text" id="valor_restante" readonly="true" name="valor_restante" value="" class="form-control">
+                                                                      </div>
+                                                             </div>
+
+                                                             <div class="row">
+
+                                                                    <div class="col-xs-4">
+                                                                          <label for="rateio_cc" class="control-label">Centro de Custo</label>
+
+                                                                          <select id="rateio_cc" name="rateio_cc" placeholder="(Selecionar)" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+                                                                          @foreach($centros_custos as $item)
+                                                                                 <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                    </div>
+
+                                                                    <div class="col-xs-3">
+                                                                          <label for="perc_rateio" class="control-label">% Rateio</label>
+                                                                          <div class="input-group">
+                                                                           <span class="input-group-addon">%</span>
+                                                                           <input id="perc_rateio"  name = "perc_rateio" type="text" class="formata_valor form-control" value="" onblur="calcular_rateio();">
+                                                                          </div>
+                                                                    </div>
+
+                                                                    <div class="col-xs-3">
+                                                                          <label for="valor_rateio" class="control-label">Valor</label>
+                                                                          <div class="input-group">
+                                                                           <span class="input-group-addon">R$</span>
+                                                                           <input id="valor_rateio"   name = "valor_rateio" type="text" class="formata_valor form-control" value="" onblur="calcular_rateio();">
+                                                                          </div>
+                                                                    </div>
+
+                                                                    <div class="col-xs-2">
+                                                                          <label for="botao" class="control-label">&nbsp;</label>
+                                                                          <button id="botao" type="button" class="btn btn-success form-control" onclick="incluir_rateio();"><i class="fa fa-plus"></i> Incluir</button>
+                                                                    </div>
+
+                                                            </div>
+
+                                                            <div class="row">
+
+                                                                   <div class="col-xs-4">
+                                                                      <label for="inc_cc[]" class="control-label"></label>
+                                                                   </div>
+
+                                                                   <div class="col-xs-3">
+                                                                          <label for="inc_perc[]" class="control-label"></label>
+                                                                   </div>
+
+                                                                   <div class="col-xs-3">
+                                                                          <label for="inc_valor[]" class="control-label"></label>
+                                                                   </div>
+
+                                                          </div>
+
+                                                          <div class="row">
+                                                                <div class="col-xs-10">
+                                                                      <table id="mais_rateios" class="table">
+                                                                      </table>
+                                                                </div>
+                                                          </div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button id="tchau" type="button" class="btn btn-default" data-dismiss="modal">Sair Sem Salvar</button>
+                                                            <button type="button" class="btn btn-primary" onclick="incluir_rateio();" data-dismiss="modal"><i class="fa fa-save"></i> Salvar</button>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                               </div>
+                                           <!-- fim modal -->
 
                                 <div class="row">
                                         <div class="col-xs-4">
@@ -213,7 +348,7 @@
                                                              <div class="row">
                                                                   <div class="col-xs-2">
                                                                         <label for="parcelas" class="control-label">Qtd. Parcelas</label>
-                                                                        <input id="parcelas"  placeholder="(Opcional)" name = "parcelas" type="text" class="form-control" value="1">
+                                                                        <input id="parcelas"  placeholder="(Opcional)" name = "parcelas" type="number" class="form-control" value="1">
                                                                   </div>
 
                                                                   <div class="col-xs-2">
@@ -256,25 +391,10 @@
 
         </form>
 
-
     </div>
 
 </div>
-<script type="text/javascript">
-        /*Prepara checkbox bootstrap*/
-
-       $(document).ready(function(){
-            $("#data_vencimento").val(moment().format('DD/MM/YYYY')); //Data de pagamento dia
-            $("#data_vencimento").trigger( "change" );
-
-            $("#data_emissao").val(moment().format('DD/MM/YYYY')); //Data de pagamento dia
-            $("#data_emissao").trigger( "change" );
-      });
-
-
-</script>
 
 @include('titulos.script_titulos')
 
 @endsection
-

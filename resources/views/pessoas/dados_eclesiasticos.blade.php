@@ -610,10 +610,10 @@
                                                           <div class="row">
                                                                <br/>
 
-                                                                   <div class="col-xs-2">
+                                                                   <div class="col-xs-3">
                                                                       <label for="inc_filhos[]" class="control-label">Nome</label>
                                                                    </div>
-                                                                   <div class="col-xs-2">
+                                                                   <div class="col-xs-1">
                                                                           <label for="inc_filhos2[]" class="control-label">Sexo</label>
                                                                    </div>
                                                                    <div class="col-xs-2">

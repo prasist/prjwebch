@@ -273,14 +273,15 @@ class TitulosController extends Controller
           $dados->alteracao_status = ""; //Servirá para filtras o log de titulos somente com baixas e estornors
       }
 
-      //Se houver saldo, será baixa parcial
+      //Se houver saldo, será baixa parcial.
       if ($dados->saldo_a_pagar<=0)
       { //Se nao houver saldo, deixa colocar o status normalmente
           $dados->status  = $var_status;
       }
       else
-      { //Baixa Parcial, deixar titulo em aberto
+      { //Baixa Parcial, deixar titulo em aberto. Nesse caso marcar tambem com alteracao de status
           $dados->status = "A";
+          $dados->alteracao_status = "S"; //Servirá para filtras o log de titulos somente com baixas e estornors
       }
 
       $dados->grupos_titulos_id  = ($input['grupos_titulos']=="" ? null : $input['grupos_titulos']);
@@ -471,7 +472,6 @@ class TitulosController extends Controller
      */
     public function update(\Illuminate\Http\Request  $request, $id, $tipo)
     {
-
         $this->salvar($request, $id,  $tipo, "update");
         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
         return redirect($this->rota . '/' . $tipo);

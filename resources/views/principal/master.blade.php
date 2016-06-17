@@ -6,33 +6,14 @@
         <!-- Est-->
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
-        <!-- bootstrap -->
-        <!--<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">-->
-        <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">-->
-
-
-        <!--<link href="{{ asset('/dist/css/bootstrap.css')}}" rel="stylesheet">-->
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
         <script src="//vitalets.github.io/x-editable/assets/mockjax/jquery.mockjax.js"></script>
-
-        <!-- antigo -->
-        <!--<link href="{{ asset('/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />-->
-        <!-- antigo -->
-
-        <!-- x-editable (bootstrap version) -->
-        <!--<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.6/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet"/>-->
-        <!--<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.6/bootstrap-editable/js/bootstrap-editable.min.js"></script>-->
         <link href="{{ asset('/dist/css/bootstrap-editable.css')}}" rel="stylesheet" type="text/css" />
         <script src="{{ asset('/dist/js/bootstrap-editable.js')}}"></script>
-
         <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.css" rel="stylesheet" type="text/css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
-        <!--<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>-->
-
         <script src="{{ asset('/dist/js/bootstrap-datepicker.js')}}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -40,7 +21,7 @@
         <link href="{{ asset('/dist/css/AdminLTE.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('/dist/css/skins/skin-green.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- jvectormap -->
-        <link href="{{ asset('/plugins/jvectormap/jquery-jvectormap-1.2.2.css')}}" rel="stylesheet" type="text/css" />
+        <!--<link href="{{ asset('/plugins/jvectormap/jquery-jvectormap-1.2.2.css')}}" rel="stylesheet" type="text/css" />-->
         <!-- Daterange picker -->
         <link href="{{ asset('/plugins/daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet" type="text/css" />
         <!-- bootstrap wysihtml5 - text editor -->

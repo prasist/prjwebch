@@ -260,10 +260,12 @@
          </div>
         </div>
 
-
-
-
 <script type="text/javascript">
+
+      //Abre menu
+      $(document).ready(function(){
+         $("#financ").addClass("treeview active");
+      });
 
         /*Quando informar um valor de acrescimo ou desconto, atualiza o valor pago*/
         function recalcula()

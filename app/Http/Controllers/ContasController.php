@@ -41,7 +41,7 @@ class ContasController extends Controller
 
         $dados = contas::select('contas.nome', 'contas.id', 'contas.saldo', 'contas.data_alteracao' , 'users.name as nome_usuario')
         ->where('contas.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->join('users', 'users.id' , '=' , 'contas.users_id')
+        ->leftjoin('users', 'users.id' , '=' , 'contas.users_id')
         ->get();
 
         return view($this->rota . '.index',compact('dados'));
