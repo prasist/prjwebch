@@ -111,7 +111,12 @@
 
                                               <div class="col-xs-3">
 
-                                                    <label for="centros_custos" class="control-label">Centro de Custo</label>
+                                                    @if ($rateio_titulos->count()>0)
+                                                          <label for="centros_custos" class="control-label text-info">Centro de Custo <i>(Existem Valores de Rateio)</i></label>
+                                                    @else
+                                                          <label for="centros_custos" class="control-label">Centro de Custo</label>
+                                                    @endif
+
                                                       <div class="input-group">
                                                              <div class="input-group-addon">
                                                                 <a href="#" data-toggle="tooltip" title="Clique em 'Incluir Novo Registro' para cadastrar sem sair da página.">
@@ -121,7 +126,7 @@
 
                                                               <select id="centros_custos" onchange="incluir_registro_combo('centros_custos');" placeholder="(Selecionar)"
                                                               name="centros_custos" data-live-search="true" data-none-selected-text="Nenhum item selecionado"
-                                                              class="form-control selectpicker" style="width: 100%;">
+                                                              class="form-control selectpicker" style="width: 100%;" {{$rateio_titulos->count()>0 ? "disabled" : "" }}>
                                                               <option  value=""></option>
 
                                                               <!-- Verifica permissão de inclusao da pagina/tabela-->
@@ -155,7 +160,7 @@
 
                                         </div>
 
-                                                <!-- vai ratear ? -->
+                                          <!-- vai ratear ? -->
                                           <!-- Modal -->
                                               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                     <div class="modal-dialog  modal-lg" role="document">
@@ -232,16 +237,33 @@
                                                           </div>
                                                           -->
 
-                                                          <div class="row">
-                                                                <div class="col-xs-10">
-                                                                      <table id="mais_rateios" class="table">
-                                                                      </table>
-                                                                </div>
-                                                          </div>
+                                                        <div class="row">
+                                                              <div class="col-xs-10">
+                                                                    <table id="mais_rateios" class="table table-bordered table-hover">
+                                                                    @if ($rateio_titulos!=null)
+                                                                        <tr>
+                                                                              <td>Centro de Custo</td>
+                                                                              <td>%</td>
+                                                                              <td>Valor</td>
+                                                                              <td>Excluir</td>
+                                                                        </tr>
+                                                                        @foreach($rateio_titulos as $item)
+                                                                        <tr>
+                                                                              <input id="hidden_id_rateio_cc[]" name = "hidden_id_rateio_cc[]" type="hidden" class="form-control" value="{{$item->centros_custos_id}}">
+                                                                              <td><input id="inc_cc[]" readonly name = "inc_cc[]" type="text" class="form-control" value="{{$item->nome}}"></td>
+                                                                              <td><input id="inc_perc[]" readonly name = "inc_perc[]" type="text" class="form-control valores" value='{{ str_replace(".", ",", $item->percentual) }}'></td>
+                                                                              <td><input id="inc_valor[]" readonly name = "inc_valor[]" type="text" class="form-control valores" value='{{ str_replace(".", ",", $item->valor) }}'></td>
+                                                                              <td><button data-toggle="tooltip" data-placement="top" title="Excluir Ítem"  class="btn btn-danger btn-sm remover"><spam class="glyphicon glyphicon-trash"></spam></button></td>
+                                                                        </tr>
+                                                                        @endforeach
+                                                                    @endif
+                                                                    </table>
+                                                              </div>
+                                                        </div>
 
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button id="tchau" type="button" class="btn btn-default" data-dismiss="modal" onclick="remover_todos();">Sair Sem Salvar</button>
+                                                            <button id="tchau" type="button" class="btn btn-danger" data-dismiss="modal" onclick="remover_todos();">Excluir Tudo</button>
                                                             <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-save"></i> Salvar</button>
                                                         </div>
                                                       </div>

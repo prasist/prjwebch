@@ -7,6 +7,7 @@
             //Expande menu
             $("#financ").addClass("treeview active");
 
+            //Remove linha da tabela de rateios
             $("#mais_rateios").on("click", ".remover", function(e){
                 $(this).closest('tr').remove();
                 verificar_valores_rateados(); //Recalcula
@@ -16,12 +17,12 @@
             //Atualiza campos com valores default
             $("#data_vencimento").val(moment().format('DD/MM/YYYY')); //Data de pagamento dia
             $("#data_vencimento").trigger( "change" );
-
             $("#data_emissao").val(moment().format('DD/MM/YYYY')); //Data de pagamento dia
             $("#data_emissao").trigger( "change" );
-
             $("#valor_original").val($("#valor").val());
             $("#valor_restante").val($("#valor").val());
+
+            verificar_valores_rateados(); //Recalcula valores se já vierem carregados
 
 
             /*Inicializa check como botoes sim e nao*/
@@ -78,18 +79,12 @@
        //Quando informar o valor do titulo, atualizar o valor de rateio
        function atualizar_valor_rateio()
        {
-            $("#valor_original").val($("#valor").val());
-            $("#valor_restante").val($("#valor").val());
+            $("#valor_original").val($("#valor").val().replace('.', '').replace(',', '.'));
+            $("#valor_restante").val($("#valor").val().replace('.', '').replace(',', '.'));
        }
 
 
-       //Caso nao confirme o rateio
-       function nao_salvar()
-       {
-            document.getElementById("mais_rateios").innerHTML = "";
-       }
-
-
+       //Calcula valor rateado, saldo remanescente e validacoes
        function calcular_rateio()
        {
 
@@ -124,7 +119,9 @@
                   var var_resultado = (parseFloat($("#valor_original").val())  * parseFloat($("#perc_rateio").val().replace('.', '').replace(',', '.')));
 
                   //Calcula valor do rateio a partir do percentual
-                  $("#valor_rateio").val(parseFloat(var_resultado).toFixed(2)/100);
+                  var var_valor_formatado = parseFloat(var_resultado).toFixed(2)/100;
+
+                  $("#valor_rateio").val(var_valor_formatado.toString().replace('.', ',')); //Formata para exibicao
 
             }
 
@@ -144,6 +141,17 @@
 
             }
 
+       }
+
+
+       function remover_todos()
+       {
+            table = $('#mais_rateios');
+              table.find('input').each(function (){
+                $(this).val("");
+                $(this).closest('tr').remove();
+              });
+              verificar_valores_rateados(); //Recalcula
        }
 
        //Percorre valores adicionados
@@ -168,6 +176,7 @@
 
            });
 
+
            $("#soma_rateio").val(valor);
            $("#valor_restante").val(($("#valor_original").val()-$("#soma_rateio").val()));
 
@@ -180,7 +189,6 @@
            {
               $('#botao').removeAttr('disabled');
            }
-
 
       }
 
@@ -208,12 +216,11 @@
                 var texto_rateio = document.getElementById("rateio_cc").options;
 
                 //Criar campos dinamicamente
-                var sCentroCustoID = '<tr><td><input id="hidden_id_rateio_cc[]" name = "hidden_id_rateio_cc[]" type="hidden" class="form-control" value=" ' + ind_centrocusto + '"></td>';
+                var sCentroCustoID = '<tr><input id="hidden_id_rateio_cc[]" name = "hidden_id_rateio_cc[]" type="hidden" class="form-control" value=" ' + ind_centrocusto + '">';
                 var sCentroCusto = '<td><input id="inc_cc[]" readonly name = "inc_cc[]" type="text" class="form-control" value="' + texto_rateio[ind_centrocusto].text + '"></td>';
                 var sPercentual = '<td><input id="inc_perc[]" readonly name = "inc_perc[]" type="text" class="form-control valores" value="' + document.getElementById("perc_rateio").value + '"></td>';
                 var sValor = '<td><input id="inc_valor[]" readonly name = "inc_valor[]" type="text" class="form-control valores" value="' + document.getElementById("valor_rateio").value + '"></td>';
                 var sBotao = '<td><button data-toggle="tooltip" data-placement="top" title="Excluir Ítem"  class="btn btn-danger btn-sm remover"><spam class="glyphicon glyphicon-trash"></spam></button></td>';
-
 
                 /*Gera codigo HTML*/
                 document.getElementById("mais_rateios").innerHTML = document.getElementById("mais_rateios").innerHTML + sCentroCustoID + sCentroCusto + sPercentual + sValor + sBotao + '</tr>';
@@ -227,6 +234,7 @@
                 verificar_valores_rateados();
       }
 
+      //Recalcula ao informar percentual ou valor
       function recalcula()
       {
 

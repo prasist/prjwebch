@@ -156,7 +156,7 @@
 
                                 </div>
 
-                                          <!-- vai ratear ? -->
+                                         <!-- vai ratear ? -->
                                           <!-- Modal -->
                                               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                     <div class="modal-dialog  modal-lg" role="document">
@@ -184,10 +184,10 @@
                                                                     <div class="col-xs-4">
                                                                           <label for="rateio_cc" class="control-label">Centro de Custo</label>
 
-                                                                          <select id="rateio_cc" name="rateio_cc" placeholder="(Selecionar)" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <select id="rateio_cc" name="rateio_cc" placeholder="(Selecionar)" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;" onchange="document.getElementById('perc_rateio').focus();">
                                                                           <option  value=""></option>
                                                                           @foreach($centros_custos as $item)
-                                                                                 <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                                                                 <option  value="{{$item->id}}">{{$item->nome}}</option>
                                                                           @endforeach
                                                                           </select>
                                                                     </div>
@@ -196,7 +196,7 @@
                                                                           <label for="perc_rateio" class="control-label">% Rateio</label>
                                                                           <div class="input-group">
                                                                            <span class="input-group-addon">%</span>
-                                                                           <input id="perc_rateio"  name = "perc_rateio" type="text" class="formata_valor form-control" value="" onblur="calcular_rateio();">
+                                                                           <input id="perc_rateio" onfocus="document.getElementById('valor_rateio').value=''; " name = "perc_rateio" type="text" class="form-control" value="" onblur="calcular_rateio();">
                                                                           </div>
                                                                     </div>
 
@@ -204,7 +204,7 @@
                                                                           <label for="valor_rateio" class="control-label">Valor</label>
                                                                           <div class="input-group">
                                                                            <span class="input-group-addon">R$</span>
-                                                                           <input id="valor_rateio"   name = "valor_rateio" type="text" class="formata_valor form-control" value="" onblur="calcular_rateio();">
+                                                                           <input id="valor_rateio" onfocus="document.getElementById('perc_rateio').value=''; "  name = "valor_rateio" type="text" class="form-control" value="" onblur="calcular_rateio();">
                                                                           </div>
                                                                     </div>
 
@@ -215,33 +215,24 @@
 
                                                             </div>
 
-                                                            <div class="row">
 
-                                                                   <div class="col-xs-4">
-                                                                      <label for="inc_cc[]" class="control-label"></label>
-                                                                   </div>
-
-                                                                   <div class="col-xs-3">
-                                                                          <label for="inc_perc[]" class="control-label"></label>
-                                                                   </div>
-
-                                                                   <div class="col-xs-3">
-                                                                          <label for="inc_valor[]" class="control-label"></label>
-                                                                   </div>
-
-                                                          </div>
-
-                                                          <div class="row">
-                                                                <div class="col-xs-10">
-                                                                      <table id="mais_rateios" class="table">
-                                                                      </table>
-                                                                </div>
-                                                          </div>
+                                                        <div class="row">
+                                                              <div class="col-xs-10">
+                                                                    <table id="mais_rateios" class="table table-bordered table-hover">
+                                                                        <tr>
+                                                                              <td>Centro de Custo</td>
+                                                                              <td>%</td>
+                                                                              <td>Valor</td>
+                                                                              <td>Excluir</td>
+                                                                        </tr>
+                                                                    </table>
+                                                              </div>
+                                                        </div>
 
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button id="tchau" type="button" class="btn btn-default" data-dismiss="modal">Sair Sem Salvar</button>
-                                                            <button type="button" class="btn btn-primary" onclick="incluir_rateio();" data-dismiss="modal"><i class="fa fa-save"></i> Salvar</button>
+                                                            <button id="tchau" type="button" class="btn btn-danger" data-dismiss="modal" onclick="remover_todos();">Excluir Tudo</button>
+                                                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-save"></i> Salvar</button>
                                                         </div>
                                                       </div>
                                                     </div>

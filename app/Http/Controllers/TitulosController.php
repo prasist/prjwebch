@@ -210,7 +210,7 @@ class TitulosController extends Controller
                 for ($i=1; $i <= $qtd_parcelas; $i++) //Se for passado parcela maior que 1
                 {
                      $dados = new titulos();
-                     $this->persisteDados($tipo, $dados, $input, $i, $vencimento, $qtd_parcelas, $date);
+                     $this->persisteDados($tipo, $dados, $input, $i, $vencimento, $qtd_parcelas, $date, $tipo_operacao);
 
                      //Acrescenta um mes na data de vencimento
                      $interval = new \DateInterval('P1M');
@@ -220,16 +220,23 @@ class TitulosController extends Controller
             }
             else //update
             {
-                 $dados = titulos::findOrfail($id);
-                 $this->persisteDados($tipo, $dados, $input, 1, $vencimento, 1, $date);
-            }
 
+                //Exclui rateios para inserir novamente
+                $excluir = \App\Models\rateio_titulos::where('empresas_id', $this->dados_login->empresas_id)
+                ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+                ->where('titulos_id', $id)
+                ->delete();
+
+                 $dados = titulos::findOrfail($id);
+                 $this->persisteDados($tipo, $dados, $input, 1, $vencimento, 1, $date, $tipo_operacao);
+            }
 
     }
 
 
-  private function persisteDados($tipo, $dados, $input, $seq, $vencimento, $qtd_parcelas, $date)
+  private function persisteDados($tipo, $dados, $input, $seq, $vencimento, $qtd_parcelas, $date, $tipo_operacao)
   {
+
 
       if ($qtd_parcelas>1)
       {
@@ -296,6 +303,53 @@ class TitulosController extends Controller
       $dados->users_id  = Auth::user()->id;
       $dados->save();
 
+
+      //Rateios por centro de custo
+      if ($input['hidden_id_rateio_cc']!="")
+      {
+
+            $i_index=0; /*Inicia sequencia*/
+
+             foreach($input['hidden_id_rateio_cc'] as $selected)
+              {
+                      if ($selected!="")
+                      {
+                              $whereForEach =
+                              [
+                                  'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                  'empresas_id' =>  $this->dados_login->empresas_id,
+                                  'titulos_id' => $dados->id,
+                                  'centros_custos_id' => $selected
+                              ];
+
+                              if ($tipo_operacao=="create")  //novo registro
+                              {
+                                  $rateio = new \App\Models\rateio_titulos();
+                              }
+                              else //Alteracao
+                              {
+                                  $rateio = \App\Models\rateio_titulos::firstOrNew($whereForEach);
+                              }
+
+                              $valores =
+                              [
+                                  'titulos_id' => $dados->id,
+                                  'empresas_id' =>  $this->dados_login->empresas_id,
+                                  'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                  'centros_custos_id' => $selected,
+                                  'valor' => $this->formatador->GravarCurrency($input['inc_valor'][$i_index]),
+                                  'percentual' => $this->formatador->GravarCurrency($input['inc_perc'][$i_index]),
+                              ];
+
+                              $rateio->fill($valores)->save();
+                              $rateio->save();
+
+                              $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
+                      }
+              }
+
+      }
+
     }
 
 
@@ -341,6 +395,13 @@ class TitulosController extends Controller
         ->OrderBy('nome')
         ->get();
 
+        $rateio_titulos = \App\Models\rateio_titulos::select('percentual', 'valor', 'centros_custos_id', 'nome')
+        ->join('centros_custos', 'centros_custos.id' , '=' , 'rateio_titulo.centros_custos_id')
+        ->where('rateio_titulo.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('rateio_titulo.empresas_id', $this->dados_login->empresas_id)
+        ->where('titulos_id', $id)
+        ->get();
+
         /*Log historico do titulo*/
         $sQuery = "select to_char(data_ocorrencia, 'DD/MM/YYYY  HH24:MI:SS') AS data_ocorrencia, name, descricao, valor, valor_pago, acrescimo, desconto, tipo, status, acao, ip, id_titulo, saldo_a_pagar, alteracao_status from log_financeiro inner join users  on users.id = log_financeiro.users_id";
         $sQuery .= " where id_titulo = ? Order by data_ocorrencia desc";
@@ -355,8 +416,17 @@ class TitulosController extends Controller
         $sQuery .= " and titulos.id = ? ";
         $dados = \DB::select($sQuery,[$tipo, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id, $id]);
 
-        return view($this->rota . '.edit', ['log'=>$log, 'preview' => $preview, 'dados'=>$dados, 'contas' => $contas,'tipo'=>$tipo, 'plano_contas'=>$plano_contas, 'centros_custos'=>$centros_custos, 'grupos_titulos'=>$grupos_titulos]);
 
+        return view($this->rota . '.edit',
+          [ 'log'=>$log,
+            'preview' => $preview,
+            'dados'=>$dados,
+            'contas' => $contas,
+            'tipo'=>$tipo,
+            'plano_contas'=>$plano_contas,
+            'centros_custos'=>$centros_custos,
+            'grupos_titulos'=>$grupos_titulos,
+            'rateio_titulos'=>$rateio_titulos]);
     }
 
 
