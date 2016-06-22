@@ -74,8 +74,8 @@
 
                           </ul>
 
-                              <!-- Tab panes -->
-                              <!-- DADOS CADASTRAIS-->
+                           <!-- Tab panes -->
+                            <!-- DADOS CADASTRAIS-->
                            <div class="tab-content">
 
                                   <div class="tab-pane fade active in" id="home">

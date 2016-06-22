@@ -356,7 +356,6 @@ class RelatorioPessoasController extends Controller
         $parametros = array_add($parametros, 'data_batismo_final', ($input["data_batismo_ate"]=="" ? '' : $formatador->FormatarData($input["data_batismo_ate"])));
     }
 
-
     if ($input["resultado"]=="email")
     {
         $emails = \DB::select('select distinct razaosocial, emailprincipal from view_pessoas_geral_celulas' . $where . ' order by razaosocial');

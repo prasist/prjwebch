@@ -220,7 +220,6 @@
 
                                                             </div>
 
-
                                                         <div class="row">
                                                               <div class="col-xs-10">
                                                                     <table id="mais_rateios" class="table table-bordered table-hover">
