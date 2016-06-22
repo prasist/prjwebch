@@ -31,7 +31,7 @@
 
                                   <div class="row">
                                       <div class="col-xs-4 {{ $errors->has('descricao') ? ' has-error' : '' }}">
-                                            <label for="descricao" class="control-label">Descrição</label>
+                                            <label for="descricao" class="control-label"><span class="text-danger">*</span> Descrição</label>
                                             <input id="descricao"  placeholder="Campo Obrigatório" name = "descricao" type="text" class="form-control" value="{{ old('descricao') }}">
                                                <!-- se houver erros na validacao do form request -->
                                                @if ($errors->has('descricao'))
@@ -43,7 +43,7 @@
 
                                       <div class="col-xs-2 {{ $errors->has('valor') ? ' has-error' : '' }}">
 
-                                            <label for="valor" class="control-label">Valor</label>
+                                            <label for="valor" class="control-label"><span class="text-danger">*</span> Valor</label>
                                             <div class="input-group">
                                              <span class="input-group-addon">R$</span>
                                              <input id="valor" maxlength="60"  placeholder="" name = "valor" type="text" class="formata_valor form-control" onblur="atualizar_valor_rateio();" value="{{ old('valor') }}">
@@ -57,7 +57,7 @@
                                       </div>
 
                                       <div class="col-xs-2">
-                                          <label for="data_emissao" class="control-label">Data Emissão</label>
+                                          <label for="data_emissao" class="control-label"><span class="text-danger">*</span> Data Emissão</label>
                                           <div class="input-group">
                                                  <div class="input-group-addon">
                                                   <i class="fa fa-calendar"></i>
@@ -68,7 +68,7 @@
                                      </div>
 
                                      <div class="col-xs-2 {{ $errors->has('data_vencimento') ? ' has-error' : '' }}">
-                                          <label for="data_vencimento" class="control-label">Data Vencimento</label>
+                                          <label for="data_vencimento" class="control-label"><span class="text-danger">*</span> Data Vencimento</label>
 
                                           <div class="input-group">
                                                  <div class="input-group-addon">
@@ -90,7 +90,7 @@
 
                                 <div class="row">
                                       <div class="col-xs-4  {{ $errors->has('conta') ? ' has-error' : '' }}">
-                                            @include('carregar_combos', array('dados'=>$contas, 'titulo' =>'Conta', 'id_combo'=>'conta', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '48'))
+                                            <span class="text-danger">*</span>@include('carregar_combos', array('dados'=>$contas, 'titulo' =>'Conta', 'id_combo'=>'conta', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '48'))
                                             @include('modal_cadastro_basico', array('qual_campo'=>'conta', 'modal' => 'modal_conta', 'tabela' => 'contas'))
 
                                                  <!-- se houver erros na validacao do form request -->
@@ -153,17 +153,16 @@
                                             @include('modal_cadastro_basico', array('qual_campo'=>'centros_custos', 'modal' => 'modal_centros_custos', 'tabela' => 'centros_custos'))
                                       </div>
 
-
                                 </div>
 
-                                         <!-- vai ratear ? -->
+                                          <!-- vai ratear ? -->
                                           <!-- Modal -->
                                               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                     <div class="modal-dialog  modal-lg" role="document">
                                                       <div class="modal-content">
                                                         <div class="modal-header">
-                                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                          <h4 class="modal-title" id="myModalLabel">Rateio por Centro de Custo</h4>
+                                                          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                                                        <h4 class="modal-title" id="myModalLabel">Rateio por Centro de Custo</h4>
                                                         </div>
                                                         <div class="modal-body">
 
@@ -184,7 +183,7 @@
                                                                     <div class="col-xs-4">
                                                                           <label for="rateio_cc" class="control-label">Centro de Custo</label>
 
-                                                                          <select id="rateio_cc" name="rateio_cc" placeholder="(Selecionar)" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;" onchange="document.getElementById('perc_rateio').focus();">
+                                                                          <select id="rateio_cc" name="rateio_cc" placeholder="(Selecionar)" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;" onchange="document.getElementById('perc_rateio').focus(); validar_cc(this.value);">
                                                                           <option  value=""></option>
                                                                           @foreach($centros_custos as $item)
                                                                                  <option  value="{{$item->id}}">{{$item->nome}}</option>
@@ -212,12 +211,11 @@
                                                                           <label for="botao" class="control-label">&nbsp;</label>
                                                                           <button id="botao" type="button" class="btn btn-success form-control" onclick="incluir_rateio();"><i class="fa fa-plus"></i> Incluir</button>
                                                                     </div>
-
                                                             </div>
-
 
                                                         <div class="row">
                                                               <div class="col-xs-10">
+                                                              <input type="hidden" name="hidden_id_rateio_cc[]" id="hidden_id_rateio_cc[]" value="">
                                                                     <table id="mais_rateios" class="table table-bordered table-hover">
                                                                         <tr>
                                                                               <td>Centro de Custo</td>
@@ -231,8 +229,8 @@
 
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button id="tchau" type="button" class="btn btn-danger" data-dismiss="modal" onclick="remover_todos();">Excluir Tudo</button>
-                                                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-save"></i> Salvar</button>
+                                                            <button id="tchau" type="button" class="btn btn-danger" data-dismiss="modal" onclick="remover_todos();">Cancelar / Excluir Tudo</button>
+                                                            <button id="salvar" type="button" class="btn btn-primary" data-dismiss="modal" disabled="true"><i class="fa fa-save"></i> Salvar / Fechar</button>
                                                         </div>
                                                       </div>
                                                     </div>
@@ -288,6 +286,7 @@
                                                         <input id="valor_pago" maxlength="10"   name = "valor_pago" type="text" class="formata_valor form-control" value="">
                                                    </div>
                                              </div>
+
                                        </div>
 
                                 </div>
@@ -374,6 +373,7 @@
 
              </div><!-- fim box-body"-->
         </div><!-- box box-primary -->
+        <span class="text-danger">* <i>Campos Obrigatórios</i></span>
 
         <div class="box-footer">
             <button class = 'btn btn-primary' type ='submit'>Gravar</button>

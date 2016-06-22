@@ -212,12 +212,13 @@
                   </li>
 
                   <li>
-                    <a href="#"><i class="fa fa-angle-double-right"></i>Fluxo de Caixa</i></a>
+                    <a href="#"><i class="fa fa-angle-double-right"></i>Transferências</i></a>
                   </li>
 
                   <li>
-                    <a href="#"><i class="fa fa-angle-double-right"></i>Transferências</i></a>
+                    <a href="#"><i class="fa fa-angle-double-right"></i>Relatórios</i></a>
                   </li>
+
 
               </ul>
 

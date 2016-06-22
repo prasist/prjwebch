@@ -52,18 +52,41 @@
                          </div>
 
                          <div id="div_opcoes" style="display: none">
+
                                  <div class="row">
-                                         <input id="categoria"   name = "categoria" type="text" class="form-control" value="" placeholder="Plano de Contas">
+                                         <select id="pesq_plano_contas"  name="pesq_plano_contas" data-live-search="true" data-none-selected-text="Plano de Contas" class="form-control selectpicker" style="width: 100%;">
+                                          <option  value=""></option>
+                                          @foreach($plano_contas as $item)
+                                                 <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                          @endforeach
+                                          </select>
                                  </div>
+
                                  <div class="row">
-                                         <input id="centrocusto"   name = "centrocusto" type="text" class="form-control" value="" placeholder="Centro de Custo">
+                                         <select id="pesq_centros_custos"  name="pesq_centros_custos" data-live-search="true" data-none-selected-text="Centro de Custo" class="form-control selectpicker" style="width: 100%;">
+                                          <option  value=""></option>
+                                          @foreach($centros_custos as $item)
+                                                 <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                                          @endforeach
+                                          </select>
                                  </div>
+
                                  <div class="row">
-                                         <input id="fornecedor"   name = "fornecedor" type="text" class="form-control" value="" placeholder="Fornecedor">
+
+                                        <div class="input-group">
+                                                 <div class="input-group-addon">
+                                                    <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#modal_fornecedor" >
+                                                           <i class="fa fa-search"></i> ...
+                                                     </button>
+                                                  </div>
+
+                                                  @include('modal_buscar_pessoas', array('qual_campo'=>'pesq_fornecedor', 'modal' => 'modal_fornecedor'))
+
+                                                  <input id="pesq_fornecedor"  name = "pesq_fornecedor" type="text" class="form-control" placeholder="Cliente / Fornecedor..." value="" readonly >
+
+                                          </div>
                                  </div>
-                                 <div class="row">
-                                         <input id="valor"   name = "valor" type="text" class="form-control" value="" placeholder="Valor">
-                                 </div>
+
                          </div>
 
                 </div>
@@ -112,7 +135,7 @@
                     <thead>
                         <tr>
                         <th><input  id="check_todos" name="check_todos" type="checkbox" /></th>
-                        <th>Data</th>
+                        <th>Data Venc.</th>
                         <th>Descrição</th>
                         <th>Valor</th>
                         <th>Data Pagto.</th>

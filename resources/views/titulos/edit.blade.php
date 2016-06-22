@@ -113,6 +113,7 @@
 
                                                     @if ($rateio_titulos->count()>0)
                                                           <label for="centros_custos" class="control-label text-info">Centro de Custo <i>(Existem Valores de Rateio)</i></label>
+                                                          <input type="hidden" name="centros_custos" id="centros_custos" value="">
                                                     @else
                                                           <label for="centros_custos" class="control-label">Centro de Custo</label>
                                                     @endif
@@ -166,7 +167,7 @@
                                                     <div class="modal-dialog  modal-lg" role="document">
                                                       <div class="modal-content">
                                                         <div class="modal-header">
-                                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
                                                           <h4 class="modal-title" id="myModalLabel">Rateio por Centro de Custo</h4>
                                                         </div>
                                                         <div class="modal-body">
@@ -188,7 +189,7 @@
                                                                     <div class="col-xs-4">
                                                                           <label for="rateio_cc" class="control-label">Centro de Custo</label>
 
-                                                                          <select id="rateio_cc" name="rateio_cc" placeholder="(Selecionar)" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;" onchange="document.getElementById('perc_rateio').focus();">
+                                                                          <select id="rateio_cc" name="rateio_cc" placeholder="(Selecionar)" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;" onchange="document.getElementById('perc_rateio').focus(); validar_cc(this.value);">
                                                                           <option  value=""></option>
                                                                           @foreach($centros_custos as $item)
                                                                                  <option  value="{{$item->id}}">{{$item->nome}}</option>
@@ -219,23 +220,6 @@
 
                                                             </div>
 
-                                                            <!--
-                                                            <div class="row">
-
-                                                                   <div class="col-xs-4">
-                                                                      <label for="inc_cc[]" class="control-label"></label>
-                                                                   </div>
-
-                                                                   <div class="col-xs-3">
-                                                                          <label id="" for="inc_perc[]" class="control-label valores"></label>
-                                                                   </div>
-
-                                                                   <div class="col-xs-3">
-                                                                          <label for="inc_valor[]" class="control-label valores"></label>
-                                                                   </div>
-
-                                                          </div>
-                                                          -->
 
                                                         <div class="row">
                                                               <div class="col-xs-10">
@@ -249,13 +233,15 @@
                                                                         </tr>
                                                                         @foreach($rateio_titulos as $item)
                                                                         <tr>
-                                                                              <input id="hidden_id_rateio_cc[]" name = "hidden_id_rateio_cc[]" type="hidden" class="form-control" value="{{$item->centros_custos_id}}">
+                                                                              <input id="hidden_id_rateio_cc[]" name = "hidden_id_rateio_cc[]" type="hidden" class="form-control ccusto" value="{{$item->centros_custos_id}}">
                                                                               <td><input id="inc_cc[]" readonly name = "inc_cc[]" type="text" class="form-control" value="{{$item->nome}}"></td>
                                                                               <td><input id="inc_perc[]" readonly name = "inc_perc[]" type="text" class="form-control valores" value='{{ str_replace(".", ",", $item->percentual) }}'></td>
                                                                               <td><input id="inc_valor[]" readonly name = "inc_valor[]" type="text" class="form-control valores" value='{{ str_replace(".", ",", $item->valor) }}'></td>
                                                                               <td><button data-toggle="tooltip" data-placement="top" title="Excluir Ítem"  class="btn btn-danger btn-sm remover"><spam class="glyphicon glyphicon-trash"></spam></button></td>
                                                                         </tr>
                                                                         @endforeach
+                                                                    @else
+                                                                          <input type="hidden" name="hidden_id_rateio_cc[]" id="hidden_id_rateio_cc[]" value="">
                                                                     @endif
                                                                     </table>
                                                               </div>
@@ -263,8 +249,8 @@
 
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button id="tchau" type="button" class="btn btn-danger" data-dismiss="modal" onclick="remover_todos();">Excluir Tudo</button>
-                                                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-save"></i> Salvar</button>
+                                                            <button id="tchau" type="button" class="btn btn-danger" data-dismiss="modal" onclick="remover_todos();">Cancelar / Excluir Tudo</button>
+                                                            <button id="salvar" type="button" class="btn btn-primary" data-dismiss="modal" disabled="true"><i class="fa fa-save"></i> Salvar / Fechar</button>
                                                         </div>
                                                       </div>
                                                     </div>
@@ -282,10 +268,6 @@
                                                              </div>
                                                       </div>
                                                 </div>
-                                                <div class="col-xs-7">
-                                                    <p>&nbsp;</p>
-                                                    <p class="text-warning">- Em caso de pagamentos parciais, o título aparecerá como NÃO PAGO, pois existirá saldo à pagar.</p>
-                                                </div>
                                         </div>
 
                                         <!-- Somente para titulos parciais-->
@@ -293,6 +275,7 @@
                                         <div class="row">
                                               <div class="col-xs-10">
                                                 <label for="" class="control-label text-warning"><i class="fa fa-exclamation-triangle"></i> Esse Título está parcialmente baixado. Você pode efetuar novas baixas informando o valor no campo abaixo</label>
+                                                <p class="text-warning">- Em caso de pagamentos parciais, o título aparecerá como NÃO PAGO, pois existirá saldo à pagar.</p>
                                               </div>
                                         </div>
                                         @endif
@@ -304,7 +287,7 @@
                                                       <label for="total_pago" class="control-label">Total Pago</label>
                                                       <div class="input-group">
                                                            <span class="input-group-addon">R$</span>
-                                                           <input id="total_pago" readonly="true"  name = "total_pago" type="text" class="formata_valor form-control" value="{{$dados[0]->valor - $dados[0]->saldo_a_pagar}}">
+                                                           <b><input id="total_pago" readonly="true"  name = "total_pago" type="text" class="formata_valor form-control" value="{{$dados[0]->valor - $dados[0]->saldo_a_pagar}}"></b>
                                                       </div>
                                               </div>
 
@@ -312,7 +295,7 @@
                                                       <label for="saldo" class="control-label">Saldo à Pagar</label>
                                                       <div class="input-group">
                                                            <span class="input-group-addon">R$</span>
-                                                           <input id="saldo" readonly="true"  name = "saldo" type="text" class="formata_valor form-control" value="{{$dados[0]->saldo_a_pagar}}">
+                                                           <b><input id="saldo" readonly="true"  name = "saldo" type="text" class="formata_valor form-control" value="{{$dados[0]->saldo_a_pagar}}"></b>
                                                       </div>
                                               </div>
 

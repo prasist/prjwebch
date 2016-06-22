@@ -143,6 +143,23 @@
 
        }
 
+      //Verificar se centro de custo não foi inserido
+       function validar_cc(valor)
+      {
+
+          $.each($('input[class="form-control ccusto"]'),function(){
+
+                if ($(this).val()==valor) //verifica se item selecionado na combo ja foi adicionado
+                {
+                   alert("Centro de Custo já informado.");
+                   $("#rateio_cc").val(''); //limpa combo
+                   $("#rateio_cc").trigger('change'); //dispara change para limpar campo
+                   return;
+                }
+
+          });
+
+       }
 
        function remover_todos()
        {
@@ -184,10 +201,12 @@
            if (percentual>=100)
            {
               $('#botao').attr('disabled', 'disabled');
+              $('#salvar').removeAttr('disabled');
            }
            else
            {
               $('#botao').removeAttr('disabled');
+              $('#salvar').attr('disabled', 'disabled');
            }
 
       }

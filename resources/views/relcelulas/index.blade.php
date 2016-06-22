@@ -141,7 +141,7 @@
 
                               <div class="col-xs-5">
 
-                                    <label for="resultado" class="control-label">Formato de Sáida : </label>
+                                    <label for="resultado" class="control-label">Formato de Saída : </label>
                                     <select id="resultado" name="resultado" class="form-control selectpicker">
                                     <option  value="pdf" data-icon="fa fa-file-pdf-o" selected>PDF (.pdf)</option>
                                     <option  value="xlsx" data-icon="fa fa-file-excel-o">Planilha Excel (.xls)</option>

@@ -1,5 +1,9 @@
 <?php
 
+
+    Route::get('minhaigreja', 'MinhaIgreja@index');
+    Route::post('minhaigreja/enviar', 'MinhaIgreja@enviar_email');
+
     Route::get('/', function ()
     {
         return view('home');

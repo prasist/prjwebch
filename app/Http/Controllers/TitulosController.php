@@ -46,6 +46,16 @@ class TitulosController extends Controller
         $data_inicial = $ano . '-' . $mes . '-01'; //Monta data inicial do mes corrente
         $data_final = $ano . '-' . $mes . '-' . $ultimo_dia; //até último dia mes corrente
 
+        $plano_contas = \App\Models\planos_contas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->OrderBy('nome')
+        ->get();
+
+        $centros_custos = \App\Models\centros_custos::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->OrderBy('nome')
+        ->get();
+
         $sQuery = "select id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, saldo_a_pagar, alteracao_status";
         $sQuery .= " from titulos ";
         $sQuery .= " where tipo = ? ";
@@ -56,7 +66,7 @@ class TitulosController extends Controller
         $sQuery .= " order by id ";
         $dados = \DB::select($sQuery, [$tipo, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id, $data_inicial, $data_final]);
 
-        return view($this->rota . '.index',['dados'=>$dados, 'post_status'=>'', 'tipo'=>$tipo, 'post_mes'=>'']);
+        return view($this->rota . '.index',['dados'=>$dados, 'post_status'=>'', 'tipo'=>$tipo, 'post_mes'=>'', 'plano_contas'=>$plano_contas, 'centros_custos'=>$centros_custos]);
     }
 
 
@@ -156,12 +166,33 @@ class TitulosController extends Controller
           }
           else if ($input["mes"]=="M") //Mais opcoes
           {
-               $data_inicial = $this->formatador->FormatarData($input["data_inicial"]);
-               $data_final = $this->formatador->FormatarData($input["data_final"]);
+               $data_inicial = "1900-01-01";
+               $data_final = "2900-01-01";
           }
 
+          //Para carregar combo plano de contas
+          $plano_contas = \App\Models\planos_contas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+          ->where('empresas_id', $this->dados_login->empresas_id)
+          ->OrderBy('nome')
+          ->get();
 
-          $sQuery = "select id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, saldo_a_pagar";
+          //Para carregar combo centro de custos
+          $centros_custos = \App\Models\centros_custos::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+          ->where('empresas_id', $this->dados_login->empresas_id)
+          ->OrderBy('nome')
+          ->get();
+
+          //Array principal de campos a serem filtrados
+          $where = array(
+              $tipo,
+              $this->dados_login->empresas_id,
+              $this->dados_login->empresas_clientes_cloud_id,
+              $input["status"],
+              $data_inicial,
+              $data_final,
+            );
+
+          $sQuery = "select id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, saldo_a_pagar, alteracao_status";
           $sQuery .= " from titulos ";
           $sQuery .= " where tipo = ? ";
           $sQuery .= " and empresas_id = ? ";
@@ -178,14 +209,39 @@ class TitulosController extends Controller
 
           $sQuery .= " and data_vencimento >= ? ";
           $sQuery .= " and data_vencimento <= ? ";
+
+          $indice_array=6;
+
+          //Se pesquisou plano de contas
+          if ($input["pesq_plano_contas"]!="")
+          {
+              $sQuery .= " and planos_contas_id = ? ";
+              $where = array_add($where, $indice_array , $input['pesq_plano_contas']); //Incrementa a array principal
+              $indice_array++;
+          }
+
+          //Se pesquisou centro de custos
+          if ($input["pesq_centros_custos"]!="")
+          {
+              $sQuery .= " and centros_custos_id = ? ";
+              $where = array_add($where, $indice_array , $input['pesq_centros_custos']); //Incrementa a array principal
+              $indice_array++;
+          }
+
+          if ($input['pesq_fornecedor']!="")
+          {
+              $sQuery .= " and pessoas_id = ? ";
+              $where = array_add($where, $indice_array , substr($input['pesq_fornecedor'],0,9)); //Incrementa a array principal
+              $indice_array++;
+          }
+
           $sQuery .= " order by id ";
 
-          $dados = \DB::select($sQuery, [$tipo, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id, $input["status"], $data_inicial, $data_final]);
+          $dados = \DB::select($sQuery, $where);
 
-          return view($this->rota . '.index',['dados'=>$dados, 'post_status'=>$input["status"], 'tipo'=>$tipo, 'post_mes'=>$input["mes"]]);
+          return view($this->rota . '.index',['dados'=>$dados, 'post_status'=>$input["status"], 'tipo'=>$tipo, 'post_mes'=>$input["mes"], 'plano_contas'=>$plano_contas, 'centros_custos'=>$centros_custos]);
 
     }
-
 
     /*Update ou insert*/
     public function salvar($request, $id, $tipo, $tipo_operacao)
@@ -236,7 +292,6 @@ class TitulosController extends Controller
 
   private function persisteDados($tipo, $dados, $input, $seq, $vencimento, $qtd_parcelas, $date, $tipo_operacao)
   {
-
 
       if ($qtd_parcelas>1)
       {

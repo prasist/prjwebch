@@ -342,6 +342,20 @@ class RelatorioPessoasController extends Controller
         $parametros = array_add($parametros, 'ano_final', $input["ano_final"]);
     }
 
+    //Data de saida
+    if ($input["data_saida"]!="" && $input["data_saida_ate"]!="")
+    {
+        $parametros = array_add($parametros, 'data_saida_inicial', ($input["data_saida"]=="" ? '' : $formatador->FormatarData($input["data_saida"])));
+        $parametros = array_add($parametros, 'data_saida_final', ($input["data_saida_ate"]=="" ? '' : $formatador->FormatarData($input["data_saida_ate"])));
+    }
+
+    //Data de batismo
+    if ($input["data_batismo"]!="" && $input["data_batismo_ate"]!="")
+    {
+        $parametros = array_add($parametros, 'data_batismo_inicial', ($input["data_batismo"]=="" ? '' : $formatador->FormatarData($input["data_batismo"])));
+        $parametros = array_add($parametros, 'data_batismo_final', ($input["data_batismo_ate"]=="" ? '' : $formatador->FormatarData($input["data_batismo_ate"])));
+    }
+
 
     if ($input["resultado"]=="email")
     {
