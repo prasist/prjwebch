@@ -158,9 +158,10 @@ class PermissoesGrupoController extends Controller
         /* Lista todas as páginas e marca o checkbox conforme permissao concedida na tabela permissoes_grupos*/
         $sql = "select pg.id as id_permissoes, pg.grupos_id, p.id, p.nome, pg.incluir, pg.alterar, pg.excluir, pg.visualizar, pg.exportar, pg.imprimir, pg.acessar
         from paginas p left join permissoes_grupos pg on (p.id = pg.paginas_id) and (pg.grupos_id = " . $id . " or pg.grupos_id is null)
-        where p.nao_mostrar_todos = 0";
+        where p.nao_mostrar_todos = 0 order by pg.id";
 
         $paginas = DB::select($sql);
+        //dd($paginas);
 
         return view('permissoes.edit', ['dados'=>$dados, 'paginas'=>$paginas, 'preview' => $preview]);
 
@@ -208,7 +209,11 @@ class PermissoesGrupoController extends Controller
                    foreach ($paginas_array as $key => $value) {
 
                             //$permissoes = new \App\Models\permissoes_gfinrupo();
-                            $permissoes = \App\Models\permissoes_grupo::firstOrNew(['grupos_id'  => $input['nome'], 'paginas_id' => $value]);
+                            $permissoes = \App\Models\permissoes_grupo::firstOrNew(
+                              [
+                                'grupos_id'  => $input['nome'],
+                                'paginas_id' => $value
+                              ]);
 
                             $valores = [
                                         'incluir'        => $incluir_array[$key],

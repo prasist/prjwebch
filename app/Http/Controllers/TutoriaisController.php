@@ -66,7 +66,6 @@ class TutoriaisController extends Controller
         //------------------Atualizar tabela USUARIOS com termino do TOUR RAPIDO
         $where = ['empresas_id' => $this->dados_login->empresas_id, 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'id' => $this->dados_login->id];
 
-
        if ($id==1)
        {
             \Session::put('tour_rapido', 'N'); //Atualiza session

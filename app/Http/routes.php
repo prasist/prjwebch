@@ -51,6 +51,10 @@
     /*Financeiro*/
     Route::get('financeiro', 'FinanceiroController@index');
 
+    /*Relatorio Financeiro*/
+    Route::get('relfinanceiro', 'RelatorioFinanceiroController@index');
+    Route::post('relfinanceiro/pesquisar', 'RelatorioFinanceiroController@pesquisar');
+
     //Contas a Pagar ou receber
     Route::post('titulos/{id}/update_inline/{campo}/{tipo}','TitulosController@update_inline');
     Route::get('titulos/{tipo}', 'TitulosController@index');

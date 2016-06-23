@@ -64,7 +64,6 @@
 <div class="row">
     <div class="col-md-12">
 
-
      <div class="row">
         <div class="col-md-12">
           <div class="box">
@@ -87,115 +86,115 @@
 
                 <div class="box-footer no-padding">
 
-                    <div class="row">
-                        <div class="col-xs-3">
+                 <div class="row">
+                        <div class="col-xs-4">
                           <h4>&nbsp;&nbsp;&nbsp;&nbsp;Pessoas</h4>
                           <ul class="nav nav-stacked">
 
-                             @foreach($pessoas_tipos as $item)
-                             <li>
-                                <a href="#">&nbsp;{!! $item->nome !!}
-                                    <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
-                                </a>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
+                                 @foreach($pessoas_tipos as $item)
+                                 <li>
+                                    <a href="#">&nbsp;{!! $item->nome !!}
+                                        <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
+                                    </a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
 
-                    <div class="col-xs-3">
-                      <h4>&nbsp;&nbsp;&nbsp;&nbsp;Sexo</h4>
-                      <ul class="nav nav-stacked">
+                        <div class="col-xs-4">
+                          <h4>&nbsp;&nbsp;&nbsp;&nbsp;Sexo</h4>
+                          <ul class="nav nav-stacked">
+                                @foreach($pessoas_sexo as $item)
+                                <li>
+                                    <a href="#">&nbsp;{!! ($item->sexo=="M" ? "Homens" : "Mulheres") !!}
+                                        <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
+                                    </a>
+                                </li>
+                                @endforeach
 
-                        @foreach($pessoas_sexo as $item)
+                            </ul>
+                        </div>
+
+                        <div class="col-xs-4">
+                              <h4>&nbsp;&nbsp;&nbsp;&nbsp;Células</h4>
+                              <ul class="nav nav-stacked">
+
+                                    <li>
+                                        <a href="#">&nbsp;Células Ativas
+                                            <span class="pull-left badge bg-blue">{!! $total_celulas !!}</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">&nbsp;Participantes
+                                            <span class="pull-left badge bg-blue">{!! $total_participantes !!}</span>
+                                        </a>
+                                    </li>
+
+                                    @foreach($celulas_faixas as $item)
+                                    <li>
+                                        <a href="#">&nbsp;{!! $item->nome !!}
+                                            <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
+                                        </a>
+                                    </li>
+                                    @endforeach
+
+                                    @foreach($celulas_publicos as $item)
+                                    <li>
+                                        <a href="#">&nbsp;{!! $item->nome !!}
+                                            <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
+                                        </a>
+                                    </li>
+                                    @endforeach
+
+                                </ul>
+                          </div>
+
+                </div> <!-- end row-->
+
+       <div class="row">
+               <div class="col-xs-4">
+                  <h4>&nbsp;&nbsp;&nbsp;&nbsp;Estado Civil</h4>
+                  <ul class="nav nav-stacked">
+
+                     @foreach($pessoas_estadoscivis as $item)
+                     <li>
+                        <a href="#">&nbsp;{!! $item->nome !!}
+                            <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <div class="col-xs-4">
+              <h4>&nbsp;&nbsp;&nbsp;&nbsp;Status</h4>
+              <ul class="nav nav-stacked">
+
+                     @foreach($pessoas_status as $item)
+                     <li>
+                        <a href="#">&nbsp;{!! $item->nome !!}
+                            <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+
+                <div class="col-xs-4">
+                  <h4>&nbsp;&nbsp;&nbsp;&nbsp;Famílias</h4>
+                  <ul class="nav nav-stacked">
+
                         <li>
-                            <a href="#">&nbsp;{!! ($item->sexo=="M" ? "Homens" : "Mulheres") !!}
-                                <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
+                            <a href="#">&nbsp;Total
+                                <span class="pull-left badge bg-blue">{!! $total_familias !!}</span>
                             </a>
                         </li>
-                        @endforeach
 
                     </ul>
                 </div>
 
-                <div class="col-xs-3">
-                  <h4>&nbsp;&nbsp;&nbsp;&nbsp;Células</h4>
-                  <ul class="nav nav-stacked">
-
-                    <li>
-                        <a href="#">&nbsp;Células Ativas
-                            <span class="pull-left badge bg-blue">{!! $total_celulas !!}</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">&nbsp;Participantes
-                            <span class="pull-left badge bg-blue">{!! $total_participantes !!}</span>
-                        </a>
-                    </li>
-
-                    @foreach($celulas_faixas as $item)
-                    <li>
-                        <a href="#">&nbsp;{!! $item->nome !!}
-                            <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
-                        </a>
-                    </li>
-                    @endforeach
-
-                    @foreach($celulas_publicos as $item)
-                    <li>
-                        <a href="#">&nbsp;{!! $item->nome !!}
-                            <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
-                        </a>
-                    </li>
-                    @endforeach
-
-                </ul>
-            </div>
-
-            <div class="col-xs-3">
-              <h4>&nbsp;&nbsp;&nbsp;&nbsp;Famílias</h4>
-              <ul class="nav nav-stacked">
-
-                <li>
-                    <a href="#">&nbsp;Total
-                        <span class="pull-left badge bg-blue">{!! $total_familias !!}</span>
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-    </div>
-
-    <div class="row">
-       <div class="col-xs-3">
-          <h4>&nbsp;&nbsp;&nbsp;&nbsp;Estado Civil</h4>
-          <ul class="nav nav-stacked">
-
-             @foreach($pessoas_estadoscivis as $item)
-             <li>
-                <a href="#">&nbsp;{!! $item->nome !!}
-                    <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
-                </a>
-            </li>
-            @endforeach
-        </ul>
-    </div>
-
-    <div class="col-xs-3">
-      <h4>&nbsp;&nbsp;&nbsp;&nbsp;Status</h4>
-      <ul class="nav nav-stacked">
-
-         @foreach($pessoas_status as $item)
-         <li>
-            <a href="#">&nbsp;{!! $item->nome !!}
-                <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
-            </a>
-        </li>
-        @endforeach
-    </ul>
-</div>
-
-</div>
+    </div> <!-- end row-->
 
 </div>
 </div>

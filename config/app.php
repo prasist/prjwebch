@@ -57,6 +57,7 @@ return [
     'centros_custos'=>'50',
     'grupos_titulos'=>'51',
     'titulos'=>'52',
+    'relfinanceiro'=>'53',
 
     'env' => env('APP_ENV', 'production'),
 

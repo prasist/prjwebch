@@ -17,7 +17,7 @@ class RelatorioCelulasController extends Controller
     public function __construct()
     {
 
-        $this->rota = "relcelulas"; //Define nome da rota que será usada na classe
+        $this->rota = "relfinanceiro"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
         //Validação de permissão de acesso a pagina
