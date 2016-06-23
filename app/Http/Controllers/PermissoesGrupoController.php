@@ -161,7 +161,6 @@ class PermissoesGrupoController extends Controller
         where p.nao_mostrar_todos = 0 order by pg.id";
 
         $paginas = DB::select($sql);
-        //dd($paginas);
 
         return view('permissoes.edit', ['dados'=>$dados, 'paginas'=>$paginas, 'preview' => $preview]);
 
@@ -170,10 +169,9 @@ class PermissoesGrupoController extends Controller
    //Somente visualização (preview=true)
    public function show (\Illuminate\Http\Request $request, $id)
    {
-
         return $this->exibir($request, $id, 'true');
-
    }
+
 
    //Edição registros (preview=false)
    public function edit(\Illuminate\Http\Request $request, $id)

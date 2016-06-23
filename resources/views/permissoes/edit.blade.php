@@ -65,12 +65,19 @@
                                                               @foreach($paginas as $value)
 
                                                                 <tr>
-                                                                            <td> <input name="pagina[{{ $value->id }}]" type="text" value="{{ $value->id }}" hidden>{{ $value->id }}</td>
-                                                                            <td>{{ $value->nome }}</td>
+                                                                            <td>
+                                                                                <input name="pagina[{{ $value->id }}]" type="text" value="{{ $value->id }}" hidden>{{ $value->id }}
+                                                                            </td>
+
+                                                                            <td>
+                                                                                {{ $value->nome }}
+                                                                            </td>
+
                                                                             <td>
                                                                                 <input  name="acessar[{{ $value->id }}]" type="hidden"  value="0" />
                                                                                 <input  name="acessar[{{ $value->id }}]" type="checkbox" class="acessar" data-group-cls="btn-group-sm" value="1" {{ ($value->acessar != 0 ? 'checked' : '') }} />
                                                                             </td>
+
                                                                             <td>
                                                                                 <input  name="incluir[{{ $value->id }}]" type="hidden" value="0" />
                                                                                 <input  name="incluir[{{ $value->id }}]" type="checkbox" class="incluir" data-group-cls="btn-group-sm" value="1" {{ ($value->incluir != 0 ? 'checked' : '') }} />
