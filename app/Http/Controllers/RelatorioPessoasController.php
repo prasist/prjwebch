@@ -26,7 +26,7 @@ class RelatorioPessoasController extends Controller
         }
     }
 
-    public function CarregarView($var_download)
+    public function CarregarView($var_download, $var_mensagem)
     {
 
         $ramos = \App\Models\ramos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
@@ -71,7 +71,8 @@ class RelatorioPessoasController extends Controller
                 'status'=>$status,
                 'grupos'=>$grupos,
                 'emails'=>'', 'filtros'=>'',
-                'var_download' => $var_download
+                'var_download' => $var_download,
+                'var_mensagem' => $var_mensagem
                 ]);
     }
 
@@ -84,7 +85,7 @@ class RelatorioPessoasController extends Controller
               return redirect('home');
         }
 
-        return $this->CarregarView('');
+        return $this->CarregarView('','');
 
     }
 
@@ -144,19 +145,19 @@ class RelatorioPessoasController extends Controller
     /*Filtros utilizados*/
     if ($input["possui_necessidades_especiais"]!="")
     {
-        $filtros .= "   Possui Necessidades Esp.: " . ($input["possui_necessidades_especiais"]=="1" ? "Sim" : "Não");
+        $filtros .= "   Possui Necessidades Esp.: " . ($input["possui_necessidades_especiais"]=="1" ? "Sim" : "Nao");
         $where .= " and possui_necessidades_especiais = " . ($input["possui_necessidades_especiais"]=="true" ? "true" : "false");
     }
 
     if ($input["doador_orgaos"]!="")
     {
-        $filtros .= "   Doador Orgãos: " . ($input["doador_orgaos"]=="1" ? "Sim" : "Não");
+        $filtros .= "   Doador Orgaos: " . ($input["doador_orgaos"]=="1" ? "Sim" : "Nao");
         $where .= " and doador_orgaos = " . ($input["doador_orgaos"]=="1" ? "true" : "false");
     }
 
     if ($input["doador_sangue"]!="")
     {
-        $filtros .= "   Doador Sangue : " . ($input["doador_sangue"]=="1" ? "Sim" : "Não");
+        $filtros .= "   Doador Sangue : " . ($input["doador_sangue"]=="1" ? "Sim" : "Nao");
         $where .= " and doador_sangue = " . ($input["doador_sangue"]=="1" ? "true" : "false");
     }
 
@@ -168,7 +169,7 @@ class RelatorioPessoasController extends Controller
 
     if ($input["graus_id"]!="")
     {
-        $filtros .= "   Grau Instrução : " . $descricao_graus[1];
+        $filtros .= "   Grau Instrucao : " . $descricao_graus[1];
         $where .= " and graus_id = " . $descricao_graus[0];
     }
 
@@ -211,7 +212,7 @@ class RelatorioPessoasController extends Controller
 
     if ($descricao_situacoes!="")
     {
-        $filtros .= "   Situação : " . $descricao_situacoes[1];
+        $filtros .= "   Situacao : " . $descricao_situacoes[1];
         $where .= " and situacoes_id = " . $descricao_situacoes[0];
     }
 
@@ -235,7 +236,7 @@ class RelatorioPessoasController extends Controller
 
     if ($descricao_motivo_sai!="")
     {
-        $filtros .= "   Motivo Saída : " . $descricao_motivo_sai[1];
+        $filtros .= "   Motivo Saida : " . ($descricao_motivo_sai[1]);
         $where .= " and motivos_saida_id = " . $descricao_motivo_sai[0];
     }
 
@@ -248,7 +249,7 @@ class RelatorioPessoasController extends Controller
 
     if ($input["data_saida"]!="")
     {
-        $filtros .= "   Saída : " . $input["data_saida"] . " até " . $input["data_saida_ate"] ;
+        $filtros .= "   Saida : " . $input["data_saida"] . " até " . $input["data_saida_ate"] ;
         $where .= " and data_saida >= '" . $formatador->FormatarData($input["data_saida"]) . "'";
         $where .= " and data_saida < '" . $formatador->FormatarData($input["data_saida_ate"]) . "'";
     }
@@ -405,8 +406,37 @@ class RelatorioPessoasController extends Controller
                     false
                 )->execute();
 
-             //Recarrega a tela com o link do relatorio gerado
-             return $this->CarregarView($path_download . '.' . $ext);
+
+            $Mensagem="";
+
+            if (filesize($output . '.' . $ext)<=1000) //Se arquivo tiver menos de 1k, provavelmente está vazio...
+            {
+                $Mensagem = "Nenhum Registro Encontrado";
+                return $this->CarregarView('', $Mensagem);
+            }
+                else
+            {
+
+                if ($ext=="pdf") //Se for pdf abre direto na pagina
+                {
+
+                    header('Content-Description: File Transfer');
+                    header('Content-Type: application/pdf');
+                    header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
+                    //header('Content-Transfer-Encoding: binary');
+                    header('Expires: 0');
+                    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                    header('Content-Length: ' . filesize($output.'.'.$ext));
+                    flush();
+                    readfile($output.'.'.$ext);
+                    unlink($output.'.'.$ext);
+                }
+                else //Gera link para download
+                {
+                    return $this->CarregarView($path_download . '.' . $ext, $Mensagem);
+                }
+            }
+
 
     }
 

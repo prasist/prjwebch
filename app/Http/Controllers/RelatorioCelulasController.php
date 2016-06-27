@@ -28,7 +28,7 @@ class RelatorioCelulasController extends Controller
 
     }
 
-    public function CarregarView($var_download)
+    public function CarregarView($var_download, $var_mensagem)
     {
 
         $publicos = \App\Models\publicos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
@@ -44,7 +44,7 @@ class RelatorioCelulasController extends Controller
         $view4 = \DB::select('select * from view_celulas_nivel4 v4 where v4.empresas_id = ? and v4.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
         $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        return view($this->rota . '.index', ['nivel1'=>$view1, 'nivel2'=>$view2, 'nivel3'=>$view3, 'nivel4'=>$view4, 'nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'lideres'=>$lideres, 'var_download' => $var_download]);
+        return view($this->rota . '.index', ['nivel1'=>$view1, 'nivel2'=>$view2, 'nivel3'=>$view3, 'nivel4'=>$view4, 'nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'lideres'=>$lideres, 'var_download' => $var_download, 'var_mensagem'=>$var_mensagem]);
 
     }
 
@@ -56,7 +56,7 @@ class RelatorioCelulasController extends Controller
               return redirect('home');
         }
 
-        return $this->CarregarView('');
+        return $this->CarregarView('','');
 
     }
 
@@ -168,26 +168,6 @@ class RelatorioCelulasController extends Controller
             }
       }
 
-    //}
-
-    /*
-    else //Analítico
-    {
-        if ($input["ckExibir"]) //Exibir participantes
-        {
-            $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_pessoas_celulas_analitico.jrxml');
-        }
-        else
-        {
-            $PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_modelo2.jrxml');
-        }
-
-    }
-*/
-
-    //$PHPJasperXML->transferDBtoArray($server,$user,$pass,$db, "psql");
-    //$PHPJasperXML->outpage("I");    //page output method I:standard output  D:Download file
-
 
     \JasperPHP::process(
             $nome_relatorio,
@@ -199,8 +179,40 @@ class RelatorioCelulasController extends Controller
             false
         )->execute();
 
-     /*Gera link para abrir o relatório*/
-     return $this->CarregarView($path_download . '.' . $ext);
+
+
+            $Mensagem="";
+
+            if (filesize($output . '.' . $ext)<=1000) //Se arquivo tiver menos de 1k, provavelmente está vazio...
+            {
+                $Mensagem = "Nenhum Registro Encontrado";
+                return $this->CarregarView('', $Mensagem);
+            }
+                else
+            {
+
+                if ($ext=="pdf") //Se for pdf abre direto na pagina
+                {
+
+                    header('Content-Description: File Transfer');
+                    header('Content-Type: application/pdf');
+                    header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
+                    //header('Content-Transfer-Encoding: binary');
+                    header('Expires: 0');
+                    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                    header('Content-Length: ' . filesize($output.'.'.$ext));
+                    flush();
+                    readfile($output.'.'.$ext);
+                    unlink($output.'.'.$ext);
+                }
+                else //Gera link para download
+                {
+                    return $this->CarregarView($path_download . '.' . $ext, $Mensagem);
+                }
+            }
+
+             /*Gera link para abrir o relatório*/
+             //return $this->CarregarView($path_download . '.' . $ext);
 
 
  }

@@ -151,7 +151,21 @@
                                     <option  value="email" data-icon="fa fa-envelope-o">Listagem de E-mails</option>
                                     </select>
 
-                                     @if ($var_download!="")
+
+                                     @if ($var_download=="")
+
+                                           @if ($var_mensagem=="Nenhum Registro Encontrado")
+                                                  <br/>
+                                                  <br/>
+                                                   <div class="alert2 alert-info">
+                                                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                      <h4>
+                                                      <i class="icon fa fa-check"></i> {{$var_mensagem}}</h4>
+                                                  </div>
+                                                  {{$var_mensagem}}
+                                            @endif
+
+                                     @else
                                         <br/>
                                         <br/>
                                         <div class="alert2 alert-info">

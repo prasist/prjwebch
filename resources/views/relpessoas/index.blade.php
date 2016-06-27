@@ -11,7 +11,7 @@
 
  <div class="col-md-12">
 
-  <form method = 'POST'  class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/pesquisar')}}>
+  <form method = 'POST'  class="form-horizontal" onsubmit="return validar_datas();"  action = {{ url('/' . \Session::get('route') . '/pesquisar')}}>
 
   {!! csrf_field() !!}
 
@@ -181,27 +181,45 @@
                                                                     <option  value="email" data-icon="fa fa-envelope-o">Listagem de E-mails</option>
                                                                     </select>
 
-                                                                   @if ($var_download!="")
-                                                                    <br/>
-                                                                    <br/>
-                                                                     <div class="alert2 alert-info">
-                                                                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                                                      <h4><i class="icon fa fa-check"></i> Relatório gerado com Sucesso!</h4>
-                                                                      Clique no link abaixo para baixar o arquivo.
-                                                                    </div>
-                                                                    <a href="{!! url($var_download) !!}" class="text" target="_blank">
-                                                                    CLIQUE AQUI PARA VISUALIZAR / BAIXAR
-                                                                    @if (substr($var_download,-3)=="pdf")
-                                                                        <img src="{{ url('/images/pdf.png') }}" alt="Baixar Arquivo" />
-                                                                     @elseif (substr($var_download,-4)=="xlsx")
-                                                                        <img src="{{ url('/images/excel.png') }}" alt="Baixar Arquivo" />
-                                                                     @elseif (substr($var_download,-3)=="csv")
-                                                                        <img src="{{ url('/images/csv.jpg') }}" alt="Baixar Arquivo" />
-                                                                     @elseif (substr($var_download,-4)=="docx")
-                                                                         <img src="{{ url('/images/microsoft-word-icon.png') }}" alt="Baixar Arquivo" />
+
+
+                                                                     @if ($var_download=="")
+
+                                                                           @if ($var_mensagem=="Nenhum Registro Encontrado")
+                                                                                  <br/>
+                                                                                  <br/>
+                                                                                   <div class="alert2 alert-info">
+                                                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                                                    <h4>
+                                                                                    <i class="icon fa fa-check"></i> {{$var_mensagem}}</h4>
+                                                                                  </div>
+                                                                                  {{$var_mensagem}}
+                                                                            @endif
+
+                                                                     @else
+                                                                                  <br/>
+                                                                                  <br/>
+                                                                                   <div class="alert2 alert-info">
+                                                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                                                    <h4><i class="icon fa fa-check"></i> Relatório gerado com Sucesso!</h4>
+                                                                                    Clique no link abaixo para baixar o arquivo.
+                                                                                  </div>
+                                                                                  <a href="{!! url($var_download) !!}" class="text" target="_blank">
+                                                                                  CLIQUE AQUI PARA VISUALIZAR / BAIXAR
+                                                                                   @if (substr($var_download,-3)=="pdf")
+                                                                                      <img src="{{ url('/images/pdf.png') }}" alt="Baixar Arquivo" />
+                                                                                   @elseif (substr($var_download,-4)=="xlsx")
+                                                                                      <img src="{{ url('/images/excel.png') }}" alt="Baixar Arquivo" />
+                                                                                   @elseif (substr($var_download,-3)=="csv")
+                                                                                      <img src="{{ url('/images/csv.jpg') }}" alt="Baixar Arquivo" />
+                                                                                   @elseif (substr($var_download,-4)=="docx")
+                                                                                       <img src="{{ url('/images/microsoft-word-icon.png') }}" alt="Baixar Arquivo" />
+                                                                                   @endif
+                                                                                   </a>
+
                                                                      @endif
-                                                                     </a>
-                                                                   @endif
+
+
 
                                                               </div>
 
@@ -529,7 +547,7 @@
  </div><!-- box box-primary -->
 
         <div class="box-footer">
-            &nbsp;&nbsp;<button class = 'btn btn-primary' type ='submit' onclick="myApp.showPleaseWait();">Pesquisar</button>
+            &nbsp;&nbsp;<button class = 'btn btn-primary' type ='submit'>Pesquisar</button>
             <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Limpar</a>
         </div>
 
@@ -550,6 +568,35 @@
               }
           };
       })();
+
+      function validar_datas()
+      {
+
+
+         if (($('#data_entrada').val()!="" && $('#data_entrada_ate').val()=="") || ($('#data_entrada').val()=="" && $('#data_entrada_ate').val()!=""))
+         {
+              alert('Informe a Data de Entrada Inicial e Final');
+              return false;
+         }
+
+
+         if (($('#data_batismo').val()!="" && $('#data_batismo_ate').val()=="") || ($('#data_batismo').val()=="" && $('#data_batismo_ate').val()!=""))
+         {
+              alert('Informe a Data de Batismo Inicial e Final');
+              return false;
+         }
+
+         if (($('#data_saida').val()!="" && $('#data_saida_ate').val()=="") || ($('#data_saida').val()=="" && $('#data_saida_ate').val()!=""))
+         {
+              alert('Informe a Data de Saída Inicial e Final');
+              return false;
+         }
+
+          myApp.showPleaseWait();
+          return true;
+
+       }
+
 
       /*Prepara checkbox bootstrap*/
        $(function () {
