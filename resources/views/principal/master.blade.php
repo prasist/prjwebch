@@ -379,6 +379,7 @@
             <script type="text/javascript">
                     console.log('era para comecar');
                     hopscotch.startTour(tour_visao_geral);
+                    console.log('era para finalizar');
             </script>
             @endif
         @endif
