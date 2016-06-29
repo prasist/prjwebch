@@ -415,11 +415,10 @@ class TitulosController extends Controller
 */
     public function store(\Illuminate\Http\Request  $request, $tipo)
     {
-            $this->salvar($request, "", $tipo, "create");
-            \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-            return redirect($this->rota . '/' . $tipo);
+          $this->salvar($request, "", $tipo, "create");
+          \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
+          return redirect($this->rota . '/' . $tipo);
     }
-
 
 
     //Abre tela para edicao ou somente visualização dos registros

@@ -22,149 +22,193 @@
             <div class="row">
                 <div class="col-md-12">
 
-                     <!-- Custom Tabs -->
-                      <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs">
-                          <li class="active"><a href="#tab_1" data-toggle="tab">Filtros Básicos</a></li>
-                          <li><a href="#tab_2" data-toggle="tab">Por Períodos</a></li>
-                          <li><a href="#tab_3" data-toggle="tab">Pesquisa Avançada</a></li>
-                        </ul>
-                        <div class="tab-content">
 
-                          <div class="tab-pane active" id="tab_1">
+                                                            <div  class="row">
+                                                                        <div class="col-xs-2">
+                                                                                <label  for="data_emissao" class="control-label">Data Emissão</label>
+                                                                                <div class="input-group">
+                                                                                       <div class="input-group-addon">
+                                                                                        <i class="fa fa-calendar"></i>
+                                                                                        </div>
+                                                                                        <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                                </div>
 
-                                <div  class="row">
-                                              <div class="col-md-12">
+                                                                       </div>
 
-                                                    <div class="box box-default">
+                                                                       <div class="col-xs-2">
+                                                                                <label  for="data_emissao_ate" class="control-label">Até</label>
+                                                                                <div class="input-group">
+                                                                                       <div class="input-group-addon">
+                                                                                        <i class="fa fa-calendar"></i>
+                                                                                        </div>
+                                                                                        <input id ="data_emissao_ate" name = "data_emissao_ate" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                                </div>
+                                                                       </div>
 
-                                                          <div class="box-body"><!-- box-body-->
+                                                                       <div class="col-xs-2">
+                                                                              <label  for="data_vencimento" class="control-label">Data Vencimento</label>
+                                                                              <div class="input-group">
+                                                                                     <div class="input-group-addon">
+                                                                                      <i class="fa fa-calendar"></i>
+                                                                                      </div>
+                                                                                      <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                              </div>
+                                                                     </div>
+
+                                                                     <div class="col-xs-2">
+                                                                              <label  for="data_vencimento_ate" class="control-label">Até</label>
+
+                                                                              <div class="input-group">
+                                                                                     <div class="input-group-addon">
+                                                                                      <i class="fa fa-calendar"></i>
+                                                                                      </div>
+                                                                                      <input id ="data_vencimento_ate" name = "data_vencimento_ate" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                              </div>
+
+                                                                     </div>
+
+
+                                                                       <div class="col-xs-2">
+                                                                              <label  for="data_pagamento" class="control-label">Data Pagamento</label>
+
+                                                                              <div class="input-group">
+                                                                                     <div class="input-group-addon">
+                                                                                      <i class="fa fa-calendar"></i>
+                                                                                      </div>
+
+                                                                                      <input id ="data_pagamento" name = "data_pagamento" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                              </div>
+
+                                                                     </div>
+
+                                                                     <div class="col-xs-2">
+                                                                              <label  for="data_pagamento_ate" class="control-label">Até</label>
+
+                                                                              <div class="input-group">
+                                                                                     <div class="input-group-addon">
+                                                                                      <i class="fa fa-calendar"></i>
+                                                                                      </div>
+
+                                                                                      <input id ="data_pagamento_ate" name = "data_pagamento_ate" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                              </div>
+
+                                                                     </div>
+
+
+
+                                                                </div><!-- end row -->
+
+
+
+                                                                 <div class="row"><!-- row saida-->
+
+
+
+                                                                 </div><!-- end row -->
 
                                                              <div class="row">
+                                                                    <input type="hidden" name="opPagar">
+                                                                    <input type="hidden" name="opReceber">
+                                                                    <div class="col-xs-3">
 
-                                                                 <div class="col-xs-3">
+                                                                          <label for="opStatus" class="control-label">Tipo :</label>
+                                                                          <br/>
+                                                                               <label>
+                                                                                    <input type="radio" name="opReceber" class="minimal" checked>
+                                                                                    Contas à Receber
+                                                                               </label>
+                                                                               <label>
+                                                                                    <input type="radio" name="opPagar" class="minimal">
+                                                                                    Contas à Pagar
+                                                                               </label>
+                                                                    </div><!-- col-xs-3-->
+
+                                                                    <div class="col-xs-3">
 
                                                                           <label for="status_id" class="control-label">Status</label>
 
                                                                           <select id="status_id" placeholder="(Selecionar)" name="status_id" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                                                          <option  value=""></option>
-
-                                                                          @foreach($status as $item)
-                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
-                                                                          @endforeach
+                                                                          <option  value="T" selected>Ambos</option>
+                                                                          <option  value="A">Abertos</option>
+                                                                          <option  value="B">Baixados</option>
                                                                           </select>
 
-                                                                    </div><!-- col-xs-5-->
+                                                                    </div><!-- col-xs-3-->
 
                                                                       <div class="col-xs-3">
 
-                                                                          <label for="tipos" class="control-label">Tipo Pessoa</label>
+                                                                          <label for="centros_custos" class="control-label">Centro de Custo</label>
 
-                                                                          <select id="tipos" placeholder="(Selecionar)" name="tipos" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <select id="centros_custos" placeholder="(Selecionar)" name="centros_custos" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
                                                                           <option  value=""></option>
 
-                                                                          @foreach($tipos as $item)
+                                                                          @foreach($centros_custos as $item)
                                                                                  <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
                                                                           @endforeach
                                                                           </select>
-                                                                      </div><!-- col-xs-5-->
+                                                                      </div><!-- col-xs-3-->
 
                                                                       <div class="col-xs-3">
-                                                                          <label for="estadoscivis" class="control-label">Estado Civil</label>
+                                                                          <label for="planos_contas" class="control-label">Plano de Contas</label>
 
-                                                                          <select id="estadoscivis" placeholder="(Selecionar)" name="estadoscivis" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <select id="planos_contas" placeholder="(Selecionar)" name="planos_contas" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
                                                                           <option  value=""></option>
 
-                                                                          @foreach($estadoscivis as $item)
+                                                                          @foreach($planos_contas as $item)
                                                                                  <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
                                                                           @endforeach
                                                                           </select>
-                                                                      </div><!-- col-xs-5-->
+                                                                      </div><!-- col-xs-3-->
 
-                                                                      <div class="col-xs-3">
-                                                                          <label for="sexo" class="control-label">Sexo</label>
-                                                                            <select id="sexo" name="sexo" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                                                                <option  value="">Ambos</option>
-                                                                                <option  value="M">Masculino</option>
-                                                                                <option  value="F">Feminino</option>
-                                                                            </select>
-                                                                      </div>
 
 
                                                                  </div> <!-- end row -->
 
                                                                  <div class="row">
+                                                                      <div class="col-xs-6">
+                                                                        <label for="fornecedor" class="control-label">Fornecedor / Cliente</label>
+                                                                        <div class="input-group">
+                                                                                 <div class="input-group-addon">
+                                                                                    <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#modal_fornecedor" >
+                                                                                           <i class="fa fa-search"></i> ...
+                                                                                     </button>
+                                                                                  </div>
+
+                                                                                  @include('modal_buscar_pessoas', array('qual_campo'=>'fornecedor', 'modal' => 'modal_fornecedor'))
+
+                                                                                  <input id="fornecedor"  name = "fornecedor" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
+
+                                                                          </div>
+                                                                      </div>
+
                                                                       <div class="col-xs-3">
-                                                                          <label for="grupo" class="control-label">Grupo</label>
 
-                                                                          <select id="grupo" placeholder="(Selecionar)" name="grupo" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                                                          <option  value=""></option>
-                                                                          @foreach($grupos as $item)
-                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
-                                                                          @endforeach
-                                                                          </select>
-                                                                      </div><!-- col-xs-5-->
+                                                                        <label for="contas" class="control-label">Conta</label>
 
-                                                                      <div class="col-xs-3">
-
-                                                                        <label for="situacoes" class="control-label">Situação</label>
-
-                                                                          <select id="situacoes" placeholder="(Selecionar)" name="situacoes" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <select id="contas" placeholder="(Selecionar)" name="contas" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
                                                                           <option  value=""></option>
 
-                                                                          @foreach($situacoes as $item)
+                                                                          @foreach($contas as $item)
                                                                                  <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
                                                                           @endforeach
                                                                           </select>
                                                                     </div><!-- col-xs-5-->
 
                                                                     <div class="col-xs-3">
-                                                                            <label for="status" class="control-label">Status Cadastro</label>
-                                                                            <select id="status" name="status" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                                                                <option  value="">Ambos</option>
-                                                                                <option  value="S">Ativo</option>
-                                                                                <option  value="N">Inativo</option>
-                                                                            </select>
-                                                                    </div>
+                                                                          <label for="grupos" class="control-label">Grupo de Títulos</label>
+
+                                                                          <select id="grupos" placeholder="(Selecionar)" name="grupos" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+
+                                                                          @foreach($grupos_titulos as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                      </div><!-- col-xs-3-->
 
 
                                                              </div> <!-- end row -->
 
-                                                        <div class="row"><!-- row entrada-->
-
-                                                                    <input  id="possui_necessidades_especiais" name="possui_necessidades_especiais" type="hidden" value="" />
-                                                                    <input  id= "ckEstruturas" name="ckEstruturas" type="hidden" class="minimal" />
-
-                                                                      <div class="col-xs-3">
-                                                                            <label for="mes" class="control-label">Mês Aniversário</label>
-                                                                            <select id="mes" name="mes" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                                                                <option  value=""></option>
-                                                                                <option  value="01">Janeiro</option>
-                                                                                <option  value="02">Fevereiro</option>
-                                                                                <option  value="03">Março</option>
-                                                                                <option  value="04">Abril</option>
-                                                                                <option  value="05">Maio</option>
-                                                                                <option  value="06">Junho</option>
-                                                                                <option  value="07">Julho</option>
-                                                                                <option  value="08">Agosto</option>
-                                                                                <option  value="09">Setembro</option>
-                                                                                <option  value="10">Outubro</option>
-                                                                                <option  value="11">Novembro</option>
-                                                                                <option  value="12">Dezembro</option>
-                                                                            </select>
-                                                                    </div>
-
-                                                                    <div class="col-xs-3">
-                                                                        <label for="ano_inicial" class="control-label">Ano Nascimento Inicial :</label>
-                                                                        <input type="text" id="ano_inicial" name="ano_inicial" class="form-control" placeholder="Ano Inicial"  data-inputmask='"mask": "9999"' data-mask>
-                                                                    </div><!-- col-xs-5-->
-
-                                                                    <div class="col-xs-3">
-                                                                        <label for="ano_final" class="control-label">Ano Nascimento Final :</label>
-                                                                        <input type="text" id="ano_final" name="ano_final" placeholder="Ano Final" class="form-control"  data-inputmask='"mask": "9999"' data-mask>
-                                                                    </div><!-- col-xs-5-->
-
-                                                                 </div><!-- end row -->
 
                                                           <div class="row">
 
@@ -213,235 +257,11 @@
                                                                     <option  value="ano" >Ano</option>
                                                                     </select>
                                                              </div>
-
-                                                             <div class="col-xs-3">
-                                                                    <br/>
-                                                                    Listar Estruturas Células &nbsp;&nbsp;<input  id= "ckEstruturas" name="ckEstruturas" type="checkbox" data-group-cls="btn-group-sm" class="ckEstruturas" />
-                                                              </div>
-
-                                                          </div>
-
-                                                       </div> <!-- enb box-body-->
-                                                     </div> <!-- end box box-default -->
-                                               </div>
-                                </div><!-- end row -->
+                                                      </div>
+                                  </div>
 
                           </div>
 
-                          <!-- /.tab-pane -->
-                          <div class="tab-pane" id="tab_2">
-
-                                <div  class="row">
-                                              <div class="col-md-12">
-
-                                                    <div class="box box-default">
-
-                                                          <div class="box-body"><!-- box-body-->
-
-                                                                <div  class="row">
-                                                                        <div class="col-xs-3">
-                                                                                <label  for="data_entrada" class="control-label">Data Entrada</label>
-                                                                                <div class="input-group">
-                                                                                       <div class="input-group-addon">
-                                                                                        <i class="fa fa-calendar"></i>
-                                                                                        </div>
-                                                                                        <input id ="data_entrada" name = "data_entrada" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
-                                                                                </div>
-
-                                                                       </div>
-
-                                                                       <div class="col-xs-3">
-                                                                                <label  for="data_entrada_ate" class="control-label">Até</label>
-                                                                                <div class="input-group">
-                                                                                       <div class="input-group-addon">
-                                                                                        <i class="fa fa-calendar"></i>
-                                                                                        </div>
-                                                                                        <input id ="data_entrada_ate" name = "data_entrada_ate" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
-                                                                                </div>
-                                                                       </div>
-
-                                                                      <div class="col-xs-4">
-                                                                               <label for="motivoentrada" class="control-label">Motivo Entrada</label>
-                                                                                <select id="motivoentrada" placeholder="(Selecionar)" name="motivoentrada" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                                                                <option  value=""></option>
-                                                                                @foreach($motivos as $item)
-                                                                                       <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
-                                                                                @endforeach
-                                                                                </select>
-                                                                      </div><!-- col-xs-5-->
-
-
-                                                                </div><!-- end row -->
-
-
-                                                                <div class="row"><!-- row saida-->
-
-                                                                     <div class="col-xs-3">
-                                                                              <label  for="data_saida" class="control-label">Data Saída</label>
-                                                                              <div class="input-group">
-                                                                                     <div class="input-group-addon">
-                                                                                      <i class="fa fa-calendar"></i>
-                                                                                      </div>
-                                                                                      <input id ="data_saida" name = "data_saida" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
-                                                                              </div>
-                                                                     </div>
-
-                                                                     <div class="col-xs-3">
-                                                                              <label  for="data_saida_ate" class="control-label">Até</label>
-
-                                                                              <div class="input-group">
-                                                                                     <div class="input-group-addon">
-                                                                                      <i class="fa fa-calendar"></i>
-                                                                                      </div>
-                                                                                      <input id ="data_saida_ate" name = "data_saida_ate" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
-                                                                              </div>
-
-                                                                     </div>
-
-                                                                      <div class="col-xs-4">
-                                                                                <label for="motivosaida" class="control-label">Motivo Saída</label>
-
-                                                                                <select id="motivosaida" placeholder="(Selecionar)" name="motivosaida" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                                                                <option  value=""></option>
-
-                                                                                @foreach($motivos as $item)
-                                                                                       <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
-                                                                                @endforeach
-                                                                                </select>
-                                                                      </div><!-- col-xs-5-->
-
-                                                                 </div><!-- end row -->
-
-                                                                 <div class="row"><!-- row saida-->
-
-                                                                      <div class="col-xs-3">
-                                                                              <label  for="data_batismo" class="control-label">Data Batismo</label>
-
-                                                                              <div class="input-group">
-                                                                                     <div class="input-group-addon">
-                                                                                      <i class="fa fa-calendar"></i>
-                                                                                      </div>
-
-                                                                                      <input id ="data_batismo" name = "data_batismo" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
-                                                                              </div>
-
-                                                                     </div>
-
-                                                                     <div class="col-xs-3">
-                                                                              <label  for="data_batismo_ate" class="control-label">Até</label>
-
-                                                                              <div class="input-group">
-                                                                                     <div class="input-group-addon">
-                                                                                      <i class="fa fa-calendar"></i>
-                                                                                      </div>
-
-                                                                                      <input id ="data_batismo_ate" name = "data_batismo_ate" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
-                                                                              </div>
-
-                                                                     </div>
-
-                                                                 </div><!-- end row -->
-
-                                                            </div>
-
-                                                    </div>
-                                              </div>
-                                </div>
-
-                          </div>
-
-                          <!-- /.tab-pane -->
-                          <div class="tab-pane" id="tab_3">
-
-                                    <div class="box box-default">
-                                        <div class="box-header with-border">
-                                          <h3 class="box-title">Estrutura de Células</h3>
-                                        </div>
-
-                                          <div class="box-body">
-
-                                          <!-- NIVEL 1-->
-                                            <div class="form-group">
-                                                <label for="nivel1_up" class="col-sm-2 control-label">{{Session::get('nivel1')}}</label>
-                                                <div class="col-sm-10">
-                                                      <select id="nivel1_up" placeholder="(Selecionar)" name="nivel1_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                                      <option  value="0"></option>
-                                                      @foreach($nivel1 as $item)
-                                                             <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
-                                                      @endforeach
-                                                      </select>
-                                                </div>
-                                            </div>
-
-
-                                            <!-- NIVEL 2 -->
-                                            <div class="form-group">
-                                                <label for="nivel2_up" class="col-sm-2 control-label">{{Session::get('nivel2')}}</label>
-                                                <div class="col-sm-10">
-                                                        <select id="nivel2_up" placeholder="(Selecionar)" name="nivel2_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                                        <option  value="0"></option>
-                                                         @foreach($nivel2 as $item)
-                                                             <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
-                                                         @endforeach
-                                                        </select>
-                                                </div>
-                                            </div>
-
-                                            <!-- NIVEL 3-->
-                                            <div class="form-group">
-                                              <label for="nivel3_up" class="col-sm-2 control-label">{{Session::get('nivel3')}}</label>
-                                              <div class="col-sm-10">
-                                                    <select id="nivel3_up" placeholder="(Selecionar)" name="nivel3_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                                    <option  value="0"></option>
-                                                      @foreach($nivel3 as $item)
-                                                             <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
-                                                      @endforeach
-                                                    </select>
-                                              </div>
-                                            </div>
-
-                                            <!-- NIVEL 4-->
-                                            <div class="form-group">
-                                              <label for="nivel4_up" class="col-sm-2 control-label">{{Session::get('nivel4')}}</label>
-
-                                              <div class="col-sm-10">
-                                                    <select id="nivel4_up" placeholder="(Selecionar)" name="nivel4_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                                    <option  value="0"></option>
-                                                      @foreach($nivel4 as $item)
-                                                             <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
-                                                      @endforeach
-                                                    </select>
-                                              </div>
-                                            </div>
-
-                                            <!-- NIVEL 5-->
-                                            <div class="form-group">
-                                              <label for="nivel5_up" class="col-sm-2 control-label">{!!Session::get('nivel5') !!}</label>
-                                              <div class="col-sm-10">
-                                                      <select id="nivel5_up" placeholder="(Selecionar)" name="nivel5_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                                      <option  value="0"></option>
-                                                      @foreach($nivel5 as $item)
-                                                             <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
-                                                      @endforeach
-                                                      </select>
-                                              </div>
-                                            </div>
-
-                                         </div>
-
-                                     </div>
-                          </div>
-                          <!-- /.tab-pane -->
-
-
-                          </div>
-
-                        </div>
-                        <!-- /.tab-content -->
-                     </div>
-
-                 </div>
-                      <!-- nav-tabs-custom -->
 
                   <div class="overlay modal" style="display: none">
                       <i class="fa fa-refresh fa-spin"></i>
