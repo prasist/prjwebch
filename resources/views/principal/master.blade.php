@@ -377,9 +377,7 @@
         @if (\Session::get('tour_visaogeral')=='' || \Session::get('tour_visaogeral')!='S')
             @if (\Session::get('dados_login')!='')
             <script type="text/javascript">
-                    console.log('era para comecar');
                     hopscotch.startTour(tour_visao_geral);
-                    console.log('era para finalizar');
             </script>
             @endif
         @endif
@@ -387,7 +385,6 @@
         @if (\Session::get('tour_rapido')==' ' || \Session::get('tour_rapido')!='S')
             @if (\Session::get('admin')==1)
                 <script type="text/javascript">
-                console.log('era para comecar 2');
                         hopscotch.startTour(tour);
                 </script>
             @endif
