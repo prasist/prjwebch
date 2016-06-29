@@ -375,7 +375,7 @@
 
         <!-- tour rápido-->
         @if (\Session::get('tour_visaogeral')=='' || \Session::get('tour_visaogeral')!='S')
-            @if (Auth::user()->confirmed==1 && \Session::get('dados_login')!='')
+            @if (\Session::get('dados_login')!='')
             <script type="text/javascript">
                     console.log('era para comecar');
                     hopscotch.startTour(tour_visao_geral);
