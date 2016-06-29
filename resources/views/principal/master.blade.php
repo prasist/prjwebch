@@ -127,6 +127,9 @@
 
                   $(function ()
                   {
+                            var pathArray = window.location.pathname.split( '/' );
+                            var secondLevelLocation = pathArray[0];
+                            console.log("/" + pathArray[1]  + "/" + pathArray[2] + "/quicktour/2");
 
                             /*Monetarios - class*/
                             $('.formata_valor').autoNumeric("init",{
