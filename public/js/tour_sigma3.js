@@ -164,6 +164,7 @@
               {
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[0];
+                  alert("/" + pathArray[1]  + "/" + pathArray[2] + "/quicktour/2");
                   window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/quicktour/2";
               }
         },

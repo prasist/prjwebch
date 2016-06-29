@@ -107,20 +107,14 @@
                                                                  </div><!-- end row -->
 
                                                              <div class="row">
-                                                                    <input type="hidden" name="opPagar">
-                                                                    <input type="hidden" name="opReceber">
+
                                                                     <div class="col-xs-3">
 
-                                                                          <label for="opStatus" class="control-label">Tipo :</label>
-                                                                          <br/>
-                                                                               <label>
-                                                                                    <input type="radio" name="opReceber" class="minimal" checked>
-                                                                                    Contas à Receber
-                                                                               </label>
-                                                                               <label>
-                                                                                    <input type="radio" name="opPagar" class="minimal">
-                                                                                    Contas à Pagar
-                                                                               </label>
+                                                                          <label for="opTipo" class="control-label">Tipo :</label>
+                                                                          <select id="opTipo" placeholder="(Selecionar)" name="opTipo" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value="P">Contas à Pagar</option>
+                                                                          <option  value="R">Contas à Receber</option>
+                                                                          </select>
                                                                     </div><!-- col-xs-3-->
 
                                                                     <div class="col-xs-3">
@@ -251,10 +245,10 @@
                                                               <div class="col-xs-3">
                                                                     <label for="ordem" class="control-label">Ordem</label>
                                                                     <select id="ordem" name="ordem" class="form-control selectpicker">
-                                                                    <option  value="razaosocial"  selected>Nome</option>
-                                                                    <option  value="aniversariante" >Data Nasc. (Dia/Mês)</option>
-                                                                    <option  value="idade" >Idade</option>
-                                                                    <option  value="ano" >Ano</option>
+                                                                    <option  value="descricao"  selected>Descrição Título</option>
+                                                                    <option  value="razaosocial"  selected>Fornecedor/Cliente</option>
+                                                                    <option  value="data_vencimento" >Data Vencimento</option>
+                                                                    <option  value="data_pagamento" >Data Pagamento</option>
                                                                     </select>
                                                              </div>
                                                       </div>

@@ -97,18 +97,19 @@ class RelatorioFinanceiroController extends Controller
         $descricao_centrocusto="";
         $descricao_planocontas="";
         $descricao_grupostitulos="";
+        $descricao_contas="";
 
+        if ($input["contas"]!="") $descricao_contas = explode("|", $input["contas"]);
         if ($input["planos_contas"]!="") $descricao_planocontas = explode("|", $input["planos_contas"]);
         if ($input["centros_custos"]!="") $descricao_centrocusto = explode("|", $input["centros_custos"]);
         if ($input["status_id"]!="") $descricao_status = explode("|", $input["status_id"]);
         if ($input["grupos"]!="") $descricao_grupostitulos = explode("|", $input["grupos"]);
 
-        if ($input["opPagar"])
+        if ($input["opTipo"]=="P")
         {
             $filtros .= "   Tipo : Contas a Pagar";
         }
-
-        if ($input["opReceber"])
+        else
         {
             $filtros .= "   Tipo : Contas a Receber";
         }
@@ -116,6 +117,11 @@ class RelatorioFinanceiroController extends Controller
         if ($input["status_id"]!="T")
         {
             $filtros .= "   Status : " . ($input["status_id"]=="A" ? "Aberto" : ($input["status_id"]=="B" ? "Baixado" : "Ambos"));
+        }
+
+        if ($input["contas"]!="")
+        {
+            $filtros .= "   Conta : " . $descricao_contas[1];
         }
 
         if ($input["centros_custos"]!="")
@@ -153,7 +159,7 @@ class RelatorioFinanceiroController extends Controller
         (
             "empresas_id"=> $this->dados_login->empresas_id,
             "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
-            "tipo"=>"'" . ($input["opPagar"] ? "P" : "R") . "'",
+            "tipo"=>"'" . $input["opTipo"] . "'",
             "centros_custos_id" => ($descricao_centrocusto=="" ? 0 : $descricao_centrocusto[0]),
             "planos_contas_id" => ($descricao_planocontas=="" ? 0 : $descricao_planocontas[0]),
             "grupos_titulos_id"=> ($descricao_grupostitulos=="" ? 0 : $descricao_grupostitulos[0]),
@@ -181,12 +187,17 @@ class RelatorioFinanceiroController extends Controller
             $parametros = array_add($parametros, 'ordem', 'descricao');
         }
 
-
+        //Se status for diferente de ambos
         if ($input["status_id"]!="T")
         {
             $parametros = array_add($parametros, 'status', $input["status_id"]);
         }
 
+        //Filtra conta corrente
+        if ($input["contas"]!="")
+        {
+            $parametros = array_add($parametros, 'contas_id', ($descricao_contas=="" ? 0 : $descricao_contas[0]));
+        }
 
         //Data de pagamento
         if ($input["data_pagamento"]!="" && $input["data_pagamento_ate"]!="")
@@ -217,32 +228,34 @@ class RelatorioFinanceiroController extends Controller
 
         $Mensagem="";
 
-            if (filesize($output . '.' . $ext)<=1000) //Se arquivo tiver menos de 1k, provavelmente está vazio...
-            {
-                $Mensagem = "Nenhum Registro Encontrado";
-                return $this->CarregarView('', $Mensagem);
-            }
-                else
-            {
+        if (filesize($output . '.' . $ext)<=1000) //Se arquivo tiver menos de 1k, provavelmente está vazio...
+        {
+            $Mensagem = "Nenhum Registro Encontrado";
+            return $this->CarregarView('', $Mensagem);
+        }
+            else
+        {
 
-                if ($ext=="pdf") //Se for pdf abre direto na pagina
-                {
-                    header('Content-Description: File Transfer');
-                    header('Content-Type: application/pdf');
-                    header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
-                    //header('Content-Transfer-Encoding: binary');
-                    header('Expires: 0');
-                    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-                    header('Content-Length: ' . filesize($output.'.'.$ext));
-                    flush();
-                    readfile($output.'.'.$ext);
-                    unlink($output.'.'.$ext);
-                }
-                else //Gera link para download
-                {
-                    return $this->CarregarView($path_download . '.' . $ext, $Mensagem);
-                }
+            if ($ext=="pdf") //Se for pdf abre direto na pagina
+            {
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/pdf');
+                header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
+                //header('Content-Transfer-Encoding: binary');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                header('Content-Length: ' . filesize($output.'.'.$ext));
+                flush();
+                readfile($output.'.'.$ext);
+                unlink($output.'.'.$ext);
             }
+            else //Gera link para download
+            {
+                return $this->CarregarView($path_download . '.' . $ext, $Mensagem);
+            }
+        }
+
+
      }
 
 }
