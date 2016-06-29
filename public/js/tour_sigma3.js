@@ -19,7 +19,8 @@
 
                 var pathArray = window.location.pathname.split( '/' );
                 var secondLevelLocation = pathArray[0];
-                window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/grupos";
+                //window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/grupos";
+                window.location =  "/" + pathArray[1]  + "/grupos";
               }
         },
         {
@@ -32,8 +33,8 @@
 
                 var pathArray = window.location.pathname.split( '/' );
                 var secondLevelLocation = pathArray[0];
-                window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/grupos/registrar";
-
+                //window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/grupos/registrar";
+                window.location =  "/" + pathArray[1]  + "/grupos/registrar";
               }
         },
         {
@@ -46,7 +47,8 @@
 
                 var pathArray = window.location.pathname.split( '/' );
                 var secondLevelLocation = pathArray[0];
-                window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/permissoes";
+                //window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/permissoes";
+                window.location =  "/" + pathArray[1]  + "/permissoes";
 
               }
         },
@@ -59,7 +61,8 @@
               onNext: function() {
                 var pathArray = window.location.pathname.split( '/' );
                 var secondLevelLocation = pathArray[0];
-                window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/permissoes/registrar";
+                //window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/permissoes/registrar";
+                window.location =  "/" + pathArray[1]  + "/permissoes/registrar";
               }
         },
 
@@ -72,7 +75,8 @@
               onNext: function() {
                 var pathArray = window.location.pathname.split( '/' );
                 var secondLevelLocation = pathArray[0];
-                window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/permissoes";
+                //window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/permissoes";
+                window.location =  "/" + pathArray[1]  + "/permissoes";
               }
         },
 
@@ -88,6 +92,7 @@
                 var pathArray = window.location.pathname.split( '/' );
                 var secondLevelLocation = pathArray[0];
                 window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/usuarios";
+                window.location =  "/" + pathArray[1]  + "/usuarios";
               }
         },
 
@@ -100,7 +105,8 @@
               onNext: function() {
                 var pathArray = window.location.pathname.split( '/' );
                 var secondLevelLocation = pathArray[0];
-                window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/usuarios/registrar";
+                //window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/usuarios/registrar";
+                window.location =  "/" + pathArray[1]  + "/usuarios/registrar";
               }
         },
 
@@ -114,7 +120,8 @@
               {
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[0];
-                  window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/quicktour/1";
+                  //window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/quicktour/1";
+                  window.location =  "/" + pathArray[1]  + "/quicktour/1";
               }
         },
 
@@ -164,8 +171,8 @@
               {
                   var pathArray = window.location.pathname.split( '/' );
                   var secondLevelLocation = pathArray[0];
-                  console.log("/" + pathArray[1]  + "/" + pathArray[2] + "/quicktour/2");
-                  window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/quicktour/2";
+                  //window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/quicktour/2";
+                  window.location =  "/" + pathArray[1]  + "/quicktour/2";
               }
         },
         {
