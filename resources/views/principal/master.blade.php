@@ -374,9 +374,10 @@
         <script src="{{ asset('/dist/js/autoNumeric-min.js')}}"></script> <!-- monetarios-->
 
         <!-- tour rápido-->
-        @if (\Session::get('tour_visaogeral')==' ' || \Session::get('tour_visaogeral')!='S')
+        @if (\Session::get('tour_visaogeral')=='' || \Session::get('tour_visaogeral')!='S')
             @if (Auth::user()->confirmed==1 && \Session::get('dados_login')!='')
             <script type="text/javascript">
+                    console.log('era para comecar');
                     hopscotch.startTour(tour_visao_geral);
             </script>
             @endif
@@ -385,6 +386,7 @@
         @if (\Session::get('tour_rapido')==' ' || \Session::get('tour_rapido')!='S')
             @if (\Session::get('admin')==1)
                 <script type="text/javascript">
+                console.log('era para comecar 2');
                         hopscotch.startTour(tour);
                 </script>
             @endif
