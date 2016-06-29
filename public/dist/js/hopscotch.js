@@ -1868,6 +1868,7 @@
           skippedSteps = {},
           self = this;
 
+          console.log('starttour');
       // loadTour if we are calling startTour directly. (When we call startTour
       // from window onLoad handler, we'll use currTour)
       if (!currTour) {
@@ -1883,6 +1884,7 @@
         }
 
         currTour = tour;
+        console.log('loadTour.call');
         loadTour.call(this, tour);
 
       }
@@ -1926,7 +1928,7 @@
         }
 
         utils.invokeEventCallbacks('start');
-
+        console.log('start');
         bubble = getBubble();
         // TODO: do we still need this call to .hide()? No longer using opt.animate...
         // Leaving it in for now to play it safe

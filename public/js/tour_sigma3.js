@@ -91,7 +91,7 @@
               onNext: function() {
                 var pathArray = window.location.pathname.split( '/' );
                 var secondLevelLocation = pathArray[0];
-                window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/usuarios";
+                //window.location =  "/" + pathArray[1]  + "/" + pathArray[2] + "/usuarios";
                 window.location =  "/" + pathArray[1]  + "/usuarios";
               }
         },
