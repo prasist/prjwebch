@@ -45,7 +45,22 @@ class CelulasPessoasController extends Controller
     }
 
     //Criar novo registro
-    public function create($id)
+    public function create()
+    {
+
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
+        {
+              return redirect('home');
+        }
+
+        $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        return view($this->rota . '.registrar', ['celulas'=>$celulas, 'id_celula'=>'']);
+
+    }
+
+        //Criar novo registro
+    public function create_membro($id)
     {
 
         if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
@@ -62,8 +77,6 @@ class CelulasPessoasController extends Controller
         {
             $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
         }
-
-
 
         return view($this->rota . '.registrar', ['celulas'=>$celulas, 'id_celula'=>$id]);
 

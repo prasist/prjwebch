@@ -518,7 +518,7 @@
     Route::get('celulaspessoas', 'CelulasPessoasController@index');
     Route::post('/celulaspessoas/gravar','CelulasPessoasController@store');
     Route::get('/celulaspessoas/registrar','CelulasPessoasController@create');
-    Route::get('/celulaspessoas/registrar/{id}','CelulasPessoasController@create');
+    Route::get('/celulaspessoas/registrar/{id}','CelulasPessoasController@create_membro');
     Route::get('/celulaspessoas/{id}/preview','CelulasPessoasController@show');
     Route::get('/celulaspessoas/{id}/imprimir','CelulasPessoasController@imprimir');
     Route::post('celulaspessoas/{id}/update','CelulasPessoasController@update');
