@@ -19,6 +19,9 @@ class CelulasController extends Controller
         $this->rota = "celulas"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
+        /*Instancia a classe de funcoes (Data, valor, etc)*/
+        $this->formatador = new  \App\Functions\FuncoesGerais();
+
         //Validação de permissão de acesso a pagina
         if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
         {
@@ -50,6 +53,7 @@ class CelulasController extends Controller
         $this->validate($request, [
             'pessoas' => 'required',
             'dia_encontro' => 'required',
+            'horario' => 'required',
         ]);
 
 
@@ -63,8 +67,24 @@ class CelulasController extends Controller
         }
 
          $dados->dia_encontro = $input['dia_encontro'];
-         $dados->turno = $input['turno'];
+
+         if ($input["horario"]<"12:00") //bom dia
+         {
+                $dados->turno = "M";
+         }
+         else if ($input["horario"]>"12:00" && $input["horario"]<"18:00") //boa tarde
+         {
+                $dados->turno = "T";
+         }
+         else if ($input["horario"]>"18:00") //boa noite
+         {
+                $dados->turno = "N";
+         }
+
+         //$dados->turno = $input['turno'];
          $dados->regiao = $input['regiao'];
+         $dados->horario = $input['horario'];
+         $dados->horario2 = $input['horario2'];
          $dados->segundo_dia_encontro = $input['segundo_dia_encontro'];
          $dados->obs = $input['obs'];
          $dados->email_grupo = $input['email_grupo'];
@@ -82,6 +102,16 @@ class CelulasController extends Controller
          $dados->suplente2_pessoas_id  = ($input['suplente2_pessoas_id']=="" ? null : substr($input['suplente2_pessoas_id'],0,9));
          $dados->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
          $dados->empresas_id  = $this->dados_login->empresas_id;
+         $dados->celulas_pai_id = ($input['celulas_pai_id']=="" ? null : $input['celulas_pai_id']);
+         $dados->origem = ($input['origem']=="" ? null : $input['origem']);
+
+         if ($input["origem"]=="1")  //Multiplicacao
+         {
+                $dados->data_multiplicacao = date('Y-m-d');
+         }
+
+         $dados->qual_endereco = ($input['local']=="" ? null : $input['local']);
+         $dados->data_inicio = ($input["data_inicio"]!="" ? $this->formatador->FormatarData($input["data_inicio"]) : date('Y-m-d'));
          $dados->save();
 
   }
@@ -97,34 +127,17 @@ class CelulasController extends Controller
 
         $publicos = \App\Models\publicos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         $faixas = \App\Models\faixas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        $vazio = \App\Models\tabela_vazia::get();
 
         /*Busca NIVEL5*/
         $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        return view($this->rota . '.registrar', ['nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
+        //return view($this->rota . '.registrar', ['nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
+        return view($this->rota . '.atualizacao', ['nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'tipo_operacao'=>'incluir', 'dados'=>$vazio, 'celulas'=>$celulas, 'vinculos'=>$vazio, 'total_vinculos'=>'0']);
 
     }
-
-
- //Criar novo registro -SOMENTE PARA FINS DE TESTES
-    public function create2()
-    {
-
-        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
-        {
-              return redirect('home');
-        }
-
-        $publicos = \App\Models\publicos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-        $faixas = \App\Models\faixas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
-
-        /*Busca NIVEL5*/
-        $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-
-        return view($this->rota . '.registrar2', ['nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
-
-    }
-
 
 /*
 * Grava dados no banco
@@ -154,12 +167,30 @@ class CelulasController extends Controller
         $faixas = \App\Models\faixas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
 
         /*Busca NIVEL5*/
-        $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $view5  = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        /*Busca */
+        $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         /*Busca NIVEL4*/
-        $dados = \DB::select('select * from view_celulas  where id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $dados = \DB::select("select to_char(to_date(data_inicio, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_inicio_format, * from view_celulas  where id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ", [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview,  'nivel5' =>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
+        //Busca celulas filhas
+        $vinculos = \DB::select('select * from view_celulas_simples  where celulas_pai_id = ?  and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        if  ($vinculos==null) //Se nao encontrar, gera controller vazio
+        {
+            $vinculos = \App\Models\tabela_vazia::get();
+            $total_vinculos = 0;
+        }
+        else
+        {
+            $temp = \DB::select('select count(*) as tot from view_celulas  where celulas_pai_id = ?  and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+            $total_vinculos =$temp[0]->tot;
+        }
+
+        //return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview,  'nivel5' =>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
+        return view($this->rota . '.atualizacao', ['dados' =>$dados, 'preview' => $preview,  'nivel5' =>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'tipo_operacao'=>'editar', 'vinculos'=>$vinculos, 'celulas'=>$celulas, 'total_vinculos'=>$total_vinculos]);
 
     }
 

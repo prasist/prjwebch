@@ -30,7 +30,7 @@
                                 <select id="celulas" placeholder="(Selecionar)" name="celulas" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;" >
                                 <option  value="0"></option>
                                 @foreach($celulas as $item)
-                                       <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                         <option  value="{{$item->id}}" {{ ($id_celula==$item->id ? "selected" : "") }}>{{$item->nome}}</option>
                                 @endforeach
                                 </select>
                         </div>

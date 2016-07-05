@@ -518,10 +518,12 @@
     Route::get('celulaspessoas', 'CelulasPessoasController@index');
     Route::post('/celulaspessoas/gravar','CelulasPessoasController@store');
     Route::get('/celulaspessoas/registrar','CelulasPessoasController@create');
+    Route::get('/celulaspessoas/registrar/{id}','CelulasPessoasController@create');
     Route::get('/celulaspessoas/{id}/preview','CelulasPessoasController@show');
     Route::get('/celulaspessoas/{id}/imprimir','CelulasPessoasController@imprimir');
     Route::post('celulaspessoas/{id}/update','CelulasPessoasController@update');
     Route::get('celulaspessoas/{id}/edit','CelulasPessoasController@edit');
     Route::get('celulaspessoas/{id}/delete','CelulasPessoasController@destroy');
+    Route::get('celulaspessoas/{id}/remover_membro/{pessoas_id}','CelulasPessoasController@remover_membro');
 
 });

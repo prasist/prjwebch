@@ -3,9 +3,11 @@
 @section('content')
 
 {{ \Session::put('titulo', 'Cadastro de Células') }}
-{{ \Session::put('subtitulo', 'Inclusão') }}
+{{ \Session::put('subtitulo', 'Alteração / Visualização') }}
 {{ \Session::put('route', 'celulas') }}
 {{ \Session::put('id_pagina', '42') }}
+
+
 
 <div class = 'row'>
 
@@ -15,7 +17,7 @@
             <a href={{ url('/' . \Session::get('route')) }} class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
     </div>
 
-    <form method = 'POST'  class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/gravar')}}>
+    <form method = 'POST' class="form-horizontal"  action = {{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update')}}>
 
        {!! csrf_field() !!}
 
@@ -27,26 +29,13 @@
 
         <div class="box-body">
 
-
-      <select name="things" id="things">
-          <option value="1">Thing One</option>
-          <option value="2">Thing Two</option>
-          <option value="3">Thing Three</option>
-          <option value="">New Thing&hellip;</option>
-      </select>
-      @include('modal_cadastro_basico', array('qual_campo'=>'things', 'modal' => 'modal_basico1', 'tabela' => 'idiomas'))
-
-      <div id="mensagem" name="mensagem">
-
-      </div>
-
           <div class="form-group">
             <label for="nivel5" class="col-sm-2 control-label">{!!Session::get('nivel5') !!}</label>
             <div class="col-sm-10{{ $errors->has('nivel5') ? ' has-error' : '' }}">
                     <select id="nivel5" placeholder="(Selecionar)" name="nivel5" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                     <option  value=""></option>
                     @foreach($nivel5 as $item)
-                           <option  value="{{$item->id}}" >{{$item->nome}}</option>
+                           <option  value="{{$item->id}}" {{ ($dados[0]->celulas_nivel5_id == $item->id ? 'selected' : '') }} >{{$item->nome}}</option>
                     @endforeach
                     </select>
                     <!-- se houver erros na validacao do form request -->
@@ -137,33 +126,40 @@
                   <div class="row">
 
                         <div class="col-xs-6 {{ $errors->has('pessoas') ? ' has-error' : '' }}">
-                                <label for="nome" class="control-label">Líder</label>
-                                <div class="input-group">
-                                         <div class="input-group-addon">
-                                            <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#modal_lider" >
-                                                   <i class="fa fa-search"></i> ...
-                                             </button>
-                                          </div>
+                                  <label for="nome" class="control-label">Líder</label>
+                                  <div class="input-group">
+                                           <div class="input-group-addon">
+                                              <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#modal_lider" >
+                                                     <i class="fa fa-search"></i> ...
+                                               </button>
+                                            </div>
 
-                                          @include('modal_buscar_pessoas', array('qual_campo'=>'pessoas', 'modal' => 'modal_lider'))
+                                            @include('modal_buscar_pessoas', array('qual_campo'=>'pessoas', 'modal' => 'modal_lider'))
 
-                                          <input id="pessoas"  name = "pessoas" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
+                                            <input id="pessoas"  name = "pessoas" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($dados[0]->lider_pessoas_id!="" ? str_repeat('0', (9-strlen($dados[0]->lider_pessoas_id))) . $dados[0]->lider_pessoas_id . ' - ' . $dados[0]->razaosocial  : '') !!}" readonly >
 
-                                          <!-- se houver erros na validacao do form request -->
-                                           @if ($errors->has('pessoas'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('pessoas') }}</strong>
-                                            </span>
-                                           @endif
+                                            <!-- se houver erros na validacao do form request -->
+                                             @if ($errors->has('pessoas'))
+                                              <span class="help-block">
+                                                  <strong>{{ $errors->first('pessoas') }}</strong>
+                                              </span>
+                                             @endif
 
-                                  </div>
-                         </div>
+                                    </div>
+                        </div>
 
-                         <div class="col-xs-6">
+                        <div class="col-xs-6 {{ $errors->has('nome') ? ' has-error' : '' }}">
                                 <label for="nome" class="control-label">Nome Célula</label>
-                                <input id="nome"  placeholder="(Opcional)" name = "nome" type="text" class="form-control" value="">
+                                <input id="nome"  placeholder="(Opcional)" name = "nome" type="text" class="form-control" value="{!! $dados[0]->nome !!}">
 
-                          </div>
+                                <!-- se houver erros na validacao do form request -->
+                               @if ($errors->has('nome'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('nome') }}</strong>
+                                </span>
+                               @endif
+
+                        </div>
 
 
                   </div>
@@ -171,74 +167,73 @@
                   <div class="row">
 
                         <div class="col-xs-4 {{ $errors->has('vicelider_pessoas_id') ? ' has-error' : '' }}">
-                                <label for="vicelider_pessoas_id" class="control-label">Vice-Líder</label>
-                                <div class="input-group">
-                                         <div class="input-group-addon">
-                                            <button  id="buscarpessoa2" type="button"  data-toggle="modal" data-target="#modal_vice" >
-                                                   <i class="fa fa-search"></i> ...
-                                             </button>
+                                        <label for="vicelider_pessoas_id" class="control-label">Vice-Líder</label>
+                                        <div class="input-group">
+                                                 <div class="input-group-addon">
+                                                    <button  id="buscarpessoa2" type="button"  data-toggle="modal" data-target="#modal_vice" >
+                                                           <i class="fa fa-search"></i> ...
+                                                     </button>
+                                                  </div>
+
+                                                  @include('modal_buscar_pessoas', array('qual_campo'=>'vicelider_pessoas_id', 'modal' => 'modal_vice'))
+
+                                                  <input id="vicelider_pessoas_id"  name = "vicelider_pessoas_id" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($dados[0]->vicelider_pessoas_id!="" ? str_repeat('0', (9-strlen($dados[0]->vicelider_pessoas_id))) . $dados[0]->vicelider_pessoas_id . ' - ' . $dados[0]->nome_vicelider  : '') !!}" readonly >
+
+                                                  <!-- se houver erros na validacao do form request -->
+                                                   @if ($errors->has('vicelider_pessoas_id'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('vicelider_pessoas_id') }}</strong>
+                                                    </span>
+                                                   @endif
+
                                           </div>
-
-                                          @include('modal_buscar_pessoas', array('qual_campo'=>'vicelider_pessoas_id', 'modal' => 'modal_vice'))
-
-                                          <input id="vicelider_pessoas_id"  name = "vicelider_pessoas_id" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
-
-                                          <!-- se houver erros na validacao do form request -->
-                                           @if ($errors->has('vicelider_pessoas_id'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('vicelider_pessoas_id') }}</strong>
-                                            </span>
-                                           @endif
-
-                                  </div>
                          </div>
 
                          <div class="col-xs-4 {{ $errors->has('suplente1_pessoas_id') ? ' has-error' : '' }}">
-                                  <label for="suplente1_pessoas_id" class="control-label">Suplente I</label>
-                                  <div class="input-group">
-                                           <div class="input-group-addon">
-                                              <button  id="buscarpessoa3" type="button"  data-toggle="modal" data-target="#modal_suplente1" >
-                                                     <i class="fa fa-search"></i> ...
-                                               </button>
-                                            </div>
+                                        <label for="suplente1_pessoas_id" class="control-label">Suplente I</label>
+                                        <div class="input-group">
+                                                 <div class="input-group-addon">
+                                                    <button  id="buscarpessoa3" type="button"  data-toggle="modal" data-target="#modal_suplente1" >
+                                                           <i class="fa fa-search"></i> ...
+                                                     </button>
+                                                  </div>
 
-                                            @include('modal_buscar_pessoas', array('qual_campo'=>'suplente1_pessoas_id', 'modal' => 'modal_suplente1'))
+                                                  @include('modal_buscar_pessoas', array('qual_campo'=>'suplente1_pessoas_id', 'modal' => 'modal_suplente1'))
 
-                                            <input id="suplente1_pessoas_id"  name = "suplente1_pessoas_id" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
+                                                  <input id="suplente1_pessoas_id"  name = "suplente1_pessoas_id" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($dados[0]->suplente1_pessoas_id!="" ? str_repeat('0', (9-strlen($dados[0]->suplente1_pessoas_id))) . $dados[0]->suplente1_pessoas_id . ' - ' . $dados[0]->nome_suplente1  : '') !!}" readonly >
 
-                                            <!-- se houver erros na validacao do form request -->
-                                             @if ($errors->has('suplente1_pessoas_id'))
-                                              <span class="help-block">
-                                                  <strong>{{ $errors->first('suplente1_pessoas_id') }}</strong>
-                                              </span>
-                                             @endif
+                                                  <!-- se houver erros na validacao do form request -->
+                                                   @if ($errors->has('suplente1_pessoas_id'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('suplente1_pessoas_id') }}</strong>
+                                                    </span>
+                                                   @endif
 
-                                    </div>
+                                          </div>
                          </div>
 
 
                          <div class="col-xs-4 {{ $errors->has('suplente1_pessoas_id') ? ' has-error' : '' }}">
-                                <label for="suplente2_pessoas_id" class="control-label">Suplente II</label>
-                                <div class="input-group">
-                                         <div class="input-group-addon">
-                                            <button  id="buscarpessoa4" type="button"  data-toggle="modal" data-target="#modal_suplente2" >
-                                                   <i class="fa fa-search"></i> ...
-                                             </button>
+                                        <label for="suplente2_pessoas_id" class="control-label">Suplente II</label>
+                                        <div class="input-group">
+                                                 <div class="input-group-addon">
+                                                    <button  id="buscarpessoa4" type="button"  data-toggle="modal" data-target="#modal_suplente2" >
+                                                           <i class="fa fa-search"></i> ...
+                                                     </button>
+                                                  </div>
+
+                                                  @include('modal_buscar_pessoas', array('qual_campo'=>'suplente2_pessoas_id', 'modal' => 'modal_suplente2'))
+
+                                                  <input id="suplente2_pessoas_id"  name = "suplente2_pessoas_id" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($dados[0]->suplente2_pessoas_id!="" ? str_repeat('0', (9-strlen($dados[0]->suplente2_pessoas_id))) . $dados[0]->suplente2_pessoas_id . ' - ' . $dados[0]->nome_suplente2  : '') !!}" readonly >
+                                                  <!-- se houver erros na validacao do form request -->
+                                                   @if ($errors->has('suplente2_pessoas_id'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('suplente2_pessoas_id') }}</strong>
+                                                    </span>
+                                                   @endif
+
                                           </div>
-
-                                          @include('modal_buscar_pessoas', array('qual_campo'=>'suplente2_pessoas_id', 'modal' => 'modal_suplente2'))
-
-                                          <input id="suplente2_pessoas_id"  name = "suplente2_pessoas_id" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
-                                          <!-- se houver erros na validacao do form request -->
-                                           @if ($errors->has('suplente2_pessoas_id'))
-                                            <span class="help-block">
-                                                <strong>{{ $errors->first('suplente2_pessoas_id') }}</strong>
-                                            </span>
-                                           @endif
-
-                                  </div>
                          </div>
-
 
                   </div>
 
@@ -250,13 +245,13 @@
 
                                 <select id="dia_encontro" placeholder="(Selecionar)" name="dia_encontro" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                 <option  value=""></option>
-                                <option  value="2">Segunda-Feira</option>
-                                <option  value="3">Terça-Feira</option>
-                                <option  value="4">Quarta-Feira</option>
-                                <option  value="5">Quinta-Feira</option>
-                                <option  value="6">Sexta-Feira</option>
-                                <option  value="7">Sábado</option>
-                                <option  value="0">Domingo</option>
+                                <option  value="2" {{ ($dados[0]->dia_encontro=="2" ? "selected" : "") }}>Segunda-Feira</option>
+                                <option  value="3" {{ ($dados[0]->dia_encontro=="3" ? "selected" : "") }}>Terça-Feira</option>
+                                <option  value="4" {{ ($dados[0]->dia_encontro=="4" ? "selected" : "") }}>Quarta-Feira</option>
+                                <option  value="5" {{ ($dados[0]->dia_encontro=="5" ? "selected" : "") }}>Quinta-Feira</option>
+                                <option  value="6" {{ ($dados[0]->dia_encontro=="6" ? "selected" : "") }}>Sexta-Feira</option>
+                                <option  value="7" {{ ($dados[0]->dia_encontro=="7" ? "selected" : "") }}>Sábado</option>
+                                <option  value="0" {{ ($dados[0]->dia_encontro=="0" ? "selected" : "") }}>Domingo</option>
                                 </select>
 
                                 <!-- se houver erros na validacao do form request -->
@@ -273,9 +268,9 @@
 
                                 <select id="turno" placeholder="(Selecionar)" name="turno" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                 <option  value=""></option>
-                                <option  value="M">Manhã</option>
-                                <option  value="T">Tarde</option>
-                                <option  value="N">Noite</option>
+                                <option  value="M" {{ ($dados[0]->turno=="M" ? "selected" : "") }}>Manhã</option>
+                                <option  value="T" {{ ($dados[0]->turno=="T" ? "selected" : "") }}>Tarde</option>
+                                <option  value="N" {{ ($dados[0]->turno=="N" ? "selected" : "") }}>Noite</option>
                                 </select>
 
                                 <!-- se houver erros na validacao do form request -->
@@ -289,7 +284,7 @@
 
                           <div class="col-xs-3 {{ $errors->has('regiao') ? ' has-error' : '' }}">
                                 <label for="regiao" class="control-label">Região</label>
-                                <input id="regiao"  placeholder="(Opcional)" name = "regiao" type="text" class="form-control" value="">
+                                <input id="regiao"  placeholder="(Opcional)" name = "regiao" type="text" class="form-control" value="{{$dados[0]->regiao}}">
 
                                 <!-- se houver erros na validacao do form request -->
                                @if ($errors->has('regiao'))
@@ -305,13 +300,13 @@
 
                                 <select id="segundo_dia_encontro" placeholder="(Selecionar)" name="segundo_dia_encontro" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                 <option  value=""></option>
-                                <option  value="2">Segunda-Feira</option>
-                                <option  value="3">Terça-Feira</option>
-                                <option  value="4">Quarta-Feira</option>
-                                <option  value="5">Quinta-Feira</option>
-                                <option  value="6">Sexta-Feira</option>
-                                <option  value="7">Sábado</option>
-                                <option  value="0">Domingo</option>
+                                <option  value="2" {{ ($dados[0]->segundo_dia_encontro=="2" ? "selected" : "") }}>Segunda-Feira</option>
+                                <option  value="3" {{ ($dados[0]->segundo_dia_encontro=="3" ? "selected" : "") }}>Terça-Feira</option>
+                                <option  value="4" {{ ($dados[0]->segundo_dia_encontro=="4" ? "selected" : "") }}>Quarta-Feira</option>
+                                <option  value="5" {{ ($dados[0]->segundo_dia_encontro=="5" ? "selected" : "") }}>Quinta-Feira</option>
+                                <option  value="6" {{ ($dados[0]->segundo_dia_encontro=="6" ? "selected" : "") }}>Sexta-Feira</option>
+                                <option  value="7" {{ ($dados[0]->segundo_dia_encontro=="7" ? "selected" : "") }}>Sábado</option>
+                                <option  value="0" {{ ($dados[0]->segundo_dia_encontro=="0" ? "selected" : "") }}>Domingo</option>
                                 </select>
 
                                 <!-- se houver erros na validacao do form request -->
@@ -348,26 +343,29 @@
                                              <div class="row">
                                                   <div class="col-xs-10">
                                                         <label for="email_grupo" class="control-label">E-mail do grupo</label>
-                                                        <input id="email_grupo"  placeholder="(Opcional)" name = "email_grupo" type="text" class="form-control" value="">
+                                                        <input id="email_grupo"  placeholder="(Opcional)" name = "email_grupo" type="text" class="form-control" value="{!! $dados[0]->email_grupo!!}">
                                                   </div>
                                              </div>
 
                                              <div class="row">
                                                   <div class="col-xs-10">
                                                         <label for="obs" class="control-label">Observações</label>
-                                                        <input id="obs"  placeholder="(Opcional)" name = "obs" type="text" class="form-control" value="">
+                                                        <input id="obs"  placeholder="(Opcional)" name = "obs" type="text" class="form-control" value="{!! $dados[0]->obs!!}">
                                                   </div>
                                              </div>
 
                                              <div class="row">
 
                                                   <div class="col-xs-5">
-                                                        @include('carregar_combos', array('dados'=>$publicos, 'titulo' =>'Público Alvo', 'id_combo'=>'publico_alvo', 'complemento'=>'', 'comparar'=>''))
+                                                        @include('carregar_combos', array('dados'=>$publicos, 'titulo' =>'Público Alvo', 'id_combo'=>'publico_alvo', 'complemento'=>'', 'comparar'=>$dados[0]->publico_alvo_id, 'id_pagina'=> '43'))
+                                                        @include('modal_cadastro_basico', array('qual_campo'=>'publico_alvo', 'modal' => 'modal_publico_alvo', 'tabela' => 'publicos_alvos'))
                                                   </div>
 
                                                   <div class="col-xs-5">
-                                                        @include('carregar_combos', array('dados'=>$faixas, 'titulo' =>'Faixa Etária', 'id_combo'=>'faixa_etaria', 'complemento'=>'', 'comparar'=>''))
+                                                        @include('carregar_combos', array('dados'=>$faixas, 'titulo' =>'Faixas Etárias', 'id_combo'=>'faixa_etaria', 'complemento'=>'', 'comparar'=>$dados[0]->faixa_etaria_id, 'id_pagina'=> '44'))
+                                                        @include('modal_cadastro_basico', array('qual_campo'=>'faixa_etaria', 'modal' => 'modal_faixa_etaria', 'tabela' => 'faixas_etarias'))
                                                   </div>
+
 
                                              </div>
 
@@ -386,7 +384,7 @@
         </div><!-- box box-primary -->
 
         <div class="box-footer">
-            <button class = 'btn btn-primary' type ='submit'>Gravar</button>
+            <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}>Gravar</button>
             <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Cancelar</a>
         </div>
 
@@ -396,16 +394,17 @@
 
 </div>
 
-<script type="text/javascript">
-  $('select[name=things]').change(function() {
-    if ($(this).val() == '')
-    {
-        //Abre modal para cadastrar novo item no combo
-        $('#modal_basico1').modal('show');
-
-    }
-});
-
-</script>
 @include('configuracoes.script_estruturas')
+
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+            /*quando carregar a pagina e estiver preenchido o nivel4, dispara o evento que carrega as outras dropdows.*/
+            if ($("#nivel5").val()!="")
+            {
+                  $("#nivel5").trigger("change");
+            }
+
+    });
+</script>
 @endsection

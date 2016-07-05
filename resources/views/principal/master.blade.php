@@ -20,6 +20,9 @@
         <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <link href="{{ asset('/dist/css/AdminLTE.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('/dist/css/skins/skin-green.min.css')}}" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap time Picker -->
+        <link href="{{ asset('/dist/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+
         <!-- jvectormap -->
         <!--<link href="{{ asset('/plugins/jvectormap/jquery-jvectormap-1.2.2.css')}}" rel="stylesheet" type="text/css" />-->
         <!-- Daterange picker -->
@@ -127,9 +130,21 @@
 
                   $(function ()
                   {
-                            console.log(window.location.pathname);//debug
-                            var pathArray = window.location.pathname.split( '/' );
-                            var secondLevelLocation = pathArray[0];
+
+                            //Timepicker
+                            //$(".timepicker").timepicker({
+//                              showInputs: false
+                            //});
+
+                            /*
+                             $('#horario').timepicker({
+                                minuteStep: 1,
+                                template: 'modal',
+                                appendWidgetTo: 'body',
+                                showMeridian: false,
+                                defaultTime: false
+                            });
+                            */
 
                             /*Monetarios - class*/
                             $('.formata_valor').autoNumeric("init",{
@@ -372,6 +387,8 @@
         <script src="{{ asset('/dist/js/bootstrap-checkbox.min.js')}}" defer></script>
         <script src="{{ asset('/dist/js/moment.min.js')}}"></script> <!-- datas-->
         <script src="{{ asset('/dist/js/autoNumeric-min.js')}}"></script> <!-- monetarios-->
+        <!-- bootstrap time picker -->
+        <script src="{{ asset('/dist/js/bootstrap-timepicker.min.js')}}"></script> <!-- monetarios-->
 
         <!-- tour rápido-->
         @if (\Session::get('tour_visaogeral')=='' || \Session::get('tour_visaogeral')!='S')

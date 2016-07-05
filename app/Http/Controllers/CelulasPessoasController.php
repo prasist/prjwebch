@@ -45,7 +45,7 @@ class CelulasPessoasController extends Controller
     }
 
     //Criar novo registro
-    public function create()
+    public function create($id)
     {
 
         if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
@@ -54,9 +54,18 @@ class CelulasPessoasController extends Controller
         }
 
         /*Busca */
-        $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        if ($id!="")
+        {
+            $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        }
+        else
+        {
+            $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        }
 
-        return view($this->rota . '.registrar', ['celulas'=>$celulas]);
+
+
+        return view($this->rota . '.registrar', ['celulas'=>$celulas, 'id_celula'=>$id]);
 
     }
 
@@ -67,14 +76,7 @@ public function salvar($request, $id, $tipo_operacao)
         //Pega dados do post
         $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-        //Se for alteração, exclui primeiro, para depois percorrer a tabela e inserir novamente
-        if ($id!="")
-        {
-              /*Clausula where padrao para as tabelas auxiliares*/
-             $where = ['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $this->dados_login->empresas_id, 'celulas_id' => $id];
-             $excluir = celulaspessoas::where($where)->delete();
-        }
-
+        //Trigger tg_atualizar_data - insere a data de inicio do membro na celula
 
         $i_index=0; /*Inicia sequencia*/
 
@@ -185,7 +187,6 @@ public function imprimir($id)
 
 
 
-
     //Abre tela para edicao ou somente visualização dos registros
     private function exibir ($request, $id, $preview)
     {
@@ -258,6 +259,28 @@ public function imprimir($id)
                   'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
                   'empresas_id' =>  $this->dados_login->empresas_id,
                   'celulas_id' => $id
+               ];
+
+               $excluir = celulaspessoas::where($where)->delete();
+         }
+
+         return redirect($this->rota);
+
+    }
+
+    public function remover_membro($id, $pessoas_id)
+    {
+
+         if ($id!="") //Se for alteração, exclui primeiro, para depois percorrer a tabela e inserir novamente
+         {
+
+                /*Clausula where padrao para as tabelas auxiliares*/
+               $where =
+               [
+                  'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                  'empresas_id' =>  $this->dados_login->empresas_id,
+                  'celulas_id' => $id,
+                  'pessoas_id'=>$pessoas_id
                ];
 
                $excluir = celulaspessoas::where($where)->delete();

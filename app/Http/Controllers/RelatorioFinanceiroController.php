@@ -233,7 +233,7 @@ class RelatorioFinanceiroController extends Controller
             $Mensagem = "Nenhum Registro Encontrado";
             return $this->CarregarView('', $Mensagem);
         }
-            else
+        else
         {
 
             if ($ext=="pdf") //Se for pdf abre direto na pagina

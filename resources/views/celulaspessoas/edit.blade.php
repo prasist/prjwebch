@@ -92,10 +92,25 @@
                                <td>{!! $item->descricao_concatenada !!}</td>
                                <td>{!! $item->descricao_pessoa !!}</td>
                                <td>
+
+                                  <!--
                                     <a href="#" class="btn btn-danger btn-sm" onclick="RemoveTableRow(this)" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><spam class="glyphicon glyphicon-trash"></spam></a>
                                     <input id="hidden_celulas[]"  name = "hidden_celulas[]" type="hidden" value="{!! $item->celulas_id !!}">
                                     <input id="hidden_pessoas[]"  name = "hidden_pessoas[]" type="hidden" value="{!! $item->pessoas_id !!}">
                                     <input id="hidden_lider_celulas[]"  name = "hidden_lider_celulas[]" type="hidden" value="{!! $item->descricao_concatenada !!}">
+                                  -->
+                                    @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
+                                    <form id="excluir{{ $item->celulas_id }}" action="{{ URL::to(\Session::get('route') . '/' . $item->celulas_id . '/remover_membro/' . $item->pessoas_id) }}" method="DELETE">
+
+                                          <button
+                                              data-toggle="tooltip" data-placement="top" title="Excluir Ítem" type="submit"
+                                              class="btn btn-danger btn-sm"
+                                              onclick="return confirm('Deseja remover : {{ $item->descricao_pessoa }} da Célula ?');">
+                                              <spam class="glyphicon glyphicon-trash"></spam></button>
+
+                                    </form>
+                                    @endcan
+
                                </td>
                              </tr>
                             @endforeach

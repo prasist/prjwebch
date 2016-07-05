@@ -34,8 +34,9 @@
                         <th>Líder / Nome</th>
                         <th>Dia Encontro</th>
                         <th>Região</th>
-                         <th>Alterar</th>
+                        <th>Alterar</th>
                         <th>Visualizar</th>
+                        <th>Participantes</th>
                         <th>Excluir</th>
                         </tr>
                     </thead>
@@ -59,6 +60,13 @@
                                                <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" class = 'btn btn-primary btn-sm'><span class="glyphicon glyphicon-zoom-in"></span></a>
                                       @endcan
                             </td>
+
+                            <td class="col-xs-1">
+                                      @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
+                                               <a href = "{{ URL::to('/registrar/' . $value->id) }}" class = 'btn btn-primary btn-sm'><span class="glyphicon glyphicon-zoom-in"></span></a>
+                                      @endcan
+                            </td>
+
                             <td class="col-xs-1">
 
                                                 @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
