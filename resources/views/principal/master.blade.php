@@ -133,7 +133,7 @@
 
                             //Timepicker
                             //$(".timepicker").timepicker({
-//                              showInputs: false
+                            //     showInputs: false
                             //});
 
                             /*
@@ -180,6 +180,27 @@
                                       {"targets": [1], "sortable": false},
                                       {"targets": [2], "sortable": false},
                                       {"targets": [3], "sortable": false}
+                                  ]
+                            });
+
+                            $("#table_titulos").DataTable({
+                                 "pageLength": 50,
+                                 language: {
+                                            paginate: {
+                                                first:      "Primeira",
+                                                previous:   "Anterior",
+                                                next:       "Próxima",
+                                                last:       "Última"}
+                                        },
+                                "columnDefs":
+                                  [
+                                      {"targets": [6], "sortable": false},
+                                      {"targets": [7], "sortable": false},
+                                      {"targets": [8], "sortable": false},
+                                      {"targets": [9], "sortable": false},
+                                      {"targets": [10], "sortable": false},
+                                      {"targets": [11], "sortable": false},
+                                      {"targets": [12], "sortable": false}
                                   ]
                             });
 
@@ -256,7 +277,6 @@
     /*Função usada para exibir no campo input pessoas[] a pessoa pesquisa da tela modal*/
     function confirmar(objInput)
     {
-
         //Percorre array input (Pois podem existir n modals na mesma pagina)
         $('input.typeahead').each(function()
         {
@@ -285,7 +305,6 @@
         //Percorre array input (Pois podem existir n modals na mesma pagina)
         $('input.novo_valor_' + objInput).each(function()
         {
-
                 var_qtd=0;
 
                 if ($(this).val()!="") //Se encontrar valor

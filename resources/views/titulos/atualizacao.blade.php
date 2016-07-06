@@ -7,7 +7,13 @@
 @else
     {{ \Session::put('titulo', 'Contas à Receber') }}
 @endif
-{{ \Session::put('subtitulo', 'Alteração') }}
+
+@if ($tipo_operacao=="incluir")
+    {{ \Session::put('subtitulo', 'Inclusão') }}
+@else
+    {{ \Session::put('subtitulo', 'Alteração / Visualização') }}
+@endif
+
 {{ \Session::put('route', 'titulos') }}
 {{ \Session::put('id_pagina', '52') }}
 
@@ -19,21 +25,25 @@
             <a href={{ url('/' . \Session::get('route')) . '/' . $tipo }} class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
     </div>
 
-     <form method = 'POST' class="form-horizontal"  action = {{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update/' . $tipo)}}>
+     @if ($tipo_operacao=="editar")
+          <form method = 'POST' class="form-horizontal"  action = {{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update/' . $tipo)}}>
+     @else
+          <form method = 'POST'  class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/gravar/' . $tipo)}}>
+     @endif
 
-       {!! csrf_field() !!}
-
+        {!! csrf_field() !!}
         <div class="box box-default">
 
              <div class="box-body">
-
 
                             <!-- Custom Tabs -->
                       <div class="nav-tabs-custom">
 
                         <ul class="nav nav-tabs">
                           <li class="active"><a href="#tab_1" data-toggle="tab">Dados</a></li>
+                          @if ($tipo_operacao=="editar")
                           <li><a href="#tab_2" data-toggle="tab">Histórico</a></li>
+                          @endif
                         </ul>
 
                         <div class="tab-content">
@@ -42,7 +52,11 @@
                                         <div class="row">
                                               <div class="col-xs-4 {{ $errors->has('descricao') ? ' has-error' : '' }}">
                                                     <label for="descricao" class="control-label"><span class="text-danger">*</span>  Descrição</label>
-                                                    <input id="descricao"  placeholder="Campo Obrigatório" name = "descricao" type="text" class="form-control" value="{{ $dados[0]->descricao }}">
+                                                    @if ($tipo_operacao=="editar")
+                                                        <input id="descricao"  placeholder="Campo Obrigatório" name = "descricao" type="text" class="form-control" value="{{ $dados[0]->descricao }}">
+                                                    @else
+                                                        <input id="descricao"  placeholder="Campo Obrigatório" name = "descricao" type="text" class="form-control" value="">
+                                                    @endif
                                                        <!-- se houver erros na validacao do form request -->
                                                        @if ($errors->has('descricao'))
                                                         <span class="help-block">
@@ -55,7 +69,12 @@
                                                     <label for="valor" class="control-label"><span class="text-danger">*</span>  Valor</label>
                                                     <div class="input-group">
                                                        <span class="input-group-addon">R$</span>
-                                                         <input id="valor" maxlength="60"   name = "valor" type="text" class="formata_valor form-control" value="{{ $dados[0]->valor }}">
+                                                         @if ($tipo_operacao=="editar")
+                                                              <input id="valor" maxlength="60"   name = "valor" type="text" class="formata_valor form-control" value="{{ $dados[0]->valor }}">
+                                                         @else
+                                                              <input id="valor" maxlength="60"   name = "valor" type="text" class="formata_valor form-control" onblur="onblur_valor();" value="">
+                                                         @endif
+
                                                          @if ($errors->has('valor'))
                                                           <span class="help-block">
                                                               <strong>{{ $errors->first('valor') }}</strong>
@@ -70,7 +89,11 @@
                                                          <div class="input-group-addon">
                                                           <i class="fa fa-calendar"></i>
                                                           </div>
-                                                          <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ $dados[0]->data_emissao }}">
+                                                          @if ($tipo_operacao=="editar")
+                                                                <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ $dados[0]->data_emissao }}">
+                                                          @else
+                                                                <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                          @endif
                                                   </div>
                                              </div>
 
@@ -80,7 +103,11 @@
                                                          <div class="input-group-addon">
                                                           <i class="fa fa-calendar"></i>
                                                           </div>
-                                                          <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ $dados[0]->data_vencimento }}">
+                                                          @if ($tipo_operacao=="editar")
+                                                                <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ $dados[0]->data_vencimento }}">
+                                                          @else
+                                                                <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                          @endif
                                                           <!-- se houver erros na validacao do form request -->
                                                            @if ($errors->has('data_vencimento'))
                                                             <span class="help-block">
@@ -94,7 +121,13 @@
 
                                         <div class="row">
                                               <div class="col-xs-4  {{ $errors->has('conta') ? ' has-error' : '' }}">
-                                                    <span class="text-danger">*</span>@include('carregar_combos', array('dados'=>$contas, 'titulo' =>'Conta', 'id_combo'=>'conta', 'complemento'=>'', 'comparar'=>$dados[0]->contas_id, 'id_pagina'=> '48'))
+                                                    <span class="text-danger">*</span>
+                                                    @if ($tipo_operacao=="editar")
+                                                            @include('carregar_combos', array('dados'=>$contas, 'titulo' =>'Conta', 'id_combo'=>'conta', 'complemento'=>'', 'comparar'=>$dados[0]->contas_id, 'id_pagina'=> '48'))
+                                                   @else
+                                                            @include('carregar_combos', array('dados'=>$contas, 'titulo' =>'Conta', 'id_combo'=>'conta', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '48'))
+                                                   @endif
+
                                                     @include('modal_cadastro_basico', array('qual_campo'=>'conta', 'modal' => 'modal_conta', 'tabela' => 'contas'))
                                                      <!-- se houver erros na validacao do form request -->
                                                      @if ($errors->has('conta'))
@@ -105,18 +138,28 @@
                                               </div><!-- col-xs-->
 
                                               <div class="col-xs-4">
-                                                    @include('carregar_combos', array('dados'=>$plano_contas, 'titulo' =>'Plano de Contas', 'id_combo'=>'plano', 'complemento'=>'', 'comparar'=>$dados[0]->planos_contas_id, 'id_pagina'=> '49'))
+                                                    @if ($tipo_operacao=="editar")
+                                                          @include('carregar_combos', array('dados'=>$plano_contas, 'titulo' =>'Plano de Contas', 'id_combo'=>'plano', 'complemento'=>'', 'comparar'=>$dados[0]->planos_contas_id, 'id_pagina'=> '49'))
+                                                    @else
+                                                          @include('carregar_combos', array('dados'=>$plano_contas, 'titulo' =>'Plano de Contas', 'id_combo'=>'plano', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '49'))
+                                                    @endif
+
                                                     @include('modal_cadastro_basico', array('qual_campo'=>'plano', 'modal' => 'modal_plano', 'tabela' => 'planos_contas'))
                                               </div><!-- col-xs-->
 
                                               <div class="col-xs-3">
 
+                                                    <input type="hidden" name="centros_custos" id="centros_custos" value="">
                                                     @if ($rateio_titulos->count()>0)
-                                                          <label for="centros_custos" class="control-label text-info">Centro de Custo <i>(Existem Valores de Rateio)</i></label>
-                                                          <input type="hidden" name="centros_custos" id="centros_custos" value="">
+                                                          @if ($tipo_operacao=="editar")
+                                                                <label for="centros_custos" class="control-label text-info">Centro de Custo <i>(Existem Valores de Rateio)</i></label>
+                                                          @else
+                                                                <label for="centros_custos" class="control-label">Centro de Custo</label>
+                                                          @endif
                                                     @else
                                                           <label for="centros_custos" class="control-label">Centro de Custo</label>
                                                     @endif
+
 
                                                       <div class="input-group">
                                                              <div class="input-group-addon">
@@ -144,7 +187,11 @@
 
                                                               <optgroup label="Registros">
                                                               @foreach($centros_custos as $item)
-                                                                     <option  value="{{$item->id}}" {{$dados[0]->centros_custos_id==$item->id ? "selected" : ""}} >{{$item->nome}}</option>
+                                                                     @if ($tipo_operacao=="editar")
+                                                                          <option  value="{{$item->id}}" {{$dados[0]->centros_custos_id==$item->id ? "selected" : ""}} >{{$item->nome}}</option>
+                                                                     @else
+                                                                          <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                     @endif
                                                               @endforeach
                                                               </select>
                                                               </optgroup>
@@ -174,13 +221,13 @@
 
                                                              <div class="row">
                                                                       <div class="col-xs-2">
-                                                                       <i class="text-info"> Valor Total Título :</i> <input type="text" id="valor_original" readonly="true" name="valor_original" value="" class="form-control">
+                                                                       <b><i class="text-info"> Valor Total Título :</i> <input type="text" id="valor_original" readonly="true" name="valor_original" value="" class="form-control"></b>
                                                                       </div>
                                                                       <div class="col-xs-2">
-                                                                       <i class="text-info"> Soma do Rateio :</i> <input type="text" id="soma_rateio" readonly="true" name="soma_rateio" value="" class="form-control">
+                                                                       <b><i class="text-info"> Soma do Rateio :</i> <input type="text" id="soma_rateio" readonly="true" name="soma_rateio" value="" class="form-control"></b>
                                                                       </div>
                                                                       <div class="col-xs-2">
-                                                                       <i class="text-info"> Valor Restante : </i><input type="text" id="valor_restante" readonly="true" name="valor_restante" value="" class="form-control">
+                                                                       <b><i class="text-info"> Valor Restante : </i><input type="text" id="valor_restante" readonly="true" name="valor_restante" value="" class="form-control"></b>
                                                                       </div>
                                                              </div>
 
@@ -221,35 +268,53 @@
                                                             </div>
 
                                                         <div class="row">
-                                                              <div class="col-xs-10">
-                                                                    <table id="mais_rateios" class="table table-bordered table-hover">
-                                                                    @if ($rateio_titulos!=null)
-                                                                        <tr>
-                                                                              <td>Centro de Custo</td>
-                                                                              <td>%</td>
-                                                                              <td>Valor</td>
-                                                                              <td>Excluir</td>
-                                                                        </tr>
-                                                                        @foreach($rateio_titulos as $item)
-                                                                        <tr>
-                                                                              <input id="hidden_id_rateio_cc[]" name = "hidden_id_rateio_cc[]" type="hidden" class="form-control ccusto" value="{{$item->centros_custos_id}}">
-                                                                              <td><input id="inc_cc[]" readonly name = "inc_cc[]" type="text" class="form-control" value="{{$item->nome}}"></td>
-                                                                              <td><input id="inc_perc[]" readonly name = "inc_perc[]" type="text" class="form-control valores" value='{{ str_replace(".", ",", $item->percentual) }}'></td>
-                                                                              <td><input id="inc_valor[]" readonly name = "inc_valor[]" type="text" class="form-control valores" value='{{ str_replace(".", ",", $item->valor) }}'></td>
-                                                                              <td><button data-toggle="tooltip" data-placement="top" title="Excluir Ítem"  class="btn btn-danger btn-sm remover"><spam class="glyphicon glyphicon-trash"></spam></button></td>
-                                                                        </tr>
-                                                                        @endforeach
-                                                                    @else
-                                                                          <input type="hidden" name="hidden_id_rateio_cc[]" id="hidden_id_rateio_cc[]" value="">
-                                                                    @endif
-                                                                    </table>
-                                                              </div>
+
+                                                              @if ($tipo_operacao=="editar")
+                                                                  <div class="col-xs-10">
+                                                                       <input type="hidden" name="hidden_id_rateio_cc[]" id="hidden_id_rateio_cc[]" value="">
+                                                                        <table id="mais_rateios" class="table table-bordered table-hover">
+                                                                        @if ($rateio_titulos!=null)
+                                                                            <tr>
+                                                                                  <td>Centro de Custo</td>
+                                                                                  <td>%</td>
+                                                                                  <td>Valor</td>
+                                                                                  <td>Excluir</td>
+                                                                            </tr>
+                                                                            @foreach($rateio_titulos as $item)
+                                                                            <tr>
+                                                                                  <input id="hidden_id_rateio_cc[]" name = "hidden_id_rateio_cc[]" type="hidden" class="form-control ccusto" value="{{$item->centros_custos_id}}">
+                                                                                  <td><input id="inc_cc[]" readonly name = "inc_cc[]" type="text" class="form-control" value="{{$item->nome}}"></td>
+                                                                                  <td><input id="inc_perc[]" readonly name = "inc_perc[]" type="text" class="form-control valores" value='{{ str_replace(".", ",", $item->percentual) }}'></td>
+                                                                                  <td><input id="inc_valor[]" readonly name = "inc_valor[]" type="text" class="form-control valores" value='{{ str_replace(".", ",", $item->valor) }}'></td>
+                                                                                  <td><button data-toggle="tooltip" data-placement="top" title="Excluir Ítem"  class="btn btn-danger btn-sm remover"><spam class="glyphicon glyphicon-trash"></spam></button></td>
+                                                                            </tr>
+                                                                            @endforeach
+                                                                        @endif
+                                                                        </table>
+                                                                  </div>
+                                                              @else
+                                                                    <div class="row">
+                                                                        <div class="col-xs-10">
+                                                                        <input type="hidden" name="hidden_id_rateio_cc[]" id="hidden_id_rateio_cc[]" value="">
+                                                                              <table id="mais_rateios" class="table table-bordered table-hover">
+                                                                                  <tr>
+                                                                                        <td>Centro de Custo</td>
+                                                                                        <td>%</td>
+                                                                                        <td>Valor</td>
+                                                                                        <td>Excluir</td>
+                                                                                  </tr>
+                                                                              </table>
+                                                                        </div>
+                                                                  </div>
+                                                              @endif
+
                                                         </div>
 
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button id="tchau" type="button" class="btn btn-danger" data-dismiss="modal" onclick="remover_todos();">Cancelar / Excluir Tudo</button>
-                                                            <button id="salvar" type="button" class="btn btn-primary" data-dismiss="modal" disabled="true"><i class="fa fa-save"></i> Salvar / Fechar</button>
+                                                            <button id="tchau" type="button" class="btn btn-danger" data-dismiss="modal" onclick="remover_todos();"><i class="fa fa-trash"></i> Excluir</button>
+                                                            <button id="salvar" type="button" class="btn btn-primary" data-dismiss="modal" disabled="true"><i class="fa fa-save"></i> Salvar</button>
+                                                            <button id="fechar" type="button" class="btn btn-default" data-dismiss="modal" ><i class="fa fa-close"></i> Fechar</button>
                                                         </div>
                                                       </div>
                                                     </div>
@@ -258,12 +323,18 @@
 
 
                                         <input  id= "ckpago" name="ckpago" type="hidden" value=""/>
+                                        <input type="hidden" name="total_pago" id='total_pago' value="0">
+
                                         <div class="row">
                                                 <div class="col-xs-4">
                                                       <label for="ckpago" class="control-label">Marcar como Pago (Parcial ou Integral) ?</label>
                                                       <div class="input-group">
                                                              <div class="input-group-addon">
-                                                                  <input  id= "ckpago" name="ckpago" type="checkbox" class="ckpago" data-group-cls="btn-group-sm" value="{{ ($dados[0]->status=='B' ? true : '') }}"  {{ ($dados[0]->status=='B' ? 'checked' : '') }} />
+                                                                  @if ($tipo_operacao=="editar")
+                                                                        <input  id= "ckpago" name="ckpago" type="checkbox" class="ckpago" data-group-cls="btn-group-sm" value="{{ ($dados[0]->status=='B' ? true : '') }}"  {{ ($dados[0]->status=='B' ? 'checked' : '') }} />
+                                                                  @else
+                                                                        <input  id= "ckpago" name="ckpago" type="checkbox" class="ckpago" data-group-cls="btn-group-sm" value="{{ ($dados[0]->status=='B' ? true : '') }}"  />
+                                                                  @endif
                                                              </div>
                                                       </div>
                                                 </div>
@@ -282,11 +353,20 @@
 
                                         <div class="row">
 
+                                              @if ($tipo_operacao=="editar")
                                               <div class="col-xs-2">
                                                       <label for="total_pago" class="control-label">Total Pago</label>
                                                       <div class="input-group">
                                                            <span class="input-group-addon">R$</span>
-                                                           <b><input id="total_pago" readonly="true"  name = "total_pago" type="text" class="formata_valor form-control" value="{{$dados[0]->valor - $dados[0]->saldo_a_pagar}}"></b>
+                                                           <b>
+
+                                                           @if ($tipo_operacao=="editar")
+                                                                <input id="total_pago" readonly="true"  name = "total_pago" type="text" class="formata_valor form-control" value="{{$dados[0]->valor - $dados[0]->saldo_a_pagar}}">
+                                                           @else
+                                                                <input id="total_pago" readonly="true"  name = "total_pago" type="text" class="formata_valor form-control" value="">
+                                                           @endif
+
+                                                           </b>
                                                       </div>
                                               </div>
 
@@ -294,10 +374,18 @@
                                                       <label for="saldo" class="control-label">Saldo à Pagar</label>
                                                       <div class="input-group">
                                                            <span class="input-group-addon">R$</span>
-                                                           <b><input id="saldo" readonly="true"  name = "saldo" type="text" class="formata_valor form-control" value="{{$dados[0]->saldo_a_pagar}}"></b>
+                                                           <b>
+
+                                                           @if ($tipo_operacao=="editar")
+                                                                <input id="saldo" readonly="true"  name = "saldo" type="text" class="formata_valor form-control" value="{{$dados[0]->saldo_a_pagar}}">
+                                                           @else
+                                                                <input id="saldo" readonly="true"  name = "saldo" type="text" class="formata_valor form-control" value="">
+                                                           @endif
+
+                                                           </b>
                                                       </div>
                                               </div>
-
+                                              @endif
 
                                               <div id="esconder" style="display: none" >
                                                     <div class="col-xs-2">
@@ -307,10 +395,11 @@
                                                                  <div class="input-group-addon">
                                                                   <i class="fa fa-calendar"></i>
                                                                   </div>
-                                                                  <input id ="data_pagamento" name = "data_pagamento"
-                                                                  onblur="validar_data(this);" type="text"
-                                                                  class="form-control"
-                                                                  data-inputmask='"mask": "99/99/9999"' data-mask  value="{{$dados[0]->data_pagamento}}">
+                                                                  @if ($tipo_operacao=="editar")
+                                                                        <input id ="data_pagamento" name = "data_pagamento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{$dados[0]->data_pagamento}}">
+                                                                  @else
+                                                                        <input id ="data_pagamento" name = "data_pagamento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                  @endif
                                                           </div>
                                                       </div>
 
@@ -319,7 +408,11 @@
                                                             <label for="acrescimo" class="control-label">Acréscimo</label>
                                                             <div class="input-group">
                                                                <span class="input-group-addon">R$</span>
-                                                                 <input id="acrescimo" maxlength="10"   name = "acrescimo" type="text" class="formata_valor form-control" onblur="recalcula();" value="{{$dados[0]->acrescimo}}">
+                                                                 @if ($tipo_operacao=="editar")
+                                                                      <input id="acrescimo" maxlength="10"   name = "acrescimo" type="text" class="formata_valor form-control" onblur="recalcula();" value="{{$dados[0]->acrescimo}}">
+                                                                 @else
+                                                                      <input id="acrescimo" maxlength="10"   name = "acrescimo" type="text" class="formata_valor form-control" onblur="recalcula();" value="">
+                                                                 @endif
                                                             </div>
                                                        </div>
 
@@ -327,7 +420,11 @@
                                                             <label for="desconto" class="control-label">Desconto</label>
                                                             <div class="input-group">
                                                                <span class="input-group-addon">R$</span>
-                                                                 <input id="desconto" maxlength="10"   name = "desconto" type="text" class="formata_valor form-control" onblur="recalcula();" value="{{$dados[0]->desconto}}">
+                                                                 @if ($tipo_operacao=="editar")
+                                                                      <input id="desconto" maxlength="10"   name = "desconto" type="text" class="formata_valor form-control" onblur="recalcula();" value="{{$dados[0]->desconto}}">
+                                                                 @else
+                                                                      <input id="desconto" maxlength="10"   name = "desconto" type="text" class="formata_valor form-control" onblur="recalcula();" value="">
+                                                                 @endif
                                                             </div>
                                                        </div>
 
@@ -343,7 +440,7 @@
                                         </div>
 
 
-                                            <br/>
+                                          <br/>
                                           <div class="row">
                                               <div class="col-md-12">
                                                 <div class="box box-solid">
@@ -375,21 +472,22 @@
 
                                                                                           @include('modal_buscar_pessoas', array('qual_campo'=>'fornecedor', 'modal' => 'modal_fornecedor'))
 
-                                                                                          <input
-                                                                                            id="fornecedor"
-                                                                                            name = "fornecedor"
-                                                                                            type="text"
-                                                                                            class="form-control"
-                                                                                            placeholder="Clica na lupa ao lado para consultar uma pessoa"
-                                                                                            value="{!! ($dados[0]->pessoas_id!='' ? str_repeat('0', (9-strlen($dados[0]->pessoas_id))) . $dados[0]->pessoas_id . ' - ' . $dados[0]->razaosocial  : '') !!}"
-                                                                                            readonly >
+                                                                                          @if ($tipo_operacao=="editar")
+                                                                                                <input id="fornecedor" name = "fornecedor" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($dados[0]->pessoas_id!='' ? str_repeat('0', (9-strlen($dados[0]->pessoas_id))) . $dados[0]->pessoas_id . ' - ' . $dados[0]->razaosocial  : '') !!}" readonly >
+                                                                                          @else
+                                                                                                <input id="fornecedor" name = "fornecedor" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
+                                                                                          @endif
 
                                                                                   </div>
                                                                          </div>
 
                                                                           <div class="col-xs-5">
                                                                                 <label for="obs" class="control-label">Observação</label>
-                                                                                <input id="obs"  placeholder="(Opcional)" name = "obs" type="text" class="form-control" value="{{$dados[0]->obs}}">
+                                                                                @if ($tipo_operacao=="editar")
+                                                                                      <input id="obs"  placeholder="(Opcional)" name = "obs" type="text" class="form-control" value="{{$dados[0]->obs}}">
+                                                                                @else
+                                                                                      <input id="obs"  placeholder="(Opcional)" name = "obs" type="text" class="form-control" value="">
+                                                                                @endif
                                                                           </div>
 
                                                                     </div>
@@ -397,21 +495,38 @@
                                                                      <div class="row">
                                                                           <div class="col-xs-2">
                                                                                 <label for="parcelas" class="control-label">Qtd. Parcelas</label>
-                                                                                <input id="parcelas"  placeholder="(Opcional)" name = "parcelas" type="number" class="form-control" value="{{$dados[0]->numpar}}">
+                                                                                @if ($tipo_operacao=="editar")
+                                                                                      <input id="parcelas"  placeholder="(Opcional)" name = "parcelas" type="number" class="form-control" value="{{$dados[0]->numpar}}">
+                                                                                @else
+                                                                                      <input id="parcelas"  placeholder="(Opcional)" name = "parcelas" type="number" class="form-control" value="">
+                                                                                @endif
                                                                           </div>
 
                                                                           <div class="col-xs-2">
                                                                                 <label for="numdoc" class="control-label">N. Documento</label>
-                                                                                <input id="numdoc"  placeholder="(Opcional)" name = "numdoc" type="text" class="form-control" value="{{$dados[0]->numdoc}}">
+                                                                                @if ($tipo_operacao=="editar")
+                                                                                      <input id="numdoc"  placeholder="(Opcional)" name = "numdoc" type="text" class="form-control" value="{{$dados[0]->numdoc}}">
+                                                                                @else
+                                                                                      <input id="numdoc"  placeholder="(Opcional)" name = "numdoc" type="text" class="form-control" value="">
+                                                                                @endif
                                                                           </div>
 
                                                                           <div class="col-xs-2">
                                                                                 <label for="serie" class="control-label">Série</label>
-                                                                                <input id="serie"  placeholder="(Opcional)" name = "serie" type="text" class="form-control" value="{{$dados[0]->serie}}">
+                                                                                @if ($tipo_operacao=="editar")
+                                                                                      <input id="serie"  placeholder="(Opcional)" name = "serie" type="text" class="form-control" value="{{$dados[0]->serie}}">
+                                                                                @else
+                                                                                      <input id="serie"  placeholder="(Opcional)" name = "serie" type="text" class="form-control" value="">
+                                                                                @endif
                                                                           </div>
 
                                                                           <div class="col-xs-6">
-                                                                                @include('carregar_combos', array('dados'=>$grupos_titulos, 'titulo' =>'Grupo Título', 'id_combo'=>'grupos_titulos', 'complemento'=>'', 'comparar'=>$dados[0]->grupos_titulos_id, 'id_pagina'=> '51'))
+                                                                                @if ($tipo_operacao=="editar")
+                                                                                      @include('carregar_combos', array('dados'=>$grupos_titulos, 'titulo' =>'Grupo Título', 'id_combo'=>'grupos_titulos', 'complemento'=>'', 'comparar'=>$dados[0]->grupos_titulos_id, 'id_pagina'=> '51'))
+                                                                                @else
+                                                                                      @include('carregar_combos', array('dados'=>$grupos_titulos, 'titulo' =>'Grupo Título', 'id_combo'=>'grupos_titulos', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '51'))
+                                                                                @endif
+
                                                                                 @include('modal_cadastro_basico', array('qual_campo'=>'grupos_titulos', 'modal' => 'modal_grupos_titulos', 'tabela' => 'grupos_titulos'))
                                                                           </div><!-- col-xs-->
 
@@ -488,6 +603,7 @@
 
 
              </div><!-- fim box-body"-->
+
         </div><!-- box box-primary -->
 
         <div class="box-footer">
@@ -501,7 +617,8 @@
     </div>
 
 </div>
+
+
 @include('titulos.script_titulos')
 
 @endsection
-

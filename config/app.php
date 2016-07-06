@@ -58,6 +58,7 @@ return [
     'grupos_titulos'=>'51',
     'titulos'=>'52',
     'relfinanceiro'=>'53',
+    'financeiro'=>'54',
 
     'env' => env('APP_ENV', 'production'),
 

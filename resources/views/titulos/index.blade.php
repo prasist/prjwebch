@@ -30,13 +30,14 @@
                 <div class="col-xs-3">
                          <select name="status" id="status" class="form-control selectpicker" data-style="btn-primary" style="width: 100%;">
                          <option  style="background: #2A4F6E; color: #fff;" value="T" {{ $post_status == 'T' ? 'selected' : ''}}>Mostrar Todos</option>
-                         <option  style="background: #F1E8B8; color: #000;" value="A" {{ $post_status == 'A' ? 'selected' : ''}}>Somente em Aberto</option>
+                         <option  style="background: #F1E8B8; color: #000;" value="A" {{ $post_status == 'A' ? 'selected' : ''}} selected>Somente em Aberto</option>
                          <option  style="background: #2A7E43; color: #fff;" value="B"{{ $post_status == 'B' ? 'selected' : ''}}>Somente Baixados</option>
                          </select>
                 </div>
 
                 <div class="col-xs-3">
                          <select name="mes" id="mes" class="form-control selectpicker" data-style="btn-info" style="width: 100%;">
+                         <option  value="" >(Nenhum Filtro)</option>
                          <option  value="C" {{ $post_mes == 'C' ? 'selected' : ''}}>Mês Corrente</option>
                          <option  value="E" {{ $post_mes == 'E' ? 'selected' : ''}}>Período Específico...</option>
                          <option  value="M" {{ $post_mes == 'M' ? 'selected' : ''}}>Mais opções...</option>
@@ -92,7 +93,7 @@
                 </div>
 
                 <div class="col-xs-2">
-                        <button class = 'btn btn-default btn-flat' type ='submit'><span class="glyphicon glyphicon-new-window"></span> Aplicar Filtro</button>
+                        <button class = 'btn btn-default btn-flat' type ='submit' onclick="myApp.showPleaseWait();"><span class="glyphicon glyphicon-new-window"></span> Aplicar Filtro</button>
                 </div>
 
                 </form>
@@ -123,7 +124,7 @@
                       <!--<li><a href="#" onclick="if(confirm('ATENÇÃO !!! Confirma a exclusão dos Títulos Selecionados ? Essa ação não tem reversão')) baixar_todos(event);"><i class="glyphicon glyphicon-trash"></i> Excluir</a></li>-->
                   </ul>
                 </div>
-        </div>
+          </div>
 
         <div class="col-md-12">
           <div class="box">
@@ -131,7 +132,7 @@
 
                 <div class="box-body">
 
-                    <table id="example" class="table table-bordered table-hover">
+                    <table id="table_titulos" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                         <th><input  id="check_todos" name="check_todos" type="checkbox" /></th>
@@ -139,6 +140,7 @@
                         <th>Descrição</th>
                         <th>Valor</th>
                         <th>Data Pagto.</th>
+                        <th>Dias Atraso</th>
                         <th>Acrésc.</th>
                         <th>Desc.</th>
                         <th>Valor Pago</th>
@@ -156,14 +158,7 @@
                             <td><input  id="check_id[{!!$value->id!!}]" name="check_id[{!!$value->id!!}]" type="checkbox" class="check_id"  /></td>
                             <td>
 
-                                    <a href="#"
-                                    class="data_venc"
-                                    data-type="text"
-                                    data-column="data_venc"
-                                    data-url="{{ url('/titulos/' . $value->id . '/update_inline/data_venc/' . $tipo)}}"
-                                    data-pk="{!!$value->id!!}"
-                                    data-title="change"
-                                    data-name="data_venc">
+                                    <a href="#" class="data_venc" data-type="text" data-column="data_venc" data-url="{{ url('/titulos/' . $value->id . '/update_inline/data_venc/' . $tipo)}}" data-pk="{!!$value->id!!}" data-title="change" data-name="data_venc">
                                     {{$value->data_vencimento}}
                                     </a>
 
@@ -188,6 +183,13 @@
                                     </a>
                                     <input type="hidden" id = "campo_data_pagto[{!!$value->id!!}]" name="campo_data_pagto[{!!$value->id!!}]" value="{{$value->data_pagamento}}">
                             </td>
+
+                            <td>
+                                         @if ($value->dias_atraso>0 && $value->data_pagamento=="")
+                                                <span class="text-danger">{{$value->dias_atraso}}</span>
+                                         @endif
+                            </td>
+
                             <td>
                                     <a href="#" class="acrescimo"  data-type="text" data-column="acrescimo" data-url="{{ url('/titulos/' . $value->id . '/update_inline/acrescimo/' . $tipo)}}" data-pk="{!!$value->id!!}" data-title="change" data-name="acrescimo">
                                         {{ str_replace(".", ",", $value->acrescimo) }}
@@ -278,6 +280,12 @@
                     </tbody>
                     </table>
                 </div>
+
+                <div class="overlay modal" style="display: none">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+
+
             </div>
           </div>
          </div>
@@ -289,6 +297,17 @@
       $(document).ready(function(){
          $("#financ").addClass("treeview active");
       });
+
+      var myApp;
+      myApp = myApp || (function () {
+
+          return {
+              showPleaseWait: function() {
+                  $(".overlay").show();
+              }
+          };
+      })();
+
 
         /*Quando informar um valor de acrescimo ou desconto, atualiza o valor pago*/
         function recalcula()
@@ -369,6 +388,7 @@
 
              }
 
+             myApp.showPleaseWait();
              $('#quero_fazer').val(e);
              $('#lote')[0].submit();
         }
@@ -631,7 +651,6 @@
             });
 
         });
-
 
 </script>
 

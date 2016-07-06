@@ -22,11 +22,22 @@ class FinanceiroController extends Controller
         $this->middleware('auth');
         $this->rota = "financeiro"; //Define nome da rota que será usada na classe
 
+        //Validação de permissão de acesso a pagina
+        if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
+        {
+            $this->dados_login = \Session::get('dados_login');
+        }
+
     }
 
     //Exibir listagem
     public function index()
     {
+
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
+        {
+              return redirect('home');
+        }
 
         //Verificar se foi cadastrado os dados da igreja
         if (usuario::find(Auth::user()->id))

@@ -1,9 +1,13 @@
 @extends('principal.master')
 @section('content')
 
-{{ \Session::put('subtitulo', 'Inclusão') }}
+{{ \Session::put('titulo', 'Dashboard Financeiro') }}
+{{ \Session::put('subtitulo', 'Visão Geral') }}
 {{ \Session::put('route', 'titulos') }}
-{{ \Session::put('id_pagina', '52') }}
+{{ \Session::put('id_pagina', '54') }}
+
+
+
 <!-- Small boxes (Stat box) -->
 
 <div class="row">

@@ -43,8 +43,8 @@ class TitulosController extends Controller
         $mes =date("m"); // mes atual
         $ano = date("Y"); // Ano atual
         $ultimo_dia = date("t", mktime(0,0,0,$mes,'01',$ano)); // pegar ultimo dia do mes corrente
-        $data_inicial = $ano . '-' . $mes . '-01'; //Monta data inicial do mes corrente
-        $data_final = $ano . '-' . $mes . '-' . $ultimo_dia; //até último dia mes corrente
+        //$data_inicial = $ano . '-' . $mes . '-01'; //Monta data inicial do mes corrente
+        //$data_final = $ano . '-' . $mes . '-' . $ultimo_dia; //até último dia mes corrente
 
         $plano_contas = \App\Models\planos_contas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('empresas_id', $this->dados_login->empresas_id)
@@ -56,15 +56,17 @@ class TitulosController extends Controller
         ->OrderBy('nome')
         ->get();
 
-        $sQuery = "select id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, saldo_a_pagar, alteracao_status";
+        $sQuery = "select id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, saldo_a_pagar, alteracao_status, DATE_PART('day', now() - data_vencimento::timestamp) AS dias_atraso";
         $sQuery .= " from titulos ";
         $sQuery .= " where tipo = ? ";
         $sQuery .= " and empresas_id = ? ";
         $sQuery .= " and empresas_clientes_cloud_id = ? ";
-        $sQuery .= " and data_vencimento >= ? ";
-        $sQuery .= " and data_vencimento <= ? ";
+        $sQuery .= " and status = ? ";
+        //$sQuery .= " and data_vencimento >= ? ";
+        //$sQuery .= " and data_vencimento <= ? ";
         $sQuery .= " order by id ";
-        $dados = \DB::select($sQuery, [$tipo, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id, $data_inicial, $data_final]);
+        //$dados = \DB::select($sQuery, [$tipo, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id, $data_inicial, $data_final]);
+        $dados = \DB::select($sQuery, [$tipo, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id, 'A']);
 
         return view($this->rota . '.index',['dados'=>$dados, 'post_status'=>'', 'tipo'=>$tipo, 'post_mes'=>'', 'plano_contas'=>$plano_contas, 'centros_custos'=>$centros_custos]);
     }
@@ -99,7 +101,10 @@ class TitulosController extends Controller
         ->OrderBy('nome')
         ->get();
 
-        return view($this->rota . '.registrar', ['contas' => $contas,'tipo'=>$tipo, 'plano_contas'=>$plano_contas, 'centros_custos'=>$centros_custos, 'grupos_titulos'=>$grupos_titulos]);
+        $vazio = \App\Models\tabela_vazia::get();
+
+        //return view($this->rota . '.registrar
+        return view($this->rota . '.atualizacao', ['preview'=>'false', 'log'=>$vazio, 'dados'=>$vazio, 'rateio_titulos'=>$vazio, 'tipo_operacao'=>'incluir', 'contas' => $contas,'tipo'=>$tipo, 'plano_contas'=>$plano_contas, 'centros_custos'=>$centros_custos, 'grupos_titulos'=>$grupos_titulos]);
 
     }
 
@@ -115,11 +120,14 @@ class TitulosController extends Controller
 
                   $dados = titulos::findOrfail($key);
 
+                  //Baixa com valor integral
                   if ($input['quero_fazer']=="baixar") //Baixar selecionados
                   {
                         $dados->data_pagamento  = $this->formatador->FormatarData($input["data_pagto_lote"]);
                         $dados->status  = "B";
-                        $dados->valor_pago  = ($input["campo_valor_pago"][$key]>0 ? $this->formatador->GravarCurrency($input["campo_valor_pago"][$key]) : $this->formatador->GravarCurrency($input["campo_valor"][$key]));
+                        //$dados->valor_pago  = ($input["campo_valor_pago"][$key]>0 ? $this->formatador->GravarCurrency($input["campo_valor_pago"][$key]) : $this->formatador->GravarCurrency($input["campo_valor"][$key]));
+                        $dados->valor_pago  = $this->formatador->GravarCurrency($input["campo_valor"][$key]);
+                        $dados->saldo_a_pagar  = 0;
                         $dados->users_id  = Auth::user()->id;
 
                   }
@@ -164,7 +172,7 @@ class TitulosController extends Controller
                $data_inicial = $this->formatador->FormatarData($input["data_inicial"]);
                $data_final = $this->formatador->FormatarData($input["data_final"]);
           }
-          else if ($input["mes"]=="M") //Mais opcoes
+          else if ($input["mes"]=="M" || $input["mes"]=="") //Mais opcoes
           {
                $data_inicial = "1900-01-01";
                $data_final = "2900-01-01";
@@ -192,7 +200,7 @@ class TitulosController extends Controller
               $data_final,
             );
 
-          $sQuery = "select id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, saldo_a_pagar, alteracao_status";
+          $sQuery = "select id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, saldo_a_pagar, alteracao_status, DATE_PART('day', now() - data_vencimento::timestamp) AS dias_atraso";
           $sQuery .= " from titulos ";
           $sQuery .= " where tipo = ? ";
           $sQuery .= " and empresas_id = ? ";
@@ -458,7 +466,7 @@ class TitulosController extends Controller
 
         /*Log historico do titulo*/
         $sQuery = "select to_char(data_ocorrencia, 'DD/MM/YYYY  HH24:MI:SS') AS data_ocorrencia, name, descricao, valor, valor_pago, acrescimo, desconto, tipo, status, acao, ip, id_titulo, saldo_a_pagar, alteracao_status from log_financeiro inner join users  on users.id = log_financeiro.users_id";
-        $sQuery .= " where id_titulo = ? Order by data_ocorrencia desc";
+        $sQuery .= " where id_titulo = ? Order by to_char(data_ocorrencia, 'YYYY/MM/DD  HH24:MI:SS') desc";
         $log = \DB::select($sQuery,[$id]);
 
 
@@ -470,9 +478,10 @@ class TitulosController extends Controller
         $sQuery .= " and titulos.id = ? ";
         $dados = \DB::select($sQuery,[$tipo, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id, $id]);
 
-
-        return view($this->rota . '.edit',
+      //return view($this->rota . '.edit',
+        return view($this->rota . '.atualizacao',
           [ 'log'=>$log,
+            'tipo_operacao'=>'editar',
             'preview' => $preview,
             'dados'=>$dados,
             'contas' => $contas,

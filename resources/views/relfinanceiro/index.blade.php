@@ -7,7 +7,6 @@
 {{ \Session::put('route', 'relfinanceiro') }}
 {{ \Session::put('id_pagina', '53') }}
 
-
 <div class="row">
 
   <form method = 'POST'  class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/pesquisar')}}>
@@ -297,22 +296,23 @@
                          </div>
                 </div>
 
+                <div class="overlay modal" style="display: none">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+
               </div>
               <!-- /.box-body -->
               <!-- /.box-footer -->
             </div>
           </div>
           <!-- /.box -->
-
-        <!-- FIM CONTEUDO -->
-
+          <!-- FIM CONTEUDO -->
         </div>
         <!--/.col (right) -->
       </div>
       <!-- /.row -->
     </section>
     <!-- /.content -->
-
 
   <div class="box-footer">
       &nbsp;&nbsp;<button class = 'btn btn-primary' type ='submit' onclick="myApp.showPleaseWait();">Pesquisar</button>

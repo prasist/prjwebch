@@ -135,7 +135,7 @@ class CelulasController extends Controller
         $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         //return view($this->rota . '.registrar', ['nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
-        return view($this->rota . '.atualizacao', ['nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'tipo_operacao'=>'incluir', 'dados'=>$vazio, 'celulas'=>$celulas, 'vinculos'=>$vazio, 'total_vinculos'=>'0']);
+        return view($this->rota . '.atualizacao', ['preview'=>'false', 'nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'tipo_operacao'=>'incluir', 'dados'=>$vazio, 'celulas'=>$celulas, 'vinculos'=>$vazio, 'total_vinculos'=>'0']);
 
     }
 

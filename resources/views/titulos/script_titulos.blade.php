@@ -13,17 +13,23 @@
                 verificar_valores_rateados(); //Recalcula
             });
 
-
             //Atualiza campos com valores default
-            $("#data_vencimento").val(moment().format('DD/MM/YYYY')); //Data de pagamento dia
-            $("#data_vencimento").trigger( "change" );
-            $("#data_emissao").val(moment().format('DD/MM/YYYY')); //Data de pagamento dia
-            $("#data_emissao").trigger( "change" );
+            if ($("#data_vencimento").val()=="")
+            {
+                $("#data_vencimento").val(moment().format('DD/MM/YYYY')); //Data de pagamento dia
+                $("#data_vencimento").trigger( "change" );
+            }
+
+            if ($("#data_emissao").val()=="")
+            {
+                $("#data_emissao").val(moment().format('DD/MM/YYYY')); //Data de pagamento dia
+                $("#data_emissao").trigger( "change" );
+            }
+
             $("#valor_original").val($("#valor").val());
             $("#valor_restante").val($("#valor").val());
 
             verificar_valores_rateados(); //Recalcula valores se já vierem carregados
-
 
             /*Inicializa check como botoes sim e nao*/
             $('.ckpago').checkboxpicker({
@@ -74,6 +80,20 @@
                   }
             });
     });
+
+
+     function onblur_valor()
+     {
+            if ($("#valor").val()!="")
+            {
+                atualizar_valor_rateio();
+                $("#valor_rateio").val('0');
+                $("#soma_rateio").val('0');
+                $("#valor_restante").val($("#valor_original").val());
+
+            }
+
+     }
 
 
        //Quando informar o valor do titulo, atualizar o valor de rateio
@@ -149,7 +169,7 @@
 
           $.each($('input[class="form-control ccusto"]'),function(){
 
-                if ($(this).val()==valor) //verifica se item selecionado na combo ja foi adicionado
+                if ($(this).val()==valor && $(this).val()!="") //verifica se item selecionado na combo ja foi adicionado
                 {
                    alert("Centro de Custo já informado.");
                    $("#rateio_cc").val(''); //limpa combo
