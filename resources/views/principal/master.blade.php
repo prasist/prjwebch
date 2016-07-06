@@ -183,6 +183,25 @@
                                   ]
                             });
 
+                            $("#table_celulas").DataTable({
+
+                                 language: {
+                                            paginate: {
+                                                first:      "Primeira",
+                                                previous:   "Anterior",
+                                                next:       "Próxima",
+                                                last:       "Última"}
+                                        },
+                                "columnDefs":
+                                  [
+                                      {"targets": [4], "sortable": false},
+                                      {"targets": [5], "sortable": false},
+                                      {"targets": [6], "sortable": false},
+                                      {"targets": [7], "sortable": false}
+                                  ]
+                            });
+
+
                             $("#table_titulos").DataTable({
                                  "pageLength": 50,
                                  language: {

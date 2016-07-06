@@ -376,7 +376,7 @@
         <span class="text-danger">* <i>Campos Obrigatórios</i></span>
 
         <div class="box-footer">
-            <button class = 'btn btn-primary' type ='submit'>Gravar</button>
+            <button class = 'btn btn-primary' type ='submit'><i class="fa fa-save"></i> Salvar</button>
             <a href="{{ url('/' . \Session::get('route') . '/' . $tipo)}}" class="btn btn-default">Cancelar</a>
         </div>
 

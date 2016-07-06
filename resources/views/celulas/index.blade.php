@@ -14,7 +14,7 @@
                 <div class="col-xs-2">
                 @can('verifica_permissao', [ \Session::get('id_pagina'),'incluir'])
                   <form method = 'get' class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/registrar')}}>
-                        <button class = 'btn btn-success btn-flat' type ='submit'><i class="fa fa-file-text-o"></i> Novo Registro</button>
+                        <button class = 'btn btn-success btn-flat' type ='submit'><i class="fa fa-file-text-o"></i> Criar Nova Célula</button>
                   </form>
                 @endcan
                 </div>
@@ -27,13 +27,13 @@
 
                 <div class="box-body">
 
-                    <div id="tour7"></div>
-                    <table id="example1" class="table table-bordered table-hover">
+                    <table id="table_celulas" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                        <th>Líder / Nome</th>
+                        <th>Líder / Nome Célula</th>
                         <th>Dia Encontro</th>
                         <th>Região</th>
+                        <th>Horário</th>
                         <th>Alterar</th>
                         <th>Visualizar</th>
                         <th>Participantes</th>
@@ -45,9 +45,10 @@
 
                         <tr>
 
-                            <td>{!! $value->razaosocial . ($value->nome!="" ? ' - ' : ''). $value->nome !!}</td>
+                            <td>{!! $value->razaosocial . ($value->nome!="" ? ' - ' : ''). $value->nome !!} <span class="badge bg-blue">{!!($value->tot==0 ? 'Nenhum Participante' : $value->tot)!!}</span></td>
                             <td>{!! $value->descricao_dia_encontro !!}</td>
                             <td>{!! $value->regiao !!}</td>
+                            <td>{!! $value->horario !!}</td>
 
                             <td class="col-xs-1">
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
@@ -63,7 +64,11 @@
 
                             <td class="col-xs-1">
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
-                                               <a href = "{{ URL::to('/registrar/' . $value->id) }}" class = 'btn btn-primary btn-sm'><span class="glyphicon glyphicon-zoom-in"></span></a>
+                                               @if ($value->tot==0)
+                                                      <a href = "{{ URL::to('/celulaspessoas/registrar/' . $value->id) }}" class = 'btn btn-warning btn-sm'><span class="fa fa-users"></span></a>
+                                               @else
+                                                      <a href = "{{ URL::to('/celulaspessoas/' . $value->id . '/edit') }}" class = 'btn btn-warning btn-sm'><span class="fa fa-users"></span></a>
+                                               @endif
                                       @endcan
                             </td>
 

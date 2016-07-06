@@ -2,7 +2,7 @@
 
 @section('content')
 
-{{ \Session::put('titulo', 'Células / Pessoas') }}
+{{ \Session::put('titulo', 'Células / Participantes') }}
 {{ \Session::put('subtitulo', 'Inclusão') }}
 {{ \Session::put('route', 'celulaspessoas') }}
 {{ \Session::put('id_pagina', '45') }}
@@ -47,7 +47,7 @@
                   <div class="row">
 
                         <div class="col-xs-11 {{ $errors->has('pessoas') ? ' has-error' : '' }}">
-                                <label for="pessoas" class="control-label">Pessoa</label>
+                                <label for="pessoas" class="control-label">Localizar Participante :</label>
                                 <div class="input-group">
                                          <div class="input-group-addon">
                                             <button  id="buscarpessoa2" type="button"  data-toggle="modal" data-target="#modal_pessoas" >
@@ -74,7 +74,7 @@
                   <div class="row">
                      <div class="col-xs-11">
                      <br/>
-                        <button onclick="AddTableRow()" type="button" class="btn btn-info"><i class="fa fa-user-plus"></i> Adicionar</button>
+                        <button onclick="AddTableRow()" type="button" class="btn btn-info"><i class="fa fa-user-plus"></i> Incluir Participante na Célula</button>
                         <br/>
                         <br/>
                         <table id="example" class="table table-bordered table-hover">
@@ -82,7 +82,7 @@
                              <tr>
                                <th>Célula</th>
                                <th>Pessoa</th>
-                               <th>Ação</th>
+                               <th>Remover</th>
                              </tr>
                              <tr>
                                <td>&nbsp;</td>
@@ -99,7 +99,7 @@
         </div><!-- box box-primary -->
 
         <div class="box-footer">
-            <button class = 'btn btn-primary' type ='submit'>Gravar</button>
+            <button class = 'btn btn-primary' type ='submit'><i class="fa fa-save"></i> Salvar</button>
             <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Cancelar</a>
         </div>
 

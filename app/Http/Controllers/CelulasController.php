@@ -113,7 +113,7 @@ class CelulasController extends Controller
          $dados->qual_endereco = ($input['local']=="" ? null : $input['local']);
          $dados->data_inicio = ($input["data_inicio"]!="" ? $this->formatador->FormatarData($input["data_inicio"]) : date('Y-m-d'));
          $dados->save();
-
+         return  $dados->id;
   }
 
     //Criar novo registro
@@ -145,9 +145,18 @@ class CelulasController extends Controller
 */
     public function store(\Illuminate\Http\Request  $request)
     {
-            $this->salvar($request, "", "create");
+            $id_gerado = $this->salvar($request, "", "create");
             \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-            return redirect($this->rota);
+
+            if ($request["quero_incluir_participante"]=="sim")
+            {
+                return redirect('celulaspessoas/registrar/' . $id_gerado);
+            }
+            else
+            {
+                return redirect($this->rota);
+            }
+
     }
 
     //Abre tela para edicao ou somente visualização dos registros
@@ -218,7 +227,15 @@ class CelulasController extends Controller
     {
            $this->salvar($request, $id,  "update");
            \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-           return redirect($this->rota);
+
+           if ($request["quero_incluir_participante"]=="sim")
+            {
+                return redirect('celulaspessoas/' . $id . '/edit');
+            }
+            else
+            {
+                return redirect($this->rota);
+            }
     }
 
 

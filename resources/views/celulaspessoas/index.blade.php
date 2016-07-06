@@ -2,7 +2,7 @@
 
 @section('content')
 
-{{ \Session::put('titulo', 'Células / Pessoas') }}
+{{ \Session::put('titulo', 'Células / Participantes') }}
 {{ \Session::put('subtitulo', 'Listagem') }}
 {{ \Session::put('route', 'celulaspessoas') }}
 {{ \Session::put('id_pagina', '45') }}

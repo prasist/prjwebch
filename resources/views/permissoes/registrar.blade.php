@@ -111,7 +111,7 @@
         </div><!-- box box-primary -->
 
         <div class="box-footer">
-            <button class = 'btn btn-primary' type ='submit'>Gravar</button>
+            <button class = 'btn btn-primary' type ='submit'><i class="fa fa-save"></i> Salvar</button>
             <a href="{{ url('/permissoes')}}" class="btn btn-default">Cancelar</a>
         </div>
 
