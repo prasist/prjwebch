@@ -137,6 +137,7 @@ class TitulosController extends Controller
                         $dados->desconto  = null;
                         $dados->acrescimo  = null;
                         $dados->valor_pago  = null;
+                        $dados->saldo_a_pagar = $dados->valor; //Retorna saldo a pagar o valor integral do titulo
                         $dados->data_pagamento=null;
                   }
 

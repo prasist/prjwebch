@@ -577,6 +577,7 @@
                                               <td>{{$item->status}}</td>
                                               <td>
                                               <!-- Se houve alteracao de status, poderá ser baixa, estorno ou baixa parcial-->
+                                              <!-- Se houver alteracao de status-->
                                               @if (trim($item->alteracao_status)!="")
                                                   @if ($item->saldo_a_pagar==0)
                                                         <p>Baixa Integral</p>
