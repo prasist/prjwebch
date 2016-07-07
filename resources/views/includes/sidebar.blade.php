@@ -114,8 +114,8 @@
             </li>
 
 
-            <li class="treeview">
-                <a href="#">
+            <li class="treeview" id="pessoas">
+                <a href="#" onclick="redirecionar_pessoas();">
                 <i class="fa fa-users"></i><span>Pessoas</span>
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
@@ -268,6 +268,14 @@ function redirecionar()
 {
 
   var_pagina = "{!! url('/financeiro') !!}";
+  window.location=var_pagina;
+
+}
+
+function redirecionar_pessoas()
+{
+
+  var_pagina = "{!! url('/pessoas') !!}";
   window.location=var_pagina;
 
 }

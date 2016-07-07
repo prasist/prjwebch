@@ -1274,7 +1274,7 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
     //Abre tela para edicao ou somente visualização dos registros
-    private function exibir ($request, $id, $id_tipo_pessoa, $preview)
+    private function exibir ($request, $id, $id_tipo_pessoa, $preview, $bool_exibir_perfil)
     {
 
         if($request->ajax())
@@ -1533,7 +1533,7 @@ public function salvar($request, $id, $tipo_operacao) {
                 $motivos = \App\Models\tiposmovimentacao::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 /* FIM Para preencher combos Dados eclesiasticos*/
 
-                return view($this->rota . '.edit',
+                return view($this->rota . ($bool_exibir_perfil=="true" ? '.perfil' : '.edit') ,
                 [
                     'grupos' =>$grupos,
                     'preview' => $preview,
@@ -1577,7 +1577,7 @@ public function salvar($request, $id, $tipo_operacao) {
         else
         {
 
-                return view($this->rota . '.edit',
+                return view($this->rota . '.edit' ,
                 [
                     'grupos' =>$grupos,
                     'preview' => $preview,
@@ -1590,18 +1590,22 @@ public function salvar($request, $id, $tipo_operacao) {
 
     }
 
-
+   //Visualizar registro
+    public function perfil (\Illuminate\Http\Request $request, $id, $id_tipo_pessoa)
+    {
+          return $this->exibir($request, $id, $id_tipo_pessoa, 'true','true');
+    }
 
     //Visualizar registro
     public function show (\Illuminate\Http\Request $request, $id, $id_tipo_pessoa)
     {
-          return $this->exibir($request, $id, $id_tipo_pessoa, 'true');
+          return $this->exibir($request, $id, $id_tipo_pessoa, 'true', 'false');
     }
 
     //Direciona para tela de alteracao
     public function edit(\Illuminate\Http\Request $request, $id, $id_tipo_pessoa)
     {
-          return $this->exibir($request, $id, $id_tipo_pessoa, 'false');
+          return $this->exibir($request, $id, $id_tipo_pessoa, 'false', 'false');
     }
 
     /**

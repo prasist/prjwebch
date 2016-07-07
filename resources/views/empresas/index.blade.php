@@ -43,7 +43,23 @@
 
                         <tr>
 
-                            <td>{{$value->razaosocial}}</td>
+                            <td>
+
+                                  @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
+                                  <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" >
+                                        {{$value->razaosocial}}
+                                  </a>
+                                  @else
+                                        @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
+                                                <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" >
+                                                      {{$value->razaosocial}}
+                                                </a>
+                                        @else
+                                                {{$value->razaosocial}}
+                                        @endcan
+                                  @endcan
+
+                            </td>
                             <td>{{$value->nomefantasia}}</td>
                             <td>{{$value->cnpj}}</td>
                             <td>{{$value->inscricaoestadual}}</td>

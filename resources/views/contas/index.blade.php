@@ -33,6 +33,7 @@
                         <tr>
                         <!--<th>ID</th>-->
                         <th>Descrição</th>
+                        <th>Saldo Atual</th>
                         <th>Saldo Inicial</th>
                         <th>Data Alteração</th>
                         <th>Usuário</th>
@@ -47,8 +48,24 @@
                         <tr>
 
                             <!--<td>{{$value->id}}</td>-->
-                            <td>{{$value->nome}}</td>
-                            <td>{{ str_replace(".", ",", $value->saldo) }}</td>
+                            <td>
+
+                                @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
+                                  <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" >
+                                        {{$value->nome}}
+                                  </a>
+                                  @else
+                                        @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
+                                                <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" >
+                                                      {{$value->nome}}
+                                                </a>
+                                        @else
+                                                {{$value->nome}}
+                                        @endcan
+                                  @endcan
+                            </td>
+                            <td>{{ str_replace(".", ",", $value->saldo_atual) }}</td>
+                            <td>{{ str_replace(".", ",", $value->saldo_inicial) }}</td>
                             <td>{{$value->data_alteracao}}</td>
                             <td>{{$value->nome_usuario}}</td>
 

@@ -44,7 +44,22 @@
 
                         <tr>
 
-                            <td>{{$value->name}}</td>
+                            <td>
+
+                                  @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
+                                  <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" >
+                                        {{$value->name}}
+                                  </a>
+                                  @else
+                                        @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
+                                                <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" >
+                                                      {{$value->name}}
+                                                </a>
+                                        @else
+                                                {{$value->name}}
+                                        @endcan
+                                  @endcan
+                            </td>
                             <td>{{$value->email}}</td>
                             <td>{{$value->razaosocial}}</td>
 

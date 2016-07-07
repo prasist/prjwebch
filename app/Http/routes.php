@@ -378,18 +378,19 @@
     Route::get('situacoes/{id}/delete','SituacoesController@destroy');
 
     /*Pessoas*/
+    Route::get('/pessoas/ver/{id}/{id_tipo_pessoa}','PessoasController@perfil');
     Route::post('pessoas/pesquisar', 'PessoasController@pesquisar');
     Route::get('pessoas', 'PessoasController@index');
     Route::get('pessoas/{buscar_nome}/buscar_nome', 'PessoasController@listar_por_nome');
     Route::get('pessoas/{buscar_nome}/json', 'PessoasController@listar_por_nome_json');
     Route::get('pessoas/json/{querystring}', 'PessoasController@listar_json');
     Route::post('/pessoas/gravar','PessoasController@store');
-    Route::get('/pessoas/registrar','PessoasController@create');
+    //Route::get('/pessoas/registrar','PessoasController@create');
     Route::get('/pessoas/registrar/{id}','PessoasController@create');
-    Route::get('/pessoas/{id}/preview','PessoasController@show');
+    //Route::get('/pessoas/{id}/preview','PessoasController@show');
     Route::get('/pessoas/{id}/preview/{id_tipo_pessoa}','PessoasController@show');
     Route::post('pessoas/{id}/update','PessoasController@update');
-    Route::get('pessoas/{id}/edit','PessoasController@edit');
+    //Route::get('pessoas/{id}/edit','PessoasController@edit');
     Route::get('pessoas/{id}/edit/{id_tipo_pessoa}','PessoasController@edit');
     Route::get('pessoas/{id}/delete','PessoasController@destroy');
     Route::get('pessoas/{id}/remover','PessoasController@remove_image');

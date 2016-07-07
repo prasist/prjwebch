@@ -11,7 +11,7 @@
 <!-- Small boxes (Stat box) -->
 
 <div class="row">
-    <div class="col-lg-5 col-xs-8">
+    <div class="col-lg-3 col-xs-6">
         <!-- small box -->
         <div class="small-box bg-green">
             <div class="inner">
@@ -25,7 +25,7 @@
         </div>
     </div><!-- ./col -->
 
-    <div class="col-lg-5 col-xs-8">
+    <div class="col-lg-3 col-xs-6">
         <!-- small box -->
         <div class="small-box bg-red">
             <div class="inner">
@@ -39,20 +39,33 @@
         </div>
     </div><!-- ./col -->
 
+
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>{{$saldo_contas==0 ? "0,00" : $saldo_contas}}</h3>
+                <p>Saldo de Todas Contas</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-social-usd"></i>
+            </div>
+        </div>
+    </div><!-- ./col -->
+
+
 </div><!-- /.row -->
 
 <div class="row">
-    <div class="col-lg-5 col-xs-8">
+    <div class="col-lg-3 col-xs-6">
             <a href="{{ url('/' . \Session::get('route') . '/registrar/R')}}"><i class="fa fa-arrow-up"></i> Incluir Nova Receita/Contas à Receber</a><br/>
             <a href="{{ url('/' . \Session::get('route') . '/R')}}"><i class="fa fa-list-ol"></i> Mostrar Lançamentos</a>
     </div>
 
-    <div class="col-lg-5 col-xs-8">
+    <div class="col-lg-3 col-xs-6">
             <a href="{{ url('/' . \Session::get('route') . '/registrar/P')}}"><i class="fa fa-arrow-down"></i> Incluir Nova Despesa/Contas à Pagar</a><br/>
             <a href="{{ url('/' . \Session::get('route') . '/P')}}"><i class="fa fa-list-ol"></i> Mostrar Lançamentos</a>
     </div>
-
-
 </div>
 
 <script type="text/javascript">

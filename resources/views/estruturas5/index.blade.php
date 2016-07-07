@@ -42,7 +42,21 @@
 
                         <tr>
 
-                            <td>{!! $value->descricao . ($value->razaosocial!="" ? ' - ' : '') . $value->razaosocial !!}</td>
+                            <td>
+                                  @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
+                                  <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" >
+                                        {!! $value->descricao . ($value->razaosocial!="" ? ' - ' : '') . $value->razaosocial !!}
+                                  </a>
+                                  @else
+                                        @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
+                                                <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" >
+                                                      {!! $value->descricao . ($value->razaosocial!="" ? ' - ' : '') . $value->razaosocial !!}
+                                                </a>
+                                        @else
+                                                {!! $value->descricao . ($value->razaosocial!="" ? ' - ' : '') . $value->razaosocial !!}
+                                        @endcan
+                                  @endcan
+                            </td>
 
                             <td class="col-xs-1">
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])

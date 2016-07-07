@@ -47,7 +47,7 @@
                                   </li>
 
                                     <li>
-                                        <a href="#financ" role="tab" data-toggle="tab">
+                                        <a href="#panel_financ" role="tab" data-toggle="tab">
                                             <i class="fa fa-money"></i> Dados Financeiros
                                         </a>
                                    </li>
@@ -382,12 +382,11 @@
                                     </div>
 
 
-
                                 </div><!-- FIM TAB ENDERECO-->
 
 
                                 <!-- TAB FINANCEIRO-->
-                                <div class="tab-pane" id="financ">
+                                <div class="tab-pane" id="panel_financ">
                                     <br/>
 
                                       <div class="row">

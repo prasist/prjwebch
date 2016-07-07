@@ -59,7 +59,10 @@ class FinanceiroController extends Controller
               $retorno = \DB::select('select  fn_total_titulos_mes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id . ', ' . "'P'" . ')');
               $total_pagar_mes = $retorno[0]->fn_total_titulos_mes;
 
-              return view($this->rota . '.dashboard', ['total_receber_aberto'=>$total_receber_aberto, 'total_receber_mes'=>$total_receber_mes, 'total_pagar_aberto'=>$total_pagar_aberto, 'total_pagar_mes'=>$total_pagar_mes]);
+              $retorno = \DB::select('select  fn_saldo_contas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id . ')');
+              $saldo_contas = $retorno[0]->fn_saldo_contas;
+
+              return view($this->rota . '.dashboard', ['total_receber_aberto'=>$total_receber_aberto, 'total_receber_mes'=>$total_receber_mes, 'total_pagar_aberto'=>$total_pagar_aberto, 'total_pagar_mes'=>$total_pagar_mes, 'saldo_contas'=>$saldo_contas]);
        }
 
     }

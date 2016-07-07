@@ -26,7 +26,6 @@
 
                 <div class="box-body">
 
-
                     <table id="example1" class="table table-bordered table-hover">
                     <thead>
                         <tr>
@@ -44,8 +43,21 @@
 
                         <tr>
 
-                            <!--<td>{{$value->celulas_id}}</td>-->
-                            <td>{!! $value->nome !!} <span class="badge bg-blue">{!!$value->tot!!}</span></td>
+                            <td>
+                                  @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
+                                  <a href = "{{ URL::to(\Session::get('route') .'/' . $value->celulas_id . '/edit') }}" data-toggle="tooltip" data-placement="top" title="Clique para Alterar">
+                                        {!! $value->nome !!} <span class="badge bg-blue">{!!$value->tot!!}</span>
+                                  </a>
+                                  @else
+                                        @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
+                                                <a href = "{{ URL::to(\Session::get('route') .'/' . $value->celulas_id . '/preview') }}" >
+                                                      {!! $value->nome !!} <span class="badge bg-blue">{!!$value->tot!!}</span>
+                                                </a>
+                                        @else
+                                                {!! $value->nome !!} <span class="badge bg-blue">{!!$value->tot!!}</span>
+                                        @endcan
+                                  @endcan
+                            </td>
 
                             <td class="col-xs-1">
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])

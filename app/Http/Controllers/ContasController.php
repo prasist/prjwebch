@@ -39,7 +39,7 @@ class ContasController extends Controller
               return redirect('home');
         }
 
-        $dados = contas::select('contas.nome', 'contas.id', 'contas.saldo', 'contas.data_alteracao' , 'users.name as nome_usuario')
+        $dados = contas::select('contas.nome', 'contas.id', 'contas.saldo_atual', 'contas.saldo_inicial', 'contas.data_alteracao' , 'users.name as nome_usuario')
         ->where('contas.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->leftjoin('users', 'users.id' , '=' , 'contas.users_id')
         ->get();
@@ -73,7 +73,7 @@ class ContasController extends Controller
 
            $dados = new contas();
            $dados->nome  = $input['nome'];
-           $dados->saldo  = ($input["saldo"]!="" ? $this->formatador->GravarCurrency($input["saldo"]) : null);
+           $dados->saldo_inicial  = ($input["saldo"]!="" ? $this->formatador->GravarCurrency($input["saldo"]) : null);
            $dados->users_id = Auth::user()->id;
            $dados->data_alteracao = date("Y-m-d H:i:s");
            $dados->empresas_id  = $this->dados_login->empresas_id;
@@ -136,7 +136,7 @@ class ContasController extends Controller
 
         $dados = contas::findOrfail($id);
         $dados->nome  = $input['nome'];
-        $dados->saldo  = ($input["saldo"]!="" ? $this->formatador->GravarCurrency($input["saldo"]) : null);
+        $dados->saldo_inicial  = ($input["saldo"]!="" ? $this->formatador->GravarCurrency($input["saldo"]) : null);
         $dados->users_id = Auth::user()->id;
         $dados->data_alteracao = date("Y-m-d H:i:s");
         $dados->save();

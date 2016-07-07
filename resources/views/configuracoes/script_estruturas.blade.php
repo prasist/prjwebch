@@ -127,7 +127,6 @@
         {
             //route para chamada funcao passando ID do nivel 4
             var urlRoute = "{!! url('/nivel5/" + $("#nivel5").val() + "') !!}";
-            console.log(urlRoute);
 
             $.getJSON(urlRoute, function(data)
             {

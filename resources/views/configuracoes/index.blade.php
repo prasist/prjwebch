@@ -30,7 +30,21 @@
 
                         <tr>
 
-                            <td>Configuração Padrão</td>
+                            <td>
+                                  @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
+                                  <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" >
+                                        Configuração Padrão
+                                  </a>
+                                  @else
+                                        @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
+                                                <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" >
+                                                      Configuração Padrão
+                                                </a>
+                                        @else
+                                                Configuração Padrão
+                                        @endcan
+                                  @endcan
+                            </td>
 
                             <td class="col-xs-1">
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])

@@ -86,9 +86,14 @@
 
 <script type="text/javascript">
 
+        $(document).ready(function(){
+
+              $("#pessoas").addClass("treeview active");
+
+        });
+
               $(function ()
               {
-
 
                 var sDados = '{{$where}}';  //Pega dados consulta
                 var urlRoute = "{!! url('/pessoas/json/" + sDados + "') !!}"; //Rota para consulta
@@ -130,7 +135,19 @@
                             ],
                           "columns": [
                                   { data: "id" },
-                                  { data: "razaosocial" },
+                                  //{ data: "razaosocial" },
+                                  {"mRender": function(data, type, full) {
+                                        if (visualizar)
+                                        {
+                                            //var urlGetUserPerfil = '{!! url("/' + rota + '/ver/' + full['id'] + '") !!}';
+                                            var urlGetUserPerfil = '{!! url("/' + rota + '/' +  full['id'] +  '/edit") !!}'; //Route
+                                            return '<a href="' + urlGetUserPerfil + '/' + full['id_tipo_pessoa'] + '" data-toggle="tooltip" data-placement="top" title="Clique para ver Perfil">' + full['razaosocial'] + '</a>';
+                                        }
+                                        else
+                                        {
+                                              return full['razaosocial'];
+                                        }
+                                    }},
                                   { data: "nomefantasia" },
                                   { data: "nome_tipo_pessoa" },
                                   { data: "cnpj_cpf" },
