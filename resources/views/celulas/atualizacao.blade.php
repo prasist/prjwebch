@@ -630,6 +630,8 @@
 
 </div>
 
+@include('configuracoes.script_estruturas')
+
 <script type="text/javascript">
 
     $(document).ready(function()
@@ -639,7 +641,6 @@
             {
                   $("#nivel5").trigger("change");
             }
-
     });
 
     function salvar_e_incluir()
@@ -650,5 +651,5 @@
 
 </script>
 
-@include('configuracoes.script_estruturas')
+
 @endsection
