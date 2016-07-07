@@ -5,9 +5,9 @@
 {{ \Session::put('titulo', 'Cadastro de Células') }}
 
 @if ($tipo_operacao=="incluir")
-    {{ \Session::put('subtitulo', 'Inclusão - NOVA') }}
+    {{ \Session::put('subtitulo', 'Inclusão') }}
 @else
-    {{ \Session::put('subtitulo', 'Alteração / Visualização - NOVA') }}
+    {{ \Session::put('subtitulo', 'Alteração / Visualização') }}
 @endif
 
 {{ \Session::put('route', 'celulas') }}
@@ -72,6 +72,7 @@
                                                      @endif
                                               </div>
                                             </div>
+
 
                                             <div class="form-group">
                                             <label for="nivel4" class="col-sm-2 control-label">{{Session::get('nivel4')}}</label>

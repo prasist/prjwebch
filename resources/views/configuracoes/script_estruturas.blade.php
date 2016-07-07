@@ -121,15 +121,13 @@
             });
         });
 
-
-
-
        /*Hierarquia inversa, do nivel 5 para baixo*/
        /*Quando selecionar item no combo nivel5, carrega combo nivel4 com dados relacionados*/
         $("#nivel5").change(function()
         {
             //route para chamada funcao passando ID do nivel 4
             var urlRoute = "{!! url('/nivel5/" + $("#nivel5").val() + "') !!}";
+            console.log(urlRoute);
 
             $.getJSON(urlRoute, function(data)
             {

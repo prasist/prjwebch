@@ -3,10 +3,11 @@
 @section('content')
 
 @if ($tipo=="P")
-    {{ \Session::put('titulo', 'Contas à Pagar') }}
+      {{ \Session::put('titulo', 'Contas à Pagar') }}
 @else
-    {{ \Session::put('titulo', 'Contas à Receber') }}
+      {{ \Session::put('titulo', 'Contas à Receber') }}
 @endif
+
 {{ \Session::put('subtitulo', 'Listagem') }}
 {{ \Session::put('route', 'titulos') }}
 {{ \Session::put('id_pagina', '52') }}
@@ -15,17 +16,16 @@
         <div>{{{ $errors->first('erros') }}}</div>
 
         <div class="row">
-                <div class="col-xs-2">
-                @can('verifica_permissao', [ \Session::get('id_pagina'),'incluir'])
-                  <form method = 'get' class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/registrar/' . $tipo)}}>
-                        <button class = 'btn btn-success btn-flat' type ='submit'><span class="fa fa-plus"></span> {!! ($tipo=="P" ? "Nova Despesa" : "Nova Receita")!!}</button>
-                  </form>
-                @endcan
-                </div>
-
+              <div class="col-xs-2">
+              @can('verifica_permissao', [ \Session::get('id_pagina'),'incluir'])
+                 <form method = 'get' class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/registrar/' . $tipo)}}>
+                      <button class = 'btn btn-success btn-flat' type ='submit'><span class="fa fa-plus"></span> {!! ($tipo=="P" ? "Nova Despesa" : "Nova Receita")!!}</button>
+                 </form>
+              @endcan
+              </div>
 
               <form method = 'post' class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/filtrar/' . $tipo)}}>
-               {!! csrf_field() !!}
+              {!! csrf_field() !!}
 
                 <div class="col-xs-3">
                          <select name="status" id="status" class="form-control selectpicker" data-style="btn-primary" style="width: 100%;">
@@ -307,6 +307,16 @@
               }
           };
       })();
+
+       //Quando selecionar titulos baixados, selecionar o periodo do mes corrente. Para evitar pesquisas longas trazendo todos titulos baixados
+       $('#status').change(function() {
+            if ($(this).val()=="B") //baixado
+            {
+                  $('#mes').val("C"); //selecionar o filtro MES CORRENTE
+                  $("#mes").trigger('change'); //dispara change para setar o campo
+            }
+
+        });
 
 
         /*Quando informar um valor de acrescimo ou desconto, atualiza o valor pago*/

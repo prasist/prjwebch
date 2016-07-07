@@ -341,7 +341,16 @@ class TitulosController extends Controller
       }
       else
       {
-          $dados->alteracao_status = ""; //Servirá para filtras o log de titulos somente com baixas e estornors
+          //se estiver incluindo o titulo, mas ja baixado... Marca como alteracao de status
+         if ($var_status=="B")
+         {
+              $dados->alteracao_status = "S";
+         }
+         else
+         {
+                $dados->alteracao_status = ""; //Servirá para filtras o log de titulos somente com baixas e estornors
+         }
+
       }
 
       //Se houver saldo, será baixa parcial.
