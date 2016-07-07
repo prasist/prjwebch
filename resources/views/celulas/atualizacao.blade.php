@@ -632,6 +632,16 @@
 
 <script type="text/javascript">
 
+    $(document).ready(function()
+    {
+            /*quando carregar a pagina e estiver preenchido o nivel4, dispara o evento que carrega as outras dropdows.*/
+            if ($("#nivel5").val()!="")
+            {
+                  $("#nivel5").trigger("change");
+            }
+
+    });
+
     function salvar_e_incluir()
     {
           $('#quero_incluir_participante').val('sim');
