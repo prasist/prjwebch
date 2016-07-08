@@ -312,6 +312,7 @@ class PessoasController extends Controller
             $estadoscivis = \App\Models\civis::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
             $disponibilidades = \App\Models\disponibilidades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
             $dons = \App\Models\dons::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+            $tiposrelacionamentos = \App\Models\tiposrelacionamentos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
             $habilidades = \App\Models\habilidades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
             $religioes = \App\Models\religioes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
             $atividades = \App\Models\atividades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
@@ -327,6 +328,7 @@ class PessoasController extends Controller
             $membros_formacoes =  "";
             $membros_idiomas =  "";
             $membros_familiares = $vazio;
+            $membros_relacionamentos = $vazio;
             $membros_filhos = $tipos;
             $membros_atividades =  "";
             $membros_ministerios =  "";
@@ -358,6 +360,7 @@ class PessoasController extends Controller
                 'ministerios' => $ministerios,
                 'cargos' => $cargos,
                 'celulas'=> $celulas,
+                'tiposrelacionamentos'=> $tiposrelacionamentos,
                 'membros_dados_pessoais' => $membros_dados_pessoais,
                 'membros_situacoes' => $membros_situacoes,
                 'membros_dons' => $membros_dons,
@@ -370,7 +373,8 @@ class PessoasController extends Controller
                 'membros_historico' => $membros_historico,
                 'membros_formacoes' => $membros_formacoes,
                 'membros_idiomas' => $membros_idiomas,
-                'membros_profissionais' => $membros_profissionais
+                'membros_profissionais' => $membros_profissionais,
+                'membros_relacionamentos'=>$membros_relacionamentos
             ]);
 
         }
@@ -427,6 +431,7 @@ public function salvar($request, $id, $tipo_operacao) {
                     $excluir = \App\Models\membros_filhos::where($where)->delete();
                     $excluir = \App\Models\membros_ministerios::where($where)->delete();
                     $excluir = \App\Models\membros_hist_eclesiasticos::where($where)->delete();
+                    $excluir = \App\Models\membros_relacionamentos::where($where)->delete();
             }
 
             /*Instancia biblioteca de funcoes globais*/
@@ -1020,6 +1025,54 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
 
+                          /*------------------------------ Tabela MEMBROS_RELACIONAMENTOS ---------------------------*/
+
+
+                        if ($input['tiposrelacionamentos']!="" && $input['pessoa_relacionamento']!="")  /*Array combo multiple*/
+                        {
+                                foreach($input['tiposrelacionamentos'] as $selected)
+                                {
+                                        if ($selected!="")
+                                        {
+                                                $whereForEach =
+                                                [
+                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                    'empresas_id' =>  $this->dados_login->empresas_id,
+                                                    'pessoas_id' => $pessoas->id,
+                                                    'pessoas2_id' => ($input['pessoa_relacionamento']=="" ? null : substr($input['pessoa_relacionamento'],0,9)),
+                                                    'tipos_relacionamentos_id' => $selected
+                                                ];
+
+                                                if ($tipo_operacao=="create")  //novo registro
+                                                {
+                                                    $relacionamentos = new \App\Models\membros_relacionamentos();
+                                                }
+                                                else //Alteracao
+                                                {
+                                                    $relacionamentos = \App\Models\membros_relacionamentos::firstOrNew($whereForEach);
+                                                }
+
+
+                                                $valores =
+                                                [
+                                                    'pessoas_id' => $pessoas->id,
+                                                    'pessoas2_id' => ($input['pessoa_relacionamento']=="" ? null : substr($input['pessoa_relacionamento'],0,9)),
+                                                    'tipos_relacionamentos_id' => $selected,
+                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                    'empresas_id' =>  $this->dados_login->empresas_id
+                                                ];
+
+                                                $relacionamentos->fill($valores)->save();
+                                                $relacionamentos->save();
+
+                                        }
+                                }
+
+                        }
+                        /*------------------------------ FIM Tabela MEMBROS_RELACIONAMENTOS---------------------------*/
+
+
+
 
 
                         /*------------------------------ Tabela MEMBROS_HABILIDADES ---------------------------*/
@@ -1506,6 +1559,17 @@ public function salvar($request, $id, $tipo_operacao) {
 
             if ($membros_ministerios->count()==0) $membros_ministerios = $vazio;
 
+
+            /*membros Relacionamentos*/
+            $membros_relacionamentos  = \App\Models\membros_relacionamentos::select('tipos_relacionamentos_id as id', 'membros_relacionamentos.pessoas2_id', 'pessoas.razaosocial')
+            ->join('pessoas', 'pessoas.id', '=' , 'membros_relacionamentos.pessoas2_id')
+            ->where('membros_relacionamentos.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('membros_relacionamentos.empresas_id', $this->dados_login->empresas_id)
+            ->where('membros_relacionamentos.pessoas_id', $id)
+            ->get();
+
+            if ($membros_relacionamentos->count()==0) $membros_relacionamentos = $vazio;
+
         }
 
 
@@ -1526,12 +1590,23 @@ public function salvar($request, $id, $tipo_operacao) {
                 $estadoscivis = \App\Models\civis::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 $disponibilidades = \App\Models\disponibilidades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 $dons = \App\Models\dons::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+                $tiposrelacionamentos = \App\Models\tiposrelacionamentos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 $habilidades = \App\Models\habilidades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 $religioes = \App\Models\religioes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 $atividades = \App\Models\atividades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 $ministerios = \App\Models\ministerios::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 $motivos = \App\Models\tiposmovimentacao::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 /* FIM Para preencher combos Dados eclesiasticos*/
+
+                if ($bool_exibir_perfil=="true")
+                {
+                        $perfil = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+                }
+                else
+                {
+                        $perfil = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+                }
+
 
                 return view($this->rota . ($bool_exibir_perfil=="true" ? '.perfil' : '.edit') ,
                 [
@@ -1559,6 +1634,7 @@ public function salvar($request, $id, $tipo_operacao) {
                     'ministerios' => $ministerios,
                     'cargos' => $cargos,
                     'celulas'=>$celulas,
+                    'tiposrelacionamentos'=>$tiposrelacionamentos,
                     'membros_celula'=>$membros_celula,
                     'membros_situacoes' =>$membros_situacoes,
                     'membros_formacoes' =>$membros_formacoes,
@@ -1570,7 +1646,8 @@ public function salvar($request, $id, $tipo_operacao) {
                     'membros_dons' =>$membros_dons,
                     'membros_filhos' => $membros_filhos,
                     'membros_habilidades' =>$membros_habilidades,
-                    'membros_profissionais' => $membros_profissionais
+                    'membros_profissionais' => $membros_profissionais,
+                    'membros_relacionamentos' => $membros_relacionamentos
                 ]);
 
         }

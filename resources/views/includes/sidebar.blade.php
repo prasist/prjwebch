@@ -109,6 +109,8 @@
                     <li class="text">&nbsp;</li>
                     <li><a href={{ url('/tipospresenca')}}><i class="fa fa-angle-double-right"></i>Tipos de Presença</a></li>
                     <li><a href={{ url('/tiposmovimentacao')}}><i class="fa fa-angle-double-right"></i>Tipos de Mov. Membros</a></li>
+                    <li><a href={{ url('/tiposrelacionamentos')}}><i class="fa fa-angle-double-right"></i>Tipos de Relacionamentos</a></li>
+                    <li><a href={{ url('/questionarios')}}><i class="fa fa-angle-double-right"></i>Questionário Padrão Encontros</a></li>
 
                 </ul>
             </li>

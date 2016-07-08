@@ -23,7 +23,6 @@
 
               @if ($pessoas[0]->caminhofoto!="")
                      <img class="profile-user-img img-responsive img-circle" src="{{ url('/images/persons/' . $pessoas[0]->caminhofoto) }}" alt="Foto">
-              </div>
             @endif
 
 
@@ -34,11 +33,19 @@
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
                   <b>Biografia</b>
+                  <br/>
 
                   @if ($membros_dados_pessoais[0]->estadoscivis_id)
-                        {{$pessoas[0]->razaosocial }} é $membros_dados_pessoais[0]->estadoscivis_id
+
+                        @if ($membros_familiares[0]->conjuge_id)
+                              $membros_familiares[0]->conjuge_id . ' - ' . $membros_familiares[0]->razaosocial
+                        @else
+
+                        @endif
+
+                        {{$pessoas[0]->razaosocial }} é {{$membros_dados_pessoais[0]->estadoscivis_id}}
                         @if ($pessoas[0]->datanasc_formatada)
-                              e nasceu em  $pessoas[0]->datanasc_formatada
+                              e nasceu em  {{$pessoas[0]->datanasc_formatada}}
                         @endif
                   @else
                         @if ($pessoas[0]->datanasc_formatada)
@@ -48,6 +55,8 @@
                         @endif
 
                   @endif
+
+                  <br/>
 
                   @if($membros_celula[0]->celulas_id)
                       Participa da Célula {{$membros_celula[0]->celulas_id}} desde
@@ -75,7 +84,7 @@
               <strong><i class="fa fa-book margin-r-5"></i> Educação</strong>
 
               <p class="text-muted">
-                B.S. in Computer Science from the University of Tennessee at Knoxville
+                      {{$membros_dados_pessoais[0]->graus_id}}
               </p>
 
               <hr>
@@ -111,7 +120,7 @@
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#activity" data-toggle="tab">Vida Eclesiástica</a></li>
-              <li><a href="#settings" data-toggle="tab">Vínculos</a></li>
+              <li><a href="#settings" data-toggle="tab">Vínculos e Relacionamentos</a></li>
               <li><a href="#timeline" data-toggle="tab">Linha do Tempo</a></li>
             </ul>
             <div class="tab-content">

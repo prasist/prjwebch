@@ -4,19 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\idiomas;
+use App\Models\tiposrelacionamentos;
 use URL;
 use Auth;
 use Input;
 use Gate;
 
-class IdiomasController extends Controller
+class TiposRelacionamentosController extends Controller
 {
 
     public function __construct()
     {
 
-        $this->rota = "idiomas"; //Define nome da rota que será usada na classe
+        $this->rota = "tiposrelacionamentos"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
         //Validação de permissão de acesso a pagina
@@ -36,7 +36,7 @@ class IdiomasController extends Controller
               return redirect('home');
         }
 
-        $dados = idiomas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $dados = tiposrelacionamentos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
 
         return view($this->rota . '.index',compact('dados'));
 
@@ -56,28 +56,37 @@ class IdiomasController extends Controller
     }
 
 
-/*
-* Grava dados no banco
-*
-*/
+public function salvar($request, $id, $tipo_operacao)
+{
+    $input = $request->except(array('_token', 'ativo')); //não levar o token
+
+    /*Validação de campos - request*/
+    $this->validate($request, [
+            'nome' => 'required',
+    ]);
+
+    if ($tipo_operacao=="create") //novo registro
+    {
+         $dados = new tiposrelacionamentos();
+    }
+    else //update
+    {
+         $dados = tiposrelacionamentos::findOrfail($id);
+    }
+
+        $dados->nome  = $input['nome'];
+        $dados->clientes_cloud_id  = $this->dados_login->empresas_clientes_cloud_id;
+        $dados->save();
+}
+
+
+
     public function store(\Illuminate\Http\Request  $request)
     {
 
-            /*Validação de campos - request*/
-            $this->validate($request, [
-                    'nome' => 'required|max:60:min:3',
-            ]);
-
-           $input = $request->except(array('_token', 'ativo')); //não levar o token
-
-           $grupos = new idiomas();
-           $grupos->nome  = $input['nome'];
-           $grupos->clientes_cloud_id  = $this->dados_login->empresas_clientes_cloud_id;
-           $grupos->save();
-
-           \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-
-            return redirect($this->rota);
+        $this->salvar($request, "", "create");
+        \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
+        return redirect($this->rota);
 
     }
 
@@ -96,7 +105,7 @@ class IdiomasController extends Controller
         }
 
         //preview = true, somente visualizacao, desabilita botao gravar
-        $dados = idiomas::findOrfail($id);
+        $dados = tiposrelacionamentos::findOrfail($id);
         return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview] );
 
     }
@@ -128,20 +137,9 @@ class IdiomasController extends Controller
     public function update(\Illuminate\Http\Request  $request, $id)
     {
 
-        /*Validação de campos - request*/
-        $this->validate($request, [
-                'nome' => 'required|max:60:min:3',
-         ]);
-
-        $input = $request->except(array('_token', 'ativo')); //não levar o token
-
-        $dados = idiomas::findOrfail($id);
-        $dados->nome  = $input['nome'];
-        $dados->save();
-
-        \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-
-        return redirect($this->rota);
+           $this->salvar($request, $id,  "update");
+           \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
+            return redirect($this->rota);
 
     }
 
@@ -155,7 +153,7 @@ class IdiomasController extends Controller
     public function destroy($id)
     {
 
-            $dados = idiomas::findOrfail($id);
+            $dados = tiposrelacionamentos::findOrfail($id);
             $dados->delete();
 
             return redirect($this->rota);

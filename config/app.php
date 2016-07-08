@@ -59,6 +59,9 @@ return [
     'titulos'=>'52',
     'relfinanceiro'=>'53',
     'financeiro'=>'54',
+    'tiposrelacionamentos'=>'55',
+    'tiposrd'=>'56',
+    'questionarios'=>'57',
 
     'env' => env('APP_ENV', 'production'),
 

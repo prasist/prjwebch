@@ -42,11 +42,37 @@
        });
 
     /*Canais de suporte*/
-    Route::get('suporte', function () {
-
-        return view('suporte.suporte');
-
+    Route::get('suporte', function ()
+    {
+          return view('suporte.suporte');
     });
+
+    /*Tipos de Relacionamentos */
+    Route::get('questionarios', 'QuestionariosController@index');
+    Route::post('/questionarios/gravar','QuestionariosController@store');
+    Route::get('/questionarios/registrar','QuestionariosController@create');
+    Route::get('/questionarios/{id}/preview','QuestionariosController@show');
+    Route::post('questionarios/{id}/update','QuestionariosController@update');
+    Route::get('questionarios/{id}/edit','QuestionariosController@edit');
+    Route::get('questionarios/{id}/delete','QuestionariosController@destroy');
+
+    /*Tipos de Relacionamentos */
+    Route::get('tiposrelacionamentos', 'TiposRelacionamentosController@index');
+    Route::post('/tiposrelacionamentos/gravar','TiposRelacionamentosController@store');
+    Route::get('/tiposrelacionamentos/registrar','TiposRelacionamentosController@create');
+    Route::get('/tiposrelacionamentos/{id}/preview','TiposRelacionamentosController@show');
+    Route::post('tiposrelacionamentos/{id}/update','TiposRelacionamentosController@update');
+    Route::get('tiposrelacionamentos/{id}/edit','TiposRelacionamentosController@edit');
+    Route::get('tiposrelacionamentos/{id}/delete','TiposRelacionamentosController@destroy');
+
+    /*Tipos de Relacionamentos Discipulado*/
+    Route::get('tiposrd', 'TiposRDController@index');
+    Route::post('/tiposrd/gravar','TiposRDController@store');
+    Route::get('/tiposrd/registrar','TiposRDController@create');
+    Route::get('/tiposrd/{id}/preview','TiposRDController@show');
+    Route::post('tiposrd/{id}/update','TiposRDController@update');
+    Route::get('tiposrd/{id}/edit','TiposRDController@edit');
+    Route::get('tiposrd/{id}/delete','TiposRDController@destroy');
 
     /*Financeiro*/
     Route::get('financeiro', 'FinanceiroController@index');
@@ -66,7 +92,6 @@
     Route::post('titulos/{id}/update/{tipo}','TitulosController@update');
     Route::get('titulos/{id}/edit/{tipo}','TitulosController@edit');
     Route::get('titulos/{id}/delete/{tipo}','TitulosController@destroy');
-
 
     /*Contas Correntes*/
     Route::get('contas', 'ContasController@index');
@@ -103,7 +128,6 @@
     Route::post('grupos_titulos/{id}/update','GruposTitulosController@update');
     Route::get('grupos_titulos/{id}/edit','GruposTitulosController@edit');
     Route::get('grupos_titulos/{id}/delete','GruposTitulosController@destroy');
-
 
     Route::get('carregar_tabela/{tabela}', 'CadastrarController@carregar_tabela');
 

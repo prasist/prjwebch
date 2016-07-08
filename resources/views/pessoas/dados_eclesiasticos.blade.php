@@ -396,7 +396,6 @@
                                                                    <div class="col-xs-4">
                                                                           @include('carregar_combos', array('dados'=>$graus, 'titulo' =>'Grau de Instrução', 'id_combo'=>'graus', 'complemento'=>'', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->graus_id), 'id_pagina'=> '10'))
                                                                           @include('modal_cadastro_basico', array('qual_campo'=>'graus', 'modal' => 'modal_graus', 'tabela' => 'graus_instrucao'))
-
                                                                    </div><!-- col-xs-5-->
 
                                                                    <input type="hidden" name="formacoes[]" class="minimal" value="">
@@ -578,7 +577,7 @@
                                                           <div class="row">
 
                                                                <div class="col-xs-10">
-                                                                    <label for="filho_cadastro" class="control-label">Selecionar filhos(as) do cadastrado</label>
+                                                                    <label for="filho_cadastro" class="control-label">Selecionar filhos(as) do cadastro</label>
                                                                     <div class="input-group">
                                                                              <div class="input-group-addon">
                                                                                 <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#filho_cadastro_myModal" >
@@ -591,7 +590,7 @@
                                                                               <input id="filho_cadastro"  name = "filho_cadastro" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
 
                                                                       </div>
-                                                                      <a href="javascript: incluir_filho_cadastro();">Clique aqui para confirmar a seleção acima...</a>
+                                                                      <a href="javascript: incluir_filho_cadastro();" class="btn btn-primary">Clique aqui para confirmar a seleção acima...</a>
                                                                 </div>
 
 
@@ -863,6 +862,67 @@
                             </div>
                           </div>
                       </div><!-- FIM TAB FAMILIAR-->
+
+
+                        <!-- TAB RELACIONAMENTOS-->
+                      <div class="panel box box-primary">
+                          <div class="box-header with-border">
+                            <h5 class="box-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#tab_relacionamentos">
+                                <span class="fa fa-sitemap"></span> Relacionamentos
+                              </a>
+                            </h5>
+                          </div>
+                          <div id="tab_relacionamentos" class="panel-collapse collapse">
+                            <div class="box-body">
+
+                             <div  class="row">
+
+                                     <div class="col-md-12">
+
+                                              <div class="box box-default">
+
+                                                    <div class="box-body"><!-- box-body-->
+
+                                                            <div class="row"><!-- row-->
+
+                                                                  <input type="hidden" name="graus" class="minimal" value="">
+
+                                                                   <div class="col-xs-4">
+                                                                          @include('carregar_combos_multiple', array('dados'=>$tiposrelacionamentos, 'titulo' =>'Tipos de Relacionamentos', 'id_combo'=>'tiposrelacionamentos[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_relacionamentos))
+                                                                   </div><!-- col-xs-5-->
+
+                                                                   <div class="col-xs-6">
+                                                                      <label for="pessoa_relacionamento" class="control-label">Com Quem ?</label>
+                                                                      <div class="input-group">
+                                                                               <div class="input-group-addon">
+                                                                                  <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#relacionamento_myModal" >
+                                                                                         <i class="fa fa-search"></i> ...
+                                                                                   </button>
+                                                                                </div>
+
+                                                                                @include('modal_buscar_pessoas', array('qual_campo'=>'pessoa_relacionamento', 'modal' => 'relacionamento_myModal'))
+
+                                                                                <input id="pessoa_relacionamento"  name = "pessoa_relacionamento" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($membros_relacionamentos[0]->pessoas2_id!="" ? str_repeat('0', (9-strlen($membros_relacionamentos[0]->pessoas2_id))) . $membros_relacionamentos[0]->pessoas2_id . ' - ' . $membros_relacionamentos[0]->razaosocial  : '') !!}" readonly >
+
+                                                                        </div>
+                                                                  </div>
+
+                                                            </div><!-- end row-->
+
+                                                     </div><!-- end box-body-->
+
+                                               </div><!-- end box-default-->
+
+                                     </div>
+
+                               </div><!-- end row-->
+
+                            </div>
+
+                          </div>
+                      </div><!-- FIM TAB FORMAÇÃO-->
+
 
 
                       <!-- TAB HISTORICO ECLESIASTICO-->
