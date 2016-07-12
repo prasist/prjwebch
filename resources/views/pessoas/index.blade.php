@@ -52,18 +52,18 @@
             <div class="box-header" data-original-title>
                 <div class="box-body table-responsive no-padding">
 
-                    <table id="tab_pessoas" class="table table-hover">
+                    <table id="tab_pessoas" class="table table-responsive">
                     <thead>
                         <tr>
                         <th>Código</th>
                         <th>Nome</th>
                         <th>Nome Abrev.</th>
                         <th>Tipo Pessoa</th>
-                        <th>CNPJ/CPF</th>
+                        <!--<th>CNPJ/CPF</th>-->
                         <th>Telefone</th>
                         <th>ID Tipo</th>
                         <th>Alterar</th>
-                        <th>Visualizar</th>
+                        <th>Ver</th>
                         <th>Excluir</th>
                         </tr>
                     </thead>
@@ -127,11 +127,11 @@
                           "ajax": urlRoute,
                           "columnDefs":
                           [
-                              {
-                                  "targets": [6],
-                                  "visible": false,
-                                  "searchable": false
-                              }
+                                  {"targets": [5], "sortable": false},
+                                  {"targets": [6], "sortable": false},
+                                  {"targets": [7], "sortable": false},
+                                  {"targets": [8], "sortable": false},
+                                  {"targets": [5], "visible": false,"searchable": false}
                             ],
                           "columns": [
                                   { data: "id" },
@@ -150,7 +150,7 @@
                                     }},
                                   { data: "nomefantasia" },
                                   { data: "nome_tipo_pessoa" },
-                                  { data: "cnpj_cpf" },
+                                  //{ data: "cnpj_cpf" },
                                   { data: "fone_principal" },
                                   { data: "id_tipo_pessoa" },
                                   {"mRender": function(data, type, full) {

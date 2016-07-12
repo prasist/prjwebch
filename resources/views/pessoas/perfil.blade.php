@@ -21,7 +21,7 @@
           <div class="box box-primary">
             <div class="box-body box-profile">
 
-              @if ($perfil[0]->caminhofoto!="")
+            @if (rtrim($perfil[0]->caminhofoto)!="")
                      <img class="profile-user-img img-responsive img-circle" src="{{ url('/images/persons/' . $perfil[0]->caminhofoto) }}" alt="Foto">
             @endif
 
@@ -164,9 +164,10 @@
         <div class="col-md-8">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#activity" data-toggle="tab">Vínculos e Relacionamentos</a></li>
-              <li><a href="#settings" data-toggle="tab">Vida Eclesiástica</a></li>
-              <li><a href="#timeline" data-toggle="tab">Linha do Tempo</a></li>
+                <li class="active"><a href="#activity" data-toggle="tab">Vínculos e Relacionamentos</a></li>
+                <li><a href="#settings" data-toggle="tab">Vida Eclesiástica</a></li>
+                <li><a href="#timeline" data-toggle="tab">Linha do Tempo</a></li>
+                <li><a href="#acomp" data-toggle="tab">Acompanhamento Pastoral</a></li>
             </ul>
             <div class="tab-content">
               <div class="active tab-pane" id="activity">
@@ -253,6 +254,11 @@
                     Em Breve...
               </div>
               <!-- /.tab-pane -->
+
+              <div class="tab-pane" id="acomp">
+                    Em Breve...
+              </div>
+
             </div>
             <!-- /.tab-content -->
           </div>

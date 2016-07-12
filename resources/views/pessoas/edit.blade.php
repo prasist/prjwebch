@@ -528,8 +528,10 @@
                                                                               <center>
                                                                               <label class="control-label">Foto Atual</label>
 
-                                                                              <div  style="width:320px; height:240px; border:dotted;">
-                                                                                    <img src="{{ url('/images/persons/' . $pessoas[0]->caminhofoto) }}" width="315px" height="235px">
+                                                                              <!--<div  style="width:320px; height:240px; border:dotted;">-->
+                                                                              <div  style="border:dotted;">
+                                                                                    <img src="{{ url('/images/persons/' . $pessoas[0]->caminhofoto) }}" width="150px" height="120px">
+                                                                                    <!--width="315px" height="235px"-->
                                                                               </div>
                                                                               @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
                                                                                  <a href="{{ url('/pessoas/' . $pessoas[0]->id . '/remover')}}" class="btn btn-danger"><i class="fa fa-trash"></i> Remover Imagem</a></center>
@@ -542,14 +544,16 @@
                                                                           <center>
                                                                           <label class="control-label"></label>
                                                                           <center><a href="javascript:void(ativar_webcam())" class="btn btn-primary"><i class="fa fa-power-off"></i> Iniciar WebCam</a></center>
-                                                                          <div id="my_camera" style="width:320px; height:240px; border:dotted;"></div>
+                                                                          <!--<div id="my_camera" style="width:320px; height:240px; border:dotted;"></div>-->
+                                                                          <div id="my_camera" style="width:150px; height:120px; border:dotted;"></div>
                                                                           <a href="javascript:void(take_snapshot())" class="btn btn-success"><i class="fa fa-camera"></i> Tirar Foto pela WebCam</a></center>
                                                                     </div>
 
                                                                     <div class="col-xs-4">
                                                                             <center>
                                                                                 <label class="control-label">Foto WebCam</label>
-                                                                                <div id="my_result" class="row" style="width:320px; height:240px; border:dotted;"></div>
+                                                                                <!--<div id="my_result" class="row" style="width:320px; height:240px; border:dotted;"></div>-->
+                                                                                <div id="my_result" class="row" style="width:150px; height:120px; border:dotted;"></div>
                                                                             </center>
                                                                     </div>
 

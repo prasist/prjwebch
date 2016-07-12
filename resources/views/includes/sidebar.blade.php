@@ -178,7 +178,7 @@
                     <li>
                       <a href="#"><i class="fa fa-circle-o"></i> Controle de Atividades <i class="fa fa-angle-left pull-right"></i></a>
                           <ul class="treeview-menu">
-                            <li><a href="#"> Presença</a></li>
+                            <li><a href="#"> Encontros</a></li>
                           </ul>
                     </li>
                   </ul>
