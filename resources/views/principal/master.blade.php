@@ -400,6 +400,12 @@
 
 <!-- Adicionando JQuery -->
 
+        <script>
+          var AdminLTEOptions = {
+                    sidebarExpandOnHover: true,
+          };
+        </script>
+
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
         <script src="{{ asset('/js/controller.js')}}"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.js')}}"></script>

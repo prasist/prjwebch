@@ -1,4 +1,6 @@
 <!-- Left side column. contains the logo and sidebar -->
+
+
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -40,7 +42,6 @@
               </span>
         </div>
       </form>
-
 
 
         <!--Menu Principal -->
@@ -125,12 +126,12 @@
 
 
             <li class="treeview" id="pessoas">
-                <a href="#" onclick="redirecionar_pessoas();">
-                <i class="fa fa-users"></i><span>Pessoas</span>
+                <a href="#">
+                <i class="fa fa-user"></i><span>Pessoas</span>
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
                  <ul class="treeview-menu">
-                        <li><a href={{ url('/pessoas')}}><i class="fa fa-file-text-o"></i> Cadastro</a></li>
+                        <li><a href={{ url('/pessoas')}}><i class="fa fa-file-text-o"></i> Listar / Cadastrar</a></li>
                         <li><a href={{ url('/relpessoas')}}><i class="fa fa-print"></i> Relatórios</a></li>
                  </ul>
              </li>
@@ -139,7 +140,7 @@
             <!-- Células -->
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-share"></i> <span>Gestão de Células</span>
+                <i class="fa fa-users"></i> <span>Gestão de Células</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
 
@@ -161,7 +162,7 @@
                     <li>
                       <a href="#"><i class="fa fa-street-view"></i> Células <i class="fa fa-angle-left pull-right"></i></a>
                           <ul class="treeview-menu">
-                            <li><a href={{ url('/celulas')}}> Cadastro</a></li>
+                            <li><a href={{ url('/celulas')}}> Listar / Cadastrar</a></li>
                             <li><a href={{ url('/celulaspessoas')}}> Células / Participantes</a></li>
                           </ul>
                     </li>

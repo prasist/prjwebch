@@ -50,6 +50,7 @@
 
                            @endif
 
+                            <input  id="sera_admin" name="sera_admin" type="hidden"  value="0" />
 
                             <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
