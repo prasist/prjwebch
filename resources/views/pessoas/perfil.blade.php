@@ -2,8 +2,8 @@
 
 @section('content')
 
-{{ \Session::put('titulo', 'Perfil Pessoa') }}
-{{ \Session::put('subtitulo', 'Inclusão') }}
+{{ \Session::put('titulo', 'Perfil') }}
+{{ \Session::put('subtitulo', 'Visualizar') }}
 {{ \Session::put('id_pagina', '28') }}
 
 
@@ -15,57 +15,90 @@
     <section class="content">
 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
 
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
 
-              @if ($pessoas[0]->caminhofoto!="")
-                     <img class="profile-user-img img-responsive img-circle" src="{{ url('/images/persons/' . $pessoas[0]->caminhofoto) }}" alt="Foto">
+              @if ($perfil[0]->caminhofoto!="")
+                     <img class="profile-user-img img-responsive img-circle" src="{{ url('/images/persons/' . $perfil[0]->caminhofoto) }}" alt="Foto">
             @endif
 
 
-              <h3 class="profile-username text-center">{{$pessoas[0]->razaosocial }}</h3>
+              <h3 class="profile-username text-center">{{$perfil[0]->razaosocial }}</h3>
 
-              <p class="text-muted text-center">{{ $pessoas[0]->ativo=='S' ? 'Ativo' : 'Inativo' }}</p>
+              <p class="text-muted text-center">{{ $perfil[0]->ativo=='S' ? 'Ativo' : 'Inativo' }}</p>
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
-                  <b>Biografia</b>
-                  <br/>
 
-                  @if ($membros_dados_pessoais[0]->estadoscivis_id)
+                  @if ($perfil[0]->estadoscivis_id)
 
+                        <b>{{$perfil[0]->razaosocial }}</b> é <i><b>{{$perfil[0]->estado_civil}}</b></i>
                         @if ($membros_familiares[0]->conjuge_id)
-                              $membros_familiares[0]->conjuge_id . ' - ' . $membros_familiares[0]->razaosocial
-                        @else
-
+                               com <i><b>{{$membros_familiares[0]->razaosocial}}</b></i>
                         @endif
-
-                        {{$pessoas[0]->razaosocial }} é {{$membros_dados_pessoais[0]->estadoscivis_id}}
-                        @if ($pessoas[0]->datanasc_formatada)
-                              e nasceu em  {{$pessoas[0]->datanasc_formatada}}
-                        @endif
-                  @else
-                        @if ($pessoas[0]->datanasc_formatada)
-                              <p>{{$pessoas[0]->razaosocial }} nasceu em {{$pessoas[0]->datanasc_formatada}}</p>
-                        @else
-                              <p>{{$pessoas[0]->razaosocial }}</p>
-                        @endif
-
+                        <br/>
                   @endif
 
-                  <br/>
+                  @if ($perfil[0]->datanasc_formatada)
+                         Nasceu em  <i><b>{{$perfil[0]->datanasc_formatada}}</b></i>
+                  @endif
+
+                  @if ($perfil[0]->naturalidade)
+                         em  <i><b>{{$perfil[0]->naturalidade}} - {{$perfil[0]->uf_naturalidade}}</b></i>
+                  @endif
 
                   @if($membros_celula[0]->celulas_id)
-                      Participa da Célula {{$membros_celula[0]->celulas_id}} desde
+                      Participa da Célula <i><b>{{$membros_celula[0]->nome}}</b></i>
+
+                      @if (rtrim($membros_celula[0]->data_entrada_celula)!="")
+                            desde <i><b>{{$membros_celula[0]->data_entrada_celula}}</b></i>
+                      @endif
                   @else
-                      Não Participa de Células
+                      Não Participa de Células.
                   @endif
+
+                   <br/>
+                    @if($perfil[0]->profissao)
+                        É <i><b>{{$perfil[0]->profissao}}</b></i>
+                    @endif
+
+                    @if($perfil[0]->nome_empresa)
+                        e trabalha na <i><b>{{$perfil[0]->nome_empresa}}</b></i>
+                    @endif
+
+                    @if($perfil[0]->cargo)
+                        como  <i><b>{{$perfil[0]->cargo}}</b></i>
+                    @endif
 
                 </li>
 
+                <li class="list-group-item">
+
+                     @if ($perfil[0]->fone_principal)
+                        <i class="fa fa-home"></i> {{$perfil[0]->fone_principal}}
+                    @endif
+
+                    @if ($perfil[0]->fone_secundario)
+                        &nbsp;&nbsp;<i class="fa fa-phone"></i> {{$perfil[0]->fone_secundario}}
+                    @endif
+
+                    @if ($perfil[0]->fone_celular)
+                        <br/><i class="fa fa-mobile-phone"></i> {{$perfil[0]->fone_celular}}
+                    @endif
+
+                    @if ($perfil[0]->emailprincipal)
+                           <br/><i class="fa fa-envelope-o"></i> {{$perfil[0]->emailprincipal}}
+                    @endif
+                </li>
+
+                @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
+                 <li class="list-group-item">
+                      <a class="btn  btn-info btn-sm" href="{{ url('/pessoas/' . $perfil[0]->id .'/edit/' . $perfil[0]->tipos_pessoas_id)}}"><spam class="glyphicon glyphicon-pencil"></spam> Alterar/Visualizar Dados Cadastrais</a>
+                 </li>
+                @endcan
               </ul>
 
 
@@ -84,43 +117,55 @@
               <strong><i class="fa fa-book margin-r-5"></i> Educação</strong>
 
               <p class="text-muted">
-                      {{$membros_dados_pessoais[0]->graus_id}}
+                      {{$perfil[0]->grau_instrucao}}
+                      @if ($membros_formacoes[0]->nome)
+                          em <i><b>{{$membros_formacoes[0]->nome}}</b></i>
+                      @endif
               </p>
 
               <hr>
 
               <strong><i class="fa fa-map-marker margin-r-5"></i> Endereço</strong>
 
-              <p class="text-muted">Malibu, California</p>
+              <p class="text-muted">
 
-              <hr>
+                @if ($perfil[0]->endereco)
+                        {{$perfil[0]->endereco}}, {{$perfil[0]->numero}} - {{$perfil[0]->bairro}}<br/>
+                        {{$perfil[0]->cidade}} - {{$perfil[0]->estado}}
+                @endif
 
-              <strong><i class="fa fa-pencil margin-r-5"></i> Qualificações</strong>
-
-              <p>
-                <span class="label label-danger">UI Design</span>
-                <span class="label label-success">Coding</span>
-                <span class="label label-info">Javascript</span>
-                <span class="label label-warning">PHP</span>
-                <span class="label label-primary">Node.js</span>
               </p>
 
               <hr>
 
               <strong><i class="fa fa-file-text-o margin-r-5"></i> Notas</strong>
 
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+              <p>
+
+                  @if ($perfil[0]->prefere_trabalhar_com)
+                        Prefere trabalhar com <i><b>{{($perfil[0]->prefere_trabalhar_com=="P" ? "Pessoas" : "Tarefas")}}</b></i>
+                  @endif
+
+                  @if ($perfil[0]->considera_se)
+                        Considera-se <i><b>{{($perfil[0]->considera_se=="M" ? "Muito Estruturado" : ($perfil[0]->considera_se=="E" ? "Estruturado" : "Pouco Estruturado"))}}</b></i>
+                  @endif
+
+                  @if ($perfil[0]->obs)
+                        <br/><br/>{{$perfil[0]->obs}}
+                  @endif
+
+              </p>
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
         </div>
         <!-- /.col -->
-        <div class="col-md-9">
+        <div class="col-md-8">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#activity" data-toggle="tab">Vida Eclesiástica</a></li>
-              <li><a href="#settings" data-toggle="tab">Vínculos e Relacionamentos</a></li>
+              <li class="active"><a href="#activity" data-toggle="tab">Vínculos e Relacionamentos</a></li>
+              <li><a href="#settings" data-toggle="tab">Vida Eclesiástica</a></li>
               <li><a href="#timeline" data-toggle="tab">Linha do Tempo</a></li>
             </ul>
             <div class="tab-content">
@@ -128,265 +173,84 @@
                 <!-- Post -->
                 <div class="post">
                   <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
-                        <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                    <span class="description">Shared publicly - 7:30 PM today</span>
+
+                          <b>Relacionamentos</b>
+                          <br/><br/>
+                          @if ($membros_relacionamentos)
+                              @foreach ($membros_relacionamentos as $item)
+                                   @if ($item->nome!="")
+                                        {{$item->nome}} de {{$item->razaosocial}}<br/>
+                                   @endif
+                              @endforeach
+                          @endif
+
+                           <br/><br/>
+                           <b>Vínculos Familiares</b>
+                          <br/><br/>
+
+                               @if ($membros_familiares[0]->razaosocial_pai)
+                                      Pai <i><b>{{$membros_familiares[0]->razaosocial_pai}}</b></i>
+                               @endif
+
+                               @if ($membros_familiares[0]->nome_pai)
+                                      Pai <i><b>{{$membros_familiares[0]->nome_pai}}</b></i>
+                               @endif
+
+                               <br/>
+                               @if ($membros_familiares[0]->razaosocial_mae)
+                                      Mãe <i><b>{{$membros_familiares[0]->razaosocial_mae}}</b></i>
+                               @endif
+
+                               @if ($membros_familiares[0]->nome_mae)
+                                      Mãe <i><b>{{$membros_familiares[0]->nome_mae}}</b></i>
+                               @endif
+
+                               <br/>
+                                @if ($membros_filhos!=null)
+                                      @foreach($membros_filhos as $item)
+                                            @if ($item->filhos_id)
+                                                    Filho(a)(s) <i><b>{{$item->filhos_id}}</b></i>
+                                            @endif
+
+                                            @if ($item->nome_filho)
+                                                    Filho(a)(s) <i><b>{{$item->nome_filho}}</b></i>
+                                            @endif
+                                            <br/>
+                                      @endforeach
+                               @endif
+
+                           <br/>
+                           <br/>
+                           <br/><br/>
+                           <br/><br/>
+                           <br/><br/>
+                           <br/>
+                           <br/>
+                           <br/>
+                           <br/>
+                           <br/><br/>
+                           <br/><br/>
+                           <br/>
+                           <br/><br/>
+                           <br/><br/>
+
                   </div>
                   <!-- /.user-block -->
-                  <p>
-                    Lorem ipsum represents a long-held tradition for designers,
-                    typographers and the like. Some people hate it and argue for
-                    its demise, but others ignore the hate as they create awesome
-                    tools to help create filler text for everyone from bacon lovers
-                    to Charlie Sheen fans.
-                  </p>
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                    <li class="pull-right">
-                      <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                        (5)</a></li>
-                  </ul>
-
-                  <input class="form-control input-sm" type="text" placeholder="Type a comment">
                 </div>
                 <!-- /.post -->
 
-                <!-- Post -->
-                <div class="post clearfix">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg" alt="User Image">
-                        <span class="username">
-                          <a href="#">Sarah Ross</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                    <span class="description">Sent you a message - 3 days ago</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <p>
-                    Lorem ipsum represents a long-held tradition for designers,
-                    typographers and the like. Some people hate it and argue for
-                    its demise, but others ignore the hate as they create awesome
-                    tools to help create filler text for everyone from bacon lovers
-                    to Charlie Sheen fans.
-                  </p>
 
-                  <form class="form-horizontal">
-                    <div class="form-group margin-bottom-none">
-                      <div class="col-sm-9">
-                        <input class="form-control input-sm" placeholder="Response">
-                      </div>
-                      <div class="col-sm-3">
-                        <button type="submit" class="btn btn-danger pull-right btn-block btn-sm">Send</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <!-- /.post -->
-
-                <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg" alt="User Image">
-                        <span class="username">
-                          <a href="#">Adam Jones</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                    <span class="description">Posted 5 photos - 5 days ago</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <div class="row margin-bottom">
-                    <div class="col-sm-6">
-                      <img class="img-responsive" src="../../dist/img/photo1.png" alt="Photo">
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-6">
-                      <div class="row">
-                        <div class="col-sm-6">
-                          <img class="img-responsive" src="../../dist/img/photo2.png" alt="Photo">
-                          <br>
-                          <img class="img-responsive" src="../../dist/img/photo3.jpg" alt="Photo">
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-6">
-                          <img class="img-responsive" src="../../dist/img/photo4.jpg" alt="Photo">
-                          <br>
-                          <img class="img-responsive" src="../../dist/img/photo1.png" alt="Photo">
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.row -->
-                    </div>
-                    <!-- /.col -->
-                  </div>
-                  <!-- /.row -->
-
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                    <li class="pull-right">
-                      <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                        (5)</a></li>
-                  </ul>
-
-                  <input class="form-control input-sm" type="text" placeholder="Type a comment">
-                </div>
-                <!-- /.post -->
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="timeline">
                 <!-- The timeline -->
-                <ul class="timeline timeline-inverse">
-                  <!-- timeline time label -->
-                  <li class="time-label">
-                        <span class="bg-red">
-                          10 Feb. 2014
-                        </span>
-                  </li>
-                  <!-- /.timeline-label -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-envelope bg-blue"></i>
+                  em breve...
 
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-
-                      <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-                      <div class="timeline-body">
-                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                        weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                        jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                        quora plaxo ideeli hulu weebly balihoo...
-                      </div>
-                      <div class="timeline-footer">
-                        <a class="btn btn-primary btn-xs">Read more</a>
-                        <a class="btn btn-danger btn-xs">Delete</a>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-user bg-aqua"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-
-                      <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
-                      </h3>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-comments bg-yellow"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-
-                      <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                      <div class="timeline-body">
-                        Take me to your leader!
-                        Switzerland is small and neutral!
-                        We are more like Germany, ambitious and misunderstood!
-                      </div>
-                      <div class="timeline-footer">
-                        <a class="btn btn-warning btn-flat btn-xs">View comment</a>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <!-- timeline time label -->
-                  <li class="time-label">
-                        <span class="bg-green">
-                          3 Jan. 2014
-                        </span>
-                  </li>
-                  <!-- /.timeline-label -->
-                  <!-- timeline item -->
-                  <li>
-                    <i class="fa fa-camera bg-purple"></i>
-
-                    <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-
-                      <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-
-                      <div class="timeline-body">
-                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                        <img src="http://placehold.it/150x100" alt="..." class="margin">
-                      </div>
-                    </div>
-                  </li>
-                  <!-- END timeline item -->
-                  <li>
-                    <i class="fa fa-clock-o bg-gray"></i>
-                  </li>
-                </ul>
               </div>
               <!-- /.tab-pane -->
 
               <div class="tab-pane" id="settings">
-                <form class="form-horizontal">
-                  <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Name</label>
-
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputName" placeholder="Name">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Name</label>
-
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputName" placeholder="Name">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
-
-                    <div class="col-sm-10">
-                      <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
-
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger">Submit</button>
-                    </div>
-                  </div>
-                </form>
+                    Em Breve...
               </div>
               <!-- /.tab-pane -->
             </div>

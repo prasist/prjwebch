@@ -886,8 +886,6 @@
 
                                                             <div class="row"><!-- row-->
 
-                                                                  <input type="hidden" name="graus" class="minimal" value="">
-
                                                                    <div class="col-xs-4">
                                                                           @include('carregar_combos_multiple', array('dados'=>$tiposrelacionamentos, 'titulo' =>'Tipos de Relacionamentos', 'id_combo'=>'tiposrelacionamentos[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_relacionamentos))
                                                                    </div><!-- col-xs-5-->

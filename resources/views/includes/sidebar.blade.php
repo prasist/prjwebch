@@ -20,20 +20,28 @@
             </div>
             <!-- ************* -->
 
-
             <!-- Usuário logado-->
             <div class="pull-left info">
                 <p>{{ Auth::user()->name }}</p>
-                <!--<a href="#"><i class="fa fa-circle text-success"></i> Online</a>-->
                 <a href="{{ URL::to('perfil/' . Auth::user()->id . '/perfil') }}"><i class="fa fa-user text-success"></i> Alterar Perfil</a>
             </div>
             <!-- ************** -->
 
         </div>
 
-        <div>
-            <p></p>
+         <!-- search form -->
+      <!--<form action="#" method="get" id="form_procurar_pessoa" class="sidebar-form">-->
+      <form name ="form_principal" method = 'get' class="sidebar-form"  action = {{ url('/pessoas/buscar_nome')}}>
+        <div class="input-group">
+          <input type="text" name="razaosocial" id="razaosocial" class="form-control" placeholder="Localizar Pessoas...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
         </div>
+      </form>
+
+
 
         <!--Menu Principal -->
         <ul class="sidebar-menu">

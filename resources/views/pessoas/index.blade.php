@@ -139,8 +139,8 @@
                                   {"mRender": function(data, type, full) {
                                         if (visualizar)
                                         {
-                                            //var urlGetUserPerfil = '{!! url("/' + rota + '/ver/' + full['id'] + '") !!}';
-                                            var urlGetUserPerfil = '{!! url("/' + rota + '/' +  full['id'] +  '/edit") !!}'; //Route
+                                            var urlGetUserPerfil = '{!! url("/' + rota + '/ver/' + full['id'] + '") !!}';
+                                            //var urlGetUserPerfil = '{!! url("/' + rota + '/' +  full['id'] +  '/edit") !!}'; //Route
                                             return '<a href="' + urlGetUserPerfil + '/' + full['id_tipo_pessoa'] + '" data-toggle="tooltip" data-placement="top" title="Clique para ver Perfil">' + full['razaosocial'] + '</a>';
                                         }
                                         else

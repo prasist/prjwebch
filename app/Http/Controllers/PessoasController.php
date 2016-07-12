@@ -260,6 +260,51 @@ class PessoasController extends Controller
  }
 
 
+ public function pesquisar_nome(\Illuminate\Http\Request  $request)
+ {
+
+    if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
+    {
+         return redirect('home');
+    }
+
+    $nome = $request->razaosocial;
+
+    //Para carregar combo de grupos de pessoas
+    $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+    ->where('empresas_id', $this->dados_login->empresas_id)
+    ->orderBy('nome','ASC')
+    ->get();
+
+    //Lista tipos de pessoas, será usado no botão novo registro para indicar qual tipo de cadastro efetuar
+    $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+    ->orderBy('nome','ASC')
+    ->get();
+
+    $where="";
+
+    if ($nome!="")
+    {
+        if ($where!="")
+        {
+            $where .= "razaosocial|" . $nome . "&";
+        }
+        else
+        {
+            $where = "razaosocial|" . $nome . "&";
+        }
+    }
+
+    /*Verifica permissoes do usuario para criar os botoes da consulta*/
+    $visualizar = Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'visualizar']);
+    $alterar = Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'alterar']);
+    $excluir = Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'excluir']);
+
+    return view($this->rota . '.index', ['tipos' => $tipos, 'grupos'=>$grupos, 'where'=>$where, 'visualizar'=>$visualizar, 'alterar'=>$alterar, 'excluir'=>$excluir, 'rota'=>$this->rota]);
+
+ }
+
+
     //Criar novo registro
     //parametros = $id (id do cadastro tipos de pessoas)
     //Buscar pelo ID o cadastro do tipo de pessoa e verificar quais abas e dados habilitar na página
@@ -1382,15 +1427,22 @@ public function salvar($request, $id, $tipo_operacao) {
         if ($habilitar_interface->membro)
         {
 
+            //Novo - aqui
+            $membros_celula = \DB::select('select celulas_id, data_entrada_celula,  descricao_concatenada_scod as nome from view_celulas_pessoas  where pessoas_id = ? and  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
             /*Busca célula que o membro participa*/
-            $membros_celula  = \App\Models\celulaspessoas::select('celulas_pessoas.celulas_id')
-            ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-            ->where('empresas_id', $this->dados_login->empresas_id)
-            ->where('pessoas_id', $id)
-            ->get();
+            //$membros_celula  = \App\Models\celulaspessoas::select('celulas_pessoas.celulas_id', 'data_entrada_celula')
+            //->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            //->where('empresas_id', $this->dados_login->empresas_id)
+            //->where('pessoas_id', $id)
+            //->get();
 
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
-            if ($membros_celula->count()==0)
+            //if ($membros_celula->count()==0)
+            //{
+            //    $membros_celula = $vazio; //Artificio para nao ter que tratar array vazia nas views
+            //}
+            if ($membros_celula==null)
             {
                 $membros_celula = $vazio; //Artificio para nao ter que tratar array vazia nas views
             }
@@ -1503,9 +1555,10 @@ public function salvar($request, $id, $tipo_operacao) {
             }
 
             /*Dados Formacoes*/
-            $membros_formacoes  = \App\Models\membros_formacoes::select('formacoes_id as id')
-            ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-            ->where('empresas_id', $this->dados_login->empresas_id)
+            $membros_formacoes  = \App\Models\membros_formacoes::select('formacoes_id as id', 'nome')
+            ->join('areas_formacao',  'areas_formacao.id', '=', 'membros_formacoes.formacoes_id')
+            ->where('membros_formacoes.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('membros_formacoes.empresas_id', $this->dados_login->empresas_id)
             ->where('pessoas_id', $id)
             ->get();
 
@@ -1561,7 +1614,8 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
             /*membros Relacionamentos*/
-            $membros_relacionamentos  = \App\Models\membros_relacionamentos::select('tipos_relacionamentos_id as id', 'membros_relacionamentos.pessoas2_id', 'pessoas.razaosocial')
+            $membros_relacionamentos  = \App\Models\membros_relacionamentos::select('tipos_relacionamentos_id as id', 'membros_relacionamentos.pessoas2_id', 'pessoas.razaosocial', 'tipos_relacionamentos.nome')
+            ->join('tipos_relacionamentos', 'tipos_relacionamentos.id', '=' , 'membros_relacionamentos.tipos_relacionamentos_id')
             ->join('pessoas', 'pessoas.id', '=' , 'membros_relacionamentos.pessoas2_id')
             ->where('membros_relacionamentos.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
             ->where('membros_relacionamentos.empresas_id', $this->dados_login->empresas_id)
@@ -1598,13 +1652,14 @@ public function salvar($request, $id, $tipo_operacao) {
                 $motivos = \App\Models\tiposmovimentacao::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 /* FIM Para preencher combos Dados eclesiasticos*/
 
+
                 if ($bool_exibir_perfil=="true")
                 {
-                        $perfil = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+                        $perfil = \DB::select('select * from view_perfil where id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
                 }
                 else
                 {
-                        $perfil = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+                        $perfil = $vazio;
                 }
 
 
@@ -1634,6 +1689,7 @@ public function salvar($request, $id, $tipo_operacao) {
                     'ministerios' => $ministerios,
                     'cargos' => $cargos,
                     'celulas'=>$celulas,
+                    'perfil'=>$perfil,
                     'tiposrelacionamentos'=>$tiposrelacionamentos,
                     'membros_celula'=>$membros_celula,
                     'membros_situacoes' =>$membros_situacoes,
