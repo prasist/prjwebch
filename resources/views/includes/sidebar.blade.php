@@ -230,7 +230,6 @@
                     <a href="{!! url('/relfinanceiro') !!}"><i class="fa fa-angle-double-right"></i>Relatórios</i></a>
                   </li>
 
-
               </ul>
 
          </li>

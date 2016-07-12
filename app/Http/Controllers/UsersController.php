@@ -119,6 +119,7 @@ class UsersController extends Controller
             $dados = new users();
             $dados->name  = $input['name'];
             $dados->email  = $input['email'];
+            $dados->confirmed                              = 1; //Se for criado usuario pelo usuario.
             $dados->password  = bcrypt($input['password']);
 
             if ($image)
@@ -138,7 +139,7 @@ class UsersController extends Controller
             $usuarios = new usuario();
             $usuarios->id                                           =   $dados->id;    //id recem cadastrado na tabela users
             $usuarios->empresas_id                          =  $input['empresa'];
-            $usuarios->confirmed                              = 1; //Se for criado usuario pelo usuario.
+            //$usuarios->confirmed                              = 1; //Se for criado usuario pelo usuario.
             $usuarios->empresas_clientes_cloud_id  =  $usuario_master['empresas_clientes_cloud_id'];
 
 
