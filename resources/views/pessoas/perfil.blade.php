@@ -47,7 +47,7 @@
                   @endif
 
                   @if ($perfil[0]->naturalidade)
-                         em  <i><b>{{$perfil[0]->naturalidade}} - {{$perfil[0]->uf_naturalidade}}</b></i>
+                         Natural de  <i><b>{{$perfil[0]->naturalidade}} - {{$perfil[0]->uf_naturalidade}}</b></i>
                   @endif
 
                   @if($membros_celula[0]->celulas_id)
@@ -333,7 +333,6 @@
                   </li>
                   <!-- END timeline item -->
                   @endif
-
 
 
                   <li>

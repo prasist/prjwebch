@@ -246,12 +246,29 @@ public function imprimir($id)
      * @param    int  $id
      * @return  \Illuminate\Http\Response
      */
-    public function update(\Illuminate\Http\Request  $request, $id)
-    {
+  public function update(\Illuminate\Http\Request  $request, $id)
+  {
         $this->salvar($request, $id,  "update");
         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
         return redirect($this->rota);
-    }
+  }
+
+
+  //Abre tela para edicao ou somente visualização dos registros
+  public function exibir_participantes_json ($id)
+  {
+
+        $dados = celulaspessoas::select('pessoas.id', 'pessoas.razaosocial')
+        ->join('pessoas', 'pessoas.id', '=', 'celulas_pessoas.pessoas_id')
+        ->where('celulas_pessoas.empresas_id', $this->dados_login->empresas_id)
+        ->where('celulas_pessoas.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('celulas_pessoas.celulas_id', $id)
+        ->orderBy('pessoas.razaosocial')
+        ->get();
+
+        return \Datatables::of($dados)->make(true);
+
+  }
 
 
     /**

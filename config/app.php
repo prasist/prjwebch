@@ -62,6 +62,8 @@ return [
     'tiposrelacionamentos'=>'55',
     'tiposrd'=>'56',
     'questionarios'=>'57',
+    'controle_atividades'=>'58',
+
 
     'env' => env('APP_ENV', 'production'),
 

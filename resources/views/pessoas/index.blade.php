@@ -89,7 +89,6 @@
         $(document).ready(function(){
 
               $("#pessoas").addClass("treeview active");
-
         });
 
               $(function ()

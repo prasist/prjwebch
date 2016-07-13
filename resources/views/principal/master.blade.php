@@ -33,6 +33,10 @@
         <link rel="stylesheet" href="{{ asset('/plugins/datatables/dataTables.bootstrap.css')}}"/>
         <link rel="stylesheet" href="{{ asset('/dist/css/hopscotch.min.css')}}"/>
         <link rel="stylesheet" href="{{ asset('/dist/css/buscapessoas.css')}}"/>
+
+        <link href="{{ asset('/dist/css/bootstrap-switch.min.css')}}" rel="stylesheet"/>
+
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -431,6 +435,7 @@
         <script src="{{ asset('/dist/js/bootstrap-checkbox.min.js')}}" defer></script>
         <script src="{{ asset('/dist/js/moment.min.js')}}"></script> <!-- datas-->
         <script src="{{ asset('/dist/js/autoNumeric-min.js')}}"></script> <!-- monetarios-->
+        <script src="{{ asset('/dist/js/bootstrap-switch.min.js')}}"></script>
         <!-- bootstrap time picker -->
         <script src="{{ asset('/dist/js/bootstrap-timepicker.min.js')}}"></script> <!-- monetarios-->
 

@@ -47,6 +47,17 @@
           return view('suporte.suporte');
     });
 
+
+
+    /*Controle Atividades*/
+    Route::get('controle_atividades', 'ControleAtividadesController@index');
+    Route::post('/controle_atividades/gravar','ControleAtividadesController@store');
+    Route::get('/controle_atividades/registrar','ControleAtividadesController@create');
+    Route::get('/controle_atividades/{id}/preview','ControleAtividadesController@show');
+    Route::post('controle_atividades/{id}/update','ControleAtividadesController@update');
+    Route::get('controle_atividades/{id}/edit','ControleAtividadesController@edit');
+    Route::get('controle_atividades/{id}/delete','ControleAtividadesController@destroy');
+
     /*Tipos de Relacionamentos */
     Route::get('questionarios', 'QuestionariosController@index');
     Route::post('/questionarios/gravar','QuestionariosController@store');
@@ -551,5 +562,6 @@
     Route::get('celulaspessoas/{id}/edit','CelulasPessoasController@edit');
     Route::get('celulaspessoas/{id}/delete','CelulasPessoasController@destroy');
     Route::get('celulaspessoas/{id}/remover_membro/{pessoas_id}','CelulasPessoasController@remover_membro');
+    Route::get('celulaspessoas/participantes/{id}', 'CelulasPessoasController@exibir_participantes_json'); /*A partir da celula informada, retorna um json com os participantes*/
 
 });
