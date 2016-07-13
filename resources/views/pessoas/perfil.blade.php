@@ -245,13 +245,150 @@
               <!-- /.tab-pane -->
               <div class="tab-pane" id="timeline">
                 <!-- The timeline -->
-                  em breve...
+                   <!-- The timeline -->
+                <ul class="timeline timeline-inverse">
 
+
+                 @if (rtrim($pessoas_timeline[0]->data_saida))
+                  <!-- timeline time label -->
+                  <li class="time-label">
+                        <span class="bg-green">
+                              {{$pessoas_timeline[0]->data_saida}}
+                        </span>
+                  </li>
+                  <!-- /.timeline-label -->
+                  <!-- timeline item -->
+                  <li>
+                    <i class="fa fa-hourglass-end"></i>
+
+                    <div class="timeline-item">
+                      <h3 class="timeline-header"><a href="#">Saiu da Igreja</a></h3>
+
+                    </div>
+                  </li>
+                  <!-- END timeline item -->
+                  @endif
+
+
+                  @if (rtrim($pessoas_timeline[0]->data_entrada_celula) && rtrim($pessoas_timeline[0]->data_entrada_celula) != "01/01/0001")
+                  <!-- timeline time label -->
+                  <li class="time-label">
+                        <span class="bg-green">
+                              {{$pessoas_timeline[0]->data_entrada_celula}}
+                        </span>
+                  </li>
+                  <!-- /.timeline-label -->
+                  <!-- timeline item -->
+                  <li>
+                    <i class="fa fa-hourglass-end"></i>
+
+                    <div class="timeline-item">
+                      <h3 class="timeline-header"><a href="#">Começou a participar de Célula</a></h3>
+
+                    </div>
+                  </li>
+                  <!-- END timeline item -->
+                  @endif
+
+
+                  <!-- timeline time label -->
+                  @if ($pessoas_timeline[0]->data_batismo)
+                  <li class="time-label">
+                        <span class="bg-red">
+                            {{$pessoas_timeline[0]->data_batismo}}
+                        </span>
+                  </li>
+                  <!-- /.timeline-label -->
+                  <!-- timeline item -->
+                  <li>
+                    <i class="fa fa-hourglass-end"></i>
+
+                    <div class="timeline-item">
+
+                      <h3 class="timeline-header"><a href="#">Batizou-se</a></h3>
+
+                    </div>
+                  </li>
+                  @endif
+
+                  <!-- END timeline item -->
+
+
+                  @if (rtrim($pessoas_timeline[0]->data_entrada))
+                  <!-- timeline time label -->
+                  <li class="time-label">
+                        <span class="bg-green">
+                              {{$pessoas_timeline[0]->data_entrada}}
+                        </span>
+                  </li>
+                  <!-- /.timeline-label -->
+                  <!-- timeline item -->
+                  <li>
+                    <i class="fa fa-hourglass-end"></i>
+
+                    <div class="timeline-item">
+                      <h3 class="timeline-header"><a href="#">Entrou na Igreja</a></h3>
+
+                    </div>
+                  </li>
+                  <!-- END timeline item -->
+                  @endif
+
+
+
+                  <li>
+                    <i class="fa fa-clock-o bg-gray"></i>
+                  </li>
+                </ul>
               </div>
               <!-- /.tab-pane -->
 
               <div class="tab-pane" id="settings">
-                    Em Breve...
+
+                  <div class="post">
+                    <div class="user-block">
+                      @if ($membros_dons)
+                      <b>Dons Espirituais</b>
+                      <br/><br/>
+                      @endif
+
+                      @foreach ($membros_dons as $item)
+                        <i><b>{{$item->nome}}</b></i><br/>
+                      @endforeach
+
+                      @if ($membros_habilidades)
+                      <br/><br/>
+                      <b>Habilidades</b>
+                      <br/><br/>
+                      @endif
+
+                      @foreach ($membros_habilidades as $item)
+                        <i><b>{{$item->nome}}</b></i><br/>
+                      @endforeach
+
+
+                      @if ($membros_ministerios)
+                      <br/><br/>
+                      <b>Ministérios</b>
+                      <br/><br/>
+                      @endif
+
+                      @foreach ($membros_ministerios as $item)
+                        <i><b>{{$item->nome}}</b></i><br/>
+                      @endforeach
+
+                      @if ($membros_atividades)
+                      <br/><br/>
+                      <b>Atividades</b>
+                      <br/><br/>
+                      @endif
+
+                      @foreach ($membros_atividades as $item)
+                        <i><b>{{$item->nome}}</b></i><br/>
+                      @endforeach
+                    </div>
+                 </div>
+
               </div>
               <!-- /.tab-pane -->
 

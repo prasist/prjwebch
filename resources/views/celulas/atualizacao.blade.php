@@ -203,7 +203,7 @@
                                                </div>
 
                                                <div class="col-xs-4 {{ $errors->has('vicelider_pessoas_id') ? ' has-error' : '' }}">
-                                                      <label for="vicelider_pessoas_id" class="control-label">Vice-Líder</label>
+                                                      <label for="vicelider_pessoas_id" class="control-label">Líder em Treinamento</label>
                                                       <div class="input-group">
                                                                <div class="input-group-addon">
                                                                   <button  id="buscarpessoa2" type="button"  data-toggle="modal" data-target="#modal_vice" >

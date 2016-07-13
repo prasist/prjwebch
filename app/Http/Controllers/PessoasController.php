@@ -496,7 +496,7 @@ public function salvar($request, $id, $tipo_operacao) {
                 $image = $request->file('caminhologo'); //Imagem / Logo
                 $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-
+                //dd($input);
                 /*--------------------------------- CADASTRO DE PESSOAS------------------- */
                 if ($tipo_operacao=="create") //novo registro
                 {
@@ -527,7 +527,7 @@ public function salvar($request, $id, $tipo_operacao) {
                 $pessoas->fone_celular = $input['celular'];
                 $pessoas->emailprincipal = $input['emailprincipal'];
                 $pessoas->emailsecundario = $input['emailsecundario'];
-                $pessoas->ativo = ($input['opStatus'] ? 'S' : 'N');
+                $pessoas->ativo = $input['opStatus'];
                 $pessoas->tipos_pessoas_id = $input['tipos_pessoas_id'];
                 $pessoas->datanasc = $formatador->FormatarData($input['datanasc']);
                 $pessoas->tipopessoa = $input['opPessoa'];
@@ -1576,7 +1576,8 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
            /*Dons*/
-            $membros_dons  = \App\Models\membros_dons::select('dons_id as id')
+            $membros_dons  = \App\Models\membros_dons::select('dons_id as id', 'dons.nome')
+            ->join('dons', 'dons.id', '=', 'membros_dons.dons_id')
             ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
             ->where('empresas_id', $this->dados_login->empresas_id)
             ->where('pessoas_id', $id)
@@ -1586,7 +1587,8 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
             /*habilidades*/
-            $membros_habilidades  = \App\Models\membros_habilidades::select('habilidades_id as id')
+            $membros_habilidades  = \App\Models\membros_habilidades::select('habilidades_id as id', 'habilidades.nome')
+            ->join('habilidades', 'habilidades.id', '=', 'membros_habilidades.habilidades_id')
             ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
             ->where('empresas_id', $this->dados_login->empresas_id)
             ->where('pessoas_id', $id)
@@ -1595,7 +1597,8 @@ public function salvar($request, $id, $tipo_operacao) {
             if ($membros_habilidades->count()==0) $membros_habilidades = $vazio;
 
             /*atividades*/
-            $membros_atividades  = \App\Models\membros_atividades::select('atividades_id as id')
+            $membros_atividades  = \App\Models\membros_atividades::select('atividades_id as id', 'atividades.nome')
+            ->join('atividades', 'atividades.id', '=', 'membros_atividades.atividades_id')
             ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
             ->where('empresas_id', $this->dados_login->empresas_id)
             ->where('pessoas_id', $id)
@@ -1604,7 +1607,8 @@ public function salvar($request, $id, $tipo_operacao) {
             if ($membros_atividades->count()==0) $membros_atividades = $vazio;
 
             /*ministerios*/
-            $membros_ministerios  = \App\Models\membros_ministerios::select('ministerios_id as id')
+            $membros_ministerios  = \App\Models\membros_ministerios::select('ministerios_id as id', 'ministerios.nome')
+            ->join('ministerios', 'ministerios.id', '=', 'membros_ministerios.ministerios_id')
             ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
             ->where('empresas_id', $this->dados_login->empresas_id)
             ->where('pessoas_id', $id)
@@ -1656,10 +1660,12 @@ public function salvar($request, $id, $tipo_operacao) {
                 if ($bool_exibir_perfil=="true")
                 {
                         $perfil = \DB::select('select * from view_perfil where id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+                        $pessoas_timeline = \DB::select("select to_char(datanasc, 'DD/MM/YYYY') AS datanasc,  to_char(to_date(data_entrada, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_entrada, to_char(to_date(data_entrada_celula, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_entrada_celula, to_char(to_date(data_saida, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_saida, to_char(to_date(data_batismo, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_batismo from view_pessoas_timeline where id = ? ", [$id]);
                 }
                 else
                 {
                         $perfil = $vazio;
+                        $pessoas_timeline= $vazio;
                 }
 
 
@@ -1690,6 +1696,7 @@ public function salvar($request, $id, $tipo_operacao) {
                     'cargos' => $cargos,
                     'celulas'=>$celulas,
                     'perfil'=>$perfil,
+                    'pessoas_timeline'=>$pessoas_timeline,
                     'tiposrelacionamentos'=>$tiposrelacionamentos,
                     'membros_celula'=>$membros_celula,
                     'membros_situacoes' =>$membros_situacoes,
