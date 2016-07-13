@@ -125,7 +125,7 @@
             </li>
 
 
-            <li class="treeview" id="pessoas">
+            <li class="treeview" id="menu_pessoas">
                 <a href="#">
                 <i class="fa fa-user"></i><span>Pessoas</span>
                 <i class="fa fa-angle-left pull-right"></i>

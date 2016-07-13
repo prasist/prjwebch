@@ -176,7 +176,7 @@
                                         <div class="row">
 
                                               <div class="col-xs-4 {{ $errors->has('pessoas') ? ' has-error' : '' }}">
-                                                      <label for="nome" class="control-label"><span class="text-danger">*</span> Líder</label>
+                                                      <label for="pessoas" class="control-label"><span class="text-danger">*</span> Líder</label>
                                                       <div class="input-group">
                                                                <div class="input-group-addon">
                                                                   <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#modal_lider" >

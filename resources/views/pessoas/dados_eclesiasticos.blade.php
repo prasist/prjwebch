@@ -1304,22 +1304,6 @@
                           </div>
                       </div><!-- FIM TAB Histórico de Movimentações -->
 
-                      <!-- TAB Cursos-->
-                      <div class="panel box box-primary">
-                          <div class="box-header with-border">
-                            <h5 class="box-title">
-                              <a data-toggle="collapse" data-parent="#accordion" href="#tab9">
-                                <span class="fa fa-trophy"></span> Cursos
-                              </a>
-                            </h5>
-                          </div>
-                          <div id="tab9" class="panel-collapse collapse">
-                            <div class="box-body">
-                                 Em Breve
-                            </div>
-                          </div>
-                      </div><!-- FIM TAB Cursos -->
-
                       <!-- TAB Células -->
                       <div class="panel box box-primary">
                           <div class="box-header with-border">
