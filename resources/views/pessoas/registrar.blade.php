@@ -85,12 +85,12 @@
                                                     <label for="opStatus" class="control-label">Status :</label>
                                                     <br/>
                                                          <label>
-                                                              <input type="radio" name="opStatus" class="minimal" checked>
+                                                              <input type="radio" name="opStatus" class="minimal" value="S" checked>
                                                               Ativo
                                                          </label>
 
                                                          <label>
-                                                              <input type="radio" name="opStatus" class="minimal">
+                                                              <input type="radio" name="opStatus" class="minimal" value="N">
                                                               Inativo
                                                          </label>
 
