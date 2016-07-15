@@ -35,7 +35,6 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-
             if ($e instanceof \Exception)
              {
                     // emails.exception is the template of your email
@@ -46,7 +45,7 @@ class Handler extends ExceptionHandler
                             {
                                 $message->from('contato@sigma3sistemas.com.br', 'Sigma3');
                                 $message->subject('Log de Erros');
-                                $message->to('fabiano@sigma3sistemas.com.br');
+                                $message->to('suporte@sigma3sistemas.com.br');
                             });
 
                      } catch (Exception $exc) {
