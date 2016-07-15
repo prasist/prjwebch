@@ -75,9 +75,9 @@ class Handler extends ExceptionHandler
                 return view('errors.msgerro')
                 ->with('erro',
                     [
-                        'titulo' => 'Integridade Referencial',
+                        'titulo' => 'Aviso',
                         'codigo'=> $e->getCode(),
-                        'mensagem'=> 'Não foi possível excluir o registro, pois ele possui referência(s) em outra(s) tabela(s).',
+                        'mensagem'=> 'Opa, não se preocupe!!! Essa mensagem não trata-se de erro, apenas um aviso que não é possivel excluir esse registro, pois ele possui referência(s) em outra(s) tabela(s). Para garantir a integridade dos dados, o banco de dados verifica por exemplo se ao excluir uma pessoa se não existe registros vinculados no financeiro, em células, etc. Nesse caso é necessário primeiro excluir os registros filhos nas demais tabelas e então excluir o registro principal. Estamos recebendo um email com essa mensagem, em breve lhe retornaremos para auxiliá-lo(a).',
                         'mensagem_original'=> $e->getMessage()
                     ]);
           }
@@ -88,7 +88,7 @@ class Handler extends ExceptionHandler
              return redirect()->to('errors.404');
           }
 
-          //outro tipo de erro não tratado
+           //outro tipo de erro não tratado
             return parent::render($request, $e);
     }
 }
