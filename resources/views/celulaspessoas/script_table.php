@@ -65,7 +65,7 @@
         strCampos += '<input id="hidden_pessoas[]"  name = "hidden_pessoas[]" type="hidden" value="' + document.getElementById("pessoas").value + '">';
         strCampos += '<input id="hidden_lider_celulas[]"  name = "hidden_lider_celulas[]" type="hidden" value="' + str_celula + '">';
 
-        cols += '<td>' + str_celula + '</td>';
+        //cols += '<td>' + str_celula + '</td>';
         cols += '<td>' + document.getElementById("pessoas").value + '</td>';
         cols += '<td>';
         cols += '<a href="#" class="btn btn-danger btn-sm" onclick="RemoveTableRow(this)"><spam class="glyphicon glyphicon-trash"></spam></a>' + strCampos;

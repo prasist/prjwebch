@@ -80,12 +80,12 @@
                         <table id="example" class="table table-bordered table-hover">
                             <tbody>
                              <tr>
-                               <th>Célula</th>
+                               <!--<th>Célula</th>-->
                                <th>Pessoa</th>
                                <th>Remover</th>
                              </tr>
                              <tr>
-                               <td>&nbsp;</td>
+                               <!--<td>&nbsp;</td>-->
                                <td>&nbsp;</td>
                                <td>&nbsp;</td>
                              </tr>

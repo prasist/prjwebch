@@ -35,6 +35,27 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
+
+            if ($e instanceof \Exception)
+             {
+                    // emails.exception is the template of your email
+                    // it will have access to the $error that we are passing below
+
+                     try {
+
+                             \Mail::send('emails.logerros', ['msg_erros' => $e->getMessage()], function($message)
+                            {
+                                $message->from('contato@sigma3sistemas.com.br', 'Sigma3');
+                                $message->subject('Log de Erros');
+                                $message->to('fabiano@sigma3sistemas.com.br');
+                            });
+
+                     } catch (Exception $exc) {
+                            dd($exc);
+                     }
+
+            }
+
         return parent::report($e);
     }
 

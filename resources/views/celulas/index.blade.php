@@ -36,7 +36,6 @@
                         <th>Horário</th>
                         <th>Alterar</th>
                         <th>Visualizar</th>
-                        <th>Participantes</th>
                         <th>Excluir</th>
                         </tr>
                     </thead>
@@ -73,16 +72,6 @@
                             <td class="col-xs-1">
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
                                                <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" class = 'btn btn-primary btn-sm'><span class="glyphicon glyphicon-zoom-in"></span></a>
-                                      @endcan
-                            </td>
-
-                            <td class="col-xs-1">
-                                      @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
-                                               @if ($value->tot==0)
-                                                      <a href = "{{ URL::to('/celulaspessoas/registrar/' . $value->id) }}" class = 'btn btn-warning btn-sm'><span class="fa fa-users"></span></a>
-                                               @else
-                                                      <a href = "{{ URL::to('/celulaspessoas/' . $value->id . '/edit') }}" class = 'btn btn-warning btn-sm'><span class="fa fa-users"></span></a>
-                                               @endif
                                       @endcan
                             </td>
 

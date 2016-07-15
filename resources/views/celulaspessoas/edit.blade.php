@@ -82,14 +82,14 @@
                         <table id="example" class="table table-bordered table-hover">
                             <tbody>
                              <tr>
-                               <th>Célula</th>
+                               <!--<th>Célula</th>-->
                                <th>Pessoa</th>
                                <th>Remover</th>
                              </tr>
 
                             @foreach($dados as $item)
                              <tr>
-                               <td>{!! $item->descricao_concatenada !!}</td>
+                               <!--<td>{!! $item->descricao_concatenada !!}</td>-->
                                <td>{!! $item->descricao_pessoa !!}</td>
                                <td>
 
@@ -117,6 +117,7 @@
                             </tbody>
 
                         </table>
+
                        </div>
                   </div>
 

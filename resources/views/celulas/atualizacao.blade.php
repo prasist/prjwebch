@@ -39,6 +39,11 @@
 
                           <ul class="nav nav-tabs">
                             <li class="active"><a href="#tab_1" data-toggle="tab">Dados Cadastrais</a></li>
+
+                            @if ($tipo_operacao=="editar")
+                                <li><a href="#tab_participantes" data-toggle="tab">Participantes</a></li>
+                            @endif
+
                             <li><a href="#tab_2" data-toggle="tab">Vinculo de Células</a></li>
                             @if ($total_vinculos>0)
                                 <li><a href="#tab_3" data-toggle="tab"> Exibir Célula(s) Vinculada(s)&nbsp;<span class="pull-right badge bg-blue">{!! ($total_vinculos==0 ? "" : $total_vinculos) !!}</span></a></li>
@@ -541,6 +546,58 @@
                                         </div><!-- fim box-body"-->
 
                                     </div><!-- /.tab-pane -->
+
+                                      <div class="tab-pane" id="tab_participantes">
+
+                                          <div class="row">
+                                                <div class="col-xs-11">
+
+                                                    <a href="{{ URL::to('celulaspessoas/' . $dados[0]->id . '/edit') }}" class = 'btn btn-success btn-flat'><i class="fa fa-file-text-o"></i>  Incluir Participante(s)</a>
+
+                                                    <table id="example" class="table table-bordered table-hover">
+                                                        <tbody>
+                                                         <tr>
+                                                           <!--<th>Célula</th>-->
+                                                           <th>Pessoa</th>
+                                                           <th>Remover</th>
+                                                         </tr>
+
+                                                        @foreach($participantes as $item)
+                                                         <tr>
+                                                           <!--<td>{!! $item->descricao_concatenada !!}</td>-->
+                                                           <td>{!! $item->descricao_pessoa !!}</td>
+                                                           <td>
+
+                                                              <!--
+                                                                <a href="#" class="btn btn-danger btn-sm" onclick="RemoveTableRow(this)" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><spam class="glyphicon glyphicon-trash"></spam></a>
+                                                                <input id="hidden_celulas[]"  name = "hidden_celulas[]" type="hidden" value="{!! $item->celulas_id !!}">
+                                                                <input id="hidden_pessoas[]"  name = "hidden_pessoas[]" type="hidden" value="{!! $item->pessoas_id !!}">
+                                                                <input id="hidden_lider_celulas[]"  name = "hidden_lider_celulas[]" type="hidden" value="{!! $item->descricao_concatenada !!}">
+                                                              -->
+                                                                @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
+                                                                <form id="excluir{{ $item->celulas_id }}" action="{{ URL::to('celulaspessoas/' . $item->celulas_id . '/remover_membro/' . $item->pessoas_id) }}" method="DELETE">
+
+                                                                      <button
+                                                                          data-toggle="tooltip" data-placement="top" title="Remover Participante" type="submit"
+                                                                          class="btn btn-danger btn-sm"
+                                                                          onclick="return confirm('Deseja remover : {{ $item->descricao_pessoa }} da Célula ?');">
+                                                                          <spam class="glyphicon glyphicon-trash"></spam></button>
+
+                                                                </form>
+                                                                @endcan
+
+                                                           </td>
+                                                         </tr>
+                                                        @endforeach
+                                                        </tbody>
+
+                                                    </table>
+
+                                                </div>
+                                          </div>
+
+
+                                    </div>
 
                                     <div class="tab-pane" id="tab_2">
 
