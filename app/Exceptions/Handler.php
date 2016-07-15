@@ -40,7 +40,6 @@ class Handler extends ExceptionHandler
              {
                     // emails.exception is the template of your email
                     // it will have access to the $error that we are passing below
-
                      try {
 
                              \Mail::send('emails.logerros', ['msg_erros' => $e->getMessage()], function($message)
