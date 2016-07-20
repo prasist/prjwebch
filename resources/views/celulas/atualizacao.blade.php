@@ -552,8 +552,8 @@
                                           <div class="row">
                                                 <div class="col-xs-11">
 
+                                                    @if ($tipo_operacao=="editar")
                                                     <a href="{{ URL::to('celulaspessoas/' . $dados[0]->id . '/edit') }}" class = 'btn btn-success btn-flat'><i class="fa fa-file-text-o"></i>  Incluir Participante(s)</a>
-
                                                     <table id="example" class="table table-bordered table-hover">
                                                         <tbody>
                                                          <tr>
@@ -592,6 +592,7 @@
                                                         </tbody>
 
                                                     </table>
+                                                    @endif
 
                                                 </div>
                                           </div>
