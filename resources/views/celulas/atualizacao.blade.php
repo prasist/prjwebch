@@ -151,7 +151,7 @@
 
                                          <div class="row">
 
-                                              <div class="col-xs-4">
+                                              <div class="col-xs-6">
                                                       <label for="nome" class="control-label">Nome Célula</label>
                                                       @if ($tipo_operacao=="editar")
                                                             <input id="nome"  placeholder="(Opcional)" name = "nome" type="text" class="form-control" value="{!! $dados[0]->nome !!}">
@@ -160,7 +160,7 @@
                                                       @endif
                                               </div>
 
-                                              <div class="col-xs-4 {{ $errors->has('regiao') ? ' has-error' : '' }}">
+                                              <div class="col-xs-6 {{ $errors->has('regiao') ? ' has-error' : '' }}">
                                                       <label for="regiao" class="control-label">Região</label>
                                                       @if ($tipo_operacao=="editar")
                                                         <input id="regiao"  placeholder="(Opcional)" name = "regiao" type="text" class="form-control" value="{{$dados[0]->regiao}}">
@@ -180,7 +180,7 @@
 
                                         <div class="row">
 
-                                              <div class="col-xs-4 {{ $errors->has('pessoas') ? ' has-error' : '' }}">
+                                              <div class="col-xs-6 {{ $errors->has('pessoas') ? ' has-error' : '' }}">
                                                       <label for="pessoas" class="control-label"><span class="text-danger">*</span> Líder</label>
                                                       <div class="input-group">
                                                                <div class="input-group-addon">
@@ -207,7 +207,7 @@
                                                         </div>
                                                </div>
 
-                                               <div class="col-xs-4 {{ $errors->has('vicelider_pessoas_id') ? ' has-error' : '' }}">
+                                               <div class="col-xs-6 {{ $errors->has('vicelider_pessoas_id') ? ' has-error' : '' }}">
                                                       <label for="vicelider_pessoas_id" class="control-label">Líder em Treinamento</label>
                                                       <div class="input-group">
                                                                <div class="input-group-addon">
@@ -233,7 +233,11 @@
                                                         </div>
                                                </div>
 
-                                               <div class="col-xs-4 {{ $errors->has('suplente1_pessoas_id') ? ' has-error' : '' }}">
+
+                                        </div>
+
+                                        <div class="row">
+                                                   <div class="col-xs-12 {{ $errors->has('suplente1_pessoas_id') ? ' has-error' : '' }}">
                                                         <label for="suplente1_pessoas_id" class="control-label">Anfitrião</label>
                                                         <div class="input-group">
                                                                  <div class="input-group-addon">
@@ -259,14 +263,12 @@
 
                                                           </div>
                                                </div>
-
                                         </div>
-
 
 
                                         <div class="row">
 
-                                                <div class="col-xs-2 {{ $errors->has('dia_encontro') ? ' has-error' : '' }}">
+                                                <div class="col-xs-3 {{ $errors->has('dia_encontro') ? ' has-error' : '' }}">
                                                       <label for="dia_encontro" class="control-label"><span class="text-danger">*</span> Dia Encontro</label>
 
                                                       <select id="dia_encontro" placeholder="(Selecionar)" name="dia_encontro" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
@@ -376,7 +378,7 @@
 
                                            <div class="row">
 
-                                              <div class="col-xs-4">
+                                              <div class="col-xs-6">
                                                     @if ($tipo_operacao=="editar")
                                                           @include('carregar_combos', array('dados'=>$publicos, 'titulo' =>'Público Alvo', 'id_combo'=>'publico_alvo', 'complemento'=>'', 'comparar'=>$dados[0]->publico_alvo_id, 'id_pagina'=> '43'))
                                                     @else
@@ -386,7 +388,7 @@
                                                     @include('modal_cadastro_basico', array('qual_campo'=>'publico_alvo', 'modal' => 'modal_publico_alvo', 'tabela' => 'publicos_alvos'))
                                               </div>
 
-                                              <div class="col-xs-4">
+                                              <div class="col-xs-6">
                                                     @if ($tipo_operacao=="editar")
                                                           @include('carregar_combos', array('dados'=>$faixas, 'titulo' =>'Faixas Etárias', 'id_combo'=>'faixa_etaria', 'complemento'=>'', 'comparar'=>$dados[0]->faixa_etaria_id, 'id_pagina'=> '44'))
                                                     @else
@@ -443,7 +445,7 @@
 
 
                                                                   <div class="row">
-                                                                    <div class="col-xs-4">
+                                                                    <div class="col-xs-12">
                                                                           <label for="suplente2_pessoas_id" class="control-label">Líder Suplente</label>
                                                                           <div class="input-group">
                                                                                    <div class="input-group-addon">
@@ -463,8 +465,11 @@
 
                                                                             </div>
                                                                    </div>
+                                                               </div>
 
-                                                                    <div class="col-xs-2">
+                                                               <div class="row">
+
+                                                                    <div class="col-xs-3">
                                                                         <label for="segundo_dia_encontro" class="control-label">2º Dia Encontro</label>
 
                                                                         <select id="segundo_dia_encontro" placeholder="(Selecionar)" name="segundo_dia_encontro" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
