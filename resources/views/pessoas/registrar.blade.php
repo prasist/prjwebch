@@ -176,7 +176,7 @@
 
                                         <div class="row">
 
-                                                    <div class="col-xs-2 {{ $errors->has('cpf') ? ' has-error' : '' }} {{ $errors->has('cnpj') ? ' has-error' : '' }}">
+                                                    <div class="col-xs-3 {{ $errors->has('cpf') ? ' has-error' : '' }} {{ $errors->has('cnpj') ? ' has-error' : '' }}">
                                                            <label id="lb_cnpj_cpf" for="cnpj_cpf" class="control-label">{{ $interface->fisica==true ? 'CPF' : 'CNPJ'}}</label>
 
                                                            <input id="cnpj" style='{{ $interface->fisica==true ? 'display:none' : '' }}' data-inputmask='"mask": "99.999.999/9999-99"' data-mask name="cnpj" type="text" class="cnpj form-control" value="{{old('cnpj_cpf')}}">
@@ -198,12 +198,12 @@
 
                                                     </div>
 
-                                                    <div class="col-xs-2">
+                                                    <div class="col-xs-3">
                                                          <label id="lb_inscricaoestadual_rg" for="inscricaoestadual_rg" class="control-label">{{ $interface->fisica==true ? 'RG' : 'Insc. Estadual'}}</label>
                                                          <input id="inscricaoestadual_rg"  maxlength="15" name = "inscricaoestadual_rg" type="text" class="form-control" value="{{ old('inscricaoestadual_rg') }}">
                                                     </div>
 
-                                                    <div class="col-xs-2">
+                                                    <div class="col-xs-3">
                                                               <label id="lb_datanasc" for="datanasc" class="control-label">{{ $interface->fisica==true ? 'Data Nasc.' : 'Data Fundação'}}</label>
 
                                                               <div class="input-group">
@@ -219,7 +219,7 @@
                                        </div>
 
                                        <div class="row">
-                                                <div class="col-xs-2">
+                                                <div class="col-xs-3">
                                                     <label for="foneprincipal" class="control-label">Fone Principal</label>
 
                                                     <div class="input-group{{ $errors->has('foneprincipal') ? ' has-error' : '' }}">
@@ -233,7 +233,7 @@
 
                                               </div>
 
-                                                 <div class="col-xs-2">
+                                                 <div class="col-xs-3">
                                                         <label for="fonesecundario" class="control-label">Fone Secundário</label>
 
                                                         <div class="input-group">
@@ -246,7 +246,7 @@
 
                                                  </div>
 
-                                                <div class="col-xs-2">
+                                                <div class="col-xs-3">
                                                         <label for="fonerecado" class="control-label">Fone Recado</label>
 
                                                         <div class="input-group">
@@ -259,7 +259,7 @@
 
                                                  </div>
 
-                                                <div class="col-xs-2">
+                                                <div class="col-xs-3">
                                                     <label for="celular" class="control-label">Celular</label>
 
                                                     <div class="input-group">
@@ -332,7 +332,7 @@
 
                                       <div class="row">
 
-                                           <div class="col-xs-2">
+                                           <div class="col-xs-3">
                                                       <label for="cep" class="control-label">CEP</label>
                                                       <div class="input-group">
                                                                <div class="input-group-addon">
@@ -350,7 +350,7 @@
                                                     <input id="endereco" maxlength="150" name = "endereco" type="text" class="form-control" value="{{old('endereco')}}">
                                             </div>
 
-                                            <div class="col-xs-1">
+                                            <div class="col-xs-2">
                                                     <label for="numero" class="control-label">Número</label>
                                                     <input id="numero" maxlength="10" name = "numero" type="text" class="form-control" value="{{old('numero')}}">
                                             </div>
@@ -375,7 +375,7 @@
                                                     <input id="cidade" maxlength="60" name = "cidade" type="text" class="form-control" value="{{old('cidade')}}">
                                             </div>
 
-                                            <div class="col-xs-1">
+                                            <div class="col-xs-2">
                                                 <label for="estado" class="control-label">Estado</label>
                                                 <input id="estado" maxlength="2" name = "estado" type="text" class="form-control" value="{{old('estado')}}">
                                             </div>

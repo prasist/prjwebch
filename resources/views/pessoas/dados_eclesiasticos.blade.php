@@ -268,7 +268,7 @@
 
                                                            <div class="row">
 
-                                                                  <div class="col-xs-2">
+                                                                  <div class="col-xs-3">
                                                                               <label for="cep_prof" class="control-label">CEP</label>
                                                                               <div class="input-group">
                                                                                        <div class="input-group-addon">
@@ -286,7 +286,7 @@
                                                                             <input id="endereco_prof" maxlength="150" name = "endereco_prof" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('endereco_prof') : $membros_profissionais[0]->endereco) }}">
                                                                     </div>
 
-                                                                    <div class="col-xs-1">
+                                                                    <div class="col-xs-2">
                                                                             <label for="numero_prof" class="control-label">Número</label>
                                                                             <input id="numero_prof" maxlength="10" name = "numero_prof" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('numero_prof') : $membros_profissionais[0]->numero) }}">
                                                                     </div>
@@ -311,7 +311,7 @@
                                                                             <input id="cidade_prof" maxlength="60" name = "cidade_prof" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('cidade_prof') : $membros_profissionais[0]->cidade) }}">
                                                                     </div>
 
-                                                                    <div class="col-xs-1">
+                                                                    <div class="col-xs-2">
                                                                         <label for="estado_prof" class="control-label">Estado</label>
                                                                         <input id="estado_prof" maxlength="2" name = "estado_prof" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('estado_prof') : $membros_profissionais[0]->estado) }}">
                                                                     </div>
@@ -338,17 +338,20 @@
 
                                                             <div class="row"><!-- row-->
 
-                                                                   <div class="col-xs-4">
+                                                                   <div class="col-xs-12">
                                                                           @include('carregar_combos', array('dados'=>$cargos, 'titulo' =>'Cargo/Função', 'id_combo'=>'cargos', 'complemento'=>'', 'comparar'=>$membros_profissionais[0]->cargos_id, 'id_pagina'=> '20'))
                                                                           @include('modal_cadastro_basico', array('qual_campo'=>'cargos', 'modal' => 'modal_cargos', 'tabela' => 'cargos'))
                                                                    </div><!-- col-xs-5-->
-
-                                                                   <div class="col-xs-4">
+                                                            </div>
+                                                            <div class="row"><!-- row-->
+                                                                   <div class="col-xs-12">
                                                                           @include('carregar_combos', array('dados'=>$ramos, 'titulo' =>'Ramos de Atividade', 'id_combo'=>'ramos', 'complemento'=>'', 'comparar'=>$membros_profissionais[0]->ramos_id, 'id_pagina'=> '21'))
                                                                           @include('modal_cadastro_basico', array('qual_campo'=>'ramos', 'modal' => 'modal_ramos', 'tabela' => 'ramos_atividades'))
                                                                    </div><!-- col-xs-5-->
+                                                            </div>
+                                                            <div class="row"><!-- row-->
 
-                                                                   <div class="col-xs-4">
+                                                                   <div class="col-xs-12">
                                                                           @include('carregar_combos', array('dados'=>$profissoes, 'titulo' =>'Profissão', 'id_combo'=>'profissoes', 'complemento'=>'', 'comparar'=>$membros_profissionais[0]->profissoes_id, 'id_pagina'=> '11'))
                                                                           @include('modal_cadastro_basico', array('qual_campo'=>'profissoes', 'modal' => 'modal_profissoes', 'tabela' => 'profissoes'))
                                                                    </div><!-- col-xs-5-->
@@ -389,27 +392,28 @@
 
                                                     <div class="box-body"><!-- box-body-->
 
+                                                            <input type="hidden" name="graus" class="minimal" value="">
+                                                            <input type="hidden" name="formacoes[]" class="minimal" value="">
+                                                            <input type="hidden" name="idiomas[]" class="minimal" value="">
+
                                                             <div class="row"><!-- row-->
-
-                                                                  <input type="hidden" name="graus" class="minimal" value="">
-
-                                                                   <div class="col-xs-4">
+                                                                   <div class="col-xs-10">
                                                                           @include('carregar_combos', array('dados'=>$graus, 'titulo' =>'Grau de Instrução', 'id_combo'=>'graus', 'complemento'=>'', 'comparar'=>($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->graus_id), 'id_pagina'=> '10'))
                                                                           @include('modal_cadastro_basico', array('qual_campo'=>'graus', 'modal' => 'modal_graus', 'tabela' => 'graus_instrucao'))
                                                                    </div><!-- col-xs-5-->
+                                                           </div>
 
-                                                                   <input type="hidden" name="formacoes[]" class="minimal" value="">
-                                                                   <input type="hidden" name="idiomas[]" class="minimal" value="">
-
-                                                                   <div class="col-xs-4">
+                                                           <div class="row"><!-- row-->
+                                                                   <div class="col-xs-10">
                                                                           @include('carregar_combos_multiple', array('dados'=>$formacoes, 'titulo' =>'Áreas de Formação', 'id_combo'=>'formacoes[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_formacoes))
                                                                    </div><!-- col-xs-5-->
+                                                           </div>
 
-                                                                   <div class="col-xs-4">
+                                                            <div class="row"><!-- row-->
+                                                                   <div class="col-xs-10">
                                                                           @include('carregar_combos_multiple', array('dados'=>$idiomas, 'titulo' =>'Idiomas', 'id_combo'=>'idiomas[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_idiomas))
                                                                    </div><!-- col-xs-5-->
-
-                                                            </div><!-- end row-->
+                                                           </div><!-- end row-->
 
                                                      </div><!-- end box-body-->
 
@@ -466,7 +470,7 @@
 
                                                           <div class="row"><!-- row entrada-->
 
-                                                                  <div class="col-xs-3">
+                                                                  <div class="col-xs-12">
                                                                       <label for="conjuge" class="control-label">Selecionar Conjuge já cadastrado</label>
                                                                       <div class="input-group">
                                                                                <div class="input-group-addon">
@@ -481,9 +485,11 @@
 
                                                                         </div>
                                                                   </div>
+                                                          </div>
+                                                          <div class="row"><!-- row-->
 
 
-                                                                   <div class="col-xs-3">
+                                                                   <div class="col-xs-5">
                                                                       <label for="nome_conjuge" class="control-label">ou Informar Nome Conjuge</label>
                                                                       <input id="nome_conjuge" name = "nome_conjuge" type="text" onblur="validar_conjuge();" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('nome_conjuge') : $membros_familiares[0]->nome_conjuge) }}">
                                                                    </div>
@@ -493,7 +499,7 @@
                                                                       <input id="igrejacasamento" name = "igrejacasamento" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('igrejacasamento') : $membros_familiares[0]->igreja_casamento) }}">
                                                                    </div>
 
-                                                                   <div class="col-xs-3">
+                                                                   <div class="col-xs-4">
                                                                         <label for="datacasamento" class="control-label">Data Casamento</label>
 
                                                                         <div class="input-group">
@@ -765,8 +771,7 @@
                                                     <div class="box-body"><!-- box-body-->
 
                                                           <div class="row"><!-- row pai-->
-
-                                                                   <div class="col-xs-3">
+                                                                   <div class="col-xs-12">
                                                                       <label for="pai" class="control-label">Pai - Selecionar do cadastro</label>
                                                                       <div class="input-group">
                                                                                <div class="input-group-addon">
@@ -781,19 +786,21 @@
 
                                                                         </div>
                                                                   </div>
+                                                         </div>
+                                                         <div class="row"><!-- row-->
 
-                                                                   <div class="col-xs-3">
+                                                                   <div class="col-xs-4">
                                                                       <label for="nome_pai" class="control-label">ou Informar Nome Pai</label>
                                                                       <input id="nome_pai" name = "nome_pai" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('nome_pai') : $membros_familiares[0]->nome_pai) }}">
                                                                    </div>
 
-                                                                   <div class="col-xs-3">
+                                                                   <div class="col-xs-4">
                                                                         @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status_pai', 'complemento'=>'', 'comparar'=>$membros_familiares[0]->status_pai_id, 'id_pagina'=> '8'))
                                                                         @include('modal_cadastro_basico', array('qual_campo'=>'status_pai', 'modal' => 'modal_status_pai', 'tabela' => 'status'))
                                                                     </div>
 
-                                                                    <div class="col-xs-2">
-                                                                        <label for="datafalecimento_pai" class="control-label">Data Falecimento</label>
+                                                                    <div class="col-xs-4">
+                                                                        <label for="datafalecimento_pai" class="control-label">Data Falecimento Pai</label>
 
                                                                         <div class="input-group">
                                                                                <div class="input-group-addon">
@@ -808,8 +815,7 @@
                                                           </div><!-- end row-->
 
                                                           <div class="row"><!-- row mãe-->
-
-                                                                   <div class="col-xs-3">
+                                                                   <div class="col-xs-12">
                                                                           <label for="mae" class="control-label">Mãe - Selecionar do cadastro</label>
                                                                           <div class="input-group">
                                                                                  <div class="input-group-addon">
@@ -824,20 +830,22 @@
 
                                                                           </div>
                                                                   </div>
+                                                         </div>
+                                                         <div class="row"><!-- row-->
 
-                                                                   <div class="col-xs-3">
+                                                                   <div class="col-xs-4">
                                                                       <label for="nome_mae" class="control-label">ou Informar Nome Mãe</label>
                                                                       <input id="nome_mae" name = "nome_mae" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('nome_mae') : $membros_familiares[0]->nome_mae) }}">
                                                                    </div>
 
 
-                                                                   <div class="col-xs-3">
+                                                                   <div class="col-xs-4">
                                                                         @include('carregar_combos', array('dados'=>$status, 'titulo' =>'Status', 'id_combo'=>'status_mae', 'complemento'=>'', 'comparar'=>$membros_familiares[0]->status_mae_id, 'id_pagina'=> '8'))
                                                                         @include('modal_cadastro_basico', array('qual_campo'=>'status_mae', 'modal' => 'modal_status_mae', 'tabela' => 'status'))
                                                                     </div>
 
-                                                                    <div class="col-xs-2">
-                                                                        <label for="datafalecimento_mae" class="control-label">Data Falecimento</label>
+                                                                    <div class="col-xs-4">
+                                                                        <label for="datafalecimento_mae" class="control-label">Data Falecimento Mãe</label>
 
                                                                         <div class="input-group">
                                                                                <div class="input-group-addon">
@@ -887,11 +895,11 @@
                                                             <div class="row"><!-- row-->
 
                                                                    <input type="hidden" name="tiposrelacionamentos[]" class="minimal" value="">
-                                                                   <div class="col-xs-4">
+                                                                   <div class="col-xs-5">
                                                                           @include('carregar_combos_multiple', array('dados'=>$tiposrelacionamentos, 'titulo' =>'Tipos de Relacionamentos', 'id_combo'=>'tiposrelacionamentos[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_relacionamentos))
                                                                    </div><!-- col-xs-5-->
 
-                                                                   <div class="col-xs-6">
+                                                                   <div class="col-xs-7">
                                                                       <label for="pessoa_relacionamento" class="control-label">Com Quem ?</label>
                                                                       <div class="input-group">
                                                                                <div class="input-group-addon">
@@ -957,7 +965,7 @@
                                                                 </div>
 
 
-                                                                <div class="col-xs-2">
+                                                                <div class="col-xs-3">
                                                                     <label for="fone_igreja_anterior" class="control-label">Telefone</label>
 
                                                                     <div class="input-group">
@@ -980,7 +988,7 @@
 
                                                            <div class="row">
 
-                                                                  <div class="col-xs-2">
+                                                                  <div class="col-xs-3">
                                                                               <label for="cep_igreja_anterior" class="control-label">CEP</label>
                                                                               <div class="input-group">
                                                                                        <div class="input-group-addon">
@@ -998,7 +1006,7 @@
                                                                             <input id="endereco_igreja_anterior" maxlength="150" name = "endereco_igreja_anterior" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('endereco_igreja_anterior') : $membros_historico[0]->endereco_igreja_anterior) }}">
                                                                     </div>
 
-                                                                    <div class="col-xs-1">
+                                                                    <div class="col-xs-2">
                                                                             <label for="numero_igreja_anterior" class="control-label">Número</label>
                                                                             <input id="numero_igreja_anterior" maxlength="10" name = "numero_igreja_anterior" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('numero_igreja_anterior') : $membros_historico[0]->numero_igreja_anterior) }}">
                                                                     </div>
@@ -1023,7 +1031,7 @@
                                                                             <input id="cidade_igreja_anterior" maxlength="60" name = "cidade_igreja_anterior" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('cidade_igreja_anterior') : $membros_historico[0]->cidade_igreja_anterior) }}">
                                                                     </div>
 
-                                                                    <div class="col-xs-1">
+                                                                    <div class="col-xs-2">
                                                                         <label for="estado_igreja_anterior" class="control-label">Estado</label>
                                                                         <input id="estado_igreja_anterior" maxlength="2" name = "estado_igreja_anterior" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('estado_igreja_anterior') : $membros_historico[0]->estado_igreja_anterior) }}">
                                                                     </div>
@@ -1049,7 +1057,7 @@
 
                                                             <div class="row">
 
-                                                                <div class="col-xs-2">
+                                                                <div class="col-xs-4">
                                                                         <label for="data_batismo" class="control-label">Data Batismo</label>
 
                                                                         <div class="input-group">
@@ -1062,7 +1070,7 @@
 
                                                                </div>
 
-                                                                <div class="col-xs-5">
+                                                                <div class="col-xs-4">
                                                                         <label for="igreja_batismo" class="control-label">Igreja</label>
                                                                         <input id="igreja_batismo" maxlength="150" name = "igreja_batismo" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('igreja_batismo') : $membros_historico[0]->igreja_batismo) }}">
                                                                 </div>
@@ -1093,7 +1101,7 @@
 
                                                           <div class="row"><!-- row entrada-->
 
-                                                                <div class="col-xs-2">
+                                                                <div class="col-xs-4">
                                                                         <label  for="data_entrada" class="control-label">Data Entrada</label>
 
                                                                         <div class="input-group">
@@ -1106,12 +1114,12 @@
 
                                                                </div>
 
-                                                                <div class="col-xs-4">
+                                                                <div class="col-xs-5">
                                                                         @include('carregar_combos', array('dados'=>$motivos, 'titulo' =>'Motivo Entrada', 'id_combo'=>'motivo_entrada', 'complemento'=>'', 'comparar'=>$membros_historico[0]->motivos_entrada_id, 'id_pagina'=> '18'))
                                                                         @include('modal_cadastro_basico', array('qual_campo'=>'motivo_entrada', 'modal' => 'modal_motivo_entrada', 'tabela' => 'tipos_movimentacao'))
                                                                 </div><!-- col-xs-5-->
 
-                                                                <div class="col-xs-4">
+                                                                <div class="col-xs-3">
                                                                         <label for="ata_entrada" class="control-label">Registrado em Ata n.:</label>
                                                                         <input id="ata_entrada" name = "ata_entrada" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('ata_entrada') : $membros_historico[0]->ata_entrada) }}">
                                                                 </div>
@@ -1120,7 +1128,7 @@
 
                                                           <div class="row"><!-- row saida-->
 
-                                                                <div class="col-xs-2">
+                                                                <div class="col-xs-4">
                                                                         <label  for="data_saida" class="control-label">Data Saída</label>
 
                                                                         <div class="input-group">
@@ -1133,12 +1141,12 @@
 
                                                                </div>
 
-                                                                <div class="col-xs-4">
+                                                                <div class="col-xs-5">
                                                                         @include('carregar_combos', array('dados'=>$motivos, 'titulo' =>'Motivo Saída', 'id_combo'=>'motivosaida', 'complemento'=>'', 'comparar'=>$membros_historico[0]->motivos_saida_id, 'id_pagina'=> '18'))
                                                                         @include('modal_cadastro_basico', array('qual_campo'=>'motivosaida', 'modal' => 'modal_motivosaida', 'tabela' => 'tipos_movimentacao'))
                                                                 </div><!-- col-xs-5-->
 
-                                                                <div class="col-xs-4">
+                                                                <div class="col-xs-3">
                                                                         <label for="ata_saida" class="control-label">Registrado em Ata n.:</label>
                                                                         <input id="ata_saida" name = "ata_saida" type="text" class="form-control" value="{{ ($tipo_operacao=='inclusao' ? old('ata_saida') : $membros_historico[0]->ata_saida) }}">
                                                                 </div>
@@ -1184,7 +1192,7 @@
 
                                                             <div class="row"><!-- row-->
 
-                                                                  <div class="col-xs-4">
+                                                                  <div class="col-xs-6">
                                                                         <label for="prefere_trabalhar_com" class="control-label">Prefere trabalhar com :</label>
 
                                                                          <select name="prefere_trabalhar_com" class="form-control select2" style="width: 100%;">
@@ -1194,7 +1202,7 @@
                                                                           </select>
                                                                   </div><!-- end col-xs-->
 
-                                                                  <div class="col-xs-4">
+                                                                  <div class="col-xs-6">
 
                                                                         <label for="considera_se" class="control-label">Considera-se :</label>
 
@@ -1215,16 +1223,18 @@
 
                                                             <div class="row"><!-- row-->
 
-                                                                   <div class="col-xs-4">
+                                                                   <div class="col-xs-6">
                                                                           @include('carregar_combos', array('dados'=>$disponibilidades, 'titulo' =>'Disponibilidade de Tempo', 'id_combo'=>'disponibilidades', 'complemento'=>'', 'comparar'=> ($tipo_operacao=='inclusao' ? '' : $membros_dados_pessoais[0]->disponibilidades_id), 'id_pagina'=> '25'))
                                                                           @include('modal_cadastro_basico', array('qual_campo'=>'disponibilidades', 'modal' => 'modal_disponibilidades', 'tabela' => 'disponibilidades'))
                                                                    </div><!-- col-xs-5-->
 
-                                                                   <div class="col-xs-4">
+                                                                   <div class="col-xs-6">
                                                                           @include('carregar_combos_multiple', array('dados'=>$dons, 'titulo' =>'Dons Espirituais', 'id_combo'=>'dons[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_dons))
                                                                    </div><!-- col-xs-5-->
 
-                                                                   <div class="col-xs-4">
+                                                            </div>
+                                                            <div class="row"><!-- row-->
+                                                                   <div class="col-xs-6">
                                                                           @include('carregar_combos_multiple', array('dados'=>$habilidades, 'titulo' =>'Habilidades', 'id_combo'=>'habilidades[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_habilidades))
                                                                    </div><!-- col-xs-5-->
 

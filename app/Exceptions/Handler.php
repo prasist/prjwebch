@@ -76,7 +76,7 @@ class Handler extends ExceptionHandler
                     [
                         'titulo' => 'Aviso',
                         'codigo'=> $e->getCode(),
-                        'mensagem'=> 'Opa, não se preocupe!!! Essa mensagem não trata-se de erro, apenas um aviso que não é possivel excluir esse registro, pois ele possui referência(s) em outra(s) tabela(s). Para garantir a integridade dos dados, o banco de dados verifica por exemplo se ao excluir uma pessoa se não existe registros vinculados no financeiro, em células, etc. Nesse caso é necessário primeiro excluir os registros filhos nas demais tabelas e então excluir o registro principal. Estamos recebendo um email com essa mensagem, em breve lhe retornaremos para auxiliá-lo(a).',
+                        'mensagem'=> 'Opa, não se preocupe!!! Não é erro, apenas um aviso que não é possivel excluir esse registro, pois ele possui referência(s) em outra(s) tabela(s). Para garantir a integridade dos dados, o sistema verifica se na tentativa da exclusão do registro não há vinculos com outros. Nesse caso é necessário primeiro excluir os registros vinculados antes de excluir o registro principal. Estamos recebendo um email com essa mensagem, em breve lhe retornaremos para auxiliá-lo(a).',
                         'mensagem_original'=> $e->getMessage()
                     ]);
           }

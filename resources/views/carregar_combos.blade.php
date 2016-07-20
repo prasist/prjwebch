@@ -15,7 +15,7 @@
         </div>
 
         <!-- class="form-control selectpicker" -->
-        <select id="{!!$id_combo!!}" onchange="incluir_registro_combo('{!!$id_combo!!}');" placeholder="(Selecionar)" name="{!!$id_combo!!}" {!!$complemento!!} data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+        <select id="{!!$id_combo!!}" onchange="incluir_registro_combo('{!!$id_combo!!}');" placeholder="(Selecionar)" name="{!!$id_combo!!}" {!!$complemento!!} data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
         <option  value=""></option>
 
         <!-- Verifica permissão de inclusao da pagina/tabela-->

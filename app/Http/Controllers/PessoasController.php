@@ -374,7 +374,7 @@ class PessoasController extends Controller
             $membros_idiomas =  "";
             $membros_familiares = $vazio;
             $membros_relacionamentos = $vazio;
-            $membros_filhos = $tipos;
+            $membros_filhos = $vazio;
             $membros_atividades =  "";
             $membros_ministerios =  "";
             $membros_historico =  $vazio;

@@ -15,11 +15,11 @@
 
 <div class = 'row'>
 
-    <div class="col-md-12">
-        <div>
-                <a href={{ url('/' . \Session::get('route')) }} class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
-        </div>
-    </div>
+  <div class="col-md-12">
+      <div>
+              <a href={{ url('/' . \Session::get('route')) }} class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+      </div>
+ </div>
 
 
   <!-- Main content -->
@@ -67,7 +67,7 @@
 
                       <div class="row">
 
-                              <div class="col-xs-4">
+                            <div class="col-xs-4">
                                     <label for="mes" class="control-label">Mês</label>
                                     <select id="mes" name="mes" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
                                         <option  value=""></option>
@@ -113,19 +113,15 @@
               <!-- FIM CONTEUDO -->
 
 
-
-
         </div>
 
         <!--/.col (left) -->
         <!-- right column -->
         <div class="col-md-6">
 
-
- <!-- INICIO CONTEUDO -->
-
+                <!-- INICIO CONTEUDO -->
                 <!-- Horizontal Form -->
-                <div class="box box-info">
+            <div class="box box-info" id="box_resumo" style="display: none">
                   <div class="box-header with-border">
                     <h3 class="box-title">Resumo</h3>
                   </div>
@@ -155,24 +151,20 @@
                                   <p>14</p>
                             </div>
 
-
                       </div>
 
-
                  </div>
-                    <!-- /.box-body -->
-                    <!-- /.box-footer -->
-                  </div>
-                </div>
-                <!-- /.box -->
-              <!-- FIM CONTEUDO -->
-
+                <!-- /.box-body -->
+                <!-- /.box-footer -->
+              </div>
+            </div>
+            <!-- /.box -->
+            <!-- FIM CONTEUDO -->
 
 
         </div>
 
-        <div class="col-md-12">
-
+       <div class="col-md-12" id="box_participantes" style="display: none">
 
           @if ($tipo_operacao=="incluir")
                 <form method = 'POST' class="form-horizontal" action = {{ url('/clientes/gravar')}}>
@@ -187,31 +179,31 @@
                 <div class="box-body">
 
 
-
                         <div class="row">
                               <p id="reune_sempre"></p>
                         </div>
 
-
                         <div class="row">
                            <div class="col-xs-12">
                            <br/>
-                              <table id="tab_participantes" class="table table-responsive">
-                              <thead>
-                                  <tr>
-                                      <th>Participantes</th>
-                                      <th>Presença</th>
-                                      <th>Observação</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                              </tbody>
-                              </table>
+
+                                 <table id="tab_participantes" class="table table-bordered table-hover">
+                                  <thead>
+                                      <tr>
+                                          <th class="col-xs-4">Participantes</th>
+                                          <th class="col-xs-2">Presença</th>
+                                          <th class="col-xs-6">Observação</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                        <td class="col-xs-4"></td>
+                                        <td class="col-xs-2"></td>
+                                        <td class="col-xs-6"></td>
+                                    </tr>
+                                  </tbody>
+                                 </table>
+
                              </div>
                         </div>
 
@@ -220,12 +212,11 @@
 
               </form>
 
-          </div>
+       </div>
 
 
-        <!-- ini-->
-        <div class="col-md-12">
-
+       <!-- ini-->
+       <div class="col-md-12"  id="box_visitantes" style="display: none">
 
             <!-- Horizontal Form -->
                 <div class="box box-info">
@@ -274,7 +265,7 @@
 
         </div>
 
-       <div class="col-md-12">
+       <div class="col-md-12"  id="box_questions" style="display: none">
              <!-- Horizontal Form -->
                 <div class="box box-info">
                   <div class="box-header with-border">
@@ -322,7 +313,7 @@
 
                 <!-- /.box -->
                 <!-- FIM CONTEUDO -->
-         </div>
+       </div>
 
       </div>
       <!-- /.row -->
@@ -335,7 +326,6 @@
 
     </section>
     <!-- /.content -->
-
 
 
 </div>
@@ -399,9 +389,14 @@
 
             }); //fim change celulas
 
+
           $("#data_encontro").change(function()
           {
                 $("[name='presenca']").bootstrapSwitch();
+                $('#box_participantes').show();
+                $('#box_visitantes').show();
+                $('#box_questions').show();
+                $('#box_resumo').show();
           });
 
     });
