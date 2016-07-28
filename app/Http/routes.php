@@ -51,6 +51,7 @@
 
     /*Controle Atividades*/
     Route::get('controle_atividades', 'ControleAtividadesController@index');
+    Route::get('controle_atividades/buscar/{cell_id}/{day}/{month}/{year}', 'ControleAtividadesController@buscar');
     Route::post('/controle_atividades/gravar','ControleAtividadesController@store');
     Route::get('/controle_atividades/registrar','ControleAtividadesController@create');
     Route::get('/controle_atividades/{id}/preview','ControleAtividadesController@show');
@@ -524,6 +525,8 @@
     Route::get('configuracoes/{id}/edit','ConfiguracoesController@edit');
 
     /*Células*/
+    Route::get('celulas/buscar/{id}', 'CelulasController@buscar_dados');
+    Route::get('celulas/buscar_datas/{dia}/{mes}/{ano}', 'CelulasController@return_dates');
     Route::get('celulas', 'CelulasController@index');
     Route::post('/celulas/gravar','CelulasController@store');
     Route::get('/celulas/registrar','CelulasController@create');

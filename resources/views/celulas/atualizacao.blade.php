@@ -273,21 +273,22 @@
 
                                                       <select id="dia_encontro" placeholder="(Selecionar)" name="dia_encontro" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                                       <option  value=""></option>
+                                                      <!--[0 Domingo] - [1 Segunda] - [2 Terca] - [3 Quarta] - [4 Quinta] - [5 Sexta] - [6 Sabado]-->
                                                       @if ($tipo_operacao=="editar")
-                                                             <option  value="2" {{ ($dados[0]->dia_encontro=="2" ? "selected" : "") }}>Segunda-Feira</option>
-                                                             <option  value="3" {{ ($dados[0]->dia_encontro=="3" ? "selected" : "") }}>Terça-Feira</option>
-                                                             <option  value="4" {{ ($dados[0]->dia_encontro=="4" ? "selected" : "") }}>Quarta-Feira</option>
-                                                             <option  value="5" {{ ($dados[0]->dia_encontro=="5" ? "selected" : "") }}>Quinta-Feira</option>
-                                                             <option  value="6" {{ ($dados[0]->dia_encontro=="6" ? "selected" : "") }}>Sexta-Feira</option>
-                                                             <option  value="7" {{ ($dados[0]->dia_encontro=="7" ? "selected" : "") }}>Sábado</option>
+                                                             <option  value="1" {{ ($dados[0]->dia_encontro=="2" ? "selected" : "") }}>Segunda-Feira</option>
+                                                             <option  value="2" {{ ($dados[0]->dia_encontro=="3" ? "selected" : "") }}>Terça-Feira</option>
+                                                             <option  value="3" {{ ($dados[0]->dia_encontro=="4" ? "selected" : "") }}>Quarta-Feira</option>
+                                                             <option  value="4" {{ ($dados[0]->dia_encontro=="5" ? "selected" : "") }}>Quinta-Feira</option>
+                                                             <option  value="5" {{ ($dados[0]->dia_encontro=="6" ? "selected" : "") }}>Sexta-Feira</option>
+                                                             <option  value="6" {{ ($dados[0]->dia_encontro=="7" ? "selected" : "") }}>Sábado</option>
                                                              <option  value="0" {{ ($dados[0]->dia_encontro=="0" ? "selected" : "") }}>Domingo</option>
                                                       @else
-                                                             <option  value="2" >Segunda-Feira</option>
-                                                             <option  value="3" >Terça-Feira</option>
-                                                             <option  value="4" >Quarta-Feira</option>
-                                                             <option  value="5">Quinta-Feira</option>
-                                                             <option  value="6">Sexta-Feira</option>
-                                                             <option  value="7">Sábado</option>
+                                                             <option  value="1" >Segunda-Feira</option>
+                                                             <option  value="2" >Terça-Feira</option>
+                                                             <option  value="3" >Quarta-Feira</option>
+                                                             <option  value="4">Quinta-Feira</option>
+                                                             <option  value="5">Sexta-Feira</option>
+                                                             <option  value="6">Sábado</option>
                                                              <option  value="0">Domingo</option>
                                                       @endif
                                                       </select>
@@ -495,7 +496,7 @@
 
                                                                   </div>
 
-                                                                  <div class="col-xs-2">
+                                                                  <div class="col-xs-3">
 
                                                                           <div class="bootstrap-timepicker">
                                                                                 <div class="form-group">
@@ -522,7 +523,7 @@
                                                                 </div>
 
                                                                 <div class="row">
-                                                                       <div class="col-xs-2">
+                                                                       <div class="col-xs-3">
                                                                                 <label  for="data_inicio" class="control-label">Data de Início da Célula</label>
                                                                                 <div class="input-group">
                                                                                        <div class="input-group-addon">

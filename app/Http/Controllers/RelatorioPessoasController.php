@@ -29,6 +29,14 @@ class RelatorioPessoasController extends Controller
     public function CarregarView($var_download, $var_mensagem)
     {
 
+        $disponibilidades = \App\Models\disponibilidades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+        $dons = \App\Models\dons::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+        $tiposrelacionamentos = \App\Models\tiposrelacionamentos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+        $habilidades = \App\Models\habilidades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+        $religioes = \App\Models\religioes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+        $atividades = \App\Models\atividades::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+        $ministerios = \App\Models\ministerios::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
+
         $ramos = \App\Models\ramos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
         $cargos = \App\Models\cargos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
         $profissoes = \App\Models\profissoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
@@ -53,6 +61,13 @@ class RelatorioPessoasController extends Controller
 
         return view($this->rota . '.index',
             [
+                'disponibilidades'=>$disponibilidades,
+                'dons'=>$dons,
+                'tiposrelacionamentos'=>$tiposrelacionamentos,
+                'habilidades'=>$habilidades,
+                'religioes'=>$religioes,
+                'atividades'=>$atividades,
+                'ministerios'=>$ministerios,
                 'nivel1'=>$view1,
                 'nivel2'=>$view2,
                 'nivel3'=>$view3,
@@ -110,10 +125,12 @@ class RelatorioPessoasController extends Controller
     $filtros = "";
     $descricao_status="";
     $descricao_situacoes="";
+    $descricao_formacao="";
     $descricao_tipos="";
     $descricao_estado_civil="";
     $descricao_motivo_ent="";
     $descricao_motivo_sai="";
+    $descricao_profissao="";
     $descricao_grupo="";
     $descricao_nivel1="";
     $descricao_nivel2="";
@@ -122,6 +139,14 @@ class RelatorioPessoasController extends Controller
     $descricao_nivel5="";
     $descricao_idiomas="";
     $descricao_graus="";
+    $descricao_ramos="";
+    $descricao_cargos="";
+    $descricao_disponibilidade="";
+    $descricao_religiao="";
+    $descricao_dons="";
+    $descricao_habilidade="";
+    $descricao_atividade="";
+    $descricao_ministerio="";
     $where="";
 
     if ($input["situacoes"]!="") $descricao_situacoes = explode("|", $input["situacoes"]);
@@ -129,7 +154,17 @@ class RelatorioPessoasController extends Controller
     if ($input["tipos"]!="") $descricao_tipos = explode("|", $input["tipos"]);
     if ($input["status_id"]!="") $descricao_status = explode("|", $input["status_id"]);
     if ($input["idiomas_id"]!="") $descricao_idiomas = explode("|", $input["idiomas_id"]);
+    if ($input["formacoes_id"]!="") $descricao_formacao = explode("|", $input["formacoes_id"]);
+    if ($input["profissoes_id"]!="") $descricao_profissao = explode("|", $input["profissoes_id"]);
+    if ($input["religioes_id"]!="") $descricao_religiao = explode("|", $input["religioes_id"]);
+    if ($input["ramos_id"]!="") $descricao_ramos = explode("|", $input["ramos_id"]);
+    if ($input["cargos_id"]!="") $descricao_cargos = explode("|", $input["cargos_id"]);
     if ($input["graus_id"]!="") $descricao_graus = explode("|", $input["graus_id"]);
+    if ($input["habilidades_id"]!="") $descricao_habilidade = explode("|", $input["habilidades_id"]);
+    if ($input["ministerios_id"]!="") $descricao_ministerio = explode("|", $input["ministerios_id"]);
+    if ($input["dons_id"]!="") $descricao_don = explode("|", $input["dons_id"]);
+    if ($input["atividades_id"]!="") $descricao_atividade = explode("|", $input["atividades_id"]);
+    if ($input["disponibilidades_id"]!="") $descricao_disponibilidade = explode("|", $input["disponibilidades_id"]);
     if ($input["motivoentrada"]!="") $descricao_motivo_ent = explode("|", $input["motivoentrada"]);
     if ($input["motivosaida"]!="") $descricao_motivo_sai = explode("|", $input["motivosaida"]);
     if ($input["grupo"]!="") $descricao_grupo = explode("|", $input["grupo"]);
@@ -140,7 +175,7 @@ class RelatorioPessoasController extends Controller
     if ($input["nivel5_up"]!="") $descricao_nivel5 = explode("|", $input["nivel5_up"]);
 
 
-    $where = " where empresas_id = " . $this->dados_login->empresas_id . "  and empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " and (emailprincipal is not null and emailprincipal<> '') ";
+    $where = " where p.empresas_id = " . $this->dados_login->empresas_id . "  and p.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " and (emailprincipal is not null and emailprincipal<> '') ";
 
     /*Filtros utilizados*/
     if ($input["possui_necessidades_especiais"]!="")
@@ -173,10 +208,79 @@ class RelatorioPessoasController extends Controller
         $where .= " and graus_id = " . $descricao_graus[0];
     }
 
+
+    if ($input["formacoes_id"]!="")
+    {
+        $filtros .= "   Area de Formacao : " . $descricao_formacao[1];
+        $where .= " and formacoes_id = " . $descricao_formacao[0];
+    }
+
+    if ($input["profissoes_id"]!="")
+    {
+        $filtros .= "   Profissao : " . $descricao_profissao[1];
+        $where .= " and profissoes_id = " . $descricao_profissao[0];
+    }
+
+    if ($input["ramos_id"]!="")
+    {
+        $filtros .= "   Ramo Atividade : " . $descricao_ramos[1];
+        $where .= " and ramos_id = " . $descricao_ramos[0];
+    }
+
+    if ($input["cargos_id"]!="")
+    {
+        $filtros .= "   Cargo : " . $descricao_cargos[1];
+        $where .= " and cargos_id = " . $descricao_cargos[0];
+    }
+
+    if ($input["disponibilidades_id"]!="")
+    {
+        $filtros .= "   Disponibilidade : " . $descricao_disponibilidade[1];
+        $where .= " and disponibilidades_id = " . $descricao_disponibilidade[0];
+    }
+
+
+    if ($input["tipo_sangue"]!="")
+    {
+        $filtros .= "   Tipo Sanguinio : " . strtoupper($input["tipo_sangue"]);
+        $where .= " and grupo_sanguinio = '" . strtoupper($input["tipo_sangue"]) . "'";
+    }
+
+
+    if ($input["religioes_id"]!="")
+    {
+        $filtros .= "   Religiao : " . $descricao_religiao[1];
+        $where .= " and religioes_id = " . $descricao_religiao[0];
+    }
+
+    if ($input["dons_id"]!="")
+    {
+        $filtros .= "   Don : " . $descricao_don[1];
+        $where .= " and dons_id = " . $descricao_don[0];
+    }
+
+    if ($input["habilidades_id"]!="")
+    {
+        $filtros .= "   Habilidade : " . $descricao_habilidade[1];
+        $where .= " and habilidades_id = " . $descricao_habilidade[0];
+    }
+
+    if ($input["atividades_id"]!="")
+    {
+        $filtros .= "   Atividade : " . $descricao_atividade[1];
+        $where .= " and atividades_id = " . $descricao_atividade[0];
+    }
+
+    if ($input["ministerios_id"]!="")
+    {
+        $filtros .= "   Ministerio : " . $descricao_ministerio[1];
+        $where .= " and ministerios_id = " . $descricao_ministerio[0];
+    }
+
     if ($input["idiomas_id"]!="")
     {
         $filtros .= "   Idioma : " . $descricao_idiomas[1];
-        $where .= " and idiomas_id = " . $descricao_idiomas[0];
+        $where .= " and mi.idiomas_id = " . $descricao_idiomas[0];
     }
 
     if ($input["mes"]!="")
@@ -350,6 +454,62 @@ class RelatorioPessoasController extends Controller
         $parametros = array_add($parametros, 'data_saida_final', ($input["data_saida_ate"]=="" ? '' : $formatador->FormatarData($input["data_saida_ate"])));
     }
 
+
+    if ($input["tipo_sangue"]!="")
+    {
+        $parametros = array_add($parametros, 'grupo_sanguinio', strtoupper($input["tipo_sangue"]));
+    }
+
+    if ($input["formacoes_id"]!="")
+    {
+        $parametros = array_add($parametros, 'formacoes_id', ($descricao_formacao=="" ? 0 : $descricao_formacao[0]));
+    }
+
+    if ($input["profissoes_id"]!="")
+    {
+        $parametros = array_add($parametros, 'profissoes_id', ($descricao_profissao=="" ? 0 : $descricao_profissao[0]));
+    }
+
+    if ($input["ramos_id"]!="")
+    {
+        $parametros = array_add($parametros, 'ramos_id', ($descricao_ramos=="" ? 0 : $descricao_ramos[0]));
+    }
+
+    if ($input["cargos_id"]!="")
+    {
+        $parametros = array_add($parametros, 'cargos_id', ($descricao_cargos=="" ? 0 : $descricao_cargos[0]));
+    }
+
+    if ($input["disponibilidades_id"]!="")
+    {
+        $parametros = array_add($parametros, 'disponibilidades_id', ($descricao_disponibilidade=="" ? 0 : $descricao_disponibilidade[0]));
+    }
+
+    if ($input["religioes_id"]!="")
+    {
+        $parametros = array_add($parametros, 'religioes_id', ($descricao_religiao=="" ? 0 : $descricao_religiao[0]));
+    }
+
+    if ($input["dons_id"]!="")
+    {
+        $parametros = array_add($parametros, 'dons_id', ($descricao_don=="" ? 0 : $descricao_don[0]));
+    }
+
+    if ($input["habilidades_id"]!="")
+    {
+        $parametros = array_add($parametros, 'habilidades_id', ($descricao_habilidade=="" ? 0 : $descricao_habilidade[0]));
+    }
+
+    if ($input["atividades_id"]!="")
+    {
+        $parametros = array_add($parametros, 'atividades_id', ($descricao_atividade=="" ? 0 : $descricao_atividade[0]));
+    }
+
+    if ($input["ministerios_id"]!="")
+    {
+        $parametros = array_add($parametros, 'ministerios_id', ($descricao_ministerio=="" ? 0 : $descricao_ministerio[0]));
+    }
+
     //Data de batismo
     if ($input["data_batismo"]!="" && $input["data_batismo_ate"]!="")
     {
@@ -359,7 +519,34 @@ class RelatorioPessoasController extends Controller
 
     if ($input["resultado"]=="email")
     {
-        $emails = \DB::select('select distinct razaosocial, emailprincipal from view_pessoas_geral_celulas' . $where . ' order by razaosocial');
+
+        //$emails = \DB::select('select distinct razaosocial, emailprincipal from view_pessoas_geral_celulas' . $where . ' order by razaosocial');
+        $strSql = " SELECT DISTINCT ";
+        $strSql .= " c.celulas_nivel1_id,      c.celulas_nivel2_id,     c.celulas_nivel3_id,      c.celulas_nivel4_id,      c.celulas_nivel5_id, ";
+        $strSql .= " p.empresas_id,  p.empresas_clientes_cloud_id, ";
+        $strSql .= " p.id,  p.tipos_pessoas_id,  p.razaosocial, ";
+        $strSql .= " to_char(p.datanasc, 'MM') AS mes, ";
+        $strSql .= " p.nomefantasia,  p.fone_principal,  p.fone_celular,  p.emailprincipal,  p.ativo,  p.datanasc, ";
+        $strSql .= " mp.sexo,  mp.status_id,     mp.estadoscivis_id,     p.grupos_pessoas_id,     mh.data_entrada,     mh.data_saida,     mh.data_batismo, ";
+        $strSql .= " mh.motivos_entrada_id,     mh.motivos_saida_id,     mp.doador_orgaos,     mp.doador_sangue,     mp.possui_necessidades_especiais, ";
+        $strSql .= " mp.idiomas_id,    mp.graus_id ";
+        $strSql .= " FROM pessoas p ";
+        $strSql .= "   LEFT JOIN membros_dados_pessoais mp ON mp.pessoas_id = p.id AND mp.empresas_id = p.empresas_id AND mp.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id ";
+        $strSql .= "   LEFT JOIN celulas_pessoas cp ON cp.pessoas_id = p.id AND cp.empresas_id = p.empresas_id AND cp.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
+        $strSql .= "   LEFT JOIN celulas c ON cp.celulas_id = c.id AND cp.empresas_id = c.empresas_id AND cp.empresas_clientes_cloud_id = c.empresas_clientes_cloud_id";
+        $strSql .= "   LEFT JOIN membros_historicos mh ON mh.pessoas_id = p.id AND mh.empresas_id = p.empresas_id AND mh.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
+        $strSql .= "   LEFT JOIN membros_formacoes mf ON mf.pessoas_id = p.id AND mf.empresas_id = p.empresas_id AND mf.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
+        $strSql .= "   LEFT JOIN membros_profissionais mprof ON mprof.pessoas_id = p.id AND mprof.empresas_id = p.empresas_id AND mprof.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
+        $strSql .= "   LEFT JOIN membros_ministerios mm ON mm.pessoas_id = p.id AND mm.empresas_id = p.empresas_id AND mm.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
+        $strSql .= "   LEFT JOIN membros_situacoes ms ON ms.pessoas_id = p.id AND ms.empresas_id = p.empresas_id AND ms.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
+        $strSql .= "   LEFT JOIN membros_dons md ON md.pessoas_id = p.id AND md.empresas_id = p.empresas_id AND md.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
+        $strSql .= "   LEFT JOIN membros_atividades ma ON ma.pessoas_id = p.id AND ma.empresas_id = p.empresas_id AND ma.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
+        $strSql .= "   LEFT JOIN membros_habilidades mhab ON mhab.pessoas_id = p.id AND mhab.empresas_id = p.empresas_id AND mhab.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
+        $strSql .= "   LEFT JOIN membros_idiomas mi ON mi.pessoas_id = p.id AND mi.empresas_id = p.empresas_id AND mi.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
+        $strSql .=  $where . ' order by razaosocial';
+        $emails = \DB::select($strSql);
+
+
         return view($this->rota . '.listaremails', ['emails'=>$emails, 'filtros'=>$filtros]);
     }
      else
@@ -390,7 +577,8 @@ class RelatorioPessoasController extends Controller
                     }
                     else
                     {
-                        $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral.jasper';
+                        $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_completo.jasper';
+                        //$nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral.jasper';
                     }
                 }
             }

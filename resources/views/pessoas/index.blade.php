@@ -52,15 +52,15 @@
             <div class="box-header" data-original-title>
                 <div class="box-body table-responsive no-padding">
 
-                    <table id="tab_pessoas" class="table table-responsive">
+                    <table id="tab_pessoas" class="table table-responsive table-hover">
                     <thead>
                         <tr>
                         <th>Código</th>
                         <th>Nome</th>
                         <th>Nome Abrev.</th>
-                        <th>Tipo Pessoa</th>
-                        <!--<th>CNPJ/CPF</th>-->
                         <th>Telefone</th>
+                        <!--<th>CNPJ/CPF</th>-->
+                        <th>Celular</th>
                         <th>ID Tipo</th>
                         <th>Alterar</th>
                         <th>Ver</th>
@@ -113,7 +113,7 @@
                           "aaSorting": [[ 1, "asc" ]],
                           language:
                           {
-                              searchPlaceholder: "Nome, CNPJ, CPF, Telefone...",
+                              searchPlaceholder: "Nome, Telefone...",
                               processing:     "Aguarde...Carregando",
                               paginate: {
                                                 first:      "Primeira",
@@ -148,9 +148,9 @@
                                         }
                                     }},
                                   { data: "nomefantasia" },
-                                  { data: "nome_tipo_pessoa" },
-                                  //{ data: "cnpj_cpf" },
                                   { data: "fone_principal" },
+                                  //{ data: "cnpj_cpf" },
+                                  { data: "fone_celular" },
                                   { data: "id_tipo_pessoa" },
                                   {"mRender": function(data, type, full) {
                                         if (alterar)

@@ -27,7 +27,7 @@
 
                 <div class="box-body">
 
-                    <table id="table_celulas" class="table table-bordered table-hover">
+                    <table id="table_celulas" class="table table-bordered table-hover table-responsive">
                     <thead>
                         <tr>
                         <th>Líder / Nome Célula</th>

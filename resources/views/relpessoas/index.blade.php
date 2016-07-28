@@ -45,15 +45,12 @@
 
                                                                  <div class="col-xs-3">
 
-                                                                          <label for="status_id" class="control-label">Status</label>
-
-                                                                          <select id="status_id" placeholder="(Selecionar)" name="status_id" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                                                          <option  value=""></option>
-
-                                                                          @foreach($status as $item)
-                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
-                                                                          @endforeach
-                                                                          </select>
+                                                                          <label for="status" class="control-label">Status Cadastro</label>
+                                                                            <select id="status" name="status" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                                <option  value="">Ambos</option>
+                                                                                <option  value="S">Ativo</option>
+                                                                                <option  value="N">Inativo</option>
+                                                                            </select>
 
                                                                     </div><!-- col-xs-5-->
 
@@ -61,7 +58,7 @@
 
                                                                           <label for="tipos" class="control-label">Tipo Pessoa</label>
 
-                                                                          <select id="tipos" placeholder="(Selecionar)" name="tipos" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <select id="tipos" placeholder="(Selecionar)" name="tipos" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
                                                                           <option  value=""></option>
 
                                                                           @foreach($tipos as $item)
@@ -73,7 +70,7 @@
                                                                       <div class="col-xs-3">
                                                                           <label for="estadoscivis" class="control-label">Estado Civil</label>
 
-                                                                          <select id="estadoscivis" placeholder="(Selecionar)" name="estadoscivis" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <select id="estadoscivis" placeholder="(Selecionar)" name="estadoscivis" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
                                                                           <option  value=""></option>
 
                                                                           @foreach($estadoscivis as $item)
@@ -84,7 +81,7 @@
 
                                                                       <div class="col-xs-3">
                                                                           <label for="sexo" class="control-label">Sexo</label>
-                                                                            <select id="sexo" name="sexo" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                            <select id="sexo" name="sexo" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
                                                                                 <option  value="">Ambos</option>
                                                                                 <option  value="M">Masculino</option>
                                                                                 <option  value="F">Feminino</option>
@@ -98,7 +95,7 @@
                                                                       <div class="col-xs-3">
                                                                           <label for="grupo" class="control-label">Grupo</label>
 
-                                                                          <select id="grupo" placeholder="(Selecionar)" name="grupo" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <select id="grupo" placeholder="(Selecionar)" name="grupo" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
                                                                           <option  value=""></option>
                                                                           @foreach($grupos as $item)
                                                                                  <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
@@ -110,7 +107,7 @@
 
                                                                         <label for="situacoes" class="control-label">Situação</label>
 
-                                                                          <select id="situacoes" placeholder="(Selecionar)" name="situacoes" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <select id="situacoes" placeholder="(Selecionar)" name="situacoes" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
                                                                           <option  value=""></option>
 
                                                                           @foreach($situacoes as $item)
@@ -120,12 +117,15 @@
                                                                     </div><!-- col-xs-5-->
 
                                                                     <div class="col-xs-3">
-                                                                            <label for="status" class="control-label">Status Cadastro</label>
-                                                                            <select id="status" name="status" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                                                                <option  value="">Ambos</option>
-                                                                                <option  value="S">Ativo</option>
-                                                                                <option  value="N">Inativo</option>
-                                                                            </select>
+                                                                            <label for="status_id" class="control-label">Status</label>
+
+                                                                          <select id="status_id" placeholder="(Selecionar)" name="status_id" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+
+                                                                          @foreach($status as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
                                                                     </div>
 
 
@@ -138,7 +138,7 @@
 
                                                                       <div class="col-xs-3">
                                                                             <label for="mes" class="control-label">Mês Aniversário</label>
-                                                                            <select id="mes" name="mes" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                            <select id="mes" name="mes" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
                                                                                 <option  value=""></option>
                                                                                 <option  value="01">Janeiro</option>
                                                                                 <option  value="02">Fevereiro</option>
@@ -234,9 +234,22 @@
                                                              </div>
 
                                                              <div class="col-xs-3">
-                                                                    <br/>
-                                                                    Listar Estruturas Células &nbsp;&nbsp;<input  id= "ckEstruturas" name="ckEstruturas" type="checkbox" data-group-cls="btn-group-sm" class="ckEstruturas" />
+                                                                    <label for="ckEstruturas">Listar Estruturas Células </label>
+                                                                    <div class="input-group">
+                                                                           <div class="input-group-addon">
+                                                                                    <input  id= "ckEstruturas" name="ckEstruturas" type="checkbox" data-group-cls="btn-group-sm" class="ckEstruturas" />
+                                                                            </div>
+                                                                      </div>
                                                               </div>
+
+                                                              <div class="col-xs-3">
+                                                                      <label for="possui_necessidades_especiais">Pessoas com Necessidades Especiais ?</label>
+                                                                      <div class="input-group">
+                                                                           <div class="input-group-addon">
+                                                                                    <input  id="possui_necessidades_especiais" data-group-cls="btn-group-sm" name="possui_necessidades_especiais" type="checkbox" class="possui_necessidades_especiais" value="true" />
+                                                                            </div>
+                                                                      </div>
+                                                             </div>
 
                                                           </div>
 
@@ -281,7 +294,7 @@
 
                                                                       <div class="col-xs-4">
                                                                                <label for="motivoentrada" class="control-label">Motivo Entrada</label>
-                                                                                <select id="motivoentrada" placeholder="(Selecionar)" name="motivoentrada" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                                <select id="motivoentrada" placeholder="(Selecionar)" name="motivoentrada" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
                                                                                 <option  value=""></option>
                                                                                 @foreach($motivos as $item)
                                                                                        <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
@@ -320,7 +333,7 @@
                                                                       <div class="col-xs-4">
                                                                                 <label for="motivosaida" class="control-label">Motivo Saída</label>
 
-                                                                                <select id="motivosaida" placeholder="(Selecionar)" name="motivosaida" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                                <select id="motivosaida" placeholder="(Selecionar)" name="motivosaida" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
                                                                                 <option  value=""></option>
 
                                                                                 @foreach($motivos as $item)
@@ -383,7 +396,7 @@
                                             <div class="form-group">
                                                 <label for="nivel1_up" class="col-sm-2 control-label">{{Session::get('nivel1')}}</label>
                                                 <div class="col-sm-10">
-                                                      <select id="nivel1_up" placeholder="(Selecionar)" name="nivel1_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                      <select id="nivel1_up" placeholder="(Selecionar)" name="nivel1_up" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control" style="width: 100%;">
                                                       <option  value="0"></option>
                                                       @foreach($nivel1 as $item)
                                                              <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
@@ -397,7 +410,7 @@
                                             <div class="form-group">
                                                 <label for="nivel2_up" class="col-sm-2 control-label">{{Session::get('nivel2')}}</label>
                                                 <div class="col-sm-10">
-                                                        <select id="nivel2_up" placeholder="(Selecionar)" name="nivel2_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                        <select id="nivel2_up" placeholder="(Selecionar)" name="nivel2_up" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control" style="width: 100%;">
                                                         <option  value="0"></option>
                                                          @foreach($nivel2 as $item)
                                                              <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
@@ -410,7 +423,7 @@
                                             <div class="form-group">
                                               <label for="nivel3_up" class="col-sm-2 control-label">{{Session::get('nivel3')}}</label>
                                               <div class="col-sm-10">
-                                                    <select id="nivel3_up" placeholder="(Selecionar)" name="nivel3_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                    <select id="nivel3_up" placeholder="(Selecionar)" name="nivel3_up" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control" style="width: 100%;">
                                                     <option  value="0"></option>
                                                       @foreach($nivel3 as $item)
                                                              <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
@@ -424,7 +437,7 @@
                                               <label for="nivel4_up" class="col-sm-2 control-label">{{Session::get('nivel4')}}</label>
 
                                               <div class="col-sm-10">
-                                                    <select id="nivel4_up" placeholder="(Selecionar)" name="nivel4_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                    <select id="nivel4_up" placeholder="(Selecionar)" name="nivel4_up" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control" style="width: 100%;">
                                                     <option  value="0"></option>
                                                       @foreach($nivel4 as $item)
                                                              <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
@@ -437,7 +450,7 @@
                                             <div class="form-group">
                                               <label for="nivel5_up" class="col-sm-2 control-label">{!!Session::get('nivel5') !!}</label>
                                               <div class="col-sm-10">
-                                                      <select id="nivel5_up" placeholder="(Selecionar)" name="nivel5_up" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                      <select id="nivel5_up" placeholder="(Selecionar)" name="nivel5_up" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control" style="width: 100%;">
                                                       <option  value="0"></option>
                                                       @foreach($nivel5 as $item)
                                                              <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
@@ -460,7 +473,7 @@
                                                   <div class="box-body"><!-- box-body-->
 
                                                          <div class="row">
-                                                              <div class="col-xs-4">
+                                                              <div class="col-xs-5">
                                                                    <label for="doador_sangue" class="control-label">Doador Sangue</label>
 
                                                                    <select name="doador_sangue" class="form-control select2" style="width: 100%;">
@@ -471,7 +484,7 @@
 
                                                              </div>
 
-                                                             <div class="col-xs-4">
+                                                             <div class="col-xs-5">
                                                                      <label for="doador_orgaos" class="control-label">Doador Orgãos</label>
 
                                                                      <select name="doador_orgaos" class="form-control select2" style="width: 100%;">
@@ -482,22 +495,33 @@
 
                                                              </div>
 
-                                                            <div class="col-xs-4">
-                                                                      <label for="possui_necessidades_especiais">Listar Pessoas com Necessidades Especiais ?</label>
-                                                                      <div class="input-group">
-                                                                           <div class="input-group-addon">
-                                                                                    <input  id="possui_necessidades_especiais" data-group-cls="btn-group-sm" name="possui_necessidades_especiais" type="checkbox" class="possui_necessidades_especiais" value="true" />
-                                                                            </div>
-                                                                      </div>
-                                                             </div>
 
                                                          </div>
 
                                                          <div class="row"><!-- row-->
+                                                                   <div class="col-xs-5">
 
-                                                                   <div class="col-xs-4">
+                                                                        <label for="tipo_sangue" class="control-label">Tipo Sanguínio :</label>
+                                                                        <input type="text" id="tipo_sangue" maxlength="50" name="tipo_sangue" class="form-control" placeholder="Tipo Sanguínio" >
+
+                                                                   </div><!-- col-xs-5-->
+
+                                                                   <div class="col-xs-5">
+                                                                          <label for="religioes_id" class="control-label">Religião</label>
+                                                                          <select id="religioes_id" placeholder="(Selecionar)" name="religioes_id" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+                                                                          @foreach($religioes as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                   </div><!-- col-xs-5-->
+                                                           </div><!-- end row-->
+
+                                                         <div class="row"><!-- row-->
+
+                                                                   <div class="col-xs-5">
                                                                           <label for="graus_id" class="control-label">Grau de Instrução</label>
-                                                                          <select id="graus_id" placeholder="(Selecionar)" name="graus_id" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <select id="graus_id" placeholder="(Selecionar)" name="graus_id" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
                                                                           <option  value=""></option>
                                                                           @foreach($graus as $item)
                                                                                  <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
@@ -505,9 +529,9 @@
                                                                           </select>
                                                                    </div><!-- col-xs-5-->
 
-                                                                   <div class="col-xs-4">
+                                                                   <div class="col-xs-5">
                                                                           <label for="idiomas_id" class="control-label">Idioma</label>
-                                                                          <select id="idiomas_id" placeholder="(Selecionar)" name="idiomas_id" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                                          <select id="idiomas_id" placeholder="(Selecionar)" name="idiomas_id" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
                                                                           <option  value=""></option>
                                                                           @foreach($idiomas as $item)
                                                                                  <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
@@ -517,6 +541,117 @@
 
                                                           </div><!-- end row-->
 
+                                                           <div class="row"><!-- row-->
+                                                                   <div class="col-xs-5">
+                                                                          <label for="formacoes_id" class="control-label">Áreas de Formação</label>
+                                                                          <select id="formacoes_id" placeholder="(Selecionar)" name="formacoes_id" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+                                                                          @foreach($formacoes as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                   </div><!-- col-xs-5-->
+
+                                                                   <div class="col-xs-5">
+                                                                          <label for="profissoes_id" class="control-label">Profissão</label>
+                                                                          <select id="profissoes_id" placeholder="(Selecionar)" name="profissoes_id" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+                                                                          @foreach($profissoes as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                   </div><!-- col-xs-5-->
+                                                           </div><!-- end row-->
+
+                                                           <div class="row"><!-- row-->
+                                                                   <div class="col-xs-5">
+                                                                          <label for="ramos_id" class="control-label">Ramos de Atividade</label>
+                                                                          <select id="ramos_id" placeholder="(Selecionar)" name="ramos_id" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+                                                                          @foreach($ramos as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                   </div><!-- col-xs-5-->
+
+                                                                   <div class="col-xs-5">
+                                                                          <label for="cargos_id" class="control-label">Cargo / Função</label>
+                                                                          <select id="cargos_id" placeholder="(Selecionar)" name="cargos_id" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+                                                                          @foreach($cargos as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                   </div><!-- col-xs-5-->
+                                                           </div><!-- end row-->
+
+
+                                                          <div class="row"><!-- row-->
+                                                                   <div class="col-xs-5">
+                                                                          <label for="disponibilidades_id" class="control-label">Disponibilidade de Tempo</label>
+                                                                          <select id="disponibilidades_id" placeholder="(Selecionar)" name="disponibilidades_id" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+                                                                          @foreach($disponibilidades as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                   </div><!-- col-xs-5-->
+
+                                                                   <div class="col-xs-5">
+                                                                          <label for="tiposrelacionamentos_id" class="control-label">Tipo de Relacionamento</label>
+                                                                          <select id="tiposrelacionamentos_id" placeholder="(Selecionar)" name="tiposrelacionamentos_id" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+                                                                          @foreach($tiposrelacionamentos as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                   </div><!-- col-xs-5-->
+                                                           </div><!-- end row-->
+
+
+                                                             <div class="row"><!-- row-->
+                                                                   <div class="col-xs-5">
+                                                                          <label for="dons_id" class="control-label">Dons</label>
+                                                                          <select id="dons_id" placeholder="(Selecionar)" name="dons_id" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+                                                                          @foreach($dons as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                   </div><!-- col-xs-5-->
+
+                                                                   <div class="col-xs-5">
+                                                                          <label for="habilidades_id" class="control-label">Habilidades</label>
+                                                                          <select id="habilidades_id" placeholder="(Selecionar)" name="habilidades_id" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+                                                                          @foreach($habilidades as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                   </div><!-- col-xs-5-->
+                                                           </div><!-- end row-->
+
+                                                              <div class="row"><!-- row-->
+                                                                   <div class="col-xs-5">
+                                                                          <label for="atividades_id" class="control-label">Atividades</label>
+                                                                          <select id="atividades_id" placeholder="(Selecionar)" name="atividades_id" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+                                                                          @foreach($atividades as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                   </div><!-- col-xs-5-->
+
+                                                                   <div class="col-xs-5">
+                                                                          <label for="ministerios_id" class="control-label">Ministérios</label>
+                                                                          <select id="ministerios_id" placeholder="(Selecionar)" name="ministerios_id" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+                                                                          @foreach($ministerios as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                   </div><!-- col-xs-5-->
+                                                           </div><!-- end row-->
 
                                                   </div><!-- end row -->
 

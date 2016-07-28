@@ -43,7 +43,7 @@
                                 <div class="box-body">
 
                                    <div class="row">
-                                          <div class="col-xs-3">
+                                          <div class="col-xs-4">
                                               <label for="opStatus" class="control-label">Status</label>
 
                                               <select name="opStatus" class="form-control select2" style="width: 100%;">
@@ -54,7 +54,7 @@
 
                                           </div>
 
-                                          <div class="col-xs-3">
+                                          <div class="col-xs-4">
 
                                                 <label for="opPessoa" class="control-label">Tipo Pessoa</label>
 
@@ -68,26 +68,36 @@
                                    </div> <!-- end row-->
 
                                    <div class="row">
-                                        <div class="col-xs-5">
-                                              @include('carregar_combos', array('dados'=>$tipos, 'titulo' =>'Tipos de Pessoa', 'id_combo'=>'tipos', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '29'))
-                                              @include('modal_cadastro_basico', array('qual_campo'=>'tipos', 'modal' => 'modal_tipos', 'tabela' => 'tipos_pessoas'))
+                                        <div class="col-xs-4">
+                                              <label for="tipos" class="control-label">Tipos de Pessoa</label>
+                                              <select id="tipos" placeholder="(Selecionar)" name="tipos" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                              <option  value=""></option>
+                                              @foreach($tipos as $item)
+                                                     <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                              @endforeach
+                                              </select>
                                         </div><!-- col-xs-5-->
 
-                                        <div class="col-xs-5">
-                                              @include('carregar_combos', array('dados'=>$grupos, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '31'))
-                                              @include('modal_cadastro_basico', array('qual_campo'=>'grupo', 'modal' => 'modal_grupo', 'tabela' => 'grupos_pessoas'))
+                                        <div class="col-xs-4">
+                                              <label for="grupo" class="control-label">Grupo de Pessoas</label>
+                                              <select id="grupo" placeholder="(Selecionar)" name="grupo" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                              <option  value=""></option>
+                                              @foreach($grupos as $item)
+                                                     <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                              @endforeach
+                                              </select>
                                         </div><!-- col-xs-5-->
 
                                    </div>
 
                                    <div class="row">
 
-                                        <div class="col-xs-4">
+                                         <div class="col-xs-4">
 
                                                 <label for="mes" class="control-label">Aniversariante Mês</label>
 
                                                 <select name="mes" class="form-control select2" style="width: 100%;">
-                                                     <option  value=""></option>
+                                                     <option  value="">(Selecionar)</option>
                                                      <option  value="1">Janeiro</option>
                                                      <option  value="2">Fevereiro</option>
                                                      <option  value="3">Março</option>
@@ -102,7 +112,14 @@
                                                      <option  value="12">Dezembro</option>
                                                 </select>
 
-                                          </div>
+                                         </div>
+
+                                         <div class="col-xs-4">
+                                                  <br/>
+                                                  <a href="{{ url('/relpessoas')}}">Mais Opções Avançadas</a>
+                                         </div>
+
+
 
                                   </div>
                             </div> <!-- fim box body -->

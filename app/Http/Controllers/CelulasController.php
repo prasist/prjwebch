@@ -30,6 +30,62 @@ class CelulasController extends Controller
 
     }
 
+    public function buscar_dados($id)
+    {
+
+            $buscar = \App\Models\celulas::select('dia_encontro')
+            ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('empresas_id', $this->dados_login->empresas_id)
+            ->where('id', $id)
+            ->get();
+
+
+            if ($buscar)
+            {
+                return $buscar[0]->dia_encontro;
+            }
+            else
+            {
+                return ""; //Retorna vazio
+            }
+
+
+
+
+    }
+
+   //Return all dates in a month by dayOfWeek
+   public function return_dates($id, $var_month, $var_year)
+   {
+
+        $var_dayOfWeek = $this->buscar_dados($id); //pega dia do encontro da celula
+
+        $var_counting_days = cal_days_in_month(CAL_GREGORIAN, $var_month, $var_year); //days of month
+
+        $dini = mktime(0,0,0,$var_month,1,$var_year);
+        $dfim = mktime(0,0,0,$var_month,$var_counting_days,$var_year);
+
+        $return_d = array();
+
+        while($dini <= $dfim) //Enquanto uma data for inferior a outra
+        {
+            $dt = date("d/m/Y",$dini); //Convertendo a data no formato dia/mes/ano
+            $diasemana = date("w", $dini);
+
+            if($diasemana == $var_dayOfWeek)
+            { // [0 Domingo] - [1 Segunda] - [2 Terca] - [3 Quarta] - [4 Quinta] - [5 Sexta] - [6 Sabado]
+                array_push($return_d, $dt);
+            }
+
+            $dini += 86400; // Adicionando mais 1 dia (em segundos) na data inicial
+        }
+
+        return ($return_d);
+
+   }
+
+
+
     //Exibir listagem
     public function index()
     {

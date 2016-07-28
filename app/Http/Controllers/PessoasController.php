@@ -138,7 +138,7 @@ class PessoasController extends Controller
          }
 
 
-        $dados = pessoas::select('pessoas.id', 'pessoas.razaosocial', 'pessoas.nomefantasia', 'pessoas.cnpj_cpf', 'pessoas.fone_principal', 'tipos_pessoas.id as id_tipo_pessoa', 'tipos_pessoas.nome as nome_tipo_pessoa')
+        $dados = pessoas::select('pessoas.id', 'pessoas.razaosocial', 'pessoas.nomefantasia', 'pessoas.cnpj_cpf', 'pessoas.fone_celular', 'pessoas.fone_principal', 'tipos_pessoas.id as id_tipo_pessoa', 'tipos_pessoas.nome as nome_tipo_pessoa')
         ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('empresas_id', $this->dados_login->empresas_id)
         ->status($status)
@@ -662,7 +662,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                     'naturalidade' => $input['naturalidade'],
                                     'uf_naturalidade' => $input['ufnaturalidade'],
                                     'nacionalidade' => $input['nacionalidade'],
-                                    'grupo_sanguinio' => ($input['grpsangue']=="" ? null : $input['grpsangue']),
+                                    'grupo_sanguinio' => ($input['grpsangue']=="" ? null : strtoupper($input['grpsangue'])),
                                     'possui_necessidades_especiais' => ($input['ck_necessidades']=="" ? 0 : $input['ck_necessidades']),
                                     'descricao_necessidade_especial' => $input['necessidades'],
                                     'link_facebook' => $input['facebook'],

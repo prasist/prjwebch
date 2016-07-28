@@ -154,7 +154,7 @@
 
                                                                 <div class="col-xs-3">
                                                                           <label for="ufnaturalidade" class="control-label">UF</label>
-                                                                          <input id="ufnaturalidade" name = "ufnaturalidade" maxlength="2" type="text" class="form-control"  value="{{ ($tipo_operacao=='inclusao' ? old('ufnaturalidade') : $membros_dados_pessoais[0]->uf_naturalidade) }}">
+                                                                          <input id="ufnaturalidade" name = "ufnaturalidade" maxlength="2" type="text" class="form-control"  value="{{ ($tipo_operacao=='inclusao' ? old('ufnaturalidade') : trim($membros_dados_pessoais[0]->uf_naturalidade) ) }}">
                                                                 </div>
 
                                                                   <div class="col-xs-3">
