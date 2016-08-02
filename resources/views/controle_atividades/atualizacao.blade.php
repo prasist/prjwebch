@@ -154,7 +154,9 @@
                                           <option value=""></option>
                                       @else
                                           @foreach($dates_of_meeting as $item)
+                                                  @if ($dados[0]->dia==substr($item,0,2))
                                                   <option value='{{$dados[0]->dia==substr($item,0,2) ? $dados[0]->dia : "" }}' {{$dados[0]->dia==substr($item,0,2) ? "selected" : "" }}>{{$item}}</option>
+                                                  @endif
                                           @endforeach
                                       @endif
                                 </select>
@@ -191,14 +193,7 @@
               <!-- FIM CONTEUDO -->
 
 
-        </div>
-
-        <!--/.col (left) -->
-        <!-- right column -->
-        <div class="col-md-6">
-
-
-               <!-- INICIO CONTEUDO -->
+                   <!-- INICIO CONTEUDO -->
                 <!-- Horizontal Form -->
             <div class="box box-info" id="box_mais" style="display: none">
                   <div class="box-header with-border">
@@ -230,8 +225,7 @@
                       <div class="row">
                             <div class="col-xs-12">
                                   <label for="observacao" class="control-label">Observações</label>
-                                  <textarea name="observacao" class="form-control" rows="2" placeholder="Digite o texto..." >
-                                  {{ ($tipo_operacao=="incluir" ? "" : $dados[0]->obs) }}
+                                  <textarea name="observacao" class="form-control" rows="2" placeholder="Digite o texto..." >{!! ($tipo_operacao=="incluir" ? "" : rtrim(ltrim($dados[0]->obs))) !!}
                                   </textarea>
                             </div>
                       </div>
@@ -243,6 +237,59 @@
             </div>
             <!-- /.box -->
             <!-- FIM CONTEUDO -->
+
+
+        </div>
+
+        <!--/.col (left) -->
+        <!-- right column -->
+        <div class="col-md-6">
+
+
+          <!-- INICIO CONTEUDO -->
+          <!-- Horizontal Form -->
+            <div class="box box-info" id="box_material">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Material Encontro</h3>
+                  </div>
+                  <!-- /.box-header -->
+                  <!-- form start -->
+                  <div class="form-horizontal">
+                    <div class="box-body">
+                      <div class="row">
+
+                           <div class="col-xs-12">
+                                  <label for="arquivo" class="control-label">Tamanho Máximo cada Arquivo : 1000Kb (1 Mega)</label>
+                                  <input type="file" id="arquivo"  name = "arquivo">
+                           </div>
+
+                      </div>
+
+                      <div class="row">
+                              <div class="col-xs-12">
+                                   <label for="link" class="control-label">Link Externo (Artigo, Documento, Site, Video, Imagem, etc)</label>
+                                   <input type="text" name="link" id="link"  class="form-control" value=''>
+                              </div>
+                      </div>
+
+                      <div class="row">
+                              <div class="col-xs-12">
+                                   <label for="texto_encontro" class="control-label">Texto</label>
+                                   <textarea name="texto_encontro" class="form-control" rows="2" placeholder="Digite o texto..." ></textarea>
+                              </div>
+                      </div>
+
+
+
+                 </div>
+                <!-- /.box-body -->
+                <!-- /.box-footer -->
+              </div>
+            </div>
+            <!-- /.box -->
+            <!-- FIM CONTEUDO -->
+
+
 
 
         </div>
@@ -324,24 +371,44 @@
 
                         <div class="row">
                                 <div class="col-xs-12">
-                                        <table id="tab_visitantes" class="table table-responsive">
-                                          <thead>
-                                              <tr>
-                                                  <th>Nome</th>
-                                                  <th>Fone</th>
-                                                  <th>Email</th>
-                                                  <th></th>
-                                              </tr>
-                                          </thead>
-                                          <tbody>
-                                            <tr>
-                                                <td><input name="pergunta" type="text" class="form-control" value=""  /></td>
-                                                <td><input name="pergunta" type="text" class="form-control" value=""  /></td>
-                                                <td><input name="pergunta" type="text" class="form-control" value=""  /></td>
-                                                <td><a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default"><b> + </b></a></td>
-                                            </tr>
-                                          </tbody>
-                                        </table>
+                                        <a href="" class="btn btn-default" id="addRow" name="addRow"><b> + Incluir Visitante </b></a>
+                                        <p>&nbsp;</p>
+
+                                            <table id="tab_visitantes" class="table table-responsive">
+                                              <thead>
+                                                  <tr>
+                                                      <th>Nome</th>
+                                                      <th>Fone</th>
+                                                      <th>Email</th>
+                                                      <th>Remover</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                <tr>
+                                                    <td class="col-xs-5"><input name="nome_visitante[]" type="text" class="form-control" value=""  /></td>
+                                                    <td class="col-xs-3"><input name="fone_visitante[]" type="text" class="form-control" value=""  /></td>
+                                                    <td class="col-xs-3"><input name="email_visitante[]" type="text" class="form-control" value=""  /></td>
+                                                    <td class="col-xs-1"><button data-toggle="tooltip" data-placement="top" title="Excluir Ítem"  class="btn btn-danger btn-sm remover"><spam class="glyphicon glyphicon-trash"></spam></button></td>
+                                                </tr>
+
+                                                @if ($tipo_operacao=='editar')
+
+                                                      @foreach($visitantes as $item)
+                                                            @if ($item->nome!="")
+                                                            <tr>
+                                                                <td class="col-xs-5"><input name="nome_visitante[]" type="text" class="form-control" value="{{$item->nome}}"  /></td>
+                                                                <td class="col-xs-3"><input name="fone_visitante[]" type="text" class="form-control" value="{{$item->fone}}"  /></td>
+                                                                <td class="col-xs-3"><input name="email_visitante[]" type="text" class="form-control" value="{{$item->email}}"  /></td>
+                                                                <td class="col-xs-1"><button data-toggle="tooltip" data-placement="top" title="Excluir Ítem"  class="btn btn-danger btn-sm remover"><spam class="glyphicon glyphicon-trash"></spam></button></td>
+                                                            </tr>
+                                                            @endif
+                                                      @endforeach
+
+                                                @endif
+
+                                              </tbody>
+                                            </table>
+
                                </div>
 
 
@@ -370,36 +437,57 @@
                   <div class="form-horizontal">
                     <div class="box-body">
 
-                        <div class="form-group">
-                                <label  for="pergunta" class="col-sm-6 control-label">Aglum alvo de oração alcançado  ? </label>
+                              @foreach ($questions as $item)
+                                    <div class="form-group">
+                                            <label  class="col-sm-6 control-label">{{$item->pergunta}}</label>
+                                             <input id="id_hidden_pergunta[]" name="id_hidden_pergunta[]" type="hidden"  value="{{$item->id}}"  />
 
-                                <div class="col-xs-4">
-                                        <input name="pergunta" type="checkbox" class="perguntas" data-group-cls="btn-group-sm" value=""  data-off-text="Não" data-on-text="Sim" />
-                               </div>
-                       </div>
-                       <div class="form-group">
-                                <label  for="pergunta" class="col-sm-6 control-label">Alguma desistência de estar na célula hoje  ? </label>
+                                            <div class="col-xs-4">
+                                                    <!-- 1 = yes or no -->
+                                                    <!-- 2 = number field -->
+                                                    <!-- 3 = text field -->
 
-                                <div class="col-xs-4">
-                                        <input name="pergunta" type="checkbox" class="perguntas" data-group-cls="btn-group-sm" value=""  data-off-text="Não" data-on-text="Sim" />
-                               </div>
-                       </div>
-                       <div class="form-group">
-                                <label  for="pergunta" class="col-sm-6 control-label">Algum testemunho hoje  ? </label>
+                                                    @if ($item->tipo_resposta==1)
+                                                            @if ($tipo_operacao=='editar')
+                                                                    @if (rtrim(ltrim($item->resposta))=="S")
+                                                                          @if ($item->questionarios_id==$item->id)
+                                                                               <input id="ck_resposta[]" name="ck_resposta[]" type="checkbox" class="perguntas" data-group-cls="btn-group-sm" data-off-text="Não" data-on-text="Sim" checked  value="{{$item->id}}"/>
+                                                                          @else
+                                                                               <input id="ck_resposta[]" name="ck_resposta[]" type="checkbox"  value="{{$item->id}}" class="perguntas" data-group-cls="btn-group-sm" data-off-text="Não" data-on-text="Sim" />
+                                                                          @endif
+                                                                    @else
+                                                                          <input id="ck_resposta[]" name="ck_resposta[]" type="checkbox"  value="{{$item->id}}" class="perguntas" data-group-cls="btn-group-sm" data-off-text="Não" data-on-text="Sim"  />
+                                                                    @endif
+                                                            @else
+                                                                  <input id="ck_resposta[]" name="ck_resposta[]" type="checkbox"  value="{{$item->id}}" class="perguntas" data-group-cls="btn-group-sm" data-off-text="Não" data-on-text="Sim" />
+                                                            @endif
+                                                    @endif
 
-                                <div class="col-xs-4">
-                                        <input name="pergunta" type="checkbox" class="perguntas" data-group-cls="btn-group-sm" value=""  data-off-text="Não" data-on-text="Sim" />
-                               </div>
-                       </div>
-                       <div class="form-group">
-                                <label  for="pergunta" class="col-sm-6 control-label">Qual sua cor favorita : </label>
+                                                    @if ($item->tipo_resposta==2 || $item->tipo_resposta==3)
 
-                                <div class="col-xs-4">
-                                        <input name="pergunta" type="text" class="form-control" value=""  />
-                               </div>
-                       </div>
+                                                            @if ($tipo_operacao=='editar')
+                                                                    @if (rtrim(ltrim($item->resposta))!="")
+                                                                         @if ($item->questionarios_id==$item->id)
+                                                                                <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="{{ ($tipo_operacao=='editar' ? $item->resposta : '') }}" />
+                                                                         @else
+                                                                                <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="" />
+                                                                         @endif
+                                                                    @else
+                                                                         <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="" />
+                                                                    @endif
+                                                            @else
+                                                                    <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="" />
+                                                            @endif
 
-                   </div>
+                                                    @else
+                                                           <input id="text_resposta[]" name="text_resposta[]" type="hidden" value="" />
+                                                    @endif
+
+                                           </div>
+                                    </div>
+                              @endforeach
+
+                    </div>
 
                  </div>
 
@@ -430,6 +518,21 @@
 
     $(document).ready(function(){
 
+
+      //Remove linha visitantes
+      $("#tab_visitantes").on("click", ".remover", function(e){
+          $(this).closest('tr').remove();
+
+      });
+
+        //Adicionar linha visitante
+        $('#addRow').on( 'click', function () {
+
+             $('#tab_visitantes').append('<tr><td class="col-xs-5"><input name="nome_visitante[]" type="text" class="form-control" value=""  /></td><td class="col-xs-3"><input name="fone_visitante[]" type="text" class="form-control" value=""  /></td><td class="col-xs-3"><input name="email_visitante[]" type="text" class="form-control" value=""  /></td><td class="col-xs-1"><button data-toggle="tooltip" data-placement="top" title="Excluir Ítem"  class="btn btn-danger btn-sm remover"><spam class="glyphicon glyphicon-trash"></spam></button></td></tr>')
+
+        });
+
+
           //editing data
           if  ($('#hidden_id').val()!="") {
 
@@ -458,8 +561,10 @@
 
                           "columnDefs":
                           [
-                             {"targets": [3], "sortable": false},
-                             {"targets": [0], "visible": false}
+                             {"targets": [0], "visible": false},
+                             {"targets": [1], "sortable": true},
+                             {"targets": [2], "sortable": false},
+                             {"targets": [3], "sortable": false}
                           ]
                    });
 
@@ -605,8 +710,10 @@
                           "ajax": urlRoute,
                           "columnDefs":
                           [
-                             {"targets": [3], "sortable": false},
-                             {"targets": [0], "visible": false}
+                             {"targets": [0], "visible": false},
+                             {"targets": [1], "sortable": true},
+                             {"targets": [2], "sortable": false},
+                             {"targets": [3], "sortable": false}
                           ],
                           "columns": [
                                   { data: "id" },
@@ -629,6 +736,13 @@
             }); //fim change celulas
 
 
+    //month change event...reload dates of meeting
+    $("#mes").change(function()
+    {
+         apos();
+    });
+
+
           //------------- DATA ENCONTRO CHANGE EVENT-----------------------
           //Quando clicar em uma data no combo
           $("#data_encontro").change(function()
@@ -645,13 +759,13 @@
 
                 //Search for existent data in database
                 var var_day = $("#data_encontro").val();
+                var var_data = $("#data_encontro").text();
                 var var_cell_input = $('#celulas').val().split('|');
                 var var_cell_id = var_cell_input[0];
                 var var_year = $("#ano").val();
                 var var_month = $("#mes").val();
                 var urlGetUser = '{!! url("/controle_atividades/buscar/' +  var_cell_id +  '/' + var_day + '/' + var_month + '/' + var_year + '") !!}';
 
-                console.log('change data encontro ' + urlGetUser);
                 //if selected a date
                 if (var_day!="")
                 {
@@ -667,7 +781,6 @@
                         }
 
                     });
-
                 }
 
 

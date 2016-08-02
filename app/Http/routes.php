@@ -53,7 +53,7 @@
     Route::get('controle_atividades', 'ControleAtividadesController@index');
     Route::get('controle_atividades/buscar/{cell_id}/{day}/{month}/{year}', 'ControleAtividadesController@buscar');
     Route::post('/controle_atividades/gravar','ControleAtividadesController@store');
-    Route::get('/controle_atividades/registrar','ControleAtividadesController@create');
+    Route::get('/controle_atividades/registrar/{data}','ControleAtividadesController@create');
     Route::get('/controle_atividades/{id}/preview','ControleAtividadesController@show');
     Route::post('controle_atividades/{id}/update','ControleAtividadesController@update');
     Route::get('controle_atividades/{id}/edit','ControleAtividadesController@edit');

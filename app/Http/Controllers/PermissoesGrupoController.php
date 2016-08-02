@@ -50,8 +50,10 @@ class PermissoesGrupoController extends Controller
         ->where('grupos.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->distinct()->get();
 
-        $paginas = paginas::select('id', 'nome')
+        $paginas = paginas::select('id', 'nome', 'menu')
         ->where('nao_mostrar_todos', '0')
+        ->orderBy('menu')
+        ->orderBy('nome')
         ->get();
 
         return view('permissoes.index', ['dados'=>$dados, 'paginas'=>$paginas]);
@@ -72,8 +74,10 @@ class PermissoesGrupoController extends Controller
           ->where('grupos.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
           ->get();
 
-          $paginas = paginas::select('id','nome')
+          $paginas = paginas::select('id','nome', 'menu')
           ->where('nao_mostrar_todos', '0')
+          ->orderBy('menu')
+          ->orderBy('nome')
           ->get();
 
           return view('permissoes.registrar', ['dados'=>$dados, 'paginas'=>$paginas]);
@@ -156,9 +160,9 @@ class PermissoesGrupoController extends Controller
 
 
         /* Lista todas as páginas e marca o checkbox conforme permissao concedida na tabela permissoes_grupos*/
-        $sql = "select pg.id as id_permissoes, pg.grupos_id, p.id, p.nome, pg.incluir, pg.alterar, pg.excluir, pg.visualizar, pg.exportar, pg.imprimir, pg.acessar
+        $sql = "select p.menu, pg.id as id_permissoes, pg.grupos_id, p.id, p.nome, pg.incluir, pg.alterar, pg.excluir, pg.visualizar, pg.exportar, pg.imprimir, pg.acessar
         from paginas p left join permissoes_grupos pg on (p.id = pg.paginas_id) and (pg.grupos_id = " . $id . " or pg.grupos_id is null)
-        where p.nao_mostrar_todos = 0 order by pg.id";
+        where p.nao_mostrar_todos = 0 order by p.menu, p.nome";
 
         $paginas = DB::select($sql);
 

@@ -48,60 +48,132 @@
 
                                                  <b>
                                                  <p>
-                                                 <i class="fa fa-refresh"></i>&nbsp;&nbsp;Selecionar Tudo&nbsp;&nbsp;<input  id= "selecionar_todos" name="selecionar_todos" type="checkbox" checked />
+                                                 <i class="fa fa-refresh"></i>&nbsp;&nbsp;Selecionar Tudo&nbsp;&nbsp;<input  id= "selecionar_todos" name="selecionar_todos" type="checkbox"  />
                                                  </p>
                                                  </b>
 
-                                                    <table id="paginas" class="table table-bordered table-hover">
-                                                          <thead>
+                                                    <table class="table table-bordered table-hover">
                                                               <tr>
-                                                              <th>ID</th>
-                                                              <th>Página</th>
-                                                              <th><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_acessar" name="selecionar_acessar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_acessar" checked/> Acessar</th>
-                                                              <th><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_incluir" name="selecionar_incluir" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_incluir" checked/> Incluir</th>
-                                                              <th><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_alterar" name="selecionar_alterar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_alterar" checked/> Alterar</th>
-                                                              <th><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_excluir" name="selecionar_excluir" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_excluir" checked/> Excluir</th>
-                                                              <th><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_visualizar" name="selecionar_visualizar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_visualizar" checked/> Visualizar</th>
-                                                              <th><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_exportar" name="selecionar_exportar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_exportar" checked/> Exportar</th>
-                                                              <th><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_imprimir" name="selecionar_imprimir" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_imprimir" checked/> Imprimir</th>
+                                                                <td>Selecionar Todos (Por Função)</td>
+                                                                <td>Acessar</td>
+                                                                <td>Incluir</td>
+                                                                <td>Alterar</td>
+                                                                <td>Excluir</td>
+                                                                <td>Visualizar</td>
+                                                                <td>Exportar</td>
+                                                                <td>Imprimir</td>
                                                               </tr>
-                                                          </thead>
-                                                          <tbody>
+                                                              <tr>
+                                                                <td></td>
+                                                                <td><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_acessar" name="selecionar_acessar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_acessar" /></td>
+                                                                <td><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_incluir" name="selecionar_incluir" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_incluir" /></td>
+                                                                <td><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_alterar" name="selecionar_alterar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_alterar" /></td>
+                                                                <td><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_excluir" name="selecionar_excluir" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_excluir" /></td>
+                                                                <td><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_visualizar" name="selecionar_visualizar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_visualizar" /></td>
+                                                                <td><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_exportar" name="selecionar_exportar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_exportar" /></td>
+                                                                <td><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_imprimir" name="selecionar_imprimir" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_imprimir" /></td>
+                                                              </tr>
+                                                          </table>
+
+                                                              <?php $var_paginas = ''; ?>
+
                                                               @foreach($paginas as $value)
 
-                                                                <tr>
-                                                                            <td> <input name="pagina[{{ $value->id }}]" type="text" value="{{ $value->id }}" hidden>{{ $value->id }}</td>
-                                                                            <td>{{ $value->nome }}</td>
-                                                                            <td>
-                                                                                <input  name="acessar[{{ $value->id }}]" type="hidden"  value="0" />
-                                                                                <input  name="acessar[{{ $value->id }}]" type="checkbox" data-group-cls="btn-group-sm" class="acessar" value="1" checked />
-                                                                            </td>
-                                                                            <td>
-                                                                                <input  name="incluir[{{ $value->id }}]" type="hidden" value="0" />
-                                                                                <input  name="incluir[{{ $value->id }}]" type="checkbox" data-group-cls="btn-group-sm" class="incluir" value="1" checked />
-                                                                            </td>
-                                                                            <td>
-                                                                            <input  name="alterar[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="alterar[{{ $value->id }}]" type="checkbox" data-group-cls="btn-group-sm" class="alterar"  value="1" checked /></td>
-                                                                            <td>
-                                                                            <input  name="excluir[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="excluir[{{ $value->id }}]" type="checkbox" data-group-cls="btn-group-sm" class="excluir" value="1" checked /></td>
-                                                                            <td>
-                                                                            <input  name="visualizar[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="visualizar[{{ $value->id }}]" type="checkbox" data-group-cls="btn-group-sm" class="visualizar"  value="1"  checked /></td>
-                                                                            <td>
-                                                                            <input  name="exportar[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="exportar[{{ $value->id }}]" type="checkbox" data-group-cls="btn-group-sm" class="exportar" value="1" checked /></td>
-                                                                            <td>
-                                                                            <input  name="imprimir[{{ $value->id }}]" type="hidden" value="0" />
-                                                                            <input  name="imprimir[{{ $value->id }}]" type="checkbox" data-group-cls="btn-group-sm" class="imprimir" value="1" checked /></td>
+                                                                @if ($value->menu!=$var_paginas)
 
-                                                               </tr>
+                                                                   @if ($var_paginas!="")
+                                                                                    </tbody>
+                                                                              </table>
+                                                                          </div>
+                                                                        <!-- /.box-body -->
+                                                                      </div>
+                                                                      <!-- /.box -->
+                                                                    </div>
+                                                                   @endif
+
+                                                                  <div class="col-md-12">
+                                                                    <div class="box box-warning">
+                                                                      <div class="box-header with-border">
+                                                                        <h3 class="box-title">Módulo : {{$value->menu}}</h3>
+
+                                                                        <div class="box-tools pull-right">
+                                                                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                                                          </button>
+                                                                        </div>
+                                                                        <!-- /.box-tools -->
+                                                                      </div>
+                                                                      <!-- /.box-header -->
+                                                                      <div class="box-body">
+
+                                                                          <table id="{{$value->menu}}" class="table table-bordered table-hover">
+                                                                          <thead>
+                                                                              <tr>
+                                                                              <th>ID</th>
+                                                                              <th>Página</th>
+                                                                              <th>Acessar</th>
+                                                                              <th>Incluir</th>
+                                                                              <th>Alterar</th>
+                                                                              <th>Excluir</th>
+                                                                              <th>Visualizar</th>
+                                                                              <th>Exportar</th>
+                                                                              <th>Imprimir</th>
+                                                                              </tr>
+                                                                          </thead>
+                                                                          <tbody>
+
+
+                                                                    <?php $var_paginas=$value->menu; ?>
+
+                                                                @endif
+
+                                                                         <tr>
+                                                                                  <td>
+                                                                                      <input name="pagina[{{ $value->id }}]" type="text" value="{{ $value->id }}" hidden>{{ $value->id }}
+                                                                                  </td>
+
+                                                                                  <td>
+                                                                                      {{ $value->nome }}
+                                                                                  </td>
+
+                                                                                  <td>
+                                                                                      <input  name="acessar[{{ $value->id }}]" type="hidden"  value="0" />
+                                                                                      <input  name="acessar[{{ $value->id }}]" type="checkbox" class="acessar" data-group-cls="btn-group-sm" value="1" />
+                                                                                  </td>
+
+                                                                                  <td>
+                                                                                      <input  name="incluir[{{ $value->id }}]" type="hidden" value="0" />
+                                                                                      <input  name="incluir[{{ $value->id }}]" type="checkbox" class="incluir" data-group-cls="btn-group-sm" value="1" />
+                                                                                  </td>
+                                                                                  <td>
+                                                                                  <input  name="alterar[{{ $value->id }}]" type="hidden" value="0" />
+                                                                                  <input  name="alterar[{{ $value->id }}]" type="checkbox" class="alterar" data-group-cls="btn-group-sm" value="1"  /></td>
+                                                                                  <td>
+                                                                                  <input  name="excluir[{{ $value->id }}]" type="hidden" value="0" />
+                                                                                  <input  name="excluir[{{ $value->id }}]" type="checkbox" class="excluir" data-group-cls="btn-group-sm" value="1"  /></td>
+                                                                                  <td>
+                                                                                  <input  name="visualizar[{{ $value->id }}]" type="hidden" value="0" />
+                                                                                  <input  name="visualizar[{{ $value->id }}]" type="checkbox" class="visualizar"  data-group-cls="btn-group-sm" value="1" /></td>
+                                                                                  <td>
+                                                                                  <input  name="exportar[{{ $value->id }}]" type="hidden" value="0" />
+                                                                                  <input  name="exportar[{{ $value->id }}]" type="checkbox" class="exportar" data-group-cls="btn-group-sm" value="1" /></td>
+                                                                                  <td>
+                                                                                  <input  name="imprimir[{{ $value->id }}]" type="hidden" value="0" />
+                                                                                  <input  name="imprimir[{{ $value->id }}]" type="checkbox" class="imprimir" data-group-cls="btn-group-sm" value="1"  /></td>
+
+                                                                            </tr>
 
                                                               @endforeach
 
-                                                          </tbody>
-                                                    </table>
+                                                              @if ($var_paginas!="")
+                                                                                    </tbody>
+                                                                              </table>
+                                                                          </div>
+                                                                        <!-- /.box-body -->
+                                                                      </div>
+                                                                      <!-- /.box -->
+                                                                    </div>
+                                                            @endif
+
                                                 </div>
                                   </div>
 

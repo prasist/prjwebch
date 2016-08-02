@@ -41,12 +41,20 @@ class ControleAtividadesController extends Controller
 
         $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
+        //get questions from database
+        $questions = \App\Models\questionarios_encontros::select('id', 'pergunta', 'tipo_resposta')
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->get();
+
         return view($this->rota . '.atualizacao',
             [
                 'preview'=>'false',
                 'tipo_operacao'=>'incluir',
                 'celulas'=>$celulas,
-                'participantes'=>''
+                'participantes'=>'',
+                'questions' =>$questions,
+                'questions_saved'=>''
              ]);
 
     }
@@ -55,29 +63,6 @@ class ControleAtividadesController extends Controller
   {
         $input = $request->except(array('_token')); //não levar o token
 
-/*
-
-     controle_questions
-
-      empresas_id
-      empresas_clientes_cloud_id
-      controle_atividades_id
-      questionarios_id
-      resposta
-
-
-      controle_visitantes
-
-      empresas_id
-      empresas_clientes_cloud_id
-      controle_atividades_id
-      nome
-      fone
-      email
-      pessoas_id
-
-*/
-
         $this->validate($request, [
             'celulas' => 'required',
             'mes' => 'required',
@@ -85,10 +70,19 @@ class ControleAtividadesController extends Controller
             'data_encontro' => 'required',
         ]);
 
+        //dd($input);
 
          $descricao_celula = explode("|", $input["celulas"]);
 
-         $dados = controle_atividades::firstOrNew(['id'=>$id]);
+         if ($tipo_operacao=="create")
+         {
+            $dados = new controle_atividades();
+         }
+         else
+         {
+            $dados = controle_atividades::firstOrNew(['id'=>$id]);
+         }
+
          $dados->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
          $dados->empresas_id = $this->dados_login->empresas_id;
          $dados->celulas_id = $descricao_celula[0];
@@ -150,7 +144,91 @@ class ControleAtividadesController extends Controller
 
                             $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
 
-                }
+                } //end foreach
+
+
+                //Visitantes
+                $i_index=0; /*initialize*/
+
+                foreach($input['nome_visitante'] as $selected)
+                {
+
+                        if ($selected!="") {
+                            $whereForEach =
+                            [
+                                'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                'empresas_id' =>  $this->dados_login->empresas_id,
+                                'controle_atividades_id' => $id_atividade,
+                                'nome' => $selected
+                            ];
+
+                            $controle_visitantes = \App\Models\controle_visitantes::firstOrNew($whereForEach);
+
+                            $valores =
+                            [
+                                'nome' => $selected,
+                                'empresas_id' =>  $this->dados_login->empresas_id,
+                                'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                'controle_atividades_id' => $id_atividade,
+                                'fone' => ($input['fone_visitante'][$i_index]=="" ? null : $input['fone_visitante'][$i_index]),
+                                'email' => ($input['email_visitante'][$i_index]=="" ? null : $input['email_visitante'][$i_index])
+                            ];
+
+                            $controle_visitantes->fill($valores)->save();
+                            $controle_visitantes->save();
+
+                            $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
+                       }
+
+                } //end for each visitantes
+
+
+                //questions
+                $i_index=0; /*initialize*/
+
+                foreach($input['id_hidden_pergunta'] as $selected)
+                {
+
+                            $whereForEach =
+                            [
+                                'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                'empresas_id' =>  $this->dados_login->empresas_id,
+                                'controle_atividades_id' => $id_atividade,
+                                'questionarios_id' => $selected
+                            ];
+
+                            $controle_questions = \App\Models\controle_questions::firstOrNew($whereForEach);
+
+                            $answer=""; //initialize
+
+                            //if found value in ck_resposta array
+                            if (in_array($selected, $input['ck_resposta'])) {
+                                $answer = "S";
+                            }
+
+                            if($answer=="")
+                            {
+                                  if (array_key_exists($i_index, $input['text_resposta']))
+                                  {
+                                      $answer = $input['text_resposta'][$i_index];
+                                  }
+                            }
+
+                            $valores =
+                            [
+                                'questionarios_id' => $selected,
+                                'empresas_id' =>  $this->dados_login->empresas_id,
+                                'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                'controle_atividades_id' => $id_atividade,
+                                'resposta' => $answer
+                            ];
+
+                            $controle_questions->fill($valores)->save();
+                            $controle_questions->save();
+
+                            $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
+
+                } //end for each visitantes
 
           }
 
@@ -208,8 +286,6 @@ class ControleAtividadesController extends Controller
             $this->salvar($request, "", "create");
             \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
             return redirect($this->rota);
-
-
     }
 
 
@@ -243,9 +319,46 @@ class ControleAtividadesController extends Controller
         ->where('celulas_pessoas.empresas_id', $this->dados_login->empresas_id)
         ->where('celulas_pessoas.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('celulas_pessoas.celulas_id', $dados[0]->celulas_id)
+        ->where('controle_atividades.id', $id)
         ->orderBy('pessoas.razaosocial')
         ->get();
 
+        $controle_questions = \App\Models\controle_questions::select('id')
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('controle_atividades_id', $id)
+        ->get();
+
+        $visitantes = \App\Models\controle_visitantes::select('id', 'nome', 'fone', 'email')
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('controle_atividades_id', $id)
+        ->get();
+
+        $questions = \App\Models\questionarios_encontros::select('id', 'pergunta', 'tipo_resposta')
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->get();
+
+
+        if ($controle_questions->count()!=0)
+        {
+            //get saved questions from database
+            $questions_saved = \App\Models\questionarios_encontros::select('controle_questions.questionarios_id', 'questionarios_encontros.id', 'pergunta', 'tipo_resposta', 'resposta')
+            ->leftjoin('controle_questions', 'controle_questions.questionarios_id',  '=', 'questionarios_encontros.id')
+            ->where('questionarios_encontros.empresas_id', $this->dados_login->empresas_id)
+            ->where('questionarios_encontros.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('controle_questions.controle_atividades_id', $id)
+            ->get();
+
+            $questions = $questions_saved;
+
+        }
+        else
+        {
+          //Artificio para tabelas vazias com objetos collection
+            $questions_saved = \App\Models\tabela_vazia::get();
+        }
 
         //Load all dates by day of week (mondays, tuesdays, etc)
         $dates_of_meeting = $this->return_dates($dados);
@@ -259,7 +372,10 @@ class ControleAtividadesController extends Controller
                 'celulas'=>$celulas,
                 'dados'=>$dados,
                 'dates_of_meeting'=>$dates_of_meeting,
-                'participantes'=>$participantes
+                'participantes'=>$participantes,
+                'questions'=>$questions,
+                'questions_saved'=>$questions_saved,
+                'visitantes'=>$visitantes
              ]);
 
     }

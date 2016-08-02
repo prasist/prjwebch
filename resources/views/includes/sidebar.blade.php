@@ -48,39 +48,57 @@
         <ul class="sidebar-menu">
             <li class="header">Menu Principal</li>
 
+
+            @can('verifica_permissao_modulo', ['Configurações'])
             <li class="treeview">
                 <a href="#">
                 <i class="fa fa-wrench"></i> <span>Configurações</span>
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href={{ url('/clientes')}}><i class="fa fa-angle-double-right"></i> Igreja Sede</a></li>
-                    <li><a href={{ url('/empresas')}}><i class="fa fa-angle-double-right"></i> Igrejas / Instituições </a></li>
+
+                    @if(Gate::check('verifica_permissao', [1 ,'acessar']))
+                        <li><a href={{ url('/clientes')}}><i class="fa fa-angle-double-right"></i> Igreja Sede</a></li>
+                    @endif
+
+                    @if(Gate::check('verifica_permissao', [27 ,'acessar']))
+                        <li><a href={{ url('/empresas')}}><i class="fa fa-angle-double-right"></i> Igrejas / Instituições </a></li>
+                    @endif
                 </ul>
             </li>
+            @endcan
 
 
+            @can('verifica_permissao_modulo', ['Segurança'])
             <li class="treeview">
                 <a href="#">
                 <i class="fa fa-lock"></i> <span>Segurança</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul  class="treeview-menu">
+                    @if(Gate::check('verifica_permissao', [2 ,'acessar']))
                     <li>
                         <a href={{ url('/grupos')}}><i class="fa fa-angle-double-right"></i>Grupos de Usuário</a>
                     </li>
+                    @endif
 
+                    @if(Gate::check('verifica_permissao', [3 ,'acessar']))
                     <li>
-                        <a href={{ url('/permissoes')}}><i class="fa fa-angle-double-right"></i>Grupos / Permissões</a>
+                        <a href={{ url('/permissoes')}}><i class="fa fa-angle-double-right"></i>Grupo / Permissões</a>
                     </li>
+                    @endif
 
+                    @if(Gate::check('verifica_permissao', [5 ,'acessar']))
                     <li>
                         <a href={{ url('/usuarios')}}><i class="fa fa-angle-double-right"></i>Usuários</a>
                     </li>
+                    @endif
                 </ul>
             </li>
+            @endcan
 
             <div id="tour2"></div>
 
+           @can('verifica_permissao_modulo', ['Cadastros Base'])
            <li class="treeview">
                 <a href="#">
                 <i class="fa fa-edit"></i> <span>Cadastros Base</span>
@@ -122,71 +140,100 @@
                     <li><a href={{ url('/questionarios')}}><i class="fa fa-angle-double-right"></i>Questionário Padrão Encontros</a></li>
 
                 </ul>
-            </li>
+           </li>
+           @endcan
 
-
+           @can('verifica_permissao_modulo', ['Gestão de Pessoas'])
             <li class="treeview" id="menu_pessoas">
                 <a href="#">
                 <i class="fa fa-user"></i><span>Pessoas</span>
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
                  <ul class="treeview-menu">
-                        <li><a href={{ url('/pessoas')}}><i class="fa fa-file-text-o"></i> Listar / Cadastrar</a></li>
-                        <li><a href={{ url('/relpessoas')}}><i class="fa fa-print"></i> Relatórios</a></li>
+                        @if(Gate::check('verifica_permissao', [28 ,'acessar']))
+                          <li><a href={{ url('/pessoas')}}><i class="fa fa-file-text-o"></i> Listar / Cadastrar</a></li>
+                        @endif
+
+                        @if(Gate::check('verifica_permissao', [47 ,'acessar']))
+                            <li><a href={{ url('/relpessoas')}}><i class="fa fa-print"></i> Relatórios</a></li>
+                        @endif
                  </ul>
-             </li>
+            </li>
+            @endcan
 
 
-            <!-- Células -->
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-users"></i> <span>Gestão de Células</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
+          @can('verifica_permissao_modulo', ['Gestão de Células'])
+          <!-- Células -->
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-users"></i> <span>Gestão de Células</span>
+              <i class="fa fa-angle-left pull-right"></i>
+            </a>
 
-                 <ul class="treeview-menu">
-                    <a href={{ url('/configuracoes')}}><li><i class="fa fa-wrench"></i>Configurações</a></li>
-                    <li>
-                      <a href="#"><i class="fa fa-sitemap"></i> Estruturas <i class="fa fa-angle-left pull-right"></i></a>
-                          <ul class="treeview-menu">
-                            <li><a href={{ url('/estruturas1')}}> 1 - {{ Session::get('nivel1') }}</a></li>
-                            <li><a href={{ url('/estruturas2')}}> 2 - {{ Session::get('nivel2') }}</a></li>
-                            <li><a href={{ url('/estruturas3')}}> 3 - {{ Session::get('nivel3') }}</a></li>
-                            <li><a href={{ url('/estruturas4')}}> 4 - {{ Session::get('nivel4') }}</a></li>
-                            <li><a href={{ url('/estruturas5')}}> 5 - {{ Session::get('nivel5') }}</a></li>
-                          </ul>
-                    </li>
+               <ul class="treeview-menu">
+
+                  @if(Gate::check('verifica_permissao', [41 ,'acessar']))
+                  <a href={{ url('/configuracoes')}}><li><i class="fa fa-wrench"></i>Configurações</a></li>
+                  @endif
+
+
+                  @if(Gate::check('verifica_permissao', [36 ,'acessar']) || Gate::check('verifica_permissao', [37 ,'acessar']) || Gate::check('verifica_permissao', [38 ,'acessar']) || Gate::check('verifica_permissao', [39 ,'acessar']) || Gate::check('verifica_permissao', [40 ,'acessar']))
+                  <li>
+                    <a href="#"><i class="fa fa-sitemap"></i> Estruturas <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                          <li><a href={{ url('/estruturas1')}}> 1 - {{ Session::get('nivel1') }}</a></li>
+                          <li><a href={{ url('/estruturas2')}}> 2 - {{ Session::get('nivel2') }}</a></li>
+                          <li><a href={{ url('/estruturas3')}}> 3 - {{ Session::get('nivel3') }}</a></li>
+                          <li><a href={{ url('/estruturas4')}}> 4 - {{ Session::get('nivel4') }}</a></li>
+                          <li><a href={{ url('/estruturas5')}}> 5 - {{ Session::get('nivel5') }}</a></li>
+                        </ul>
+                  </li>
+                  @endcan
+              </ul>
+
+                <ul class="treeview-menu">
+                  @if(Gate::check('verifica_permissao', [42 ,'acessar']) || Gate::check('verifica_permissao', [45 ,'acessar']))
+                  <li>
+                    <a href="#"><i class="fa fa-street-view"></i> Células <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+
+                          @if(Gate::check('verifica_permissao', [42 ,'acessar']))
+                              <li><a href={{ url('/celulas')}}> Listar / Cadastrar</a></li>
+                          @endif
+
+                          @if(Gate::check('verifica_permissao', [45 ,'acessar']))
+                              <li><a href={{ url('/celulaspessoas')}}> Células / Participantes</a></li>
+                          @endif
+                        </ul>
+                  </li>
+                  @endif
                 </ul>
 
-                  <ul class="treeview-menu">
-                    <li>
-                      <a href="#"><i class="fa fa-street-view"></i> Células <i class="fa fa-angle-left pull-right"></i></a>
-                          <ul class="treeview-menu">
-                            <li><a href={{ url('/celulas')}}> Listar / Cadastrar</a></li>
-                            <li><a href={{ url('/celulaspessoas')}}> Células / Participantes</a></li>
-                          </ul>
-                    </li>
-                  </ul>
+                @if(Gate::check('verifica_permissao', [46 ,'acessar']))
+                <ul class="treeview-menu">
+                  <li>
+                      <a href={{ url('/relcelulas')}}><i class="fa fa-print"></i> Relatórios</a>
 
-                  <ul class="treeview-menu">
-                    <li>
-                        <a href={{ url('/relcelulas')}}><i class="fa fa-print"></i> Relatórios</a>
+                  </li>
+                </ul>
+                @endif
 
-                    </li>
-                  </ul>
+                @if(Gate::check('verifica_permissao', [58 ,'acessar']))
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="#"><i class="fa fa-circle-o"></i> Controle de Atividades <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                          <li><a href="{{ url('/controle_atividades')}}"> Encontros</a></li>
+                        </ul>
+                  </li>
+                </ul>
+                @endif
 
-                  <ul class="treeview-menu">
-                    <li>
-                      <a href="#"><i class="fa fa-circle-o"></i> Controle de Atividades <i class="fa fa-angle-left pull-right"></i></a>
-                          <ul class="treeview-menu">
-                            <li><a href="{{ url('/controle_atividades')}}"> Encontros</a></li>
-                          </ul>
-                    </li>
-                  </ul>
-
-            </li>
+          </li>
+          @endcan
 
 
+          @can('verifica_permissao_modulo', ['Financeiro'])
           <li class="treeview" id="financ">
 
                 <a href="#" onclick="redirecionar();">
@@ -200,39 +247,61 @@
                   <li>
                     <a href="#"><i class="fa fa-file-text-o"></i>Cadastros Base <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                      <li><a href="{!! url('/bancos') !!}">Bancos</a></li>
-                      <li><a href="{!! url('/grupos_titulos') !!}"> Grupos de Títulos</a></li>
-                      <li><a href="{!! url('/planos_contas') !!}"> Planos de Contas</a></li>
-                      <li><a href="{!! url('/centros_custos') !!}"> Centros de Custos</a></li>
-                      <li><a href="{!! url('/contas') !!}"> Contas Correntes</a></li>
+                      @if(Gate::check('verifica_permissao', [35 ,'acessar']))
+                          <li><a href="{!! url('/bancos') !!}">Bancos</a></li>
+                      @endif
+
+                      @if(Gate::check('verifica_permissao', [51 ,'acessar']))
+                          <li><a href="{!! url('/grupos_titulos') !!}"> Grupos de Títulos</a></li>
+                      @endif
+
+                      @if(Gate::check('verifica_permissao', [49 ,'acessar']))
+                          <li><a href="{!! url('/planos_contas') !!}"> Planos de Contas</a></li>
+                      @endif
+
+                      @if(Gate::check('verifica_permissao', [50 ,'acessar']))
+                          <li><a href="{!! url('/centros_custos') !!}"> Centros de Custos</a></li>
+                      @endif
+
+                      @if(Gate::check('verifica_permissao', [48 ,'acessar']))
+                          <li><a href="{!! url('/contas') !!}"> Contas Correntes</a></li>
+                      @endif
                     </ul>
                   </li>
 
+
+                  @if(Gate::check('verifica_permissao', [52 ,'acessar']))
                   <li>
                     <a href="#"><i class="fa fa-calendar-plus-o"></i>Contas a Pagar <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                       <li><a href="{!! url('/titulos/P') !!}">Lançamentos</a></li>
                     </ul>
                   </li>
+                  @endif
 
+                  @if(Gate::check('verifica_permissao', [52 ,'acessar']))
                   <li>
                     <a href="#"><i class="fa fa-money"></i>Contas a Receber <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                       <li><a href="{!! url('/titulos/R') !!}">Lançamentos</a></li>
                     </ul>
                   </li>
+                  @endif
 
                   <li>
                     <a href="#"><i class="fa fa-angle-double-right"></i>Transferências</i></a>
                   </li>
 
+                  @if(Gate::check('verifica_permissao', [53 ,'acessar']))
                   <li>
                     <a href="{!! url('/relfinanceiro') !!}"><i class="fa fa-angle-double-right"></i>Relatórios</i></a>
                   </li>
+                  @endif
 
               </ul>
 
          </li>
+         @endcan
 
           <li class="header">Precisa de Ajuda ?</li>
           <li class="treeview">

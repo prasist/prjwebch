@@ -103,5 +103,36 @@ class AuthServiceProvider extends ServiceProvider
 
         });
 
+
+        //Verificação : Se for usuário recém cadastrado, verifica se já cadastrou os dados da empresa
+        $gate->define('verifica_permissao_modulo', function ($user, $modulo)
+        {
+
+                //--------Verificar se o usuario ja cadastrou os dados da empresa
+                $cadastrou = \App\Models\usuario::findOrfail($user->id);
+
+                if ($cadastrou) //Verifica se cadastrou os dados da empresa
+                {
+
+                    //Ler todas permissoes do usuarios
+                    $permissoes_modulos = \DB::select('select sum(acessar) as permissao_modulo, menu from view_permissoes_grupo where usuario = ? and menu = ? group by menu', [$user->id, $modulo]);
+
+                    if ($permissoes_modulos)
+                    {
+                         if ($permissoes_modulos[0]->permissao_modulo >0) return true;
+                    }
+                    else //Não encontrou permissao para a pagina
+                    {
+                          return false;
+                    }
+
+                }
+                else // Verifica se cadastrou os dados da empresa
+                {
+                    return false;
+                }
+
+        });
+
     }
 }
