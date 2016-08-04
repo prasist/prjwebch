@@ -9,6 +9,7 @@ use URL;
 use Auth;
 use Input;
 use Gate;
+use DB;
 
 class ControleAtividadesController extends Controller
 {
@@ -54,13 +55,20 @@ class ControleAtividadesController extends Controller
                 'celulas'=>$celulas,
                 'participantes'=>'',
                 'questions' =>$questions,
-                'questions_saved'=>''
+                'questions_saved'=>'',
+                'controle_materiais'=>''
              ]);
 
     }
 
   public function salvar($request, $id, $tipo_operacao)
   {
+
+     /* ------------------ INICIA TRANSACTION -----------------------*/
+     \DB::transaction(function() use ($request, $id, $tipo_operacao)
+    {
+
+
         $input = $request->except(array('_token')); //não levar o token
 
         $this->validate($request, [
@@ -70,7 +78,6 @@ class ControleAtividadesController extends Controller
             'data_encontro' => 'required',
         ]);
 
-        //dd($input);
 
          $descricao_celula = explode("|", $input["celulas"]);
 
@@ -83,6 +90,7 @@ class ControleAtividadesController extends Controller
             $dados = controle_atividades::firstOrNew(['id'=>$id]);
          }
 
+
          $dados->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
          $dados->empresas_id = $this->dados_login->empresas_id;
          $dados->celulas_id = $descricao_celula[0];
@@ -92,7 +100,9 @@ class ControleAtividadesController extends Controller
          $dados->hora_inicio = $input['hora_inicio'];
          $dados->hora_fim = $input['hora_fim'];
          $dados->valor_oferta = ($input['valor_oferta']=="" ? null : $input['valor_oferta']);
-         $dados->obs = $input['observacao'];
+         $dados->obs = trim($input['observacao']);
+         $dados->link_externo = trim($input['link_externo']);
+         $dados->texto = trim($input['texto_encontro']);
          $dados->lider_pessoas_id = substr($descricao_celula[1],0,9);
          $dados->save();
 
@@ -104,6 +114,9 @@ class ControleAtividadesController extends Controller
 
                 $i_index=0; /*initialize*/
 
+                /*
+                    $input['id_obs_membro'] have all indexes with ID
+                */
                 foreach($input['id_obs_membro'] as $selected)
                 {
 
@@ -117,15 +130,15 @@ class ControleAtividadesController extends Controller
 
                             $controle_presencas = \App\Models\controle_presencas::firstOrNew($whereForEach);
 
-                            //find if the current index exists in array of presenca
-                            //if found, set presenca "S" (Yes)
-                            if (array_key_exists($i_index, $input['presenca']))
+                            $presenca=""; //initialize
+
+                            if (isset($input['presenca']))
                             {
-                                $presenca = "S"; //Yes
-                            }
-                            else
-                            {
-                                $presenca = "N"; //No
+                                //if found value in ck_resposta array
+                                if (in_array($selected, $input['presenca']))
+                                {
+                                    $presenca = "S"; //Yes
+                                }
                             }
 
 
@@ -228,11 +241,67 @@ class ControleAtividadesController extends Controller
 
                             $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
 
-                } //end for each visitantes
+                } //end for each question
 
           }
 
-          return  $id_atividade;
+           //-------------------------------------------------Material para encontro--------------------------------------------------
+          //UPLOAD FILES
+           $fileName="";
+           $file_count=0;
+           $uploadcount = 0;
+
+           $arquivo = $request->file('upload_arquivo');
+
+           if ($request->hasFile('upload_arquivo'))
+           {
+
+                 $file_count = count($arquivo);
+
+                 foreach($arquivo as $file)
+                 {
+
+                      //caminho onde será gravado
+                      $destinationPath = base_path() . '/public/images/persons';
+
+                      $fileName = $file->getClientOriginalName(); // renameing image
+
+                      $file->move($destinationPath, $fileName); // uploading file to given path
+
+                      $whereForEach =
+                                        [
+                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                            'empresas_id' =>  $this->dados_login->empresas_id,
+                                            'controle_atividades_id' => $id_atividade,
+                                            'arquivo' => $fileName
+                                        ];
+
+                        $controle_materiais = \App\Models\controle_materiais::firstOrNew($whereForEach);
+                        $controle_materiais->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
+                        $controle_materiais->empresas_id = $this->dados_login->empresas_id;
+                        $controle_materiais->controle_atividades_id = $id_atividade;
+                        $controle_materiais->arquivo = $fileName;
+                        $controle_materiais->save();
+
+                      $uploadcount ++;
+                  }
+
+            }
+
+            if ($uploadcount!=$file_count) {
+                \Session::flash('flash_message_erro', 'Os dados foram salvos, porém houve erro no envio da imagem.');
+                return redirect($this->rota);
+            }
+
+
+
+          //-------------------------------------------------FIM Material para encontro--------------------------------------------------
+
+
+          return $id_atividade;
+
+      });// ------------ FIM TRANSACTION
+
 
   }
 
@@ -304,7 +373,7 @@ class ControleAtividadesController extends Controller
         }
 
         //Controle de Atividades
-        $dados = controle_atividades::select('controle_atividades.id', 'celulas_id', 'hora_inicio', 'hora_fim', 'valor_oferta', 'controle_atividades.obs', 'dia', 'mes', 'ano', 'celulas.dia_encontro', 'encontro_encerrado')
+        $dados = controle_atividades::select('texto', 'link_externo', 'controle_atividades.id', 'celulas_id', 'hora_inicio', 'hora_fim', 'valor_oferta', 'controle_atividades.obs', 'dia', 'mes', 'ano', 'celulas.dia_encontro', 'encontro_encerrado')
         ->join('celulas', 'celulas.id', '=', 'controle_atividades.celulas_id')
         ->where('controle_atividades.empresas_id', $this->dados_login->empresas_id)
         ->where('controle_atividades.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
@@ -323,11 +392,23 @@ class ControleAtividadesController extends Controller
         ->orderBy('pessoas.razaosocial')
         ->get();
 
+
         $controle_questions = \App\Models\controle_questions::select('id')
         ->where('empresas_id', $this->dados_login->empresas_id)
         ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('controle_atividades_id', $id)
         ->get();
+
+        $controle_materiais = \App\Models\controle_materiais::select('arquivo', 'id')
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('controle_atividades_id', $id)
+        ->get();
+
+        if ($controle_materiais->count()==0)
+        {
+              $controle_materiais = \App\Models\tabela_vazia::get();
+        }
 
         $visitantes = \App\Models\controle_visitantes::select('id', 'nome', 'fone', 'email')
         ->where('empresas_id', $this->dados_login->empresas_id)
@@ -375,7 +456,8 @@ class ControleAtividadesController extends Controller
                 'participantes'=>$participantes,
                 'questions'=>$questions,
                 'questions_saved'=>$questions_saved,
-                'visitantes'=>$visitantes
+                'visitantes'=>$visitantes,
+                'controle_materiais'=>$controle_materiais
              ]);
 
     }
@@ -453,5 +535,25 @@ class ControleAtividadesController extends Controller
             $dados->delete();
             return redirect($this->rota);
     }
+
+
+    public function remove_image ($id)
+    {
+
+         $encontro_materiais = \App\Models\controle_materiais::findOrfail($id);
+
+         if(!\File::delete(public_path() . '/images/persons/' . $encontro_materiais->arquivo))
+         {
+            return "false";
+         }
+         else
+         {
+
+            $encontro_materiais->delete();
+            return "true";
+         }
+
+    }
+
 
 }

@@ -41,7 +41,7 @@
                             <li class="active"><a href="#tab_1" data-toggle="tab">Dados Cadastrais</a></li>
 
                             @if ($tipo_operacao=="editar")
-                                <li><a href="#tab_participantes" data-toggle="tab">Participantes</a></li>
+                                <li><a href="#tab_participantes" data-toggle="tab">Participantes <span class="badge bg-blue">{!!$dados[0]->tot!!}</span></a></li>
                             @endif
 
                             <li><a href="#tab_2" data-toggle="tab">Vinculo de Células</a></li>
@@ -559,7 +559,13 @@
                                                 <div class="col-xs-11">
 
                                                     @if ($tipo_operacao=="editar")
-                                                    <a href="{{ URL::to('celulaspessoas/' . $dados[0]->id . '/edit') }}" class = 'btn btn-success btn-flat'><i class="fa fa-file-text-o"></i>  Incluir Participante(s)</a>
+
+                                                    @if ($dados[0]->tot>0)
+                                                        <a href="{{ URL::to('celulaspessoas/' . $dados[0]->id . '/edit') }}" class = 'btn btn-success btn-flat'><i class="fa fa-file-text-o"></i>  Incluir Participante(s)</a>
+                                                    @else
+                                                        <a href="{{ URL::to('celulaspessoas/registrar/' .$dados[0]->id) }}" class = 'btn btn-success btn-flat'><i class="fa fa-file-text-o"></i>  Incluir Participante(s)</a>
+                                                    @endif
+
                                                     <table id="example" class="table table-bordered table-hover">
                                                         <tbody>
                                                          <tr>

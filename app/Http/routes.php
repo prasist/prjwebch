@@ -58,6 +58,7 @@
     Route::post('controle_atividades/{id}/update','ControleAtividadesController@update');
     Route::get('controle_atividades/{id}/edit','ControleAtividadesController@edit');
     Route::get('controle_atividades/{id}/delete','ControleAtividadesController@destroy');
+    Route::get('controle_atividades/{id}/remover','ControleAtividadesController@remove_image');
 
     /*Tipos de Relacionamentos */
     Route::get('questionarios', 'QuestionariosController@index');

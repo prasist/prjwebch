@@ -22,9 +22,9 @@
  </div>
 
 @if ($tipo_operacao=="incluir")
-      <form method = 'POST' class="form-horizontal"  action = {{ url('/' . \Session::get('route') . '/gravar')}}>
+      <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action = {{ url('/' . \Session::get('route') . '/gravar')}}>
 @else
-      <form method = 'POST' class="form-horizontal"  action = {{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update')}}>
+      <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action = {{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update')}}>
 @endif
 
 {!! csrf_field() !!}
@@ -259,32 +259,56 @@
                       <div class="row">
 
                            <div class="col-xs-12">
-                                  <label for="arquivo" class="control-label">Tamanho Máximo cada Arquivo : 1000Kb (1 Mega)</label>
-                                  <input type="file" id="arquivo"  name = "arquivo">
+                                  <label for="upload_arquivo" class="control-label">Tamanho Máximo cada Arquivo : 500Kb</label>
+                                  <input type="file" id="upload_arquivo[]" multiple="true" name = "upload_arquivo[]">
+
+                                  @if ($tipo_operacao=="editar")
+                                      <table id="tab_arquivos" class="table table-responsive table-hover">
+                                      @foreach($controle_materiais as $item)
+                                           @if ($item->arquivo!="")
+                                              <tr id="{{$item->id}}">
+                                                  <td><a href="{{ url('/images/persons/' . $item->arquivo) }}" target="_blank">{{$item->arquivo}}</a></td>
+                                                  <td><a href="" class="btn btn-danger remover_arquivo" id="{{$item->id}}"><i class="fa fa-trash"></i></a></td>
+                                              </tr>
+                                           @endif
+
+                                      @endforeach
+                                      </table>
+                                  @endif
                            </div>
 
                       </div>
 
                       <div class="row">
                               <div class="col-xs-12">
-                                   <label for="link" class="control-label">Link Externo (Artigo, Documento, Site, Video, Imagem, etc)</label>
-                                   <input type="text" name="link" id="link"  class="form-control" value=''>
+                                   <label for="link_externo" class="control-label">Link Externo (Artigo, Documento, Site, Video, Imagem, etc)</label>
+                                   <input type="text" name="link_externo" id="link_externo"  class="form-control" value='{{ ($tipo_operacao=="editar" ? $dados[0]->link_externo : "") }}'>
                               </div>
                       </div>
 
                       <div class="row">
                               <div class="col-xs-12">
                                    <label for="texto_encontro" class="control-label">Texto</label>
-                                   <textarea name="texto_encontro" class="form-control" rows="2" placeholder="Digite o texto..." ></textarea>
+                                   <textarea name="texto_encontro" class="form-control" rows="2" placeholder="Digite o texto..." >
+                                   @if ($tipo_operacao=="editar")
+                                        {{rtrim(ltrim($dados[0]->texto))}}
+                                   @endif
+
+                                   </textarea>
                               </div>
                       </div>
-
 
 
                  </div>
                 <!-- /.box-body -->
                 <!-- /.box-footer -->
               </div>
+
+              <div class="box-footer">
+                  <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-save"></i> Salvar</button>
+                  <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Cancelar</a>
+              </div>
+
             </div>
             <!-- /.box -->
             <!-- FIM CONTEUDO -->
@@ -331,13 +355,13 @@
                                         @foreach ($participantes as $item)
                                         <tr>
                                                   <td>{{$item->id}}</td>
-                                                  <td>{{$item->razaosocial}}</td>
+                                                  <td>{{ltrim(rtrim($item->razaosocial))}}</td>
                                                   <td>
                                                       <input name="presenca[]" id="presenca[]" type="checkbox" class="obs" data-group-cls="btn-group-sm" value="{{$item->id}}"  data-off-text="Não" data-on-text="Sim" {{ ($item->presenca_simples=="S" ? "checked" : "") }} />
                                                   </td>
                                                   <td>
                                                             <input  name="id_obs_membro[]" id="id_obs_membro[]" type="hidden"  value="{{$item->id}}" />
-                                                            <input  name="obs_membro[]" id="obs_membro[]" type="text" class="form-control" value="{{$item->observacao}}" />
+                                                            <input  name="obs_membro[]" id="obs_membro[]" type="text" class="form-control" value="{{ltrim(rtrim($item->observacao))}}" />
                                                   </td>
                                          </tr>
                                          @endforeach
@@ -436,6 +460,8 @@
                   <!-- form start -->
                   <div class="form-horizontal">
                     <div class="box-body">
+                    <input id="ck_resposta[]" name="ck_resposta[]" type="hidden" value=""/>
+
 
                               @foreach ($questions as $item)
                                     <div class="form-group">
@@ -500,10 +526,10 @@
       </div>
       <!-- /.row -->
 
-             <div class="box-footer">
+            <div class="box-footer">
                   <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-save"></i> Salvar</button>
                   <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Cancelar</a>
-              </div>
+            </div>
 
 
     </section>
@@ -524,6 +550,35 @@
           $(this).closest('tr').remove();
 
       });
+
+
+      //remove file
+      $("#tab_arquivos").on("click", ".remover_arquivo", function(e){
+
+          //get ID of the file
+          var var_id = $(this).closest('tr').attr('id');
+          $(this).closest('tr').remove();
+
+          //url of route to delete file
+          var urlGetUser = '{!! url("/controle_atividades/' +  var_id +  '/remover' + '") !!}';
+
+          //call ajax
+          $.ajax(
+          {
+               url: urlGetUser,
+               success: function (response) {
+
+                   if (response=="false")
+                   {
+                       alert("Erro ao remover o arquivo");
+                   }
+
+               }
+          });
+
+      });
+
+
 
         //Adicionar linha visitante
         $('#addRow').on( 'click', function () {
@@ -547,6 +602,9 @@
                           'iDisplayLength': 25,
                           "bProcessing": true,
                           "processing": true,
+                          "ordering": false,
+                          "search": false,
+                          "paging": false,
                           "aaSorting": [[ 1, "asc" ]],
                           language:
                           {
@@ -577,18 +635,18 @@
           {
 
                   if (bool_opcao==true) {
-                      $('#box_participantes').show();
-                      $('#box_visitantes').show();
-                      $('#box_questions').show();
-                      $('#box_resumo').show();
-                      $('#box_mais').show();
+                        $('#box_mais').show();
+                        $('#box_participantes').show();
+                        $('#box_visitantes').show();
+                        $('#box_questions').show();
+                        $('#box_resumo').show();
                   } else {
                         //hide divs
+                      $('#box_mais').hide();
                       $('#box_participantes').hide();
                       $('#box_visitantes').hide();
                       $('#box_questions').hide();
                       $('#box_resumo').hide();
-                      $('#box_mais').hide();
                  }
           }
 
@@ -695,6 +753,9 @@
                           'iDisplayLength': 25,
                           "bProcessing": true,
                           "processing": true,
+                          "ordering": false,
+                          "search": false,
+                          "paging": false,
                           "aaSorting": [[ 1, "asc" ]],
                           language:
                           {
@@ -747,8 +808,9 @@
           //Quando clicar em uma data no combo
           $("#data_encontro").change(function()
           {
-                if ($('#ckFinalizar').prop('checked')) //Exibe divs se foi selecionado encerramento
-                {
+
+               if ($('#ckFinalizar').prop('checked')) //Exibe divs se foi selecionado encerramento
+               {
                     $("[class='obs']").bootstrapSwitch();
                     exibir_divs(true);
                }

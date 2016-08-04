@@ -166,7 +166,7 @@
           <!-- Células -->
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-users"></i> <span>Gestão de Células</span>
+              <i class="fa fa-users"></i> <span>Células</span>
               <i class="fa fa-angle-left pull-right"></i>
             </a>
 
@@ -191,29 +191,26 @@
                   @endcan
               </ul>
 
+                @if(Gate::check('verifica_permissao', [42 ,'acessar']))
                 <ul class="treeview-menu">
-                  @if(Gate::check('verifica_permissao', [42 ,'acessar']) || Gate::check('verifica_permissao', [45 ,'acessar']))
                   <li>
-                    <a href="#"><i class="fa fa-street-view"></i> Células <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-
-                          @if(Gate::check('verifica_permissao', [42 ,'acessar']))
-                              <li><a href={{ url('/celulas')}}> Listar / Cadastrar</a></li>
-                          @endif
-
-                          @if(Gate::check('verifica_permissao', [45 ,'acessar']))
-                              <li><a href={{ url('/celulaspessoas')}}> Células / Participantes</a></li>
-                          @endif
-                        </ul>
+                    <a href="{{ url('/celulas/registrar')}}"><i class="fa fa-plus"></i> Nova Célula</a>
                   </li>
-                  @endif
                 </ul>
+                @endif
 
-                @if(Gate::check('verifica_permissao', [46 ,'acessar']))
+                @if(Gate::check('verifica_permissao', [42 ,'acessar']))
                 <ul class="treeview-menu">
                   <li>
-                      <a href={{ url('/relcelulas')}}><i class="fa fa-print"></i> Relatórios</a>
+                      <a href="{{ url('/celulas')}}" title="Lista todas as células cadastradas e a quantidade de participantes..."><i class="fa  fa-list-alt"></i> Listar</a>
+                  </li>
+                </ul>
+                @endif
 
+                @if(Gate::check('verifica_permissao', [45 ,'acessar']))
+                <ul class="treeview-menu">
+                  <li>
+                      <a href="{{ url('/celulaspessoas')}}" title="Inclua pessoas que participarão das células..."> <i class="fa fa-user-plus"></i> Participantes </i></a>
                   </li>
                 </ul>
                 @endif
@@ -221,13 +218,20 @@
                 @if(Gate::check('verifica_permissao', [58 ,'acessar']))
                 <ul class="treeview-menu">
                   <li>
-                    <a href="#"><i class="fa fa-circle-o"></i> Controle de Atividades <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                          <li><a href="{{ url('/controle_atividades')}}"> Encontros</a></li>
-                        </ul>
+                         <a href="{{ url('/controle_atividades')}}" title="Controle a presença dos membros e visitantes, envie material para encontro..."> <i class="fa fa-check"></i> Encontros</a>
                   </li>
                 </ul>
                 @endif
+
+                @if(Gate::check('verifica_permissao', [46 ,'acessar']))
+                <ul class="treeview-menu">
+                  <li>
+                      <a href="{{ url('/relcelulas')}}"><i class="fa fa-print"></i> Relatórios</a>
+                  </li>
+                </ul>
+                @endif
+
+
 
           </li>
           @endcan
