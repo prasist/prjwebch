@@ -108,8 +108,10 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define('verifica_permissao_modulo', function ($user, $modulo)
         {
 
+            if ($user) {
                 //--------Verificar se o usuario ja cadastrou os dados da empresa
-                $cadastrou = \App\Models\usuario::findOrfail($user->id);
+
+                $cadastrou = \App\Models\usuario::find($user->id);
 
                 if ($cadastrou) //Verifica se cadastrou os dados da empresa
                 {
@@ -131,6 +133,8 @@ class AuthServiceProvider extends ServiceProvider
                 {
                     return false;
                 }
+
+            }
 
         });
 
