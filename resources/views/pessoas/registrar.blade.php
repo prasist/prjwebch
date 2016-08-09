@@ -270,7 +270,7 @@
                                                                <div class="input-group-addon">
                                                                 <i class="fa fa-phone"></i>
                                                                 </div>
-                                                                <input id="celular" data-inputmask='"mask": "(99) 9999-9999"' data-mask  name = "celular" type="text" class="form-control" value="{{old('celular')}}">
+                                                                <input id="celular"  name = "celular" type="text" class="form-control" value="{{old('celular')}}">
                                                     </div>
                                                 </div>
 

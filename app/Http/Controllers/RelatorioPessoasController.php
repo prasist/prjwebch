@@ -286,7 +286,7 @@ class RelatorioPessoasController extends Controller
     if ($input["mes"]!="")
     {
         $filtros .= "   Mes Aniversario : " . $input["mes"];
-        $where .= " and mes = '" . $input["mes"] . "'";
+        $where .= " and to_char(p.datanasc, 'MM') = '" . $input["mes"] . "'";
     }
 
     if ($input["ano_inicial"]!="" && $input["ano_final"]!="" )
