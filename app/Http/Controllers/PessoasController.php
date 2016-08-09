@@ -433,7 +433,8 @@ class PessoasController extends Controller
             [
                 'grupos'=> $grupos,
                 'interface' => $habilitar_interface,
-                'bancos' => $bancos
+                'bancos' => $bancos,
+                'tipos_pessoas'=>$tipos_pessoas
             ]);
 
         }
