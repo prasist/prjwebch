@@ -54,6 +54,24 @@ class CelulasController extends Controller
 
     }
 
+    public function dashboard()
+    {
+
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
+        {
+              return redirect('home');
+        }
+
+        //Verificar se foi cadastrado os dados da igreja
+        if (\App\Models\usuario::find(Auth::user()->id))
+        {
+              //Busca ID do cliente cloud e ID da empresa
+              $this->dados_login = \App\Models\usuario::find(Auth::user()->id);
+              return view($this->rota . '.dashboard', ['dados'=>'']);
+        }
+
+    }
+
    //Return all dates in a month by dayOfWeek
    public function return_dates($id, $var_month, $var_year)
    {

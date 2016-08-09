@@ -180,7 +180,6 @@
                                              </div>
                                       </div>
                             </div>
-
                       </div>
 
 
@@ -193,8 +192,8 @@
               <!-- FIM CONTEUDO -->
 
 
-                   <!-- INICIO CONTEUDO -->
-                <!-- Horizontal Form -->
+            <!-- INICIO CONTEUDO -->
+            <!-- Horizontal Form -->
             <div class="box box-info" id="box_mais" style="display: none">
                   <div class="box-header with-border">
                     <h3 class="box-title">Encerramento Encontro</h3>

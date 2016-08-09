@@ -316,6 +316,8 @@ class PessoasController extends Controller
               return redirect('home');
        }
 
+        $tipos_pessoas = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome')->get();
+
         //Para carregar combo de grupos de pessoas
         $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('empresas_id', $this->dados_login->empresas_id)
@@ -419,7 +421,8 @@ class PessoasController extends Controller
                 'membros_formacoes' => $membros_formacoes,
                 'membros_idiomas' => $membros_idiomas,
                 'membros_profissionais' => $membros_profissionais,
-                'membros_relacionamentos'=>$membros_relacionamentos
+                'membros_relacionamentos'=>$membros_relacionamentos,
+                'tipos_pessoas'=>$tipos_pessoas
             ]);
 
         }
@@ -1375,6 +1378,7 @@ public function salvar($request, $id, $tipo_operacao) {
     private function exibir ($request, $id, $id_tipo_pessoa, $preview, $bool_exibir_perfil)
     {
 
+
         if($request->ajax())
         {
             return URL::to($this->rota . '/'. $id . '/edit');
@@ -1401,6 +1405,9 @@ public function salvar($request, $id, $tipo_operacao) {
 
         //Listagem de bancos (Para carregar dropdown )
         $bancos = \App\Models\bancos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome')->get();
+
+        $tipos_pessoas = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome')->get();
+
 
         /*Pessoas e dados financeiros*/
         /*Usado dessa forma para formatar a data de nascimento */
@@ -1710,22 +1717,22 @@ public function salvar($request, $id, $tipo_operacao) {
                     'membros_filhos' => $membros_filhos,
                     'membros_habilidades' =>$membros_habilidades,
                     'membros_profissionais' => $membros_profissionais,
-                    'membros_relacionamentos' => $membros_relacionamentos
+                    'membros_relacionamentos' => $membros_relacionamentos,
+                    'tipos_pessoas'=>$tipos_pessoas
                 ]);
 
         }
         else
         {
-
                 return view($this->rota . '.edit' ,
                 [
                     'grupos' =>$grupos,
                     'preview' => $preview,
                     'interface' => $habilitar_interface,
                     'bancos' => $bancos,
-                    'pessoas' => $pessoas
+                    'pessoas' => $pessoas,
+                    'tipos_pessoas'=>$tipos_pessoas
                 ]);
-
         }
 
     }

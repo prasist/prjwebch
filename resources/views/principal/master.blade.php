@@ -438,6 +438,7 @@
         <!-- bootstrap time picker -->
         <script src="{{ asset('/dist/js/bootstrap-timepicker.min.js')}}"></script> <!-- monetarios-->
 
+
         <!-- tour rápido-->
         @if (\Session::get('tour_visaogeral')=='' || \Session::get('tour_visaogeral')!='S')
             @if (\Session::get('dados_login')!='')

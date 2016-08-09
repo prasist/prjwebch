@@ -90,6 +90,9 @@
     /*Financeiro*/
     Route::get('financeiro', 'FinanceiroController@index');
 
+    Route::get('dashboard_celulas', 'CelulasController@dashboard');
+
+
     /*Relatorio Financeiro*/
     Route::get('relfinanceiro', 'RelatorioFinanceiroController@index');
     Route::post('relfinanceiro/pesquisar', 'RelatorioFinanceiroController@pesquisar');

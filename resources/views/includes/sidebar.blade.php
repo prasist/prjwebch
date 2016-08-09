@@ -164,8 +164,8 @@
 
           @can('verifica_permissao_modulo', ['Gestão de Células'])
           <!-- Células -->
-          <li class="treeview">
-            <a href="#">
+          <li class="treeview" id="menu_celulas">
+            <a href="#" onclick="redirecionar_celulas();">
               <i class="fa fa-users"></i> <span>Células</span>
               <i class="fa fa-angle-left pull-right"></i>
             </a>
@@ -359,6 +359,14 @@ function redirecionar_pessoas()
 {
 
   var_pagina = "{!! url('/pessoas') !!}";
+  window.location=var_pagina;
+
+}
+
+function redirecionar_celulas()
+{
+
+  var_pagina = "{!! url('/dashboard_celulas') !!}";
   window.location=var_pagina;
 
 }

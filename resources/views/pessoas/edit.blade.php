@@ -31,7 +31,6 @@
                  <div class="nav-tabs-custom"> <!--anterior box-body-->
 
                         <!-- Guarda ID tipo pessoa-->
-                        <input  name="tipos_pessoas_id" type="hidden"  value="{{ $interface->id }}" />
 
                          <!-- Nav tabs -->
                           <ul class="nav nav-tabs" role="tablist">
@@ -137,10 +136,6 @@
 
                                                 </div>
 
-                                                <div class="col-xs-3">
-                                                     @include('carregar_combos', array('dados'=>$grupos, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>$pessoas[0]->grupos_pessoas_id, 'id_pagina'=> '31'))
-                                                     @include('modal_cadastro_basico', array('qual_campo'=>'grupo', 'modal' => 'modal_grupo', 'tabela' => 'grupos_pessoas'))
-                                                </div>
 
                                                 @if ($pessoas[0]->caminhofoto!="")
                                                   <div class="col-xs-3">
@@ -151,6 +146,22 @@
                                                   </div>
                                                 @endif
 
+                                        </div>
+                                        <div class="row">
+                                                <div class="col-xs-6">
+                                                     @include('carregar_combos', array('dados'=>$grupos, 'titulo' =>'Grupo', 'id_combo'=>'grupo', 'complemento'=>'', 'comparar'=>$pessoas[0]->grupos_pessoas_id, 'id_pagina'=> '31'))
+                                                     @include('modal_cadastro_basico', array('qual_campo'=>'grupo', 'modal' => 'modal_grupo', 'tabela' => 'grupos_pessoas'))
+                                                </div>
+
+                                                <div class="col-xs-6">
+                                                     <label for="tipos_pessoas_id" class="control-label">Tipos Pessoas</label>
+                                                     <select id="tipos_pessoas_id" placeholder="(Selecionar)" name="tipos_pessoas_id" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                      <option  value="">(Selecionar)</option>
+                                                      @foreach($tipos_pessoas as $item)
+                                                             <option  value="{{$item->id}}" {{ ($pessoas[0]->tipos_pessoas_id== $item->id ? 'selected' : '') }}>{{$item->nome}}</option>
+                                                      @endforeach
+                                                      </select>
+                                                </div>
                                         </div>
 
                                         <div class="row{{ $errors->has('razaosocial') ? ' has-error' : '' }}">
