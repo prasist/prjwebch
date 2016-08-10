@@ -531,6 +531,7 @@ class RelatorioPessoasController extends Controller
         $parametros = array_add($parametros, 'data_casamento_final', ($input["data_casamento_ate"]=="" ? '' : $formatador->FormatarData($input["data_casamento_ate"])));
     }
 
+
     if ($input["resultado"]=="email")
     {
 
@@ -549,7 +550,7 @@ class RelatorioPessoasController extends Controller
         $strSql .= "   LEFT JOIN celulas_pessoas cp ON cp.pessoas_id = p.id AND cp.empresas_id = p.empresas_id AND cp.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
         $strSql .= "   LEFT JOIN celulas c ON cp.celulas_id = c.id AND cp.empresas_id = c.empresas_id AND cp.empresas_clientes_cloud_id = c.empresas_clientes_cloud_id";
         $strSql .= "   LEFT JOIN membros_historicos mh ON mh.pessoas_id = p.id AND mh.empresas_id = p.empresas_id AND mh.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
-        $strSql .= "   LEFT JOIN membrops_formacoes mf ON mf.pessoas_id = p.id AND mf.empresas_id = p.empresas_id AND mf.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
+        $strSql .= "   LEFT JOIN membros_formacoes mf ON mf.pessoas_id = p.id AND mf.empresas_id = p.empresas_id AND mf.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
         $strSql .= "   LEFT JOIN membros_familiares mfa ON mfa.pessoas_id = p.id AND mfa.empresas_id = p.empresas_id AND mfa.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
         $strSql .= "   LEFT JOIN membros_profissionais mprof ON mprof.pessoas_id = p.id AND mprof.empresas_id = p.empresas_id AND mprof.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
         $strSql .= "   LEFT JOIN membros_ministerios mm ON mm.pessoas_id = p.id AND mm.empresas_id = p.empresas_id AND mm.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
