@@ -1541,7 +1541,7 @@ public function salvar($request, $id, $tipo_operacao) {
 
             $sQuery = " select p3.razaosocial as razaosocial_mae, p2.razaosocial as razaosocial_pai,  pessoas.razaosocial, pessoas_id, membros_familiares.empresas_id, membros_familiares.empresas_clientes_cloud_id, conjuge_id, nome_conjuge, ";
             $sQuery .= " to_char(data_falecimento, 'DD-MM-YYYY') AS data_falecimento, ";
-            $sQuery .= " to_char(data_casamento, 'DD-MM-YYYY') AS data_casamento, ";
+            $sQuery .= " to_char(to_date(data_casamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_casamento, ";
             $sQuery .= " to_char(data_nasc, 'DD-MM-YYYY') AS data_nasc,";
             $sQuery .= " to_char(data_falecimento_pai, 'DD-MM-YYYY') AS data_falecimento_pai, ";
             $sQuery .= " to_char(data_falecimento_mae, 'DD-MM-YYYY') AS data_falecimento_mae, ";

@@ -208,6 +208,9 @@
 
                   $(function () {
 
+
+                         $("#menu_seguranca").addClass("treeview active");
+
                          $('.acessar').checkboxpicker({
                               offLabel : 'Não',
                               onLabel : 'Sim',

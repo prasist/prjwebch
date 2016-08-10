@@ -98,5 +98,9 @@
           </div>
          </div>
         </div>
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#menu_celulas").addClass("treeview active");
+    });
+</script>
 @endsection

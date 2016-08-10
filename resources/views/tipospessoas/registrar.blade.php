@@ -76,5 +76,9 @@
     </div><!-- <col-md-12 -->
 
 </div><!-- row -->
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#menu_cadastros_base").addClass("treeview active");
+    });
+</script>
 @endsection

@@ -116,6 +116,9 @@
 $(function ()
     {
 
+        $("#menu_celulas").addClass("treeview active");
+
+
           //Verifica se cpf é único no banco de dados
           $("#celulas").change(function()
           {

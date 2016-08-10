@@ -164,6 +164,9 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
+
+            $("#menu_celulas").addClass("treeview active");
+
             /*quando carregar a pagina e estiver preenchido o nivel4, dispara o evento que carrega as outras dropdows.*/
             if ($("#nivel4").val()!="")
             {

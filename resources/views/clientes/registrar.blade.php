@@ -356,4 +356,9 @@
 
                    });
 </script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#menu_config").addClass("treeview active");
+    });
+</script>
 @endsection

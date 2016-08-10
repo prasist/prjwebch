@@ -135,6 +135,12 @@
 
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#menu_celulas").addClass("treeview active");
+    });
+</script>
+
 @include('celulaspessoas.script_table')
 
 @endsection

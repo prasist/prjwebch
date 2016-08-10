@@ -98,4 +98,9 @@
          </div>
         </div>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#menu_seguranca").addClass("treeview active");
+    });
+</script>
 @endsection

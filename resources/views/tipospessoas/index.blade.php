@@ -102,5 +102,9 @@
           </div>
          </div>
         </div>
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#menu_cadastros_base").addClass("treeview active");
+    });
+</script>
 @endsection

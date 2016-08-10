@@ -57,7 +57,7 @@
                                                          </div><!-- col-xs-5-->
 
                                                          <div class="col-xs-6">
-                                                                 @include('carregar_combos_multiple', array('dados'=>$situacoes, 'titulo' =>'Situações', 'id_combo'=>'situacoes[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_situacoes))
+                                                                 @include('carregar_combos_multiple', array('dados'=>$situacoes, 'titulo' =>'Situações', 'id_combo'=>'situacoes[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_situacoes, 'id_pagina'=> '26'))
                                                          </div><!-- col-xs-5-->
                                                    </div>
                                                 </div>
@@ -405,13 +405,13 @@
 
                                                            <div class="row"><!-- row-->
                                                                    <div class="col-xs-10">
-                                                                          @include('carregar_combos_multiple', array('dados'=>$formacoes, 'titulo' =>'Áreas de Formação', 'id_combo'=>'formacoes[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_formacoes))
+                                                                          @include('carregar_combos_multiple', array('dados'=>$formacoes, 'titulo' =>'Áreas de Formação', 'id_combo'=>'formacoes[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_formacoes, 'id_pagina'=> '12'))
                                                                    </div><!-- col-xs-5-->
                                                            </div>
 
                                                             <div class="row"><!-- row-->
                                                                    <div class="col-xs-10">
-                                                                          @include('carregar_combos_multiple', array('dados'=>$idiomas, 'titulo' =>'Idiomas', 'id_combo'=>'idiomas[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_idiomas))
+                                                                          @include('carregar_combos_multiple', array('dados'=>$idiomas, 'titulo' =>'Idiomas', 'id_combo'=>'idiomas[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_idiomas, 'id_pagina'=> '9'))
                                                                    </div><!-- col-xs-5-->
                                                            </div><!-- end row-->
 
@@ -896,7 +896,7 @@
 
                                                                    <input type="hidden" name="tiposrelacionamentos[]" class="minimal" value="">
                                                                    <div class="col-xs-5">
-                                                                          @include('carregar_combos_multiple', array('dados'=>$tiposrelacionamentos, 'titulo' =>'Tipos de Relacionamentos', 'id_combo'=>'tiposrelacionamentos[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_relacionamentos))
+                                                                          @include('carregar_combos_multiple', array('dados'=>$tiposrelacionamentos, 'titulo' =>'Tipos de Relacionamentos', 'id_combo'=>'tiposrelacionamentos[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_relacionamentos, 'id_pagina'=> '55'))
                                                                    </div><!-- col-xs-5-->
 
                                                                    <div class="col-xs-7">
@@ -1229,13 +1229,13 @@
                                                                    </div><!-- col-xs-5-->
 
                                                                    <div class="col-xs-6">
-                                                                          @include('carregar_combos_multiple', array('dados'=>$dons, 'titulo' =>'Dons Espirituais', 'id_combo'=>'dons[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_dons))
+                                                                          @include('carregar_combos_multiple', array('dados'=>$dons, 'titulo' =>'Dons Espirituais', 'id_combo'=>'dons[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_dons, 'id_pagina'=> '16'))
                                                                    </div><!-- col-xs-5-->
 
                                                             </div>
                                                             <div class="row"><!-- row-->
                                                                    <div class="col-xs-6">
-                                                                          @include('carregar_combos_multiple', array('dados'=>$habilidades, 'titulo' =>'Habilidades', 'id_combo'=>'habilidades[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_habilidades))
+                                                                          @include('carregar_combos_multiple', array('dados'=>$habilidades, 'titulo' =>'Habilidades', 'id_combo'=>'habilidades[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_habilidades, 'id_pagina'=> '24'))
                                                                    </div><!-- col-xs-5-->
 
                                                             </div><!-- end row-->
@@ -1276,11 +1276,11 @@
                                                                           <input type="hidden" name="atividades[]" class="minimal" value="">
 
                                                                            <div class="col-xs-6">
-                                                                                  @include('carregar_combos_multiple', array('dados'=>$ministerios, 'titulo' =>'Ministérios', 'id_combo'=>'ministerios[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_ministerios))
+                                                                                  @include('carregar_combos_multiple', array('dados'=>$ministerios, 'titulo' =>'Ministérios', 'id_combo'=>'ministerios[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_ministerios, 'id_pagina'=> '13'))
                                                                            </div><!-- col-xs-5-->
 
                                                                            <div class="col-xs-6">
-                                                                                  @include('carregar_combos_multiple', array('dados'=>$atividades, 'titulo' =>'Atividades', 'id_combo'=>'atividades[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_atividades))
+                                                                                  @include('carregar_combos_multiple', array('dados'=>$atividades, 'titulo' =>'Atividades', 'id_combo'=>'atividades[]', 'complemento'=>'multiple="multiple"', 'comparar'=>$membros_atividades, 'id_pagina'=> '15'))
                                                                            </div><!-- col-xs-5-->
 
                                                                     </div><!-- end row-->

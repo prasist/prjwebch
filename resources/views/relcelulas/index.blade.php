@@ -316,6 +316,8 @@
         /*Prepara checkbox bootstrap*/
        $(function () {
 
+            $("#menu_celulas").addClass("treeview active");
+
             $('.ckEstruturas').checkboxpicker({
                 offLabel : 'Não',
                 onLabel : 'Sim',

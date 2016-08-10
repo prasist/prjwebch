@@ -365,6 +365,13 @@ class RelatorioPessoasController extends Controller
         $where .= " and data_batismo <= '" . $formatador->FormatarData($input["data_batismo_ate"]) . "'";
     }
 
+    if ($input["data_casamento"]!="")
+    {
+        $filtros .= "   Casamento : " . $input["data_casamento"] . " até " . $input["data_casamento_ate"] ;
+        $where .= " and data_casamento >= '" . $formatador->FormatarData($input["data_casamento"]) . "'";
+        $where .= " and data_casamento <= '" . $formatador->FormatarData($input["data_casamento_ate"]) . "'";
+    }
+
     if ($input["nivel1_up"]!="0")
     {
         $filtros .= "<br/>" . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
@@ -517,6 +524,13 @@ class RelatorioPessoasController extends Controller
         $parametros = array_add($parametros, 'data_batismo_final', ($input["data_batismo_ate"]=="" ? '' : $formatador->FormatarData($input["data_batismo_ate"])));
     }
 
+    //Data de casamento
+    if ($input["data_casamento"]!="" && $input["data_casamento_ate"]!="")
+    {
+        $parametros = array_add($parametros, 'data_casamento_inicial', ($input["data_casamento"]=="" ? '' : $formatador->FormatarData($input["data_casamento"])));
+        $parametros = array_add($parametros, 'data_casamento_final', ($input["data_casamento_ate"]=="" ? '' : $formatador->FormatarData($input["data_casamento_ate"])));
+    }
+
     if ($input["resultado"]=="email")
     {
 
@@ -535,7 +549,8 @@ class RelatorioPessoasController extends Controller
         $strSql .= "   LEFT JOIN celulas_pessoas cp ON cp.pessoas_id = p.id AND cp.empresas_id = p.empresas_id AND cp.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
         $strSql .= "   LEFT JOIN celulas c ON cp.celulas_id = c.id AND cp.empresas_id = c.empresas_id AND cp.empresas_clientes_cloud_id = c.empresas_clientes_cloud_id";
         $strSql .= "   LEFT JOIN membros_historicos mh ON mh.pessoas_id = p.id AND mh.empresas_id = p.empresas_id AND mh.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
-        $strSql .= "   LEFT JOIN membros_formacoes mf ON mf.pessoas_id = p.id AND mf.empresas_id = p.empresas_id AND mf.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
+        $strSql .= "   LEFT JOIN membrops_formacoes mf ON mf.pessoas_id = p.id AND mf.empresas_id = p.empresas_id AND mf.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
+        $strSql .= "   LEFT JOIN membros_familiares mfa ON mfa.pessoas_id = p.id AND mfa.empresas_id = p.empresas_id AND mfa.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
         $strSql .= "   LEFT JOIN membros_profissionais mprof ON mprof.pessoas_id = p.id AND mprof.empresas_id = p.empresas_id AND mprof.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
         $strSql .= "   LEFT JOIN membros_ministerios mm ON mm.pessoas_id = p.id AND mm.empresas_id = p.empresas_id AND mm.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
         $strSql .= "   LEFT JOIN membros_situacoes ms ON ms.pessoas_id = p.id AND ms.empresas_id = p.empresas_id AND ms.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";

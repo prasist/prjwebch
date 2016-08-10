@@ -174,7 +174,9 @@
 
                   $(function () {
 
-            //TELA USUARIOS
+                  $("#menu_seguranca").addClass("treeview active");
+
+                          //TELA USUARIOS
                             //----Quando abrir a pagina
                             $("#ocultar_check").hide();     //Por padrao ocultar a DIV do check ADMIN
                             //-----------------------------------------------------

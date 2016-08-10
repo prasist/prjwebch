@@ -107,5 +107,10 @@
     </div>
 
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#menu_celulas").addClass("treeview active");
+    });
+</script>
 @include('configuracoes.script_estruturas')
 @endsection

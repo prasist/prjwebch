@@ -129,12 +129,12 @@
                                                                 @endif
 
 
-                                                                        @if ($value->id==3 && \Session::get('admin')==1)
+                                                                        @if (($value->id==3 && \Session::get('admin')==1))
                                                                                  <tr>
-                                                                                  <td></td>
-                                                                                  <td>
+                                                                                      <td></td>
+                                                                                      <td>
                                                                                           <b>Usuário ADMIN não pode retirar as permissões de acesso dele mesmo para a página : {{ $value->nome }}</b>
-                                                                                  </td>
+                                                                                      </td>
                                                                                   </tr>
                                                                         @else
 
@@ -214,6 +214,8 @@
 <script type="text/javascript">
 
                   $(function () {
+
+                         $("#menu_seguranca").addClass("treeview active");
 
                          $('.acessar').checkboxpicker({
                               offLabel : 'Não',

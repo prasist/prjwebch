@@ -289,6 +289,8 @@
                   $(function ()
                   {
 
+                            $("#menu_config").addClass("treeview active");
+
                             $('[data-toggle="tooltip"]').tooltip();
 
                             function limpa_formulario_cep()

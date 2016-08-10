@@ -374,6 +374,37 @@
 
                                                                  </div><!-- end row -->
 
+
+                                                                 <div class="row"><!-- row saida-->
+
+                                                                      <div class="col-xs-3">
+                                                                              <label  for="data_casamento" class="control-label">Data Casamento</label>
+
+                                                                              <div class="input-group">
+                                                                                     <div class="input-group-addon">
+                                                                                      <i class="fa fa-calendar"></i>
+                                                                                      </div>
+
+                                                                                      <input id ="data_casamento" name = "data_casamento" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                              </div>
+
+                                                                     </div>
+
+                                                                     <div class="col-xs-3">
+                                                                              <label  for="data_casamento_ate" class="control-label">Até</label>
+
+                                                                              <div class="input-group">
+                                                                                     <div class="input-group-addon">
+                                                                                      <i class="fa fa-calendar"></i>
+                                                                                      </div>
+
+                                                                                      <input id ="data_casamento_ate" name = "data_casamento_ate" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                              </div>
+
+                                                                     </div>
+
+                                                                 </div><!-- end row -->
+
                                                             </div>
 
                                                     </div>

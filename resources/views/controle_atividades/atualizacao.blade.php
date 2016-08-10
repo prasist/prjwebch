@@ -543,6 +543,7 @@
 
     $(document).ready(function(){
 
+     $("#menu_celulas").addClass("treeview active");
 
       //Remove linha visitantes
       $("#tab_visitantes").on("click", ".remover", function(e){

@@ -50,7 +50,7 @@
 
 
             @can('verifica_permissao_modulo', ['Configurações'])
-            <li class="treeview">
+            <li class="treeview" id="menu_config">
                 <a href="#">
                 <i class="fa fa-wrench"></i> <span>Configurações</span>
                 <i class="fa fa-angle-left pull-right"></i>
@@ -70,7 +70,7 @@
 
 
             @can('verifica_permissao_modulo', ['Segurança'])
-            <li class="treeview">
+            <li class="treeview" id="menu_seguranca">
                 <a href="#">
                 <i class="fa fa-lock"></i> <span>Segurança</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
@@ -99,7 +99,7 @@
             <div id="tour2"></div>
 
            @can('verifica_permissao_modulo', ['Cadastros Base'])
-           <li class="treeview">
+           <li class="treeview" id="menu_cadastros_base">
                 <a href="#">
                 <i class="fa fa-edit"></i> <span>Cadastros Base</span>
                 <i class="fa fa-angle-left pull-right"></i>
@@ -351,14 +351,6 @@ function redirecionar()
 {
 
   var_pagina = "{!! url('/financeiro') !!}";
-  window.location=var_pagina;
-
-}
-
-function redirecionar_pessoas()
-{
-
-  var_pagina = "{!! url('/pessoas') !!}";
   window.location=var_pagina;
 
 }
