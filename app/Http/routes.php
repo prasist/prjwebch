@@ -417,6 +417,8 @@
     Route::get('situacoes/{id}/edit','SituacoesController@edit');
     Route::get('situacoes/{id}/delete','SituacoesController@destroy');
 
+    Route::get('relpessoas/aniversariantes/{querystring}', 'RelatorioPessoasController@pesquisar_aniversariantes');
+
     /*Pessoas*/
     Route::get('pessoas/buscar_nome', 'PessoasController@pesquisar_nome');
     Route::get('/pessoas/ver/{id}/{id_tipo_pessoa}','PessoasController@perfil');
