@@ -727,15 +727,17 @@
 
 <script type="text/javascript">
 
-      var myApp;
-      myApp = myApp || (function () {
 
-          return {
-              showPleaseWait: function() {
-                  $(".overlay").show();
-              }
-          };
-      })();
+       var myApp;
+       myApp = myApp || (function () {
+
+            return {
+                showPleaseWait: function() {
+                    $(".overlay").show();
+                }
+            };
+       })();
+
 
       function validar_datas()
       {

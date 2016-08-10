@@ -36,6 +36,11 @@
                 @endif
 
                 <ul>
+
+                        @if (Auth::user())
+                              Usuário <b>{!!Auth::user()->name!!}</b> com sessão ativa.
+                        @endif
+
                         <li>
                                <a  href="{{ url('/home') }}">Retonar ao SIGMA3</a>
                         </li>
