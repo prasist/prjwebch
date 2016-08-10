@@ -234,22 +234,25 @@
                                                              </div>
 
                                                              <div class="col-xs-3">
+
+                                                                    <!--
                                                                     <label for="ckEstruturas">Listar Estruturas Células </label>
                                                                     <div class="input-group">
                                                                            <div class="input-group-addon">
                                                                                     <input  id= "ckEstruturas" name="ckEstruturas" type="checkbox" data-group-cls="btn-group-sm" class="ckEstruturas" />
                                                                             </div>
                                                                       </div>
-                                                              </div>
-
-                                                              <div class="col-xs-3">
+                                                                      -->
                                                                       <label for="possui_necessidades_especiais">Pessoas com Necessidades Especiais ?</label>
                                                                       <div class="input-group">
                                                                            <div class="input-group-addon">
                                                                                     <input  id="possui_necessidades_especiais" data-group-cls="btn-group-sm" name="possui_necessidades_especiais" type="checkbox" class="possui_necessidades_especiais" value="true" />
                                                                             </div>
                                                                       </div>
-                                                             </div>
+                                                              </div>
+
+
+                                                            <!--<div class="col-xs-3"></div>-->
 
                                                           </div>
 
@@ -506,9 +509,8 @@
                                                          <div class="row">
                                                               <div class="col-xs-5">
                                                                    <label for="doador_sangue" class="control-label">Doador Sangue</label>
-
-                                                                   <select name="doador_sangue" class="form-control select2" style="width: 100%;">
-                                                                   <option  value="">(Selecionar)</option>
+                                                                   <select id="doador_sangue" placeholder="(Selecionar)" name="doador_sangue" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                         <option  value=""></option>
                                                                          <option  value="1">SIM</option>
                                                                          <option  value="0">NÃO</option>
                                                                    </select>
@@ -518,8 +520,8 @@
                                                              <div class="col-xs-5">
                                                                      <label for="doador_orgaos" class="control-label">Doador Orgãos</label>
 
-                                                                     <select name="doador_orgaos" class="form-control select2" style="width: 100%;">
-                                                                     <option  value="">(Selecionar)</option>
+                                                                     <select id="doador_orgaos" placeholder="(Selecionar)" name="doador_orgaos" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                           <option  value=""></option>
                                                                            <option  value="1">SIM</option>
                                                                            <option  value="0">NÃO</option>
                                                                      </select>

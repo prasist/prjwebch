@@ -367,9 +367,18 @@ class RelatorioPessoasController extends Controller
 
     if ($input["data_casamento"]!="")
     {
-        $filtros .= "   Casamento : " . $input["data_casamento"] . " até " . $input["data_casamento_ate"] ;
-        $where .= " and data_casamento >= '" . $formatador->FormatarData($input["data_casamento"]) . "'";
-        $where .= " and data_casamento <= '" . $formatador->FormatarData($input["data_casamento_ate"]) . "'";
+
+        if ($input["ordem"]!="razaosocial" || $input["mes"]!="" || $input["ano_inicial"]!="" || $input["ano_final"]!="")
+        {
+            //nothing
+        }
+        else
+        {
+            $filtros .= "   Casamento : " . $input["data_casamento"] . " até " . $input["data_casamento_ate"] ;
+            $where .= " and data_casamento >= '" . $formatador->FormatarData($input["data_casamento"]) . "'";
+            $where .= " and data_casamento <= '" . $formatador->FormatarData($input["data_casamento_ate"]) . "'";
+        }
+
     }
 
     if ($input["nivel1_up"]!="0")
@@ -527,8 +536,16 @@ class RelatorioPessoasController extends Controller
     //Data de casamento
     if ($input["data_casamento"]!="" && $input["data_casamento_ate"]!="")
     {
-        $parametros = array_add($parametros, 'data_casamento_inicial', ($input["data_casamento"]=="" ? '' : $formatador->FormatarData($input["data_casamento"])));
-        $parametros = array_add($parametros, 'data_casamento_final', ($input["data_casamento_ate"]=="" ? '' : $formatador->FormatarData($input["data_casamento_ate"])));
+
+        if ($input["ordem"]!="razaosocial" || $input["mes"]!="" || $input["ano_inicial"]!="" || $input["ano_final"]!="") {
+            //nothing
+        }
+        else
+        {
+            $parametros = array_add($parametros, 'data_casamento_inicial', ($input["data_casamento"]=="" ? '' : $formatador->FormatarData($input["data_casamento"])));
+            $parametros = array_add($parametros, 'data_casamento_final', ($input["data_casamento_ate"]=="" ? '' : $formatador->FormatarData($input["data_casamento_ate"])));
+        }
+
     }
 
 

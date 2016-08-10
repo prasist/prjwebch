@@ -71,12 +71,22 @@ class Handler extends ExceptionHandler
 
           if($e->getCode())
           {
+
+                if ($e->getCode()==23503)
+                {
+                     $sMensagem =   "Opa, não se preocupe!!! Não é erro, apenas um aviso que não é possivel excluir esse registro, pois ele possui referência(s) em outra(s) tabela(s). Para garantir a integridade dos dados, o sistema verifica se na tentativa da exclusão do registro não há vinculos com outros. Nesse caso é necessário primeiro excluir os registros vinculados antes de excluir o registro principal. Estamos recebendo um email com essa mensagem, em breve lhe retornaremos para auxiliá-lo(a).";
+                }
+                else
+                {
+                    $sMensagem = "Ocorreu um erro";
+                }
+
                 return view('errors.msgerro')
                 ->with('erro',
                     [
                         'titulo' => 'Aviso',
                         'codigo'=> $e->getCode(),
-                        'mensagem'=> 'Opa, não se preocupe!!! Não é erro, apenas um aviso que não é possivel excluir esse registro, pois ele possui referência(s) em outra(s) tabela(s). Para garantir a integridade dos dados, o sistema verifica se na tentativa da exclusão do registro não há vinculos com outros. Nesse caso é necessário primeiro excluir os registros vinculados antes de excluir o registro principal. Estamos recebendo um email com essa mensagem, em breve lhe retornaremos para auxiliá-lo(a).',
+                        'mensagem'=> $sMensagem,
                         'mensagem_original'=> $e->getMessage()
                     ]);
           }
