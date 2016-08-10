@@ -501,8 +501,8 @@
                                                          <div class="row"><!-- row-->
                                                                    <div class="col-xs-5">
 
-                                                                        <label for="tipo_sangue" class="control-label">Tipo Sanguínio :</label>
-                                                                        <input type="text" id="tipo_sangue" maxlength="50" name="tipo_sangue" class="form-control" placeholder="Tipo Sanguínio" >
+                                                                        <label for="tipo_sangue" class="control-label">Tipo Sanguíneo :</label>
+                                                                        <input type="text" id="tipo_sangue" maxlength="50" name="tipo_sangue" class="form-control" placeholder="Tipo Sanguíneo" >
 
                                                                    </div><!-- col-xs-5-->
 

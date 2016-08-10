@@ -95,6 +95,12 @@ class PermissoesGrupoController extends Controller
         *    Caso encontre, busca somente os dados da empresa que o usuário pertence
         */
 
+          /*Validação de campos - request*/
+          $this->validate($request, [
+                  'nome' => 'required',
+          ]);
+
+
             $input = $request->except(array('_token', 'ativo')); //não levar o token
 
             $acessar_array     = $input['acessar'];

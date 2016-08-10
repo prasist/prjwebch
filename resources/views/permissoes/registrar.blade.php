@@ -28,11 +28,18 @@
 
                                         <label for="nome" class="control-label">Grupo</label>
                                         <select id="nome" placeholder="(Selecionar)" name="nome" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                              <option  value="0"></option>
+                                              <option  value=""></option>
                                                 @foreach($dados as $item)
                                                        <option  value="{{$item->id}}" >{{$item->nome}}</option>
                                                 @endforeach
                                         </select>
+
+                                        <!-- se houver erros na validacao do form request -->
+                                         @if ($errors->has('nome'))
+                                          <span class="help-block">
+                                              <strong>{{ $errors->first('nome') }}</strong>
+                                          </span>
+                                         @endif
 
                                     </div>
                             </div>

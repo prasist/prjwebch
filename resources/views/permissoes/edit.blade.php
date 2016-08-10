@@ -33,6 +33,13 @@
                                                 <option  value="{{$item->id}}">{{$item->nome}}</option>
                                           @endforeach
                                           </select>
+
+                                             <!-- se houver erros na validacao do form request -->
+                                             @if ($errors->has('nome'))
+                                              <span class="help-block">
+                                                  <strong>{{ $errors->first('nome') }}</strong>
+                                              </span>
+                                             @endif
                                     </div>
                             </div>
 
@@ -91,7 +98,7 @@
                                                                       <div class="box-header with-border">
                                                                         <h3 class="box-title">Módulo : {{$value->menu}}</h3>
 
-                                                                        <div class="box-tools pull-right">
+                                                                        <div class="box-tools pull-left">
                                                                           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                                                           </button>
                                                                         </div>
@@ -120,6 +127,16 @@
                                                                     <?php $var_paginas=$value->menu; ?>
 
                                                                 @endif
+
+
+                                                                        @if ($value->id==3 && \Session::get('admin')==1)
+                                                                                 <tr>
+                                                                                  <td></td>
+                                                                                  <td>
+                                                                                          <b>Usuário ADMIN não pode retirar as permissões de acesso dele mesmo para a página : {{ $value->nome }}</b>
+                                                                                  </td>
+                                                                                  </tr>
+                                                                        @else
 
                                                                          <tr>
                                                                                   <td>
@@ -156,6 +173,7 @@
                                                                                   <input  name="imprimir[{{ $value->id }}]" type="checkbox" class="imprimir" data-group-cls="btn-group-sm" value="1" {{ ($value->imprimir != 0 ? 'checked' : '') }} /></td>
 
                                                                             </tr>
+                                                                            @endif
 
                                                               @endforeach
 

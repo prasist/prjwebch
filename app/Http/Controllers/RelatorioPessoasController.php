@@ -242,7 +242,7 @@ class RelatorioPessoasController extends Controller
 
     if ($input["tipo_sangue"]!="")
     {
-        $filtros .= "   Tipo Sanguinio : " . strtoupper($input["tipo_sangue"]);
+        $filtros .= "   Tipo Sanguineo : " . strtoupper($input["tipo_sangue"]);
         $where .= " and grupo_sanguinio = '" . strtoupper($input["tipo_sangue"]) . "'";
     }
 
