@@ -27,6 +27,8 @@
 
                         <div class="col-xs-11 {{ $errors->has('celulas') ? ' has-error' : '' }}">
 
+                                <input id="celulas"  name = "celulas" type="hidden" value="{{$dados[0]->celulas_id}}">
+
                                 <label for="celulas" class="control-label">Célula</label>
                                 <select id="celulas" placeholder="(Selecionar)" name="celulas" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;" disabled=disabled>
                                 <option  value=""></option>
