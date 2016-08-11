@@ -29,7 +29,7 @@
 
                                 <label for="celulas" class="control-label">Célula</label>
                                 <select id="celulas" placeholder="(Selecionar)" name="celulas" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;" disabled=disabled>
-                                <option  value="0"></option>
+                                <option  value=""></option>
                                 @foreach($celulas as $item)
                                        <option  value="{{$item->id}}" {{ ($dados[0]->celulas_id== $item->id ? 'selected' : '') }}>{{$item->nome}}</option>
                                 @endforeach

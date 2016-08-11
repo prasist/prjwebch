@@ -224,8 +224,7 @@
                       <div class="row">
                             <div class="col-xs-12">
                                   <label for="observacao" class="control-label">Observações</label>
-                                  <textarea name="observacao" class="form-control" rows="2" placeholder="Digite o texto..." >{!! ($tipo_operacao=="incluir" ? "" : rtrim(ltrim($dados[0]->obs))) !!}
-                                  </textarea>
+                                  <textarea name="observacao" class="form-control" rows="2" placeholder="Digite o texto..." >{!! ($tipo_operacao=="incluir" ? "" : rtrim(ltrim($dados[0]->obs))) !!}</textarea>
                             </div>
                       </div>
 
@@ -288,12 +287,7 @@
                       <div class="row">
                               <div class="col-xs-12">
                                    <label for="texto_encontro" class="control-label">Texto</label>
-                                   <textarea name="texto_encontro" class="form-control" rows="2" placeholder="Digite o texto..." >
-                                   @if ($tipo_operacao=="editar")
-                                        {{rtrim(ltrim($dados[0]->texto))}}
-                                   @endif
-
-                                   </textarea>
+                                   <textarea name="texto_encontro" class="form-control" rows="4" placeholder="Digite o texto..." >@if ($tipo_operacao=="editar"){{rtrim(ltrim($dados[0]->texto))}}@endif</textarea>
                               </div>
                       </div>
 
@@ -634,13 +628,16 @@
           function exibir_divs(bool_opcao)
           {
 
-                  if (bool_opcao==true) {
+                  if (bool_opcao==true)
+                  {
                         $('#box_mais').show();
                         $('#box_participantes').show();
                         $('#box_visitantes').show();
                         $('#box_questions').show();
                         $('#box_resumo').show();
-                  } else {
+                  }
+                  else
+                  {
                         //hide divs
                       $('#box_mais').hide();
                       $('#box_participantes').hide();
@@ -725,7 +722,9 @@
         {
               if ($(this).prop('checked'))
               {
-                  $("#data_encontro").trigger("change");
+                  //$("#data_encontro").trigger("change");
+                  exibir_divs(true);
+                  $("[class='obs']").bootstrapSwitch();
               }
               else
               {

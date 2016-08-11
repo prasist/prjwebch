@@ -28,7 +28,7 @@
                         <div class="col-xs-11 {{ $errors->has('celulas') ? ' has-error' : '' }}">
                                 <label for="celulas" class="control-label">Célula</label>
                                 <select id="celulas" placeholder="(Selecionar)" name="celulas" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;" >
-                                <option  value="0"></option>
+                                <option  value=""></option>
                                 @foreach($celulas as $item)
                                          <option  value="{{$item->id}}" {{ ($id_celula==$item->id ? "selected" : "") }}>{{$item->nome}}</option>
                                 @endforeach

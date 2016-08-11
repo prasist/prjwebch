@@ -89,6 +89,10 @@ public function salvar($request, $id, $tipo_operacao)
         //Pega dados do post
         $input = $request->except(array('_token', 'ativo')); //não levar o token
 
+        $this->validate($request, [
+            'celulas' => 'required',
+        ]);
+
         //Trigger tg_atualizar_data - insere a data de inicio do membro na celula
 
         $i_index=0; /*Inicia sequencia*/

@@ -90,7 +90,6 @@ class ControleAtividadesController extends Controller
             $dados = controle_atividades::firstOrNew(['id'=>$id]);
          }
 
-
          $dados->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
          $dados->empresas_id = $this->dados_login->empresas_id;
          $dados->celulas_id = $descricao_celula[0];

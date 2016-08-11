@@ -51,7 +51,7 @@
 
             @can('verifica_permissao_modulo', ['Configurações'])
             <li class="treeview" id="menu_config">
-                <a href="#">
+                <a href="#" title="Alterar e Incluir Dados Cadastrais da Igreja Sede e Igrejas / Instituições...">
                 <i class="fa fa-wrench"></i> <span>Configurações</span>
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
@@ -71,25 +71,25 @@
 
             @can('verifica_permissao_modulo', ['Segurança'])
             <li class="treeview" id="menu_seguranca">
-                <a href="#">
+                <a href="#" title="Cadastrar Usuários, Grupos e Permissões de Acesso ao sistema...">
                 <i class="fa fa-lock"></i> <span>Segurança</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul  class="treeview-menu">
                     @if(Gate::check('verifica_permissao', [2 ,'acessar']))
                     <li>
-                        <a href={{ url('/grupos')}}><i class="fa fa-angle-double-right"></i>Grupos de Usuário</a>
+                        <a href="{{ url('/grupos')}}" title="Cadastro dos Grupos de acesso..."><i class="fa fa-angle-double-right"></i>Grupos de Usuário</a>
                     </li>
                     @endif
 
                     @if(Gate::check('verifica_permissao', [3 ,'acessar']))
                     <li>
-                        <a href={{ url('/permissoes')}}><i class="fa fa-angle-double-right"></i>Grupo / Permissões</a>
+                        <a href="{{ url('/permissoes')}}" title="Aqui você informará quais permissões de acesso cada grupo terá..."><i class="fa fa-angle-double-right"></i>Grupo / Permissões</a>
                     </li>
                     @endif
 
                     @if(Gate::check('verifica_permissao', [5 ,'acessar']))
                     <li>
-                        <a href={{ url('/usuarios')}}><i class="fa fa-angle-double-right"></i>Usuários</a>
+                        <a href="{{ url('/usuarios')}}" title="Aqui você cadastra os usuários e os associa aos grupos de acesso que pertencerão..."><i class="fa fa-angle-double-right"></i>Usuários</a>
                     </li>
                     @endif
                 </ul>
@@ -100,7 +100,7 @@
 
            @can('verifica_permissao_modulo', ['Cadastros Base'])
            <li class="treeview" id="menu_cadastros_base">
-                <a href="#">
+                <a href="#" title="Cadastro de diversas tabelas de dados auxiliares, tais como Profissões, Cargos, Atividades, Ministérios, Grupos de Pessoas, etc...">
                 <i class="fa fa-edit"></i> <span>Cadastros Base</span>
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
@@ -145,7 +145,7 @@
 
            @can('verifica_permissao_modulo', ['Gestão de Pessoas'])
             <li class="treeview" id="menu_pessoas">
-                <a href="#">
+                <a href="#" title="Cadastro, consulta e relatórios de Membros e Pessoas em Geral...">
                 <i class="fa fa-user"></i><span>Pessoas</span>
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
@@ -165,7 +165,7 @@
           @can('verifica_permissao_modulo', ['Gestão de Células'])
           <!-- Células -->
           <li class="treeview" id="menu_celulas">
-            <a href="#" onclick="redirecionar_celulas();">
+            <a href="#" onclick="redirecionar_celulas();" title="Gerencie suas células, planejamento dos encontros, configurações, relatórios e estatísticas...">
               <i class="fa fa-users"></i> <span>Células</span>
               <i class="fa fa-angle-left pull-right"></i>
             </a>
@@ -217,9 +217,15 @@
 
                 @if(Gate::check('verifica_permissao', [58 ,'acessar']))
                 <ul class="treeview-menu">
+
                   <li>
-                         <a href="{{ url('/controle_atividades')}}" title="Controle a presença dos membros e visitantes, envie material para encontro..."> <i class="fa fa-check"></i> Encontros</a>
+                    <a href="#"><i class="fa fa-sitemap"></i> Encontros <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                             <li><a href="{{ url('/controle_atividades')}}" title="Controle a presença dos membros e visitantes, envie material para encontro..."> <i class="fa fa-check"></i> Gerenciar</a></li>
+                             <li><a href="{{ url('/controle_atividades/relatorios')}}" title="Emita Relatório dos Encontros..."> <i class="fa fa-check"></i> Relatório Semanal</a></li>
+                        </ul>
                   </li>
+
                 </ul>
                 @endif
 
