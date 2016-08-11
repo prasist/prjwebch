@@ -89,50 +89,62 @@ public function salvar($request, $id, $tipo_operacao)
         //Pega dados do post
         $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-        /*
+
         $this->validate($request, [
             'celulas' => 'required',
         ]);
-        */
+
 
         //Trigger tg_atualizar_data - insere a data de inicio do membro na celula
 
         $i_index=0; /*Inicia sequencia*/
 
-        foreach($input['hidden_celulas'] as $selected)
-         {
+        if ($tipo_operacao=="create" && !isset($input['hidden_celulas']))  //novo registro
+        {
+                return;
+        }
 
-              $whereForEach =
-              [
-                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                    'empresas_id' =>  $this->dados_login->empresas_id,
-                    'pessoas_id' => substr($input['hidden_pessoas'][$i_index],0,9),
-                    'celulas_id' => $selected
-              ];
 
-                if ($tipo_operacao=="create")  //novo registro
-                {
-                    $dados = new celulaspessoas();
-                }
-                else //Alteracao
-                {
-                    $dados = celulaspessoas::firstOrNew($whereForEach);
-                }
+        if (isset($input['hidden_celulas']))
+        {
+              foreach($input['hidden_celulas'] as $selected)
+               {
 
-                $valores =
-                [
-                    'pessoas_id' => substr($input['hidden_pessoas'][$i_index],0,9),
-                    'empresas_id' =>  $this->dados_login->empresas_id,
-                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                    'celulas_id' => $selected,
-                    'lider_pessoas_id' => substr($input['hidden_lider_celulas'][$i_index],0,9)
-                ];
+                   if (isset($input['hidden_pessoas']))
+                   {
+                        $whereForEach =
+                        [
+                              'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                              'empresas_id' =>  $this->dados_login->empresas_id,
+                              'pessoas_id' => substr($input['hidden_pessoas'][$i_index],0,9),
+                              'celulas_id' => $selected
+                        ];
 
-                $dados->fill($valores)->save();
-                $dados->save();
+                          if ($tipo_operacao=="create")  //novo registro
+                          {
+                              $dados = new celulaspessoas();
+                          }
+                          else //Alteracao
+                          {
+                              $dados = celulaspessoas::firstOrNew($whereForEach);
+                          }
 
-                $i_index = $i_index + 1;
-         }
+                          $valores =
+                          [
+                              'pessoas_id' => substr($input['hidden_pessoas'][$i_index],0,9),
+                              'empresas_id' =>  $this->dados_login->empresas_id,
+                              'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                              'celulas_id' => $selected,
+                              'lider_pessoas_id' => substr($input['hidden_lider_celulas'][$i_index],0,9)
+                          ];
+
+                          $dados->fill($valores)->save();
+                          $dados->save();
+
+                          $i_index = $i_index + 1;
+                    }
+               }
+       }
 
 }
 
