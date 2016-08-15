@@ -71,7 +71,7 @@ class MensagensController extends Controller
            $input = $request->except(array('_token', 'ativo')); //não levar o token
 
 
-           $urlMensagem = "http://177.70.4.6/plataforma/api5.php?usuario=fabianosigma&senha=h4ck3r1423&destinatario=" . $input["telefone"] . "&msg=" . $input["mensagem"];
+           $urlMensagem = "http://177.70.4.6/plataforma/api5.php?usuario=fabianosigma&senha=h4ck3r1423&destinatario=" . $input["telefone"] . "&msg=" . urlencode($input["mensagem"]);
 
           /*
           $url = $urlMensagem;
@@ -86,21 +86,8 @@ class MensagensController extends Controller
           dd('fim');
           */
 
-          $opts = array(
-            'http'=>array(
-              'timeout' => 25,
-              'method'=>"GET",
-              'header'=>"Accept-language: en\r\n" .
-                        "Cookie: foo=bar\r\n"
-            )
-          );
-
-          $context = stream_context_create($opts);
-
-          /* Sends an http request to www.example.com
-             with additional headers shown above */
-          $contents = file_get_contents($urlMensagem, false, $context);
-          echo $contents;
+          $api_http = file_get_contents($urlMensagem);
+          echo $api_http;
           echo "fim";
 
 
