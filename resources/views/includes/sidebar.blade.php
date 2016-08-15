@@ -313,7 +313,6 @@
          </li>
          @endcan
 
-
          <li class="treeview">
               <a href="{{ url('/mensagens')}}">
                   <i class="fa fa-commenting-o"></i> <span>Enviar SMS / Whatsapp</span>
