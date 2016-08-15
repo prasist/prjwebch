@@ -85,8 +85,24 @@ class MensagensController extends Controller
           echo $urlMensagem;
           dd('fim');
           */
-          $api_http = file_get_contents($urlMensagem);
-          echo $api_http; //
+
+          $opts = array(
+            'http'=>array(
+              'timeout' => 25,
+              'method'=>"GET",
+              'header'=>"Accept-language: en\r\n" .
+                        "Cookie: foo=bar\r\n"
+            )
+          );
+
+          $context = stream_context_create($opts);
+
+          /* Sends an http request to www.example.com
+             with additional headers shown above */
+          $contents = file_get_contents($urlMensagem, false, $context);
+          echo $contents;
+          echo "fim";
+
 
           \Session::flash('flash_message', $response);
 
