@@ -170,6 +170,7 @@ class ControleAtividadesController extends Controller
                 {
 
                         if ($selected!="") {
+
                             $whereForEach =
                             [
                                 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
@@ -190,12 +191,15 @@ class ControleAtividadesController extends Controller
                                 'email' => ($input['email_visitante'][$i_index]=="" ? null : $input['email_visitante'][$i_index])
                             ];
 
+
                             $controle_visitantes->fill($valores)->save();
                             $controle_visitantes->save();
+
 
                             $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
                             $var_total_visitantes=$var_total_visitantes+1;
                        }
+
 
                 } //end for each visitantes
 
@@ -332,7 +336,6 @@ class ControleAtividadesController extends Controller
           return $id_atividade;
 
       });// ------------ FIM TRANSACTION
-
 
   }
 
