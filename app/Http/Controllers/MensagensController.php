@@ -86,9 +86,11 @@ class MensagensController extends Controller
           dd('fim');
           */
 
-          //$api_http = file_get_contents($urlMensagem);
-          //echo $api_http;
+          $api_http = file_get_contents($urlMensagem);
+          echo $api_http;
+          dd('fin');
 
+/*
           $url = $urlMensagem;
           $ch = curl_init();
           curl_setopt ($ch, CURLOPT_URL, $url);
@@ -106,6 +108,7 @@ class MensagensController extends Controller
           echo $contents;
 
           echo "fim";
+          */
 
 
           \Session::flash('flash_message', $response);
