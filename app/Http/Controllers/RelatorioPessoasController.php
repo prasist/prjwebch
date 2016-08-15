@@ -635,7 +635,7 @@ class RelatorioPessoasController extends Controller
     }
 
 
-    if ($input["resultado"]=="email")
+    if ($input["resultado"]=="email" || $input["resultado"]=="celular")
     {
 
         //$emails = \DB::select('select distinct razaosocial, emailprincipal from view_pessoas_geral_celulas' . $where . ' order by razaosocial');
@@ -666,7 +666,7 @@ class RelatorioPessoasController extends Controller
         $emails = \DB::select($strSql);
 
 
-        return view($this->rota . '.listaremails', ['emails'=>$emails, 'filtros'=>$filtros]);
+        return view($this->rota . '.listaremails', ['emails'=>$emails, 'filtros'=>$filtros, 'resultado'=>$input["resultado"]]);
     }
      else
     {

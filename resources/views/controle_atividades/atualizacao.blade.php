@@ -180,6 +180,11 @@
                                              </div>
                                       </div>
                             </div>
+
+                            <div class="col-xs-5">
+                                <p>&nbsp;</p>
+                                <button class = 'btn btn-info' type ='button' onclick="abrir_relatorio();" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-print"></i> Imprimir</button>
+                            </div>
                       </div>
 
 
@@ -535,7 +540,26 @@
 <script type="text/javascript">
 
 
+      function abrir_relatorio()
+      {
+          if ($('#hidden_id').val()!="")
+          {
+
+              var var_day = $("#data_encontro").val();
+              var var_year = $("#ano").val();
+              var var_month = $("#mes").val();
+              var urlGetUser = '{!! url("/controle_atividades/imprimir/' +  $('#hidden_id').val() +  '/data/' + var_year + '-' + var_month + '-' + var_day + '") !!}';
+              window.location=urlGetUser; //redirect to route
+          }
+          else
+          {
+              alert('Selecione a Célula e a Data do Encontro');
+          }
+      }
+
     $(document).ready(function(){
+
+
 
      $("#menu_celulas").addClass("treeview active");
 

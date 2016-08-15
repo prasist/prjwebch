@@ -93,6 +93,7 @@ class ControleAtividadesController extends Controller
          $dados->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
          $dados->empresas_id = $this->dados_login->empresas_id;
          $dados->celulas_id = $descricao_celula[0];
+         $dados->data_encontro = $input['ano'] . "-" . $input['mes'] . "-" . $input['data_encontro'];
          $dados->dia = $input['data_encontro'];
          $dados->mes = $input['mes'];
          $dados->ano = $input['ano'];
@@ -112,6 +113,7 @@ class ControleAtividadesController extends Controller
          {
 
                 $i_index=0; /*initialize*/
+                $var_total_membros_presentes=0;
 
                 /*
                     $input['id_obs_membro'] have all indexes with ID
@@ -137,6 +139,7 @@ class ControleAtividadesController extends Controller
                                 if (in_array($selected, $input['presenca']))
                                 {
                                     $presenca = "S"; //Yes
+                                    $var_total_membros_presentes = $var_total_membros_presentes + 1;
                                 }
                             }
 
@@ -161,6 +164,7 @@ class ControleAtividadesController extends Controller
 
                 //Visitantes
                 $i_index=0; /*initialize*/
+                $var_total_visitantes=0;
 
                 foreach($input['nome_visitante'] as $selected)
                 {
@@ -190,6 +194,7 @@ class ControleAtividadesController extends Controller
                             $controle_visitantes->save();
 
                             $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
+                            $var_total_visitantes=$var_total_visitantes+1;
                        }
 
                 } //end for each visitantes
@@ -243,6 +248,33 @@ class ControleAtividadesController extends Controller
                 } //end for each question
 
           }
+
+
+      //----------------------------RESUMO ENCONTRO-------------------------------------
+       $whereForEach =
+        [
+            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+            'empresas_id' =>  $this->dados_login->empresas_id,
+            'controle_atividades_id' => $id_atividade
+        ];
+
+        $controle_resumo = \App\Models\controle_resumo::firstOrNew($whereForEach);
+
+        $valores =
+        [
+            'empresas_id' =>  $this->dados_login->empresas_id,
+            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+            'controle_atividades_id' => $id_atividade,
+            'total_membros' => $var_total_membros_presentes,
+            'total_visitantes' => $var_total_visitantes,
+            'total_geral' => ($var_total_membros_presentes + $var_total_visitantes)
+        ];
+
+        $controle_resumo->fill($valores)->save();
+        $controle_resumo->save();
+
+       //----------------------------FIM RESUMO ENCONTRO-------------------------------------
+
 
            //-------------------------------------------------Material para encontro--------------------------------------------------
           //UPLOAD FILES
@@ -553,6 +585,64 @@ class ControleAtividadesController extends Controller
          }
 
     }
+
+
+ public function relatorio_encontro($id, $data)
+ {
+
+    /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
+    //Pega dados de conexao com o banco para o JASPER REPORT
+    $database = \Config::get('database.connections.jasper_report');
+    $ext = "pdf"; //Tipo saída (PDF, XLS)
+    $output = public_path() . '/relatorios/resultados/' . $ext . '/encontro_' . $this->dados_login->empresas_id . '_' . Auth::user()->id; //Path para cada tipo de relatorio
+    $path_download = '/relatorios/resultados/' . $ext . '/encontro_' . $this->dados_login->empresas_id . '_' .  Auth::user()->id; //Path para cada tipo de relatorio
+    /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
+
+    $parametros = array
+    (
+        "empresas_id"=> $this->dados_login->empresas_id,
+        "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
+        "controle_ativ_id"=> $id,
+        "data_encontro"=> "'" . $data . "'",
+        "SUBREPORT_DIR"=> "'" . public_path() . '/relatorios/' . "'"
+    );
+
+   $nome_relatorio = public_path() . '/relatorios/relatorio_encontro.jasper';
+
+
+    \JasperPHP::process(
+            $nome_relatorio,
+            $output,
+            array($ext),
+            $parametros,
+            $database,
+            false,
+            false
+        )->execute();
+
+
+            $Mensagem="";
+
+            if (filesize($output . '.' . $ext)<=1000) //Se arquivo tiver menos de 1k, provavelmente está vazio...
+            {
+                $Mensagem = "Nenhum Registro Encontrado";
+            }
+                else
+            {
+                  header('Content-Description: File Transfer');
+                  header('Content-Type: application/pdf');
+                  header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
+                  //header('Content-Transfer-Encoding: binary');
+                  header('Expires: 0');
+                  header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                  header('Content-Length: ' . filesize($output.'.'.$ext));
+                  flush();
+                  readfile($output.'.'.$ext);
+                  unlink($output.'.'.$ext);
+
+            }
+
+ }//fim relatorio
 
 
 }
