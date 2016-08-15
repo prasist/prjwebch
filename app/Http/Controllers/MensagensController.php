@@ -86,8 +86,25 @@ class MensagensController extends Controller
           dd('fim');
           */
 
-          $api_http = file_get_contents($urlMensagem);
-          echo $api_http;
+          //$api_http = file_get_contents($urlMensagem);
+          //echo $api_http;
+
+          $url = $urlMensagem;
+          $ch = curl_init();
+          curl_setopt ($ch, CURLOPT_URL, $url);
+          curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 5);
+          curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+          $contents = curl_exec($ch);
+          if (curl_errno($ch)) {
+             echo curl_error($ch);
+             echo "\n<br />";
+             $contents = '';
+          } else {
+            curl_close($ch);
+          }
+
+          echo $contents;
+
           echo "fim";
 
 
