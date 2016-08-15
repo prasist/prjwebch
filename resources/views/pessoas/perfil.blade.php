@@ -392,7 +392,11 @@
               <!-- /.tab-pane -->
 
               <div class="tab-pane" id="acomp">
-                    Em Breve...
+                    <textarea name="acomp" class="form-control" rows="10" placeholder="Digite o texto..." ></textarea>
+              </div>
+
+               <div class="box-footer">
+                  <button class = 'btn btn-primary' type ='submit' ><i class="fa fa-save"></i> Salvar</button>
               </div>
 
             </div>
