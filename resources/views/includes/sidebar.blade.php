@@ -222,7 +222,6 @@
                     <a href="#"><i class="fa fa-sitemap"></i> Encontros <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
                              <li><a href="{{ url('/controle_atividades')}}" title="Controle a presença dos membros e visitantes, envie material para encontro..."> <i class="fa fa-check"></i> Gerenciar</a></li>
-                             <li><a href="{{ url('/controle_atividades/relatorios')}}" title="Emita Relatório dos Encontros..."> <i class="fa fa-check"></i> Relatório Semanal</a></li>
                         </ul>
                   </li>
 
@@ -315,7 +314,7 @@
 
          <li class="treeview">
               <a href="{{ url('/mensagens')}}">
-                  <i class="fa fa-commenting-o"></i> <span>Enviar SMS / Whatsapp</span>
+                  <i class="fa fa-commenting-o"></i> <span>Enviar SMS</span>
               </a>
           </li>
 

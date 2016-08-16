@@ -304,7 +304,7 @@ class RelatorioPessoasController extends Controller
     if ($input["profissoes_id"]!="")
     {
         $filtros .= "   Profissao : " . $descricao_profissao[1];
-        $where .= " and profissoes_id = " . $descricao_profissao[0];
+        $where .= " and mprof.profissoes_id = " . $descricao_profissao[0];
     }
 
     if ($input["ramos_id"]!="")
