@@ -31,8 +31,9 @@
 
         </div>
 
-         <!-- search form -->
+      <!-- search form -->
       <!--<form action="#" method="get" id="form_procurar_pessoa" class="sidebar-form">-->
+      @if (Auth::user()->membro!="S")
       <form name ="form_principal" method = 'get' class="sidebar-form"  action = {{ url('/pessoas/buscar_nome')}}>
         <div class="input-group">
           <input type="text" name="razaosocial" id="razaosocial" class="form-control" placeholder="Localizar Pessoas...">
@@ -42,7 +43,7 @@
               </span>
         </div>
       </form>
-
+      @endif
 
         <!--Menu Principal -->
         <ul class="sidebar-menu">
@@ -312,12 +313,23 @@
          </li>
          @endcan
 
-         <li class="treeview">
+          @if(Gate::check('verifica_permissao', [59 ,'acessar']))
+          <li class="treeview">
               <a href="{{ url('/mensagens')}}">
                   <i class="fa fa-commenting-o"></i> <span>Enviar SMS</span>
               </a>
           </li>
+          @endif
 
+          @if(Gate::check('verifica_permissao', [60 ,'acessar']))
+          <li class="treeview">
+              <a href="{{ url('/home')}}">
+                  <i class="fa fa-users"></i> <span>Minha Célula</span>
+              </a>
+          </li>
+          @endif
+
+          @if (Auth::user()->membro!="S")
           <li class="header">Precisa de Ajuda ?</li>
           <li class="treeview">
                   <a href="#">
@@ -345,7 +357,8 @@
 
                     <div id="tour5_visaogeral"></div>
 
-               </li>
+          </li>
+          @endif
 
               <li class="treeview">
                   <a href={{ url('/suporte')}}>

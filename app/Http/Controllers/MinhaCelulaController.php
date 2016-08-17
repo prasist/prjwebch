@@ -9,13 +9,13 @@ use Auth;
 use Input;
 use Gate;
 
-class MensagensController extends Controller
+class MinhaCelulaController extends Controller
 {
 
     public function __construct()
     {
 
-        $this->rota = "mensagens"; //Define nome da rota que será usada na classe
+        $this->rota = "minhacelula"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
         //Validação de permissão de acesso a pagina
@@ -71,12 +71,47 @@ class MensagensController extends Controller
            $input = $request->except(array('_token', 'ativo')); //não levar o token
 
 
-           $urlMensagem = "http://54.233.99.254/plataforma/api5.php?usuario=fabianosigma&senha=h4ck3r1423&destinatario=" . $input["telefone"] . "&msg=" . urlencode($input["mensagem"]);
+           $urlMensagem = "http://177.70.4.6/plataforma/api5.php?usuario=fabianosigma&senha=h4ck3r1423&destinatario=" . $input["telefone"] . "&msg=" . urlencode($input["mensagem"]);
+
+          /*
+          $url = $urlMensagem;
+          $ch = curl_init($url);
+          curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+          curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          $data = curl_exec($ch);
+          curl_close($ch);
+          echo $data;
+          echo $urlMensagem;
+          dd('fim');
+          */
 
           $api_http = file_get_contents($urlMensagem);
           echo $api_http;
+          dd('fin');
 
-          \Session::flash('flash_message', $api_http);
+/*
+          $url = $urlMensagem;
+          $ch = curl_init();
+          curl_setopt ($ch, CURLOPT_URL, $url);
+          curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 5);
+          curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+          $contents = curl_exec($ch);
+          if (curl_errno($ch)) {
+             echo curl_error($ch);
+             echo "\n<br />";
+             $contents = '';
+          } else {
+            curl_close($ch);
+          }
+
+          echo $contents;
+
+          echo "fim";
+          */
+
+
+          \Session::flash('flash_message', $response);
 
           return redirect($this->rota);
 

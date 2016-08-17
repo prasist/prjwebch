@@ -49,6 +49,8 @@
 
 
 
+    Route::get('minhacelula', 'MinhaCelulaController@index');
+
     Route::get('mensagens', 'MensagensController@create');
     Route::post('mensagens/enviar', 'MensagensController@enviar');
 
