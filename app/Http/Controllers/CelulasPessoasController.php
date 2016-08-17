@@ -59,7 +59,7 @@ class CelulasPessoasController extends Controller
 
     }
 
-        //Criar novo registro
+   //Criar novo registro
     public function create_membro($id)
     {
 

@@ -122,9 +122,10 @@
                                                   <label for="nome" class="control-label">Pessoa</label>
                                                   <div class="input-group">
                                                            <div class="input-group-addon">
-                                                              <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#myModal" >
+                                                              <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#myModal" title="Pesquisar Pessoas..." >
                                                                      <i class="fa fa-search"></i> ...
                                                                </button>
+                                                               &nbsp;<a href="#" onclick="remover_pessoa('pessoas');" title="Limpar Campo"><spam class="fa fa-close"></spam></a>
                                                             </div>
 
                                                             @include('modal_buscar_pessoas', array('qual_campo'=>'pessoas', 'modal' => 'myModal'))
@@ -162,8 +163,16 @@
 @include('configuracoes.script_estruturas')
 
 <script type="text/javascript">
+
+  function remover_pessoa(var_objeto)
+  {
+      $('#' + var_objeto).val('');
+  }
+
+
     $(document).ready(function()
     {
+
 
             $("#menu_celulas").addClass("treeview active");
 

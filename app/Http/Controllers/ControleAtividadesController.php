@@ -207,49 +207,52 @@ class ControleAtividadesController extends Controller
                 //questions
                 $i_index=0; /*initialize*/
 
-                foreach($input['id_hidden_pergunta'] as $selected)
+                if (isset($input['id_hidden_pergunta']))
                 {
+                    foreach($input['id_hidden_pergunta'] as $selected)
+                    {
 
-                            $whereForEach =
-                            [
-                                'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                'empresas_id' =>  $this->dados_login->empresas_id,
-                                'controle_atividades_id' => $id_atividade,
-                                'questionarios_id' => $selected
-                            ];
+                                $whereForEach =
+                                [
+                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                    'empresas_id' =>  $this->dados_login->empresas_id,
+                                    'controle_atividades_id' => $id_atividade,
+                                    'questionarios_id' => $selected
+                                ];
 
-                            $controle_questions = \App\Models\controle_questions::firstOrNew($whereForEach);
+                                $controle_questions = \App\Models\controle_questions::firstOrNew($whereForEach);
 
-                            $answer=""; //initialize
+                                $answer=""; //initialize
 
-                            //if found value in ck_resposta array
-                            if (in_array($selected, $input['ck_resposta'])) {
-                                $answer = "S";
-                            }
+                                //if found value in ck_resposta array
+                                if (in_array($selected, $input['ck_resposta'])) {
+                                    $answer = "S";
+                                }
 
-                            if($answer=="")
-                            {
-                                  if (array_key_exists($i_index, $input['text_resposta']))
-                                  {
-                                      $answer = $input['text_resposta'][$i_index];
-                                  }
-                            }
+                                if($answer=="")
+                                {
+                                      if (array_key_exists($i_index, $input['text_resposta']))
+                                      {
+                                          $answer = $input['text_resposta'][$i_index];
+                                      }
+                                }
 
-                            $valores =
-                            [
-                                'questionarios_id' => $selected,
-                                'empresas_id' =>  $this->dados_login->empresas_id,
-                                'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                'controle_atividades_id' => $id_atividade,
-                                'resposta' => $answer
-                            ];
+                                $valores =
+                                [
+                                    'questionarios_id' => $selected,
+                                    'empresas_id' =>  $this->dados_login->empresas_id,
+                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                    'controle_atividades_id' => $id_atividade,
+                                    'resposta' => $answer
+                                ];
 
-                            $controle_questions->fill($valores)->save();
-                            $controle_questions->save();
+                                $controle_questions->fill($valores)->save();
+                                $controle_questions->save();
 
-                            $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
+                                $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
 
-                } //end for each question
+                    } //end for each question
+                }
 
           }
 

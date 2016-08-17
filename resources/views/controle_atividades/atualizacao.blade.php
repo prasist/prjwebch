@@ -460,7 +460,6 @@
                     <div class="box-body">
                     <input id="ck_resposta[]" name="ck_resposta[]" type="hidden" value=""/>
 
-
                               @foreach ($questions as $item)
                                     <div class="form-group">
                                             <label  class="col-sm-6 control-label">{{$item->pergunta}}</label>

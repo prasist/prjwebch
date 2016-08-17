@@ -305,13 +305,17 @@ class CelulasController extends Controller
            $this->salvar($request, $id,  "update");
            \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
 
-           if ($request["quero_incluir_participante"]=="sim")
+           if ($request["quero_incluir_participante"]=="sim") //quando for edicao com membros ja incluidos
             {
                 return redirect('celulaspessoas/' . $id . '/edit');
             }
-            else
+            else if ($request["quero_incluir_participante"]=="simnovo") //nenhum membro inserido ainda...
             {
-                return redirect($this->rota);
+                 return redirect('celulaspessoas/registrar/' . $id);
+            }
+            else //nao quer incluir participante agora
+            {
+                 return redirect($this->rota);
             }
     }
 

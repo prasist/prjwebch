@@ -42,6 +42,9 @@
 
                             @if ($tipo_operacao=="editar")
                                 <li><a href="#tab_participantes" data-toggle="tab">Participantes <span class="badge bg-blue">{!!$dados[0]->tot!!}</span></a></li>
+                                <input type="hidden" name="hidden_existe" id="hidden_existe" value="{!!$dados[0]->tot!!}">
+                            @else
+                                <input type="hidden" name="hidden_existe" id="hidden_existe" value="">
                             @endif
 
                             <li><a href="#tab_2" data-toggle="tab">Vinculo de Células</a></li>
@@ -187,6 +190,8 @@
                                                                   <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#modal_lider" >
                                                                          <i class="fa fa-search"></i> ...
                                                                    </button>
+                                                                   &nbsp;<a href="#" onclick="remover_pessoa('pessoas');" title="Limpar Campo"><spam class="fa fa-close"></spam></a>
+
                                                                 </div>
 
                                                                 @include('modal_buscar_pessoas', array('qual_campo'=>'pessoas', 'modal' => 'modal_lider'))
@@ -214,6 +219,8 @@
                                                                   <button  id="buscarpessoa2" type="button"  data-toggle="modal" data-target="#modal_vice" >
                                                                          <i class="fa fa-search"></i> ...
                                                                    </button>
+                                                                   &nbsp;<a href="#" onclick="remover_pessoa('vicelider_pessoas_id');" title="Limpar Campo"><spam class="fa fa-close"></spam></a>
+
                                                                 </div>
 
                                                                 @include('modal_buscar_pessoas', array('qual_campo'=>'vicelider_pessoas_id', 'modal' => 'modal_vice'))
@@ -244,6 +251,7 @@
                                                                     <button  id="buscarpessoa3" type="button"  data-toggle="modal" data-target="#modal_suplente1" >
                                                                            <i class="fa fa-search"></i> ...
                                                                      </button>
+                                                                     &nbsp;<a href="#" onclick="remover_pessoa('suplente1_pessoas_id');" title="Limpar Campo"><spam class="fa fa-close"></spam></a>
                                                                   </div>
 
                                                                   @include('modal_buscar_pessoas', array('qual_campo'=>'suplente1_pessoas_id', 'modal' => 'modal_suplente1'))
@@ -453,6 +461,7 @@
                                                                                       <button  id="buscarpessoa4" type="button"  data-toggle="modal" data-target="#modal_suplente2" >
                                                                                              <i class="fa fa-search"></i> ...
                                                                                        </button>
+                                                                                       &nbsp;<a href="#" onclick="remover_pessoa('suplente2_pessoas_id');" title="Limpar Campo"><spam class="fa fa-close"></spam></a>
                                                                                     </div>
 
                                                                                     @include('modal_buscar_pessoas', array('qual_campo'=>'suplente2_pessoas_id', 'modal' => 'modal_suplente2'))
@@ -704,6 +713,11 @@
 
 <script type="text/javascript">
 
+   function remover_pessoa(var_objeto)
+   {
+       $('#' + var_objeto).val('');
+   }
+
     $(document).ready(function()
     {
 
@@ -718,7 +732,17 @@
 
     function salvar_e_incluir()
     {
-          $('#quero_incluir_participante').val('sim');
+        alert($('#hidden_existe').val());
+
+          if ($('#hidden_existe').val()!="0")
+          {
+              $('#quero_incluir_participante').val('sim');
+          }
+          else
+          {
+               $('#quero_incluir_participante').val('simnovo');
+          }
+
           $('#form_celulas')[0].submit();
     }
 

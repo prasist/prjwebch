@@ -76,6 +76,7 @@
                                                               <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#myModal" >
                                                                      <i class="fa fa-search"></i> ...
                                                                </button>
+                                                               &nbsp;<a href="#" onclick="remover_pessoa('pessoas');" title="Limpar Campo"><spam class="fa fa-close"></spam></a>
                                                             </div>
 
                                                             @include('modal_buscar_pessoas', array('qual_campo'=>'pessoas', 'modal' => 'myModal'))
@@ -108,6 +109,11 @@
 
 </div>
 <script type="text/javascript">
+   function remover_pessoa(var_objeto)
+   {
+       $('#' + var_objeto).val('');
+   }
+
     $(document).ready(function() {
         $("#menu_celulas").addClass("treeview active");
     });
