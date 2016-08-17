@@ -46,7 +46,20 @@ class CarregaEstruturasController extends Controller
 
         foreach ($nivel4 as $item)
         {
-            $options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial) );
+            if ($item->razaosocial!="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome . ' - ' . $item->razaosocial;
+            }
+            else if ($item->razaosocial=="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome;
+            }
+            else if ($item->razaosocial!="" && $item->nome=="")
+            {
+                $sDescricao = $item->razaosocial;
+            }
+
+            $options += array($item->id => $sDescricao );
         }
 
         return \Response::json($options);
@@ -70,7 +83,21 @@ class CarregaEstruturasController extends Controller
 
         foreach ($nivel3 as $item)
         {
-            $options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+            //$options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+            if ($item->razaosocial!="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome . ' - ' . $item->razaosocial;
+            }
+            else if ($item->razaosocial=="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome;
+            }
+            else if ($item->razaosocial!="" && $item->nome=="")
+            {
+                $sDescricao = $item->razaosocial;
+            }
+
+            $options += array($item->id => $sDescricao );
         }
 
         return \Response::json($options);
@@ -95,7 +122,21 @@ class CarregaEstruturasController extends Controller
 
         foreach ($nivel2 as $item)
         {
-            $options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+            //$options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+            if ($item->razaosocial!="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome . ' - ' . $item->razaosocial;
+            }
+            else if ($item->razaosocial=="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome;
+            }
+            else if ($item->razaosocial!="" && $item->nome=="")
+            {
+                $sDescricao = $item->razaosocial;
+            }
+
+            $options += array($item->id => $sDescricao );
         }
 
         return \Response::json($options);
@@ -122,7 +163,21 @@ class CarregaEstruturasController extends Controller
         //enquanto houver registros
         foreach ($nivel1 as $item)
         {
-            $options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+            //$options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+            if ($item->razaosocial!="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome . ' - ' . $item->razaosocial;
+            }
+            else if ($item->razaosocial=="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome;
+            }
+            else if ($item->razaosocial!="" && $item->nome=="")
+            {
+                $sDescricao = $item->razaosocial;
+            }
+
+            $options += array($item->id => $sDescricao );
         }
 
         return \Response::json($options);
@@ -146,7 +201,21 @@ class CarregaEstruturasController extends Controller
         //enquanto houver registros
         foreach ($nivel2 as $item)
         {
-            $options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+            //$options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+            if ($item->razaosocial!="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome . ' - ' . $item->razaosocial;
+            }
+            else if ($item->razaosocial=="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome;
+            }
+            else if ($item->razaosocial!="" && $item->nome=="")
+            {
+                $sDescricao = $item->razaosocial;
+            }
+
+            $options += array($item->id => $sDescricao );
         }
 
         return \Response::json($options);
@@ -171,7 +240,21 @@ class CarregaEstruturasController extends Controller
         //enquanto houver registros
         foreach ($nivel3 as $item)
         {
-            $options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+            //$options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+            if ($item->razaosocial!="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome . ' - ' . $item->razaosocial;
+            }
+            else if ($item->razaosocial=="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome;
+            }
+            else if ($item->razaosocial!="" && $item->nome=="")
+            {
+                $sDescricao = $item->razaosocial;
+            }
+
+            $options += array($item->id => $sDescricao );
         }
 
         return \Response::json($options);
@@ -195,7 +278,21 @@ class CarregaEstruturasController extends Controller
         //enquanto houver registros
         foreach ($nivel4 as $item)
         {
-            $options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+            //$options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+            if ($item->razaosocial!="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome . ' - ' . $item->razaosocial;
+            }
+            else if ($item->razaosocial=="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome;
+            }
+            else if ($item->razaosocial!="" && $item->nome=="")
+            {
+                $sDescricao = $item->razaosocial;
+            }
+
+            $options += array($item->id => $sDescricao );
         }
 
         return \Response::json($options);
@@ -219,7 +316,21 @@ class CarregaEstruturasController extends Controller
         //enquanto houver registros
         foreach ($nivel5 as $item)
         {
-            $options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+            //$options += array($item->id => ($item->razaosocial=="" ? $item->nome : $item->razaosocial));
+            if ($item->razaosocial!="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome . ' - ' . $item->razaosocial;
+            }
+            else if ($item->razaosocial=="" && $item->nome!="")
+            {
+                $sDescricao = $item->nome;
+            }
+            else if ($item->razaosocial!="" && $item->nome=="")
+            {
+                $sDescricao = $item->razaosocial;
+            }
+
+            $options += array($item->id => $sDescricao );
         }
 
         return \Response::json($options);
