@@ -168,7 +168,6 @@ class RelatorioCelulasController extends Controller
         "publico_alvo"=> ($descricao_publico_alvo[0]=="" ? 0 : $descricao_publico_alvo[0]),
         "faixa_etaria"=> ($descricao_faixa_etaria[0]=="" ? 0 : $descricao_faixa_etaria[0]),
         "lideres"=> ($descricao_lider=="" ? 0 : $descricao_lider[0]),
-        "vice_lider"=> ($descricao_vice_lider=="" ? 0 : $descricao_vice_lider[0]),
         "nivel1"=> ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]),
         "nivel2"=> ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]),
         "nivel3"=> ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]),
@@ -178,6 +177,8 @@ class RelatorioCelulasController extends Controller
         "id"=> 0
     );
 
+
+//"vice_lider"=> ($descricao_vice_lider=="" ? 0 : $descricao_vice_lider[0]),
     //$PHPJasperXML->debugsql=true;
 
 
