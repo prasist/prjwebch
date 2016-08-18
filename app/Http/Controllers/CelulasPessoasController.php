@@ -38,7 +38,7 @@ class CelulasPessoasController extends Controller
         }
 
         //$dados = \DB::select('select distinct celulas_id, lider_pessoas_id, descricao_lider  as nome from view_celulas_pessoas where  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-        $dados = \DB::select('select distinct celulas_id, lider_pessoas_id, descricao_lider  as nome, tot, cor from view_celulas_pessoas_participantes where  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $dados = \DB::select('select distinct celulas_id, lider_pessoas_id, descricao_lider_scod  as nome, tot, cor from view_celulas_pessoas_participantes where  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         return view($this->rota . '.index',compact('dados'));
 

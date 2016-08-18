@@ -73,12 +73,12 @@
                                         <label for="dia_encontro" class="control-label">Dia Encontro</label>
                                         <select id="dia_encontro" placeholder="(Selecionar)" name="dia_encontro" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                         <option  value=""></option>
-                                        <option  value="2">Segunda-Feira</option>
-                                        <option  value="3">Terça-Feira</option>
-                                        <option  value="4">Quarta-Feira</option>
-                                        <option  value="5">Quinta-Feira</option>
-                                        <option  value="6">Sexta-Feira</option>
-                                        <option  value="7">Sábado</option>
+                                        <option  value="1">Segunda-Feira</option>
+                                        <option  value="2">Terça-Feira</option>
+                                        <option  value="3">Quarta-Feira</option>
+                                        <option  value="4">Quinta-Feira</option>
+                                        <option  value="5">Sexta-Feira</option>
+                                        <option  value="6">Sábado</option>
                                         <option  value="0">Domingo</option>
                                         </select>
                                   </div>
@@ -102,12 +102,12 @@
                                         <label for="segundo_dia_encontro" class="control-label">Segundo Dia Encontro</label>
                                         <select id="segundo_dia_encontro" placeholder="(Selecionar)" name="segundo_dia_encontro" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                         <option  value=""></option>
-                                        <option  value="2">Segunda-Feira</option>
-                                        <option  value="3">Terça-Feira</option>
-                                        <option  value="4">Quarta-Feira</option>
-                                        <option  value="5">Quinta-Feira</option>
-                                        <option  value="6">Sexta-Feira</option>
-                                        <option  value="7">Sábado</option>
+                                        <option  value="1">Segunda-Feira</option>
+                                        <option  value="2">Terça-Feira</option>
+                                        <option  value="3">Quarta-Feira</option>
+                                        <option  value="4">Quinta-Feira</option>
+                                        <option  value="5">Sexta-Feira</option>
+                                        <option  value="6">Sábado</option>
                                         <option  value="0">Domingo</option>
                                         </select>
                                   </div>

@@ -101,8 +101,43 @@ class RelatorioCelulasController extends Controller
     if ($input["nivel4_up"]!="") $descricao_nivel4 = explode("|", $input["nivel4_up"]);
     if ($input["nivel5_up"]!="") $descricao_nivel5 = explode("|", $input["nivel5_up"]);
 
+    $sDiaEncontro = "";
 
-    if ($input["dia_encontro"]!="")  $filtros .= "      Dia Encontro : " . $input["dia_encontro"];
+    switch ($input["dia_encontro"]) {
+            case '1':
+            $sDiaEncontro = "Segunda-Feira";
+            break;
+
+            case '2':
+            $sDiaEncontro = "Terca-Feira";
+            break;
+
+            case '3':
+            $sDiaEncontro = "Quarta-Feira";
+            break;
+
+            case '4':
+            $sDiaEncontro = "Quinta-Feira";
+            break;
+
+            case '5':
+            $sDiaEncontro = "Sexta-Feira";
+            break;
+
+            case '6':
+            $sDiaEncontro = "Sabado";
+            break;
+
+            case '0':
+            $sDiaEncontro = "Domingo";
+            break;
+
+        default:
+            $sDiaEncontro = "";
+            break;
+    }
+
+    if ($input["dia_encontro"]!="")  $filtros .= "      Dia Encontro : " . $sDiaEncontro;
     if ($input["regiao"]!="")  $filtros .= "        Região : " . $input["regiao"];
     if ($input["turno"]!="")  $filtros .= "         Turno : " . $input["turno"];
     if ($input["segundo_dia_encontro"]!="")  $filtros .= "      Segundo dia encontro : " . $input["segundo_dia_encontro"];
