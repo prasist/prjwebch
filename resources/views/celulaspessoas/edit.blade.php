@@ -93,22 +93,25 @@
                                <td>{!! $item->descricao_pessoa !!}</td>
                                <td>
 
-                                  <!--
+
                                     <a href="#" class="btn btn-danger btn-sm" onclick="RemoveTableRow(this)" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><spam class="glyphicon glyphicon-trash"></spam></a>
                                     <input id="hidden_celulas[]"  name = "hidden_celulas[]" type="hidden" value="{!! $item->celulas_id !!}">
                                     <input id="hidden_pessoas[]"  name = "hidden_pessoas[]" type="hidden" value="{!! $item->pessoas_id !!}">
                                     <input id="hidden_lider_celulas[]"  name = "hidden_lider_celulas[]" type="hidden" value="{!! $item->descricao_concatenada !!}">
-                                  -->
+
                                     @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
-                                    <form id="excluir{{ $item->celulas_id }}" action="{{ URL::to(\Session::get('route') . '/' . $item->celulas_id . '/remover_membro/' . $item->pessoas_id) }}" method="DELETE">
+
+                                    <!--
+                                    <form id="excluir{{ $item->pessoas_id }}" action="{{ URL::to(\Session::get('route') . '/' . $item->celulas_id . '/remover_membro/' . $item->pessoas_id) }}" method="DELETE">
 
                                           <button
-                                              data-toggle="tooltip" data-placement="top" title="Remover Participante" type="submit"
+                                              data-toggle="tooltip" data-placement="top" title="Remover Participante" type="button"
                                               class="btn btn-danger btn-sm"
-                                              onclick="return confirm('Deseja remover : {{ $item->descricao_pessoa }} da Célula ?');">
+                                              onclick="return confirm('Deseja remover : {{ $item->descricao_pessoa }} da Célula ?') ? remover_participante('{{ URL::to(\Session::get('route') . '/' . $item->celulas_id . '/remover_membro/' . $item->pessoas_id) }}') : '';">
                                               <spam class="glyphicon glyphicon-trash"></spam></button>
 
                                     </form>
+                                    -->
                                     @endcan
 
                                </td>
@@ -136,9 +139,31 @@
 </div>
 
 <script type="text/javascript">
+
+    function remover_participante(nome_form)
+    {
+
+            $.ajax({
+                  url: nome_form,
+                  type: 'POST',
+                   success: function( msg ) {
+                      //if ( msg.status === 'success' ) {
+                          alert(msg);
+                      //}
+                  },
+                  error: function( data ) {
+                      //if ( data.status === 422 ) {
+                          alert(msg);
+                      //}
+                  }
+            });
+
+    }
+
     $(document).ready(function() {
         $("#menu_celulas").addClass("treeview active");
     });
+
 </script>
 
 @include('celulaspessoas.script_table')

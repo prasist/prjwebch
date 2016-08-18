@@ -86,6 +86,7 @@ class CelulasPessoasController extends Controller
 public function salvar($request, $id, $tipo_operacao)
 {
 
+
         //Pega dados do post
         $input = $request->except(array('_token', 'ativo')); //não levar o token
 
@@ -101,8 +102,19 @@ public function salvar($request, $id, $tipo_operacao)
 
         if ($tipo_operacao=="create" && !isset($input['hidden_celulas']))  //novo registro
         {
-                return;
+             return;
         }
+
+
+        //excluir para inserir noamente
+        $where =
+                      [
+                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                            'empresas_id' =>  $this->dados_login->empresas_id,
+                            'celulas_id' => $id
+                      ];
+
+        $excluir = celulaspessoas::where($where)->delete();
 
 
         if (isset($input['hidden_celulas']))
