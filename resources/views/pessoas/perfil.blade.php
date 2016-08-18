@@ -393,11 +393,13 @@
 
               <div class="tab-pane" id="acomp">
                     <textarea name="acomp" class="form-control" rows="10" placeholder="Digite o texto..." ></textarea>
+
+                    <div class="box-footer">
+                        <button class = 'btn btn-primary' type ='submit'  disabled><i class="fa fa-save"></i> Salvar</button>
+                    </div>
               </div>
 
-               <div class="box-footer">
-                  <button class = 'btn btn-primary' type ='submit' ><i class="fa fa-save"></i> Salvar</button>
-              </div>
+
 
             </div>
             <!-- /.tab-content -->
