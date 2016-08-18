@@ -757,7 +757,6 @@
 
     function salvar_e_incluir()
     {
-        alert($('#hidden_existe').val());
 
           if ($('#hidden_existe').val()!="0")
           {
