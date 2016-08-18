@@ -463,14 +463,35 @@ class ControleAtividadesController extends Controller
         if ($controle_questions->count()!=0)
         {
             //get saved questions from database
-            $questions_saved = \App\Models\questionarios_encontros::select('controle_questions.questionarios_id', 'questionarios_encontros.id', 'pergunta', 'tipo_resposta', 'resposta')
-            ->leftjoin('controle_questions', 'controle_questions.questionarios_id',  '=', 'questionarios_encontros.id')
-            ->where('questionarios_encontros.empresas_id', $this->dados_login->empresas_id)
-            ->where('questionarios_encontros.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-            ->where('controle_questions.controle_atividades_id', $id)
-            ->get();
+            //$questions_saved = \App\Models\questionarios_encontros::select('controle_questions.questionarios_id', 'questionarios_encontros.id', 'pergunta', 'tipo_resposta', 'resposta')
+            //->leftjoin('controle_questions', 'controle_questions.questionarios_id',  '=', 'questionarios_encontros.id')
+            //->where('questionarios_encontros.empresas_id', $this->dados_login->empresas_id)
+            //->where('questionarios_encontros.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            //->where('controle_questions.controle_atividades_id', $id);
 
-            $questions = $questions_saved;
+
+             $strSql = " select q.id as questionarios_id, q.id, pergunta, q.tipo_resposta, '' as resposta  from questionarios_encontros q ";
+             $strSql .=  " where  q.empresas_id = " . $this->dados_login->empresas_id . " ";
+             $strSql .=  " and q.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " and ";
+             $strSql .=  " q.id not in (select c.questionarios_id from questionarios_encontros q ";
+             $strSql .=  "                  inner join controle_questions c on q.id = c.questionarios_id ";
+             $strSql .=  "                  where c.controle_atividades_id =" . $id . " and ";
+             $strSql .=  "                  c.empresas_id = " . $this->dados_login->empresas_id . " and ";
+             $strSql .=  "                  c.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . ")";
+
+             $strSql .=  " union all";
+
+             $strSql .=  " select q.id as questionarios_id, q.id, q.pergunta, q.tipo_resposta, c.resposta from questionarios_encontros q";
+             $strSql .=  " inner join controle_questions c on q.id = c.questionarios_id ";
+             $strSql .=  " where c.controle_atividades_id=" . $id . " and ";
+             $strSql .=  " c.empresas_id = " . $this->dados_login->empresas_id . " and ";
+             $strSql .=  " c.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "";
+             $strSql .=  " order by pergunta";
+
+             $questions = \DB::select($strSql);
+             $questions_saved = $questions;
+
+
 
         }
         else
