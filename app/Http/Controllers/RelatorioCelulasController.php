@@ -37,6 +37,10 @@ class RelatorioCelulasController extends Controller
         /*Busca Lideres*/
         $lideres = \DB::select('select * from view_lideres where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
+        /*Busca vice - Lideres*/
+        $vice_lider = \DB::select('select * from view_vicelideres where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+
         /*Busca Niveis*/
         $view1 = \DB::select('select * from view_celulas_nivel1 v1 where v1.empresas_id = ? and v1.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
         $view2 = \DB::select('select * from view_celulas_nivel2 v2 where v2.empresas_id = ? and v2.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
@@ -44,7 +48,7 @@ class RelatorioCelulasController extends Controller
         $view4 = \DB::select('select * from view_celulas_nivel4 v4 where v4.empresas_id = ? and v4.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
         $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        return view($this->rota . '.index', ['nivel1'=>$view1, 'nivel2'=>$view2, 'nivel3'=>$view3, 'nivel4'=>$view4, 'nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'lideres'=>$lideres, 'var_download' => $var_download, 'var_mensagem'=>$var_mensagem]);
+        return view($this->rota . '.index', ['vice_lider'=>$vice_lider, 'nivel1'=>$view1, 'nivel2'=>$view2, 'nivel3'=>$view3, 'nivel4'=>$view4, 'nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'lideres'=>$lideres, 'var_download' => $var_download, 'var_mensagem'=>$var_mensagem]);
 
     }
 
@@ -85,6 +89,7 @@ class RelatorioCelulasController extends Controller
     $descricao_publico_alvo="";
     $descricao_faixa_etaria="";
     $descricao_lider="";
+    $descricao_vice_lider="";
     $descricao_nivel1="";
     $descricao_nivel2="";
     $descricao_nivel3="";
@@ -95,6 +100,7 @@ class RelatorioCelulasController extends Controller
     if ($input["publico_alvo"]!="") $descricao_publico_alvo = explode("|", $input["publico_alvo"]);
     if ($input["faixa_etaria"]!="") $descricao_faixa_etaria = explode("|", $input["faixa_etaria"]);
     if ($input["lideres"]!="") $descricao_lider = explode("|", $input["lideres"]);
+    if ($input["vice_lider"]!="") $descricao_vice_lider = explode("|", $input["vice_lider"]);
     if ($input["nivel1_up"]!="") $descricao_nivel1 = explode("|", $input["nivel1_up"]);
     if ($input["nivel2_up"]!="") $descricao_nivel2 = explode("|", $input["nivel2_up"]);
     if ($input["nivel3_up"]!="") $descricao_nivel3 = explode("|", $input["nivel3_up"]);
@@ -138,12 +144,13 @@ class RelatorioCelulasController extends Controller
     }
 
     if ($input["dia_encontro"]!="")  $filtros .= "      Dia Encontro : " . $sDiaEncontro;
-    if ($input["regiao"]!="")  $filtros .= "        Região : " . $input["regiao"];
+    if ($input["regiao"]!="")  $filtros .= "        Regiao : " . $input["regiao"];
     if ($input["turno"]!="")  $filtros .= "         Turno : " . $input["turno"];
     if ($input["segundo_dia_encontro"]!="")  $filtros .= "      Segundo dia encontro : " . $input["segundo_dia_encontro"];
     if ($descricao_publico_alvo[0]!="0")  $filtros .= "     Publico Alvo : " . $descricao_publico_alvo[1];
-    if ($descricao_faixa_etaria[0]!="0")  $filtros .= "     Faixa Etária : " . $descricao_faixa_etaria[1];
-    if ($descricao_lider[0]!="0")  $filtros .= "     Líder : " . $descricao_lider[1];
+    if ($descricao_faixa_etaria[0]!="0")  $filtros .= "     Faixa Etaria : " . $descricao_faixa_etaria[1];
+    if ($descricao_lider[0]!="0")  $filtros .= "     Lider : " . $descricao_lider[1];
+    if ($descricao_vice_lider[0]!="0")  $filtros .= "     Lider em Treinamento: " . $descricao_vice_lider[1];
     if ($input["nivel1_up"]!="0")  $filtros .= "        " . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
     if ($input["nivel2_up"]!="0")  $filtros .= "        " . \Session::get('nivel2') . " : " . $descricao_nivel2[1];
     if ($input["nivel3_up"]!="0")  $filtros .= "        " . \Session::get('nivel3') . " : " . $descricao_nivel3[1];
@@ -161,6 +168,7 @@ class RelatorioCelulasController extends Controller
         "publico_alvo"=> ($descricao_publico_alvo[0]=="" ? 0 : $descricao_publico_alvo[0]),
         "faixa_etaria"=> ($descricao_faixa_etaria[0]=="" ? 0 : $descricao_faixa_etaria[0]),
         "lideres"=> ($descricao_lider=="" ? 0 : $descricao_lider[0]),
+        "vice_lider"=> ($descricao_vice_lider=="" ? 0 : $descricao_vice_lider[0]),
         "nivel1"=> ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]),
         "nivel2"=> ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]),
         "nivel3"=> ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]),

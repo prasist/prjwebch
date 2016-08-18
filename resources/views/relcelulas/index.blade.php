@@ -37,15 +37,13 @@
                       <div class="tab-pane active" id="tab_1">
 
                           <div class="row">
-                                <div class="col-xs-5">
-                                        <label for="lideres" class="control-label">Líder</label>
-                                        <select id="lideres" placeholder="(Selecionar)" name="lideres" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
-                                              <option  value="0"></option>
-                                                @foreach($lideres as $item)
-                                                       <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
-                                                @endforeach
+                                  <div class="col-xs-6">
+                                        <label for="tipo" class="control-label">Tipo Relatório</label>
+                                        <select id="tipo"  name="tipo" class="form-control">
+                                            <option  value="S">Sintético (Nome Célula / Líder)</option>
+                                            <option  value="C">Completo (Nome Célula / Líder, Endereço, Telefone e Email do Líder)</option>
                                         </select>
-                                </div>
+                                  </div>
 
                                 <div class="col-xs-3">
                                       <label for="ckEstruturas" class="control-label">Listar Estruturas Células</label>
@@ -64,6 +62,31 @@
                                              </div>
                                       </div>
                                 </div>
+
+                          </div>
+
+                          <div class="row">
+
+                                <div class="col-xs-6">
+                                        <label for="lideres" class="control-label">Líder</label>
+                                        <select id="lideres" placeholder="(Selecionar)" name="lideres" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                              <option  value="0"></option>
+                                                @foreach($lideres as $item)
+                                                       <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
+                                                @endforeach
+                                        </select>
+                                </div>
+
+                                <div class="col-xs-6">
+                                        <label for="vice_lider" class="control-label">Líder em Treinamento</label>
+                                        <select id="vice_lider" placeholder="(Selecionar)" name="vice_lider" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                              <option  value="0"></option>
+                                                @foreach($vice_lider as $item)
+                                                       <option  value="{{$item->id . '|' . $item->nome}}" >{{$item->nome}}</option>
+                                                @endforeach
+                                        </select>
+                                </div>
+
 
                           </div>
 
@@ -115,7 +138,7 @@
 
                           <div class="row">
 
-                              <div class="col-xs-5">
+                              <div class="col-xs-6">
                                     <label for="publico_alvo" class="control-label">Público Alvo</label>
                                     <select id="publico_alvo" placeholder="(Selecionar)" name="publico_alvo" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
                                           <option  value="0"></option>
@@ -125,7 +148,7 @@
                                     </select>
                               </div>
 
-                              <div class="col-xs-5">
+                              <div class="col-xs-6">
                                     <label for="faixa_etaria" class="control-label">Faixa Etária</label>
                                     <select id="faixa_etaria" placeholder="(Selecionar)" name="faixa_etaria" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
                                           <option  value="0"></option>
@@ -139,7 +162,7 @@
 
                           <div class="row">
 
-                              <div class="col-xs-5">
+                              <div class="col-xs-6">
 
                                     <label for="resultado" class="control-label">Formato de Saída : </label>
                                     <select id="resultado" name="resultado" class="form-control selectpicker">

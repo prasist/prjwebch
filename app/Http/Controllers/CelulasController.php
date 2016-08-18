@@ -39,7 +39,6 @@ class CelulasController extends Controller
             ->where('id', $id)
             ->get();
 
-
             if ($buscar)
             {
                 return $buscar[0]->dia_encontro;
@@ -48,9 +47,6 @@ class CelulasController extends Controller
             {
                 return ""; //Retorna vazio
             }
-
-
-
 
     }
 
@@ -180,6 +176,11 @@ class CelulasController extends Controller
          $dados->empresas_id  = $this->dados_login->empresas_id;
          $dados->celulas_pai_id = ($input['celulas_pai_id']=="" ? null : $input['celulas_pai_id']);
          $dados->origem = ($input['origem']=="" ? null : $input['origem']);
+
+         if (isset($input["endereco_encontro"]))
+         {
+               $dados->endereco_encontro = ($input['endereco_encontro']=="" ? null : $input['endereco_encontro']);
+         }
 
          if ($input["origem"]=="1")  //Multiplicacao
          {

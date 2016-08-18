@@ -293,12 +293,12 @@
                                                       <option  value=""></option>
                                                       <!--[0 Domingo] - [1 Segunda] - [2 Terca] - [3 Quarta] - [4 Quinta] - [5 Sexta] - [6 Sabado]-->
                                                       @if ($tipo_operacao=="editar")
-                                                             <option  value="1" {{ ($dados[0]->dia_encontro=="2" ? "selected" : "") }}>Segunda-Feira</option>
-                                                             <option  value="2" {{ ($dados[0]->dia_encontro=="3" ? "selected" : "") }}>Terça-Feira</option>
-                                                             <option  value="3" {{ ($dados[0]->dia_encontro=="4" ? "selected" : "") }}>Quarta-Feira</option>
-                                                             <option  value="4" {{ ($dados[0]->dia_encontro=="5" ? "selected" : "") }}>Quinta-Feira</option>
-                                                             <option  value="5" {{ ($dados[0]->dia_encontro=="6" ? "selected" : "") }}>Sexta-Feira</option>
-                                                             <option  value="6" {{ ($dados[0]->dia_encontro=="7" ? "selected" : "") }}>Sábado</option>
+                                                             <option  value="1" {{ ($dados[0]->dia_encontro=="1" ? "selected" : "") }}>Segunda-Feira</option>
+                                                             <option  value="2" {{ ($dados[0]->dia_encontro=="2" ? "selected" : "") }}>Terça-Feira</option>
+                                                             <option  value="3" {{ ($dados[0]->dia_encontro=="3" ? "selected" : "") }}>Quarta-Feira</option>
+                                                             <option  value="4" {{ ($dados[0]->dia_encontro=="4" ? "selected" : "") }}>Quinta-Feira</option>
+                                                             <option  value="5" {{ ($dados[0]->dia_encontro=="5" ? "selected" : "") }}>Sexta-Feira</option>
+                                                             <option  value="6" {{ ($dados[0]->dia_encontro=="6" ? "selected" : "") }}>Sábado</option>
                                                              <option  value="0" {{ ($dados[0]->dia_encontro=="0" ? "selected" : "") }}>Domingo</option>
                                                       @else
                                                              <option  value="1" >Segunda-Feira</option>
@@ -394,6 +394,17 @@
 
 
                                         </div><!-- end row -->
+
+                                        <div id="div_endereco" class="row" style="display: none">
+                                            <div class="col-xs-12">
+                                                  <label for="endereco_encontro" class="control-label">Outro Local Encontro</label>
+                                                  @if ($tipo_operacao=="editar")
+                                                       <input type="text" id="endereco_encontro" name="endereco_encontro" class="form-control" value="{{$dados[0]->endereco_encontro}}" placeholder="Preencha o endereço completo...">
+                                                  @else
+                                                       <input type="text" id="endereco_encontro" name="endereco_encontro" class="form-control" value="" placeholder="Preencha o endereço completo...">
+                                                  @endif
+                                            </div>
+                                        </div>
 
                                            <div class="row">
 
@@ -495,20 +506,20 @@
                                                                         <select id="segundo_dia_encontro" placeholder="(Selecionar)" name="segundo_dia_encontro" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                                                         <option  value=""></option>
                                                                         @if ($tipo_operacao=="editar")
-                                                                              <option  value="2" {{ ($dados[0]->segundo_dia_encontro=="2" ? "selected" : "") }}>Segunda-Feira</option>
-                                                                              <option  value="3" {{ ($dados[0]->segundo_dia_encontro=="3" ? "selected" : "") }}>Terça-Feira</option>
-                                                                              <option  value="4" {{ ($dados[0]->segundo_dia_encontro=="4" ? "selected" : "") }}>Quarta-Feira</option>
-                                                                              <option  value="5" {{ ($dados[0]->segundo_dia_encontro=="5" ? "selected" : "") }}>Quinta-Feira</option>
-                                                                              <option  value="6" {{ ($dados[0]->segundo_dia_encontro=="6" ? "selected" : "") }}>Sexta-Feira</option>
-                                                                              <option  value="7" {{ ($dados[0]->segundo_dia_encontro=="7" ? "selected" : "") }}>Sábado</option>
+                                                                              <option  value="1" {{ ($dados[0]->segundo_dia_encontro=="1" ? "selected" : "") }}>Segunda-Feira</option>
+                                                                              <option  value="2" {{ ($dados[0]->segundo_dia_encontro=="2" ? "selected" : "") }}>Terça-Feira</option>
+                                                                              <option  value="3" {{ ($dados[0]->segundo_dia_encontro=="3" ? "selected" : "") }}>Quarta-Feira</option>
+                                                                              <option  value="4" {{ ($dados[0]->segundo_dia_encontro=="4" ? "selected" : "") }}>Quinta-Feira</option>
+                                                                              <option  value="5" {{ ($dados[0]->segundo_dia_encontro=="5" ? "selected" : "") }}>Sexta-Feira</option>
+                                                                              <option  value="6" {{ ($dados[0]->segundo_dia_encontro=="6" ? "selected" : "") }}>Sábado</option>
                                                                               <option  value="0" {{ ($dados[0]->segundo_dia_encontro=="0" ? "selected" : "") }}>Domingo</option>
                                                                         @else
-                                                                              <option  value="2">Segunda-Feira</option>
-                                                                              <option  value="3">Terça-Feira</option>
-                                                                              <option  value="4">Quarta-Feira</option>
-                                                                              <option  value="5">Quinta-Feira</option>
-                                                                              <option  value="6">Sexta-Feira</option>
-                                                                              <option  value="7">Sábado</option>
+                                                                              <option  value="1">Segunda-Feira</option>
+                                                                              <option  value="2">Terça-Feira</option>
+                                                                              <option  value="3">Quarta-Feira</option>
+                                                                              <option  value="4">Quinta-Feira</option>
+                                                                              <option  value="5">Sexta-Feira</option>
+                                                                              <option  value="6">Sábado</option>
                                                                               <option  value="0">Domingo</option>
                                                                         @endif
                                                                         </select>
@@ -746,6 +757,7 @@
     $(document).ready(function()
     {
 
+
            $("#menu_celulas").addClass("treeview active");
 
             /*quando carregar a pagina e estiver preenchido o nivel4, dispara o evento que carrega as outras dropdows.*/
@@ -753,6 +765,25 @@
             {
                   $("#nivel5").trigger("change");
             }
+
+          if ($('#local').val()==6)
+          {
+               $("#div_endereco").show();
+          }
+
+          //Quando selecionar outro tipo de endereco para encontro
+          $("#local").change(function()
+          {
+
+               if ($(this).val()==6)
+               {
+                    $("#div_endereco").show();
+               } else {
+                    $("#div_endereco").hide();
+               }
+
+          });
+
     });
 
     function salvar_e_incluir()

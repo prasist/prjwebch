@@ -436,6 +436,7 @@ class ControleAtividadesController extends Controller
         ->where('controle_atividades_id', $id)
         ->get();
 
+
         $controle_materiais = \App\Models\controle_materiais::select('arquivo', 'id')
         ->where('empresas_id', $this->dados_login->empresas_id)
         ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
