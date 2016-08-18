@@ -152,15 +152,25 @@
 
                                         </div>
 
+
                                          <div class="row">
 
-                                              <div class="col-xs-6">
+                                              <div class="col-xs-5">
                                                       <label for="nome" class="control-label">Nome Célula</label>
                                                       @if ($tipo_operacao=="editar")
                                                             <input id="nome"  placeholder="(Opcional)" name = "nome" type="text" class="form-control" value="{!! $dados[0]->nome !!}">
                                                       @else
                                                             <input id="nome"  placeholder="(Opcional)" name = "nome" type="text" class="form-control" value="">
                                                       @endif
+                                              </div>
+
+                                              <div class="col-xs-1">
+                                                    <label for="cor" class="control-label">Cor</label>
+                                                    @if ($tipo_operacao=="editar")
+                                                        <input id="cor"  placeholder="(Opcional)" name = "cor" type="text" class="pick-a-color form-control" value="{{($dados[0]->cor=='' ? 'fff' : $dados[0]->cor)}}">
+                                                    @else
+                                                        <input id="cor"  placeholder="(Opcional)" name = "cor" type="text" class="pick-a-color form-control" value="fff">
+                                                    @endif
                                               </div>
 
                                               <div class="col-xs-6 {{ $errors->has('regiao') ? ' has-error' : '' }}">
@@ -545,6 +555,21 @@
                                                                                         @endif
                                                                                 </div>
                                                                        </div>
+
+                                                                       <div class="col-xs-3">
+                                                                                <label  for="data_previsao_multiplicacao" class="control-label">Data Previsão Multiplicação</label>
+                                                                                <div class="input-group">
+                                                                                       <div class="input-group-addon">
+                                                                                        <i class="fa fa-calendar"></i>
+                                                                                        </div>
+                                                                                        @if ($tipo_operacao=="editar")
+                                                                                              <input id ="data_previsao_multiplicacao" name = "data_previsao_multiplicacao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ $dados[0]->data_previsao_multiplicacao_format}}">
+                                                                                        @else
+                                                                                              <input id ="data_previsao_multiplicacao" name = "data_previsao_multiplicacao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                                        @endif
+                                                                                </div>
+                                                                       </div>
+
                                                                 </div>
 
                                                         </div>
@@ -713,10 +738,10 @@
 
 <script type="text/javascript">
 
-   function remover_pessoa(var_objeto)
-   {
-       $('#' + var_objeto).val('');
-   }
+    function remover_pessoa(var_objeto)
+    {
+        $('#' + var_objeto).val('');
+    }
 
     $(document).ready(function()
     {

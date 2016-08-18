@@ -26,11 +26,12 @@
 
                 <div class="box-body">
 
-                    <table id="example1" class="table table-bordered table-hover">
+                    <table id="tab_celulas_pessoas" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                         <!--<th>ID</th>-->
                         <th>Célula / Qtd. Participantes</th>
+                        <th>Cor</th>
                         <th>Alterar</th>
                         <th>Visualizar</th>
                         <th>Imprimir</th>
@@ -57,6 +58,10 @@
                                                 {!! $value->nome !!} <span class="badge bg-blue">{!!$value->tot!!}</span>
                                         @endcan
                                   @endcan
+                            </td>
+
+                            <td style="color: #{!! rtrim(ltrim($value->cor)) !!};  background-color:#{!! rtrim(ltrim($value->cor)) !!};">
+                                  {!! rtrim(ltrim($value->cor)) !!}
                             </td>
 
                             <td class="col-xs-1">

@@ -5,6 +5,8 @@
         <title>SIGMA3 - Sistema para Igrejas</title>
         <!-- Est-->
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <meta http-equiv="x-ua-compatible" content="IE=10">
+
 
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
@@ -48,6 +50,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
         <!-- Date Picker -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" />
+
+        <link href="{{ asset('/dist/css/pick-a-color-1.1.8.min.css')}}" rel="stylesheet"/>
+
 
     </head>
 
@@ -128,12 +133,21 @@
 <script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+<script src="{{ asset('/dist/js/tinycolor-0.9.15.min.js')}}"></script> <!-- monetarios-->
+<script src="{{ asset('/dist/js/pick-a-color-1.1.8.min.js')}}"></script> <!-- monetarios-->
 
 
 <script type="text/javascript">
 
                   $(function ()
                   {
+
+                            $(".pick-a-color").pickAColor({
+                              showHexInput            : false,
+                              showBasicColors         : true,
+                              allowBlank              : false,
+                              inlineDropdown          : true
+                            });
 
                             //Timepicker
                             //$(".timepicker").timepicker({
@@ -187,6 +201,24 @@
                                   ]
                             });
 
+                               $("#tab_celulas_pessoas").DataTable({
+
+                                 language: {
+                                            paginate: {
+                                                first:      "Primeira",
+                                                previous:   "Anterior",
+                                                next:       "Próxima",
+                                                last:       "Última"}
+                                        },
+                                "columnDefs":
+                                  [
+                                      {"targets": [2], "sortable": false},
+                                      {"targets": [3], "sortable": false},
+                                      {"targets": [4], "sortable": false},
+                                      {"targets": [5], "sortable": false}
+                                  ]
+                            });
+
                             $("#table_celulas").DataTable({
 
                                  language: {
@@ -198,9 +230,9 @@
                                         },
                                 "columnDefs":
                                   [
-                                      {"targets": [4], "sortable": false},
                                       {"targets": [5], "sortable": false},
-                                      {"targets": [6], "sortable": false}
+                                      {"targets": [6], "sortable": false},
+                                      {"targets": [7], "sortable": false}
                                   ]
                             });
 
