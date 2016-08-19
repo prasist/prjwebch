@@ -662,9 +662,14 @@ class ControleAtividadesController extends Controller
         "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
         "controle_ativ_id"=> $id,
         "data_encontro"=> "'" . $data . "'",
-        "SUBREPORT_DIR"=> "'" . public_path() . '/relatorios/' . "'",
-        "path_logo"=> "'" . public_path() . '/images/clients/' . \Session::get('logo') . "'"
+        "SUBREPORT_DIR"=> "'" . public_path() . '/relatorios/' . "'"
     );
+
+    //se houver logo informada
+    if (\Session::get('logo')!="")
+    {
+        $parametros = array_add($parametros, 'path_logo', public_path() . '/images/clients/' . \Session::get('logo'));
+    }
 
 
    $nome_relatorio = public_path() . '/relatorios/relatorio_encontro.jasper';
