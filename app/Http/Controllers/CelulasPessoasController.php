@@ -106,15 +106,17 @@ public function salvar($request, $id, $tipo_operacao)
         }
 
 
-        //excluir para inserir noamente
-        $where =
-                      [
-                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                            'empresas_id' =>  $this->dados_login->empresas_id,
-                            'celulas_id' => $id
-                      ];
+        if ($id!="") {
+              //excluir para inserir noamente
+              $where =
+                            [
+                                  'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                  'empresas_id' =>  $this->dados_login->empresas_id,
+                                  'celulas_id' => $id
+                            ];
 
-        $excluir = celulaspessoas::where($where)->delete();
+              $excluir = celulaspessoas::where($where)->delete();
+       }
 
 
         if (isset($input['hidden_celulas']))
