@@ -202,7 +202,7 @@
                             });
 
                                $("#tab_celulas_pessoas").DataTable({
-
+                                 "pageLength": 50,
                                  language: {
                                             paginate: {
                                                 first:      "Primeira",
@@ -220,7 +220,7 @@
                             });
 
                             $("#table_celulas").DataTable({
-
+                                "pageLength": 50,
                                  language: {
                                             paginate: {
                                                 first:      "Primeira",

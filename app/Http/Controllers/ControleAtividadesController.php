@@ -458,6 +458,7 @@ class ControleAtividadesController extends Controller
         ->get();
 
         //members of cell
+        /*
         $participantes = \App\Models\celulaspessoas::select('pessoas.id', 'pessoas.razaosocial', 'controle_presencas.observacao', 'controle_presencas.presenca_simples')
         ->join('pessoas', 'pessoas.id', '=', 'celulas_pessoas.pessoas_id')
         ->leftjoin('controle_presencas', 'controle_presencas.pessoas_id', '=', 'celulas_pessoas.pessoas_id')
@@ -468,8 +469,42 @@ class ControleAtividadesController extends Controller
         ->where('controle_atividades.id', $id)
         ->orderBy('pessoas.razaosocial')
         ->get();
+        */
 
 
+        //------------------INICIO
+       //Busca participantes que nao esteja gravadas no controle de presencas
+
+       $strSql = " SELECT celulas_pessoas.pessoas_id as id, pessoas.razaosocial, '' AS observacao, '' AS presenca_simples ";
+       $strSql .=  " FROM celulas_pessoas inner join pessoas on pessoas.id = celulas_pessoas.pessoas_id ";
+       $strSql .=  " WHERE  ";
+       $strSql .=  " celulas_pessoas.empresas_id = " . $this->dados_login->empresas_id . "  and ";
+       $strSql .=  " celulas_pessoas.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " and  ";
+       $strSql .=  " celulas_id = " . $dados[0]->celulas_id . " and  ";
+       $strSql .=  " pessoas_id not in ";
+       $strSql .=  " (select pessoas_id from controle_presencas                  ";
+       $strSql .=  " where controle_atividades_id = " . $id . " and                   ";
+       $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " and                  ";
+        $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . ") ";
+
+       $strSql .=  " union all ";
+
+       $strSql .=  " SELECT pessoas.id as id, pessoas.razaosocial, controle_presencas.observacao, controle_presencas.presenca_simples ";
+       $strSql .=  " FROM controle_presencas ";
+       $strSql .=  " inner join pessoas on pessoas.id = controle_presencas.pessoas_id ";
+       $strSql .=  " where ";
+       $strSql .=  " controle_presencas.controle_atividades_id= " . $id . " and ";
+       $strSql .=  " controle_presencas.empresas_id = " . $this->dados_login->empresas_id . " and  ";
+       $strSql .=  " controle_presencas.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
+       $strSql .=  " order by razaosocial";
+
+       $participantes = \DB::select($strSql);
+
+       //-------------------FIM
+
+
+
+       //Questionarios gravados
         $controle_questions = \App\Models\controle_questions::select('id')
         ->where('empresas_id', $this->dados_login->empresas_id)
         ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
@@ -477,6 +512,8 @@ class ControleAtividadesController extends Controller
         ->get();
 
 
+
+        //Materiais Enviados
         $controle_materiais = \App\Models\controle_materiais::select('arquivo', 'id')
         ->where('empresas_id', $this->dados_login->empresas_id)
         ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
