@@ -24,6 +24,7 @@
 
                 <input  id= "ckEstruturas" name="ckEstruturas" type="hidden" class="minimal" />
                 <input  id= "ckExibir" name="ckExibir" type="hidden" class="minimal"  />
+                <input  id= "ckExibirDadosParticipantes" name="ckExibirDadosParticipantes" type="hidden" class="minimal"  />
 
                  <!-- Custom Tabs -->
                   <div class="nav-tabs-custom">
@@ -37,7 +38,7 @@
                       <div class="tab-pane active" id="tab_1">
 
                           <div class="row">
-                                  <div class="col-xs-6">
+                                  <div class="col-xs-3">
                                         <label for="tipo" class="control-label">Tipo Relatório</label>
                                         <select id="tipo"  name="tipo" class="form-control">
                                             <option  value="S">Sintético (Nome Célula / Líder)</option>
@@ -59,6 +60,15 @@
                                       <div class="input-group">
                                              <div class="input-group-addon">
                                                   <input  id= "ckExibir" name="ckExibir" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm" checked />
+                                             </div>
+                                      </div>
+                                </div>
+
+                                <div class="col-xs-3">
+                                      <label for="ckExibirDadosParticipantes" class="control-label">Exibir Dados Participantes</label>
+                                      <div class="input-group">
+                                             <div class="input-group-addon">
+                                                  <input  id= "ckExibirDadosParticipantes" name="ckExibirDadosParticipantes" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm" checked  />
                                              </div>
                                       </div>
                                 </div>

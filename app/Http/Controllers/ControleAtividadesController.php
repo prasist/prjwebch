@@ -166,42 +166,52 @@ class ControleAtividadesController extends Controller
                 $i_index=0; /*initialize*/
                 $var_total_visitantes=0;
 
-                foreach($input['nome_visitante'] as $selected)
+                //Excluir antes...
+                $where = ['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                 'empresas_id' =>  $this->dados_login->empresas_id,
+                                 'controle_atividades_id' => $id_atividade];
+
+                $excluir = \App\Models\controle_visitantes::where($where)->delete();
+
+                if (isset($input['nome_visitante']))
                 {
+                      foreach($input['nome_visitante'] as $selected)
+                      {
 
-                        if ($selected!="") {
+                              if ($selected!="") {
 
-                            $whereForEach =
-                            [
-                                'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                'empresas_id' =>  $this->dados_login->empresas_id,
-                                'controle_atividades_id' => $id_atividade,
-                                'nome' => $selected
-                            ];
+                                  $whereForEach =
+                                  [
+                                      'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                      'empresas_id' =>  $this->dados_login->empresas_id,
+                                      'controle_atividades_id' => $id_atividade,
+                                      'nome' => $selected
+                                  ];
 
-                            $controle_visitantes = \App\Models\controle_visitantes::firstOrNew($whereForEach);
+                                  $controle_visitantes = \App\Models\controle_visitantes::firstOrNew($whereForEach);
 
-                            $valores =
-                            [
-                                'nome' => $selected,
-                                'empresas_id' =>  $this->dados_login->empresas_id,
-                                'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                'controle_atividades_id' => $id_atividade,
-                                'fone' => ($input['fone_visitante'][$i_index]=="" ? null : $input['fone_visitante'][$i_index]),
-                                'email' => ($input['email_visitante'][$i_index]=="" ? null : $input['email_visitante'][$i_index])
-                            ];
-
-
-                            $controle_visitantes->fill($valores)->save();
-                            $controle_visitantes->save();
+                                  $valores =
+                                  [
+                                      'nome' => $selected,
+                                      'empresas_id' =>  $this->dados_login->empresas_id,
+                                      'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                      'controle_atividades_id' => $id_atividade,
+                                      'fone' => ($input['fone_visitante'][$i_index]=="" ? null : $input['fone_visitante'][$i_index]),
+                                      'email' => ($input['email_visitante'][$i_index]=="" ? null : $input['email_visitante'][$i_index])
+                                  ];
 
 
-                            $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
-                            $var_total_visitantes=$var_total_visitantes+1;
-                       }
+                                  $controle_visitantes->fill($valores)->save();
+                                  $controle_visitantes->save();
 
 
-                } //end for each visitantes
+                                  $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
+                                  $var_total_visitantes=$var_total_visitantes+1;
+                             }
+
+
+                      } //end for each visitantes
+                }
 
 
                 //questions
@@ -301,7 +311,7 @@ class ControleAtividadesController extends Controller
         $strSql .=  " SELECT cp.empresas_id, cp.empresas_clientes_cloud_id , cp.controle_atividades_id , p.tipos_pessoas_id, count(p.tipos_pessoas_id) FROM ";
         $strSql .=  " controle_presencas cp INNER JOIN pessoas p on cp.pessoas_id = p.id and cp.empresas_id = p.empresas_id and cp.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id ";
         $strSql .=  " WHERE ";
-        $strSql .=  " cp.presenca_simples = 'S' AND ";
+        //$strSql .=  " cp.presenca_simples = 'S' AND ";
         $strSql .=  " cp.controle_atividades_id = " . $id_atividade . " AND ";
         $strSql .=  " cp.empresas_id = " . $this->dados_login->empresas_id . " AND ";
         $strSql .=  " cp.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "";
@@ -499,7 +509,7 @@ class ControleAtividadesController extends Controller
             //->where('questionarios_encontros.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
             //->where('controle_questions.controle_atividades_id', $id);
 
-
+           //Busca perguntas que nao esteja gravadas no encontro
              $strSql = " select q.id as questionarios_id, q.id, pergunta, q.tipo_resposta, '' as resposta  from questionarios_encontros q ";
              $strSql .=  " where  q.empresas_id = " . $this->dados_login->empresas_id . " ";
              $strSql .=  " and q.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " and ";
@@ -509,8 +519,9 @@ class ControleAtividadesController extends Controller
              $strSql .=  "                  c.empresas_id = " . $this->dados_login->empresas_id . " and ";
              $strSql .=  "                  c.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . ")";
 
-             $strSql .=  " union all";
+             $strSql .=  " union all"; //Unira as duas querys para trazer todas as perguntas, mesmo que nao esteja gravadas para o encontro
 
+             //Busca perguntas somente do encontro
              $strSql .=  " select q.id as questionarios_id, q.id, q.pergunta, q.tipo_resposta, c.resposta from questionarios_encontros q";
              $strSql .=  " inner join controle_questions c on q.id = c.questionarios_id ";
              $strSql .=  " where c.controle_atividades_id=" . $id . " and ";

@@ -182,6 +182,23 @@ class RelatorioCelulasController extends Controller
     //$PHPJasperXML->debugsql=true;
 
 
+
+    if ($input["tipo"]=="S") //Sintetico, nao listar endereco, fone e email
+    {
+        $parametros = array_add($parametros, 'exibir_dados_lider', 'N');
+    }
+
+
+    if ($input["ckExibirDadosParticipantes"]=="")
+    {
+        $parametros = array_add($parametros, 'exibir_dados', 'N');
+    }
+
+    if ($descricao_vice_lider[0]!="0")
+    {
+        $parametros = array_add($parametros, 'vice_lider', $descricao_vice_lider[0]);
+    }
+
     //if ($input["tipo_relatorio"]=="S") //Sintético
     //{
       if ($input["ckExibir"]) //Exibir participantes
@@ -195,7 +212,8 @@ class RelatorioCelulasController extends Controller
             else
             {
                 //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas.jrxml');
-                $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas.jasper';
+                //$nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas.jasper';
+                $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_analitico.jasper';
             }
 
       } else
@@ -211,7 +229,6 @@ class RelatorioCelulasController extends Controller
                  $nome_relatorio = public_path() . '/relatorios/listagem_celulas.jasper';
             }
       }
-
 
     \JasperPHP::process(
             $nome_relatorio,
