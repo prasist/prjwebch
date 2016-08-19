@@ -188,6 +188,53 @@ class CelulasController extends Controller
          }
 
          $dados->qual_endereco = ($input['local']=="" ? null : $input['local']);
+
+         //Verifique qual endereco sera o encontro conforme selecao do local
+         if (isset($input["endereco_encontro"]))
+         {
+               if ($dados->qual_endereco != "6")
+               {
+                        switch ($dados->qual_endereco)
+                        {
+                            case '1': //lider
+                                $id_pessoa_endereco = $dados->lider_pessoas_id;
+                                break;
+
+                                case '2': //lider em treinamento
+                                $id_pessoa_endereco = $dados->vicelider_pessoas_id;
+                                break;
+
+                                case '3': //anfitriao
+                                $id_pessoa_endereco = $dados->suplente1_pessoas_id;
+                                break;
+
+                                case '4': //suplente
+                                $id_pessoa_endereco = $dados->suplente2_pessoas_id;
+                                break;
+
+                            default:
+                                $id_pessoa_endereco = "";
+                                break;
+                        }
+
+                        if ($dados->qual_endereco=='5') //endereco igreja sede
+                        {
+                            $pegar_endereco = \App\Models\empresas::select('endereco', 'numero', 'bairro', 'cidade', 'estado', 'complemento')->findOrfail($this->dados_login->empresas_id);
+                            $dados->endereco_encontro = $pegar_endereco->endereco . ', ' . $pegar_endereco->numero . ' - ' . $pegar_endereco->bairro . '  ' . $pegar_endereco->complemento;
+                        }
+                        else
+                        {
+                            if ($id_pessoa_endereco!="")
+                            {
+                                    $pegar_endereco = \App\Models\pessoas::select('endereco', 'numero', 'bairro', 'cidade', 'estado', 'complemento')->findOrfail($id_pessoa_endereco);
+                                    $dados->endereco_encontro = $pegar_endereco->endereco . ', ' . $pegar_endereco->numero . ' - ' . $pegar_endereco->bairro . '  ' . $pegar_endereco->complemento;
+                            }
+                        }
+
+               }
+
+         }
+
          $dados->data_inicio = ($input["data_inicio"]!="" ? $this->formatador->FormatarData($input["data_inicio"]) : date('Y-m-d'));
          $dados->save();
          return  $dados->id;

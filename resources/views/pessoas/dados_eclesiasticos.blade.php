@@ -477,6 +477,7 @@
                                                                                   <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#conjuge_myModal" >
                                                                                          <i class="fa fa-search"></i> ...
                                                                                    </button>
+                                                                                   &nbsp;<a href="#" onclick="remover_pessoa('conjuge');" title="Limpar Campo"><spam class="fa fa-close"></spam></a>
                                                                                 </div>
 
                                                                                 @include('modal_buscar_pessoas', array('qual_campo'=>'conjuge', 'modal' => 'conjuge_myModal'))
@@ -589,6 +590,7 @@
                                                                                 <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#filho_cadastro_myModal" >
                                                                                        <i class="fa fa-search"></i> ...
                                                                                  </button>
+                                                                                 &nbsp;<a href="#" onclick="remover_pessoa('filho_cadastro');" title="Limpar Campo"><spam class="fa fa-close"></spam></a>
                                                                               </div>
 
                                                                               @include('modal_buscar_pessoas', array('qual_campo'=>'filho_cadastro', 'modal' => 'filho_cadastro_myModal'))
@@ -778,6 +780,7 @@
                                                                                   <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#pai_myModal">
                                                                                          <i class="fa fa-search"></i> ...
                                                                                    </button>
+                                                                                   &nbsp;<a href="#" onclick="remover_pessoa('pai');" title="Limpar Campo"><spam class="fa fa-close"></spam></a>
                                                                                 </div>
 
                                                                                 @include('modal_buscar_pessoas', array('qual_campo'=>'pai', 'modal' => 'pai_myModal'))
@@ -822,6 +825,7 @@
                                                                                     <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#mae_myModal">
                                                                                            <i class="fa fa-search"></i> ...
                                                                                      </button>
+                                                                                     &nbsp;<a href="#" onclick="remover_pessoa('mae');" title="Limpar Campo"><spam class="fa fa-close"></spam></a>
                                                                                   </div>
 
                                                                                   @include('modal_buscar_pessoas', array('qual_campo'=>'mae', 'modal' => 'mae_myModal'))
@@ -1368,6 +1372,11 @@
    </div><!-- FIM - DADOS ECLISIASTICOS-->
 
 <script type="text/javascript">
+
+  function remover_pessoa(var_objeto)
+    {
+        $('#' + var_objeto).val('');
+    }
 
 /*Quando selecionar um conjuge do cadastro desabilitar os campos para informação manual*/
    function validar_conjuge()
