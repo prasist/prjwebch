@@ -667,7 +667,7 @@ class ControleAtividadesController extends Controller
 
 
     //se houver logo informada
-    if (\Session::get('logo')!="")
+    if (rtrim(ltrim(\Session::get('logo')))!="")
     {
         $parametros = array_add($parametros, 'path_logo', public_path() . '/images/clients/' . \Session::get('logo'));
     }
