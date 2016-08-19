@@ -665,6 +665,7 @@ class ControleAtividadesController extends Controller
         "SUBREPORT_DIR"=> "'" . public_path() . '/relatorios/' . "'"
     );
 
+
     //se houver logo informada
     if (\Session::get('logo')!="")
     {
