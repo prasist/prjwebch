@@ -39,10 +39,11 @@ class AuthServiceProvider extends ServiceProvider
 
                     //Verifica se a empresa logada é sede, para das as devidas permissoes ao master
                     $verifica_sede = \App\Models\empresas::select('igreja_sede')->findOrfail($cadastrou->empresas_id);
-                    $nome_igreja = \App\Models\empresas::select('razaosocial')->findOrfail($cadastrou->empresas_id);
+                    $nome_igreja = \App\Models\empresas::select('razaosocial', 'caminhologo')->findOrfail($cadastrou->empresas_id);
 
                     \Session::put('master_sede', $verifica_sede);
                     \Session::put('nome_igreja', $nome_igreja->razaosocial);
+                    \Session::put('logo', $nome_igreja->caminhologo);
                     \Session::put('dados_login', $cadastrou);
                     \Session::put('tour_rapido', $cadastrou->tutorial);
                     \Session::put('admin', $cadastrou->admin);

@@ -257,6 +257,7 @@ class ControleAtividadesController extends Controller
           }
 
 
+
       //----------------------------RESUMO ENCONTRO-------------------------------------
        $whereForEach =
         [
@@ -281,6 +282,35 @@ class ControleAtividadesController extends Controller
         $controle_resumo->save();
 
        //----------------------------FIM RESUMO ENCONTRO-------------------------------------
+
+
+
+        //--------------------------RESUMO POR TIPOS DE PESSOAS
+
+        //Excluir antes...
+        $where = [
+                          'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                          'empresas_id' =>  $this->dados_login->empresas_id,
+                          'controle_atividades_id' => $id_atividade
+                        ];
+
+        $excluir = \App\Models\controle_resumo_tipo_pessoa::where($where)->delete();
+
+
+        $strSql =  " INSERT INTO controle_resumo_tipo_pessoa (empresas_id, empresas_clientes_cloud_id, controle_atividades_id, tipos_pessoas_id, total)";
+        $strSql .=  " SELECT cp.empresas_id, cp.empresas_clientes_cloud_id , cp.controle_atividades_id , p.tipos_pessoas_id, count(p.tipos_pessoas_id) FROM ";
+        $strSql .=  " controle_presencas cp INNER JOIN pessoas p on cp.pessoas_id = p.id and cp.empresas_id = p.empresas_id and cp.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id ";
+        $strSql .=  " WHERE ";
+        $strSql .=  " cp.presenca_simples = 'S' AND ";
+        $strSql .=  " cp.controle_atividades_id = " . $id_atividade . " AND ";
+        $strSql .=  " cp.empresas_id = " . $this->dados_login->empresas_id . " AND ";
+        $strSql .=  " cp.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "";
+        $strSql .=  " group by cp.empresas_id, cp.empresas_clientes_cloud_id , cp.controle_atividades_id , p.tipos_pessoas_id";
+
+        $gravar_resumo = \DB::select($strSql);
+
+        //--------------------------FIM - RESUMO POR TIPOS DE PESSOAS
+
 
 
            //-------------------------------------------------Material para encontro--------------------------------------------------
@@ -632,8 +662,10 @@ class ControleAtividadesController extends Controller
         "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
         "controle_ativ_id"=> $id,
         "data_encontro"=> "'" . $data . "'",
-        "SUBREPORT_DIR"=> "'" . public_path() . '/relatorios/' . "'"
+        "SUBREPORT_DIR"=> "'" . public_path() . '/relatorios/' . "'",
+        "path_logo"=> "'" . public_path() . '/images/clients/' . \Session::get('logo') . "'"
     );
+
 
    $nome_relatorio = public_path() . '/relatorios/relatorio_encontro.jasper';
 

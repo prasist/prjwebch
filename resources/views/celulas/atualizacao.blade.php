@@ -606,7 +606,7 @@
                                                     @if ($tipo_operacao=="editar")
 
                                                     @if ($dados[0]->tot>0)
-                                                        <a href="{{ URL::to('celulaspessoas/' . $dados[0]->id . '/edit') }}" class = 'btn btn-success btn-flat'><i class="fa fa-file-text-o"></i>  Incluir Participante(s)</a>
+                                                        <a href="{{ URL::to('celulaspessoas/' . $dados[0]->id . '/edit') }}" class = 'btn btn-success btn-flat'><i class="fa fa-file-text-o"></i>  Editar Participante(s)</a>
                                                     @else
                                                         <a href="{{ URL::to('celulaspessoas/registrar/' .$dados[0]->id) }}" class = 'btn btn-success btn-flat'><i class="fa fa-file-text-o"></i>  Incluir Participante(s)</a>
                                                     @endif
@@ -616,34 +616,13 @@
                                                          <tr>
                                                            <!--<th>Célula</th>-->
                                                            <th>Pessoa</th>
-                                                           <th>Remover</th>
                                                          </tr>
 
                                                         @foreach($participantes as $item)
                                                          <tr>
                                                            <!--<td>{!! $item->descricao_concatenada !!}</td>-->
                                                            <td>{!! $item->descricao_pessoa !!}</td>
-                                                           <td>
 
-                                                              <!--
-                                                                <a href="#" class="btn btn-danger btn-sm" onclick="RemoveTableRow(this)" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><spam class="glyphicon glyphicon-trash"></spam></a>
-                                                                <input id="hidden_celulas[]"  name = "hidden_celulas[]" type="hidden" value="{!! $item->celulas_id !!}">
-                                                                <input id="hidden_pessoas[]"  name = "hidden_pessoas[]" type="hidden" value="{!! $item->pessoas_id !!}">
-                                                                <input id="hidden_lider_celulas[]"  name = "hidden_lider_celulas[]" type="hidden" value="{!! $item->descricao_concatenada !!}">
-                                                              -->
-                                                                @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
-                                                                <form id="excluir{{ $item->celulas_id }}" action="{{ URL::to('celulaspessoas/' . $item->celulas_id . '/remover_membro/' . $item->pessoas_id) }}" method="DELETE">
-
-                                                                      <button
-                                                                          data-toggle="tooltip" data-placement="top" title="Remover Participante" type="submit"
-                                                                          class="btn btn-danger btn-sm"
-                                                                          onclick="return confirm('Deseja remover : {{ $item->descricao_pessoa }} da Célula ?');">
-                                                                          <spam class="glyphicon glyphicon-trash"></spam></button>
-
-                                                                </form>
-                                                                @endcan
-
-                                                           </td>
                                                          </tr>
                                                         @endforeach
                                                         </tbody>

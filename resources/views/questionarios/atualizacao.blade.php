@@ -60,7 +60,7 @@
                                       @if ($tipo_operacao=="incluir")
                                             <select id="tipo" name="tipo" placeholder="(Selecionar)" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
                                             <option  value="1">Campo de Seleção : Sim / Não</option>
-                                            <option  value="2">Campo Numérico</option>
+                                            <option  value="2">Campo Numérico (Aparecerá sumarizado em relatórios e estatísticas)</option>
                                             <option  value="3">Campo Texto</option>
                                             </select>
                                       @else

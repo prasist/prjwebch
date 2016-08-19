@@ -1,7 +1,7 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href={{ url('/home')}} class="logo">
-        <img src="{{ url('/images/clients/logo.png') }}" class="user-image" alt="Usuário Logado" width="100" height="30" />
+    <a href="{{ url('/home')}}" class="logo">
+        <img src="{{ url('/images/clients/logo_sigma3.png') }}" class="user-image" alt="Usuário Logado" width="100" height="30" />
     </a>
 
     <nav class="navbar navbar-static-top" role="navigation">
