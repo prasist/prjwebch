@@ -26,7 +26,6 @@ class HomeController extends Controller
         //retirado gate
     }
 
-
      public function confirm($codigo)
     {
 
