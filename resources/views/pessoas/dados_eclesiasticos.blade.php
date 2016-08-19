@@ -617,7 +617,7 @@
                                                           <div class="row">
                                                                <br/>
 
-                                                                   <div class="col-xs-3">
+                                                                   <div class="col-xs-2">
                                                                       <label for="inc_filhos[]" class="control-label">Nome</label>
                                                                    </div>
                                                                    <div class="col-xs-1">
@@ -653,7 +653,7 @@
 
                                                                                 <tr id="{{$item->id_seq}}">
                                                                                     <td class="col-xs-2"><input id="inc_filhos[]" name = "inc_filhos[]" type="text" class="form-control" readonly value="{{$item->nome_filho}}"></td>
-                                                                                    <td class="col-xs-2"><input id="inc_sexo[]" name = "inc_sexo[]" type="text" class="form-control" readonly value="{{$item->sexo}}"></td>
+                                                                                    <td class="col-xs-1"><input id="inc_sexo[]" name = "inc_sexo[]" type="text" class="form-control" readonly value="{{$item->sexo}}"></td>
                                                                                     <td class="col-xs-2"><input id="inc_status[]" name = "inc_status[]" type="text" class="form-control" readonly value="{{$item->desc_status}}"></td>
                                                                                     <td class="col-xs-2"><input id="inc_estadocivl[]" name = "inc_estadocivl[]" type="text" class="form-control" readonly value="{{$item->desc_estcivil}}"></td>
                                                                                     <td class="col-xs-2"><input id="inc_datanasc[]" name = "inc_datanasc[]" type="text" class="form-control" readonly value="{{$item->data_nasc}}"></td>
@@ -1407,7 +1407,7 @@ function incluir_filho_cadastro()
         {
               /*cria os inputs para exibicao ao usuario*/
               var sFilho = '<div class="col-xs-2"><input id="inc_filhos[]" readonly name = "inc_filhos[]" type="text" class="form-control" value="' + document.getElementById("filho_cadastro").value + '"></div>';
-              var sSexoFilho = '<div class="col-xs-2"><input id="inc_sexo[]" readonly name = "inc_sexo[]" type="text" class="form-control" value=""></div>';
+              var sSexoFilho = '<div class="col-xs-1"><input id="inc_sexo[]" readonly name = "inc_sexo[]" type="text" class="form-control" value=""></div>';
               var sStatusFilho = '<div class="col-xs-2"><input id="inc_status[]" readonly name = "inc_status[]" type="text" class="form-control" value=""></div>';
               var sEstadoCivilFilho = '<div class="col-xs-2"><input id="inc_estadocivl[]" readonly name = "inc_estadocivl[]" type="text" class="form-control" value=""></div>';
               var sDataNascFilho = '<div class="col-xs-2"><input id="inc_datanasc[]" readonly name = "inc_datanasc[]" type="text" class="form-control" value=""></div>';
@@ -1449,7 +1449,7 @@ function incluir_filho()
 
           /*cria os inputs para exibicao ao usuario*/
           var sFilho = '<div class="col-xs-2"><input id="inc_filhos[]" readonly name = "inc_filhos[]" type="text" class="form-control" value="' + document.getElementById("nome_filho").value + '"></div>';
-          var sSexoFilho = '<div class="col-xs-2"><input id="inc_sexo[]" readonly name = "inc_sexo[]" type="text" class="form-control" value="' + texto_sexo[ind_sexo].text + '"></div>';
+          var sSexoFilho = '<div class="col-xs-1"><input id="inc_sexo[]" readonly name = "inc_sexo[]" type="text" class="form-control" value="' + texto_sexo[ind_sexo].text + '"></div>';
           var sStatusFilho = '<div class="col-xs-2"><input id="inc_status[]" readonly name = "inc_status[]" type="text" class="form-control" value="' + texto_status_filho[ind_status_filho].text + '"></div>';
           var sEstadoCivilFilho = '<div class="col-xs-2"><input id="inc_estadocivl[]" readonly name = "inc_estadocivl[]" type="text" class="form-control" value="' + texto_estado_civil_filho[ind_estado_civil_filho].text + '"></div>';
           var sDataNascFilho = '<div class="col-xs-2"><input id="inc_datanasc[]" readonly name = "inc_datanasc[]" type="text" class="form-control" value="' + document.getElementById("datanascimento_filho").value + '"></div>';
