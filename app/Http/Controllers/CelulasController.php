@@ -50,6 +50,197 @@ class CelulasController extends Controller
 
     }
 
+
+    protected function resumo_perguntas($mes, $ano)
+    {
+            //RESUMO por Respostas
+            $strSql = " SELECT c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano, qe.pergunta, ";
+            $strSql .=  " sum(cast(resposta as int)) as total ";
+            $strSql .=  " FROM controle_atividades ca  ";
+            $strSql .=  " inner join celulas c on c.id = ca.celulas_id ";
+            $strSql .=  " inner join pessoas p on p.id = ca.lider_pessoas_id ";
+            $strSql .=  " inner join controle_questions cq on cq.controle_atividades_id = ca.id and cq.empresas_id = ca.empresas_id and cq.empresas_clientes_cloud_id = ca.empresas_clientes_cloud_id ";
+            $strSql .=  " inner join questionarios_encontros qe on qe.id = cq.questionarios_id ";
+            $strSql .=  " where qe.tipo_resposta = 2  and cq.resposta is not null and cq.resposta <> '' AND ";
+            $strSql .=  " ca.empresas_id = " . $this->dados_login->empresas_id . " AND ";
+            $strSql .=  " ca.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
+            $strSql .=  " ca.mes  = '" . $mes . "' AND ";
+            $strSql .=  " ca.ano  = '" . $ano . "'";
+            $strSql .=  " group by c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano, qe.pergunta ";
+            $resumo_perguntas = \DB::select($strSql);
+            return $resumo_perguntas;
+    }
+
+    protected function resumo_tipo_pessoas($mes, $ano)
+    {
+
+           //RESUMO POR TIPO DE PESSOA
+            $strSql = " SELECT c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano, tp.nome, ";
+            $strSql .=  " sum(total) as total ";
+            $strSql .=  " from controle_atividades ca ";
+            $strSql .=  " inner join celulas c on c.id = ca.celulas_id ";
+            $strSql .=  " inner join pessoas p on p.id = ca.lider_pessoas_id ";
+            $strSql .=  " inner join controle_resumo_tipo_pessoa cr on cr.controle_atividades_id = ca.id ";
+            $strSql .=  " inner join tipos_pessoas tp on tp.id = cr.tipos_pessoas_id ";
+            $strSql .=  " WHERE ";
+            $strSql .=  " ca.empresas_id = " . $this->dados_login->empresas_id . " AND ";
+            $strSql .=  " ca.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
+            $strSql .=  " ca.mes  = '" . $mes . "' AND ";
+            $strSql .=  " ca.ano  = '" . $ano . "'";
+            $strSql .=  " group by c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano, tp.nome ";
+            $resumo_tipo_pessoas = \DB::select($strSql);
+            return $resumo_tipo_pessoas;
+
+
+    }
+
+    protected function resumo_geral($mes, $ano) {
+            //RESUMO GERAL - total geral de participantes, independente de presenca
+            $strSql = " SELECT sum(total) as total ";
+            $strSql .=  " FROM controle_atividades ca  ";
+            $strSql .=  " inner join celulas c on c.id = ca.celulas_id ";
+            $strSql .=  " inner join pessoas p on p.id = ca.lider_pessoas_id ";
+            $strSql .=  " inner join controle_resumo_tipo_pessoa cr on cr.controle_atividades_id = ca.id ";
+            $strSql .=  " WHERE ";
+            $strSql .=  " ca.empresas_id = " . $this->dados_login->empresas_id . " AND ";
+            $strSql .=  " ca.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
+            $strSql .=  " ca.mes  = '" . $mes . "' AND ";
+            $strSql .=  " ca.ano  = '" . $ano . "'";
+            $resumo_geral = \DB::select($strSql);
+            //dd($strSql);
+            return $resumo_geral;
+
+    }
+    protected function resumo_presencas($mes, $ano)
+    {
+
+            //RESUMO DE PRESENCAS
+            $strSql = " SELECT c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano, ";
+            $strSql .=  " sum(total_membros) as total_membros, sum(total_visitantes) as total_visitantes, sum(total_geral) as total_geral ";
+            $strSql .=  " FROM controle_atividades ca ";
+            $strSql .=  " inner join celulas c on c.id = ca.celulas_id ";
+            $strSql .=  " inner join pessoas p on p.id = ca.lider_pessoas_id ";
+            $strSql .=  " inner join controle_resumo cr on cr.controle_atividades_id = ca.id ";
+            $strSql .=  " WHERE ";
+            //$strSql .=  " ca.id = " . $id . " AND ";
+            $strSql .=  " ca.empresas_id = " . $this->dados_login->empresas_id . " AND ";
+            $strSql .=  " ca.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
+            $strSql .=  " ca.mes  = '" . $mes . "' AND ";
+            $strSql .=  " ca.ano  = '" . $ano . "'";
+            $strSql .=  " GROUP BY c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano";
+
+            $resumo = \DB::select($strSql);
+
+            return $resumo;
+
+    }
+
+    public function grafico_mensal($opcao, $mes, $ano)
+    {
+        //Frequencia mes atual e ultimos meses
+        //% percentual do total
+
+        if ($opcao=="visitantes")
+        {
+
+            $retorna = array();
+
+            $resumo = $this->resumo_presencas($mes, $ano);
+
+            foreach ($resumo as $item)
+            {
+                    $descricao_mes = $this->retorna_mes($item->mes);
+                    $retorna[] = array("mes" => $descricao_mes, "total" => $item->total_visitantes);
+            }
+
+             return json_encode($retorna);
+
+
+        }
+        else if ($opcao=="frequencia")
+        {
+
+        }
+
+
+/*
+ data: [
+          { mes: 'Maio', total: 5 },
+          { mes: 'Maio', total: 5 },
+          { mes: 'Maio', total: 5 },
+          { mes: 'Maio', total: 5 },
+        ],
+
+
+        [{
+          mes: '2015-01', // <-- valid timestamp strings
+          total: 75
+        }, {
+          mes: '2015-02',
+          total: 70
+        }, {
+          mes: '2015-03',
+          total: 89
+        }, {
+          mes: '2015-04',
+          total: 86
+        }, ]
+*/
+
+
+
+    }
+
+    protected function retorna_mes($mes) {
+
+        switch ($mes)
+        {
+                        case 1:
+                            $descricao_mes = "Janeiro";
+                            break;
+                            case 2:
+                            $descricao_mes = "Fevereiro";
+                            break;
+                            case 3:
+                            $descricao_mes = "Março";
+                            break;
+                            case 4:
+                            $descricao_mes = "Abril";
+                            break;
+                            case 5:
+                            $descricao_mes = "Maio";
+                            break;
+                            case 6:
+                            $descricao_mes = "Junho";
+                            break;
+                            case 7:
+                            $descricao_mes = "Julho";
+                            break;
+                            case 8:
+                            $descricao_mes = "Agosto";
+                            break;
+                            case 9:
+                            $descricao_mes = "Setembro";
+                            break;
+                            case 10:
+                            $descricao_mes = "Outubro";
+                            break;
+                            case 11:
+                            $descricao_mes = "Novembro";
+                            break;
+                            case 12:
+                            $descricao_mes = "Dezembro";
+                            break;
+
+                        default:
+                            $descricao_mes="";
+                            break;
+          }
+
+          return $descricao_mes;
+
+    }
+
     public function dashboard()
     {
 
@@ -61,12 +252,46 @@ class CelulasController extends Controller
         //Verificar se foi cadastrado os dados da igreja
         if (\App\Models\usuario::find(Auth::user()->id))
         {
+
+
+            $retorno = \DB::select('select  fn_total_celulas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
+            $total_celulas = $retorno[0]->fn_total_celulas;
+
+            $retorno = \DB::select('select  fn_total_participantes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
+            $total_participantes = $retorno[0]->fn_total_participantes;
+
+
+            $celulas_faixas = \DB::select('select * from view_total_celulas_faixa_etaria vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+            $celulas_publicos = \DB::select('select * from view_total_celulas_publico_alvo vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+
+            $resumo = $this->resumo_presencas(date('m'), date('Y'));
+
+            $resumo_geral = $this->resumo_geral(date('m'), date('Y'));
+
+            $resumo_tipo_pessoas = $this->resumo_tipo_pessoas(date('m'), date('Y'));
+
+            $resumo_perguntas = $this->resumo_perguntas(date('m'), date('Y'));
+
+
               //Busca ID do cliente cloud e ID da empresa
               $this->dados_login = \App\Models\usuario::find(Auth::user()->id);
-              return view($this->rota . '.dashboard', ['dados'=>'']);
+              return view($this->rota . '.dashboard',
+                 [
+                  'dados'=>'',
+                  'resumo'=>$resumo,
+                  'resumo_geral'=>$resumo_geral,
+                  'resumo_tipo_pessoas'=>$resumo_tipo_pessoas,
+                  'total_celulas'=>$total_celulas,
+                  'total_participantes'=>$total_participantes,
+                  'celulas_faixas'=>$celulas_faixas,
+                  'celulas_publicos'=>$celulas_publicos,
+                  'resumo_perguntas'=>$resumo_perguntas
+                ]);
         }
 
     }
+
 
    //Return all dates in a month by dayOfWeek
    public function return_dates($id, $var_month, $var_year)

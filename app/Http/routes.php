@@ -97,6 +97,7 @@
     Route::get('financeiro', 'FinanceiroController@index');
 
     Route::get('dashboard_celulas', 'CelulasController@dashboard');
+    Route::get('grafico_celulas/{opcao}/{mes}/{ano}', 'CelulasController@grafico_mensal');
 
 
     /*Relatorio Financeiro*/

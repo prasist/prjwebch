@@ -173,11 +173,11 @@ class HomeController extends Controller
                         $retorno = \DB::select('select  fn_total_inativos(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
                         $total_inativos = $retorno[0]->fn_total_inativos;
 
-                        $retorno = \DB::select('select  fn_total_celulas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
-                        $total_celulas = $retorno[0]->fn_total_celulas;
+                        //$retorno = \DB::select('select  fn_total_celulas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
+                        //$total_celulas = $retorno[0]->fn_total_celulas;
 
-                        $retorno = \DB::select('select  fn_total_participantes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
-                        $total_participantes = $retorno[0]->fn_total_participantes;
+                        //$retorno = \DB::select('select  fn_total_participantes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
+                        //$total_participantes = $retorno[0]->fn_total_participantes;
 
                         $retorno = \DB::select('select  fn_total_familias(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
                         $total_familias = $retorno[0]->fn_total_familias;
@@ -190,8 +190,10 @@ class HomeController extends Controller
                         $pessoas_status = \DB::select('select * from view_total_pessoas_status vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
                         $pessoas_estadoscivis = \DB::select('select * from view_total_pessoas_estadoscivis vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-                        $celulas_faixas = \DB::select('select * from view_total_celulas_faixa_etaria vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-                        $celulas_publicos = \DB::select('select * from view_total_celulas_publico_alvo vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+
+                        //$celulas_faixas = \DB::select('select * from view_total_celulas_faixa_etaria vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+                        //$celulas_publicos = \DB::select('select * from view_total_celulas_publico_alvo vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
             }
             else
@@ -226,14 +228,10 @@ class HomeController extends Controller
                         'total_aniversariantes' => $total_aniversariantes,
                         'total_inativos' => $total_inativos,
                         'pessoas_tipos'=>$pessoas_tipos,
-                        'total_celulas'=>$total_celulas,
-                        'total_participantes'=>$total_participantes,
                         'total_familias'=>$total_familias,
                         'pessoas_sexo'=>$pessoas_sexo,
                         'pessoas_status'=>$pessoas_status,
-                        'pessoas_estadoscivis'=>$pessoas_estadoscivis,
-                        'celulas_faixas'=>$celulas_faixas,
-                        'celulas_publicos'=>$celulas_publicos
+                        'pessoas_estadoscivis'=>$pessoas_estadoscivis
                     ]);
             }
 
