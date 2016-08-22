@@ -512,7 +512,13 @@
 
                     </div>
 
+<div id="ampulheta" class="overlay modal" style="display: none">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+
                  </div>
+
+
 
               </div>
 
@@ -529,6 +535,7 @@
             </div>
 
 
+
     </section>
     <!-- /.content -->
  </form>
@@ -537,6 +544,8 @@
 
 
 <script type="text/javascript">
+
+
 
 
       function abrir_relatorio()
@@ -556,8 +565,15 @@
           }
       }
 
+
     $(document).ready(function(){
 
+
+      $("#ampulheta").bind("ajaxStart", function(){
+          $(this).show();
+      }).bind("ajaxStop", function(){
+          $(this).hide();
+      });
 
 
      $("#menu_celulas").addClass("treeview active");
@@ -763,6 +779,7 @@
         //ao celecionar a celula, preenche com os participantes
         $("#celulas").change(function()
         {
+
 
              var conteudo_celulas = $(this).val().split('|');
              var id_celula = conteudo_celulas[0];

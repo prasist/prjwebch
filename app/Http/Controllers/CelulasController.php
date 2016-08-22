@@ -162,7 +162,7 @@ class CelulasController extends Controller
          $dados->publico_alvo_id = ($input['publico_alvo']=="" ? null : $input['publico_alvo']);
          $dados->nome = $input['nome'];
          $dados->cor = $input['cor'];
-         $dados->data_previsao_multiplicacao = ($input["data_previsao_multiplicacao"]!="" ? $this->formatador->FormatarData($input["data_previsao_multiplicacao"]) : "");
+         $dados->data_previsao_multiplicacao = $this->formatador->FormatarData($input["data_previsao_multiplicacao"]);
          $dados->celulas_nivel1_id  = ($input['nivel1']=="" ? null : $input['nivel1']);
          $dados->celulas_nivel2_id  = ($input['nivel2']=="" ? null : $input['nivel2']);
          $dados->celulas_nivel3_id  = ($input['nivel3']=="" ? null : $input['nivel3']);

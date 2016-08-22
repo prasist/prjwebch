@@ -104,6 +104,7 @@ class ControleAtividadesController extends Controller
          $dados->link_externo = trim($input['link_externo']);
          $dados->texto = trim($input['texto_encontro']);
          $dados->lider_pessoas_id = substr($descricao_celula[1],0,9);
+         $dados->encontro_encerrado = ($input["ckFinalizar"] ? "S" : "N");
          $dados->save();
 
          $id_atividade = $dados->id; //Pega ID recem criado
