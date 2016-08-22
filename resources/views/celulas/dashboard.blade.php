@@ -117,7 +117,7 @@
 
                                     <li>
                                         <a href="#">Participantes :
-                                            <small class="label pull-right bg-green">{!! $resumo_geral[0]->total !!}</small>
+                                            <small class="label pull-right bg-green">{!! $total_participantes !!}</small>
                                         </a>
 
                                         <ul style="list-style-type:none">
