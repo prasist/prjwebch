@@ -165,7 +165,8 @@ class CelulasController extends Controller
 
             $retorna = array();
 
-            $resumo = $this->resumo_presencas($mes, $ano);
+            //ULTIMOS 3 MESES
+            $resumo = $this->resumo_presencas(($mes-2), $ano); //Mes atual menos 2
 
             foreach ($resumo as $item)
             {
@@ -173,41 +174,87 @@ class CelulasController extends Controller
                     $retorna[] = array("mes" => $descricao_mes, "total" => $item->total_visitantes);
             }
 
-             return json_encode($retorna);
+            $resumo = $this->resumo_presencas(($mes-1), $ano); //Mes atual menos 1
+
+            foreach ($resumo as $item)
+            {
+                    $descricao_mes = $this->retorna_mes($item->mes);
+                    $retorna[] = array("mes" => $descricao_mes, "total" => $item->total_visitantes);
+            }
+
+            $resumo = $this->resumo_presencas($mes, $ano); //Mes Atual
+
+            foreach ($resumo as $item)
+            {
+                    $descricao_mes = $this->retorna_mes($item->mes);
+                    $retorna[] = array("mes" => $descricao_mes, "total" => $item->total_visitantes);
+            }
 
 
         }
         else if ($opcao=="frequencia")
         {
+                /*
+                    [{
+                      mes: '2015-01', // <-- valid timestamp strings
+                      total: 75
+                    }, {
+                      mes: '2015-02',
+                      total: 70
+                    }, {
+                      mes: '2015-03',
+                      total: 89
+                    }, {
+                      mes: '2015-04',
+                      total: 86
+                    }, ]
+            */
+
+                    $retorno = \DB::select('select  fn_total_participantes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
+                    $total_participantes = $retorno[0]->fn_total_participantes;
+
+                    $retorna = array();
+
+                    //ULTIMOS 3 MESES
+                    $resumo = $this->resumo_presencas(($mes-2), $ano); //Mes atual menos 2
+
+                    foreach ($resumo as $item)
+                    {
+                            $retorna[] = array("mes" => ($item->ano . '-' . $item->mes), "total" => ($item->total_visitantes / $total_participantes * 100));
+                    }
+
+                    $resumo = $this->resumo_presencas(($mes-1), $ano); //Mes atual menos 1
+
+                    foreach ($resumo as $item)
+                    {
+                            $retorna[] = array("mes" => ($item->ano . '-' . $item->mes), "total" => ($item->total_visitantes / $total_participantes * 100));
+                    }
+
+                    $resumo = $this->resumo_presencas($mes, $ano); //Mes Atual
+
+                    foreach ($resumo as $item)
+                    {
+                            $retorna[] = array("mes" => ($item->ano . '-' . '08'), "total" => ($item->total_visitantes / $total_participantes * 100));
+                    }
+
+
+        }
+        else if ($opcao=="tipo_pessoa")
+        {
+
+                    $retorna = array();
+
+                    //ULTIMOS 3 MESES
+                    $resumo = $this->resumo_tipo_pessoas($mes, $ano, "Geral");
+
+                    foreach ($resumo as $item)
+                    {
+                            $retorna[] = array('label' => $item->nome, 'value' => $item->total);
+                    }
 
         }
 
-
-/*
- data: [
-          { mes: 'Maio', total: 5 },
-          { mes: 'Maio', total: 5 },
-          { mes: 'Maio', total: 5 },
-          { mes: 'Maio', total: 5 },
-        ],
-
-
-        [{
-          mes: '2015-01', // <-- valid timestamp strings
-          total: 75
-        }, {
-          mes: '2015-02',
-          total: 70
-        }, {
-          mes: '2015-03',
-          total: 89
-        }, {
-          mes: '2015-04',
-          total: 86
-        }, ]
-*/
-
-
+        return json_encode($retorna);
 
     }
 
@@ -278,7 +325,6 @@ class CelulasController extends Controller
             $total_celulas = $retorno[0]->fn_total_celulas;
 
             $retorno = \DB::select('select  fn_total_participantes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
-
             $total_participantes = $retorno[0]->fn_total_participantes;
 
 

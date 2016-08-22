@@ -43,19 +43,19 @@
 
                                       <div class="col-lg-5 col-xs-8">
                                               <div class="inner">
-                                                   <center><h4>% Frequência</h4>
-                                                    <p>Últimos 4 meses</p>
+                                                   <center><h4>Total Participantes</h4>
+
                                                    </center>
 
                                               </div>
 
-                                              <div id="frequencia" style="height: 250px;"></div>
+                                              <div id="tipo_pessoa" style="height: 250px;"></div>
                                       </div>
 
                                       <div class="col-lg-5 col-xs-8">
                                               <div class="inner">
-                                                   <center><h4>Quantidade de Visitantes (4 Meses)</h4>
-                                                   <p>Últimos 4 meses</p>
+                                                   <center><h4>Quantidade de Visitantes</h4>
+                                                   <p>Últimos 3 meses</p>
                                                    </center>
                                               </div>
                                               <div id="visitantes" style="height: 250px;"></div>
@@ -132,26 +132,29 @@
                                     </li>
 
 
+                                   @if ($celulas_faixas)
+                                         <h4>&nbsp;&nbsp;&nbsp;&nbsp;Por Faixa Etária</h4>
 
-                                   <h4>&nbsp;&nbsp;&nbsp;&nbsp;Por Faixa Etária</h4>
+                                          @foreach($celulas_faixas as $item)
+                                          <li>
+                                              <a href="#">&nbsp;{!! $item->nome !!}
+                                                  <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
+                                              </a>
+                                          </li>
+                                          @endforeach
+                                    @endif
 
-                                    @foreach($celulas_faixas as $item)
-                                    <li>
-                                        <a href="#">&nbsp;{!! $item->nome !!}
-                                            <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
-                                        </a>
-                                    </li>
-                                    @endforeach
+                                    @if ($celulas_publicos)
+                                          <h4>&nbsp;&nbsp;&nbsp;&nbsp;Público Alvo</h4>
 
-                                    <h4>&nbsp;&nbsp;&nbsp;&nbsp;Público Alvo</h4>
-
-                                    @foreach($celulas_publicos as $item)
-                                    <li>
-                                        <a href="#">&nbsp;{!! $item->nome !!}
-                                            <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
-                                        </a>
-                                    </li>
-                                    @endforeach
+                                          @foreach($celulas_publicos as $item)
+                                          <li>
+                                              <a href="#">&nbsp;{!! $item->nome !!}
+                                                  <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
+                                              </a>
+                                          </li>
+                                          @endforeach
+                                    @endif
 
                                 </ul>
                           </div>
@@ -210,116 +213,71 @@
 
        $("#menu_celulas").addClass("treeview active");
 
-/*
-  Morris.Bar({
-        element: 'visitantes',
-        data: [
-          { y: 'Maio', a: 5 },
-          { y: 'Junho', a: 3 },
-          { y: 'Julho', a: 7 },
-          { y: 'Agosto', a: 2 }
-        ],
-        xkey: 'y',
-        ykeys: ['a'],
-        labels: ['Visitantes']
-      });
-*/
 
-  var var_json = (function () {
-        var var_json = null;
-        var var_month = 8;
-        var var_year = 2016;
-        var urlGetUser = '{!! url("/grafico_celulas/visitantes/' +  var_month + '/' + var_year + '") !!}';
+      //-------------------------Grafico visitantes
+      var var_json = (function () {
+            var var_json = null;
+            var var_month = 8;
+            var var_year = 2016;
+            var urlGetUser = '{!! url("/grafico_celulas/visitantes/' +  var_month + '/' + var_year + '") !!}';
 
-        $.ajax({
-            'async': false,
-            'global': false,
-            'url': urlGetUser,
-            'dataType': "json",
-            'success': function (data) {
-                var_json = data;
-            }
+            $.ajax({
+                'async': false,
+                'global': false,
+                'url': urlGetUser,
+                'dataType': "json",
+                'success': function (data) {
+                    var_json = data;
+                }
+            });
+            return var_json;
+        })
+        ();
+
+         Morris.Bar({
+          element: 'visitantes',
+          data: var_json,
+          xkey: 'mes',
+          ykeys: ['total'],
+          labels: ['Visitantes']
         });
-        return var_json;
-    })
-    ();
+     //---------------------FIM
 
-      console.log("antes");
-      console.log(var_json);
-       Morris.Bar({
-        element: 'visitantes',
-        data: var_json,
-        xkey: 'mes',
-        ykeys: ['total'],
-        labels: ['Visitantes']
-      });
 
-/*
-var var_json = (function () {
-        var var_json = null;
-        var urlGetUser = '{!! url("/grafico_celulas/frequencia' +  var_month + '/' + var_year + '") !!}';
 
-        $.ajax({
-            'async': false,
-            'global': false,
-            'url': urlGetUser,
-            'dataType': "json",
-            'success': function (data) {
-                var_json = data;
-            }
+     //-----------------------Grafico Total Por Tipo de Pessoa
+      var var_json = (function () {
+            var var_json = null;
+            var var_month = 8;
+            var var_year = 2016;
+            var urlGetUser = '{!! url("/grafico_celulas/tipo_pessoa/' +  var_month + '/' + var_year + '") !!}';
+
+            $.ajax({
+                'async': false,
+                'global': false,
+                'url': urlGetUser,
+                'dataType': "json",
+                'success': function (data) {
+                    console.log('data ' + data);
+                    var_json = data;
+                }
+            });
+            return var_json;
+        })
+        ();
+
+        Morris.Donut({
+          element: 'tipo_pessoa',
+           colors: [
+            '#0BA462',
+            '#39B580',
+            '#67C69D',
+            '#95D7BB'
+          ],
+          data: var_json
         });
-        return var_json;
-    })
-    ();
 
-      var months = ["Maio", "Junho", "Julho", "Agosto"];
-
-      Morris.Line({
-        element: 'frequencia',
-        data: var_json,
-        xkey: 'x',
-        ykeys: ['total' ],
-        labels: ['% Frequencia'],
-        xLabelFormat: function(x) { // <--- x.getMonth() returns valid index
-          var month = months[x.getMonth()];
-          return month;
-        },
-        dateFormat: function(x) {
-          var month = months[new Date(x).getMonth()];
-          return month;
-        },
-      });
-      */
-
-var months = ["Maio", "Junho", "Julho", "Agosto"];
-Morris.Line({
-        element: 'frequencia',
-        data: [{
-          mes: '2015-01', // <-- valid timestamp strings
-          total: 75
-        }, {
-          mes: '2015-02',
-          total: 70
-        }, {
-          mes: '2015-03',
-          total: 89
-        }, {
-          mes: '2015-04',
-          total: 86
-        }, ],
-        xkey: 'mes',
-        ykeys: ['total' ],
-        labels: ['% Frequencia'],
-        xLabelFormat: function(x) { // <--- x.getMonth() returns valid index
-          var month = months[x.getMonth()];
-          return month;
-        },
-        dateFormat: function(x) {
-          var month = months[new Date(x).getMonth()];
-          return month;
-        },
-      });
-
+        //---------------------FIM
 
 
      });
