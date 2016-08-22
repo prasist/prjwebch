@@ -208,6 +208,8 @@ class HomeController extends Controller
                         $materiais = $vazio;
                     }
 
+                    //dd($membro);
+
             }
 
             if (Auth::user()->membro=="S")

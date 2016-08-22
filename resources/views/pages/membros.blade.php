@@ -77,9 +77,11 @@
                       <h3 class="timeline-header"><a href="#">Informações</a></h3>
 
                       <div class="timeline-body">
+                      @if ($materiais)
                         @if ($materiais[0]->texto!="")
                               {{$materiais[0]->texto}}
                         @endif
+                     @endif
                       </div>
                     </div>
                   </li>
@@ -102,6 +104,7 @@
                       <h3 class="timeline-header"><a href="#">Materiais do Encontro</a></h3>
 
                       <div class="timeline-body">
+                      @if ($materiais)
                       @foreach($materiais as $item)
                        @if ($item->arquivo!="")
                           <tr id="{{$item->id}}">
@@ -111,6 +114,7 @@
                           </tr>
                        @endif
                       @endforeach
+                      @endif
 
                       </div>
                     </div>
