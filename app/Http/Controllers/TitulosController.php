@@ -62,10 +62,8 @@ class TitulosController extends Controller
         $sQuery .= " and empresas_id = ? ";
         $sQuery .= " and empresas_clientes_cloud_id = ? ";
         $sQuery .= " and status = ? ";
-        //$sQuery .= " and data_vencimento >= ? ";
-        //$sQuery .= " and data_vencimento <= ? ";
         $sQuery .= " order by id ";
-        //$dados = \DB::select($sQuery, [$tipo, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id, $data_inicial, $data_final]);
+
         $dados = \DB::select($sQuery, [$tipo, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id, 'A']);
 
         return view($this->rota . '.index',['dados'=>$dados, 'post_status'=>'', 'tipo'=>$tipo, 'post_mes'=>'', 'plano_contas'=>$plano_contas, 'centros_custos'=>$centros_custos]);

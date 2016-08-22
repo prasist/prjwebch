@@ -117,14 +117,14 @@
 
                                     <li>
                                         <a href="#">Participantes :
-                                            <small class="label pull-right bg-green">{!! $total_participantes !!}</small>
+                                            <span class="pull-right badge bg-green">{!! $total_participantes !!}</span>
                                         </a>
 
                                         <ul style="list-style-type:none">
                                             @foreach($resumo_tipo_pessoas as $item)
                                             <li>
                                                 {!! $item->nome !!}
-                                                    <small class="label pull-right bg-blue">{!! $item->total !!}</small>
+                                                    <span class="pull-right badge bg-blue">{!! $item->total !!}</span>
                                             </li>
                                             @endforeach
 
@@ -165,19 +165,18 @@
 
                                     <li>
                                         <a href="#">&nbsp;Total Geral Presentes
-                                            <small class="label pull-right bg-green">{!! $resumo[0]->total_geral !!}</small>
+                                            <span class="pull-right badge bg-green">{!! $resumo[0]->total_geral !!}</span>
                                         </a>
                                     </li>
 
                                     <ul style="list-style-type:none">
                                           <li>
-                                              Visitantes
-                                                  <small class="label pull-right bg-blue">{!! $resumo[0]->total_visitantes !!}</small>
+                                              Visitantes<span class="pull-right badge bg-blue">{!! $resumo[0]->total_visitantes !!}</span>
                                           </li>
 
                                           <li>
                                               Membros
-                                                  <small class="label pull-right bg-blue">{!! $resumo[0]->total_membros !!}</small>
+                                              <span class="pull-right badge bg-yellow">{!! $resumo[0]->total_membros !!}</span>
                                           </li>
 
                                     </ul>
@@ -258,7 +257,6 @@
                 'url': urlGetUser,
                 'dataType': "json",
                 'success': function (data) {
-                    console.log('data ' + data);
                     var_json = data;
                 }
             });

@@ -221,7 +221,7 @@
 
                                 <div class="col-xs-4">
                                    <label for="valor_oferta" class="control-label">Valor Oferta</label>
-                                   <input type="text" name="valor_oferta" id="valor_oferta"  class="form-control" value='{{ ($tipo_operacao=="incluir" ? "" : $dados[0]->valor_oferta) }}'>
+                                   <input type="text" name="valor_oferta" id="valor_oferta"  class="formata_valor form-control" value='{{ ($tipo_operacao=="incluir" ? "" : $dados[0]->valor_oferta) }}'>
                                 </div>
 
                       </div>
@@ -241,13 +241,11 @@
             <!-- /.box -->
             <!-- FIM CONTEUDO -->
 
-
         </div>
 
         <!--/.col (left) -->
         <!-- right column -->
         <div class="col-md-6">
-
 
           <!-- INICIO CONTEUDO -->
           <!-- Horizontal Form -->
@@ -312,8 +310,6 @@
             <!-- FIM CONTEUDO -->
 
 
-
-
         </div>
 
        <div class="col-md-12" id="box_participantes" style="display: none">
@@ -321,7 +317,6 @@
           <div class="box box-default">
 
                 <div class="box-body">
-
 
                         <div class="row">
                               <p id="reune_sempre"></p>

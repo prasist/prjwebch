@@ -99,7 +99,7 @@ class ControleAtividadesController extends Controller
          $dados->ano = $input['ano'];
          $dados->hora_inicio = $input['hora_inicio'];
          $dados->hora_fim = $input['hora_fim'];
-         $dados->valor_oferta = ($input['valor_oferta']=="" ? null : $input['valor_oferta']);
+         $dados->valor_oferta = ($input['valor_oferta']=="" ? null : $this->formatador->GravarCurrency($input['valor_oferta']));
          $dados->obs = trim($input['observacao']);
          $dados->link_externo = trim($input['link_externo']);
          $dados->texto = trim($input['texto_encontro']);
