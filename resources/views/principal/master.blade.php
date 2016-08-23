@@ -201,6 +201,24 @@
                                   ]
                             });
 
+
+                            $("#tab_login").DataTable({
+
+                                 language: {
+                                            paginate: {
+                                                first:      "Primeira",
+                                                previous:   "Anterior",
+                                                next:       "Próxima",
+                                                last:       "Última"}
+                                        },
+                                "columnDefs":
+                                  [
+                                      {"targets": [1], "sortable": false},
+                                      {"targets": [2], "sortable": false}
+                                  ]
+                            });
+
+
                                $("#tab_celulas_pessoas").DataTable({
                                  "pageLength": 50,
                                  language: {
@@ -471,21 +489,23 @@
         <script src="{{ asset('/dist/js/bootstrap-timepicker.min.js')}}"></script> <!-- monetarios-->
 
 
-        <!-- tour rápido-->
-        @if (\Session::get('tour_visaogeral')=='' || \Session::get('tour_visaogeral')!='S')
-            @if (\Session::get('dados_login')!='')
-            <script type="text/javascript">
-                    hopscotch.startTour(tour_visao_geral);
-            </script>
-            @endif
-        @endif
+        @if (\Session::get('membro')=='')
+                <!-- tour rápido-->
+                @if (\Session::get('tour_visaogeral')=='' || \Session::get('tour_visaogeral')!='S')
+                    @if (\Session::get('dados_login')!='')
+                    <script type="text/javascript">
+                            hopscotch.startTour(tour_visao_geral);
+                    </script>
+                    @endif
+                @endif
 
-        @if (\Session::get('tour_rapido')==' ' || \Session::get('tour_rapido')!='S')
-            @if (\Session::get('admin')==1)
-                <script type="text/javascript">
-                        hopscotch.startTour(tour);
-                </script>
-            @endif
+                @if (\Session::get('tour_rapido')==' ' || \Session::get('tour_rapido')!='S')
+                    @if (\Session::get('admin')==1)
+                        <script type="text/javascript">
+                                hopscotch.startTour(tour);
+                        </script>
+                    @endif
+                @endif
         @endif
 
     </body>

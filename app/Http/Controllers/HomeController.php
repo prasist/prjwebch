@@ -199,7 +199,8 @@ class HomeController extends Controller
             else
             {
                     //busca informacoes do membro
-                    $membro = \DB::select('select * from view_celulas_pessoas vp where email_membro = ? and vp.empresas_id = ? and vp.empresas_clientes_cloud_id = ? ', [Auth::user()->email, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+                    $membro = \DB::select('select * from view_login_membro vp where email_membro = ? and vp.empresas_id = ? and vp.empresas_clientes_cloud_id = ? ', [Auth::user()->email, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
 
                     $vazio = \App\Models\tabela_vazia::get();
 
@@ -208,9 +209,9 @@ class HomeController extends Controller
                           $materiais = \DB::select('select * from controle_atividades ca inner join controle_materiais cm on ca.id = cm.controle_atividades_id and ca.empresas_id = cm.empresas_id and ca.empresas_clientes_cloud_id = cm.empresas_clientes_cloud_id where ca.celulas_id = ? and ca.empresas_id = ? and ca.empresas_clientes_cloud_id = ? ', [$membro[0]->id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
                     }else {
                         $materiais = $vazio;
+                        $membro = $vazio;
                     }
 
-                    //dd($membro);
 
             }
 

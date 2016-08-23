@@ -49,13 +49,13 @@
 
 
 /*Login membros*/
-    Route::get('loginmembro', 'LoginMembroController@index');
-    Route::post('/loginmembro/gravar','LoginMembroController@store');
-    Route::get('/loginmembro/registrar','LoginMembroController@create');
-    Route::get('/loginmembro/{id}/preview','LoginMembroController@show');
-    Route::post('loginmembro/{id}/update','LoginMembroController@update');
-    Route::get('loginmembro/{id}/edit','LoginMembroController@edit');
-    Route::get('loginmembro/{id}/delete','LoginMembroController@destroy');
+    Route::get('login_membros', 'LoginMembroController@index');
+    Route::post('/login_membros/gravar','LoginMembroController@store');
+    Route::get('/login_membros/registrar','LoginMembroController@create');
+    Route::get('/login_membros/{id}/preview','LoginMembroController@show');
+    Route::post('login_membros/{id}/update','LoginMembroController@update');
+    Route::get('login_membros/{id}/edit','LoginMembroController@edit');
+    Route::get('login_membros/{id}/delete','LoginMembroController@destroy');
 
 
 
@@ -261,7 +261,9 @@
     Route::get('usuarios/{id}/perfil','UsersController@perfil');
 
     /*Perfil*/
-    Route::get('perfil/{id}/perfil','PerfilController@perfil');
+    Route::get('profile/{id}/perfil','PerfilController@perfil');
+    Route::post('profile/{id}/update','PerfilController@update');
+
 
    /*Igrejas*/
     Route::get('igrejas', 'IgrejasController@index');

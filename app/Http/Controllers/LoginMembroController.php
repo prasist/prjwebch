@@ -11,6 +11,7 @@ use Auth;
 use Input;
 use Validator;
 use Gate;
+use DB;
 
 class LoginMembroController extends Controller
 {
@@ -20,9 +21,10 @@ class LoginMembroController extends Controller
     {
 
         $this->middleware('auth');
+        $this->rota = "login_membros"; //Define nome da rota que será usada na classe
 
         //Validação de permissão de acesso a pagina
-        if (Gate::allows('verifica_permissao', [\Config::get('app.loginmembro'),'acessar']))
+        if (Gate::allows('verifica_permissao', [\Config::get('app.login_membros'),'acessar']))
         {
             $this->dados_login = \Session::get('dados_login');
         }
@@ -32,7 +34,7 @@ class LoginMembroController extends Controller
     //Exibir listagem dos grupos
     public function index()
     {
-        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.loginmembro'))==false)
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.login_membros'))==false)
         {
               return redirect('home');
         }
@@ -48,9 +50,10 @@ class LoginMembroController extends Controller
             $where = ['usuarios.empresas_id' => $this->dados_login->empresas_id, 'usuarios.empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id];
         }
 
-        $usuarios = users::select ('users.id', 'users.name', 'users.email', 'usuarios.master', 'empresas.razaosocial')
+        $usuarios = users::select ('data_acesso', 'ip', 'users.id', 'users.name', 'users.email', 'usuarios.master', 'empresas.razaosocial')
         ->join('usuarios', 'usuarios.id' , '=' , 'users.id')
         ->join('empresas', 'empresas.id' , '=' , 'usuarios.empresas_id')
+        ->leftJoin('log_users', 'log_users.id' , '=' , 'usuarios.id')
         ->where($where)
         ->where('users.membro', 'S')
         ->get();
@@ -63,7 +66,7 @@ class LoginMembroController extends Controller
     public function create()
     {
 
-        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.loginmembro'))==false)
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.login_membros'))==false)
         {
               return redirect('home');
         }
@@ -85,12 +88,7 @@ class LoginMembroController extends Controller
             $where = ['empresas.id' => $this->dados_login->empresas_id, 'clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id];
         }
 
-        //Query para trazer empresas na dropdown
-        $empresas = \App\Models\empresas::select('empresas.id', 'empresas.razaosocial')
-        ->where($where)
-        ->get();
-
-        return view('login_membros.registrar', ['dados' => $dados, 'empresas'=>$empresas, 'dados_login'=>$this->dados_login]);
+        return view('login_membros.registrar', ['dados' => $dados, 'dados_login'=>$this->dados_login]);
 
     }
 
@@ -99,160 +97,111 @@ class LoginMembroController extends Controller
 * Grava dados no banco
 *
 */
-    public function store(\Illuminate\Http\Request  $request)
-    {
+public function store(\Illuminate\Http\Request  $request)
+{
 
-            /*Validação de campos - request*/
-            $this->validate($request, [
-                   'name' => 'required|max:255',
-                   'email' => 'required|email|max:255|unique:users',
-                   'password' => 'required|confirmed|min:6',
-                   'empresa' => 'required',
-                   'grupo' => 'required',
-             ]);
-
-            $image = $request->file('caminhologo'); //Pega imagem
+    /* ------------------ INICIA TRANSACTION -----------------------*/
+     \DB::transaction(function() use ($request)
+     {
 
             $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-
-            //----------------------Grava novo usuario (Tabela USERS)
-            $dados = new users();
-            $dados->name  = $input['name'];
-            $dados->email  = $input['email'];
-            $dados->confirmed                              = 1; //Se for criado usuario pelo usuario.
-            $dados->password  = bcrypt($input['password']);
-
-            if ($image)
-            {
-                $dados->path_foto = $image->getClientOriginalName();
-            }
-
-            $dados->save();
-            //----------------------FIM - Grava novo usuario (Tabela USERS)
-
-
-            //-----------------Pega dados do usuarios admin (id da empresa e cliente cloud)
-            $usuario_master = usuario::find(Auth::user()->id);
-
-
-            //-----------------Cria registro na tabela usuarios para associar com a tabela users
-            $usuarios = new usuario();
-            $usuarios->id                                           =   $dados->id;    //id recem cadastrado na tabela users
-            $usuarios->empresas_id                          =  $input['empresa'];
-            //$usuarios->confirmed                              = 1; //Se for criado usuario pelo usuario.
-            $usuarios->empresas_clientes_cloud_id  =  $usuario_master['empresas_clientes_cloud_id'];
-
-
-            if ($input['sera_admin']==1) //Se estiver criando usuário ADMIN
-            {
-                //Se este for de outra empresa, cria como MASTER
-                //if ($input['empresa']!=$this->dados_login->empresas_id)
-                //{
-                //    $usuarios->master = 1; //MASTER tem acesso total e nao pode ser excluido
-
-                //} else
-                //{
-                 //   $usuarios->master = 0;
-               // }
-
-            }
-            else
-            {
-                $usuarios->master = 0;
-            }
-
-            $usuarios->admin = $input['sera_admin'];
-            $usuarios->save();
-            //-----------------FIM - Cria registro na tabela usuarios para associar com a tabela users
-
-
-            //Se usuário master estiver criando um admin para outras igrejas/instituições, cria um usuario como admin.
-            if ($input['sera_admin']==1)
-            {
-
-                    //Cria o novo grupo somente se o usuário for pertencer a outra empresa
-                    //Caso seja da mesma empresa associa ao grupo existente
-                    if ($input['empresa']!=$this->dados_login->empresas_id) {
-
-                         //----------------------------------Cria grupo padrão Administrador (Se já não existir)
-                         //A tabela grupos, dispara a triiger de INSERT e chama a  spCriarPermissoesPadrao(NEW.id) que cria as permissoes padrao para o Administrador
-                         $grupo_padrao = \App\Models\grupos::firstOrCreate(
-                            [
-                                'nome' => 'Administrador',
-                                'empresas_id' => $input['empresa'],
-                                'empresas_clientes_cloud_id' => $usuario_master['empresas_clientes_cloud_id'],
-                                'default' => '1'
-                            ]);
-                         //----------------------------------FIM - Cria grupo padrão Administrador
-
-
-                         //------------------------------------Grava usuario e grupo
-                         //Usuario Admin com grupo padrão admin (com todas permissões)
-                         $usuarios_grupo = new \App\Models\usuarios_grupo();
-                         $usuarios_grupo->usuarios_id = $dados->id;
-                         $usuarios_grupo->usuarios_empresas_id = $input['empresa'];
-                         $usuarios_grupo->usuarios_empresas_clientes_cloud_id = $usuario_master['empresas_clientes_cloud_id'];
-                         $usuarios_grupo->grupos_id = $grupo_padrao->id;
-                         $usuarios_grupo->save();
-                        //------------------------------------FIM Grava usuario e grupo
-                    } else
-                    {
-                           //Grava Grupo que o usuário iŕa pertencer
-                            $grupo_usuario = new \App\Models\usuarios_grupo();
-                            $grupo_usuario->usuarios_id = $dados->id;
-                            $grupo_usuario->usuarios_empresas_id = $input['empresa'];
-                            $grupo_usuario->usuarios_empresas_clientes_cloud_id = $usuario_master['empresas_clientes_cloud_id'];
-                            $grupo_usuario->grupos_id = $input['grupo'];
-                            $grupo_usuario->save();
-                    }
-
+            /*Validação de campos - request*/
+            if ($input['quem']=="2") {
+                $this->validate($request, ['grupo' => 'required', 'pessoas'=> 'required']);
             } else {
-
-                //Grava Grupo que o usuário iŕa pertencer
-                $grupo_usuario = new \App\Models\usuarios_grupo();
-                $grupo_usuario->usuarios_id = $dados->id;
-                $grupo_usuario->usuarios_empresas_id = $input['empresa'];
-                $grupo_usuario->usuarios_empresas_clientes_cloud_id = $usuario_master['empresas_clientes_cloud_id'];
-                $grupo_usuario->grupos_id = $input['grupo'];
-                $grupo_usuario->save();
-
+                $this->validate($request, ['grupo' => 'required']);
             }
 
-            //----------------------------------Foto do usuário
+            if ($input["pessoas"]!="")  //PESSOA ESPECIFICA
+           {
+               $pessoas = \App\Models\pessoas::select('emailprincipal', 'razaosocial', 'datanasc', 'cpf')
+               ->where('empresas_id', $this->dados_login->empresas_id)
+               ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+               ->where('emailprincipal', '<>', '')
+               ->where('id', substr($input['pessoas'],0,9))
+               ->get();
+           } else {
+               //Lista tipos de pessoas, será usado no botão novo registro para indicar qual tipo de cadastro efetuar
+               $pessoas = \App\Models\pessoas::select('emailprincipal', 'razaosocial', 'datanasc', 'cpf')
+               ->where('empresas_id', $this->dados_login->empresas_id)
+               ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+               ->where('emailprincipal', '<>', '')
+               ->get();
+            }
 
-            if ($image)
-            {
-                    /*Regras validação imagem*/
-                    $rules = array(
-                        'image' => 'image',
-                        'image' => array('mimes:jpeg,jpg,png', 'max:200px'),
-                    );
+            $iQtd=0;
 
-                    // Validar regras
-                    $validator = Validator::make([$image], $rules);
+           foreach ($pessoas as $item)
+           {
 
-                    // Check to see if validation fails or passes
-                    if ($validator->fails()) {
+                if (rtrim(ltrim($item->cpf))!="" ||  rtrim(ltrim($item->datanasc))!="") //Deve exisitr pelo menos um dos dois
+                {
 
-                        dd($validator);
+                        $iQtd++;
+                        $dados = users::firstOrNew(['email' => $item->emailprincipal]);
+                        $dados->name  = $item->razaosocial;
+                        $dados->email  = $item->emailprincipal;
+                        $dados->confirmed = 1; //Se for criado usuario pelo usuario.
 
-                    } else {
-
-                        $destinationPath = base_path() . '/public/images/users'; //caminho onde será gravado
-                        if(!$image->move($destinationPath, $image->getClientOriginalName())) //move para pasta destino com nome fixo logo
+                        if ($input["gerar"]=="1")  //CPF
                         {
-                            return $this->errors(['message' => 'Erro ao salvar imagem.', 'code' => 400]);
+                            if (rtrim(ltrim($item->cpf))!="") //se houver cpf
+                            {
+                                 $dados->password = bcrypt(substr($item->cpf, 0,6));
+                            }
+                            else if (rtrim(ltrim($item->datanasc))!="") //nao tem cpf, mas tem data de nascimento
+                            {
+                                $dados->password = bcrypt((substr($item->datanasc,5,2) . substr($item->datanasc,0,4)));
+                            }
+                            else
+                            { //nao tem nenhum
+                                 $dados->password = "";
+                            }
                         }
-                    }
-             }//----------------------------------FIM - Foto do usuário
+                        else if ($input["gerar"]=="2")  //Especifico
+                        {
+                            $dados->password = bcrypt($input['password']);
+                        }
+
+                        $dados->membro = "S";
+                        $dados->save();
+
+                        //-----------------Cria registro na tabela usuarios para associar com a tabela users
+                        $usuarios = usuario::firstOrNew(['id' => $dados->id, 'empresas_id'=>$this->dados_login->empresas_id, 'empresas_clientes_cloud_id'=>$this->dados_login->empresas_clientes_cloud_id]);
+                        $usuarios->id                                         =  $dados->id;    //id recem cadastrado na tabela users
+                        $usuarios->empresas_id                         =  $this->dados_login->empresas_id;
+                        $usuarios->empresas_clientes_cloud_id  =  $this->dados_login->empresas_clientes_cloud_id;
+                        $usuarios->master = 0;
+                        $usuarios->membro = 'S';
+                        $usuarios->save();
+                        //-----------------FIM - Cria registro na tabela usuarios para associar com a tabela users
+
+                        //Grava Grupo que o usuário iŕa pertencer
+                        $grupo_usuario = \App\Models\usuarios_grupo::firstOrNew(['usuarios_id' => $dados->id, 'usuarios_empresas_id'=>$this->dados_login->empresas_id, 'usuarios_empresas_clientes_cloud_id'=>$this->dados_login->empresas_clientes_cloud_id]);
+                        $grupo_usuario->usuarios_id = $dados->id;
+                        $grupo_usuario->usuarios_empresas_id = $this->dados_login->empresas_id;
+                        $grupo_usuario->usuarios_empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
+                        $grupo_usuario->grupos_id = $input['grupo'];
+                        $grupo_usuario->save();
+                }
+
+           } //loop
 
 
-            \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
+            if ($iQtd>0) {
+                \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
+            }else{
+                \Session::flash('flash_message_erro', 'Nenhum registro Atualizado, verifique se o(s) membro(s) possue(m) email cadastrado, CPF ou data de nascimento');
+            }
 
-            return redirect('login_membros');
+         }); //FIM TRANSACTION
+
+        return redirect('login_membros');
 
     }
+
+
 
     //Abre tela para edicao ou somente visualização dos registros
     private function exibir ($request, $id, $preview, $perfil)
@@ -262,7 +211,7 @@ class LoginMembroController extends Controller
             return URL::to('login_membros/'. $id . '/edit');
         }
 
-        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.loginmembro'))==false)
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.login_membros'))==false)
         {
               return redirect('home');
         }
@@ -293,19 +242,8 @@ class LoginMembroController extends Controller
             $where = ['empresas.id' => $this->dados_login->empresas_id, 'clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id];
         }
 
-        //Todas igrejas/instituições pertencentes a igreja sede
-        $empresas = \App\Models\empresas::select('id', 'razaosocial')
-        ->where($where)
-        ->get();
 
-        if ($perfil=='true')
-        {
-            return view('login_membros.perfil', ['dados' =>$dados, 'preview' => $preview, 'grupos'=>$grupos, 'empresas'=>$empresas, 'grupo_do_usuario' =>$grupo_do_usuario, 'dados_login'=>$this->dados_login]);
-        }
-        else
-        {
-            return view('login_membros.edit', ['dados' =>$dados, 'preview' => $preview, 'grupos'=>$grupos, 'empresas'=>$empresas, 'grupo_do_usuario' =>$grupo_do_usuario, 'dados_login'=>$this->dados_login]);
-        }
+        return view('login_membros.edit', ['tipo_operacao'=>'editar', 'dados' =>$dados, 'preview' => $preview, 'grupos'=>$grupos, 'grupo_do_usuario' =>$grupo_do_usuario, 'dados_login'=>$this->dados_login]);
 
 
     }
@@ -426,35 +364,19 @@ class LoginMembroController extends Controller
     public function destroy($id)
     {
 
-        try {
-
             //Apaga tabela USERS
             $dados = users::findOrfail($id);
             $dados->delete();
 
             //Apaga tabela USUARIOS_GRUPO
-            $where = [
-            'usuarios_empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-            'usuarios_id' => $id];
-
+            $where = ['usuarios_empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'usuarios_id' => $id];
             \DB::table('usuarios_grupo')->where($where)->delete();
 
             //Apaga tabela USUARIOS
-            $where = [
-            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-            'id' => $id];
-
+            $where = ['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'id' => $id];
             \DB::table('usuarios')->where($where)->delete();
 
             return redirect('login_membros');
-
-        } catch (Exception $e) {
-
-            \Session::flash('flash_message_erro', 'Erro ao tentar excluir o registro. Detalhes : ' . $e);
-            return redirect('login_membros');
-
-        }
-
     }
 
 

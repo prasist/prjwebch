@@ -12,7 +12,7 @@ use Input;
 use Validator;
 use Gate;
 
-class UsersController extends Controller
+class ProfileController extends Controller
 {
     //
 
@@ -22,7 +22,7 @@ class UsersController extends Controller
         $this->middleware('auth');
 
         //Validação de permissão de acesso a pagina
-        if (Gate::allows('verifica_permissao', [\Config::get('app.usuarios'),'acessar']))
+        if (Gate::allows('verifica_permissao', [\Config::get('app.profile'),'acessar']))
         {
             $this->dados_login = \Session::get('dados_login');
         }
@@ -33,7 +33,7 @@ class UsersController extends Controller
     //Exibir listagem dos grupos
     public function index()
     {
-        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.usuarios'))==false)
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.profile'))==false)
         {
               return redirect('home');
         }
@@ -55,7 +55,7 @@ class UsersController extends Controller
         ->where($where)
         ->get();
 
-        return view('usuarios.index', compact('usuarios'));
+        return view('profile.index', compact('usuarios'));
 
     }
 
@@ -63,7 +63,7 @@ class UsersController extends Controller
     public function create()
     {
 
-        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.usuarios'))==false)
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.profile'))==false)
         {
               return redirect('home');
         }
@@ -90,7 +90,7 @@ class UsersController extends Controller
         ->where($where)
         ->get();
 
-        return view('usuarios.registrar', ['dados' => $dados, 'empresas'=>$empresas, 'dados_login'=>$this->dados_login]);
+        return view('profile.registrar', ['dados' => $dados, 'empresas'=>$empresas, 'dados_login'=>$this->dados_login]);
 
     }
 
@@ -262,7 +262,7 @@ class UsersController extends Controller
             return URL::to('usuarios/'. $id . '/edit');
         }
 
-        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.usuarios'))==false)
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.profile'))==false)
         {
               return redirect('home');
         }
@@ -300,11 +300,11 @@ class UsersController extends Controller
 
         if ($perfil=='true')
         {
-            return view('usuarios.perfil', ['dados' =>$dados, 'preview' => $preview, 'grupos'=>$grupos, 'empresas'=>$empresas, 'grupo_do_usuario' =>$grupo_do_usuario, 'dados_login'=>$this->dados_login]);
+            return view('profile.perfil', ['dados' =>$dados, 'preview' => $preview, 'grupos'=>$grupos, 'empresas'=>$empresas, 'grupo_do_usuario' =>$grupo_do_usuario, 'dados_login'=>$this->dados_login]);
         }
         else
         {
-            return view('usuarios.edit', ['dados' =>$dados, 'preview' => $preview, 'grupos'=>$grupos, 'empresas'=>$empresas, 'grupo_do_usuario' =>$grupo_do_usuario, 'dados_login'=>$this->dados_login]);
+            return view('profile.edit', ['dados' =>$dados, 'preview' => $preview, 'grupos'=>$grupos, 'empresas'=>$empresas, 'grupo_do_usuario' =>$grupo_do_usuario, 'dados_login'=>$this->dados_login]);
         }
 
 

@@ -25,7 +25,9 @@
                       <br/>
                       Sua Célula é <b>{{$membro[0]->nome}}</b> toda <b>{{$membro[0]->descricao_dia_encontro}}</b> às <b>{{$membro[0]->horario}}</b>.
                       <br/>
-                @endif
+              @else
+                     Você não participa de nenhuma célula ainda...
+              @endif
 
             <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">

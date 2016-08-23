@@ -4,53 +4,21 @@
 
 {{ \Session::put('titulo', 'Perfil do Usuário') }}
 {{ \Session::put('subtitulo', 'Alteração') }}
-{{ \Session::put('route', 'usuarios') }}
+{{ \Session::put('route', 'profile') }}
+{{ \Session::put('id_pagina', '62') }}
 
 <div class = 'row'>
 
     <div class="col-md-12">
 
-        <div>
-            <a href="{{ url('/usuarios')}}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
-        </div>
-
         <h4>Alteração Perfil Usuário</h4>
-        <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action = {{ url('/usuarios/' . $dados->id . '/update')}}>
+        <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action = "{{ url('/profile/' . $dados->id . '/update')}}">
 
         {!! csrf_field() !!}
 
             <div class="box box-primary">
 
                  <div class="box-body"> <!--anterior box-body-->
-
-                          <div style="display:none;">
-                                <select name="empresa" class="form-control select2" >
-
-                                @foreach($empresas as $item)
-                                      <option  {{ ($item->id == $grupo_do_usuario[0]->usuarios_empresas_id ? 'selected' : '')  }} value="{{$item->id}}">{{$item->razaosocial}}</option>
-                                @endforeach
-                                </select>
-                          </div>
-
-                          <div style="display:none;">
-                              <select name="grupo" class="form-control select2" >
-
-                              @foreach($grupos as $item)
-                                    <option  {{ ($item->id == $grupo_do_usuario[0]->grupos_id ? 'selected' : '')  }} value="{{$item->id}}">{{$item->nome}}</option>
-                              @endforeach
-                              </select>
-                          </div>
-
-                          <!--Somente usuário MASTER poderá criar usuários ADMIN-->
-                          <input  name="admin" type="hidden"  value="0" />
-                           @if ($dados_login->master==1)
-                                <div style="display:none;">
-                                    <input  name="admin" type="checkbox" style="display:none;" class="acessar" value="1" {{ ($grupo_do_usuario[0]->admin==1 ? 'checked' : '') }} />
-                                </div>
-
-                           @endif
-
-                            <input  id="sera_admin" name="sera_admin" type="hidden"  value="0" />
 
                             <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
@@ -72,7 +40,8 @@
                                     <div class="col-xs-10">
                                           <label for="email" class="control-label">Email</label>
 
-                                          <input id="email" maxlength="255"  name = "email" type="text" class="form-control" value="{{ $dados->email }}">
+                                          <input id="email" name = "email" type="hidden"  value="{{ $dados->email }}" >
+                                          <input id="email" maxlength="255"  name = "email" type="text" class="form-control" value="{{ $dados->email }}" disabled>
 
                                              <!-- se houver erros na validacao do form request -->
                                              @if ($errors->has('email'))
@@ -125,7 +94,7 @@
                                         <p></p>
                                         <div class="col-xs-3">
                                               <img src="{{ url('/images/users/' . $dados->path_foto) }}" width="160px" height="160px">
-                                              <a href="{{ url('/usuarios/' . $dados->id . '/remover')}}"><i class="fa fa-remove"> Remover Imagem</i> </a>
+                                              <a href="{{ url('/profile/' . $dados->id . '/remover')}}"><i class="fa fa-remove"> Remover Imagem</i> </a>
                                         </div>
 
                                     @endif
@@ -137,7 +106,7 @@
 
         <div class="box-footer">
             <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-save"></i> Salvar</button>
-            <a href="{{ url('/usuarios')}}" class="btn btn-default">Cancelar</a>
+            <a href="{{ url('/home')}}" class="btn btn-default">Cancelar</a>
         </div>
 
        </form>

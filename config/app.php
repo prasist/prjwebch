@@ -65,7 +65,9 @@ return [
     'controle_atividades'=>'58',
     'mensagens'=>'59',
     'minhacelula'=>'60',
-    'loginmembro'=>'61',
+    'login_membros'=>'61',
+    'profile'=>'62',
+    'alterardados'=>'63',
 
 
     'env' => env('APP_ENV', 'production'),

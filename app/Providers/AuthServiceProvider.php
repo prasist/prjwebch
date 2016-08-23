@@ -48,6 +48,7 @@ class AuthServiceProvider extends ServiceProvider
                     \Session::put('tour_rapido', $cadastrou->tutorial);
                     \Session::put('admin', $cadastrou->admin);
                     \Session::put('tour_visaogeral', $cadastrou->tutorial_visaogeral);
+                    \Session::put('membro', $cadastrou->membro);
 
                     //Ler todas permissoes do usuarios
                     $permissoes = \DB::select('select incluir, alterar, excluir, visualizar, exportar, acessar, imprimir from view_permissoes_grupo where view_permissoes_grupo.usuario = ? and id_pagina = ? ', [$user->id, $pagina]);

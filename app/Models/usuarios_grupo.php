@@ -9,6 +9,7 @@ class usuarios_grupo extends Model
 
     protected $table = "usuarios_grupo";
     public $timestamps = false;
+    protected $fillable = array('usuarios_id', 'usuarios_empresas_id', 'usuarios_empresas_clientes_cloud_id', 'grupos_id');
 
     /*  Exemplo da query
     *   $dados = usuarios_grupo::find(1)->grupos;

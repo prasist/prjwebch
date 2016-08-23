@@ -4,7 +4,7 @@
 
 {{ \Session::put('titulo', 'Login Membros') }}
 {{ \Session::put('subtitulo', 'Listagem') }}
-{{ \Session::put('route', 'loginmembro') }}
+{{ \Session::put('route', 'login_membros') }}
 {{ \Session::put('id_pagina', '61') }}
 
 
@@ -13,8 +13,8 @@
         <div class="row">
                 <div class="col-xs-2">
                 @can('verifica_permissao', [ \Session::get('id_pagina'),'incluir'])
-                  <form method = 'get' class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/registrar')}}>
-                        <button class = 'btn btn-success btn-flat' type ='submit'><i class="fa fa-file-text-o"></i> Novo Registro</button>
+                  <form method = 'get' class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/registrar')}}">
+                        <button class = 'btn btn-success btn-flat' type ='submit'><i class="fa fa-file-text-o"></i> Gerar Login Membros</button>
                   </form>
                 @endcan
                 </div>
@@ -27,13 +27,13 @@
 
                 <div class="box-body">
 
-                    <table id="example1" class="table table-bordered table-hover">
+                    <table id="tab_login" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                        <th>Nome Usuário</th>
+                        <th>Nome</th>
                         <th>Email</th>
-                         <th>Alterar</th>
-                        <th>Visualizar</th>
+                        <th>Último Acesso</th>
+                        <th>IP</th>
                         <th>Excluir</th>
                         </tr>
                     </thead>
@@ -43,50 +43,29 @@
                         <tr>
 
                             <td>
-
-                                  @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
-                                  <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" >
-                                        {{$value->name}}
-                                  </a>
-                                  @else
-                                        @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
-                                                <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" >
-                                                      {{$value->name}}
-                                                </a>
-                                        @else
-                                                {{$value->name}}
-                                        @endcan
-                                  @endcan
+                                    {{$value->name}}
                             </td>
+
                             <td>{{$value->email}}</td>
 
+                            <td>{{$value->data_acesso}}</td>
+
+                            <td>{{$value->ip}}</td>
+
                             <td class="col-xs-1">
-                                      @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
-                                            <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" class = 'btn  btn-info btn-sm'><spam class="glyphicon glyphicon-pencil"></spam></a>
+
+                                      @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
+                                      <form id="excluir{{ $value->id }}" action="{{ URL::to(\Session::get('route') . '/' . $value->id . '/delete') }}" method="DELETE">
+
+                                            <button
+                                                data-toggle="tooltip" data-placement="top" title="Excluir Registro" type="submit"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Confirma exclusão do registro ?');">
+                                                <spam class="glyphicon glyphicon-trash"></spam></button>
+
+                                      </form>
                                       @endcan
-                            </td>
 
-                            <td class="col-xs-1">
-                                      @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
-                                               <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" class = 'btn btn-primary btn-sm'><span class="glyphicon glyphicon-zoom-in"></span></a>
-                                      @endcan
-                            </td>
-                            <td class="col-xs-1">
-                                        @if ($value->master != 1)
-
-                                                @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
-                                                <form id="excluir{{ $value->id }}" action="{{ URL::to(\Session::get('route') . '/' . $value->id . '/delete') }}" method="DELETE">
-
-                                                      <button
-                                                          data-toggle="tooltip" data-placement="top" title="Excluir Registro" type="submit"
-                                                          class="btn btn-danger btn-sm"
-                                                          onclick="return confirm('Confirma exclusão do registro ?');">
-                                                          <spam class="glyphicon glyphicon-trash"></spam></button>
-
-                                                </form>
-                                                @endcan
-
-                                        @endif
                             </td>
 
 

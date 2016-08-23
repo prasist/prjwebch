@@ -9,6 +9,7 @@ class users extends Model
     //
 
     public $timestamps = false;
+    protected $fillable = array('name', 'email', 'password', 'confirmed', 'membro');
 
     public function usuarios() {
 

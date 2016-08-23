@@ -24,7 +24,7 @@
             <!-- Usuário logado-->
             <div class="pull-left info">
                 <p>{{ Auth::user()->name }}</p>
-                <a href="{{ URL::to('perfil/' . Auth::user()->id . '/perfil') }}"><i class="fa fa-user text-success"></i> Alterar Perfil</a>
+                <a href="{{ URL::to('profile/' . Auth::user()->id . '/perfil') }}"><i class="fa fa-user text-success"></i> Alterar Perfil</a>
             </div>
             <!-- ************** -->
 
@@ -95,7 +95,7 @@
 
                     @if(Gate::check('verifica_permissao', [61 ,'acessar']))
                     <li>
-                        <a href="{{ url('/loginmembro')}}" title="Gerar Login e Senha automaticamente para os membros..."><i class="fa fa-angle-double-right"></i>Criar Login para Membros</a>
+                        <a href="{{ url('/login_membros')}}" title="Gerar Login e Senha automaticamente para os membros..."><i class="fa fa-angle-double-right"></i>Criar Login para Membros</a>
                     </li>
                     @endif
                 </ul>
