@@ -24,7 +24,8 @@
 
             Auth::logout();
             \Session::flush();
-            return view('home', ['erros'=>'']);
+            //return view('home', ['erros'=>'']);
+            return Redirect::away('http://www.sigma3sistemas.com.br');
 
         });
 

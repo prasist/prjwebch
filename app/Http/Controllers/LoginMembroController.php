@@ -113,6 +113,13 @@ public function store(\Illuminate\Http\Request  $request)
                 $this->validate($request, ['grupo' => 'required']);
             }
 
+            //Pega tipo de pessoa MEMBRO
+            $tipos = \App\Models\tipospessoas::select('id')
+            ->where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('membro', 't')
+            ->get();
+
+
             if ($input["pessoas"]!="")  //PESSOA ESPECIFICA
            {
                $pessoas = \App\Models\pessoas::select('emailprincipal', 'razaosocial', 'datanasc', 'cpf')
@@ -127,6 +134,8 @@ public function store(\Illuminate\Http\Request  $request)
                ->where('empresas_id', $this->dados_login->empresas_id)
                ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
                ->where('emailprincipal', '<>', '')
+               ->where('tipos_pessoas_id', '=', $tipos[0]->id) //SOMENTE MEMBROS
+               ->where('ativo', '=', 'S') //ATIVOS
                ->get();
             }
 
@@ -148,11 +157,13 @@ public function store(\Illuminate\Http\Request  $request)
                         {
                             if (rtrim(ltrim($item->cpf))!="") //se houver cpf
                             {
+                                 $sSenha= substr($item->cpf, 0,6);
                                  $dados->password = bcrypt(substr($item->cpf, 0,6));
                             }
                             else if (rtrim(ltrim($item->datanasc))!="") //nao tem cpf, mas tem data de nascimento
                             {
                                 $dados->password = bcrypt((substr($item->datanasc,5,2) . substr($item->datanasc,0,4)));
+                                $sSenha= (substr($item->datanasc,5,2) . substr($item->datanasc,0,4));
                             }
                             else
                             { //nao tem nenhum
@@ -162,6 +173,7 @@ public function store(\Illuminate\Http\Request  $request)
                         else if ($input["gerar"]=="2")  //Especifico
                         {
                             $dados->password = bcrypt($input['password']);
+                            $sSenha = $input['password'];
                         }
 
                         $dados->membro = "S";
@@ -184,6 +196,16 @@ public function store(\Illuminate\Http\Request  $request)
                         $grupo_usuario->usuarios_empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
                         $grupo_usuario->grupos_id = $input['grupo'];
                         $grupo_usuario->save();
+
+                        $data = ['email'=>$item->emailprincipal, 'nome_igreja'=>\Session::get('nome_igreja'), 'nome'=>$item->razaosocial, 'senha'=>$sSenha];
+
+                        \Mail::send('emails.bemvindo', ['nome' => $data["nome"], 'nome_igreja'=>$data["nome_igreja"], 'email'=>$data["email"], 'senha'=>$data["senha"]], function($message) use ($data)
+                        {
+                            $message->from('contato@sigma3sistemas.com.br', 'Sigma3');
+                            $message->subject('Acesso a Àrea do Membro - ' . $data['nome_igreja']);
+                            $message->to($data['email']);
+                        });
+
                 }
 
            } //loop

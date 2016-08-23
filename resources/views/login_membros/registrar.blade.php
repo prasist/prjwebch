@@ -24,7 +24,7 @@
 
                           <div class="row">
                               <div class="col-xs-12">
-                                <p><b>Serão gerados automaticamente Logins para Membros que tiverem email cadastrado e que pelo menos um dos campos esteja preenchido (Data Nascimento ou CPF)</b></p>
+                                <p class="text-info"><b>Serão gerados automaticamente Logins para Membros ATIVOS, que tenham o email cadastrado e que pelo menos um dos campos esteja preenchido (Data Nascimento ou CPF)</b></p>
                               </div>
 
                           </div>
@@ -102,6 +102,18 @@
                                   </div>
                           </div>
 
+                          <div class="row">
+                                <div class="col-xs-6">
+                                      <label for="ckenviar" class="control-label">Enviar Email ao Membro Informando seus dados para acesso</label>
+                                      <div class="input-group">
+                                             <div class="input-group-addon">
+                                                  <input  id= "ckenviar" name="ckenviar" data-group-cls="btn-group-sm" type="checkbox" class="ckenviar" />
+                                             </div>
+                                      </div>
+                                </div>
+                          </div>
+
+
                           <div id="div_senha" class="row" style="display: none">
                                   <div class="col-xs-6">
                                           <label for="password" class="control-label">Senha Específica</label>
@@ -133,6 +145,11 @@
     $(document).ready(function()
     {
 
+
+        $('.ckenviar').checkboxpicker({
+                offLabel : 'Não',
+                onLabel : 'Sim',
+        });
 
         $("#quem").change(function()
         {
