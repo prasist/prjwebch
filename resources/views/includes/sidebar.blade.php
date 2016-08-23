@@ -33,7 +33,7 @@
       <!-- search form -->
       <!--<form action="#" method="get" id="form_procurar_pessoa" class="sidebar-form">-->
       @if (Auth::user()->membro!="S")
-      <form name ="form_principal" method = 'get' class="sidebar-form"  action = {{ url('/pessoas/buscar_nome')}}>
+      <form name ="form_principal" method = 'get' class="sidebar-form"  action = "{{ url('/pessoas/buscar_nome')}}">
         <div class="input-group">
           <input type="text" name="razaosocial" id="razaosocial" class="form-control" placeholder="Localizar Pessoas...">
               <span class="input-group-btn">
@@ -90,6 +90,12 @@
                     @if(Gate::check('verifica_permissao', [5 ,'acessar']))
                     <li>
                         <a href="{{ url('/usuarios')}}" title="Aqui você cadastra os usuários e os associa aos grupos de acesso que pertencerão..."><i class="fa fa-angle-double-right"></i>Usuários</a>
+                    </li>
+                    @endif
+
+                    @if(Gate::check('verifica_permissao', [61 ,'acessar']))
+                    <li>
+                        <a href="{{ url('/loginmembro')}}" title="Gerar Login e Senha automaticamente para os membros..."><i class="fa fa-angle-double-right"></i>Criar Login para Membros</a>
                     </li>
                     @endif
                 </ul>

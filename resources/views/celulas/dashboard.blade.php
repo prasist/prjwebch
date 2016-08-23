@@ -120,6 +120,7 @@
                                             <span class="pull-right badge bg-green">{!! $total_participantes !!}</span>
                                         </a>
 
+                                        @if ($resumo_tipo_pessoas)
                                         <ul style="list-style-type:none">
                                             @foreach($resumo_tipo_pessoas as $item)
                                             <li>
@@ -129,6 +130,7 @@
                                             @endforeach
 
                                         </ul>
+                                        @endif
                                     </li>
 
 
@@ -159,6 +161,7 @@
                                 </ul>
                           </div>
 
+                          @if ($resumo)
                           <div class="col-xs-6">
                               <h4>&nbsp;&nbsp;&nbsp;&nbsp;Resumo Encontros (Mês Corrente)</h4>
                               <ul class="nav nav-stacked">
@@ -192,7 +195,7 @@
 
                                 </ul>
                           </div>
-
+                          @endif
 
                 </div> <!-- end row-->
 

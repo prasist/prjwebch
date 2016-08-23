@@ -48,6 +48,16 @@
     });
 
 
+/*Login membros*/
+    Route::get('loginmembro', 'LoginMembroController@index');
+    Route::post('/loginmembro/gravar','LoginMembroController@store');
+    Route::get('/loginmembro/registrar','LoginMembroController@create');
+    Route::get('/loginmembro/{id}/preview','LoginMembroController@show');
+    Route::post('loginmembro/{id}/update','LoginMembroController@update');
+    Route::get('loginmembro/{id}/edit','LoginMembroController@edit');
+    Route::get('loginmembro/{id}/delete','LoginMembroController@destroy');
+
+
 
     Route::get('minhacelula', 'MinhaCelulaController@index');
 

@@ -114,7 +114,6 @@ class PessoasController extends Controller
         $datanasc_ate="";
         $mes="";
 
-
         if ($querystring!="")
         {
                 /*Pegar todos querystrings passados*/
@@ -137,7 +136,6 @@ class PessoasController extends Controller
                 }
          }
 
-
         $dados = pessoas::select('pessoas.id', 'pessoas.razaosocial', 'pessoas.nomefantasia', 'pessoas.cnpj_cpf', 'pessoas.fone_celular', 'pessoas.fone_principal', 'tipos_pessoas.id as id_tipo_pessoa', 'tipos_pessoas.nome as nome_tipo_pessoa')
         ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('empresas_id', $this->dados_login->empresas_id)
@@ -152,6 +150,7 @@ class PessoasController extends Controller
         ->join('tipos_pessoas', 'tipos_pessoas.id', '=' , 'pessoas.tipos_pessoas_id')
         ->orderBy('pessoas.razaosocial')
         ->get();
+
 
         return \Datatables::of($dados)->make(true);
 
@@ -294,6 +293,13 @@ class PessoasController extends Controller
             $where = "razaosocial|" . $nome . "&";
         }
     }
+
+    $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+    ->where('membro', 't')
+    ->get();
+
+    $where .= "tipos_pessoas_id|" . $tipos[0]->id . "&";
+
 
     /*Verifica permissoes do usuario para criar os botoes da consulta*/
     $visualizar = Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'visualizar']);
