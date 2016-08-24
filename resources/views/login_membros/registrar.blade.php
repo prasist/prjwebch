@@ -24,7 +24,7 @@
 
                           <div class="row">
                               <div class="col-xs-12">
-                                <p class="text-info"><b>Serão gerados automaticamente Logins para Membros ATIVOS, que tenham o email cadastrado e que pelo menos um dos campos esteja preenchido (Data Nascimento ou CPF)</b></p>
+                                  <p class="text-info"><b>Serão gerados automaticamente Logins para Membros ATIVOS, que tenham o email cadastrado e que pelo menos um dos campos esteja preenchido (Data Nascimento ou CPF)</b></p>
                               </div>
 
                           </div>

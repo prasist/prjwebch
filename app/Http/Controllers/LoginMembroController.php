@@ -15,7 +15,18 @@ use DB;
 
 class LoginMembroController extends Controller
 {
-    //
+    /*
+        --MEMBROS APTOS A RECEBER LOGIN
+        select count(*) from pessoas where
+        tipos_pessoas_id = 11 and ativo = 'S' AND
+        empresas_id = 20 and empresas_clientes_cloud_id = 15 and (emailprincipal is not null or emailprincipal <> '')
+
+        --MEMBROS ATIVOS POREM SEM EMAIL
+        select count(*) from pessoas where
+        tipos_pessoas_id = 11 and ativo = 'S' AND
+        empresas_id = 20 and empresas_clientes_cloud_id = 15 and (emailprincipal is  null or emailprincipal = '')
+
+    */
 
     public function __construct()
     {
