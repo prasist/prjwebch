@@ -16,15 +16,13 @@
 <div class = 'row'>
 
   <div class="col-md-12">
-      <div>
-              <a href={{ url('/' . \Session::get('route')) }} class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
-      </div>
- </div>
+            <a href="{{ url('/' . \Session::get('route')) }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+  </div>
 
 @if ($tipo_operacao=="incluir")
-      <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action = {{ url('/' . \Session::get('route') . '/gravar')}}>
+      <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action ="{{ url('/' . \Session::get('route') . '/gravar')}}">
 @else
-      <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action = {{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update')}}>
+      <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action ="{{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update')}}">
 @endif
 
 {!! csrf_field() !!}
@@ -64,7 +62,9 @@
                                            @if ($tipo_operacao=="incluir")
                                                   <option  value="{{$item->id . '|' . $item->nome}}" {{ (old('celulas')== $item->id ? 'selected' : '') }}>{{$item->nome}}</option>
                                            @else
+                                                   @if ($dados[0]->celulas_id== $item->id)
                                                   <option  value="{{$item->id . '|' . $item->nome}}" {{ ($dados[0]->celulas_id== $item->id ? 'selected' : '') }}>{{$item->nome}}</option>
+                                                  @endif
                                            @endif
                                     @endforeach
                                     </select>
@@ -625,6 +625,7 @@
               exibir_divs(true);
 
               //initialize datatable
+
                $('#tab_participantes').dataTable({
                           "bDeferRender": true,
                           "deferRender": true,
@@ -655,6 +656,7 @@
                              {"targets": [3], "sortable": false}
                           ]
                    });
+
 
           } else { //create, nothing to do...
                 exibir_divs(false);
@@ -782,7 +784,9 @@
              var id_celula = conteudo_celulas[0];
              var urlRoute = "{!! url('/celulaspessoas/participantes/" + id_celula + "') !!}"; //Rota para consulta
 
+
                     $('#tab_participantes').dataTable({
+                          "destroy": true,
                           "bDeferRender": true,
                           "deferRender": true,
                           "pagingType": "full_numbers",
@@ -829,6 +833,7 @@
 
                               ],
                    }).after(apos()); //Apos carregar participantes, dispara function
+
 
             }); //fim change celulas
 
