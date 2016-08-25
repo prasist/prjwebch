@@ -43,17 +43,30 @@
 
                                     <div class="col-xs-3">
                                           <label for="sms_marketing" class="control-label">SMS Marketing</label>
-                                          <input  id= "sms_marketing" name="sms_marketing" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm"  {{ $dados[0]->sms_marketing=="S" ? "checked" : "" }}/>
+                                          @if ($tipo_operacao=="editar")
+                                                <input  id= "sms_marketing" name="sms_marketing" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm"  {{ $dados[0]->sms_marketing=="S" ? "checked" : "" }}/>
+                                          @else
+                                                <input  id= "sms_marketing" name="sms_marketing" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm"  />
+                                          @endif
                                     </div>
 
                                     <div class="col-xs-3">
                                            <label for="sms_corporativo" class="control-label">SMS Corporativo</label>
-                                           <input  id= "sms_corporativo" name="sms_corporativo" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm"  {{ $dados[0]->sms_corporativo=="S" ? "checked" : "" }} />
+                                           @if ($tipo_operacao=="editar")
+                                                  <input  id= "sms_corporativo" name="sms_corporativo" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm"  {{ $dados[0]->sms_corporativo=="S" ? "checked" : "" }} />
+                                           @else
+                                                   <input  id= "sms_corporativo" name="sms_corporativo" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm"  />
+                                           @endif
                                     </div>
 
                                     <div class="col-xs-3">
                                            <label for="whatsapp" class="control-label">Whatsapp</label>
+                                           @if ($tipo_operacao=="editar")
                                            <input  id= "whatsapp" name="whatsapp" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm" {{ $dados[0]->whatsapp=="S" ? "checked" : "" }} />
+                                           @else
+                                           <input  id= "whatsapp" name="whatsapp" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm"  />
+                                           @endif
+
                                     </div>
 
                             </div>
