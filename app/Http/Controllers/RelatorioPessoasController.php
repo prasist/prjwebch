@@ -634,7 +634,7 @@ class RelatorioPessoasController extends Controller
 
     }
 
-
+   //QUANDO PESQUISAR E RESULTADO FOR CELULAR OU EMAIL
     if ($input["resultado"]=="email" || $input["resultado"]=="celular")
     {
 
@@ -666,7 +666,11 @@ class RelatorioPessoasController extends Controller
         $emails = \DB::select($strSql);
 
 
-        return view($this->rota . '.listaremails', ['emails'=>$emails, 'filtros'=>$filtros, 'resultado'=>$input["resultado"]]);
+        //Busca configuracao do provedor SMS
+        $where = ['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $this->dados_login->empresas_id];
+        $parametros = \App\Models\parametros::where($where)->get();
+
+        return view($this->rota . '.listaremails', ['parametros'=>$parametros, 'emails'=>$emails, 'filtros'=>$filtros, 'resultado'=>$input["resultado"]]);
     }
      else
     {

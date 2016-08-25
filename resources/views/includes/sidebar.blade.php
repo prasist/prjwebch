@@ -51,19 +51,24 @@
 
             @can('verifica_permissao_modulo', ['Configurações'])
             <li class="treeview" id="menu_config">
-                <a href="#" title="Alterar e Incluir Dados Cadastrais da Igreja Sede e Igrejas / Instituições...">
+                <a href="#" title="Alterar e Incluir Dados Cadastrais da Igreja Sede e Igrejas / Instituições e Configurações do serviço de mensagens">
                 <i class="fa fa-wrench"></i> <span>Configurações</span>
                 <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
 
                     @if(Gate::check('verifica_permissao', [1 ,'acessar']))
-                        <li><a href={{ url('/clientes')}}><i class="fa fa-angle-double-right"></i> Igreja Sede</a></li>
+                        <li><a href="{{ url('/clientes')}}"><i class="fa fa-angle-double-right"></i> Igreja Sede</a></li>
                     @endif
 
                     @if(Gate::check('verifica_permissao', [27 ,'acessar']))
-                        <li><a href={{ url('/empresas')}}><i class="fa fa-angle-double-right"></i> Igrejas / Instituições </a></li>
+                        <li><a href="{{ url('/empresas')}}"><i class="fa fa-angle-double-right"></i> Igrejas / Instituições </a></li>
                     @endif
+
+                    @if(Gate::check('verifica_permissao', [64 ,'acessar']))
+                        <li><a href="{{ url('/configmsg')}}"><i class="fa fa-angle-double-right"></i> Config Serviço SMS/Whatsapp </a></li>
+                    @endif
+
                 </ul>
             </li>
             @endcan
@@ -321,7 +326,7 @@
           @if(Gate::check('verifica_permissao', [59 ,'acessar']))
           <li class="treeview">
               <a href="{{ url('/mensagens')}}">
-                  <i class="fa fa-commenting-o"></i> <span>Enviar SMS</span>
+                  <i class="fa fa-commenting-o"></i> <span>Enviar SMS/Whatsapp</span>
               </a>
           </li>
           @endif

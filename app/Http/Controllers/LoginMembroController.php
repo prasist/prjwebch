@@ -155,7 +155,7 @@ public function store(\Illuminate\Http\Request  $request)
            foreach ($pessoas as $item)
            {
 
-                if (rtrim(ltrim($item->cpf))!="" ||  rtrim(ltrim($item->datanasc))!="") //Deve exisitr pelo menos um dos dois
+                if (rtrim(ltrim($item->cpf))!="" ||  rtrim(ltrim($item->datanasc))!="" || rtrim(ltrim($input['password']))) //Deve exisitr pelo menos um dos dois
                 {
 
                         $iQtd++;

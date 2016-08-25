@@ -179,7 +179,7 @@
                                                                     <option  value="docx" data-icon="fa fa-file-word-o">Microsoft Word (.docx)</option>
                                                                     <option  value="html" data-icon="fa fa-file-word-o">HTML (.html)</option>
                                                                     <option  value="email" data-icon="fa fa-envelope-o">Listagem de E-mails</option>
-                                                                    <option  value="celular" data-icon="fa fa-envelope-o">Número Celular (Envio Mensagens)</option>
+                                                                    <option  value="celular" data-icon="fa fa-whatsapp">Número Celular (Envio Mensagens)</option>
                                                                     </select>
 
 

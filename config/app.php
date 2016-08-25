@@ -68,6 +68,7 @@ return [
     'login_membros'=>'61',
     'profile'=>'62',
     'alterardados'=>'63',
+    'configmsg'=>'64',
 
 
     'env' => env('APP_ENV', 'production'),

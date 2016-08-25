@@ -49,6 +49,12 @@
     });
 
 
+    /*configuracao*/
+    Route::get('configmsg','ConfigMsgController@index');
+    Route::post('configmsg/{id}/update','ConfigMsgController@update');
+    Route::post('/configmsg/gravar','ConfigMsgController@store');
+
+
 /*Login membros*/
     Route::get('login_membros', 'LoginMembroController@index');
     Route::post('/login_membros/gravar','LoginMembroController@store');
@@ -58,10 +64,7 @@
     Route::get('login_membros/{id}/edit','LoginMembroController@edit');
     Route::get('login_membros/{id}/delete','LoginMembroController@destroy');
 
-
-
-    Route::get('minhacelula', 'MinhaCelulaController@index');
-
+    //Envio SMS e Whatsapp
     Route::get('mensagens', 'MensagensController@create');
     Route::post('mensagens/enviar', 'MensagensController@enviar');
 
