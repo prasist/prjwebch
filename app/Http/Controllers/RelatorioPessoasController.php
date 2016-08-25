@@ -638,6 +638,18 @@ class RelatorioPessoasController extends Controller
     if ($input["resultado"]=="email" || $input["resultado"]=="celular")
     {
 
+
+        //Busca configuracao do provedor SMS
+        $where = ['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $this->dados_login->empresas_id];
+        $parametros = \App\Models\parametros::where($where)->get();
+
+        if ($parametros->count()<=0)
+        {
+            \Session::flash('flash_message_erro', 'Não foi configurado o serviço de envio. Acesse o menu Configurações / Config SMS/Whatsapp');
+            return redirect($this->rota);
+        }
+
+
         //$emails = \DB::select('select distinct razaosocial, emailprincipal from view_pessoas_geral_celulas' . $where . ' order by razaosocial');
         $strSql = " SELECT DISTINCT ";
         $strSql .= " c.celulas_nivel1_id,      c.celulas_nivel2_id,     c.celulas_nivel3_id,      c.celulas_nivel4_id,      c.celulas_nivel5_id, ";
@@ -665,12 +677,8 @@ class RelatorioPessoasController extends Controller
         $strSql .=  $where . ' ';
         $emails = \DB::select($strSql);
 
-
-        //Busca configuracao do provedor SMS
-        $where = ['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $this->dados_login->empresas_id];
-        $parametros = \App\Models\parametros::where($where)->get();
-
         return view($this->rota . '.listaremails', ['parametros'=>$parametros, 'emails'=>$emails, 'filtros'=>$filtros, 'resultado'=>$input["resultado"]]);
+
     }
      else
     {

@@ -39,7 +39,6 @@ class MensagensController extends Controller
         }
 
 
-
         //SE nao encontrar configuracao
         if ($this->parametros->count()<=0)
         {
@@ -58,6 +57,13 @@ class MensagensController extends Controller
 */
     public function enviar(\Illuminate\Http\Request  $request)
     {
+
+
+          if ($this->parametros->count()<=0)
+          {
+              \Session::flash('flash_message_erro', 'Não foi configurado o serviço de envio. Acesse o menu Configurações / Config SMS/Whatsapp');
+              return redirect('home');
+          }
 
           $input = $request->except(array('_token', 'ativo')); //não levar o token
 
