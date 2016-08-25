@@ -219,10 +219,12 @@
                                     <input type="text" name="hora_fim" id="hora_fim"  data-inputmask='"mask": "99:99"' data-mask  class="form-control input-small" value='{{ ($tipo_operacao=="incluir" ? "" : $dados[0]->hora_fim) }}'>
                                 </div>
 
+                                <!--
                                 <div class="col-xs-4">
                                    <label for="valor_oferta" class="control-label">Valor Oferta</label>
                                    <input type="text" name="valor_oferta" id="valor_oferta"  class="formata_valor form-control" value='{{ ($tipo_operacao=="incluir" ? "" : $dados[0]->valor_oferta) }}'>
                                 </div>
+                                -->
 
                       </div>
 
