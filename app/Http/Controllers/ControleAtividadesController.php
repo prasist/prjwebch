@@ -490,7 +490,7 @@ class ControleAtividadesController extends Controller
        $strSql .=  " (select pessoas_id from controle_presencas                  ";
        $strSql .=  " where controle_atividades_id = " . $id . " and                   ";
        $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " and                  ";
-        $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . ") ";
+       $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . ") ";
 
        $strSql .=  " union all ";
 

@@ -65,8 +65,8 @@
                 <ul class="timeline timeline-inverse">
                   <!-- timeline time label -->
                   <li class="time-label">
-                        <span class="bg-red">
-                          Pŕoximo Encontro
+                        <span class="bg-blue">
+                          Pŕoximo Encontro {{$materiais[0]->data_encontro_formatada}}
                         </span>
                   </li>
                   <!-- /.timeline-label -->
