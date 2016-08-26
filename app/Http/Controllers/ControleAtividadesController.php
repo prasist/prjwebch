@@ -698,7 +698,7 @@ class ControleAtividadesController extends Controller
     }
 
 
- public function relatorio_encontro($id, $data)
+ public function relatorio_encontro($id, $tipo, $data)
  {
 
     /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
@@ -723,6 +723,12 @@ class ControleAtividadesController extends Controller
     if (rtrim(ltrim(\Session::get('logo')))!="")
     {
         $parametros = array_add($parametros, 'path_logo', public_path() . '/images/clients/' . \Session::get('logo'));
+    }
+
+    //Relatorio Resumido
+    if ($tipo=="R")
+    {
+        $parametros = array_add($parametros, 'exibir_pessoas', 'N');
     }
 
 

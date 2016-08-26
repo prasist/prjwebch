@@ -183,7 +183,23 @@
 
                             <div class="col-xs-5">
                                 <p>&nbsp;</p>
-                                <button class = 'btn btn-info' type ='button' onclick="abrir_relatorio();" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-print"></i> Imprimir</button>
+
+                                <!--<button class = 'btn btn-info' type ='button' onclick="abrir_relatorio();" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-print"></i> Imprimir</button>-->
+
+                                <div class="input-group margin">
+                                  <div class="input-group-btn">
+                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"><span class="fa fa-print"></span>  Imprimir
+                                        <span class="fa fa-caret-down"></span></button>
+                                        <ul class="dropdown-menu">
+
+                                              <li><a href="" onclick="abrir_relatorio('C');">Relatório Completo</a></li>
+                                              <li><a href="" onclick="abrir_relatorio('R');">Resumo</a></li>
+
+                                        </ul>
+                                  </div>
+                                  <br/>
+                              </div>
+
                             </div>
                       </div>
 
@@ -545,7 +561,7 @@
 
 
 
-      function abrir_relatorio()
+      function abrir_relatorio(tipo)
       {
           if ($('#hidden_id').val()!="")
           {
@@ -553,7 +569,7 @@
               var var_day = $("#data_encontro").val();
               var var_year = $("#ano").val();
               var var_month = $("#mes").val();
-              var urlGetUser = '{!! url("/controle_atividades/imprimir/' +  $('#hidden_id').val() +  '/data/' + var_year + '-' + var_month + '-' + var_day + '") !!}';
+              var urlGetUser = '{!! url("/controle_atividades/imprimir/' +  $('#hidden_id').val() +  '/data/' + tipo + '/' + var_year + '-' + var_month + '-' + var_day + '") !!}';
               window.location=urlGetUser; //redirect to route
           }
           else

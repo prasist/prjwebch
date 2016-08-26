@@ -69,7 +69,7 @@
     Route::post('mensagens/enviar', 'MensagensController@enviar');
 
     /*Controle Atividades*/
-    Route::get('controle_atividades/imprimir/{id}/data/{data}', 'ControleAtividadesController@relatorio_encontro');    //Imprimir relatorio encontro semanal
+    Route::get('controle_atividades/imprimir/{id}/data/{tipo}/{data}', 'ControleAtividadesController@relatorio_encontro');    //Imprimir relatorio encontro semanal
     Route::get('controle_atividades', 'ControleAtividadesController@index');
     Route::get('controle_atividades/buscar/{cell_id}/{day}/{month}/{year}', 'ControleAtividadesController@buscar');
     Route::post('/controle_atividades/gravar','ControleAtividadesController@store');
