@@ -81,7 +81,7 @@ class CelulasController extends Controller
                 $strSql = " SELECT c.empresas_id, c.empresas_clientes_cloud_id, tp.nome,  count(*) as total";
                 $strSql .=  " from celulas_pessoas ca   ";
                 $strSql .=  " inner join celulas c on c.id = ca.celulas_id ";
-                $strSql .=  " inner join pessoas p on p.id = ca.lider_pessoas_id ";
+                $strSql .=  " inner join pessoas p on p.id = ca.pessoas_id ";
                 $strSql .=  " inner join tipos_pessoas tp on tp.id = p.tipos_pessoas_id ";
                 $strSql .=  " WHERE ";
                 $strSql .=  " ca.empresas_id = " . $this->dados_login->empresas_id . " AND ";
@@ -91,12 +91,12 @@ class CelulasController extends Controller
             }
             else
             {
-
+                //POR  PESSOA MES E ANO ESPECIFICOS
                 $strSql = " SELECT c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano, tp.nome, ";
                 $strSql .=  " sum(total) as total ";
                 $strSql .=  " from controle_atividades ca ";
                 $strSql .=  " inner join celulas c on c.id = ca.celulas_id ";
-                $strSql .=  " inner join pessoas p on p.id = ca.lider_pessoas_id ";
+                $strSql .=  " inner join pessoas p on p.id = ca.pessoas_id ";
                 $strSql .=  " inner join controle_resumo_tipo_pessoa cr on cr.controle_atividades_id = ca.id ";
                 $strSql .=  " inner join tipos_pessoas tp on tp.id = cr.tipos_pessoas_id ";
                 $strSql .=  " WHERE ";
@@ -115,7 +115,7 @@ class CelulasController extends Controller
     }
 
     protected function resumo_geral($mes, $ano) {
-            //RESUMO GERAL - total geral de participantes, independente de presenca
+            //RESUMO GERAL - total geral de presentes
             $strSql = " SELECT sum(total) as total ";
             $strSql .=  " FROM controle_atividades ca  ";
             $strSql .=  " inner join celulas c on c.id = ca.celulas_id ";

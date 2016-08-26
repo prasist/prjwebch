@@ -59,14 +59,13 @@
         <!-- /.col -->
         <div class="col-md-8">
 
-
               <div class="row">
                 <!-- The timeline -->
                 <ul class="timeline timeline-inverse">
                   <!-- timeline time label -->
                   <li class="time-label">
                         <span class="bg-blue">
-                          Pŕoximo Encontro {{$materiais[0]->data_encontro_formatada}}
+                          Pŕoximo Encontro {{$materiais[0]->data_encontro_formatada}} às {{$membro[0]->horario}}
                         </span>
                   </li>
                   <!-- /.timeline-label -->
@@ -76,14 +75,16 @@
 
                     <div class="timeline-item">
 
-                      <h3 class="timeline-header"><a href="#">Informações</a></h3>
+                      <h3 class="timeline-header">
+                            <a href="#">Informações</a>
+                      </h3>
 
                       <div class="timeline-body">
                       @if ($materiais)
-                        @if ($materiais[0]->texto!="")
-                              {{$materiais[0]->texto}}
-                        @endif
-                     @endif
+                          @if ($materiais[0]->texto!="")
+                               {{$materiais[0]->texto}}
+                          @endif
+                      @endif
                       </div>
                     </div>
                   </li>
