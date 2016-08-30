@@ -183,6 +183,8 @@
 
                <ul class="treeview-menu">
 
+                <a href="{{ url('/dashboard_celulas')}}""><li><i class="fa fa-bar-chart"></i>Visão Geral</a></li>
+
                   @if(Gate::check('verifica_permissao', [41 ,'acessar']))
                   <a href={{ url('/configuracoes')}}><li><i class="fa fa-wrench"></i>Configurações</a></li>
                   @endif

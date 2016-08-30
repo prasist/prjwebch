@@ -204,20 +204,30 @@ class HomeController extends Controller
 
                     $vazio = \App\Models\tabela_vazia::get();
 
+
                     if ($membro)
                     {
 
-                         //Retorna próxima data de encontro em aberto
-                         $strSql =  " SELECT to_char(data_encontro::timestamp with time zone, 'DD-MM-YYYY'::text) AS data_encontro_formatada, * FROM controle_atividades ca ";
-                         $strSql .=  " left join controle_materiais cm on ca.id = cm.controle_atividades_id and ca.empresas_id = cm.empresas_id and ca.empresas_clientes_cloud_id = cm.empresas_clientes_cloud_id  ";
-                         $strSql .=  " where ";
-                         $strSql .=  " ca.celulas_id = " . $membro[0]->id . " AND ";
-                         $strSql .=  " ca.empresas_id = " . $this->dados_login->empresas_id . " AND ";
-                         $strSql .=  " ca.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
-                         $strSql .=  " isnull(ca.encontro_encerrado,'N') = 'N' AND ";
-                         $strSql .=  " ca.data_encontro >=  to_char( now(), 'YYYY-MM-DD' ) ";
 
-                         $materiais = \DB::select($strSql);
+                        if ($membro[0]->id!="")
+                        {
+                             //Retorna próxima data de encontro em aberto
+                             $strSql =  " SELECT to_char(data_encontro::timestamp with time zone, 'DD-MM-YYYY'::text) AS data_encontro_formatada, * FROM controle_atividades ca ";
+                             $strSql .=  " left join controle_materiais cm on ca.id = cm.controle_atividades_id and ca.empresas_id = cm.empresas_id and ca.empresas_clientes_cloud_id = cm.empresas_clientes_cloud_id  ";
+                             $strSql .=  " where ";
+                             $strSql .=  " ca.celulas_id = " . $membro[0]->id . " AND ";
+                             $strSql .=  " ca.empresas_id = " . $this->dados_login->empresas_id . " AND ";
+                             $strSql .=  " ca.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
+                             $strSql .=  " isnull(ca.encontro_encerrado,'N') = 'N' AND ";
+                             $strSql .=  " ca.data_encontro >=  to_char( now(), 'YYYY-MM-DD' ) ";
+
+                             $materiais = \DB::select($strSql);
+                         }
+                         else
+                         {
+                             $materiais = $vazio;
+                             $membro = $vazio;
+                         }
 
 
                     }else {

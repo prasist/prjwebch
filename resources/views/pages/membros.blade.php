@@ -84,6 +84,13 @@
                           @if ($materiais[0]->texto!="")
                                {{$materiais[0]->texto}}
                           @endif
+
+
+                          @if ($materiais[0]->link_externo!="")
+                                <br/>
+                                <br/>
+                               Link Externo : {{$materiais[0]->link_externo}}
+                          @endif
                       @endif
                       </div>
                     </div>
