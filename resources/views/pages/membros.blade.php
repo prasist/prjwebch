@@ -26,7 +26,7 @@
                       Sua Célula é <b>{{$membro[0]->nome}}</b> toda <b>{{$membro[0]->descricao_dia_encontro}}</b> às <b>{{$membro[0]->horario}}</b>.
                       <br/>
               @else
-                     Você não participa de nenhuma célula ainda...
+                     Você ainda não participa de nenhuma célula...
               @endif
 
             <ul class="list-group list-group-unbordered">
@@ -63,11 +63,13 @@
                 <!-- The timeline -->
                 <ul class="timeline timeline-inverse">
                   <!-- timeline time label -->
+                  @if ($materiais[0]->data_encontro_formatada!="")
                   <li class="time-label">
                         <span class="bg-blue">
-                          Pŕoximo Encontro {{$materiais[0]->data_encontro_formatada}} às {{$membro[0]->horario}}
+                          Próximo Encontro {{$materiais[0]->data_encontro_formatada}} às {{$membro[0]->horario}}
                         </span>
                   </li>
+                  @endif
                   <!-- /.timeline-label -->
                   <!-- timeline item -->
                   <li>

@@ -74,7 +74,7 @@
 
                             <div class="row{{ $errors->has('email') ? ' has-error' : '' }}">
                                     <div class="col-xs-6">
-                                          <label for="email" class="control-label">Uusário de Acesso SPEED MARKET</label>
+                                          <label for="email" class="control-label">Usuário de Acesso SPEED MARKET</label>
 
                                           @if ($tipo_operacao=="editar")
                                                <input id="email" maxlength="255"  name = "email" type="text" class="form-control" value="{{ $dados[0]->email }}">
