@@ -11,22 +11,6 @@
 <!-- Small boxes (Stat box) -->
 
 <div class="row">
-      <div class="col-lg-12 col-xs-8">
-            <div class="box box-primary">
-                  <div class="box-header with-border">
-                          <h5 class="box-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#tab2">
-                              <span class="fa fa-search"></span> Filtros
-                            </a>
-                          </h5>
-                  </div>
-
-
-            </div>
-      </div>
-</div>
-
-<div class="row">
     <div class="col-lg-12 col-xs-8">
             <div class="nav-tabs-custom">
 
@@ -66,6 +50,8 @@
                         </div><!-- /.tab-pane -->
 
                         <div class="tab-pane" id="tab_2">
+
+                               @include('celulas.filtro_rel_encontro')
 
                         </div>
                         <!--  END TABS-->
@@ -284,7 +270,10 @@
      });
 
 
-
 </script>
+
+
+@include('configuracoes.script_estruturas')
+
 
 @endsection

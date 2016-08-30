@@ -204,7 +204,12 @@
 
     /*Relatorio de Celulas*/
     Route::get('relcelulas', 'RelatorioCelulasController@index');
-    Route::post('relcelulas/pesquisar', 'RelatorioCelulasController@pesquisar');
+
+    //Route::post('relcelulas/pesquisar', 'RelatorioCelulasController@pesquisar');
+    Route::post('relcelulas/pesquisar/{tipo}', 'RelatorioCelulasController@pesquisar');
+
+   //Relatorio de encontros
+    Route::get('relencontro', 'RelEncontroController@index');
 
     Route::post('filhos', 'FilhosController@destroy');
 

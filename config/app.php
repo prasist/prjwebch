@@ -69,6 +69,7 @@ return [
     'profile'=>'62',
     'alterardados'=>'63',
     'configmsg'=>'64',
+    'relencontro'=>'65',
 
 
     'env' => env('APP_ENV', 'production'),

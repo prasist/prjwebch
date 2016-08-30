@@ -226,18 +226,25 @@
                 </ul>
                 @endif
 
-                @if(Gate::check('verifica_permissao', [58 ,'acessar']))
+
                 <ul class="treeview-menu">
 
                   <li>
                     <a href="#"><i class="fa fa-sitemap"></i> Encontros <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
+                             @if(Gate::check('verifica_permissao', [58 ,'acessar']))
                              <li><a href="{{ url('/controle_atividades')}}" title="Controle a presença dos membros e visitantes, envie material para encontro..."> <i class="fa fa-check"></i> Gerenciar</a></li>
+                             @endif
+
+                             @if(Gate::check('verifica_permissao', [65 ,'acessar']))
+                             <li><a href="{{ url('/relencontro')}}" title="Relatórios Estatístico dos Encontros, Participantes de Células..."> <i class="fa fa-print"></i> Relatórios</a></li>
+                             @endif
+
                         </ul>
                   </li>
 
                 </ul>
-                @endif
+
 
                 @if(Gate::check('verifica_permissao', [46 ,'acessar']))
                 <ul class="treeview-menu">
@@ -248,10 +255,8 @@
                 @endif
 
 
-
           </li>
           @endcan
-
 
           @can('verifica_permissao_modulo', ['Financeiro'])
           <li class="treeview" id="financ">

@@ -11,7 +11,7 @@
 
  <div class="col-md-12">
 
-  <form method = 'POST'  class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/pesquisar')}}">
+  <form method = 'POST'  class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/pesquisar/celulas')}}">
 
   {!! csrf_field() !!}
 

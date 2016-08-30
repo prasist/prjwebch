@@ -320,6 +320,24 @@ class CelulasController extends Controller
         if (\App\Models\usuario::find(Auth::user()->id))
         {
 
+            $publicos = \App\Models\publicos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+            $faixas = \App\Models\faixas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+
+            /*Busca Lideres*/
+            $lideres = \DB::select('select * from view_lideres where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+            /*Busca vice - Lideres*/
+            $vice_lider = \DB::select('select * from view_vicelideres where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+            $var_download="";
+            $var_mensagem="";
+
+            /*Busca Niveis*/
+            $view1 = \DB::select('select * from view_celulas_nivel1 v1 where v1.empresas_id = ? and v1.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+            $view2 = \DB::select('select * from view_celulas_nivel2 v2 where v2.empresas_id = ? and v2.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+            $view3 = \DB::select('select * from view_celulas_nivel3 v3 where v3.empresas_id = ? and v3.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+            $view4 = \DB::select('select * from view_celulas_nivel4 v4 where v4.empresas_id = ? and v4.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+            $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
             $retorno = \DB::select('select  fn_total_celulas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
             $total_celulas = $retorno[0]->fn_total_celulas;
@@ -327,10 +345,8 @@ class CelulasController extends Controller
             $retorno = \DB::select('select  fn_total_participantes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
             $total_participantes = $retorno[0]->fn_total_participantes;
 
-
             $celulas_faixas = \DB::select('select * from view_total_celulas_faixa_etaria vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
             $celulas_publicos = \DB::select('select * from view_total_celulas_publico_alvo vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-
 
             $resumo = $this->resumo_presencas(date('m'), date('Y'));
 
@@ -339,7 +355,6 @@ class CelulasController extends Controller
             $resumo_tipo_pessoas = $this->resumo_tipo_pessoas(date('m'), date('Y'), 'Geral');
 
             $resumo_perguntas = $this->resumo_perguntas(date('m'), date('Y'));
-
 
               //Busca ID do cliente cloud e ID da empresa
               $this->dados_login = \App\Models\usuario::find(Auth::user()->id);
@@ -353,7 +368,18 @@ class CelulasController extends Controller
                   'total_participantes'=>$total_participantes,
                   'celulas_faixas'=>$celulas_faixas,
                   'celulas_publicos'=>$celulas_publicos,
-                  'resumo_perguntas'=>$resumo_perguntas
+                  'resumo_perguntas'=>$resumo_perguntas,
+                  'vice_lider'=>$vice_lider,
+                   'nivel1'=>$view1,
+                   'nivel2'=>$view2,
+                   'nivel3'=>$view3,
+                   'nivel4'=>$view4,
+                   'nivel5'=>$view5,
+                   'publicos'=>$publicos,
+                   'faixas'=>$faixas,
+                   'lideres'=>$lideres,
+                   'var_download'=>'',
+                   'var_mensagem'=>''
                 ]);
         }
 

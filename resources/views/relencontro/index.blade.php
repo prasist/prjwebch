@@ -2,12 +2,12 @@
 
 @section('content')
 
-{{ \Session::put('titulo', 'Relatório Resumo Encontros') }}
+{{ \Session::put('titulo', 'Relatório de Encontros') }}
 {{ \Session::put('subtitulo', 'Listagem') }}
 {{ \Session::put('route', 'relencontro') }}
-{{ \Session::put('id_pagina', '46') }}
+{{ \Session::put('id_pagina', '65') }}
 
-@include('filtro_rel_encontro')
+@include('celulas.filtro_rel_encontro')
 
 @include('configuracoes.script_estruturas')
 @endsection

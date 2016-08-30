@@ -28,6 +28,7 @@ class RelatorioCelulasController extends Controller
 
     }
 
+
     public function CarregarView($var_download, $var_mensagem)
     {
 
@@ -65,17 +66,11 @@ class RelatorioCelulasController extends Controller
     }
 
 
- public function pesquisar(\Illuminate\Http\Request  $request)
+ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
  {
-
-    //include_once(__DIR__ . '/../../../public/relatorios/class/tcpdf/tcpdf.php');
-    //include_once(__DIR__ . '/../../../public/relatorios/class/PHPJasperXML.inc.php');
-    //include_once (__DIR__ . '/../../../public/relatorios/setting.php');
 
     /*Pega todos campos enviados no post*/
     $input = $request->except(array('_token', 'ativo')); //não levar o token
-
-    //$PHPJasperXML = new \PHPJasperXML();
 
     /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
     //Pega dados de conexao com o banco para o JASPER REPORT
@@ -109,44 +104,56 @@ class RelatorioCelulasController extends Controller
 
     $sDiaEncontro = "";
 
-    switch ($input["dia_encontro"]) {
-            case '1':
-            $sDiaEncontro = "Segunda-Feira";
-            break;
+    if (isset($input["dia_encontro"])) {
+        switch ($input["dia_encontro"]) {
+                case '1':
+                $sDiaEncontro = "Segunda-Feira";
+                break;
 
-            case '2':
-            $sDiaEncontro = "Terca-Feira";
-            break;
+                case '2':
+                $sDiaEncontro = "Terca-Feira";
+                break;
 
-            case '3':
-            $sDiaEncontro = "Quarta-Feira";
-            break;
+                case '3':
+                $sDiaEncontro = "Quarta-Feira";
+                break;
 
-            case '4':
-            $sDiaEncontro = "Quinta-Feira";
-            break;
+                case '4':
+                $sDiaEncontro = "Quinta-Feira";
+                break;
 
-            case '5':
-            $sDiaEncontro = "Sexta-Feira";
-            break;
+                case '5':
+                $sDiaEncontro = "Sexta-Feira";
+                break;
 
-            case '6':
-            $sDiaEncontro = "Sabado";
-            break;
+                case '6':
+                $sDiaEncontro = "Sabado";
+                break;
 
-            case '0':
-            $sDiaEncontro = "Domingo";
-            break;
+                case '0':
+                $sDiaEncontro = "Domingo";
+                break;
 
-        default:
-            $sDiaEncontro = "";
-            break;
+            default:
+                $sDiaEncontro = "";
+                break;
+        }
     }
 
-    if ($input["dia_encontro"]!="")  $filtros .= "      Dia Encontro : " . $sDiaEncontro;
+
+    if ($tipo_relatorio=="celulas")
+    {
+        if ($input["dia_encontro"]!="")  $filtros .= "      Dia Encontro : " . $sDiaEncontro;
+        if ($input["turno"]!="")  $filtros .= "         Turno : " . $input["turno"];
+        if ($input["segundo_dia_encontro"]!="")  $filtros .= "      Segundo dia encontro : " . $input["segundo_dia_encontro"];
+    }
+    else
+    {
+        $filtros .= "     Mes : " . $input["mes"];
+        $filtros .= "     Ano : " . $input["ano"];
+    }
+
     if ($input["regiao"]!="")  $filtros .= "        Regiao : " . $input["regiao"];
-    if ($input["turno"]!="")  $filtros .= "         Turno : " . $input["turno"];
-    if ($input["segundo_dia_encontro"]!="")  $filtros .= "      Segundo dia encontro : " . $input["segundo_dia_encontro"];
     if ($descricao_publico_alvo[0]!="0")  $filtros .= "     Publico Alvo : " . $descricao_publico_alvo[1];
     if ($descricao_faixa_etaria[0]!="0")  $filtros .= "     Faixa Etaria : " . $descricao_faixa_etaria[1];
     if ($descricao_lider[0]!="0")  $filtros .= "     Lider : " . $descricao_lider[1];
@@ -161,10 +168,6 @@ class RelatorioCelulasController extends Controller
     (
         "empresas_id"=> $this->dados_login->empresas_id,
         "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
-        "dia_encontro"=>"'" . $input["dia_encontro"] . "'",
-        "regiao"=>"'%" . $input["regiao"] . "%'",
-        "turno"=>"'" . $input["turno"] . "'",
-        "segundo_dia_encontro"=>"'" . $input["segundo_dia_encontro"] . "'",
         "publico_alvo"=> ($descricao_publico_alvo[0]=="" ? 0 : $descricao_publico_alvo[0]),
         "faixa_etaria"=> ($descricao_faixa_etaria[0]=="" ? 0 : $descricao_faixa_etaria[0]),
         "lideres"=> ($descricao_lider=="" ? 0 : $descricao_lider[0]),
@@ -173,62 +176,94 @@ class RelatorioCelulasController extends Controller
         "nivel3"=> ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]),
         "nivel4"=> ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]),
         "nivel5"=> ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]),
-        "filtros"=> "'" . ($filtros) . "'",
-        "id"=> 0
+        "filtros"=> "'" . ($filtros) . "'"
     );
 
 
 //"vice_lider"=> ($descricao_vice_lider=="" ? 0 : $descricao_vice_lider[0]),
     //$PHPJasperXML->debugsql=true;
 
+    $parametros = array_add($parametros, 'regiao', $input["regiao"] . '%');
 
+    if ($tipo_relatorio=="celulas") //Sintetico, nao listar endereco, fone e email
+   {
+        $parametros = array_add($parametros, 'segundo_dia_encontro', $input["segundo_dia_encontro"]);
+        $parametros = array_add($parametros, 'turno', $input["turno"]);
+        $parametros = array_add($parametros, 'dia_encontro', $input["dia_encontro"] );
+        $parametros = array_add($parametros, 'id', 0);
 
-    if ($input["tipo"]=="S") //Sintetico, nao listar endereco, fone e email
-    {
-        $parametros = array_add($parametros, 'exibir_dados_lider', 'N');
-    }
-
-
-    if ($input["ckExibirDadosParticipantes"]=="")
-    {
-        $parametros = array_add($parametros, 'exibir_dados', 'N');
-    }
-
-    if ($descricao_vice_lider[0]!="0")
-    {
-        $parametros = array_add($parametros, 'vice_lider', $descricao_vice_lider[0]);
-    }
-
-    //if ($input["tipo_relatorio"]=="S") //Sintético
-    //{
-      if ($input["ckExibir"]) //Exibir participantes
-      {
-
-            if ($input["ckEstruturas"])
+        if ($input["tipo"]=="S") //Sintetico, nao listar endereco, fone e email
             {
-                //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas_niveis.jrxml');
-                $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_niveis.jasper';
-            }
-            else
-            {
-                //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas.jrxml');
-                //$nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas.jasper';
-                $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_analitico.jasper';
+                $parametros = array_add($parametros, 'exibir_dados_lider', 'N');
             }
 
-      } else
-      {
-            if ($input["ckEstruturas"])
+
+            if ($input["ckExibirDadosParticipantes"]=="")
             {
-                //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas_niveis_sintetico.jrxml');
-                $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_niveis_sintetico.jasper';
+                $parametros = array_add($parametros, 'exibir_dados', 'N');
             }
-            else
+
+            if ($descricao_vice_lider[0]!="0")
             {
-                 //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas.jrxml');
-                 $nome_relatorio = public_path() . '/relatorios/listagem_celulas.jasper';
+                $parametros = array_add($parametros, 'vice_lider', $descricao_vice_lider[0]);
             }
-      }
+
+            //if ($input["tipo_relatorio"]=="S") //Sintético
+            //{
+              if ($input["ckExibir"]) //Exibir participantes
+              {
+
+                    if ($input["ckEstruturas"])
+                    {
+                        //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas_niveis.jrxml');
+                        $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_niveis.jasper';
+                    }
+                    else
+                    {
+                        //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas.jrxml');
+                        //$nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas.jasper';
+                        $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_analitico.jasper';
+                    }
+
+              } else
+              {
+                    if ($input["ckEstruturas"])
+                    {
+                        //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas_niveis_sintetico.jrxml');
+                        $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_niveis_sintetico.jasper';
+                    }
+                    else
+                    {
+                         //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas.jrxml');
+                         $nome_relatorio = public_path() . '/relatorios/listagem_celulas.jasper';
+                    }
+              }
+
+   }
+   else
+   {
+
+        if ($input["mes"]!="")
+        {
+            $parametros = array_add($parametros, 'mes', $input["mes"]);
+        }
+
+        if ($input["ano"]!="")
+        {
+            $parametros = array_add($parametros, 'ano', $input["ano"]);
+        }
+
+        $parametros = array_add($parametros, 'SUBREPORT_DIR', public_path() . '/relatorios/');
+
+        if ($input["ckExibir"]=="on")
+        {
+                $nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral_lider.jasper';
+        } else {
+                $nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral.jasper';
+        }
+
+   }
+
 
     \JasperPHP::process(
             $nome_relatorio,
@@ -246,8 +281,14 @@ class RelatorioCelulasController extends Controller
 
             if (filesize($output . '.' . $ext)<=1000) //Se arquivo tiver menos de 1k, provavelmente está vazio...
             {
+
                 $Mensagem = "Nenhum Registro Encontrado";
-                return $this->CarregarView('', $Mensagem);
+                if ($tipo_relatorio=="celulas")  {
+                    return $this->CarregarView('', $Mensagem);
+                } else {
+                    return redirect('dashboard_celulas');
+                }
+
             }
                 else
             {
