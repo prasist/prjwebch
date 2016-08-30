@@ -37,7 +37,7 @@
 
                           @if ($presenca[0]->presenca_simples=="S")
                                 <br/>
-                                <b class="text-green"><i class="fa fa-thumbs-o-up"></i> Legal ! Você já confirmou presença.</b>
+                                <b><i class="fa fa-thumbs-o-up text-green"></i> Legal ! Você já confirmou presença.</b>
                           @else
                                 <b>Quer confirmar presença agora ?</b>
                                 <br/>
