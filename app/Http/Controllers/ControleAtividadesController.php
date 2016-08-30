@@ -71,7 +71,27 @@ class ControleAtividadesController extends Controller
               return redirect('home');
         }
 
-        $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+      //camarada é lider ou vice-lider
+       $strSql =  " SELECT id, lider_pessoas_id ";
+       $strSql .=  " FROM celulas ";
+       $strSql .=  " where ";
+       $strSql .=  " (lider_pessoas_id in (select id from pessoas where emailprincipal = '" .  Auth::user()->email  . "') or vicelider_pessoas_id in (select id from pessoas where emailprincipal = '" .  Auth::user()->email . "'))";
+       $strSql .=  " and empresas_id = " . $this->dados_login->empresas_id . " ";
+       $strSql .=  " and empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
+
+       $lider_logado = \DB::select($strSql);
+
+
+
+       if ($lider_logado!=null)
+       {
+            $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where lider_pessoas_id = ? and  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$lider_logado[0]->lider_pessoas_id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+       } else {
+            $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+       }
+
+
 
         //get questions from database
         $questions = \App\Models\questionarios_encontros::select('id', 'pergunta', 'tipo_resposta')
