@@ -255,6 +255,12 @@ class RelatorioCelulasController extends Controller
 
         $parametros = array_add($parametros, 'SUBREPORT_DIR', public_path() . '/relatorios/');
 
+        //se houver logo informada
+        if (rtrim(ltrim(\Session::get('logo')))!="")
+        {
+            $parametros = array_add($parametros, 'path_logo', public_path() . '/images/clients/' . \Session::get('logo'));
+        }
+
         if ($input["ckExibir"]=="on")
         {
                 $nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral_lider.jasper';
