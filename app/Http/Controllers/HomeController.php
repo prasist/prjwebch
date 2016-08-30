@@ -208,7 +208,6 @@ class HomeController extends Controller
                     if ($membro)
                     {
 
-
                         if ($membro[0]->id!="")
                         {
                              //Retorna próxima data de encontro em aberto
