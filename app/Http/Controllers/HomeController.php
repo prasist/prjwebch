@@ -225,7 +225,8 @@ class HomeController extends Controller
                              $presenca = \App\Models\controle_presencas::select('presenca_simples', 'hora_check_in')
                              ->where('empresas_id', $this->dados_login->empresas_id)
                              ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-                             ->where('controle_atividades_id', $materiais[0]->id)
+                             ->where('controle_atividades_id', $materiais[0]->controle_id)
+                             ->where('pessoas_id', $membro[0]->pessoas_id)
                              ->get();
 
                              if ($presenca->count()==0)
