@@ -49,6 +49,7 @@
           return view('suporte.suporte');
     });
 
+   Route::post('checkin/{controle_atividades}/{pessoas}/{user}','ControleAtividadesController@checkin');
 
     /*configuracao*/
     Route::get('configmsg','ConfigMsgController@index');

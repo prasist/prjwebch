@@ -31,6 +31,37 @@ class ControleAtividadesController extends Controller
 
     }
 
+
+    public  function checkin(\Illuminate\Http\Request  $request, $controle_id, $pessoa_id, $user_id)
+    {
+
+            $this->dados_login = \App\Models\usuario::find($user_id);
+
+
+
+            $whereForEach =
+                            [
+                                'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                'empresas_id' =>  $this->dados_login->empresas_id,
+                                'controle_atividades_id' => $controle_id,
+                                'pessoas_id' => $pessoa_id
+                            ];
+
+
+
+            $controle_presencas = \App\Models\controle_presencas::firstOrNew($whereForEach);
+            $controle_presencas->presenca_simples = "S";
+            $controle_presencas->check_in = "S";
+            $controle_presencas->hora_check_in = date("H:i:s");
+
+            $controle_presencas->save();
+
+            return redirect('home');
+
+
+    }
+
+
     //Exibir listagem
     public function index()
     {

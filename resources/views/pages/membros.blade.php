@@ -29,7 +29,7 @@
                      Você ainda não participa de nenhuma célula...
               @endif
 
-            <ul class="list-group list-group-unbordered">
+                <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
 
                      @if ($membro[0]->fone_principal)
@@ -46,6 +46,35 @@
 
                     @if ($membro[0]->emailprincipal)
                            <br/><i class="fa fa-envelope-o"></i> {{$membro[0]->emailprincipal}}
+                    @endif
+                </li>
+              </ul>
+
+              <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item">
+
+                    @if ($materiais[0]->data_encontro==date("Y-m-d"))
+                          <b>Oba, hoje é dia de Célula !!!!</b>
+
+                          @if ($presenca[0]->presenca_simples=="S")
+                                <br/>
+                                <b>Legal ! Você já confirmou presença.</b>
+                          @else
+                                <b>Quer confirmar presença agora ?</b>
+                                <br/>
+
+                              <form method = 'POST' class="form-horizontal"  action = "{{ url('/checkin/' . $materiais[0]->controle_id. '/' . $membro[0]->pessoas_id . '/' . Auth::user()->id)}}">
+
+                                    {!! csrf_field() !!}
+                                    <div class="box-footer">
+                                        <button class = 'btn btn-primary' type ='submit' ><i class="fa fa-check"></i> Confirmar Presença</button>
+                                    </div>
+
+                              </form>
+                          @endif
+
+
+                          <br/>
                     @endif
                 </li>
               </ul>

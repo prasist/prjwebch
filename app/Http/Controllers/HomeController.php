@@ -211,7 +211,7 @@ class HomeController extends Controller
                         if ($membro[0]->id!="")
                         {
                              //Retorna próxima data de encontro em aberto
-                             $strSql =  " SELECT to_char(data_encontro::timestamp with time zone, 'DD-MM-YYYY'::text) AS data_encontro_formatada, * FROM controle_atividades ca ";
+                             $strSql =  " SELECT to_char(data_encontro::timestamp with time zone, 'DD-MM-YYYY'::text) AS data_encontro_formatada, ca.id as controle_id, * FROM controle_atividades ca ";
                              $strSql .=  " left join controle_materiais cm on ca.id = cm.controle_atividades_id and ca.empresas_id = cm.empresas_id and ca.empresas_clientes_cloud_id = cm.empresas_clientes_cloud_id  ";
                              $strSql .=  " where ";
                              $strSql .=  " ca.celulas_id = " . $membro[0]->id . " AND ";
@@ -221,17 +221,31 @@ class HomeController extends Controller
                              $strSql .=  " ca.data_encontro >=  to_char( now(), 'YYYY-MM-DD' ) ";
 
                              $materiais = \DB::select($strSql);
+
+                             $presenca = \App\Models\controle_presencas::select('presenca_simples', 'hora_check_in')
+                             ->where('empresas_id', $this->dados_login->empresas_id)
+                             ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+                             ->where('controle_atividades_id', $materiais[0]->id)
+                             ->get();
+
+                             if ($presenca->count()==0)
+                             {
+                                    $presenca = $vazio;
+                             }
+
                          }
                          else
                          {
                              $materiais = $vazio;
                              $membro = $vazio;
+                             $presenca = $vazio;
                          }
 
 
                     }else {
                         $materiais = $vazio;
                         $membro = $vazio;
+                        $presenca = $vazio;
                     }
 
 
@@ -239,7 +253,7 @@ class HomeController extends Controller
 
             if (Auth::user()->membro=="S")
             {
-                  return view('pages.membros', ['membro'=>$membro, 'materiais'=>$materiais]);
+                  return view('pages.membros', ['presenca'=>$presenca, 'membro'=>$membro, 'materiais'=>$materiais]);
             }
             else
             {
