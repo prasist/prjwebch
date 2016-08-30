@@ -29,27 +29,6 @@
                      Você ainda não participa de nenhuma célula...
               @endif
 
-                <ul class="list-group list-group-unbordered">
-                    <li class="list-group-item">
-
-                     @if ($membro[0]->fone_principal)
-                        <i class="fa fa-home"></i> {{$membro[0]->fone_principal}}
-                    @endif
-
-                    @if ($membro[0]->fone_secundario)
-                        &nbsp;&nbsp;<i class="fa fa-phone"></i> {{$membro[0]->fone_secundario}}
-                    @endif
-
-                    @if ($membro[0]->fone_celular)
-                        <br/><i class="fa fa-mobile-phone"></i> {{$membro[0]->fone_celular}}
-                    @endif
-
-                    @if ($membro[0]->emailprincipal)
-                           <br/><i class="fa fa-envelope-o"></i> {{$membro[0]->emailprincipal}}
-                    @endif
-                </li>
-              </ul>
-
               <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
 
@@ -58,7 +37,7 @@
 
                           @if ($presenca[0]->presenca_simples=="S")
                                 <br/>
-                                <b><i class="fa fa-thumbs-o-up"></i> Legal ! Você já confirmou presença.</b>
+                                <b class="text-green"><i class="fa fa-thumbs-o-up"></i> Legal ! Você já confirmou presença.</b>
                           @else
                                 <b>Quer confirmar presença agora ?</b>
                                 <br/>
@@ -78,6 +57,46 @@
                     @endif
                 </li>
               </ul>
+
+
+                <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item">
+
+                     @if ($membro[0]->fone_membro)
+                        <i class="fa fa-home"></i> {{$membro[0]->fone_membro}}
+                    @endif
+
+                    @if ($membro[0]->fone_secundario)
+                        &nbsp;&nbsp;<i class="fa fa-phone"></i> {{$membro[0]->fone_secundario}}
+                    @endif
+
+                    @if ($membro[0]->fone_celular)
+                        <br/><i class="fa fa-mobile-phone"></i> {{$membro[0]->fone_celular}}
+                    @endif
+
+                    @if ($membro[0]->email_membro)
+                           <br/><i class="fa fa-envelope-o"></i> {{$membro[0]->email_membro}}
+                    @endif
+                </li>
+              </ul>
+
+              <strong><i class="fa fa-map-marker margin-r-5"></i> Endereço</strong>
+
+              <p class="text-muted">
+
+                @if ($membro[0]->endereco)
+                        {{$membro[0]->endereco}}, {{$membro[0]->numero}} - {{$membro[0]->bairro}}<br/>
+                        {{$membro[0]->cidade}} - {{$membro[0]->estado}}
+                @endif
+
+              </p>
+
+              @can('verifica_permissao', ['63' ,'alterar'])
+                 <li class="list-group-item">
+                      <a class="btn  btn-success btn-sm" href="{{ url('/membro_dados/' . $membro[0]->pessoas_id .'/edit')}}"><spam class="glyphicon glyphicon-pencil"></spam> Alterar Dados Cadastrais</a>
+                 </li>
+              @endcan
+
 
             </div>
             <!-- /.box-body -->

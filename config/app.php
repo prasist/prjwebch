@@ -67,7 +67,7 @@ return [
     'minhacelula'=>'60',
     'login_membros'=>'61',
     'profile'=>'62',
-    'alterardados'=>'63',
+    'membro_dados'=>'63',
     'configmsg'=>'64',
     'relencontro'=>'65',
 

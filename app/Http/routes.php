@@ -49,6 +49,11 @@
           return view('suporte.suporte');
     });
 
+   //Alteracao dados membro  - area do membro
+   Route::post('/membro_dados/gravar','MembroDadosController@store');
+   Route::get('membro_dados/{id}/edit','MembroDadosController@edit');
+   Route::post('membro_dados/{id}/update','MembroDadosController@update');
+
    Route::post('checkin/{controle_atividades}/{pessoas}/{user}','ControleAtividadesController@checkin');
 
     /*configuracao*/

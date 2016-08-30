@@ -201,7 +201,6 @@ class HomeController extends Controller
                     //busca informacoes do membro
                     $membro = \DB::select('select * from view_login_membro vp where email_membro = ? and vp.empresas_id = ? and vp.empresas_clientes_cloud_id = ? ', [Auth::user()->email, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-
                     $vazio = \App\Models\tabela_vazia::get();
 
 
