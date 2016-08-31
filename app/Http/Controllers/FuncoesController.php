@@ -20,7 +20,7 @@ class FuncoesController extends Controller
         $this->middleware('auth');
 
         //Validação de permissão de acesso a pagina
-        if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
+        if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']) || Gate::allows('verifica_permissao', [\Config::get('app.celulas'),'acessar']) || Gate::allows('verifica_permissao', [\Config::get('app.controle_atividades'),'acessar']))
         {
             $this->dados_login = \Session::get('dados_login');
         }

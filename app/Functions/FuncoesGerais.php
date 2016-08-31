@@ -85,8 +85,6 @@ class FuncoesGerais extends Controller
     public function verifica_se_lider()
     {
 
-
-
         if (\App\Models\usuario::find(Auth::user()->id))
        {
             //Busca ID do cliente cloud e ID da empresa
