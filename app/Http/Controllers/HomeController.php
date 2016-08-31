@@ -135,17 +135,6 @@ class HomeController extends Controller
             if (Auth::user()->membro!="S")
             {
 
-                        //Verificar se usuario logado é LIDER DE CELULA
-                        $funcoes = new  \App\Functions\FuncoesGerais();
-
-                        $lider_logado = $funcoes->verifica_se_lider();
-
-                        //SE for lider, direciona para dashboard da célula
-                        if ($lider_logado!=null)
-                        {
-                             return redirect('dashboard_celulas');
-                        }
-
                         /*
                         Busca Configuracao de labels para menu de estrutura de celulas
                         */
@@ -162,6 +151,18 @@ class HomeController extends Controller
                              \Session::put('nivel4', $menu_celulas[0]->celulas_nivel4_label);
                              \Session::put('nivel5', $menu_celulas[0]->celulas_nivel5_label);
                         }
+
+                        //Verificar se usuario logado é LIDER DE CELULA
+                        $funcoes = new  \App\Functions\FuncoesGerais();
+
+                        $lider_logado = $funcoes->verifica_se_lider();
+
+                        //SE for lider, direciona para dashboard da célula
+                        if ($lider_logado!=null)
+                        {
+                             return redirect('dashboard_celulas');
+                        }
+
 
                         $where =
                         [

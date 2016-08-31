@@ -361,9 +361,6 @@ class RelatorioCelulasController extends Controller
                 }
             }
 
-             /*Gera link para abrir o relatório*/
-             //return $this->CarregarView($path_download . '.' . $ext);
-
 
  }
 

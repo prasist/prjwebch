@@ -33,7 +33,6 @@ class CelulasController extends Controller
         }
 
 
-
     }
 
     public function buscar_dados($id)
