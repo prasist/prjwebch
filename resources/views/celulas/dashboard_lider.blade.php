@@ -107,7 +107,7 @@
 
 
                           @if ($resumo)
-                          <div class="col-xs-5">
+                          <div class="col-xs-3">
                               <h4>&nbsp;&nbsp;&nbsp;&nbsp;Resumo Encontros (Mês Corrente)</h4>
                               <ul class="nav nav-stacked">
 
@@ -143,12 +143,14 @@
                           @endif
 
                           @if ($participantes_presenca)
-                          <div class="col-xs-5">
+                          <div class="col-xs-7">
                               <h4>&nbsp;&nbsp;&nbsp;&nbsp;Participantes</h4>
-                              <table class="table">
+                              <table id="tab_simples" class="table table-responsible table-hover">
                                     <tr>
                                           <td>Foto</td>
                                           <td>Nome</td>
+                                          <td>Celular</td>
+                                          <td>Email</td>
                                           <td>Compareceu Último Encontro ?</td>
                                     </tr>
 
@@ -159,8 +161,16 @@
                                                <img src="{{ url('/images/persons/' . $item->caminhofoto) }}" class="img-circle" alt="Participante" />
                                           @endif
                                         </td>
-                                        <td><a href="#">{!! $item->razaosocial !!}</a></td>
-                                        <td><a href="#">{!! ($item->presenca=="S" ? "Sim" : "Não") !!}</a></td>
+                                        <td>{!! $item->razaosocial !!}</td>
+                                        <td>{!! $item->fone_celular !!}</td>
+                                        <td>{!! $item->email_membro !!}</td>
+                                        <td>
+                                              @if ($item->presenca=="S")
+                                                  <p class='fa fa-thumbs-o-up text-green'> Sim</p>
+                                              @else
+                                                  <p class='fa fa-thumbs-o-down text-red'>Não</p>
+                                              @endif
+                                        </td>
                                     </tr>
                                     @endforeach
 
