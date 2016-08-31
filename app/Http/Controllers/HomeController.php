@@ -136,7 +136,6 @@ class HomeController extends Controller
             {
 
                         //Verificar se usuario logado é LIDER DE CELULA
-
                         $funcoes = new  \App\Functions\FuncoesGerais();
 
                         $lider_logado = $funcoes->verifica_se_lider();
@@ -144,7 +143,7 @@ class HomeController extends Controller
                         //SE for lider, direciona para dashboard da célula
                         if ($lider_logado!=null)
                         {
-                                return redirect('dashboard_celulas');
+                             return redirect('dashboard_celulas');
                         }
 
                         /*

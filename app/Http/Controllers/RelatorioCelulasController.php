@@ -91,16 +91,40 @@ class RelatorioCelulasController extends Controller
     $descricao_nivel4="";
     $descricao_nivel5="";
 
+    if (isset($input["publico_alvo"]))
+    {
+         if ($input["publico_alvo"]!="") $descricao_publico_alvo = explode("|", $input["publico_alvo"]);
+         if ($descricao_publico_alvo[0]!="0")  $filtros .= "     Publico Alvo : " . $descricao_publico_alvo[1];
+     }
 
-    if ($input["publico_alvo"]!="") $descricao_publico_alvo = explode("|", $input["publico_alvo"]);
-    if ($input["faixa_etaria"]!="") $descricao_faixa_etaria = explode("|", $input["faixa_etaria"]);
-    if ($input["lideres"]!="") $descricao_lider = explode("|", $input["lideres"]);
-    if ($input["vice_lider"]!="") $descricao_vice_lider = explode("|", $input["vice_lider"]);
-    if ($input["nivel1_up"]!="") $descricao_nivel1 = explode("|", $input["nivel1_up"]);
-    if ($input["nivel2_up"]!="") $descricao_nivel2 = explode("|", $input["nivel2_up"]);
-    if ($input["nivel3_up"]!="") $descricao_nivel3 = explode("|", $input["nivel3_up"]);
-    if ($input["nivel4_up"]!="") $descricao_nivel4 = explode("|", $input["nivel4_up"]);
-    if ($input["nivel5_up"]!="") $descricao_nivel5 = explode("|", $input["nivel5_up"]);
+    if (isset($input["faixa_etaria"])) {
+        if ($input["faixa_etaria"]!="") $descricao_faixa_etaria = explode("|", $input["faixa_etaria"]);
+        if ($descricao_faixa_etaria[0]!="0")  $filtros .= "     Faixa Etaria : " . $descricao_faixa_etaria[1];
+    }
+
+    if (isset($input["lideres"]))
+        if ($input["lideres"]!="") $descricao_lider = explode("|", $input["lideres"]);
+
+    if (isset($input["vice_lider"]))
+    {
+        if ($input["vice_lider"]!="") $descricao_vice_lider = explode("|", $input["vice_lider"]);
+        if ($descricao_vice_lider[0]!="0")  $filtros .= "     Lider em Treinamento: " . $descricao_vice_lider[1];
+    }
+
+    if (isset($input["nivel1_up"]))
+        if ($input["nivel1_up"]!="") $descricao_nivel1 = explode("|", $input["nivel1_up"]);
+
+    if (isset($input["nivel2_up"]))
+        if ($input["nivel2_up"]!="") $descricao_nivel2 = explode("|", $input["nivel2_up"]);
+
+    if (isset($input["nivel3_up"]))
+        if ($input["nivel3_up"]!="") $descricao_nivel3 = explode("|", $input["nivel3_up"]);
+
+    if (isset($input["nivel4_up"]))
+        if ($input["nivel4_up"]!="") $descricao_nivel4 = explode("|", $input["nivel4_up"]);
+
+    if (isset($input["nivel5_up"]))
+        if ($input["nivel5_up"]!="") $descricao_nivel5 = explode("|", $input["nivel5_up"]);
 
     $sDiaEncontro = "";
 
@@ -153,23 +177,30 @@ class RelatorioCelulasController extends Controller
         $filtros .= "     Ano : " . $input["ano"];
     }
 
-    if ($input["regiao"]!="")  $filtros .= "        Regiao : " . $input["regiao"];
-    if ($descricao_publico_alvo[0]!="0")  $filtros .= "     Publico Alvo : " . $descricao_publico_alvo[1];
-    if ($descricao_faixa_etaria[0]!="0")  $filtros .= "     Faixa Etaria : " . $descricao_faixa_etaria[1];
+    if (isset($input["regiao"]))
+        if ($input["regiao"]!="")  $filtros .= "        Regiao : " . $input["regiao"];
+
     if ($descricao_lider[0]!="0")  $filtros .= "     Lider : " . $descricao_lider[1];
-    if ($descricao_vice_lider[0]!="0")  $filtros .= "     Lider em Treinamento: " . $descricao_vice_lider[1];
-    if ($input["nivel1_up"]!="0")  $filtros .= "        " . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
-    if ($input["nivel2_up"]!="0")  $filtros .= "        " . \Session::get('nivel2') . " : " . $descricao_nivel2[1];
-    if ($input["nivel3_up"]!="0")  $filtros .= "        " . \Session::get('nivel3') . " : " . $descricao_nivel3[1];
-    if ($input["nivel4_up"]!="0")  $filtros .= "        " . \Session::get('nivel4') . " : " . $descricao_nivel4[1];
-    if ($input["nivel5_up"]!="0")  $filtros .= "        " . \Session::get('nivel5') . " : " . $descricao_nivel5[1];
+
+    if (isset($input["nivel1_up"]))
+        if ($input["nivel1_up"]!="0")  $filtros .= "        " . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
+
+    if (isset($input["nivel2_up"]))
+        if ($input["nivel2_up"]!="0")  $filtros .= "        " . \Session::get('nivel2') . " : " . $descricao_nivel2[1];
+
+    if (isset($input["nivel3_up"]))
+        if ($input["nivel3_up"]!="0")  $filtros .= "        " . \Session::get('nivel3') . " : " . $descricao_nivel3[1];
+
+    if (isset($input["nivel4_up"]))
+        if ($input["nivel4_up"]!="0")  $filtros .= "        " . \Session::get('nivel4') . " : " . $descricao_nivel4[1];
+
+    if (isset($input["nivel5_up"]))
+        if ($input["nivel5_up"]!="0")  $filtros .= "        " . \Session::get('nivel5') . " : " . $descricao_nivel5[1];
 
     $parametros = array
     (
         "empresas_id"=> $this->dados_login->empresas_id,
         "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
-        "publico_alvo"=> ($descricao_publico_alvo[0]=="" ? 0 : $descricao_publico_alvo[0]),
-        "faixa_etaria"=> ($descricao_faixa_etaria[0]=="" ? 0 : $descricao_faixa_etaria[0]),
         "lideres"=> ($descricao_lider=="" ? 0 : $descricao_lider[0]),
         "nivel1"=> ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]),
         "nivel2"=> ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]),
@@ -179,11 +210,20 @@ class RelatorioCelulasController extends Controller
         "filtros"=> "'" . ($filtros) . "'"
     );
 
+    if (isset($input["publico_alvo"]))
+    {
+        $parametros = array_add($parametros, 'publico_alvo', ($descricao_publico_alvo[0]=="" ? 0 : $descricao_publico_alvo[0]));
+    }
 
-//"vice_lider"=> ($descricao_vice_lider=="" ? 0 : $descricao_vice_lider[0]),
-    //$PHPJasperXML->debugsql=true;
+    if (isset($input["faixa_etaria"]))
+    {
+        $parametros = array_add($parametros, 'faixa_etaria', ($descricao_faixa_etaria[0]=="" ? 0 : $descricao_faixa_etaria[0]));
+    }
 
-    $parametros = array_add($parametros, 'regiao', $input["regiao"] . '%');
+    if (isset($input["regiao"]))
+    {
+        $parametros = array_add($parametros, 'regiao', $input["regiao"] . '%');
+    }
 
     if ($tipo_relatorio=="celulas") //Sintetico, nao listar endereco, fone e email
    {
@@ -264,7 +304,9 @@ class RelatorioCelulasController extends Controller
         if ($input["ckExibir"]=="on")
         {
                 $nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral_lider.jasper';
-        } else {
+        }
+        else
+        {
                 $nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral.jasper';
         }
 

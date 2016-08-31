@@ -73,7 +73,7 @@
                         </div><!-- /.tab-pane -->
 
                         <div class="tab-pane" id="tab_2">
-
+                                @include('celulas.filtro_rel_encontro_lider')
                         </div>
                         <!--  END TABS-->
 
