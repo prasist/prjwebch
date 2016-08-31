@@ -45,9 +45,10 @@
                                               <div id="visitantes" style="height: 250px;"></div>
                                       </div>
 
+                                      <!--
                                       <div class="row">
                                               <div id="tree"></div>
-                                      </div>
+                                      </div>-->
 
                                 </div><!-- /.row -->
 
