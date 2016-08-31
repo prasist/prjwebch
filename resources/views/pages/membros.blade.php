@@ -32,30 +32,35 @@
               <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
 
-                    @if ($materiais[0]->data_encontro==date("Y-m-d"))
-                          <b>Oba, hoje é dia de Célula !!!!</b>
+                       @if ($materiais)
+                               @if ($materiais[0]->data_encontro==date("Y-m-d"))
+                                  <b>Oba, hoje é dia de Célula !!!!</b>
 
-                          @if ($presenca[0]->presenca_simples=="S")
-                                <br/>
-                                <b><i class="fa fa-thumbs-o-up text-green"></i> Legal ! Você já confirmou presença.</b>
-                          @else
-                                <b>Quer confirmar presença agora ?</b>
-                                <br/>
+                                  @if ($presenca!=null)
+                                        @if ($presenca[0]->presenca_simples=="S")
+                                              <br/>
+                                              <b><i class="fa fa-thumbs-o-up text-green"></i> Legal ! Você já confirmou presença.</b>
+                                        @else
+                                              <b>Quer confirmar presença agora ?</b>
+                                              <br/>
 
-                              <form method = 'POST' class="form-horizontal"  action = "{{ url('/checkin/' . $materiais[0]->controle_id. '/' . $membro[0]->pessoas_id . '/' . Auth::user()->id)}}">
+                                            <form method = 'POST' class="form-horizontal"  action = "{{ url('/checkin/' . $materiais[0]->controle_id. '/' . $membro[0]->pessoas_id . '/' . Auth::user()->id)}}">
 
-                                    {!! csrf_field() !!}
-                                    <div class="box-footer">
-                                        <button class = 'btn btn-primary' type ='submit' ><i class="fa fa-check"></i> Confirmar Presença</button>
-                                    </div>
+                                                  {!! csrf_field() !!}
+                                                  <div class="box-footer">
+                                                      <button class = 'btn btn-primary' type ='submit' ><i class="fa fa-check"></i> Confirmar Presença</button>
+                                                  </div>
 
-                              </form>
-                          @endif
+                                            </form>
+                                        @endif
+                                  @endif
+                                  <br/>
+
+                            @endif
+                      @endif
 
 
-                          <br/>
-                    @endif
-                </li>
+                    </li>
               </ul>
 
 
@@ -111,12 +116,14 @@
                 <!-- The timeline -->
                 <ul class="timeline timeline-inverse">
                   <!-- timeline time label -->
-                  @if ($materiais[0]->data_encontro_formatada!="")
-                  <li class="time-label">
-                        <span class="bg-blue">
-                          Próximo Encontro {{$materiais[0]->data_encontro_formatada}} às {{$membro[0]->horario}}
-                        </span>
-                  </li>
+                  @if ($materiais)
+                        @if ($materiais[0]->data_encontro_formatada!="")
+                        <li class="time-label">
+                              <span class="bg-blue">
+                                Próximo Encontro {{$materiais[0]->data_encontro_formatada}} às {{$membro[0]->horario}}
+                              </span>
+                        </li>
+                        @endif
                   @endif
                   <!-- /.timeline-label -->
                   <!-- timeline item -->

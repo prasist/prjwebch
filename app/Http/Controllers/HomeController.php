@@ -134,6 +134,19 @@ class HomeController extends Controller
 
             if (Auth::user()->membro!="S")
             {
+
+                        //Verificar se usuario logado é LIDER DE CELULA
+
+                        $funcoes = new  \App\Functions\FuncoesGerais();
+
+                        $lider_logado = $funcoes->verifica_se_lider();
+
+                        //SE for lider, direciona para dashboard da célula
+                        if ($lider_logado!=null)
+                        {
+                                return redirect('dashboard_celulas');
+                        }
+
                         /*
                         Busca Configuracao de labels para menu de estrutura de celulas
                         */
@@ -173,12 +186,6 @@ class HomeController extends Controller
                         $retorno = \DB::select('select  fn_total_inativos(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
                         $total_inativos = $retorno[0]->fn_total_inativos;
 
-                        //$retorno = \DB::select('select  fn_total_celulas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
-                        //$total_celulas = $retorno[0]->fn_total_celulas;
-
-                        //$retorno = \DB::select('select  fn_total_participantes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
-                        //$total_participantes = $retorno[0]->fn_total_participantes;
-
                         $retorno = \DB::select('select  fn_total_familias(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
                         $total_familias = $retorno[0]->fn_total_familias;
 
@@ -190,10 +197,6 @@ class HomeController extends Controller
                         $pessoas_status = \DB::select('select * from view_total_pessoas_status vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
                         $pessoas_estadoscivis = \DB::select('select * from view_total_pessoas_estadoscivis vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-
-
-                        //$celulas_faixas = \DB::select('select * from view_total_celulas_faixa_etaria vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-                        //$celulas_publicos = \DB::select('select * from view_total_celulas_publico_alvo vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
             }
             else //Area do MEMBRO
@@ -221,17 +224,22 @@ class HomeController extends Controller
 
                              $materiais = \DB::select($strSql);
 
-                             $presenca = \App\Models\controle_presencas::select('presenca_simples', 'hora_check_in')
-                             ->where('empresas_id', $this->dados_login->empresas_id)
-                             ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-                             ->where('controle_atividades_id', $materiais[0]->controle_id)
-                             ->where('pessoas_id', $membro[0]->pessoas_id)
-                             ->get();
-
-                             if ($presenca->count()==0)
+                             if ($materiais!=null)
                              {
-                                    $presenca = $vazio;
-                             }
+                                 $presenca = \App\Models\controle_presencas::select('presenca_simples', 'hora_check_in')
+                                 ->where('empresas_id', $this->dados_login->empresas_id)
+                                 ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+                                 ->where('controle_atividades_id', $materiais[0]->controle_id)
+                                 ->where('pessoas_id', $membro[0]->pessoas_id)
+                                 ->get();
+
+                                 if ($presenca->count()==0)
+                                 {
+                                        $presenca = $vazio;
+                                 }
+                            } else {
+                                $presenca = $vazio;
+                            }
 
                          }
                          else

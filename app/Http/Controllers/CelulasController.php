@@ -26,7 +26,13 @@ class CelulasController extends Controller
         if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
         {
             $this->dados_login = \Session::get('dados_login');
+
+            //Verificar se usuario logado é LIDER
+            $this->lider_logado = $this->formatador->verifica_se_lider();
+
         }
+
+
 
     }
 
@@ -50,6 +56,26 @@ class CelulasController extends Controller
 
     }
 
+ protected function participantes_presenca ()
+ {
+
+
+            $strSql = " SELECT * FROM view_participantes_celula_ultima_presenca";
+            $strSql .=  " WHERE ";
+            $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+            $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+
+            //SE for lider, direciona para dashboard da célula
+            if ($this->lider_logado!=null)
+            {
+                   $strSql .=  " AND lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+            }
+
+            $participantes_presenca = \DB::select($strSql);
+            return $participantes_presenca;
+
+
+ }
 
     protected function resumo_perguntas($mes, $ano)
     {
@@ -66,6 +92,13 @@ class CelulasController extends Controller
             $strSql .=  " ca.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
             $strSql .=  " ca.mes  = '" . $mes . "' AND ";
             $strSql .=  " ca.ano  = '" . $ano . "'";
+
+            //SE for lider, direciona para dashboard da célula
+            if ($this->lider_logado!=null)
+            {
+                   $strSql .=  " AND ca.lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+            }
+
             $strSql .=  " group by c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano, qe.pergunta ";
             $resumo_perguntas = \DB::select($strSql);
             return $resumo_perguntas;
@@ -86,6 +119,13 @@ class CelulasController extends Controller
                 $strSql .=  " WHERE ";
                 $strSql .=  " ca.empresas_id = " . $this->dados_login->empresas_id . " AND ";
                 $strSql .=  " ca.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "";
+
+                //SE for lider, direciona para dashboard da célula
+                if ($this->lider_logado!=null)
+                {
+                       $strSql .=  " AND c.lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+                }
+
                 $strSql .=  " group by c.empresas_id, c.empresas_clientes_cloud_id, tp.nome ";
 
             }
@@ -104,6 +144,13 @@ class CelulasController extends Controller
                 $strSql .=  " ca.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
                 $strSql .=  " ca.mes  = '" . $mes . "' AND ";
                 $strSql .=  " ca.ano  = '" . $ano . "'";
+
+                //SE for lider, direciona para dashboard da célula
+                if ($this->lider_logado!=null)
+                {
+                       $strSql .=  " AND c.lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+                }
+
                 $strSql .=  " group by c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano, tp.nome ";
             }
 
@@ -126,6 +173,13 @@ class CelulasController extends Controller
             $strSql .=  " ca.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
             $strSql .=  " ca.mes  = '" . $mes . "' AND ";
             $strSql .=  " ca.ano  = '" . $ano . "'";
+
+            //SE for lider, direciona para dashboard da célula
+            if ($this->lider_logado!=null)
+            {
+                   $strSql .=  " AND ca.lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+            }
+
             $resumo_geral = \DB::select($strSql);
             //dd($strSql);
             return $resumo_geral;
@@ -147,6 +201,13 @@ class CelulasController extends Controller
             $strSql .=  " ca.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
             $strSql .=  " ca.mes  = '" . $mes . "' AND ";
             $strSql .=  " ca.ano  = '" . $ano . "'";
+
+            //SE for lider, direciona para dashboard da célula
+            if ($this->lider_logado!=null)
+            {
+                   $strSql .=  " AND ca.lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+            }
+
             $strSql .=  " GROUP BY c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano";
 
             $resumo = \DB::select($strSql);
@@ -194,21 +255,6 @@ class CelulasController extends Controller
         }
         else if ($opcao=="frequencia")
         {
-                /*
-                    [{
-                      mes: '2015-01', // <-- valid timestamp strings
-                      total: 75
-                    }, {
-                      mes: '2015-02',
-                      total: 70
-                    }, {
-                      mes: '2015-03',
-                      total: 89
-                    }, {
-                      mes: '2015-04',
-                      total: 86
-                    }, ]
-            */
 
                     $retorno = \DB::select('select  fn_total_participantes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
                     $total_participantes = $retorno[0]->fn_total_participantes;
@@ -356,9 +402,22 @@ class CelulasController extends Controller
 
             $resumo_perguntas = $this->resumo_perguntas(date('m'), date('Y'));
 
-              //Busca ID do cliente cloud e ID da empresa
-              $this->dados_login = \App\Models\usuario::find(Auth::user()->id);
-              return view($this->rota . '.dashboard',
+            //AQUI
+            //Busca ID do cliente cloud e ID da empresa
+            $this->dados_login = \App\Models\usuario::find(Auth::user()->id);
+
+            //SE for lider, direciona para dashboard da célula
+            if ($this->lider_logado!=null)
+            {
+                $qual_pagina = ".dashboard_lider";
+                $participantes_presenca = $this->participantes_presenca();
+            } else {
+                $qual_pagina = ".dashboard";
+                $participantes_presenca = '';
+            }
+
+
+              return view($this->rota . $qual_pagina,
                  [
                   'dados'=>'',
                   'resumo'=>$resumo,
@@ -379,7 +438,8 @@ class CelulasController extends Controller
                    'faixas'=>$faixas,
                    'lideres'=>$lideres,
                    'var_download'=>'',
-                   'var_mensagem'=>''
+                   'var_mensagem'=>'',
+                   'participantes_presenca'=> $participantes_presenca
                 ]);
         }
 
@@ -427,7 +487,17 @@ class CelulasController extends Controller
                   return redirect('home');
             }
 
-            $dados = \DB::select('select * from view_celulas_simples where  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+            $strSql = "SELECT * from view_celulas_simples ";
+            $strSql .=  " WHERE  empresas_id = " . $this->dados_login->empresas_id;
+            $strSql .=  " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
+
+            //SE for lider, direciona para dashboard da célula
+            if ($this->lider_logado!=null)
+            {
+                   $strSql .=  " AND lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+            }
+
+            $dados = \DB::select($strSql);
 
             //Listagem de pessoas
             return view($this->rota . '.index',compact('dados'));

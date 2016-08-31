@@ -72,16 +72,9 @@ class ControleAtividadesController extends Controller
         }
 
 
-      //camarada é lider ou vice-lider
-       $strSql =  " SELECT id, lider_pessoas_id ";
-       $strSql .=  " FROM celulas ";
-       $strSql .=  " where ";
-       $strSql .=  " (lider_pessoas_id in (select id from pessoas where emailprincipal = '" .  Auth::user()->email  . "') or vicelider_pessoas_id in (select id from pessoas where emailprincipal = '" .  Auth::user()->email . "'))";
-       $strSql .=  " and empresas_id = " . $this->dados_login->empresas_id . " ";
-       $strSql .=  " and empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
+       $funcoes = new  \App\Functions\FuncoesGerais();
 
-       $lider_logado = \DB::select($strSql);
-
+       $lider_logado = $funcoes->verifica_se_lider();
 
 
        if ($lider_logado!=null)

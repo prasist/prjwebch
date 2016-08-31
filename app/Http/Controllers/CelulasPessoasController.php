@@ -20,10 +20,17 @@ class CelulasPessoasController extends Controller
         $this->rota = "celulaspessoas"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
+        /*Instancia a classe de funcoes (Data, valor, etc)*/
+        $this->formatador = new  \App\Functions\FuncoesGerais();
+
         //Validação de permissão de acesso a pagina
         if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
         {
             $this->dados_login = \Session::get('dados_login');
+
+            //Verificar se usuario logado é LIDER
+            $this->lider_logado = $this->formatador->verifica_se_lider();
+
         }
 
     }
@@ -37,8 +44,17 @@ class CelulasPessoasController extends Controller
               return redirect('home');
         }
 
-        //$dados = \DB::select('select distinct celulas_id, lider_pessoas_id, descricao_lider  as nome from view_celulas_pessoas where  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-        $dados = \DB::select('select distinct celulas_id, lider_pessoas_id, descricao_lider_scod  as nome, tot, cor from view_celulas_pessoas_participantes where  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $strSql = "SELECT Distinct celulas_id, lider_pessoas_id, descricao_lider_scod  as nome, tot, cor FROM view_celulas_pessoas_participantes ";
+        $strSql .=  " WHERE  empresas_id = " . $this->dados_login->empresas_id;
+        $strSql .=  " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
+
+        //SE for lider, direciona para dashboard da célula
+        if ($this->lider_logado!=null)
+        {
+               $strSql .=  " AND lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+        }
+
+        $dados = \DB::select($strSql);
 
         return view($this->rota . '.index',compact('dados'));
 

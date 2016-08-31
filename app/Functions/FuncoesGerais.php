@@ -79,4 +79,34 @@ class FuncoesGerais extends Controller
             return number_format($valor, 2, ',', '.'); // retorna R$100,000.50
     }
 
+
+
+    //Verificar se a pessoa logada é lider de célula
+    public function verifica_se_lider()
+    {
+
+
+
+        if (\App\Models\usuario::find(Auth::user()->id))
+       {
+            //Busca ID do cliente cloud e ID da empresa
+            $this->dados_login = \App\Models\usuario::find(Auth::user()->id);
+        }
+
+       $email = Auth::user()->email;
+
+       $strSql =  " SELECT id, lider_pessoas_id ";
+       $strSql .=  " FROM celulas ";
+       $strSql .=  " where ";
+       $strSql .=  " (lider_pessoas_id in (select id from pessoas where emailprincipal = '" .  $email  . "') or vicelider_pessoas_id in (select id from pessoas where emailprincipal = '" .  $email . "'))";
+       $strSql .=  " and empresas_id = " . $this->dados_login->empresas_id . " ";
+       $strSql .=  " and empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
+
+       $lider_logado = \DB::select($strSql);
+
+       return $lider_logado;
+
+    }
+
+
 }
