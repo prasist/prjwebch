@@ -37,6 +37,7 @@
         <link rel="stylesheet" href="{{ asset('/dist/css/buscapessoas.css')}}"/>
 
         <link href="{{ asset('/dist/css/bootstrap-switch.min.css')}}" rel="stylesheet"/>
+        <link href="{{ asset('/dist/css/bootstrap-treeview.min.css')}}" rel="stylesheet"/>
 
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -459,6 +460,7 @@
           };
         </script>
 
+        <script src="{{ asset('/dist/js/bootstrap-treeview.min.js')}}"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
         <script src="{{ asset('/js/controller.js')}}"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.js')}}"></script>

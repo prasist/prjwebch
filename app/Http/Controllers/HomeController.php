@@ -132,25 +132,28 @@ class HomeController extends Controller
             \Session::put('tour_visaogeral', $this->dados_login->tutorial_visaogeral);
             \Session::put('admin', $this->dados_login->admin);
 
+
+        /*
+        Busca Configuracao de labels para menu de estrutura de celulas
+        */
+        $menu_celulas = \App\Models\configuracoes::select('id', 'celulas_nivel1_label', 'celulas_nivel2_label', 'celulas_nivel3_label', 'celulas_nivel4_label', 'celulas_nivel5_label')
+                ->where('empresas_id', $this->dados_login->empresas_id)
+                ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+                ->get();
+
+        if ($menu_celulas)
+        {
+             \Session::put('nivel1', $menu_celulas[0]->celulas_nivel1_label);
+             \Session::put('nivel2', $menu_celulas[0]->celulas_nivel2_label);
+             \Session::put('nivel3', $menu_celulas[0]->celulas_nivel3_label);
+             \Session::put('nivel4', $menu_celulas[0]->celulas_nivel4_label);
+             \Session::put('nivel5', $menu_celulas[0]->celulas_nivel5_label);
+        }
+
+
             if (Auth::user()->membro!="S")
             {
 
-                        /*
-                        Busca Configuracao de labels para menu de estrutura de celulas
-                        */
-                        $menu_celulas = \App\Models\configuracoes::select('id', 'celulas_nivel1_label', 'celulas_nivel2_label', 'celulas_nivel3_label', 'celulas_nivel4_label', 'celulas_nivel5_label')
-                                ->where('empresas_id', $this->dados_login->empresas_id)
-                                ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-                                ->get();
-
-                        if ($menu_celulas)
-                        {
-                             \Session::put('nivel1', $menu_celulas[0]->celulas_nivel1_label);
-                             \Session::put('nivel2', $menu_celulas[0]->celulas_nivel2_label);
-                             \Session::put('nivel3', $menu_celulas[0]->celulas_nivel3_label);
-                             \Session::put('nivel4', $menu_celulas[0]->celulas_nivel4_label);
-                             \Session::put('nivel5', $menu_celulas[0]->celulas_nivel5_label);
-                        }
 
                         //Verificar se usuario logado é LIDER DE CELULA
                         $funcoes = new  \App\Functions\FuncoesGerais();
