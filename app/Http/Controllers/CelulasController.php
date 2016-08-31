@@ -356,10 +356,18 @@ class CelulasController extends Controller
     public function dashboard()
     {
 
-        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.controle_atividades')) || \App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.celulas')))
         {
-              return redirect('home');
+              $this->dados_login = \Session::get('dados_login');
+
+             //Verificar se usuario logado é LIDER
+             $this->lider_logado = $this->formatador->verifica_se_lider();
         }
+        else
+        {
+                return redirect('home');
+        }
+
 
         //Verificar se foi cadastrado os dados da igreja
         if (\App\Models\usuario::find(Auth::user()->id))
