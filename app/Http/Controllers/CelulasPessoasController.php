@@ -69,7 +69,19 @@ class CelulasPessoasController extends Controller
               return redirect('home');
         }
 
-        $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        //$celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $strSql = "SELECT id, descricao_concatenada as nome FROM view_celulas_simples ";
+        $strSql .=  " WHERE  empresas_id = " . $this->dados_login->empresas_id;
+        $strSql .=  " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
+
+        //SE for lider, direciona para dashboard da célula
+        if ($this->lider_logado!=null)
+        {
+               $strSql .=  " AND lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+        }
+
+        $celulas = \DB::select($strSql);
+
 
         return view($this->rota . '.registrar', ['celulas'=>$celulas, 'id_celula'=>'']);
 
@@ -262,7 +274,20 @@ public function imprimir($id)
         }
 
         /*Busca */
-        $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        //$celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        $strSql = "SELECT id, descricao_concatenada as nome FROM view_celulas_simples ";
+        $strSql .=  " WHERE  empresas_id = " . $this->dados_login->empresas_id;
+        $strSql .=  " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
+
+        //SE for lider, direciona para dashboard da célula
+        if ($this->lider_logado!=null)
+        {
+               $strSql .=  " AND lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+        }
+
+        $celulas = \DB::select($strSql);
+
 
         $dados = \DB::select('select * from view_celulas_pessoas where celulas_id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
