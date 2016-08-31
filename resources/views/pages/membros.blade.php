@@ -44,7 +44,7 @@
                                               <b>Quer confirmar presença agora ?</b>
                                               <br/>
 
-                                            <form method = 'POST' class="form-horizontal"  action = "{{ url('/checkin/' . $materiais[0]->controle_id. '/' . $membro[0]->pessoas_id . '/' . Auth::user()->id)}}">
+                                            <form method = 'POST' class="form-horizontal"  action = "{{ url('/checkin/' . $materiais[0]->controle_id. '/' . $membro[0]->id_membro . '/' . Auth::user()->id)}}">
 
                                                   {!! csrf_field() !!}
                                                   <div class="box-footer">
@@ -97,9 +97,11 @@
               </p>
 
               @can('verifica_permissao', ['63' ,'alterar'])
+                 @if ($membro[0]->id_membro!="")
                  <li class="list-group-item">
-                      <a class="btn  btn-success btn-sm" href="{{ url('/membro_dados/' . $membro[0]->pessoas_id .'/edit')}}"><spam class="glyphicon glyphicon-pencil"></spam> Alterar Dados Cadastrais</a>
+                      <a class="btn  btn-success btn-sm" href="{{ url('/membro_dados/' . $membro[0]->id_membro .'/edit')}}"><spam class="glyphicon glyphicon-pencil"></spam> Alterar Dados Cadastrais</a>
                  </li>
+                 @endif
               @endcan
 
 
