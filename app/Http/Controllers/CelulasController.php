@@ -411,15 +411,36 @@ class CelulasController extends Controller
             {
                 $qual_pagina = ".dashboard_lider";
                 $participantes_presenca = $this->participantes_presenca();
-            } else {
+
+                //busca da proxima multiplicacao
+                $strSql = "SELECT data_previsao_multiplicacao from view_celulas_simples ";
+                $strSql .=  " WHERE  empresas_id = " . $this->dados_login->empresas_id;
+                $strSql .=  " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
+                $strSql .=  " AND lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+                $dados = \DB::select($strSql);
+
+                //Verifica se ultimo encontro ja foi encerrado
+                $strSql = " SELECT  to_char(to_date(data_encontro, 'yyyy-MM-dd'), 'DD-MM-YYYY') AS data_encontro, id from controle_atividades ";
+                $strSql .=  " WHERE ";
+                $strSql .=  " lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+                $strSql .=  " AND encontro_encerrado <> 'S' and  ";
+                $strSql .=  " to_char(to_date(data_encontro, 'yyyy-MM-dd'), 'DD-MM-YYYY') < to_char( now(), 'yyyy-MM-dd' ) ";
+                $aberto = \DB::select($strSql);
+
+            }
+            else
+            {
                 $qual_pagina = ".dashboard";
                 $participantes_presenca = '';
+                $dados='';
+                $aberto='';
             }
 
 
               return view($this->rota . $qual_pagina,
                  [
-                  'dados'=>'',
+                 'aberto'=>$aberto,
+                  'dados'=>$dados,
                   'resumo'=>$resumo,
                   'resumo_geral'=>$resumo_geral,
                   'resumo_tipo_pessoas'=>$resumo_tipo_pessoas,

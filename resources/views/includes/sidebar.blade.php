@@ -124,7 +124,7 @@
           <li><a href={{ url('/civis')}}><i class="fa fa-angle-double-right"></i>Estados Civis</a></li>
           <li><a href={{ url('/idiomas')}}><i class="fa fa-angle-double-right"></i>Idiomas</a></li>
           <li><a href={{ url('/graus')}}><i class="fa fa-angle-double-right"></i>Graus de Instrução</a></li>
-          <li><a href={{ url('/areas')}}><i class="fa fa-angle-double-right"></i>Àreas de Formação</a></li>
+          <li><a href={{ url('/areas')}}><i class="fa fa-angle-double-right"></i>Áreas de Formação</a></li>
           <li><a href={{ url('/profissoes')}}><i class="fa fa-angle-double-right"></i>Profissões</a></li>
           <li><a href={{ url('/grausparentesco')}}><i class="fa fa-angle-double-right"></i>Graus de Parentesco</a></li>
           <li><a href={{ url('/disponibilidades')}}><i class="fa fa-angle-double-right"></i>Disponibilidades de Tempo</a></li>
@@ -255,11 +255,10 @@
            </li>
          </ul>-->
 
-
          @if(Gate::check('verifica_permissao', [46 ,'acessar']))
          <ul class="treeview-menu">
           <li>
-            <a href="{{ url('/relcelulas')}}"><i class="fa fa-print"></i> Relatórios</a>
+            <a href="{{ url('/relcelulas')}}"><i class="fa fa-print"></i> Relatório Células</a>
           </li>
         </ul>
         @endif

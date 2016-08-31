@@ -66,7 +66,7 @@ class MinhaIgreja extends Controller
                     \Mail::send('emails.link_newuser', ['key' => $dados], function($message) use ($data)
                     {
                         $message->from('contato@sigma3sistemas.com.br', 'Sigma3');
-                        $message->subject('Link para validação SIGMA3 - Àrea do Membro');
+                        $message->subject('Link para validação SIGMA3 - Área do Membro');
                         $message->to($data['email']);
                         $message->bcc('contato@sigma3sistemas.com.br');
                     });

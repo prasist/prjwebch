@@ -213,7 +213,8 @@ class HomeController extends Controller
                         if ($membro[0]->id!="")
                         {
                              //Retorna próxima data de encontro em aberto
-                             $strSql =  " SELECT to_char(data_encontro::timestamp with time zone, 'DD-MM-YYYY'::text) AS data_encontro_formatada, ca.id as controle_id, * FROM controle_atividades ca ";
+                             $strSql =  " SELECT to_char(data_encontro::timestamp with time zone, 'DD-MM-YYYY'::text) AS data_encontro_formatada, ca.id as controle_id, * ";
+                             $strSql .=  " FROM controle_atividades ca ";
                              $strSql .=  " left join controle_materiais cm on ca.id = cm.controle_atividades_id and ca.empresas_id = cm.empresas_id and ca.empresas_clientes_cloud_id = cm.empresas_clientes_cloud_id  ";
                              $strSql .=  " where ";
                              $strSql .=  " ca.celulas_id = " . $membro[0]->id . " AND ";

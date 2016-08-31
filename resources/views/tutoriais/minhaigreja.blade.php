@@ -47,7 +47,7 @@
  <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-info">
-                <div class="panel-heading">Àrea do Membro - Login</div>
+                <div class="panel-heading">Área do Membro - Login</div>
                 <div class="panel-body">
                     <form method = 'POST'  class="form-horizontal" action = "{{ url('/minhaigreja/enviar')}}">
                         {!! csrf_field() !!}

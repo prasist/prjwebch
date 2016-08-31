@@ -13,7 +13,16 @@
 <div class="box box-default">
                   <div class="box-header with-border">
                     <h4>Olá <b>{!! strtoupper(Auth::user()->name) !!}</b>, confira abaixo alguns números de sua célula.</h4>
+                    @if (rtrim(ltrim($dados[0]->data_previsao_multiplicacao))!="")
+                          A multiplicação de sua célula está prevista para {{$dados[0]->data_previsao_multiplicacao}}.
+                    @endif
+
+                    @if ($aberto)
+                       <b class="text-red">O encontro do dia {{$aberto[0]->data_encontro}} ainda não foi marcado como encerrado, </b><a href="{{ url('/controle_atividades') }}">CLIQUE AQUI</a> para gerenciá-lo.
+                    @endif
+
                   </div>
+
 </div>
 
 <div class="row">
@@ -64,8 +73,6 @@
                         </div><!-- /.tab-pane -->
 
                         <div class="tab-pane" id="tab_2">
-
-
 
                         </div>
                         <!--  END TABS-->
@@ -162,7 +169,7 @@
                                           @endif
                                         </td>
                                         <td>{!! $item->razaosocial !!}</td>
-                                        <td>{!! $item->fone_celular !!}</td>
+                                        <td width="100">{!! $item->fone_celular !!}</td>
                                         <td>{!! $item->email_membro !!}</td>
                                         <td>
                                               @if ($item->presenca=="S")

@@ -15,7 +15,6 @@
                                               <div class="row">
                                                   <div class="col-md-12">
 
-
                                                    <!-- Custom Tabs -->
                                                     <div class="nav-tabs-custom">
 
@@ -67,10 +66,10 @@
                                                             <div class="row">
 
                                                                     <div class="col-xs-3">
-                                                                          <label for="mes" class="control-label">Mês</label>
-                                                                          <select id="mes" placeholder="(Selecionar)" name="mes" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                                                          <option  value=""></option>
-                                                                          <option  value="01" {{ (date('m')==1 ? 'selected' : '') }} >Janeiro</option>
+                                                                         <label for="mes" class="control-label">Mês</label>
+                                                                         <select id="mes" placeholder="(Selecionar)" name="mes" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                                         <option  value=""></option>
+                                                                         <option  value="01" {{ (date('m')==1 ? 'selected' : '') }} >Janeiro</option>
                                                                          <option  value="02" {{ (date('m')==2 ? 'selected' : '') }} >Fevereiro</option>
                                                                          <option  value="03" {{ (date('m')==3 ? 'selected' : '') }} >Março</option>
                                                                          <option  value="04" {{ (date('m')==4 ? 'selected' : '') }} >Abril</option>

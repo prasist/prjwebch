@@ -31,7 +31,7 @@
 
                           <div class="row{{ $errors->has('grupo') ? ' has-error' : '' }}">
                                   <div class="col-xs-6">
-                                        <label for="grupo" class="control-label">Informe qual grupo de permissões os membros pertencerão</label>
+                                        <label for="grupo" class="control-label">Informe a qual grupo de permissões os membros pertencerão</label>
 
                                         <select name="grupo" class="form-control select2" style="width: 100%;">
                                          <option  value=""></option>
@@ -56,7 +56,7 @@
 
                                         <label for="quem" class="control-label">Para Quem ?</label>
                                         <select id="quem" name="quem" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
-                                            <option  value="1">Todos Membros</option>
+                                            <option  value="1">Todos os Membros</option>
                                             <option  value="2">Pessoa Específica</option>
                                         </select>
 

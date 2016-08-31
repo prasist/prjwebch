@@ -2,7 +2,7 @@
 
 @section('content')
 
-{{ \Session::put('titulo', 'Àreas de Formação') }}
+{{ \Session::put('titulo', 'Áreas de Formação') }}
 {{ \Session::put('subtitulo', 'Inclusão') }}
 {{ \Session::put('route', 'areas') }}
 {{ \Session::put('id_pagina', '12') }}

@@ -213,7 +213,7 @@ public function store(\Illuminate\Http\Request  $request)
                         \Mail::send('emails.bemvindo', ['nome' => $data["nome"], 'nome_igreja'=>$data["nome_igreja"], 'email'=>$data["email"], 'senha'=>$data["senha"]], function($message) use ($data)
                         {
                             $message->from('contato@sigma3sistemas.com.br', 'Sigma3');
-                            $message->subject('Acesso a Àrea do Membro - ' . $data['nome_igreja']);
+                            $message->subject('Acesso a Área do Membro - ' . $data['nome_igreja']);
                             $message->to($data['email']);
                         });
 
