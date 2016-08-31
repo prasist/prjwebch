@@ -249,7 +249,6 @@ class HomeController extends Controller
                          else
                          {
                              $materiais = $vazio;
-                             $membro = $vazio;
                              $presenca = $vazio;
                          }
 
