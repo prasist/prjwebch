@@ -369,16 +369,20 @@ class CelulasController extends Controller
             $publicos = \App\Models\publicos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
             $faixas = \App\Models\faixas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
 
+
+            //busca da proxima multiplicacao
+            $strSql = "SELECT * FROM view_lideres ";
+            $strSql .=  " WHERE  empresas_id = " . $this->dados_login->empresas_id;
+            $strSql .=  " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
+
             //Busca LIDERES, se for lider logado retorna somente dados dele mesmo
             if ($this->lider_logado!=null)
             {
-                //busca da proxima multiplicacao
-                $strSql = "SELECT * FROM view_lideres ";
-                $strSql .=  " WHERE  empresas_id = " . $this->dados_login->empresas_id;
-                $strSql .=  " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
                 $strSql .=  " AND id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
-                $lideres = \DB::select($strSql);
             }
+
+            $lideres = \DB::select($strSql);
+
 
             /*Busca vice - Lideres*/
             $vice_lider = \DB::select('select * from view_vicelideres where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
