@@ -158,7 +158,7 @@
                                     <tr>
                                         <td>
                                           @if ($item->caminhofoto!="")
-                                               <img src="{{ url('/images/persons/' . $item->caminhofoto) }}" class="img-circle" alt="Participante" />
+                                               <img src="{{ url('/images/persons/' . $item->caminhofoto) }}" width="40" height="40" alt="Participante" />
                                           @endif
                                         </td>
                                         <td>{!! $item->razaosocial !!}</td>
