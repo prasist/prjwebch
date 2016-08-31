@@ -150,7 +150,7 @@
                           @endif
 
                           @if ($participantes_presenca)
-                          <div class="col-xs-7">
+                          <div class="col-xs-9">
                               <h4>&nbsp;&nbsp;&nbsp;&nbsp;Participantes</h4>
                               <table id="tab_simples" class="table table-responsible table-hover">
                                     <tr>

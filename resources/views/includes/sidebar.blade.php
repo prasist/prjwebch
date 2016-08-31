@@ -242,11 +242,11 @@
               -->
               <ul class="treeview-menu">
                @if(Gate::check('verifica_permissao', [58 ,'acessar']))
-               <li><a href="{{ url('/controle_atividades')}}" title="Controle a presença dos membros e visitantes, envie material para encontro..."> <i class="fa fa-check"></i> Gerenciar Encontro</a></li>
+               <li><a href="{{ url('/controle_atividades')}}" title="Controle a presença dos membros e visitantes, envie material para encontro..."> <i class="fa fa-check"></i> Gerenciar Encontros</a></li>
                @endif
 
                @if(Gate::check('verifica_permissao', [65 ,'acessar']))
-               <li><a href="{{ url('/relencontro')}}" title="Relatórios Estatístico dos Encontros, Participantes de Células..."> <i class="fa fa-print"></i> Relatório Encontro</a></li>
+               <li><a href="{{ url('/relencontro')}}" title="Relatórios Estatístico dos Encontros, Participantes de Células..."> <i class="fa fa-print"></i> Relatório Encontros</a></li>
                @endif
 
              </ul>
