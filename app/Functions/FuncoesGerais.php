@@ -98,7 +98,7 @@ class FuncoesGerais extends Controller
        $strSql =  " SELECT id, lider_pessoas_id ";
        $strSql .=  " FROM celulas ";
        $strSql .=  " where ";
-       $strSql .=  " (lider_pessoas_id in (select id from pessoas where emailprincipal = '" .  $email  . "') or vicelider_pessoas_id in (select id from pessoas where emailprincipal = '" .  $email . "'))";
+       $strSql .=  " (lider_pessoas_id in (select id from pessoas where upper(emailprincipal) = '" .  strtoupper($email)  . "') or vicelider_pessoas_id in (select id from pessoas where upper(emailprincipal) = '" .  strtoupper($email) . "'))";
        $strSql .=  " and empresas_id = " . $this->dados_login->empresas_id . " ";
        $strSql .=  " and empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
 

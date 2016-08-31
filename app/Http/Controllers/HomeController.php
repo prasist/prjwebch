@@ -154,7 +154,6 @@ class HomeController extends Controller
             if (Auth::user()->membro!="S")
             {
 
-
                         //Verificar se usuario logado é LIDER DE CELULA
                         $funcoes = new  \App\Functions\FuncoesGerais();
 
@@ -165,7 +164,6 @@ class HomeController extends Controller
                         {
                              return redirect('dashboard_celulas');
                         }
-
 
                         $where =
                         [
