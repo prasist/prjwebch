@@ -21,7 +21,7 @@
 
                           <!-- Carrega todos os tipos de pessoas, cria uma rota passando o ID do tipo de pessoa. Com esse ID a interface habilitara ou nao campos -->
                           @foreach($tipos as $item)
-                              <li><a href="{{ url('/' . \Session::get('route') . '/registrar/' . $item->id )}}>{{ $item->nome }}</a>"</li>
+                              <li><a href="{{ url('/' . \Session::get('route') . '/registrar/' . $item->id )}}">{{ $item->nome }}</a></li>
                           @endforeach
 
                         </ul>

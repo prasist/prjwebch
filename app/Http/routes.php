@@ -49,6 +49,8 @@
           return view('suporte.suporte');
     });
 
+   Route::get('/celulas/buscar_estruturas','CelulasController@getEstruturas');
+
    //Alteracao dados membro  - area do membro
    Route::post('/membro_dados/gravar','MembroDadosController@store');
    Route::get('membro_dados/{id}/edit','MembroDadosController@edit');

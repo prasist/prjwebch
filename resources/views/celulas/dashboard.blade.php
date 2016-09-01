@@ -25,7 +25,7 @@
 
                                 <div class="row">
 
-                                      <div class="col-lg-5 col-xs-8">
+                                      <div class="col-lg-3 col-xs-6">
                                               <div class="inner">
                                                    <center><h4>Total Participantes</h4>
 
@@ -36,7 +36,7 @@
                                               <div id="tipo_pessoa" style="height: 250px;"></div>
                                       </div>
 
-                                      <div class="col-lg-5 col-xs-8">
+                                      <div class="col-lg-3 col-xs-6">
                                               <div class="inner">
                                                    <center><h4>Quantidade de Visitantes</h4>
                                                    <p>Últimos 3 meses</p>
@@ -46,7 +46,8 @@
                                       </div>
 
                                       <!--
-                                      <div class="row">
+
+                                      <div class="col-lg-4 col-xs-7">
                                               <div id="tree"></div>
                                       </div>-->
 
@@ -205,41 +206,14 @@
   function getTree() {
         // Some logic to retrieve, or generate tree structure
 
-        var tree = [
-        {
-          text: "Parent 1",
-          nodes: [
-            {
-              text: "Child 1",
-              nodes: [
-                {
-                  text: "Grandchild 1"
-                },
-                {
-                  text: "Grandchild 2"
-                }
-              ]
-            },
-            {
-              text: "Child 2"
-            }
-          ]
-        },
-        {
-          text: "Parent 2"
-        },
-        {
-          text: "Parent 3"
-        },
-        {
-          text: "Parent 4"
-        },
-        {
-          text: "Parent 5"
-        }
-      ];
+        var urlGetUser = '{!! url("/celulas/buscar_estruturas/") !!}';
 
-        return tree;
+        $.getJSON(urlGetUser, function( data, status )
+        {
+                console.log(data);
+                return data;
+        });
+
   }
 
     $(document).ready(function(){

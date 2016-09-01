@@ -23,7 +23,7 @@ class CelulasController extends Controller
         $this->formatador = new  \App\Functions\FuncoesGerais();
 
         //Validação de permissão de acesso a pagina
-        if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']) || Gate::allows('verifica_permissao', [\Config::get('app.controle_atividades'),'acessar']))
+        if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']) ) //|| Gate::allows('verifica_permissao', [\Config::get('app.controle_atividades'),'acessar'])
         {
             $this->dados_login = \Session::get('dados_login');
 
@@ -32,6 +32,65 @@ class CelulasController extends Controller
 
         }
 
+
+    }
+
+    public function getEstruturas()
+    {
+
+            $strSql = " SELECT celulas_nivel1_id, celulas_nivel2_id, celulas_nivel3_id, celulas_nivel4_id, id, id_lider, nome_1, nome_2, nome_3, nome_4, nome, razaosocial  FROM view_estruturas";
+            $strSql .=  " WHERE ";
+            $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+            $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+
+            $estruturas = \DB::select($strSql);
+
+            $montar = array();
+
+            foreach ($estruturas as $key => $value)
+            {
+
+                    $montar = array($value->nome_1 =>
+                                                                                    array($value->nome_2 =>
+                                                                                                                                array($value->nome_3 =>
+                                                                                                                                                                                array($value->nome_4 =>
+                                                                                                                                                                                                                                array($value->nome => $value->razaosocial))))
+                                         );
+
+
+            }
+
+            dd($montar);
+
+/*
+            $tree = [
+                {
+                  text: "Parent 1",
+                  nodes: [
+
+                    {
+                      text: "Child 1",
+                        nodes: [
+                          {
+                            text: "Grandchild 1"
+                          },
+                          {
+                            text: "Grandchild 2"
+                          }
+                        ] //fim node filho
+                    },
+
+                    {
+                      text: "Child 2"
+                    }
+
+                  ] //fim node
+
+                }
+
+              ];*/
+
+        return $tree;
 
     }
 
