@@ -10,25 +10,25 @@
 
 <!-- Small boxes (Stat box) -->
 <div class="row">
-            <div class="col-md-12">
-              <!-- Widget: user widget style 1 -->
-              <div class="box box-widget">
+  <div class="col-md-12">
+    <!-- Widget: user widget style 1 -->
+    <div id="arvore" class="box box-widget" style="display: none">
 
-                <div class="box-footer no-padding">
+      <div class="box-footer no-padding">
 
-                    <div class="row">
-                            <div class="col-md-12">
-                             <div class="box-header with-border">
-                                  <h3 class="box-title">Árvore Hierárquica da Rede</h3>
-                                    &nbsp;(<i class="text">Clique para expandir</i>)
-                                   {!! $gerar_treeview !!}
-                              </div>
+        <div class="row">
+          <div class="col-md-12">
+           <div class="box-header with-border">
+            <h3 class="box-title">Árvore Hierárquica da Rede</h3>
+            &nbsp;(<i class="text">Clique para expandir</i>)
+            {!! $gerar_treeview !!}
+          </div>
 
-                            </div>
-                      </div>
+        </div>
+      </div>
 
-</div>
-</div>
+    </div>
+  </div>
 </div>
 </div>
 
@@ -234,6 +234,8 @@
 
     $(document).ready(function(){
 
+
+       $('#arvore').show();
 
        $("#menu_celulas").addClass("treeview active");
 
