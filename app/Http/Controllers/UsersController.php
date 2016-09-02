@@ -49,7 +49,7 @@ class UsersController extends Controller
             $where = ['usuarios.empresas_id' => $this->dados_login->empresas_id, 'usuarios.empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id];
         }
 
-        $usuarios = users::select ('users.id', 'users.name', 'users.email', 'usuarios.master', 'empresas.razaosocial')
+        $usuarios = users::select ('users.path_foto', 'users.id', 'users.name', 'users.email', 'usuarios.master', 'empresas.razaosocial')
         ->join('usuarios', 'usuarios.id' , '=' , 'users.id')
         ->join('empresas', 'empresas.id' , '=' , 'usuarios.empresas_id')
         ->where($where)
@@ -127,6 +127,12 @@ class UsersController extends Controller
             {
                 $dados->path_foto = $image->getClientOriginalName();
             }
+
+            if ($input['mydata']!="") //Imagem tirada pela webcam
+            {
+                $dados->path_foto = str_replace(" ","", (strtolower($input['name']) . date("his")) ) . '_webcam.jpg';
+            }
+
 
             $dados->save();
             //----------------------FIM - Grava novo usuario (Tabela USERS)
@@ -248,6 +254,22 @@ class UsersController extends Controller
              }//----------------------------------FIM - Foto do usuário
 
 
+              if ($input['mydata']!="") //Imagem da webcam
+             {
+                 $encoded_data = $input['mydata'];
+
+                 $binary_data = base64_decode($encoded_data);
+
+                 //caminho onde será gravado
+                 $destinationPath = base_path() . '/public/images/users';
+
+                 // Salva no path definido, alterando o nome da imagem com o nome da pessoa
+                 $result = file_put_contents( $destinationPath . '/' . str_replace(" ","", (strtolower($input['name']) . date("his"))) . '_webcam.jpg', $binary_data );
+             }
+
+
+
+
             \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
 
             return redirect('usuarios');
@@ -359,9 +381,16 @@ class UsersController extends Controller
         $dados->email  = $input['email'];
         $dados->password  = bcrypt($input['password']);
 
+
         if ($image)
         {
             $dados->path_foto  = $image->getClientOriginalName();
+        }
+
+        if ($input['mydata']!="") //Imagem tirada pela webcam
+        {
+
+            $dados->path_foto = str_replace(" ","", (strtolower($input['name']) . date("his")) ) . '_webcam.jpg';
         }
 
         $dados->save();//-------------FIM - Atualiza Usuario
@@ -393,6 +422,20 @@ class UsersController extends Controller
                     }
                 }
          }//-----FIM upload
+
+         if ($input['mydata']!="") //Imagem da webcam
+         {
+             $encoded_data = $input['mydata'];
+
+             $binary_data = base64_decode($encoded_data);
+
+             //caminho onde será gravado
+             $destinationPath = base_path() . '/public/images/users';
+
+             // Salva no path definido, alterando o nome da imagem com o nome da pessoa
+             $result = file_put_contents( $destinationPath . '/' . str_replace(" ","", (strtolower($input['name']) . date("his"))) . '_webcam.jpg', $binary_data );
+         }
+
 
 
          //-----------------Cria registro na tabela usuarios para associar com a tabela users

@@ -15,7 +15,7 @@
             <a href="{{ url('/usuarios')}}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
         </div>
 
-        <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action = {{ url('/usuarios/' . $dados->id . '/update')}}>
+        <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action ="{{ url('/usuarios/' . $dados->id . '/update')}}">
 
         {!! csrf_field() !!}
 
@@ -135,21 +135,89 @@
                             </div>
 
 
-                          <div class="row">
-                                  <div class="col-xs-5">
-                                          <label for="caminhologo" class="control-label">Foto</label>
-                                          <input type="file" id="caminhologo" maxlength="255" name = "caminhologo" >
-                                  </div>
+                           <br/>
+                          <div class="nav-tabs-custom">
 
-                                    @if ($dados->path_foto!="")
-                                        <p></p>
-                                        <div class="col-xs-3">
-                                              <img src="{{ url('/images/users/' . $dados->path_foto) }}" width="160px" height="160px">
-                                              <a href="{{ url('/usuarios/' . $dados->id . '/remover')}}"><i class="fa fa-remove"> Remover Imagem</i> </a>
-                                        </div>
+                            <ul class="nav nav-tabs">
+                              <li class="active"><a href="#tab_1" data-toggle="tab"><b><i class="fa fa-file-image-o"></i>&nbsp;Você pode enviar uma foto...</b></a></li>
+                              <li><a href="#tab_2" data-toggle="tab"><b><i class="fa fa-camera"></i>&nbsp;...ou tirar uma agora pela WebCam</b></a></li>
+                            </ul>
 
-                                    @endif
-                          </div>
+                            <div class="tab-content">
+                                      <!-- TABS-->
+                                      <input id="mydata" type="hidden" name="mydata" value=""/>
+                                      <div class="tab-pane active" id="tab_1">
+
+                                                <div class="row">
+                                                        <div class="col-xs-5">
+                                                                <label for="caminhologo" class="control-label">Foto</label>
+                                                                <input type="file" id="caminhologo" name = "caminhologo"  onchange="checkPhoto(this)">
+                                                                <label id="msg" class="text-danger"></label>
+                                                        </div>
+
+                                                          @if ($dados->path_foto!="")
+                                                              <p></p>
+                                                              <div class="col-xs-4">
+                                                                    <img src="{{ url('/images/users/' . $dados->path_foto) }}" width="160px" height="160px">
+                                                                    <div class="col-xs-4">
+                                                                          <a href="{{ url('/profile/' . $dados->id . '/remover')}}"><i class="fa fa-trash"></i>&nbsp;Remover</a>
+                                                                    </div>
+                                                              </div>
+
+
+                                                          @endif
+                                                </div>
+
+
+                                      </div><!-- /.tab-pane -->
+
+                                      <div class="tab-pane" id="tab_2">
+
+
+                                                    <div class="row">
+                                                                   <div class="col-md-12">
+                                                                          <div class="box box-default">
+
+                                                                                <!--
+                                                                                <div class="box-header">
+                                                                                        <h3 class="box-title">Tirar foto pela WebCam</h3>
+                                                                                </div>
+                                                                                -->
+
+                                                                                <p class="text-warning">Importante! A WebCam apresenta problemas de funcionamento no Google Chrome. Sugerimos utilizar o navegador Firefox.</p>
+
+                                                                                <div class="box-body"><!-- box-body-->
+                                                                                      <div class="row"><!-- row entrada-->
+
+                                                                                              <div class="col-xs-4">
+                                                                                                    <center>
+                                                                                                    <label class="control-label"></label>
+                                                                                                    <center><a href="javascript:void(ativar_webcam())" class="btn btn-primary"><i class="fa fa-power-off"></i> Iniciar WebCam</a></center>
+                                                                                                    <div id="my_camera" style="width:320px; height:240px; border:dotted;"></div>
+                                                                                                    <a href="javascript:void(take_snapshot())" class="btn btn-success"><i class="fa fa-camera"></i> Tirar Foto</a></center>
+                                                                                              </div>
+
+                                                                                              <div class="col-xs-4">
+                                                                                                      <label class="control-label"></label>
+                                                                                                      <center>
+                                                                                                          <label class="control-label">Foto WebCam</label>
+                                                                                                          <div id="my_result" class="row" style="width:320px; height:240px; border:dotted;"></div>
+                                                                                                      </center>
+                                                                                              </div>
+
+                                                                                    </div>
+
+                                                                             </div> <!-- fim body-->
+                                                                     </div>
+                                                                </div>
+                                                             </div>
+
+                                      </div>
+                                      <!--  END TABS-->
+
+                           </div> <!-- TAB CONTENTS -->
+
+                        </div> <!-- nav-tabs-custom -->
 
 
             </div><!-- fim box-body"-->
@@ -224,3 +292,4 @@
    </script>
 
 @endsection
+@include('pessoas.script_pessoas')

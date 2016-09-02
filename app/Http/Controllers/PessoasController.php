@@ -757,54 +757,6 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
 
-                      /*
-                        if ($input['filhos']!="") //Se foi informado um ou varios na combo (do cadastro de pessoas)
-                        {
-
-                            //Pode ser um ou vários, por isso percorre array de inputs gerados
-                            foreach($input['filhos'] as $selected)
-                                {
-                                        if ($selected!="")
-                                        {
-
-                                                $whereForEach =
-                                                [
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'filhos_id' => $selected
-                                                ];
-
-                                                if ($tipo_operacao=="create")  //novo registro
-                                                {
-                                                    $filhos = new \App\Models\membros_filhos();
-                                                }
-                                                else //Alteracao
-                                                {
-                                                    $filhos = \App\Models\membros_filhos::firstOrNew($whereForEach);
-                                                }
-
-                                                $valores =
-                                                [
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'filhos_id' => $selected,
-                                                ];
-
-                                                $filhos->fill($valores)->save();
-                                                $filhos->save();
-
-                                        }
-                                }
-
-
-                            }
-                        */
-
-
-
-
                         /*------------------------------ DADOS PROFISSIONAIS ------------------------------*/
 
                         if ($input['nome_empresa']!="" || $input['endereco_prof']!=""

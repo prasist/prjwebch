@@ -104,6 +104,12 @@ class PerfilController extends Controller
             $dados->path_foto  = $image->getClientOriginalName();
         }
 
+        if ($input['mydata']!="") //Imagem tirada pela webcam
+        {
+
+            $dados->path_foto = str_replace(" ","", (strtolower($input['name']) . date("his")) ) . '_webcam.jpg';
+        }
+
         $dados->save();//-------------FIM - Atualiza Usuario
 
 
@@ -133,6 +139,19 @@ class PerfilController extends Controller
                     }
                 }
          }//-----FIM upload
+
+         if ($input['mydata']!="") //Imagem da webcam
+         {
+             $encoded_data = $input['mydata'];
+
+             $binary_data = base64_decode($encoded_data);
+
+             //caminho onde será gravado
+             $destinationPath = base_path() . '/public/images/users';
+
+             // Salva no path definido, alterando o nome da imagem com o nome da pessoa
+             $result = file_put_contents( $destinationPath . '/' . str_replace(" ","", (strtolower($input['name']) . date("his"))) . '_webcam.jpg', $binary_data );
+         }
 
 
         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');

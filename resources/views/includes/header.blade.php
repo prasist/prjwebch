@@ -114,7 +114,7 @@
                                 <a href="{{ URL::to('profile/' . Auth::user()->id . '/perfil') }}" class="btn btn-default btn-flat"><i class="fa fa-user"></i> Perfil</a>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ url('/logout') }}" class="btn btn-danger btn-flat"><i class="fa fa-power-off"></i> Encerrar Sessão</a>
+                                <a href="{{ url('/logout') }}" class="btn btn-danger"><i class="fa fa-power-off"></i> Encerrar Sessão</a>
                             </div>
                         </li>
                     </ul>

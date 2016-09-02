@@ -68,7 +68,7 @@
 
     </head>
 
-    <body class="hold-transition skin-green sidebar-mini" ng-controller="ctrl">
+    <body class="hold-transition skin-green sidebar-mini">
 
         <div class="wrapper">
             @include('includes.header')
@@ -483,7 +483,7 @@
 
         <script src="{{ asset('/dist/js/bootstrap-treeview.min.js')}}"></script>
         <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>-->
-        <script src="{{ asset('/js/controller.js')}}"></script>
+        <!--<script src="{{ asset('/js/controller.js')}}"></script>-->
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.js')}}"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
