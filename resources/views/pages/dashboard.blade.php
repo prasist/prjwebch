@@ -13,7 +13,7 @@
                 <p>Pessoas Cadastradas</p>
             </div>
             <div class="icon">
-                <i class="ion ion-bag"></i>
+                <i class="ion ion-person-stalker"></i>
             </div>
             <!--<a href="#" class="small-box-footer">Mais <i class="fa fa-arrow-circle-right"></i></a>-->
         </div>
@@ -26,7 +26,7 @@
                 <p>Membros</p>
             </div>
             <div class="icon">
-                <i class="ion ion-stats-bars"></i>
+                <i class="ion ion-ios-body"></i>
             </div>
 
         </div>
@@ -39,7 +39,7 @@
                 <p>Aniversariantes no mês</p>
             </div>
             <div class="icon">
-                <i class="ion ion-person-add"></i>
+                <i class="ion ion-android-star-outline"></i>
             </div>
             <a href="{{ url('/relpessoas/aniversariantes/mes')}}" class="small-box-footer">Listar <i class="fa fa-arrow-circle-right"></i></a>
 
@@ -53,7 +53,7 @@
                 <p>Cadastros Inativos</p>
             </div>
             <div class="icon">
-                <i class="ion ion-pie-graph"></i>
+                <i class="ion ion-alert"></i>
             </div>
 
         </div>
