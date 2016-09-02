@@ -56,7 +56,11 @@ class CelulasController extends Controller
 
                    if  ($value->foto1!="")
                    {
-                          $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->foto1 . "' width='40' height='40' alt='Pessoa' />";
+                          $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->foto1 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
+                   }
+                   else
+                   {
+                         $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/contact-person.png' class='img-circle' width='40' height='40' alt='Pessoa' />";
                    }
 
 
@@ -64,7 +68,7 @@ class CelulasController extends Controller
 
 
                            //---------------------------------------------NIVEL2-----------------------------------------------------
-                           $strSql = " SELECT Distinct nome_2, celulas_nivel2_id, celulas_nivel1_id FROM view_estruturas";
+                           $strSql = " SELECT Distinct nome_2, celulas_nivel2_id, celulas_nivel1_id, foto2 FROM view_estruturas";
                            $strSql .=  " WHERE ";
                            $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
                            $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
@@ -76,10 +80,20 @@ class CelulasController extends Controller
                             {
 
                                   $linha .= "      <li>";
+
+                                 if  ($value->foto2!="")
+                                 {
+                                        $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->foto2 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
+                                 }
+                                 else
+                                 {
+                                       $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/contact-person.png' class='img-circle' width='40' height='40' alt='Pessoa' />";
+                                 }
+
                                   $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_2 . "</a>";
 
                                    //NIVEL3
-                                   $strSql = " SELECT Distinct nome_3, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id FROM view_estruturas";
+                                   $strSql = " SELECT Distinct nome_3, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id, foto3 FROM view_estruturas";
                                    $strSql .=  " WHERE ";
                                    $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
                                    $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
@@ -92,11 +106,21 @@ class CelulasController extends Controller
                                     {
 
                                           $linha .= "      <li>";
+
+                                         if  ($value->foto3!="")
+                                         {
+                                                $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->foto3 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
+                                         }
+                                         else
+                                        {
+                                               $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/contact-person.png' class='img-circle' width='40' height='40' alt='Pessoa' />";
+                                        }
+
                                           $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_3 . "</a>";
 
 
                                            //NIVEL4
-                                           $strSql = " SELECT Distinct nome_4, celulas_nivel4_id, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id FROM view_estruturas";
+                                           $strSql = " SELECT Distinct nome_4, celulas_nivel4_id, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id,foto4 FROM view_estruturas";
                                            $strSql .=  " WHERE ";
                                            $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
                                            $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
@@ -109,10 +133,20 @@ class CelulasController extends Controller
                                             {
 
                                                   $linha .= "      <li>";
+
+                                                  if  ($value->foto4!="")
+                                                 {
+                                                        $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->foto4 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
+                                                 }
+                                                 else
+                                                {
+                                                       $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/contact-person.png' class='img-circle' width='40' height='40' alt='Pessoa' />";
+                                                }
+
                                                   $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_4 . "</a>";
 
                                                            //NIVEL5
-                                                           $strSql = " SELECT Distinct nome, id, celulas_nivel4_id, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id FROM view_estruturas";
+                                                           $strSql = " SELECT Distinct nome, id, celulas_nivel4_id, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id,foto5 FROM view_estruturas";
                                                            $strSql .=  " WHERE ";
                                                            $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
                                                            $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
@@ -125,10 +159,20 @@ class CelulasController extends Controller
                                                             {
 
                                                                   $linha .= "      <li>";
+
+                                                                  if  ($value->foto5!="")
+                                                                  {
+                                                                        $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->foto5 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
+                                                                  }
+                                                                  else
+                                                                  {
+                                                                         $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/contact-person.png' class='img-circle' width='40' height='40' alt='Pessoa' />";
+                                                                  }
+
                                                                   $linha .= "           <i class='fa  fa-users'></i>&nbsp;<a href='#'>" . $value->nome . "</a>";
 
                                                                               //LIDERES
-                                                                               $strSql = " SELECT lider_pessoas_id, razaosocial , ";
+                                                                               $strSql = " SELECT lider_pessoas_id, razaosocial , caminhofoto, ";
                                                                                $strSql .=  " ( SELECT count(cp.pessoas_id) AS count ";
                                                                                $strSql .=  "     FROM celulas_pessoas cp ";
                                                                                $strSql .=  "       JOIN celulas c ON cp.celulas_id = c.id AND cp.empresas_id = c.empresas_id AND cp.empresas_clientes_cloud_id = c.empresas_clientes_cloud_id ";
@@ -147,6 +191,16 @@ class CelulasController extends Controller
                                                                                 foreach ($lideres as $key => $value)
                                                                                 {
                                                                                       $linha .= "      <li>";
+
+                                                                                      if  ($value->caminhofoto!="")
+                                                                                      {
+                                                                                             $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->caminhofoto . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
+                                                                                      }
+                                                                                      else
+                                                                                      {
+                                                                                             $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/contact-person.png' class='img-circle' width='40' height='40' alt='Pessoa' />";
+                                                                                      }
+
                                                                                       $linha .= "        <a href='#'>" . $value->razaosocial .  "<span class='pull-right badge bg-green'>" . $value->tot . " participantes.</span></a>";
                                                                                       $linha .= "        ";
                                                                                       $linha .= "     </li>";
