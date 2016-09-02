@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html lang="pt-br">
     <head>
         <meta charset="UTF-8">
         <title>SIGMA3 - Sistema para Igrejas</title>
@@ -38,6 +38,10 @@
 
         <link href="{{ asset('/dist/css/bootstrap-switch.min.css')}}" rel="stylesheet"/>
         <link href="{{ asset('/dist/css/bootstrap-treeview.min.css')}}" rel="stylesheet"/>
+
+        <link href="{{ asset('/dist/css/pace.min.css')}}" rel="stylesheet"/>
+
+
 
 
 
@@ -147,8 +151,18 @@
 
 <script type="text/javascript">
 
+        // To make Pace works on Ajax calls
+            $(document).ajaxStart(function() { Pace.restart(); });
+            $('.ajax').click(function(){
+                $.ajax({url: '#', success: function(result){
+                    $('.ajax-content').html('<hr>Ajax Request Completed !');
+                }});
+            });
+
+
                   $(function ()
                   {
+
 
                             $(".pick-a-color").pickAColor({
                               showHexInput            : false,
@@ -468,7 +482,7 @@
         </script>
 
         <script src="{{ asset('/dist/js/bootstrap-treeview.min.js')}}"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>-->
         <script src="{{ asset('/js/controller.js')}}"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.js')}}"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
@@ -487,7 +501,7 @@
         <script src="{{ asset('/dist/js/pages/dashboard.js')}}"></script>
         <script src="{{ asset('/dist/js/hopscotch.min.js')}}"></script>
         <script src="{{ asset('/js/tour_sigma3.js')}}"></script>
-        <script src="{{ asset('/js/app_angular.js')}}"></script>
+        <!--<script src="{{ asset('/js/app_angular.js')}}"></script>-->
         <script src="{{ asset('/js/typeahead.min.js')}}"></script>
         <script src="{{ asset('/dist/webcam.js')}}"></script>
         <script src="{{ asset('/dist/js/bootstrap-checkbox.min.js')}}" defer></script>
@@ -498,6 +512,7 @@
         <script src="{{ asset('/dist/js/bootstrap-timepicker.min.js')}}"></script>
 
         <script src="{{ asset('/dist/js/treeview.js')}}"></script>
+        <script src="{{ asset('/dist/js/pace.min.js')}}"></script>
 
 
 
