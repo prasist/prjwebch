@@ -58,20 +58,30 @@
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-bell-o"></i>
-                    <span class="label label-warning"></span>
+                    @if (isset($avisos))
+                            @if (count($avisos)>0)
+                                    <span class="label label-danger">{!!count($avisos)!!}</span>
+                           @endif
+                    @endif
                     </a>
                     <ul class="dropdown-menu">
                         <li class="header">Notificações</li>
                         <li>
 
                             <ul class="menu">
-                                <li>
-
-                                </li>
+                                @if (isset($avisos))
+                                        @foreach($avisos as $item)
+                                        <li>
+                                                <a href="{{url('/avisos/ler/' . $item->id . '')}}">
+                                                        <i class="fa fa-bullhorn text-aqua"></i>&nbsp;{{$item->titulo}}
+                                                </a>
+                                        </li>
+                                        @endforeach
+                                @endif
 
                             </ul>
                         </li>
-                        <li class="footer"><a href="#">Ver Todas</a></li>
+                        <li class="footer"><a href="{{url('/avisos/listar')}}">Ver Todas</a></li>
                     </ul>
                 </li>
 

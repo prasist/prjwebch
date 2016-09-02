@@ -49,6 +49,11 @@
           return view('suporte.suporte');
     });
 
+    //Avisos dos sistema
+   Route::get('/avisos/ler/{id}','AvisosController@show');
+
+   Route::get('/avisos/listar','AvisosController@listar');
+
    Route::get('/celulas/buscar_estruturas','CelulasController@getEstruturas');
 
    //Alteracao dados membro  - area do membro

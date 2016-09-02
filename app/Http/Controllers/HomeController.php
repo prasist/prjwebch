@@ -76,6 +76,8 @@ class HomeController extends Controller
         if (usuario::find(Auth::user()->id))
        {
 
+            $avisos='';
+
             //Busca ID do cliente cloud e ID da empresa
             $this->dados_login = usuario::find(Auth::user()->id);
 
@@ -153,6 +155,8 @@ class HomeController extends Controller
 
             if (Auth::user()->membro!="S")
             {
+
+                        $avisos = \DB::select('select * from avisos where id not in (select avisos_id from log_avisos where users_id = ' .  Auth::user()->id . ')');
 
                         //Verificar se usuario logado é LIDER DE CELULA
                         $funcoes = new  \App\Functions\FuncoesGerais();
@@ -278,7 +282,8 @@ class HomeController extends Controller
                         'total_familias'=>$total_familias,
                         'pessoas_sexo'=>$pessoas_sexo,
                         'pessoas_status'=>$pessoas_status,
-                        'pessoas_estadoscivis'=>$pessoas_estadoscivis
+                        'pessoas_estadoscivis'=>$pessoas_estadoscivis,
+                        'avisos'=>$avisos
                     ]);
             }
 
