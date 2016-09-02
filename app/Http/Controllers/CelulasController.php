@@ -56,7 +56,7 @@ class CelulasController extends Controller
 
                    if  ($value->foto1!="")
                    {
-                          $linha .= "<img src='http://app.sigma3sistemas.com.br/prjwebch/public/images/persons/" . $value->foto1 . "' width='40' height='40' alt='Pessoa' />";
+                          $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->foto1 . "' width='40' height='40' alt='Pessoa' />";
                    }
 
 
