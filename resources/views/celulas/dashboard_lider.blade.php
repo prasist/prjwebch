@@ -147,6 +147,18 @@
 
                                 </ul>
                           </div>
+
+                          @else
+                            <div class="col-xs-6">
+                                  <h4>&nbsp;&nbsp;&nbsp;&nbsp;Resumo Encontros (Mês Corrente)</h4>
+                                  <ul class="nav nav-stacked">
+
+                                        <li>
+                                            Sem dados estatísticos dos encontros até o momento.
+                                        </li>
+                                  </ul>
+                           </div>
+
                           @endif
 
                           @if ($participantes_presenca)
