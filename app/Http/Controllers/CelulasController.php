@@ -58,10 +58,6 @@ class CelulasController extends Controller
                    {
                           $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->foto1 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
                    }
-                   else
-                   {
-                         $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/contact-person.png' class='img-circle' width='40' height='40' alt='Pessoa' />";
-                   }
 
 
                    $linha .= "             <i class='fa  fa-sitemap'></i>&nbsp;<a href='#'>" . $value->nome_1 . "</a>";
@@ -85,10 +81,6 @@ class CelulasController extends Controller
                                  {
                                         $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->foto2 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
                                  }
-                                 else
-                                 {
-                                       $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/contact-person.png' class='img-circle' width='40' height='40' alt='Pessoa' />";
-                                 }
 
                                   $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_2 . "</a>";
 
@@ -111,10 +103,6 @@ class CelulasController extends Controller
                                          {
                                                 $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->foto3 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
                                          }
-                                         else
-                                        {
-                                               $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/contact-person.png' class='img-circle' width='40' height='40' alt='Pessoa' />";
-                                        }
 
                                           $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_3 . "</a>";
 
@@ -138,10 +126,6 @@ class CelulasController extends Controller
                                                  {
                                                         $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->foto4 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
                                                  }
-                                                 else
-                                                {
-                                                       $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/contact-person.png' class='img-circle' width='40' height='40' alt='Pessoa' />";
-                                                }
 
                                                   $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_4 . "</a>";
 
@@ -163,10 +147,6 @@ class CelulasController extends Controller
                                                                   if  ($value->foto5!="")
                                                                   {
                                                                         $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->foto5 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
-                                                                  }
-                                                                  else
-                                                                  {
-                                                                         $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/contact-person.png' class='img-circle' width='40' height='40' alt='Pessoa' />";
                                                                   }
 
                                                                   $linha .= "           <i class='fa  fa-users'></i>&nbsp;<a href='#'>" . $value->nome . "</a>";
@@ -195,10 +175,6 @@ class CelulasController extends Controller
                                                                                       if  ($value->caminhofoto!="")
                                                                                       {
                                                                                              $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->caminhofoto . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
-                                                                                      }
-                                                                                      else
-                                                                                      {
-                                                                                             $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/contact-person.png' class='img-circle' width='40' height='40' alt='Pessoa' />";
                                                                                       }
 
                                                                                       $linha .= "        <a href='#'>" . $value->razaosocial .  "<span class='pull-right badge bg-green'>" . $value->tot . " participantes.</span></a>";
