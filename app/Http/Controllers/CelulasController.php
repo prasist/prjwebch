@@ -183,7 +183,7 @@ class CelulasController extends Controller
                                                                                              $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->caminhofoto . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
                                                                                       }
 
-                                                                                      $linha .= "        <a href='#'>" . $value->razaosocial .  "<span class='pull-right badge bg-green'>" . $value->tot . " participantes.</span><span class='pull-right badge bg-yellow'>" . $value->tot_batizados . " batizados.</span></a>";
+                                                                                      $linha .= "        <a href='#'>" . $value->razaosocial .  "<span class='pull-right badge bg-yellow'>" . $value->tot_batizados . " batizados.</span><span class='pull-right badge bg-green'>" . $value->tot . " participantes.</span></a>";
                                                                                       $linha .= "        ";
                                                                                       $linha .= "     </li>";
                                                                                 }
