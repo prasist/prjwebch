@@ -38,61 +38,273 @@ class CelulasController extends Controller
     public function getEstruturas()
     {
 
-            $strSql = " SELECT celulas_nivel1_id, celulas_nivel2_id, celulas_nivel3_id, celulas_nivel4_id, id, id_lider, nome_1, nome_2, nome_3, nome_4, nome, razaosocial  FROM view_estruturas";
+
+            $strSql = " SELECT Distinct nome_1, celulas_nivel1_id  FROM view_estruturas";
             $strSql .=  " WHERE ";
             $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
             $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
 
-            $estruturas = \DB::select($strSql);
+            $level1 = \DB::select($strSql);
 
-            $montar = array();
-
-            foreach ($estruturas as $key => $value)
+            $linha = "<h4><ul class='treeview2'>";
+            foreach ($level1 as $key => $value)
             {
 
-                    $montar = array($value->nome_1 =>
-                                                                                    array($value->nome_2 =>
-                                                                                                                                array($value->nome_3 =>
-                                                                                                                                                                                array($value->nome_4 =>
-                                                                                                                                                                                                                                array($value->nome => $value->razaosocial))))
-                                         );
+                   //NIVEL1
+                   $linha .= "      <li>";
+                   $linha .= "             <i class='fa  fa-sitemap'></i>&nbsp;<a href='#'>" . $value->nome_1 . "</a>";
 
 
+                           //---------------------------------------------NIVEL2-----------------------------------------------------
+                           $strSql = " SELECT Distinct nome_2, celulas_nivel2_id, celulas_nivel1_id FROM view_estruturas";
+                           $strSql .=  " WHERE ";
+                           $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+                           $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+                           $strSql .=  " AND celulas_nivel1_id = " . $value->celulas_nivel1_id;
+                           $level2 = \DB::select($strSql);
+
+                            $linha .= "<ul>";
+                            foreach ($level2 as $key => $value)
+                            {
+
+                                  $linha .= "      <li>";
+                                  $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_2 . "</a>";
+
+                                   //NIVEL3
+                                   $strSql = " SELECT Distinct nome_3, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id FROM view_estruturas";
+                                   $strSql .=  " WHERE ";
+                                   $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+                                   $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+                                   $strSql .=  " AND celulas_nivel2_id = " . $value->celulas_nivel2_id;
+
+                                    $level3 = \DB::select($strSql);
+
+                                    $linha .= "<ul>";
+                                    foreach ($level3 as $key => $value)
+                                    {
+
+                                          $linha .= "      <li>";
+                                          $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_3 . "</a>";
+
+
+                                           //NIVEL4
+                                           $strSql = " SELECT Distinct nome_4, celulas_nivel4_id, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id FROM view_estruturas";
+                                           $strSql .=  " WHERE ";
+                                           $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+                                           $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+                                           $strSql .=  " AND celulas_nivel3_id = " . $value->celulas_nivel3_id;
+
+                                            $level4 = \DB::select($strSql);
+
+                                            $linha .= "<ul>";
+                                            foreach ($level4 as $key => $value)
+                                            {
+
+                                                  $linha .= "      <li>";
+                                                  $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_4 . "</a>";
+
+                                                           //NIVEL5
+                                                           $strSql = " SELECT Distinct nome, id, celulas_nivel4_id, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id FROM view_estruturas";
+                                                           $strSql .=  " WHERE ";
+                                                           $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+                                                           $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+                                                           $strSql .=  " AND celulas_nivel4_id = " . $value->celulas_nivel4_id;
+
+                                                            $level5 = \DB::select($strSql);
+
+                                                            $linha .= "<ul>";
+                                                            foreach ($level5 as $key => $value)
+                                                            {
+
+                                                                  $linha .= "      <li>";
+                                                                  $linha .= "           <i class='fa  fa-users'></i>&nbsp;<a href='#'>" . $value->nome . "</a>";
+
+                                                                              //LIDERES
+                                                                               $strSql = " SELECT lider_pessoas_id, razaosocial , ";
+                                                                               $strSql .=  " ( SELECT count(cp.pessoas_id) AS count ";
+                                                                               $strSql .=  "     FROM celulas_pessoas cp ";
+                                                                               $strSql .=  "       JOIN celulas c ON cp.celulas_id = c.id AND cp.empresas_id = c.empresas_id AND cp.empresas_clientes_cloud_id = c.empresas_clientes_cloud_id ";
+                                                                               $strSql .=  "    WHERE cp.empresas_id = celulas.empresas_id AND cp.empresas_clientes_cloud_id = celulas.empresas_clientes_cloud_id AND cp.celulas_id = celulas.id) AS tot ";
+                                                                               $strSql .=  " from celulas";
+                                                                               $strSql .=  " inner join pessoas on pessoas.id = celulas.lider_pessoas_id ";
+                                                                               $strSql .=  " WHERE ";
+                                                                               $strSql .=  " celulas.empresas_id = " . $this->dados_login->empresas_id . " AND ";
+                                                                               $strSql .=  " celulas.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+                                                                               $strSql .=  " AND celulas_nivel5_id = " . $value->id;
+                                                                               $strSql .=  " order by razaosocial ";
+
+                                                                               $lideres = \DB::select($strSql);
+
+                                                                                $linha .= "<ul>";
+                                                                                foreach ($lideres as $key => $value)
+                                                                                {
+                                                                                      $linha .= "      <li>";
+                                                                                      $linha .= "        <a href='#'>" . $value->razaosocial .  "<span class='pull-right badge bg-green'>" . $value->tot . " participantes.</span></a>";
+                                                                                      $linha .= "        ";
+                                                                                      $linha .= "     </li>";
+                                                                                }
+                                                                                $linha .= "</ul>";
+
+                                                                  $linha .= "     </li>";
+
+                                                            }
+                                                            $linha .= "</ul>";
+
+                                                    $linha .= "     </li>";
+                                            }
+                                            $linha .= "</ul>";
+
+                                         $linha .= "     </li>";
+                                    }
+
+                                    $linha .= "</ul>";
+                                $linha .= "     </li>";
+
+                            }
+                            $linha .= "</ul>";
+
+                $linha .= "     </li>";
             }
 
-            dd($montar);
+            $linha .= "</ul></h4>";
 
-/*
-            $tree = [
-                {
-                  text: "Parent 1",
-                  nodes: [
-
-                    {
-                      text: "Child 1",
-                        nodes: [
-                          {
-                            text: "Grandchild 1"
-                          },
-                          {
-                            text: "Grandchild 2"
-                          }
-                        ] //fim node filho
-                    },
-
-                    {
-                      text: "Child 2"
-                    }
-
-                  ] //fim node
-
-                }
-
-              ];*/
-
-        return $tree;
+        return $linha;
 
     }
+
+
+  public function getEstruturasOrganograma()
+    {
+
+
+            $strSql = " SELECT Distinct nome_1, celulas_nivel1_id  FROM view_estruturas";
+            $strSql .=  " WHERE ";
+            $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+            $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+
+            $level1 = \DB::select($strSql);
+
+            $linha = "<ul id='org'>";
+
+            foreach ($level1 as $key => $value)
+            {
+
+                   //NIVEL1
+                   $linha .= "      <li>";
+                   $linha .= "             <a href='#'>" . $value->nome_1 . "</a>";
+
+
+                           //---------------------------------------------NIVEL2-----------------------------------------------------
+                           $strSql = " SELECT Distinct nome_2, celulas_nivel2_id, celulas_nivel1_id FROM view_estruturas";
+                           $strSql .=  " WHERE ";
+                           $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+                           $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+                           $strSql .=  " AND celulas_nivel1_id = " . $value->celulas_nivel1_id;
+                           $level2 = \DB::select($strSql);
+
+                            $linha .= "<ul>";
+                            foreach ($level2 as $key => $value)
+                            {
+
+                                  $linha .= "      <li>";
+                                  $linha .= "             <a href='#'>" . $value->nome_2 . "</a>";
+
+                                   //NIVEL3
+                                   $strSql = " SELECT Distinct nome_3, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id FROM view_estruturas";
+                                   $strSql .=  " WHERE ";
+                                   $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+                                   $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+                                   $strSql .=  " AND celulas_nivel2_id = " . $value->celulas_nivel2_id;
+
+                                    $level3 = \DB::select($strSql);
+
+                                    $linha .= "<ul>";
+                                    foreach ($level3 as $key => $value)
+                                    {
+
+                                          $linha .= "      <li>";
+                                          $linha .= "             <a href='#'>" . $value->nome_3 . "</a>";
+
+
+                                           //NIVEL4
+                                           $strSql = " SELECT Distinct nome_4, celulas_nivel4_id, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id FROM view_estruturas";
+                                           $strSql .=  " WHERE ";
+                                           $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+                                           $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+                                           $strSql .=  " AND celulas_nivel3_id = " . $value->celulas_nivel3_id;
+
+                                            $level4 = \DB::select($strSql);
+
+                                            $linha .= "<ul>";
+                                            foreach ($level4 as $key => $value)
+                                            {
+
+                                                  $linha .= "      <li>";
+                                                  $linha .= "             <a href='#'>" . $value->nome_4 . "</a>";
+
+                                                           //NIVEL5
+                                                           $strSql = " SELECT Distinct nome, id, celulas_nivel4_id, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id FROM view_estruturas";
+                                                           $strSql .=  " WHERE ";
+                                                           $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+                                                           $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+                                                           $strSql .=  " AND celulas_nivel4_id = " . $value->celulas_nivel4_id;
+
+                                                            $level5 = \DB::select($strSql);
+
+                                                            $linha .= "<ul>";
+                                                            foreach ($level5 as $key => $value)
+                                                            {
+
+                                                                  $linha .= "      <li>";
+                                                                  $linha .= "           <a href='#'>" . $value->nome . "</a>";
+
+                                                                              //LIDERES
+                                                                               $strSql = " SELECT lider_pessoas_id, razaosocial  from celulas";
+                                                                               $strSql .=  " inner join pessoas on pessoas.id = celulas.lider_pessoas_id ";
+                                                                               $strSql .=  " WHERE ";
+                                                                               $strSql .=  " celulas.empresas_id = " . $this->dados_login->empresas_id . " AND ";
+                                                                               $strSql .=  " celulas.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+                                                                               $strSql .=  " AND celulas_nivel5_id = " . $value->id;
+                                                                               $strSql .=  " order by razaosocial ";
+
+                                                                               $lideres = \DB::select($strSql);
+
+                                                                                $linha .= "<ul>";
+                                                                                foreach ($lideres as $key => $value)
+                                                                                {
+                                                                                      $linha .= "      <li>";
+                                                                                      $linha .= "        <a href='#'>" . $value->razaosocial . "</a>";
+                                                                                      $linha .= "     </li>";
+                                                                                }
+                                                                                $linha .= "</ul>";
+
+                                                                  $linha .= "     </li>";
+
+                                                            }
+                                                            $linha .= "</ul>";
+
+                                                    $linha .= "     </li>";
+                                            }
+                                            $linha .= "</ul>";
+
+                                         $linha .= "     </li>";
+                                    }
+
+                                    $linha .= "</ul>";
+                                $linha .= "     </li>";
+
+                            }
+                            $linha .= "</ul>";
+
+                $linha .= "     </li>";
+            }
+
+            $linha .= "</ul>";
+
+        return $linha;
+
+    }
+
 
     public function buscar_dados($id)
     {
@@ -507,9 +719,14 @@ class CelulasController extends Controller
                 $strSql .=  " to_char(to_date(data_encontro, 'yyyy-MM-dd'), 'DD-MM-YYYY') < to_char( now(), 'yyyy-MM-dd' ) ";
                 $aberto = \DB::select($strSql);
 
+                $gerar_treeview = '';
+
             }
             else
             {
+
+                $gerar_treeview = $this->getEstruturas();
+                //$gerar_treeview = $this->getEstruturasOrganograma();
                 $qual_pagina = ".dashboard";
                 $participantes_presenca = '';
                 $dados='';
@@ -540,7 +757,8 @@ class CelulasController extends Controller
                    'lideres'=>$lideres,
                    'var_download'=>'',
                    'var_mensagem'=>'',
-                   'participantes_presenca'=> $participantes_presenca
+                   'participantes_presenca'=> $participantes_presenca,
+                   'gerar_treeview'=>$gerar_treeview
                 ]);
         }
 

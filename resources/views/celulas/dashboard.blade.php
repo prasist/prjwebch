@@ -9,6 +9,28 @@
 
 
 <!-- Small boxes (Stat box) -->
+<div class="row">
+            <div class="col-md-12">
+              <!-- Widget: user widget style 1 -->
+              <div class="box box-widget">
+
+                <div class="box-footer no-padding">
+
+                    <div class="row">
+                            <div class="col-md-12">
+                             <div class="box-header with-border">
+                                  <h3 class="box-title">Árvore Hierárquica da Rede</h3>
+                                    &nbsp;(<i class="text">Clique para expandir</i>)
+                                   {!! $gerar_treeview !!}
+                              </div>
+
+                            </div>
+                      </div>
+
+</div>
+</div>
+</div>
+</div>
 
 <div class="row">
     <div class="col-lg-12 col-xs-8">
@@ -23,20 +45,19 @@
                         <!-- TABS-->
                         <div class="tab-pane active" id="tab_1">
 
+
+
                                 <div class="row">
 
-                                      <div class="col-lg-3 col-xs-6">
+                                      <div class="col-lg-5 col-xs-8">
                                               <div class="inner">
-                                                   <center><h4>Total Participantes</h4>
-
-                                                   </center>
-
+                                                   <center><h4>Total Participantes</h4></center>
                                               </div>
 
                                               <div id="tipo_pessoa" style="height: 250px;"></div>
                                       </div>
 
-                                      <div class="col-lg-3 col-xs-6">
+                                      <div class="col-lg-5 col-xs-8">
                                               <div class="inner">
                                                    <center><h4>Quantidade de Visitantes</h4>
                                                    <p>Últimos 3 meses</p>
@@ -45,13 +66,9 @@
                                               <div id="visitantes" style="height: 250px;"></div>
                                       </div>
 
-                                      <!--
-
-                                      <div class="col-lg-4 col-xs-7">
-                                              <div id="tree"></div>
-                                      </div>-->
 
                                 </div><!-- /.row -->
+
 
                         </div><!-- /.tab-pane -->
 
@@ -84,7 +101,7 @@
                 </button>
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
             </div>
-        </div>
+          </div>
 
         <!-- /.box-header -->
         <div class="box-body">
@@ -203,25 +220,9 @@
 
 <script type="text/javascript">
 
-  function getTree() {
-        // Some logic to retrieve, or generate tree structure
-
-        var urlGetUser = '{!! url("/celulas/buscar_estruturas/") !!}';
-
-        $.getJSON(urlGetUser, function( data, status )
-        {
-                console.log(data);
-                return data;
-        });
-
-  }
 
     $(document).ready(function(){
 
-
-
-
-       $('#tree').treeview({data: getTree()});
 
        $("#menu_celulas").addClass("treeview active");
 

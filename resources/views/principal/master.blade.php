@@ -40,6 +40,7 @@
         <link href="{{ asset('/dist/css/bootstrap-treeview.min.css')}}" rel="stylesheet"/>
 
 
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -53,6 +54,12 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" />
 
         <link href="{{ asset('/dist/css/pick-a-color-1.1.8.min.css')}}" rel="stylesheet"/>
+
+        <link href="{{ asset('/dist/css/treeview.css')}}" rel="stylesheet"/>
+
+
+        <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>-->
+
 
 
     </head>
@@ -488,7 +495,11 @@
         <script src="{{ asset('/dist/js/autoNumeric-min.js')}}"></script> <!-- monetarios-->
         <script src="{{ asset('/dist/js/bootstrap-switch.min.js')}}"></script>
         <!-- bootstrap time picker -->
-        <script src="{{ asset('/dist/js/bootstrap-timepicker.min.js')}}"></script> <!-- monetarios-->
+        <script src="{{ asset('/dist/js/bootstrap-timepicker.min.js')}}"></script>
+
+        <script src="{{ asset('/dist/js/treeview.js')}}"></script>
+
+
 
 
         @if (\Session::get('membro')=='')
