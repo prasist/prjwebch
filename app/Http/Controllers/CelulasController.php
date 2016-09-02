@@ -39,12 +39,12 @@ class CelulasController extends Controller
     {
 
 
+            //Busca primeiro nivel das estruturas
             $strSql = " SELECT Distinct nome_1, celulas_nivel1_id, foto1  FROM view_estruturas";
             $strSql .=  " WHERE ";
             $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
             $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
 
-            //dd($strSql);
             $level1 = \DB::select($strSql);
 
             $linha = "<h4><ul class='treeview2'>";
@@ -157,6 +157,12 @@ class CelulasController extends Controller
                                                                                $strSql .=  "     FROM celulas_pessoas cp ";
                                                                                $strSql .=  "       JOIN celulas c ON cp.celulas_id = c.id AND cp.empresas_id = c.empresas_id AND cp.empresas_clientes_cloud_id = c.empresas_clientes_cloud_id ";
                                                                                $strSql .=  "    WHERE cp.empresas_id = celulas.empresas_id AND cp.empresas_clientes_cloud_id = celulas.empresas_clientes_cloud_id AND cp.celulas_id = celulas.id) AS tot ";
+                                                                               $strSql .=  "    , ";
+                                                                               $strSql .=  "     ( SELECT count(mh.pessoas_id) AS count      ";
+                                                                               $strSql .=  "     FROM celulas_pessoas cp          ";
+                                                                               $strSql .=  "     JOIN celulas c ON cp.celulas_id = c.id AND cp.empresas_id = c.empresas_id AND cp.empresas_clientes_cloud_id = c.empresas_clientes_cloud_id     ";
+                                                                               $strSql .=  "     JOIN membros_historicos mh ON mh.pessoas_id = cp.pessoas_id AND mh.empresas_id = cp.empresas_id AND mh.empresas_clientes_cloud_id = cp.empresas_clientes_cloud_id     ";
+                                                                               $strSql .=  "     WHERE mh.empresas_id = celulas.empresas_id AND mh.empresas_clientes_cloud_id = celulas.empresas_clientes_cloud_id AND cp.celulas_id = celulas.id and isnull(mh.data_batismo,'') = '') AS tot_batizados  ";
                                                                                $strSql .=  " from celulas";
                                                                                $strSql .=  " inner join pessoas on pessoas.id = celulas.lider_pessoas_id ";
                                                                                $strSql .=  " WHERE ";
@@ -177,7 +183,7 @@ class CelulasController extends Controller
                                                                                              $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->caminhofoto . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
                                                                                       }
 
-                                                                                      $linha .= "        <a href='#'>" . $value->razaosocial .  "<span class='pull-right badge bg-green'>" . $value->tot . " participantes.</span></a>";
+                                                                                      $linha .= "        <a href='#'>" . $value->razaosocial .  "<span class='pull-right badge bg-green'>" . $value->tot . " participantes.</span><span class='pull-right badge bg-yellow'>" . $value->tot_batizados . " batizados.</span></a>";
                                                                                       $linha .= "        ";
                                                                                       $linha .= "     </li>";
                                                                                 }
