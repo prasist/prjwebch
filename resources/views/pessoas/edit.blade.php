@@ -551,6 +551,8 @@
 
                                                                   @endif
 
+                                                                  <p class="text-warning">Importante! A WebCam apresenta problemas de funcionamento no Google Chrome. Sugerimos utilizar o navegador Firefox.</p>
+
                                                                     <div class="col-xs-4">
                                                                           <center>
                                                                           <label class="control-label"></label>

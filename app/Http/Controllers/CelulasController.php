@@ -39,11 +39,12 @@ class CelulasController extends Controller
     {
 
 
-            $strSql = " SELECT Distinct nome_1, celulas_nivel1_id  FROM view_estruturas";
+            $strSql = " SELECT Distinct nome_1, celulas_nivel1_id, foto1  FROM view_estruturas";
             $strSql .=  " WHERE ";
             $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
             $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
 
+            //dd($strSql);
             $level1 = \DB::select($strSql);
 
             $linha = "<h4><ul class='treeview2'>";
@@ -52,6 +53,13 @@ class CelulasController extends Controller
 
                    //NIVEL1
                    $linha .= "      <li>";
+
+                   if  ($value->foto1!="")
+                   {
+                          $linha .= "<img src='http://app.sigma3sistemas.com.br/prjwebch/public/images/persons/" . $value->foto1 . "' width='40' height='40' alt='Pessoa' />";
+                   }
+
+
                    $linha .= "             <i class='fa  fa-sitemap'></i>&nbsp;<a href='#'>" . $value->nome_1 . "</a>";
 
 
