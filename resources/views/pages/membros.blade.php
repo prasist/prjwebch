@@ -33,7 +33,7 @@
                     <li class="list-group-item">
 
                        @if ($materiais)
-                               @if ($materiais[0]->data_encontro==date("Y-m-d"))
+                               @if ($materiais[0]->data_encontro_formatada==date("d-m-Y"))
                                   <b>Oba, hoje é dia de Célula !!!!</b>
 
                                   @if ($presenca!=null)
@@ -57,6 +57,7 @@
                                   <br/>
 
                             @endif
+
                       @endif
 
 

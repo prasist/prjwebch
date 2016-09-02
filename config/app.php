@@ -78,7 +78,7 @@ return [
 
     'url' => 'http://localhost',
 
-    'timezone' => 'UTC',
+    'timezone' => 'Brazil/East',
 
     'locale' => 'en',
 

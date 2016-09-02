@@ -222,7 +222,8 @@ class HomeController extends Controller
                              $strSql .=  " ca.empresas_id = " . $this->dados_login->empresas_id . " AND ";
                              $strSql .=  " ca.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
                              $strSql .=  " isnull(ca.encontro_encerrado,'N') = 'N' AND ";
-                             $strSql .=  " ca.data_encontro >=  to_char( now(), 'YYYY-MM-DD' ) ";
+                             $strSql .=  " ca.data_encontro >=  to_char( now(), 'YYYY-MM-DD' ) ORDER BY data_encontro asc";
+
 
                              $materiais = \DB::select($strSql);
 
@@ -232,7 +233,7 @@ class HomeController extends Controller
                                  ->where('empresas_id', $this->dados_login->empresas_id)
                                  ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
                                  ->where('controle_atividades_id', $materiais[0]->controle_id)
-                                 ->where('pessoas_id', $membro[0]->pessoas_id)
+                                 ->where('pessoas_id', $membro[0]->id_membro)
                                  ->get();
 
                                  if ($presenca->count()==0)
