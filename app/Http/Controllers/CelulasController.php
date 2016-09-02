@@ -23,7 +23,7 @@ class CelulasController extends Controller
         $this->formatador = new  \App\Functions\FuncoesGerais();
 
         //Validação de permissão de acesso a pagina
-        if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']) ) //|| Gate::allows('verifica_permissao', [\Config::get('app.controle_atividades'),'acessar'])
+        if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']) || Gate::allows('verifica_permissao', [\Config::get('app.controle_atividades'),'acessar'])) //
         {
             $this->dados_login = \Session::get('dados_login');
 
