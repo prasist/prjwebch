@@ -574,7 +574,7 @@
           }
           else
           {
-              alert('Selecione a Célula e a Data do Encontro');
+              alert('Não há dados para imprimir para a Célula e Data informada.');
           }
       }
 
