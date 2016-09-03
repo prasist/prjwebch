@@ -47,7 +47,7 @@
                                 <div class="row">
 
 
-                                      <div class="col-lg-5 col-xs-8">
+                                      <div class="col-lg-4 col-xs-7">
 
                                               <div class="inner">
                                                    <center><h4>Total Participantes</h4>
@@ -59,7 +59,7 @@
                                               <div id="tipo_pessoa" style="height: 250px;"></div>
                                       </div>
 
-                                      <div class="col-lg-5 col-xs-8">
+                                      <div class="col-lg-4 col-xs-7">
                                               <div class="inner">
                                                    <center><h4>Quantidade de Visitantes</h4>
                                                    <p>Últimos 3 meses</p>
@@ -67,6 +67,57 @@
                                               </div>
                                               <div id="visitantes" style="height: 250px;"></div>
                                       </div>
+
+
+                                        @if ($resumo)
+                                        <div class="col-lg-4 col-xs-7">
+                                            <h4>&nbsp;&nbsp;&nbsp;&nbsp;Resumo Encontros (Mês Corrente)</h4>
+                                            <ul class="nav nav-stacked">
+
+                                                  <li>
+                                                      <a href="#">&nbsp;Total Geral Presentes
+                                                          <span class="pull-right badge bg-green">{!! $resumo[0]->total_geral !!}</span>
+                                                      </a>
+                                                  </li>
+
+                                                  <ul style="list-style-type:none">
+                                                        <li>
+                                                            <i>Visitantes</i><span class="pull-right badge bg-blue">{!! $resumo[0]->total_visitantes !!}</span>
+                                                        </li>
+
+                                                        <li>
+                                                            <i>Membros</i>
+                                                            <span class="pull-right badge bg-yellow">{!! $resumo[0]->total_membros !!}</span>
+                                                        </li>
+
+                                                  </ul>
+
+                                                  <br/>
+                                                  @foreach($resumo_perguntas as $item)
+                                                  <li>
+                                                      <a href="#">&nbsp;{!! $item->pergunta !!}
+                                                          <span class="pull-right badge bg-blue">{!! $item->total !!}</span>
+                                                      </a>
+                                                  </li>
+                                                  @endforeach
+
+                                              </ul>
+                                        </div>
+
+                                        @else
+                                          <div class="col-lg-4 col-xs-7">
+                                                <h4>&nbsp;&nbsp;&nbsp;&nbsp;Resumo Encontros (Mês Corrente)</h4>
+                                                <ul class="nav nav-stacked">
+
+                                                      <li>
+                                                          Sem dados estatísticos dos encontros até o momento.
+                                                      </li>
+                                                </ul>
+                                         </div>
+
+                                        @endif
+
+
 
                                 </div><!-- /.row -->
 
@@ -92,7 +143,7 @@
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Visão Geral</h3>
+              <h3 class="box-title">Participantes</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -108,63 +159,15 @@
               <!-- Widget: user widget style 1 -->
               <div class="box box-widget">
 
-                <div class="box-footer no-padding">
+                <!--<div class="box-footer no-padding">-->
+                <div class="box-body table-responsive no-padding">
 
                  <div class="row">
 
-
-                          @if ($resumo)
-                          <div class="col-xs-3">
-                              <h4>&nbsp;&nbsp;&nbsp;&nbsp;Resumo Encontros (Mês Corrente)</h4>
-                              <ul class="nav nav-stacked">
-
-                                    <li>
-                                        <a href="#">&nbsp;Total Geral Presentes
-                                            <span class="pull-right badge bg-green">{!! $resumo[0]->total_geral !!}</span>
-                                        </a>
-                                    </li>
-
-                                    <ul style="list-style-type:none">
-                                          <li>
-                                              Visitantes<span class="pull-right badge bg-blue">{!! $resumo[0]->total_visitantes !!}</span>
-                                          </li>
-
-                                          <li>
-                                              Membros
-                                              <span class="pull-right badge bg-yellow">{!! $resumo[0]->total_membros !!}</span>
-                                          </li>
-
-                                    </ul>
-
-                                    <br/>
-                                    @foreach($resumo_perguntas as $item)
-                                    <li>
-                                        <a href="#">&nbsp;{!! $item->pergunta !!}
-                                            <span class="pull-right badge bg-blue">{!! $item->total !!}</span>
-                                        </a>
-                                    </li>
-                                    @endforeach
-
-                                </ul>
-                          </div>
-
-                          @else
-                            <div class="col-xs-6">
-                                  <h4>&nbsp;&nbsp;&nbsp;&nbsp;Resumo Encontros (Mês Corrente)</h4>
-                                  <ul class="nav nav-stacked">
-
-                                        <li>
-                                            Sem dados estatísticos dos encontros até o momento.
-                                        </li>
-                                  </ul>
-                           </div>
-
-                          @endif
-
                           @if ($participantes_presenca)
-                          <div class="col-xs-9">
-                              <h4>&nbsp;&nbsp;&nbsp;&nbsp;Participantes</h4>
-                              <table id="tab_simples" class="table table-responsible table-hover">
+                          <div class="col-xs-12">
+
+                              <table id="tab_simples" class="table table-responsive table-hover">
                                     <tr>
                                           <td>Foto</td>
                                           <td>Nome</td>
