@@ -26,7 +26,7 @@
 
                 <div class="box-body">
 
-                    <table id="tab_celulas_pessoas" class="table table-bordered table-hover">
+                    <table id="tab_celulas_pessoas" class="table table-responsive table-hover">
                     <thead>
                         <tr>
                         <!--<th>ID</th>-->
