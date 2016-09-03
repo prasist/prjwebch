@@ -49,7 +49,7 @@
 
                                 <div class="row">
 
-                                      <div class="col-lg-5 col-xs-8">
+                                      <div class="col-xs-6">
                                               <div class="inner">
                                                    <center><h4>Total Participantes</h4></center>
                                               </div>
@@ -57,7 +57,7 @@
                                               <div id="tipo_pessoa" style="height: 250px;"></div>
                                       </div>
 
-                                      <div class="col-lg-5 col-xs-8">
+                                      <div class="col-xs-6">
                                               <div class="inner">
                                                    <center><h4>Quantidade de Visitantes</h4>
                                                    <p>Últimos 3 meses</p>
