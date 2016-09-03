@@ -25,7 +25,7 @@
           <div class="box">
             <div class="box-header">
 
-                <div class="box-body">
+                <div class="box-body table-responsive no-padding">
 
                     <table id="table_celulas" class="table table-responsive table-hover">
                     <thead>
