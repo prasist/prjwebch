@@ -54,7 +54,7 @@
                                                    <center><h4>Total Participantes</h4></center>
                                               </div>
 
-                                              <div id="tipo_pessoa" style="height: 250px;"></div>
+                                              <div id="tipo_pessoa"></div>
                                       </div>
 
                                       <div class="col-xs-6">
@@ -63,7 +63,7 @@
                                                    <p>Últimos 3 meses</p>
                                                    </center>
                                               </div>
-                                              <div id="visitantes" style="height: 250px;"></div>
+                                              <div id="visitantes"></div>
                                       </div>
 
 
@@ -114,7 +114,7 @@
 
                  <div class="row">
 
-                        <div class="col-xs-3">
+                        <div class="col-xs-4">
                               <h4>&nbsp;&nbsp;&nbsp;&nbsp;Células</h4>
                               <ul class="nav nav-stacked">
 
