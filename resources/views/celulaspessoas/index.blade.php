@@ -1,4 +1,4 @@
-@extends('principal.master')
+</span>@extends('principal.master')
 
 @section('content')
 

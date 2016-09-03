@@ -192,8 +192,8 @@
                                         <span class="fa fa-caret-down"></span></button>
                                         <ul class="dropdown-menu">
 
-                                              <li><a href="" onclick="abrir_relatorio('C');">Relatório Completo</a></li>
-                                              <li><a href="" onclick="abrir_relatorio('R');">Resumo</a></li>
+                                              <li><a href="#" onclick="abrir_relatorio('C');">Relatório Completo</a></li>
+                                              <li><a href="#" onclick="abrir_relatorio('R');">Resumo</a></li>
 
                                         </ul>
                                   </div>
@@ -525,9 +525,10 @@
 
                     </div>
 
-<div id="ampulheta" class="overlay modal" style="display: none">
-                    <i class="fa fa-refresh fa-spin"></i>
-                </div>
+                      <!--
+                      <div id="ampulheta" class="overlay modal" style="display: none">
+                          <i class="fa fa-refresh fa-spin"></i>
+                      </div>-->
 
                  </div>
 
@@ -559,10 +560,10 @@
 <script type="text/javascript">
 
 
-
-
       function abrir_relatorio(tipo)
       {
+
+
           if ($('#hidden_id').val()!="")
           {
 
@@ -570,7 +571,11 @@
               var var_year = $("#ano").val();
               var var_month = $("#mes").val();
               var urlGetUser = '{!! url("/controle_atividades/imprimir/' +  $('#hidden_id').val() +  '/data/' + tipo + '/' + var_year + '-' + var_month + '-' + var_day + '") !!}';
-              window.location=urlGetUser; //redirect to route
+
+              //window.location=urlGetUser; //redirect to route
+
+              window.location.href =urlGetUser;
+
           }
           else
           {

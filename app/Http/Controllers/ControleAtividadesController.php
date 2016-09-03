@@ -792,6 +792,7 @@ class ControleAtividadesController extends Controller
 
             $Mensagem="";
 
+
             if (filesize($output . '.' . $ext)<=1000) //Se arquivo tiver menos de 1k, provavelmente está vazio...
             {
                 $Mensagem = "Nenhum Registro Encontrado";
