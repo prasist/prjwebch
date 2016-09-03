@@ -33,57 +33,22 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-12 col-xs-8">
-            <div class="nav-tabs-custom">
+           <div class="col-xs-5">
+                <div class="inner">
+                     <center><h4>Total Participantes</h4></center>
+                </div>
 
-              <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab_1" data-toggle="tab">Gráficos</a></li>
-                <li><a href="#tab_2" data-toggle="tab">Relatórios Estatísticos</a></li>
-              </ul>
+                <div id="tipo_pessoa"></div>
+          </div>
 
-              <div class="tab-content">
-                        <!-- TABS-->
-                        <div class="tab-pane active" id="tab_1">
-
-
-
-                                <div class="row">
-
-                                      <div class="col-xs-6">
-                                              <div class="inner">
-                                                   <center><h4>Total Participantes</h4></center>
-                                              </div>
-
-                                              <div id="tipo_pessoa"></div>
-                                      </div>
-
-                                      <div class="col-xs-6">
-                                              <div class="inner">
-                                                   <center><h4>Quantidade de Visitantes</h4>
-                                                   <p>Últimos 3 meses</p>
-                                                   </center>
-                                              </div>
-                                              <div id="visitantes"></div>
-                                      </div>
-
-
-                                </div><!-- /.row -->
-
-
-                        </div><!-- /.tab-pane -->
-
-                        <div class="tab-pane" id="tab_2">
-
-                               @include('celulas.filtro_rel_encontro')
-
-                        </div>
-                        <!--  END TABS-->
-
-             </div> <!-- TAB CONTENTS -->
-
-          </div> <!-- nav-tabs-custom -->
-    </div>
-
+            <div class="col-xs-5">
+                    <div class="inner">
+                         <center><h4>Quantidade de Visitantes</h4>
+                         <p>Últimos 3 meses</p>
+                         </center>
+                    </div>
+                    <div id="visitantes"></div>
+            </div>
 </div>
 
 
@@ -242,9 +207,11 @@
 
       //-------------------------Grafico visitantes
       var var_json = (function () {
+
+
             var var_json = null;
-            var var_month = 8;
-            var var_year = 2016;
+            var var_month = moment().format('M');
+            var var_year = moment().format('YYYY');
             var urlGetUser = '{!! url("/grafico_celulas/visitantes/' +  var_month + '/' + var_year + '") !!}';
 
             $.ajax({
@@ -274,8 +241,8 @@
      //-----------------------Grafico Total Por Tipo de Pessoa
       var var_json = (function () {
             var var_json = null;
-            var var_month = 8;
-            var var_year = 2016;
+            var var_month = moment().format('M');
+            var var_year = moment().format('YYYY');
             var urlGetUser = '{!! url("/grafico_celulas/tipo_pessoa/' +  var_month + '/' + var_year + '") !!}';
 
             $.ajax({
