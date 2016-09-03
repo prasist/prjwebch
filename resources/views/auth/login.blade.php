@@ -79,7 +79,9 @@
     <div class="row">
             <div class="col-md-8 col-md-offset-2">
                         Para uma navegação mais agradável e compatível, recomendamos :
-                        <img src="app.sigma3sistemas.com.br/images/mozilla_firefox_logo.png" alt="Mozilla Firefox" width="120" height="40">
+                        <a href="www.mozilla.org/firefox-download" target="_blank">
+                         <img src="images/mozilla_firefox_logo.png" alt="Mozilla Firefox" width="120" height="40">
+                         </a>
 
             </div>
     </div>
