@@ -18,6 +18,7 @@ class CelulasController extends Controller
 
         $this->rota = "celulas"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
+        $this->sequencia = 0;
 
         /*Instancia a classe de funcoes (Data, valor, etc)*/
         $this->formatador = new  \App\Functions\FuncoesGerais();
@@ -47,7 +48,7 @@ class CelulasController extends Controller
 
             $level1 = \DB::select($strSql);
 
-            $linha = "<h4><ul class='treeview2'>";
+            $linha = "<h5><ul class='treeview2'>";
             foreach ($level1 as $key => $value)
             {
 
@@ -210,10 +211,113 @@ class CelulasController extends Controller
                 $linha .= "     </li>";
             }
 
-            $linha .= "</ul></h4>";
+            $linha .= "</ul></h5>";
 
         return $linha;
 
+    }
+
+   //Lista celulas filhas e suas filhas,,,, enquanto houverem
+   protected function buscaProximoNivel($celulas_id)
+   {
+
+            $this->gerar_proximo_nivel = "";
+
+            //BUSCA AS CELULAS FILHOS DE UM DETERMINADO PAI
+            $strSql = " SELECT celulas_pai_id, celulas.Id, nome, razaosocial , caminhofoto, origem, ";
+            $strSql .= " CASE  WHEN nome <> ''::text AND razaosocial <> ''::text THEN (nome || ' - '::text) || razaosocial ";
+            $strSql .= "       ELSE COALESCE(razaosocial, nome) ";
+            $strSql .= "       END AS nome";
+            $strSql .=  " FROM  celulas ";
+            $strSql .=  " INNER JOIN pessoas on pessoas.id = celulas.lider_pessoas_id ";
+            $strSql .=  " WHERE ";
+            $strSql .=  " isnull_int(celulas_pai_id ,0) = " . $celulas_id . " AND ";
+            $strSql .=  " celulas.empresas_id = " . $this->dados_login->empresas_id . " AND ";
+            $strSql .=  " celulas.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+
+            $retornar = \DB::select($strSql);
+
+            if (count($retornar)>0)
+            {
+                $this->linha .= "<ul>";
+                $this->sequencia = $this->sequencia + 1;
+            }
+
+            foreach ($retornar as $key => $value)
+            {
+                  $this->linha .= "      <li>";
+
+                  if  (rtrim(ltrim($value->caminhofoto))!="")
+                  {
+                         $this->linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->caminhofoto . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
+                  }
+
+                  $this->linha .= "        <a href='#'>" . $this->sequencia . ' - ' . $value->razaosocial .  ' - ' . ($value->origem==1 ? "Multiplicação" : "Vínculo (ou Célula Filha)") . "</a>";
+
+                  //Verificar se a celula filha tem PAI
+                  $this->gerar_proximo_nivel = $value->id;
+
+            }
+
+
+            //verifica se tem outro nivel
+            if ($this->gerar_proximo_nivel!="")
+            {
+               $mais = $this->buscaProximoNivel($this->gerar_proximo_nivel);
+            }else
+            {
+                for ($i=$this->sequencia; $i >1 ; $i--) {
+                      $this->linha .= "     </li>";
+                      $this->linha .= "</ul>";
+                }
+
+                //$this->linha .= "</ul>";
+                $mais="";
+            }
+
+   }
+
+    public function getEstruturasCelulasOrigem($celulas_id)
+    {
+
+
+            $strSql = " SELECT caminhofoto, ";
+            $strSql .= " CASE  WHEN nome <> ''::text AND razaosocial <> ''::text THEN (nome || ' - '::text) || razaosocial ";
+            $strSql .= "       ELSE COALESCE(razaosocial, nome) ";
+            $strSql .= "       END AS nome";
+            $strSql .=  " FROM  celulas ";
+            $strSql .=  " INNER JOIN pessoas on pessoas.id = celulas.lider_pessoas_id ";
+            $strSql .=  " WHERE ";
+            $strSql .=  " celulas.id = " . $celulas_id . " AND ";
+            $strSql .=  " celulas.empresas_id = " . $this->dados_login->empresas_id . " AND ";
+            $strSql .=  " celulas.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+
+            $retornar = \DB::select($strSql);
+
+            $this->linha = "<h3 class='box-title'>Árvore Hierárquica da Célula (Multiplicação / Vínculos)</h3>&nbsp;(<i class='text'>Clique para expandir</i>)";
+            $this->linha .= "<h5><ul class='treeview2'>";
+
+            $this->linha .= "      <li>";
+
+            if  ($retornar[0]->caminhofoto!="")
+            {
+                   $this->linha .= "      <img src='http://app.sigma3sistemas.com.br/images/persons/" . $retornar[0]->caminhofoto . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
+            }
+
+            $this->linha .= "                   <a href='#'>" . $retornar[0]->nome .  "</a>";
+
+            //Gera niveis
+            $niveis = $this->buscaProximoNivel($celulas_id);
+
+            //Finaliza
+            $this->linha .= "</h5>";
+
+            //Não exibir se não houverem niveis abaixo
+            if ($this->sequencia <=1)
+            {
+                $this->linha = '';
+            }
+            return $this->linha;
     }
 
 
@@ -768,9 +872,7 @@ class CelulasController extends Controller
             }
             else
             {
-
                 $gerar_treeview = $this->getEstruturas();
-                //$gerar_treeview = $this->getEstruturasOrganograma();
                 $qual_pagina = ".dashboard";
                 $participantes_presenca = '';
                 $dados='';
@@ -1065,6 +1167,9 @@ class CelulasController extends Controller
         //Busca celulas filhas
         $vinculos = \DB::select('select * from view_celulas_simples  where celulas_pai_id = ?  and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
+
+        $gerar_estrutura_origem = $this->getEstruturasCelulasOrigem($id);
+
         if  ($vinculos==null) //Se nao encontrar, gera controller vazio
         {
             $vinculos = \App\Models\tabela_vazia::get();
@@ -1077,7 +1182,19 @@ class CelulasController extends Controller
         }
 
         //return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview,  'nivel5' =>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
-        return view($this->rota . '.atualizacao', ['participantes'=>$participantes, 'dados' =>$dados, 'preview' => $preview,  'nivel5' =>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'tipo_operacao'=>'editar', 'vinculos'=>$vinculos, 'celulas'=>$celulas, 'total_vinculos'=>$total_vinculos]);
+        return view($this->rota . '.atualizacao', [
+              'gerar_estrutura_origem'=>$gerar_estrutura_origem,
+              'participantes'=>$participantes,
+              'dados' =>$dados,
+              'preview' => $preview,
+              'nivel5' =>$view5,
+              'publicos'=>$publicos,
+              'faixas'=>$faixas,
+              'tipo_operacao'=>'editar',
+              'vinculos'=>$vinculos,
+              'celulas'=>$celulas,
+              'total_vinculos'=>$total_vinculos
+            ]);
 
     }
 

@@ -33,22 +33,28 @@
 </div>
 
 <div class="row">
-           <div class="col-xs-5">
-                <div class="inner">
-                     <center><h4>Total Participantes</h4></center>
-                </div>
+           <div class="col-lg-4 col-xs-7">
 
-                <div id="tipo_pessoa"></div>
-          </div>
+                    <div class="inner">
+                         <center><h4>Total Participantes</h4>
 
-            <div class="col-xs-5">
+                         </center>
+
+                    </div>
+
+                    <div id="tipo_pessoa" style="height: 250px;"></div>
+            </div>
+
+
+          <div class="col-lg-4 col-xs-7">
                     <div class="inner">
                          <center><h4>Quantidade de Visitantes</h4>
                          <p>Últimos 3 meses</p>
                          </center>
                     </div>
-                    <div id="visitantes"></div>
-            </div>
+                    <div id="visitantes" style="height: 250px;"></div>
+          </div>
+
 </div>
 
 
@@ -199,9 +205,10 @@
 
     $(document).ready(function(){
 
-
+      //so mostrat div quando load pagina
        $('#arvore').show();
 
+       //expandir menu
        $("#menu_celulas").addClass("treeview active");
 
 

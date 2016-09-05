@@ -675,6 +675,28 @@
                                               </div>
                                         </div>
 
+                                        <br/>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                              <!-- Widget: user widget style 1 -->
+                                              <div id="arvore" class="box box-widget">
+
+                                                <div class="box-footer no-padding">
+
+                                                  <div class="row">
+                                                    <div class="col-md-12">
+                                                     <div class="box-header with-border">
+                                                      {!! $gerar_estrutura_origem !!}
+                                                    </div>
+
+                                                  </div>
+                                                </div>
+
+                                              </div>
+                                            </div>
+                                          </div>
+                                          </div>
+
 
                                     </div>
 

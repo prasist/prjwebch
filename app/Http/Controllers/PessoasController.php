@@ -1394,7 +1394,7 @@ public function salvar($request, $id, $tipo_operacao) {
         {
 
             //Novo - aqui
-            $membros_celula = \DB::select('select celulas_id, data_entrada_celula,  descricao_concatenada_scod as nome from view_celulas_pessoas  where pessoas_id = ? and  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+            $membros_celula = \DB::select("select celulas_id, to_char(to_date(data_entrada_celula, 'yyyy-MM-dd'), 'DD-MM-YYYY') AS data_entrada_celula,  descricao_concatenada_scod as nome from view_celulas_pessoas  where pessoas_id = ? and  empresas_id = ? and empresas_clientes_cloud_id = ? ", [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
             /*Busca célula que o membro participa*/
             //$membros_celula  = \App\Models\celulaspessoas::select('celulas_pessoas.celulas_id', 'data_entrada_celula')
@@ -1625,7 +1625,7 @@ public function salvar($request, $id, $tipo_operacao) {
 
                 if ($bool_exibir_perfil=="true")
                 {
-                        $perfil = \DB::select('select * from view_perfil where id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+                        $perfil = \DB::select("select * from view_perfil where id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ", [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
                         $pessoas_timeline = \DB::select("select to_char(datanasc, 'DD/MM/YYYY') AS datanasc,  to_char(to_date(data_entrada, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_entrada, to_char(to_date(data_entrada_celula, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_entrada_celula, to_char(to_date(data_saida, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_saida, to_char(to_date(data_batismo, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_batismo from view_pessoas_timeline where id = ? ", [$id]);
                 }
                 else
