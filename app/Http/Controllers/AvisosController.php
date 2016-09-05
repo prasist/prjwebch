@@ -85,7 +85,7 @@ class AvisosController extends Controller
         //Busca mensagem para leitura
          $dados = avisos::findOrfail($id);
 
-         $log = \App\Models\log_avisos::firstOrNew(['users_id' => Auth::user()->id]);
+         $log = \App\Models\log_avisos::firstOrNew(['users_id' => Auth::user()->id, 'id'=>$id]);
          $log->users_id = Auth::user()->id;
          $log->avisos_id = $id;
          $log->data_leitura = date("Y-m-d");
