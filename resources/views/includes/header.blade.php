@@ -57,8 +57,9 @@
 
 
                 <li class="dropdown notifications-menu">
-                    <div id="aviso_mensagens"></div>
+
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <div id="aviso_mensagens"></div>
                     <i class="fa fa-bell-o"></i>
                     @if (isset($avisos))
                             @if (count($avisos)>0)
@@ -66,6 +67,7 @@
                            @endif
                     @endif
                     </a>
+
                     <ul class="dropdown-menu">
                         <li class="header">Notificações</li>
                         <li>
