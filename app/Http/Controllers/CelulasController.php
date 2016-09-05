@@ -41,7 +41,7 @@ class CelulasController extends Controller
 
 
             //Busca primeiro nivel das estruturas
-            $strSql = " SELECT Distinct nome_1, celulas_nivel1_id, foto1  FROM view_estruturas";
+            $strSql = " SELECT DISTINCT nome_1, celulas_nivel1_id, foto1  FROM view_estruturas";
             $strSql .=  " WHERE ";
             $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
             $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
@@ -229,7 +229,7 @@ class CelulasController extends Controller
             $strSql .= "       ELSE COALESCE(razaosocial, nome) ";
             $strSql .= "       END AS nome";
             $strSql .=  " FROM  celulas ";
-            $strSql .=  " INNER JOIN pessoas on pessoas.id = celulas.lider_pessoas_id ";
+            $strSql .=  " INNER JOIN pessoas on pessoas.id = celulas.lider_pessoas_id AND pessoas.empresas_id = celulas.empresas_id AND pessoas.empresas_clientes_cloud_id = celulas.empresas_clientes_cloud_id";
             $strSql .=  " WHERE ";
             $strSql .=  " isnull_int(celulas_pai_id ,0) = " . $celulas_id . " AND ";
             $strSql .=  " celulas.empresas_id = " . $this->dados_login->empresas_id . " AND ";
@@ -241,6 +241,7 @@ class CelulasController extends Controller
             {
                 $this->linha .= "<ul>";
                 $this->sequencia = $this->sequencia + 1;
+                //dd($strSql);
             }
 
             foreach ($retornar as $key => $value)
@@ -258,7 +259,6 @@ class CelulasController extends Controller
                   $this->gerar_proximo_nivel = $value->id;
 
             }
-
 
             //verifica se tem outro nivel
             if ($this->gerar_proximo_nivel!="")
@@ -313,7 +313,7 @@ class CelulasController extends Controller
             $this->linha .= "</h5>";
 
             //Não exibir se não houverem niveis abaixo
-            if ($this->sequencia <=1)
+            if ($this->sequencia ==1)
             {
                 $this->linha = '';
             }
