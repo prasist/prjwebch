@@ -10,7 +10,8 @@
         <ul>
         @foreach($dados as $item)
 
-                        <li><a href="{{url('/avisos/ler/' . $item->id . '')}}">{{$item->titulo}}  - {{$item->data_publicacao}}</a></li>
+                        <li><a href="{{url('/avisos/ler/' . $item->id . '')}}">{{$item->titulo}}  - {!! date('d/m/Y',strtotime($item->data_publicacao)) !!}</a></li>
+
 
         @endforeach
         </ul>
