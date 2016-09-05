@@ -55,7 +55,9 @@
                     </ul>
                 </li>
 
+
                 <li class="dropdown notifications-menu">
+                    <div id="aviso_mensagens"></div>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-bell-o"></i>
                     @if (isset($avisos))

@@ -174,3 +174,15 @@
         }
       ]
     };
+
+      var avisos_sigma3 = {
+      id: "avisos_sigma3",
+      steps: [
+        {
+          title: "Olá...",
+          content: "Agora você receberá notificações sobre dicas e novidades do Sigma3 por aqui...",
+          target: document.querySelector("#aviso_mensagens"),
+          placement: "left"
+        }
+      ]
+    };

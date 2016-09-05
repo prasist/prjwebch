@@ -534,7 +534,18 @@
                         </script>
                     @endif
                 @endif
+
+               @if (isset($avisos))
+                    @if (count($avisos)>0)
+                             <script type="text/javascript">
+                                    hopscotch.startTour(avisos_sigma3);
+                             </script>
+                    @endif
+                @endif
+
         @endif
+
+
 
     </body>
 </html>
