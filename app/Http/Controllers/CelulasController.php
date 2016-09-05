@@ -313,10 +313,10 @@ class CelulasController extends Controller
             $this->linha .= "</h5>";
 
             //Não exibir se não houverem niveis abaixo
-            //if ($this->sequencia <1)
-            //{
-                //$this->linha = '';
-            //}
+            if ($this->sequencia ==0)
+            {
+               $this->linha = '';
+            }
             return $this->linha;
     }
 
