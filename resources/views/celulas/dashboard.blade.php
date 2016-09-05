@@ -7,7 +7,6 @@
 {{ \Session::put('id_pagina', '42') }}
 
 
-
 <!-- Small boxes (Stat box) -->
 <div class="row">
   <div class="col-md-12">
@@ -33,18 +32,13 @@
 </div>
 
 <div class="row">
-           <div class="col-lg-4 col-xs-7">
-
+          <div class="col-lg-4 col-xs-7">
                     <div class="inner">
                          <center><h4>Total Participantes</h4>
-
                          </center>
-
                     </div>
-
                     <div id="tipo_pessoa" style="height: 250px;"></div>
-            </div>
-
+          </div>
 
           <div class="col-lg-4 col-xs-7">
                     <div class="inner">
@@ -54,7 +48,6 @@
                     </div>
                     <div id="visitantes" style="height: 250px;"></div>
           </div>
-
 </div>
 
 

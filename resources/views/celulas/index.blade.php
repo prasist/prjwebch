@@ -18,7 +18,17 @@
                   </form>
                 @endcan
                 </div>
+
+               <div class="col-xs-5">
+                        <p class="text"><i> Legendas</i></p>
+                        <span class="badge bg-yellow">0</span>&nbsp;Indica se há célula multiplicada ou vínculada
+                        <br/>
+                        <span class="badge bg-blue">0</span>&nbsp;Quantidade de Participantes
+                        <br/>
+              </div>
+
         </div>
+
 
         <div class="row">
         <div class="col-md-12">
@@ -58,7 +68,9 @@
                                                 {!! $value->razaosocial . ($value->nome!="" ? ' - ' : ''). $value->nome !!} <span class="badge bg-blue">{!!$value->tot!!}</span>
                                         @endcan
                                   @endcan
-
+                                  @if ($value->tot_vinc>0)
+                                  <span class="badge bg-yellow">{!!$value->tot_vinc!!}</span>
+                                  @endif
                             </td>
                             <td>{!! $value->descricao_dia_encontro !!}</td>
                             <td>{!! $value->regiao !!}</td>
