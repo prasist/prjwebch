@@ -279,7 +279,8 @@
 
                            <div class="col-xs-12">
                                   <label for="upload_arquivo" class="control-label">Tamanho Máximo cada Arquivo : 500Kb</label>
-                                  <input type="file" id="upload_arquivo[]" multiple="true" name = "upload_arquivo[]">
+                                  <input type="file" id="upload_arquivo[]" multiple="true" name = "upload_arquivo[]" onchange="checkPhoto(this)">
+                                  <label id="msg" class="text-danger"></label>
 
                                   @if ($tipo_operacao=="editar")
                                       <table id="tab_arquivos" class="table table-responsive table-hover">
@@ -559,6 +560,23 @@
 
 <script type="text/javascript">
 
+
+        /*Validação da imagem que será enviada*/
+        function checkPhoto(target)
+        {
+
+            /*Tamanho maximo 2Mg*/
+            if(target.files[0].size > 500000) {
+                document.getElementById("msg").innerHTML = "arquivo muito grande (max 500Kb)";
+                document.getElementById("upload_arquivo").value = "";
+                alert("Imagem muito grande (max 500Kb), favor selecionar outro arquivo.");
+                return false;
+            }
+
+            /*Chegou ate aqui beleza...*/
+            document.getElementById("msg").innerHTML = "";
+            return true;
+        }
 
       function abrir_relatorio(tipo)
       {
@@ -915,5 +933,7 @@
     });
 
 </script>
+
+
 
 @endsection

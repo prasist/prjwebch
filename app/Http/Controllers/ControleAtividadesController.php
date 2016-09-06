@@ -569,7 +569,6 @@ class ControleAtividadesController extends Controller
         ->where('controle_atividades_id', $id)
         ->get();
 
-        dd($controle_materiais);
 
         if ($controle_materiais->count()==0)
         {
