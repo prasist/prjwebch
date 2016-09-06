@@ -167,48 +167,52 @@ class ControleAtividadesController extends Controller
                 /*
                     $input['id_obs_membro'] have all indexes with ID
                 */
-                foreach($input['id_obs_membro'] as $selected)
-                {
 
-                            $whereForEach =
-                            [
-                                'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                'empresas_id' =>  $this->dados_login->empresas_id,
-                                'controle_atividades_id' => $id_atividade,
-                                'pessoas_id' => $selected
-                            ];
+               if (isset($input['id_obs_membro'])) {
 
-                            $controle_presencas = \App\Models\controle_presencas::firstOrNew($whereForEach);
+                  foreach($input['id_obs_membro'] as $selected)
+                  {
 
-                            $presenca=""; //initialize
+                              $whereForEach =
+                              [
+                                  'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                  'empresas_id' =>  $this->dados_login->empresas_id,
+                                  'controle_atividades_id' => $id_atividade,
+                                  'pessoas_id' => $selected
+                              ];
 
-                            if (isset($input['presenca']))
-                            {
-                                //if found value in ck_resposta array
-                                if (in_array($selected, $input['presenca']))
-                                {
-                                    $presenca = "S"; //Yes
-                                    $var_total_membros_presentes = $var_total_membros_presentes + 1;
-                                }
-                            }
+                              $controle_presencas = \App\Models\controle_presencas::firstOrNew($whereForEach);
+
+                              $presenca=""; //initialize
+
+                              if (isset($input['presenca']))
+                              {
+                                  //if found value in ck_resposta array
+                                  if (in_array($selected, $input['presenca']))
+                                  {
+                                      $presenca = "S"; //Yes
+                                      $var_total_membros_presentes = $var_total_membros_presentes + 1;
+                                  }
+                              }
 
 
-                            $valores =
-                            [
-                                'pessoas_id' => $selected,
-                                'empresas_id' =>  $this->dados_login->empresas_id,
-                                'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                'controle_atividades_id' => $id_atividade,
-                                'presenca_simples' => $presenca,
-                                'observacao' => ($input['obs_membro'][$i_index]=="" ? null : $input['obs_membro'][$i_index])
-                            ];
+                              $valores =
+                              [
+                                  'pessoas_id' => $selected,
+                                  'empresas_id' =>  $this->dados_login->empresas_id,
+                                  'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                  'controle_atividades_id' => $id_atividade,
+                                  'presenca_simples' => $presenca,
+                                  'observacao' => ($input['obs_membro'][$i_index]=="" ? null : $input['obs_membro'][$i_index])
+                              ];
 
-                            $controle_presencas->fill($valores)->save();
-                            $controle_presencas->save();
+                              $controle_presencas->fill($valores)->save();
+                              $controle_presencas->save();
 
-                            $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
+                              $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
 
-                } //end foreach
+                  } //end foreach
+              }
 
 
                 //Visitantes
@@ -377,8 +381,11 @@ class ControleAtividadesController extends Controller
            $fileName="";
            $file_count=0;
            $uploadcount = 0;
+           $lista_arquivos="";
+           $seq=0;
 
            $arquivo = $request->file('upload_arquivo');
+
 
            if ($request->hasFile('upload_arquivo'))
            {
@@ -388,35 +395,52 @@ class ControleAtividadesController extends Controller
                  foreach($arquivo as $file)
                  {
 
-                      //caminho onde será gravado
-                      $destinationPath = base_path() . '/public/images/persons';
+                     if ($_FILES["upload_arquivo"]["size"][$seq] <= 200000) //verifica tamanho permitido
+                     {
+                            //caminho onde será gravado
+                            $destinationPath = base_path() . '/public/arquivos/encontros';
 
-                      $fileName = $file->getClientOriginalName(); // renameing image
+                            $fileName = $file->getClientOriginalName(); // renameing image
 
-                      $file->move($destinationPath, $fileName); // uploading file to given path
+                            $file->move($destinationPath, $fileName); // uploading file to given path
 
-                      $whereForEach =
-                                        [
-                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                            'empresas_id' =>  $this->dados_login->empresas_id,
-                                            'controle_atividades_id' => $id_atividade,
-                                            'arquivo' => $fileName
-                                        ];
+                            $whereForEach =
+                                              [
+                                                  'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                  'empresas_id' =>  $this->dados_login->empresas_id,
+                                                  'controle_atividades_id' => $id_atividade,
+                                                  'arquivo' => $fileName
+                                              ];
 
-                        $controle_materiais = \App\Models\controle_materiais::firstOrNew($whereForEach);
-                        $controle_materiais->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
-                        $controle_materiais->empresas_id = $this->dados_login->empresas_id;
-                        $controle_materiais->controle_atividades_id = $id_atividade;
-                        $controle_materiais->arquivo = $fileName;
-                        $controle_materiais->save();
+                              $controle_materiais = \App\Models\controle_materiais::firstOrNew($whereForEach);
+                              $controle_materiais->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
+                              $controle_materiais->empresas_id = $this->dados_login->empresas_id;
+                              $controle_materiais->controle_atividades_id = $id_atividade;
+                              $controle_materiais->arquivo = $fileName;
+                              $controle_materiais->save();
 
-                      $uploadcount ++;
+                              $uploadcount ++; //contabiliza somente enviados
+
+                      } else {
+
+                          if ($lista_arquivos=="")
+                          {
+                                $lista_arquivos = $file->getClientOriginalName();
+                          }
+                          else
+                          {
+                                $lista_arquivos .= "," . $file->getClientOriginalName();
+                          }
+
+                      }
+
+                      $seq++; //sequencial de arquivos
                   }
 
             }
 
             if ($uploadcount!=$file_count) {
-                \Session::flash('flash_message_erro', 'Os dados foram salvos, porém houve erro no envio da imagem.');
+                \Session::flash('flash_message_erro', 'Os dados foram salvos, porém existe(m) arquivo(s) com tamanho máximo excedido : ' . $lista_arquivos );
                 return redirect($this->rota);
             }
 
@@ -559,7 +583,6 @@ class ControleAtividadesController extends Controller
         ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('controle_atividades_id', $id)
         ->get();
-
 
 
         //Materiais Enviados
@@ -729,13 +752,12 @@ class ControleAtividadesController extends Controller
 
          $encontro_materiais = \App\Models\controle_materiais::findOrfail($id);
 
-         if(!\File::delete(public_path() . '/images/persons/' . $encontro_materiais->arquivo))
+         if(!\File::delete(public_path() . '/arquivos/encontros/' . $encontro_materiais->arquivo))
          {
             return "false";
          }
          else
          {
-
             $encontro_materiais->delete();
             return "true";
          }

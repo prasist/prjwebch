@@ -278,8 +278,9 @@
                       <div class="row">
 
                            <div class="col-xs-12">
-                                  <label for="upload_arquivo" class="control-label">Tamanho Máximo cada Arquivo : 500Kb</label>
-                                  <input type="file" id="upload_arquivo[]" multiple="true" name = "upload_arquivo[]" onchange="checkPhoto(this)">
+                                  <p class="text"><i>Para arquivos maiores, sugerimos utilizar algum repositório remoto e informar o link no campo "Link Externo"</i></p>
+                                  <label for="upload_arquivo" class="control-label">Tamanho Máximo cada Arquivo : 200Kb.</label>
+                                  <input type="file" id="upload_arquivo[]" name = "upload_arquivo[]" multiple="true" onchange="checkPhoto(this)">
                                   <label id="msg" class="text-danger"></label>
 
                                   @if ($tipo_operacao=="editar")
@@ -287,7 +288,7 @@
                                       @foreach($controle_materiais as $item)
                                            @if ($item->arquivo!="")
                                               <tr id="{{$item->id}}">
-                                                  <td><a href="{{ url('/images/persons/' . $item->arquivo) }}" target="_blank">{{$item->arquivo}}</a></td>
+                                                  <td><a href="{{ url('/images/arquivos/encontros/' . $item->arquivo) }}" target="_blank">{{$item->arquivo}}</a></td>
                                                   <td><a href="" class="btn btn-danger remover_arquivo" id="{{$item->id}}"><i class="fa fa-trash"></i></a></td>
                                               </tr>
                                            @endif
@@ -301,7 +302,7 @@
 
                       <div class="row">
                               <div class="col-xs-12">
-                                   <label for="link_externo" class="control-label">Link Externo (Artigo, Documento, Site, Video, Imagem, etc)</label>
+                                   <label for="link_externo" class="control-label">Link Externo (Material Encontro, Artigo, Documento, Site, Video, Imagem, etc)</label>
                                    <input type="text" name="link_externo" id="link_externo"  class="form-control" value='{{ ($tipo_operacao=="editar" ? $dados[0]->link_externo : "") }}'>
                               </div>
                       </div>
@@ -565,11 +566,11 @@
         function checkPhoto(target)
         {
 
-            /*Tamanho maximo 2Mg*/
-            if(target.files[0].size > 500000) {
-                document.getElementById("msg").innerHTML = "arquivo muito grande (max 500Kb)";
+            /*Tamanho maximo */
+            if(target.files[0].size > 200000) {
+                document.getElementById("msg").innerHTML = "arquivo muito grande (max 200Kb)";
                 document.getElementById("upload_arquivo").value = "";
-                alert("Imagem muito grande (max 500Kb), favor selecionar outro arquivo.");
+                alert("Imagem muito grande (max 200Kb), favor selecionar outro arquivo.");
                 return false;
             }
 
