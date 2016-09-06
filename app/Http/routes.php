@@ -286,6 +286,7 @@
     /*Perfil*/
     Route::get('profile/{id}/perfil','PerfilController@perfil');
     Route::post('profile/{id}/update','PerfilController@update');
+    Route::get('profile/{id}/remover','PerfilController@remove_image');
 
 
    /*Igrejas*/
