@@ -47,10 +47,8 @@
                                 <input type="hidden" name="hidden_existe" id="hidden_existe" value="">
                             @endif
 
-                            <li><a href="#tab_2" data-toggle="tab">Vinculo de Células</a></li>
-                            @if ($total_vinculos>0)
-                                <li><a href="#tab_3" data-toggle="tab"> Exibir Célula(s) Vinculada(s)&nbsp;<span class="pull-right badge bg-blue">{!! ($total_vinculos==0 ? "" : $total_vinculos) !!}</span></a></li>
-                            @endif
+                            <li><a href="#tab_2" data-toggle="tab">Vinculo de Células&nbsp;<span class="pull-right badge bg-blue">{!! ($total_vinculos==0 ? "" : $total_vinculos) !!}</span></a></li>
+
                           </ul>
 
                           <div class="tab-content">
@@ -640,7 +638,7 @@
 
                                           <div class="row">
                                                 <div class="col-xs-11">
-                                                      <p class="text-info">- Informe o campo abaixo caso essa célula teve origem de outra.</p>
+                                                      <p class="text-info">- Informe o campo abaixo caso essa célula teve origem em outra.</p>
                                                       <p class="text-info"> - Células Vinculadas são aquelas que ocorrem dentro da própria célula, por exemplo : Célula para Crianças</p>
                                                       <p class="text-info"> - Células Multiplicadas são novas células geradas a partir de outra.</p>
 
@@ -700,29 +698,6 @@
 
                                     </div>
 
-                                    <div class="tab-pane" id="tab_3">
-                                         <div class="row">
-                                                  <div class="col-xs-11">
-                                                    @if ($vinculos[0]->nome!="")
-                                                          <label for="tabela" class="control-label">A Célula <i>{{ $dados[0]->nome}}</i> possui a(s) seguinte(s) célula(s) vinculada(s) : </label>
-                                                          <table class="table">
-                                                              <tr>
-                                                                  <td>Célula</td>
-                                                                  <td>Dia Encontro</td>
-                                                                  <td>Horário</td>
-                                                              </tr>
-                                                              @foreach ($vinculos as $value)
-                                                              <tr>
-                                                                    <td>{!! $value->razaosocial . ($value->nome!="" ? ' - ' : ''). $value->nome !!}</td>
-                                                                    <td>{!! $value->descricao_dia_encontro !!}</td>
-                                                                    <td>{!! $value->horario !!}</td>
-                                                              </tr>
-                                                              @endforeach
-                                                          </table>
-                                                    @endif
-                                                  </div>
-                                         </div>
-                                    </div>
                                     <!--  END TABS-->
 
                          </div> <!-- TAB CONTENTS -->

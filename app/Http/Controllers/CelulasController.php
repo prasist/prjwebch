@@ -1165,21 +1165,22 @@ class CelulasController extends Controller
         //$dados = \DB::select('select distinct celulas_id, lider_pessoas_id, descricao_lider  as nome, tot from view_celulas_pessoas_participantes where  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         //Busca celulas filhas
-        $vinculos = \DB::select('select * from view_celulas_simples  where celulas_pai_id = ?  and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        //$vinculos = \DB::select('select * from view_celulas_simples  where celulas_pai_id = ?  and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
 
         $gerar_estrutura_origem = $this->getEstruturasCelulasOrigem($id);
 
-        if  ($vinculos==null) //Se nao encontrar, gera controller vazio
-        {
-            $vinculos = \App\Models\tabela_vazia::get();
-            $total_vinculos = 0;
-        }
-        else
-        {
+        //if  ($vinculos==null) //Se nao encontrar, gera controller vazio
+        //{
+            //$vinculos = \App\Models\tabela_vazia::get();
+            //$total_vinculos = 0;
+        //}
+        //else
+        //{
             $temp = \DB::select('select count(*) as tot from view_celulas  where celulas_pai_id = ?  and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
             $total_vinculos =$temp[0]->tot;
-        }
+        //}
+            //'vinculos'=>$vinculos,
 
         //return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview,  'nivel5' =>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
         return view($this->rota . '.atualizacao', [
@@ -1191,7 +1192,6 @@ class CelulasController extends Controller
               'publicos'=>$publicos,
               'faixas'=>$faixas,
               'tipo_operacao'=>'editar',
-              'vinculos'=>$vinculos,
               'celulas'=>$celulas,
               'total_vinculos'=>$total_vinculos
             ]);
