@@ -188,6 +188,9 @@ class HomeController extends Controller
                         $retorno = \DB::select('select  fn_total_niver(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
                         $total_aniversariantes = $retorno[0]->fn_total_niver;
 
+                        $retorno = \DB::select('select  fn_total_niver_dia(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
+                        $total_aniversariantes_dia = $retorno[0]->fn_total_niver_dia;
+
                         $retorno = \DB::select('select  fn_total_inativos(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
                         $total_inativos = $retorno[0]->fn_total_inativos;
 
@@ -277,6 +280,7 @@ class HomeController extends Controller
                         'total_pessoas' => $total_pessoas,
                         'total_membros' => $total_membros,
                         'total_aniversariantes' => $total_aniversariantes,
+                        'total_aniversariantes_dia'=>$total_aniversariantes_dia,
                         'total_inativos' => $total_inativos,
                         'pessoas_tipos'=>$pessoas_tipos,
                         'total_familias'=>$total_familias,

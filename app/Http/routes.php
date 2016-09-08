@@ -49,6 +49,11 @@
           return view('suporte.suporte');
     });
 
+
+   //Relatorio geral celulas
+  Route::get('estatisticas/{id}', 'RelatorioCelulasController@estatisticas');    //Imprimir relatorio encontro semanal
+  Route::get('estatisticas_nivel/{id}/{nivel}/{valor}', 'RelatorioCelulasController@estatisticas_nivel');    //Imprimir relatorio encontro semanal
+
     //Avisos dos sistema
    Route::get('/avisos/ler/{id}','AvisosController@show');
 

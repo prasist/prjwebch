@@ -31,6 +31,7 @@
 
         </div>
     </div><!-- ./col -->
+
     <div class="col-lg-3 col-xs-6">
         <!-- small box -->
         <div class="small-box bg-yellow">
@@ -45,16 +46,18 @@
 
         </div>
     </div><!-- ./col -->
+
     <div class="col-lg-3 col-xs-6">
         <!-- small box -->
         <div class="small-box bg-blue">
             <div  class="inner">
-                <h3>{{$total_inativos}}</h3>
-                <p>Cadastros Inativos</p>
+                <h3>{{$total_aniversariantes_dia}}</h3>
+                <p>Aniversariantes Hoje</p>
             </div>
             <div class="icon">
-                <i class="ion ion-alert"></i>
+                <i class="ion ion-ios-star"></i>
             </div>
+             <a href="{{ url('/relpessoas/aniversariantes/dia')}}" class="small-box-footer">Listar <i class="fa fa-arrow-circle-right"></i></a>
 
         </div>
 

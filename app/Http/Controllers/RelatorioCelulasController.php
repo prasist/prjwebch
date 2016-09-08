@@ -364,4 +364,93 @@ class RelatorioCelulasController extends Controller
 
  }
 
+
+protected function imprimir($tipo_relatorio, $nivel, $valor)
+{
+
+     /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
+    //Pega dados de conexao com o banco para o JASPER REPORT
+    $database = \Config::get('database.connections.jasper_report');
+    $ext = "pdf"; //Tipo saída (PDF, XLS)
+    $output = public_path() . '/relatorios/resultados/' . $ext . '/celulas_' . $this->dados_login->empresas_id . '_' . Auth::user()->id; //Path para cada tipo de relatorio
+    $path_download = '/relatorios/resultados/' . $ext . '/celulas_' . $this->dados_login->empresas_id . '_' .  Auth::user()->id; //Path para cada tipo de relatorio
+    /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
+
+    $parametros = array
+    (
+        "empresas_id"=> $this->dados_login->empresas_id,
+        "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id
+    );
+
+    //se foi passado nivel, filtra por estrutura da rede
+    if (isset($nivel))
+    {
+        $parametros = array_add($parametros, 'nivel' . $nivel, $valor);
+    }
+
+
+    $nome_relatorio = public_path() . '/relatorios/total_celulas_anual.jasper';
+
+    \JasperPHP::process(
+            $nome_relatorio,
+            $output,
+            array($ext),
+            $parametros,
+            $database,
+            false,
+            false
+        )->execute();
+
+            $Mensagem="";
+
+            if (filesize($output . '.' . $ext)<=1000) //Se arquivo tiver menos de 1k, provavelmente está vazio...
+            {
+
+                $Mensagem = "Nenhum Registro Encontrado";
+                if ($tipo_relatorio=="celulas")  {
+                    return $this->CarregarView('', $Mensagem);
+                } else {
+                    return redirect('dashboard_celulas');
+                }
+
+            }
+                else
+            {
+
+                if ($ext=="pdf") //Se for pdf abre direto na pagina
+                {
+
+                    header('Content-Description: File Transfer');
+                    header('Content-Type: application/pdf');
+                    header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
+                    //header('Content-Transfer-Encoding: binary');
+                    header('Expires: 0');
+                    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                    header('Content-Length: ' . filesize($output.'.'.$ext));
+                    flush();
+                    readfile($output.'.'.$ext);
+                    unlink($output.'.'.$ext);
+                }
+                else //Gera link para download
+                {
+                    return $this->CarregarView($path_download . '.' . $ext, $Mensagem);
+                }
+            }
+
+}
+
+public function estatisticas(\Illuminate\Http\Request  $request, $tipo_relatorio)
+{
+
+        $this->imprimir($tipo_relatorio, '', '');
+
+ }
+
+public function estatisticas_nivel(\Illuminate\Http\Request  $request, $tipo_relatorio, $nivel, $valor)
+{
+
+        $this->imprimir($tipo_relatorio, $nivel, $valor);
+
+ }
+
 }

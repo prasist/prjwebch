@@ -110,13 +110,6 @@ class RelatorioPessoasController extends Controller
       public function pesquisar_aniversariantes($querystring)
       {
 
-
-
-            if ($querystring=="mes")
-            {
-                $mes = date("m");
-            }
-
             /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
             //Pega dados de conexao com o banco para o JASPER REPORT
             $database = \Config::get('database.connections.jasper_report');
@@ -133,14 +126,20 @@ class RelatorioPessoasController extends Controller
                 "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id
             );
 
-            if ($mes!="")
-            {
-                $parametros = array_add($parametros, 'mes', $mes);
-            }
-
             $parametros = array_add($parametros, 'ordem', 'razaosocial');
 
-           $nome_relatorio = public_path() . '/relatorios/listagem_aniversariantes.jasper';
+
+            if ($querystring=="mes")
+            {
+                    $nome_relatorio = public_path() . '/relatorios/listagem_aniversariantes_mes.jasper';
+            }
+            else if ($querystring=="dia")
+            {
+                    $nome_relatorio = public_path() . '/relatorios/listagem_aniversariantes_dia.jasper';
+            }
+
+           //$nome_relatorio = public_path() . '/relatorios/listagem_aniversariantes.jasper';
+
 
             //Executa JasperReport
             \JasperPHP::process(

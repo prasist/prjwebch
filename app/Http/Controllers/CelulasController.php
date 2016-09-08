@@ -62,6 +62,7 @@ class CelulasController extends Controller
 
 
                    $linha .= "             <i class='fa  fa-sitemap'></i>&nbsp;<a href='#'>" . $value->nome_1 . "</a>";
+                   $linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 1, " . $value->celulas_nivel1_id . ");'>Resumo</a>)";
 
 
                            //---------------------------------------------NIVEL2-----------------------------------------------------
@@ -84,6 +85,7 @@ class CelulasController extends Controller
                                  }
 
                                   $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_2 . "</a>";
+                                  $linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 2, " . $value->celulas_nivel2_id . ");'>Resumo</a>)";
 
                                    //NIVEL3
                                    $strSql = " SELECT Distinct nome_3, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id, foto3 FROM view_estruturas";
@@ -106,6 +108,7 @@ class CelulasController extends Controller
                                          }
 
                                           $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_3 . "</a>";
+                                          $linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 3, " . $value->celulas_nivel3_id . ");'>Resumo</a>)";
 
 
                                            //NIVEL4
@@ -129,6 +132,7 @@ class CelulasController extends Controller
                                                  }
 
                                                   $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_4 . "</a>";
+                                                  $linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 4, " . $value->celulas_nivel4_id . ");'>Resumo</a>)";
 
                                                            //NIVEL5
                                                            $strSql = " SELECT Distinct nome, id, celulas_nivel4_id, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id,foto5 FROM view_estruturas";
@@ -151,6 +155,7 @@ class CelulasController extends Controller
                                                                   }
 
                                                                   $linha .= "           <i class='fa  fa-users'></i>&nbsp;<a href='#'>" . $value->nome . "</a>";
+                                                                  $linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 5, " . $value->id . ");'>Resumo</a>)";
 
                                                                               //LIDERES
                                                                                $strSql = " SELECT lider_pessoas_id, razaosocial , caminhofoto, ";
@@ -184,7 +189,7 @@ class CelulasController extends Controller
                                                                                              $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->caminhofoto . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
                                                                                       }
 
-                                                                                      $linha .= "        <a href='#'>" . $value->razaosocial .  "<span class='pull-right badge bg-yellow'>" . $value->tot_batizados . " batizados.</span><span class='pull-right badge bg-green'>" . $value->tot . " participantes.</span></a>";
+                                                                                      $linha .= "        <a href='#' title='List: '>" . $value->razaosocial .  "<span class='pull-right badge bg-yellow'>" . $value->tot_batizados . " batizados.</span><span class='pull-right badge bg-green'>" . $value->tot . " participantes.</span></a>";
                                                                                       $linha .= "        ";
                                                                                       $linha .= "     </li>";
                                                                                 }

@@ -19,7 +19,7 @@
           <div class="col-md-12">
            <div class="box-header with-border">
             <h3 class="box-title">Árvore Hierárquica da Rede</h3>
-            &nbsp;(<i class="text">Clique para expandir</i>)
+            &nbsp;(<i class="text">Clique no nível para expandir e em Resumo para Visualizar Relatório</i>)
             {!! $gerar_treeview !!}
           </div>
 
@@ -48,6 +48,27 @@
                     </div>
                     <div id="visitantes" style="height: 250px;"></div>
           </div>
+
+          <!--
+           <div class="col-lg-4 col-xs-7">
+                <p>&nbsp;</p>
+
+                <div class="input-group margin">
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"><span class="fa fa-print"></span>  Estatísticas
+                        <span class="fa fa-caret-down"></span></button>
+                        <ul class="dropdown-menu">
+
+                              <li><a href="#" onclick="abrir_relatorio('1');">Total Geral de Células</a></li>
+                              <li><a href="#" onclick="abrir_relatorio('2');">Resumo</a></li>
+
+                        </ul>
+                  </div>
+                  <br/>
+              </div>
+
+            </div>-->
+
 </div>
 
 
@@ -195,6 +216,19 @@
 
 <script type="text/javascript">
 
+    //resumo anual por estrutura
+      function abrir_relatorio_nivel(tipo, nivel, valor)
+      {
+              var urlGetUser = '{!! url("/estatisticas_nivel/' +  tipo + '/' + nivel+ '/' + valor + '") !!}';
+              window.location.href =urlGetUser;
+      }
+
+      //resumo anual
+      function abrir_relatorio(tipo)
+      {
+              var urlGetUser = '{!! url("/estatisticas/' +  tipo + '") !!}';
+              window.location.href =urlGetUser;
+      }
 
     $(document).ready(function(){
 
