@@ -15,7 +15,7 @@
 
       <div class="box-footer no-padding">
 
-        <div class="row">
+       <div class="row">
           <div class="col-md-12">
            <div class="box-header with-border">
             <h3 class="box-title">Árvore Hierárquica da Rede</h3>
@@ -23,7 +23,61 @@
             {!! $gerar_treeview !!}
           </div>
 
-        </div>
+         </div>
+
+         <!--
+            <div class="col-xs-6">
+
+                  <label for="resultado" class="control-label">Formato de Saída : </label>
+                  <select id="resultado" name="resultado" class="form-control selectpicker">
+                  <option  value="pdf" data-icon="fa fa-file-pdf-o" selected>PDF (.pdf)</option>
+                  <option  value="xlsx" data-icon="fa fa-file-excel-o">Planilha Excel (.xls)</option>
+                  <option  value="csv" data-icon="fa fa-file-excel-o">CSV (.csv)</option>
+                  <option  value="docx" data-icon="fa fa-file-word-o">Microsoft Word (.docx)</option>
+                  <option  value="html" data-icon="fa fa-file-word-o">HTML (.html)</option>
+                  <option  value="email" data-icon="fa fa-envelope-o">Listagem de E-mails</option>
+                  </select>
+
+
+                   @if ($var_download=="")
+
+                         @if ($var_mensagem=="Nenhum Registro Encontrado")
+                                <br/>
+                                <br/>
+                                 <div class="alert2 alert-info">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <h4>
+                                    <i class="icon fa fa-check"></i> {{$var_mensagem}}</h4>
+                                </div>
+                                {{$var_mensagem}}
+                          @endif
+
+                   @else
+                      <br/>
+                      <br/>
+                      <div class="alert2 alert-info">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Relatório gerado com Sucesso!</h4>
+                        Clique no link abaixo para baixar o arquivo.
+                      </div>
+                      <a href="{!! url($var_download) !!}" class="text" target="_blank">
+                        CLIQUE AQUI PARA VISUALIZAR / BAIXAR
+                        @if (substr($var_download,-3)=="pdf")
+                          <img src="{{ url('/images/pdf.png') }}" alt="Baixar Arquivo" />
+                        @elseif (substr($var_download,-4)=="xlsx")
+                          <img src="{{ url('/images/excel.png') }}" alt="Baixar Arquivo" />
+                        @elseif (substr($var_download,-3)=="csv")
+                          <img src="{{ url('/images/csv.jpg') }}" alt="Baixar Arquivo" />
+                        @elseif (substr($var_download,-4)=="docx")
+                           <img src="{{ url('/images/microsoft-word-icon.png') }}" alt="Baixar Arquivo" />
+                        @endif
+                      </a>
+                    @endif
+
+            </div>
+            -->
+
+
       </div>
 
     </div>
@@ -51,7 +105,6 @@
 
           <!--
            <div class="col-lg-4 col-xs-7">
-                <p>&nbsp;</p>
 
                 <div class="input-group margin">
                   <div class="input-group-btn">
@@ -216,11 +269,28 @@
 
 <script type="text/javascript">
 
+   function changeFunc(objeto, nivel, valor, nome)
+   {
+        var selectBox =  objeto;
+        var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+
+        //var selectSaida =  document.getElementById("resultado");
+        //var saida = selectSaida.options[selectSaida.selectedIndex].value;
+
+        if (selectedValue!="")
+        {
+            //Abre Relatorio conforme parametros passados
+            abrir_relatorio_nivel(selectedValue, nivel, valor, nome, "pdf");
+        }
+
+   }
+
     //resumo anual por estrutura
-      function abrir_relatorio_nivel(tipo, nivel, valor)
+      function abrir_relatorio_nivel(tipo, nivel, valor, nome, saida)
       {
-              var urlGetUser = '{!! url("/estatisticas_nivel/' +  tipo + '/' + nivel+ '/' + valor + '") !!}';
-              window.location.href =urlGetUser;
+             var urlGetUser = '';
+             urlGetUser = '{!! url("/estatisticas_nivel/' +  tipo + '/' + nivel+ '/' + valor + '/' + nome + '/' + saida + '") !!}';
+             window.location.href =urlGetUser;
       }
 
       //resumo anual

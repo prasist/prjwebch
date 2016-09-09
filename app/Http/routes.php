@@ -52,7 +52,9 @@
 
    //Relatorio geral celulas
   Route::get('estatisticas/{id}', 'RelatorioCelulasController@estatisticas');    //Imprimir relatorio encontro semanal
-  Route::get('estatisticas_nivel/{id}/{nivel}/{valor}', 'RelatorioCelulasController@estatisticas_nivel');    //Imprimir relatorio encontro semanal
+  Route::get('estatisticas_nivel/{id}/{nivel}/{valor}/{nome}/{saida}', 'RelatorioCelulasController@estatisticas_nivel');    //Imprimir relatorio encontro semanal
+  //Route::get('estatisticas_batismos/{id}/{nivel}/{valor}/{mes}/{ano}/{nome}/{saida}', 'RelatorioCelulasController@estatisticas_batismos');    //Imprimir relatorio encontro semanal
+
 
     //Avisos dos sistema
    Route::get('/avisos/ler/{id}','AvisosController@show');

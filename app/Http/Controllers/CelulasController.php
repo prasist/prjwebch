@@ -62,7 +62,17 @@ class CelulasController extends Controller
 
 
                    $linha .= "             <i class='fa  fa-sitemap'></i>&nbsp;<a href='#'>" . $value->nome_1 . "</a>";
-                   $linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 1, " . $value->celulas_nivel1_id . ");'>Resumo</a>)";
+                   //$linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 1, " . $value->celulas_nivel1_id . ");'>Resumo</a>)";
+
+
+                   $linha .= '  <select id="tiporelatorio[]"  name="tiporelatorio[]" onchange="changeFunc(this, 1, ' . $value->celulas_nivel1_id . ', \'' . $value->nome_1 . '\');"> ';
+                   $linha .= '        <option  value="">Relatórios Disponíveis...</option>';
+                   $linha .= '        <option  value="1">Resumo Células Geral</option>';
+                   $linha .= '        <option  value="2">Batismos (Anual - Últimos 5 anos)</option>';
+                   $linha .= '        <option  value="3">Batismos (Mensal - Ano Corrente)</option>';
+                   $linha .= '        <option  value="4">Multiplicação (Anual - Últimos 5 anos)</option>';
+                   $linha .= '        <option  value="5">Multiplicação (Mensal - Ano Corrente)</option>';
+                   $linha .= '  </select>';
 
 
                            //---------------------------------------------NIVEL2-----------------------------------------------------
@@ -85,7 +95,16 @@ class CelulasController extends Controller
                                  }
 
                                   $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_2 . "</a>";
-                                  $linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 2, " . $value->celulas_nivel2_id . ");'>Resumo</a>)";
+                                  //$linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 2, " . $value->celulas_nivel2_id . ");'>Resumo</a>)";
+
+                                   $linha .= '  <select id="tiporelatorio[]"  name="tiporelatorio[]" onchange="changeFunc(this, 2, ' . $value->celulas_nivel2_id . ', \'' . $value->nome_2 . '\');"> ';
+                                   $linha .= '        <option  value="">Relatórios Disponíveis...</option>';
+                                   $linha .= '        <option  value="1">Resumo Células Geral</option>';
+                                   $linha .= '        <option  value="2">Batismos (Anual - Últimos 5 anos)</option>';
+                                   $linha .= '        <option  value="3">Batismos (Mensal - Ano Corrente)</option>';
+                                   $linha .= '        <option  value="4">Multiplicação (Anual - Últimos 5 anos)</option>';
+                                   $linha .= '        <option  value="5">Multiplicação (Mensal - Ano Corrente)</option>';
+                                   $linha .= '  </select>';
 
                                    //NIVEL3
                                    $strSql = " SELECT Distinct nome_3, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id, foto3 FROM view_estruturas";
@@ -108,7 +127,16 @@ class CelulasController extends Controller
                                          }
 
                                           $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_3 . "</a>";
-                                          $linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 3, " . $value->celulas_nivel3_id . ");'>Resumo</a>)";
+                                          //$linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 3, " . $value->celulas_nivel3_id . ");'>Resumo</a>)";
+
+                                         $linha .= '  <select id="tiporelatorio[]"  name="tiporelatorio[]" onchange="changeFunc(this, 3, ' . $value->celulas_nivel3_id . ', \'' . $value->nome_3 . '\');"> ';
+                                         $linha .= '        <option  value="">Relatórios Disponíveis...</option>';
+                                         $linha .= '        <option  value="1">Resumo Células Geral</option>';
+                                         $linha .= '        <option  value="2">Batismos (Anual - Últimos 5 anos)</option>';
+                                         $linha .= '        <option  value="3">Batismos (Mensal - Ano Corrente)</option>';
+                                         $linha .= '        <option  value="4">Multiplicação (Anual - Últimos 5 anos)</option>';
+                                         $linha .= '        <option  value="5">Multiplicação (Mensal - Ano Corrente)</option>';
+                                         $linha .= '  </select>';
 
 
                                            //NIVEL4
@@ -132,7 +160,16 @@ class CelulasController extends Controller
                                                  }
 
                                                   $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_4 . "</a>";
-                                                  $linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 4, " . $value->celulas_nivel4_id . ");'>Resumo</a>)";
+                                                  //$linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 4, " . $value->celulas_nivel4_id . ");'>Resumo</a>)";
+
+                                                  $linha .= '  <select id="tiporelatorio[]"  name="tiporelatorio[]" onchange="changeFunc(this, 4, ' . $value->celulas_nivel4_id . ', \'' . $value->nome_4 . '\');"> ';
+                                                  $linha .= '        <option  value="">Relatórios Disponíveis...</option>';
+                                                  $linha .= '        <option  value="1">Resumo Células Geral</option>';
+                                                  $linha .= '        <option  value="2">Batismos (Anual - Últimos 5 anos)</option>';
+                                                  $linha .= '        <option  value="3">Batismos (Mensal - Ano Corrente)</option>';
+                                                  $linha .= '        <option  value="4">Multiplicação (Anual - Últimos 5 anos)</option>';
+                                                  $linha .= '        <option  value="5">Multiplicação (Mensal - Ano Corrente)</option>';
+                                                  $linha .= '  </select>';
 
                                                            //NIVEL5
                                                            $strSql = " SELECT Distinct nome, id, celulas_nivel4_id, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id,foto5 FROM view_estruturas";
@@ -155,7 +192,16 @@ class CelulasController extends Controller
                                                                   }
 
                                                                   $linha .= "           <i class='fa  fa-users'></i>&nbsp;<a href='#'>" . $value->nome . "</a>";
-                                                                  $linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 5, " . $value->id . ");'>Resumo</a>)";
+                                                                  //$linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 5, " . $value->id . ");'>Resumo</a>)";
+
+                                                                   $linha .= '  <select id="tiporelatorio[]"  name="tiporelatorio[]" onchange="changeFunc(this, 1, ' . $value->id . ', \'' . $value->nome . '\');"> ';
+                                                                   $linha .= '        <option  value="">Relatórios Disponíveis...</option>';
+                                                                   $linha .= '        <option  value="1">Resumo Células Geral</option>';
+                                                                   $linha .= '        <option  value="2">Batismos (Anual - Últimos 5 anos)</option>';
+                                                                   $linha .= '        <option  value="3">Batismos (Mensal - Ano Corrente)</option>';
+                                                                   $linha .= '        <option  value="4">Multiplicação (Anual - Últimos 5 anos)</option>';
+                                                                   $linha .= '        <option  value="5">Multiplicação (Mensal - Ano Corrente)</option>';
+                                                                   $linha .= '  </select>';
 
                                                                               //LIDERES
                                                                                $strSql = " SELECT lider_pessoas_id, razaosocial , caminhofoto, ";
