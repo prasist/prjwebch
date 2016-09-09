@@ -19,7 +19,7 @@
           <div class="col-md-12">
            <div class="box-header with-border">
             <h3 class="box-title">Árvore Hierárquica da Rede</h3>
-            &nbsp;(<i class="text">Clique no nível para expandir e em Resumo para Visualizar Relatório</i>)
+            &nbsp;(<i class="text-info">Clique no nível para expandir e exibir os relatório disponíveis.</i>)
             {!! $gerar_treeview !!}
           </div>
 

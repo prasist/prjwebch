@@ -411,7 +411,7 @@ class RelatorioCelulasController extends Controller
 
            case 2:
                 $nome_relatorio = public_path() . '/relatorios/total_batismos.jasper';
-                $parametros = array_add($parametros, 'ano_inicial', (date("Y")-5));
+                $parametros = array_add($parametros, 'ano_inicial', (date("Y")-4));
                 $parametros = array_add($parametros, 'ano_final', date("Y"));
                 break;
 
@@ -423,7 +423,7 @@ class RelatorioCelulasController extends Controller
 
             case 4:
                 $nome_relatorio = public_path() . '/relatorios/total_multiplicacao_anual.jasper';
-                $parametros = array_add($parametros, 'ano_inicial', (date("Y")-5));
+                $parametros = array_add($parametros, 'ano_inicial', (date("Y")-4));
                 $parametros = array_add($parametros, 'ano_final', date("Y"));
                 break;
 
