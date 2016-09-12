@@ -82,6 +82,8 @@
 
     </div>
   </div>
+
+
 </div>
 </div>
 
@@ -263,11 +265,28 @@
 
       </div>
 
+          <div class="overlay modal" style="display: none">
+              <i class="fa fa-refresh fa-spin"></i>
+          </div>
+
+
     </div>
 
 </div>
 
 <script type="text/javascript">
+
+  var myApp;
+       myApp = myApp || (function () {
+
+            return {
+                showPleaseWait: function() {
+                    $(".overlay").show();
+                }
+            };
+       })();
+
+
 
    function changeFunc(objeto, nivel, valor, nome)
    {
@@ -280,6 +299,7 @@
         if (selectedValue!="")
         {
             //Abre Relatorio conforme parametros passados
+            myApp.showPleaseWait();
             abrir_relatorio_nivel(selectedValue, nivel, valor, nome, "pdf");
         }
 
