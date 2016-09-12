@@ -289,7 +289,7 @@
                                            @if ($item->arquivo!="")
                                               <tr id="{{$item->id}}">
                                                   <td><a href="{{ url('/images/arquivos/encontros/' . $item->arquivo) }}" target="_blank">{{$item->arquivo}}</a></td>
-                                                  <td><a href="" class="btn btn-danger remover_arquivo" id="{{$item->id}}"><i class="fa fa-trash"></i></a></td>
+                                                  <td><a href="#" class="btn btn-danger remover_arquivo" id="{{$item->id}}"><i class="fa fa-trash"></i></a></td>
                                               </tr>
                                            @endif
 
@@ -408,7 +408,7 @@
 
                         <div class="row">
                                 <div class="col-xs-12">
-                                        <a href="" class="btn btn-default" id="addRow" name="addRow"><b> + Incluir Visitante </b></a>
+                                        <a href="#" class="btn btn-default" id="addRow" name="addRow"><b> + Incluir Visitante </b></a>
                                         <p>&nbsp;</p>
 
                                             <table id="tab_visitantes" class="table table-responsive">
