@@ -44,7 +44,7 @@ class CelulasPessoasController extends Controller
               return redirect('home');
         }
 
-        $strSql = "SELECT Distinct celulas_id, lider_pessoas_id, descricao_lider_scod  as nome, tot, cor FROM view_celulas_pessoas_participantes ";
+        $strSql = "SELECT Distinct celulas_id, lider_pessoas_id, descricao_lider_scod  as nome, tot, cor, nome_celula FROM view_celulas_pessoas_participantes ";
         $strSql .=  " WHERE  empresas_id = " . $this->dados_login->empresas_id;
         $strSql .=  " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
 

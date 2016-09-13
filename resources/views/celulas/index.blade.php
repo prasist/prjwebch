@@ -40,7 +40,8 @@
                     <table id="table_celulas" class="table table-responsive table-hover">
                     <thead>
                         <tr>
-                        <th>Líder / Nome Célula</th>
+                        <th>Nome Célula</th>
+                        <th>Líder</th>
                         <th>Dia Encontro</th>
                         <th>Região</th>
                         <th>Horário</th>
@@ -54,6 +55,23 @@
                         @foreach($dados as $value)
 
                         <tr>
+
+                            <td>
+                                  @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
+                                  <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" data-toggle="tooltip" data-placement="top" title="Clique para Alterar">
+                                       {!! $value->nome !!}
+                                  </a>
+                                  @else
+                                        @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
+                                                <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" >
+                                                      {!! $value->nome !!}
+                                                </a>
+                                        @else
+                                                {!! $value->nome !!}
+                                        @endcan
+                                  @endcan
+                            </td>
+
                             <td>
                                   @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
                                   <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" data-toggle="tooltip" data-placement="top" title="Clique para Alterar">
@@ -72,6 +90,7 @@
                                   <span class="badge bg-yellow">{!!$value->tot_vinc!!}</span>
                                   @endif
                             </td>
+
                             <td>{!! $value->descricao_dia_encontro !!}</td>
                             <td>{!! $value->regiao !!}</td>
                             <td>{!! $value->horario !!}</td>

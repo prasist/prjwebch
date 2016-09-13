@@ -30,7 +30,8 @@
                     <thead>
                         <tr>
                         <!--<th>ID</th>-->
-                        <th>Célula / Qtd. Participantes</th>
+                        <th>Nome Célula</th>
+                        <th>Líder / Qtd. Participantes</th>
                         <th>Cor</th>
                         <th>Alterar</th>
                         <th>Visualizar</th>
@@ -43,6 +44,22 @@
                         @foreach($dados as $value)
 
                         <tr>
+
+                            <td>
+                                  @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
+                                  <a href = "{{ URL::to(\Session::get('route') .'/' . $value->celulas_id . '/edit') }}" data-toggle="tooltip" data-placement="top" title="Clique para Alterar">
+                                        {!! $value->nome_celula !!}
+                                  </a>
+                                  @else
+                                        @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
+                                                <a href = "{{ URL::to(\Session::get('route') .'/' . $value->celulas_id . '/preview') }}" >
+                                                      {!! $value->nome_celula !!}
+                                                </a>
+                                        @else
+                                                {!! $value->nome_celula !!}
+                                        @endcan
+                                  @endcan
+                            </td>
 
                             <td>
                                   @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])

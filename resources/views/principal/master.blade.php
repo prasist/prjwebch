@@ -243,6 +243,7 @@
 
                                $("#tab_celulas_pessoas").DataTable({
                                  "pageLength": 50,
+                                 "order": [[ 1, "asc" ]],
                                  language: {
                                             paginate: {
                                                 first:      "Primeira",
@@ -252,15 +253,16 @@
                                         },
                                 "columnDefs":
                                   [
-                                      {"targets": [2], "sortable": false},
                                       {"targets": [3], "sortable": false},
                                       {"targets": [4], "sortable": false},
-                                      {"targets": [5], "sortable": false}
+                                      {"targets": [5], "sortable": false},
+                                      {"targets": [6], "sortable": false}
                                   ]
                             });
 
                             $("#table_celulas").DataTable({
                                 "pageLength": 50,
+                                "order": [[ 1, "asc" ]],
                                  language: {
                                             paginate: {
                                                 first:      "Primeira",
@@ -270,9 +272,9 @@
                                         },
                                 "columnDefs":
                                   [
-                                      {"targets": [5], "sortable": false},
                                       {"targets": [6], "sortable": false},
-                                      {"targets": [7], "sortable": false}
+                                      {"targets": [7], "sortable": false},
+                                      {"targets": [8], "sortable": false}
                                   ]
                             });
 
