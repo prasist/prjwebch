@@ -225,7 +225,9 @@ class RelatorioCelulasController extends Controller
         $parametros = array_add($parametros, 'regiao', $input["regiao"] . '%');
     }
 
-    if ($tipo_relatorio=="celulas") //Sintetico, nao listar endereco, fone e email
+
+
+   if ($tipo_relatorio=="celulas")  //Relatorio de celulas
    {
         $parametros = array_add($parametros, 'segundo_dia_encontro', $input["segundo_dia_encontro"]);
         $parametros = array_add($parametros, 'turno', $input["turno"]);
@@ -280,7 +282,7 @@ class RelatorioCelulasController extends Controller
               }
 
    }
-   else
+   else //relatorio de encotnros
    {
 
         if ($input["mes"]!="")
@@ -301,14 +303,14 @@ class RelatorioCelulasController extends Controller
             $parametros = array_add($parametros, 'path_logo', public_path() . '/images/clients/' . \Session::get('logo'));
         }
 
-        if ($input["ckExibir"]=="on")
-        {
+        //if ($input["ckExibir"]=="on") //Exibir LIDER
+        //{
                 $nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral_lider.jasper';
-        }
-        else
-        {
-                $nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral.jasper';
-        }
+        //}
+        //else
+        //{
+                //$nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral.jasper';
+        //}
 
    }
 
