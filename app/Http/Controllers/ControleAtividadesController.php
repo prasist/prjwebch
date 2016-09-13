@@ -348,6 +348,7 @@ class ControleAtividadesController extends Controller
 
 
 
+        /*
         //--------------------------RESUMO POR TIPOS DE PESSOAS
 
         //Excluir antes...
@@ -373,6 +374,7 @@ class ControleAtividadesController extends Controller
         $gravar_resumo = \DB::select($strSql);
 
         //--------------------------FIM - RESUMO POR TIPOS DE PESSOAS
+       */
 
 
 

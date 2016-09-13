@@ -528,7 +528,6 @@ class CelulasController extends Controller
  protected function participantes_presenca ()
  {
 
-
             $strSql = " SELECT * FROM view_participantes_celula_ultima_presenca";
             $strSql .=  " WHERE ";
             $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
@@ -542,7 +541,6 @@ class CelulasController extends Controller
 
             $participantes_presenca = \DB::select($strSql);
             return $participantes_presenca;
-
 
  }
 
@@ -569,6 +567,7 @@ class CelulasController extends Controller
             }
 
             $strSql .=  " group by c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano, qe.pergunta ";
+
             $resumo_perguntas = \DB::select($strSql);
             return $resumo_perguntas;
     }
@@ -1159,12 +1158,31 @@ class CelulasController extends Controller
 
         $vazio = \App\Models\tabela_vazia::get();
 
+        //Verifica se tem permissao para incluir ou alterar
+        if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'incluir']) || Gate::allows('verifica_permissao', [\Config::get('app.controle_atividades'),'alterar']))
+        {
+              $preview = 'false'; //somente visualizacao = false
+        } else
+        {
+              $preview = 'true'; //somente visualizacao = true
+        }
 
         /*Busca NIVEL5*/
         $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         //return view($this->rota . '.registrar', ['nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
-        return view($this->rota . '.atualizacao', ['gerar_estrutura_origem' => $vazio, 'participantes'=>'', 'preview'=>'false', 'nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'tipo_operacao'=>'incluir', 'dados'=>$vazio, 'celulas'=>$celulas, 'vinculos'=>$vazio, 'total_vinculos'=>'0']);
+        return view($this->rota . '.atualizacao', [
+          'gerar_estrutura_origem' => $vazio,
+          'participantes'=>'',
+          'preview'=>$preview,
+          'nivel5'=>$view5,
+          'publicos'=>$publicos,
+          'faixas'=>$faixas,
+          'tipo_operacao'=>'incluir',
+          'dados'=>$vazio,
+          'celulas'=>$celulas,
+          'vinculos'=>$vazio,
+          'total_vinculos'=>'0']);
 
     }
 

@@ -22,9 +22,9 @@
 </div>
 
 @if ($tipo_operacao=="incluir")
-<form id="form_celulas" method = 'POST'  class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/gravar')}}>
+<form id="form_celulas" method = 'POST'  class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/gravar')}}">
 @else
-<form id="form_celulas" method = 'POST' class="form-horizontal"  action = {{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update')}}>
+<form id="form_celulas" method = 'POST' class="form-horizontal"  action = "{{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update')}}">
 @endif
 
 <input type="hidden" id="quero_incluir_participante" name="quero_incluir_participante" value="">
@@ -711,7 +711,7 @@
 
    <div class="box-footer">
        <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-save"></i> Salvar</button>
-       <a href="#" class="btn btn-warning" onclick="salvar_e_incluir();" ><i class="fa fa-users"></i> Salvar e Incluir Participantes</a>
+       <a href="#" class="btn btn-warning" onclick="salvar_e_incluir();" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }} ><i class="fa fa-users"></i> Salvar e Incluir Participantes</a>
        <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Cancelar</a>
    </div>
 
