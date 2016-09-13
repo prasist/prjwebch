@@ -24,6 +24,14 @@ class HomeController extends Controller
         $this->middleware('auth');
         $this->rota = "home"; //Define nome da rota que será usada na classe
         //retirado gate
+
+
+        //if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
+        //{
+
+            //$this->dados_login = \Session::get('dados_login');
+        //}
+
     }
 
      public function confirm($codigo)
@@ -67,10 +75,6 @@ class HomeController extends Controller
 
         //retirado da construct
         //Validação de permissão de acesso a pagina
-        //if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
-        //{
-            //$this->dados_login = \Session::get('dados_login');
-        //}
 
         //Verificar se foi cadastrado os dados da igreja
         if (usuario::find(Auth::user()->id))

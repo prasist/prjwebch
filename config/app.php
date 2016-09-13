@@ -70,6 +70,7 @@ return [
     'membro_dados'=>'63',
     'configmsg'=>'64',
     'relencontro'=>'65',
+    'cursos'=>'66',
 
 
     'env' => env('APP_ENV', 'production'),

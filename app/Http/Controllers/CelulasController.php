@@ -204,7 +204,7 @@ class CelulasController extends Controller
                                                                    $linha .= '  </select>';
 
                                                                               //LIDERES
-                                                                               $strSql = " SELECT lider_pessoas_id, razaosocial , caminhofoto, ";
+                                                                               $strSql = " SELECT celulas.nome,  lider_pessoas_id, razaosocial , caminhofoto, ";
                                                                                $strSql .=  " ( SELECT count(cp.pessoas_id) AS count ";
                                                                                $strSql .=  "     FROM celulas_pessoas cp ";
                                                                                $strSql .=  "       JOIN celulas c ON cp.celulas_id = c.id AND cp.empresas_id = c.empresas_id AND cp.empresas_clientes_cloud_id = c.empresas_clientes_cloud_id ";
@@ -235,7 +235,7 @@ class CelulasController extends Controller
                                                                                              $linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->caminhofoto . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
                                                                                       }
 
-                                                                                      $linha .= "        <a href='#' title='List: '>" . $value->razaosocial .  "<span class='pull-right badge bg-yellow'>" . $value->tot_batizados . " batizados.</span><span class='pull-right badge bg-green'>" . $value->tot . " participantes.</span></a>";
+                                                                                      $linha .= "        <a href='#' title='List: '>" . $value->nome . ' - ' . $value->razaosocial .  "<span class='pull-right badge bg-yellow'>" . $value->tot_batizados . " batizados.</span><span class='pull-right badge bg-green'>" . $value->tot . " participantes.</span></a>";
                                                                                       $linha .= "        ";
                                                                                       $linha .= "     </li>";
                                                                                 }

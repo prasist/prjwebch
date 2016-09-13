@@ -352,6 +352,7 @@ class PessoasController extends Controller
             /*
             Para preencher combos Dados eclesiasticos
             */
+            $cursos = \App\Models\cursos::where(['empresas_id' => $this->dados_login->empresas_id, 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id])->orderBy('nome','ASC')->get();
             $tipos = \App\Models\tipospessoas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
             $igrejas = \App\Models\igrejas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
             $situacoes = \App\Models\situacoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
@@ -377,6 +378,7 @@ class PessoasController extends Controller
             $membros_dados_pessoais =  $vazio; //array('0' => ['0'  => 'membros_dados']);
             $membros_situacoes =  "";
             $membros_dons =  "";
+            $membros_cursos=$vazio;
             $membros_habilidades =  "";
             $membros_formacoes =  "";
             $membros_idiomas =  "";
@@ -406,6 +408,7 @@ class PessoasController extends Controller
                 'religioes' => $religioes,
                 'disponibilidades' => $disponibilidades,
                 'dons' => $dons,
+                'cursos' => $cursos,
                 'habilidades' => $habilidades,
                 'estadoscivis' => $estadoscivis,
                 'motivos' => $motivos,
@@ -428,6 +431,7 @@ class PessoasController extends Controller
                 'membros_idiomas' => $membros_idiomas,
                 'membros_profissionais' => $membros_profissionais,
                 'membros_relacionamentos'=>$membros_relacionamentos,
+                'membros_cursos'=>$membros_cursos,
                 'tipos_pessoas'=>$tipos_pessoas
             ]);
 
@@ -474,6 +478,7 @@ public function salvar($request, $id, $tipo_operacao) {
             {
                     /*Excluir antes atualizar*/
                     $excluir = \App\Models\membros_dons::where($where)->delete();
+                    $excluir = \App\Models\membros_cursos::where($where)->delete();
                     $excluir = \App\Models\membros_profissionais::where($where)->delete();
                     $excluir = \App\Models\financpessoas::where($where)->delete();
                     $excluir = \App\Models\membros_dados::where($where)->delete();
@@ -1034,6 +1039,57 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
 
+
+
+                        /*------------------------------ Tabela CURSOS ---------------------------*/
+
+                        /*
+                        if ($input['cursos']!="")
+                        {
+                                foreach($input['cursos'] as $selected)
+                                {
+                                        if ($selected!="")
+                                        {
+                                                $whereForEach =
+                                                [
+                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                    'empresas_id' =>  $this->dados_login->empresas_id,
+                                                    'pessoas_id' => $pessoas->id,
+                                                    'cursos_id' => $selected
+                                                ];
+
+                                                if ($tipo_operacao=="create")  //novo registro
+                                                {
+                                                    $dons = new \App\Models\membros_cursos();
+                                                }
+                                                else //Alteracao
+                                                {
+                                                    $dons = \App\Models\membros_cursos::firstOrNew($whereForEach);
+                                                }
+
+
+                                                $valores =
+                                                [
+                                                    'pessoas_id' => $pessoas->id,
+                                                    'cursos_id' => $selected,
+                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                    'empresas_id' =>  $this->dados_login->empresas_id
+                                                ];
+
+                                                $cursos->fill($valores)->save();
+                                                $cursos->save();
+
+                                        }
+                                }
+
+                        }
+                        */
+
+                        /*------------------------------ FIM Tabela CURSOS---------------------------*/
+
+
+
+
                           /*------------------------------ Tabela MEMBROS_RELACIONAMENTOS ---------------------------*/
 
 
@@ -1499,6 +1555,20 @@ public function salvar($request, $id, $tipo_operacao) {
             }
 
 
+            /*CURSOS EVENTOS*/
+            $membros_cursos  = \App\Models\membros_cursos::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('empresas_id', $this->dados_login->empresas_id)
+            ->where('pessoas_id', $id)
+            ->get();
+
+            /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
+            if ($membros_cursos->count()==0)
+            {
+                $membros_cursos = $vazio; //Artificio para nao ter que tratar array vazia nas views
+            }
+
+
+
             $sQuery = " select p3.razaosocial as razaosocial_mae, p2.razaosocial as razaosocial_pai,  pessoas.razaosocial, pessoas_id, membros_familiares.empresas_id, membros_familiares.empresas_clientes_cloud_id, conjuge_id, nome_conjuge, ";
             $sQuery .= " to_char(data_falecimento, 'DD-MM-YYYY') AS data_falecimento, ";
             $sQuery .= " to_char(to_date(data_casamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_casamento, ";
@@ -1604,6 +1674,7 @@ public function salvar($request, $id, $tipo_operacao) {
                 /*
                 Para preencher combos Dados eclesiasticos
                 */
+                $cursos = \App\Models\cursos::where(['empresas_id' => $this->dados_login->empresas_id, 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id])->orderBy('nome','ASC')->get();
                 $igrejas = \App\Models\igrejas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 $situacoes = \App\Models\situacoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
                 $idiomas = \App\Models\idiomas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
@@ -1664,6 +1735,7 @@ public function salvar($request, $id, $tipo_operacao) {
                     'cargos' => $cargos,
                     'celulas'=>$celulas,
                     'perfil'=>$perfil,
+                    'cursos'=>$cursos,
                     'pessoas_timeline'=>$pessoas_timeline,
                     'tiposrelacionamentos'=>$tiposrelacionamentos,
                     'membros_celula'=>$membros_celula,
@@ -1679,6 +1751,7 @@ public function salvar($request, $id, $tipo_operacao) {
                     'membros_habilidades' =>$membros_habilidades,
                     'membros_profissionais' => $membros_profissionais,
                     'membros_relacionamentos' => $membros_relacionamentos,
+                    'membros_cursos'=>$membros_cursos,
                     'tipos_pessoas'=>$tipos_pessoas
                 ]);
 

@@ -377,7 +377,7 @@
                           <div class="box-header with-border">
                             <h5 class="box-title">
                               <a data-toggle="collapse" data-parent="#accordion" href="#tab3">
-                                <span class="fa fa-mortar-board"></span> Formação
+                                <span class="fa fa-institution"></span> Formação
                               </a>
                             </h5>
                           </div>
@@ -602,7 +602,7 @@
                                                                 </div>
 
 
-                                                                  <div class="col-xs-10">
+                                                                   <div class="col-xs-10">
 
                                                                       <label for="novofilho" class="control-label">Inclusão Filhos(as) sem cadastro</label>
                                                                       <br/>
@@ -663,7 +663,7 @@
                                                                                             <input id="hidden_sexo[]" name = "hidden_sexo[]" type="hidden" class="form-control" value="{{$item->sexo}}">
                                                                                             <input id="hidden_status[]" name = "hidden_status[]" type="hidden" class="form-control" value="{{$item->id_status}}">
                                                                                             <input id="hidden_estadocivl[]" name = "hidden_estadocivl[]" type="hidden" class="form-control" value="{{$item->id_estadocivil}}">
-                                                                                            <a href="#" class="deleteLink">Remover</a>
+                                                                                            <a href="#" class="deleteLink"><i class="glyphicon glyphicon-trash"></i> Remover</a>
                                                                                    </td>
                                                                                 </tr>
 
@@ -1175,7 +1175,7 @@
                       </div><!-- FIM TAB HISTORICO ECLESIASTICO-->
 
 
-                      <!-- TAB Habilidades, Dons e Cursos-->
+                      <!-- TAB Habilidades, Dons -->
                       <div class="panel box box-primary">
                           <div class="box-header with-border">
                             <h5 class="box-title">
@@ -1252,7 +1252,7 @@
 
                             </div>
                           </div>
-                      </div><!-- FIM TAB Habilidades, Dons e Cursos-->
+                      </div><!-- FIM TAB Habilidades, Dons -->
 
                       <!-- TAB Envolvimento Ministerial-->
                       <div class="panel box box-primary">
@@ -1317,6 +1317,26 @@
                             </div>
                           </div>
                       </div><!-- FIM TAB Histórico de Movimentações -->
+
+                      <!-- TAB Histórico de Movimentações -->
+                      <div class="panel box box-primary">
+                          <div class="box-header with-border">
+                            <h5 class="box-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#tab_cursos">
+                                <span class="fa fa-mortar-board"></span> Cursos / Eventos
+                              </a>
+                            </h5>
+                          </div>
+                          <div id="tab_cursos" class="panel-collapse collapse">
+                            <div class="box-body">
+
+
+                            </div>
+                          </div>
+                      </div><!-- FIM TAB Histórico de Movimentações -->
+
+
+
 
                       <!-- TAB Células -->
                       <div class="panel box box-primary">

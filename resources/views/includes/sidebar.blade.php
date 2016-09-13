@@ -48,7 +48,6 @@
     <ul class="sidebar-menu">
       <li class="header">Menu Principal</li>
 
-
       @can('verifica_permissao_modulo', ['Configurações'])
       <li class="treeview" id="menu_config">
         <a href="#" title="Alterar e Incluir Dados Cadastrais da Igreja Sede e Igrejas / Instituições e Configurações do serviço de mensagens">
@@ -118,37 +117,38 @@
         <ul class="treeview-menu">
 
           <li class="text">&nbsp;</li>
-          <li><a href={{ url('/bancos')}}><i class="fa fa-angle-double-right"></i>Bancos</a></li>
-          <li><a href={{ url('/cargos')}}><i class="fa fa-angle-double-right"></i>Cargos / Funções</a></li>
-          <li><a href={{ url('/ramos')}}><i class="fa fa-angle-double-right"></i>Ramos de Atividades</a></li>
-          <li><a href={{ url('/civis')}}><i class="fa fa-angle-double-right"></i>Estados Civis</a></li>
-          <li><a href={{ url('/idiomas')}}><i class="fa fa-angle-double-right"></i>Idiomas</a></li>
-          <li><a href={{ url('/graus')}}><i class="fa fa-angle-double-right"></i>Graus de Instrução</a></li>
-          <li><a href={{ url('/areas')}}><i class="fa fa-angle-double-right"></i>Áreas de Formação</a></li>
-          <li><a href={{ url('/profissoes')}}><i class="fa fa-angle-double-right"></i>Profissões</a></li>
-          <li><a href={{ url('/grausparentesco')}}><i class="fa fa-angle-double-right"></i>Graus de Parentesco</a></li>
-          <li><a href={{ url('/disponibilidades')}}><i class="fa fa-angle-double-right"></i>Disponibilidades de Tempo</a></li>
-          <li><a href={{ url('/publicos')}}><i class="fa fa-angle-double-right"></i>Públicos Alvos</a></li>
-          <li><a href={{ url('/faixas')}}><i class="fa fa-angle-double-right"></i>Faixas Etárias</a></li>
+          <li><a href="{{ url('/bancos')}}"><i class="fa fa-angle-double-right"></i>Bancos</a></li>
+          <li><a href="{{ url('/cargos')}}"><i class="fa fa-angle-double-right"></i>Cargos / Funções</a></li>
+          <li><a href="{{ url('/ramos')}}"><i class="fa fa-angle-double-right"></i>Ramos de Atividades</a></li>
+          <li><a href="{{ url('/civis')}}"><i class="fa fa-angle-double-right"></i>Estados Civis</a></li>
+          <li><a href="{{ url('/idiomas')}}"><i class="fa fa-angle-double-right"></i>Idiomas</a></li>
+          <li><a href="{{ url('/graus')}}"><i class="fa fa-angle-double-right"></i>Graus de Instrução</a></li>
+          <li><a href="{{ url('/areas')}}"><i class="fa fa-angle-double-right"></i>Áreas de Formação</a></li>
+          <li><a href="{{ url('/profissoes')}}"><i class="fa fa-angle-double-right"></i>Profissões</a></li>
+          <li><a href="{{ url('/grausparentesco')}}"><i class="fa fa-angle-double-right"></i>Graus de Parentesco</a></li>
+          <li><a href="{{ url('/disponibilidades')}}"><i class="fa fa-angle-double-right"></i>Disponibilidades de Tempo</a></li>
+          <li><a href="{{ url('/publicos')}}"><i class="fa fa-angle-double-right"></i>Públicos Alvos</a></li>
+          <li><a href="{{ url('/faixas')}}"><i class="fa fa-angle-double-right"></i>Faixas Etárias</a></li>
 
           <li class="text">&nbsp;</li>
-          <li><a href={{ url('/igrejas')}}><i class="fa fa-angle-double-right"></i>Igrejas</a></li>
-          <li><a href={{ url('/religioes')}}><i class="fa fa-angle-double-right"></i>Religiões</a></li>
-          <li><a href={{ url('/ministerios')}}><i class="fa fa-angle-double-right"></i>Ministérios</a></li>
-          <li><a href={{ url('/atividades')}}><i class="fa fa-angle-double-right"></i>Atividades</a></li>
-          <li><a href={{ url('/dons')}}><i class="fa fa-angle-double-right"></i>Dons Espirituais</a></li>
-          <li><a href={{ url('/habilidades')}}><i class="fa fa-angle-double-right"></i>Habilidades</a></li>
+          <li><a href="{{ url('/cursos')}}"><i class="fa fa-angle-double-right"></i>Cursos / Eventos</a></li>
+          <li><a href="{{ url('/igrejas')}}"><i class="fa fa-angle-double-right"></i>Igrejas</a></li>
+          <li><a href="{{ url('/religioes')}}"><i class="fa fa-angle-double-right"></i>Religiões</a></li>
+          <li><a href="{{ url('/ministerios')}}"><i class="fa fa-angle-double-right"></i>Ministérios</a></li>
+          <li><a href="{{ url('/atividades')}}"><i class="fa fa-angle-double-right"></i>Atividades</a></li>
+          <li><a href="{{ url('/dons')}}"><i class="fa fa-angle-double-right"></i>Dons Espirituais</a></li>
+          <li><a href="{{ url('/habilidades')}}"><i class="fa fa-angle-double-right"></i>Habilidades</a></li>
 
           <li class="text">&nbsp;</li>
-          <li><a href={{ url('/status')}}><i class="fa fa-angle-double-right"></i>Status</a></li>
-          <li><a href={{ url('/situacoes')}}><i class="fa fa-angle-double-right"></i>Situações</a></li>
-          <li><a href={{ url('/tipospessoas')}}><i class="fa fa-angle-double-right"></i>Tipos de Pessoas</a></li>
-          <li><a href={{ url('/grupospessoas')}}><i class="fa fa-angle-double-right"></i>Grupos de Pessoas</a></li>
+          <li><a href="{{ url('/status')}}"><i class="fa fa-angle-double-right"></i>Status</a></li>
+          <li><a href="{{ url('/situacoes')}}"><i class="fa fa-angle-double-right"></i>Situações</a></li>
+          <li><a href="{{ url('/tipospessoas')}}"><i class="fa fa-angle-double-right"></i>Tipos de Pessoas</a></li>
+          <li><a href="{{ url('/grupospessoas')}}"><i class="fa fa-angle-double-right"></i>Grupos de Pessoas</a></li>
           <li class="text">&nbsp;</li>
-          <li><a href={{ url('/tipospresenca')}}><i class="fa fa-angle-double-right"></i>Tipos de Presença</a></li>
-          <li><a href={{ url('/tiposmovimentacao')}}><i class="fa fa-angle-double-right"></i>Tipos de Mov. Membros</a></li>
-          <li><a href={{ url('/tiposrelacionamentos')}}><i class="fa fa-angle-double-right"></i>Tipos de Relacionamentos</a></li>
-          <li><a href={{ url('/questionarios')}}><i class="fa fa-angle-double-right"></i>Questionário Padrão Encontros</a></li>
+          <li><a href="{{ url('/tipospresenca')}}"><i class="fa fa-angle-double-right"></i>Tipos de Presença</a></li>
+          <li><a href="{{ url('/tiposmovimentacao')}}"><i class="fa fa-angle-double-right"></i>Tipos de Mov. Membros</a></li>
+          <li><a href="{{ url('/tiposrelacionamentos')}}"><i class="fa fa-angle-double-right"></i>Tipos de Relacionamentos</a></li>
+          <li><a href="{{ url('/questionarios')}}"><i class="fa fa-angle-double-right"></i>Questionário Padrão Encontros</a></li>
 
         </ul>
       </li>
@@ -162,11 +162,11 @@
         </a>
         <ul class="treeview-menu">
           @if(Gate::check('verifica_permissao', [28 ,'acessar']))
-          <li><a href={{ url('/pessoas')}}><i class="fa fa-file-text-o"></i> Listar / Cadastrar</a></li>
+          <li><a href="{{ url('/pessoas')}}"><i class="fa fa-file-text-o"></i> Listar / Cadastrar</a></li>
           @endif
 
           @if(Gate::check('verifica_permissao', [47 ,'acessar']))
-          <li><a href={{ url('/relpessoas')}}><i class="fa fa-print"></i> Relatórios</a></li>
+          <li><a href="{{ url('/relpessoas')}}"><i class="fa fa-print"></i> Relatórios</a></li>
           @endif
         </ul>
       </li>
@@ -201,11 +201,11 @@
             <li>
               <a href="#"><i class="fa fa-sitemap"></i> Estruturas <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li><a href={{ url('/estruturas1')}}> 1 - {{ Session::get('nivel1') }}</a></li>
-                <li><a href={{ url('/estruturas2')}}> 2 - {{ Session::get('nivel2') }}</a></li>
-                <li><a href={{ url('/estruturas3')}}> 3 - {{ Session::get('nivel3') }}</a></li>
-                <li><a href={{ url('/estruturas4')}}> 4 - {{ Session::get('nivel4') }}</a></li>
-                <li><a href={{ url('/estruturas5')}}> 5 - {{ Session::get('nivel5') }}</a></li>
+                <li><a href="{{ url('/estruturas1')}}"> 1 - {{ Session::get('nivel1') }}</a></li>
+                <li><a href="{{ url('/estruturas2')}}"> 2 - {{ Session::get('nivel2') }}</a></li>
+                <li><a href="{{ url('/estruturas3')}}"> 3 - {{ Session::get('nivel3') }}</a></li>
+                <li><a href="{{ url('/estruturas4')}}"> 4 - {{ Session::get('nivel4') }}</a></li>
+                <li><a href="{{ url('/estruturas5')}}"> 5 - {{ Session::get('nivel5') }}</a></li>
               </ul>
             </li>
             @endcan

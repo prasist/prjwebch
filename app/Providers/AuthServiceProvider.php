@@ -27,12 +27,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
+
         //Verificação : Se for usuário recém cadastrado, verifica se já cadastrou os dados da empresa
         $gate->define('verifica_permissao', function ($user, $pagina, $acao)
         {
 
                 //--------Verificar se o usuario ja cadastrou os dados da empresa
-                $cadastrou = \App\Models\usuario::findOrfail($user->id);
+                $cadastrou = \App\Models\usuario::find($user->id);
 
                 if ($cadastrou) //Verifica se cadastrou os dados da empresa
                 {
@@ -112,11 +113,11 @@ class AuthServiceProvider extends ServiceProvider
 
             if ($user)
             {
-                //--------Verificar se o usuario ja cadastrou os dados da empresa
 
+                //--------Verificar se o usuario ja cadastrou os dados da empresa
                 $cadastrou = \App\Models\usuario::find($user->id);
 
-                if ($cadastrou) //Verifica se cadastrou os dados da empresa
+                if ($cadastrou!=null) //Verifica se cadastrou os dados da empresa
                 {
 
                     //Ler todas permissoes do usuarios
@@ -137,9 +138,16 @@ class AuthServiceProvider extends ServiceProvider
                     return false;
                 }
 
+
+            }
+            else
+            {
+                return false;
             }
 
         });
+
+
 
     }
 }

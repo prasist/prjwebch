@@ -186,6 +186,15 @@
     Route::get('grupos_titulos/{id}/edit','GruposTitulosController@edit');
     Route::get('grupos_titulos/{id}/delete','GruposTitulosController@destroy');
 
+    /*curos eventos*/
+    Route::get('cursos', 'CursosController@index');
+    Route::post('/cursos/gravar','CursosController@store');
+    Route::get('/cursos/registrar','CursosController@create');
+    Route::get('/cursos/{id}/preview','CursosController@show');
+    Route::post('cursos/{id}/update','CursosController@update');
+    Route::get('cursos/{id}/edit','CursosController@edit');
+    Route::get('cursos/{id}/delete','CursosController@destroy');
+
     Route::get('carregar_tabela/{tabela}', 'CadastrarController@carregar_tabela');
 
     //Criar novo registro através da combobox
