@@ -639,13 +639,16 @@ class RelatorioPessoasController extends Controller
 
 
         //Busca configuracao do provedor SMS
-        $where = ['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $this->dados_login->empresas_id];
-        $parametros = \App\Models\parametros::where($where)->get();
 
-        if ($parametros->count()<=0)
+        //Se for SMS, verifica se foi contratado o servico
+        if ($input["resultado"]=="celular")
         {
-            \Session::flash('flash_message_erro', 'Não foi configurado o serviço de envio. Acesse o menu Configurações / Config SMS/Whatsapp');
-            return redirect($this->rota);
+            $parametros = \App\Models\parametros::where(['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $this->dados_login->empresas_id])->get();
+            if ($parametros->count()<=0)
+            {
+                \Session::flash('flash_message_erro', 'Não foi configurado o serviço de envio. Acesse o menu Configurações / Config SMS/Whatsapp');
+                return redirect($this->rota);
+            }
         }
 
 
@@ -673,7 +676,7 @@ class RelatorioPessoasController extends Controller
         $strSql .= "   LEFT JOIN membros_atividades ma ON ma.pessoas_id = p.id AND ma.empresas_id = p.empresas_id AND ma.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
         $strSql .= "   LEFT JOIN membros_habilidades mhab ON mhab.pessoas_id = p.id AND mhab.empresas_id = p.empresas_id AND mhab.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
         $strSql .= "   LEFT JOIN membros_idiomas mi ON mi.pessoas_id = p.id AND mi.empresas_id = p.empresas_id AND mi.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
-        $strSql .=  $where . ' ';
+        $strSql .=  $where;
         $emails = \DB::select($strSql);
 
         return view($this->rota . '.listaremails', ['parametros'=>$parametros, 'emails'=>$emails, 'filtros'=>$filtros, 'resultado'=>$input["resultado"]]);
