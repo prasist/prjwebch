@@ -545,16 +545,18 @@ public function salvar($request, $id, $tipo_operacao) {
                 $pessoas->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
                 $pessoas->empresas_id = $this->dados_login->empresas_id;
 
+                $nome_imagem = str_replace(" ","", (strtolower($input['razaosocial']) . date("his")));
+
                 if ($image) //Imagem Enviada computador
                 {
                     //$pessoas->caminhofoto = $image->getClientOriginalName();
-                    $pessoas->caminhofoto = str_replace(" ","", (strtolower($input['razaosocial']) . date("his")) ) . '.' . $image->getClientOriginalExtension();
+                    $pessoas->caminhofoto = $nome_imagem . '.' . $image->getClientOriginalExtension();
                 }
 
                 if ($input['mydata']!="") //Imagem tirada pela webcam
                 {
 
-                    $pessoas->caminhofoto = str_replace(" ","", (strtolower($input['razaosocial']) . date("his")) ) . '_webcam.jpg';
+                    $pessoas->caminhofoto = $nome_imagem . '_webcam.jpg';
                 }
 
                 $pessoas->save();
@@ -1300,7 +1302,7 @@ public function salvar($request, $id, $tipo_operacao) {
                             $img->resize(320, 240);
 
                             //Salva a imagem no path definido, criando com nome da pessoa e a extencao original do arquivo
-                            $img->save($destinationPath . '/' . str_replace(" ","", (strtolower($input['razaosocial']) . date("his")) ) . '.' . $image->getClientOriginalExtension());
+                            $img->save($destinationPath . '/' . $nome_imagem . '.' . $image->getClientOriginalExtension());
 
                         }
                  }
