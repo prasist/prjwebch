@@ -17,7 +17,6 @@
     Route::group(['middleware' => 'web'], function ()
     {
 
-
         Route::auth();
 
         /*Logout do sistema*/

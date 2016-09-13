@@ -515,8 +515,6 @@
         <script src="{{ asset('/dist/js/pace.min.js')}}"></script>
 
 
-
-
         @if (\Session::get('membro')=='')
                 <!-- tour rápido-->
                 @if (\Session::get('tour_visaogeral')=='' || \Session::get('tour_visaogeral')!='S')

@@ -311,7 +311,6 @@ public function imprimir($id)
 
     }
 
-
     /**
      * Atualiza dados no banco
      *
