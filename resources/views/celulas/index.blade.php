@@ -75,15 +75,15 @@
                             <td>
                                   @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
                                   <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" data-toggle="tooltip" data-placement="top" title="Clique para Alterar">
-                                       {!! $value->razaosocial . ($value->nome!="" ? ' - ' : ''). $value->nome !!} <span class="badge bg-blue">{!!$value->tot!!}</span>
+                                       {!! $value->razaosocial !!} <span class="badge bg-blue">{!!$value->tot!!}</span>
                                   </a>
                                   @else
                                         @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
                                                 <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" >
-                                                      {!! $value->razaosocial . ($value->nome!="" ? ' - ' : ''). $value->nome !!} <span class="badge bg-blue">{!!$value->tot!!}</span>
+                                                      {!! $value->razaosocial !!} <span class="badge bg-blue">{!!$value->tot!!}</span>
                                                 </a>
                                         @else
-                                                {!! $value->razaosocial . ($value->nome!="" ? ' - ' : ''). $value->nome !!} <span class="badge bg-blue">{!!$value->tot!!}</span>
+                                                {!! $value->razaosocial !!} <span class="badge bg-blue">{!!$value->tot!!}</span>
                                         @endcan
                                   @endcan
                                   @if ($value->tot_vinc>0)
