@@ -766,50 +766,53 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                         /*------------------------------ Tabela CURSOS ---------------------------*/
-
-                        if ($input['hidden_cursos']!="")
+                        if (isset($input['hidden_cursos']))
                         {
 
-                                $i_index=0; /*Inicia sequencia*/
-
-                                foreach($input['hidden_cursos'] as $selected)
+                                if ($input['hidden_cursos']!="")
                                 {
-                                        if ($selected!="")
+
+                                        $i_index=0; /*Inicia sequencia*/
+
+                                        foreach($input['hidden_cursos'] as $selected)
                                         {
-                                                $whereForEach =
-                                                [
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'cursos_id' => $selected
-                                                ];
-
-                                                if ($tipo_operacao=="create")  //novo registro
+                                                if ($selected!="")
                                                 {
-                                                    $cursos = new \App\Models\membros_cursos();
+                                                        $whereForEach =
+                                                        [
+                                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                            'empresas_id' =>  $this->dados_login->empresas_id,
+                                                            'pessoas_id' => $pessoas->id,
+                                                            'cursos_id' => $selected
+                                                        ];
+
+                                                        if ($tipo_operacao=="create")  //novo registro
+                                                        {
+                                                            $cursos = new \App\Models\membros_cursos();
+                                                        }
+                                                        else //Alteracao
+                                                        {
+                                                            $cursos = \App\Models\membros_cursos::firstOrNew($whereForEach);
+                                                        }
+
+                                                        $valores =
+                                                        [
+                                                            'pessoas_id' => $pessoas->id,
+                                                            'cursos_id' => $selected,
+                                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                            'empresas_id' =>  $this->dados_login->empresas_id,
+                                                            'ministrante_id' => ($input['inc_ministrante_id'][$i_index] !="" ? $input['inc_ministrante_id'][$i_index] : null),
+                                                            'data_inicio' => $input['inc_datainicio'][$i_index],
+                                                            'data_fim' => $input['inc_datafim'][$i_index],
+                                                            'observacao' => $input['inc_obs'][$i_index]
+                                                        ];
+
+                                                        $cursos->fill($valores)->save();
+                                                        $cursos->save();
+
+                                                        $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
+
                                                 }
-                                                else //Alteracao
-                                                {
-                                                    $cursos = \App\Models\membros_cursos::firstOrNew($whereForEach);
-                                                }
-
-                                                $valores =
-                                                [
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'cursos_id' => $selected,
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                                    'ministrante_id' => ($input['inc_ministrante_id'][$i_index] !="" ? $input['inc_ministrante_id'][$i_index] : null),
-                                                    'data_inicio' => $input['inc_datainicio'][$i_index],
-                                                    'data_fim' => $input['inc_datafim'][$i_index],
-                                                    'observacao' => $input['inc_obs'][$i_index]
-                                                ];
-
-                                                $cursos->fill($valores)->save();
-                                                $cursos->save();
-
-                                                $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
-
                                         }
                                 }
                         }
