@@ -1330,11 +1330,132 @@
                           <div id="tab_cursos" class="panel-collapse collapse">
                             <div class="box-body">
 
+                                      <div class="row">
+                                          <div class="col-xs-5">
+                                                <label for="curso" class="control-label">Curso / Evento :</label>
+                                                 <select id="curso"  name="curso"  data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                 <option  value="">(Selecionar)</option>
+                                                 @foreach ($cursos as $item)
+                                                        <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                 @endforeach
+                                                 </select>
+                                         </div>
+
+                                        <div class="col-xs-5">
+                                                <label for="ministrante" class="control-label">Ministrante</label>
+                                                <div class="input-group">
+                                                       <div class="input-group-addon">
+                                                          <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#ministrante_myModal" >
+                                                                 <i class="fa fa-search"></i> ...
+                                                           </button>
+                                                           &nbsp;<a href="#" onclick="remover_pessoa('ministrante');" title="Limpar Campo"><spam class="fa fa-close"></spam></a>
+                                                        </div>
+
+                                                        @include('modal_buscar_pessoas', array('qual_campo'=>'ministrante', 'modal' => 'ministrante_myModal'))
+
+                                                        <input id="ministrante"  name = "ministrante" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
+
+                                                </div>
+                                          </div>
+                                     </div>
+
+                                     <div class="row">
+
+                                          <div class="col-xs-3">
+                                                <label for="data_inicio" class="control-label">Data Início</label>
+                                                <div class="input-group">
+                                                       <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+
+                                                        <input id ="data_inicio" name = "data_inicio" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                </div>
+                                          </div>
+
+                                          <div class="col-xs-3">
+                                                <label for="data_fim" class="control-label">Data Fim</label>
+                                                <div class="input-group">
+                                                       <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+
+                                                        <input id ="data_fim" name = "data_fim" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                </div>
+                                          </div>
+
+                                          <div class="col-xs-6">
+                                                  <label for="observacao" class="control-label">Observação</label>
+                                                  <input id="observacao" name="observacao" type="text" class="form-control" value="">
+                                          </div>
+
+                                      </div>
+
+                                      <div class="row">
+
+                                          <div class="col-xs-4">
+                                                 <p>&nbsp;</p>
+                                                <button onclick="AddTableRow()" type="button" class="btn btn-info"><i class="fa fa-user-plus"></i> Adicionar Curso</button>
+                                          </div>
+
+                                      </div>
+
+                                      <div class="row">
+
+                                          <div class="col-xs-12">
+
+                                                      <table id="tabela_cursos" class="table table-bordered table-hover">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>Curso / Evento</th>
+                                                                <th>Ministrante</th>
+                                                                <th>Data Início</th>
+                                                                <th>Data Fim</th>
+                                                                <th>Observação</th>
+                                                                <th>Remover</th>
+                                                            </tr>
+
+                                                          <tr>
+                                                              <td class="col-xs-3"></td>
+                                                              <td class="col-xs-4"></td>
+                                                              <td class="col-xs-2"></td>
+                                                              <td class="col-xs-2"></td>
+                                                              <td class="col-xs-5"></td>
+                                                              <td class="col-xs-1"></td>
+                                                          </tr>
+
+                                                          @if (isset ($membros_cursos))
+                                                              @foreach($membros_cursos as $item)
+                                                                  <tr>
+                                                                      <td class="col-xs-3">{!!$item->nome!!}</td>
+                                                                      <td class="col-xs-4">{!!$item->razaosocial!!}</td>
+                                                                      <td class="col-xs-2">{!!$item->data_inicio!!}</td>
+                                                                      <td class="col-xs-2">{!!$item->data_fim!!}</td>
+                                                                      <td class="col-xs-5">{!!$item->observacao!!}</td>
+                                                                      <td class="col-xs-1"><a href="#tabela_cursos" class="btn btn-danger btn-sm" onclick="RemoveTableRow(this)"><spam class="glyphicon glyphicon-trash"></spam></a>
+                                                                            <input id="hidden_cursos[]"  name = "hidden_cursos[]" type="hidden" value="{!!$item->id!!}">
+                                                                            <input id="inc_cursos[]"  name = "inc_cursos[]" type="hidden" value="{!!$item->nome!!}">
+                                                                            <input id="inc_ministrante[]"  name = "inc_ministrante[]" type="hidden" value="{!!$item->razaosocial!!}">
+                                                                            <input id="inc_ministrante_id[]"  name = "inc_ministrante_id[]" type="hidden" value="{!!$item->ministrante_id!!}">
+                                                                            <input id="inc_datainicio[]"  name = "inc_datainicio[]" type="hidden" value="{!!$item->data_inicio!!}">
+                                                                            <input id="inc_datafim[]"  name = "inc_datafim[]" type="hidden" value="{!!$item->data_fim!!}">
+                                                                            <input id="inc_obs[]"  name = "inc_obs[]" type="hidden" value="{!!$item->observacao!!}">
+                                                                      </td>
+
+                                                                  </tr>
+                                                              @endforeach
+                                                          @endif
+
+                                                        </tbody>
+                                                      </table>
+
+                                         </div>
+
+                                   </div><!-- end row-->
+
 
                             </div>
                           </div>
                       </div><!-- FIM TAB Histórico de Movimentações -->
-
 
 
 
@@ -1392,6 +1513,9 @@
    </div><!-- FIM - DADOS ECLISIASTICOS-->
 
 <script type="text/javascript">
+
+
+
 
   function remover_pessoa(var_objeto)
     {
@@ -1510,5 +1634,73 @@ function incluir_filho()
 
 
 });
+
+</script>
+
+<script type="text/javascript">
+
+   (function($) {
+      AddTableRow = function() {
+
+        /*Não deixa adicionar sem curso*/
+        if (document.getElementById("curso").value=="")
+        {
+            return false; //sai da funcao
+        }
+
+        var newRow = $("<tr>");
+        var cols = "";
+        var strCampos="";
+
+        var ind_curso = document.getElementById("curso").selectedIndex;
+        var texto_curso = document.getElementById("curso").options;
+        var scurso = texto_curso[ind_curso].text ;
+
+        //ID do curso
+        strCampos =    '<input id="hidden_cursos[]"  name = "hidden_cursos[]" type="hidden" value="' + document.getElementById("curso").value + '">';
+        strCampos += '<input id="inc_cursos[]"  name = "inc_cursos[]" type="hidden" value="' + scurso + '">';
+        strCampos += '<input id="inc_ministrante[]"  name = "inc_ministrante[]" type="hidden" value="' + document.getElementById("ministrante").value + '">';
+        strCampos += '<input id="inc_ministrante_id[]"  name = "inc_ministrante_id[]" type="hidden" value="' + document.getElementById("ministrante").value.substr(0,9) + '">';
+        strCampos += '<input id="inc_datainicio[]"  name = "inc_datainicio[]" type="hidden" value="' + document.getElementById("data_inicio").value + '">';
+        strCampos += '<input id="inc_datafim[]"  name = "inc_datafim[]" type="hidden" value="' + document.getElementById("data_fim").value + '">';
+        strCampos += '<input id="inc_obs[]"  name = "inc_obs[]" type="hidden" value="' + document.getElementById("observacao").value + '">';
+
+        //Cria linha na tabela
+        cols += '<td>' + scurso + '</td>';
+        cols += '<td>' + document.getElementById("ministrante").value + '</td>';
+        cols += '<td>' + document.getElementById("data_inicio").value + '</td>';
+        cols += '<td>' + document.getElementById("data_fim").value + '</td>';
+        cols += '<td>' + document.getElementById("observacao").value + '</td>';
+        cols += '<td>';
+        cols += '<a href="#tabela_cursos" class="btn btn-danger btn-sm" onclick="RemoveTableRow(this)"><spam class="glyphicon glyphicon-trash"></spam></a>'  + strCampos;
+        cols += '</td>';
+
+        newRow.append(cols);
+        $("#tabela_cursos").append(newRow);
+
+        //limpa campos
+        $("#curso")[0].selectedIndex = 0;
+        $('#curso').trigger('change');
+        document.getElementById("ministrante").value="";
+        document.getElementById("data_inicio").value="";
+        document.getElementById("data_fim").value="";
+        document.getElementById("observacao").value="";
+        return false;
+      };
+    })(jQuery);
+
+    //remover linha tabela
+    (function($) {
+
+      RemoveTableRow = function(handler) {
+        var tr = $(handler).closest('tr');
+
+        tr.fadeOut(400, function(){
+          tr.remove();
+        });
+
+        return false;
+      };
+    })(jQuery);
 
 </script>

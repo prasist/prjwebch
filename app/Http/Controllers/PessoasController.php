@@ -512,6 +512,7 @@ public function salvar($request, $id, $tipo_operacao) {
                 $input = $request->except(array('_token', 'ativo')); //não levar o token
 
                 //dd($input);
+
                 /*--------------------------------- CADASTRO DE PESSOAS------------------- */
                 if ($tipo_operacao=="create") //novo registro
                 {
@@ -761,6 +762,58 @@ public function salvar($request, $id, $tipo_operacao) {
                             }
                         /*------------------------------FIM - MEMBROS FILHOS (SEM CADASTRO) ------------------------------*/
 
+
+
+
+                        /*------------------------------ Tabela CURSOS ---------------------------*/
+
+                        if ($input['hidden_cursos']!="")
+                        {
+
+                                $i_index=0; /*Inicia sequencia*/
+
+                                foreach($input['hidden_cursos'] as $selected)
+                                {
+                                        if ($selected!="")
+                                        {
+                                                $whereForEach =
+                                                [
+                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                    'empresas_id' =>  $this->dados_login->empresas_id,
+                                                    'pessoas_id' => $pessoas->id,
+                                                    'cursos_id' => $selected
+                                                ];
+
+                                                if ($tipo_operacao=="create")  //novo registro
+                                                {
+                                                    $cursos = new \App\Models\membros_cursos();
+                                                }
+                                                else //Alteracao
+                                                {
+                                                    $cursos = \App\Models\membros_cursos::firstOrNew($whereForEach);
+                                                }
+
+                                                $valores =
+                                                [
+                                                    'pessoas_id' => $pessoas->id,
+                                                    'cursos_id' => $selected,
+                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                    'empresas_id' =>  $this->dados_login->empresas_id,
+                                                    'ministrante_id' => ($input['inc_ministrante_id'][$i_index] !="" ? $input['inc_ministrante_id'][$i_index] : null),
+                                                    'data_inicio' => $input['inc_datainicio'][$i_index],
+                                                    'data_fim' => $input['inc_datafim'][$i_index],
+                                                    'observacao' => $input['inc_obs'][$i_index]
+                                                ];
+
+                                                $cursos->fill($valores)->save();
+                                                $cursos->save();
+
+                                                $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
+
+                                        }
+                                }
+                        }
+                        /*------------------------------ FIM Tabela CURSOS---------------------------*/
 
 
 
@@ -1041,51 +1094,7 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
 
-                        /*------------------------------ Tabela CURSOS ---------------------------*/
 
-                        /*
-                        if ($input['cursos']!="")
-                        {
-                                foreach($input['cursos'] as $selected)
-                                {
-                                        if ($selected!="")
-                                        {
-                                                $whereForEach =
-                                                [
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'cursos_id' => $selected
-                                                ];
-
-                                                if ($tipo_operacao=="create")  //novo registro
-                                                {
-                                                    $dons = new \App\Models\membros_cursos();
-                                                }
-                                                else //Alteracao
-                                                {
-                                                    $dons = \App\Models\membros_cursos::firstOrNew($whereForEach);
-                                                }
-
-
-                                                $valores =
-                                                [
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'cursos_id' => $selected,
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id
-                                                ];
-
-                                                $cursos->fill($valores)->save();
-                                                $cursos->save();
-
-                                        }
-                                }
-
-                        }
-                        */
-
-                        /*------------------------------ FIM Tabela CURSOS---------------------------*/
 
 
 
@@ -1556,17 +1565,19 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
             /*CURSOS EVENTOS*/
-            $membros_cursos  = \App\Models\membros_cursos::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-            ->where('empresas_id', $this->dados_login->empresas_id)
-            ->where('pessoas_id', $id)
+            $membros_cursos  = \App\Models\membros_cursos::select('cursos.nome', 'data_inicio', 'data_fim', 'observacao', 'cursos.id', 'membros_cursos.ministrante_id', 'membros_cursos.pessoas_id', 'pessoas.razaosocial')
+            ->join('cursos', 'cursos.id', '=', 'membros_cursos.cursos_id')
+            ->leftjoin('pessoas', 'pessoas.id', '=', 'membros_cursos.ministrante_id')
+            ->where('membros_cursos.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('membros_cursos.empresas_id', $this->dados_login->empresas_id)
+            ->where('membros_cursos.pessoas_id', $id)
             ->get();
 
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
-            if ($membros_cursos->count()==0)
-            {
-                $membros_cursos = $vazio; //Artificio para nao ter que tratar array vazia nas views
-            }
-
+            //if ($membros_cursos->count()==0)
+            //{
+                //$membros_cursos = $vazio; //Artificio para nao ter que tratar array vazia nas views
+            //}
 
 
             $sQuery = " select p3.razaosocial as razaosocial_mae, p2.razaosocial as razaosocial_pai,  pessoas.razaosocial, pessoas_id, membros_familiares.empresas_id, membros_familiares.empresas_clientes_cloud_id, conjuge_id, nome_conjuge, ";

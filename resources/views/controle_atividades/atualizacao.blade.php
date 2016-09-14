@@ -649,12 +649,12 @@
 
 
 
-        //Adicionar linha visitante
-        $('#addRow').on( 'click', function () {
+          //Adicionar linha visitante
+          $('#addRow').on( 'click', function () {
 
-             $('#tab_visitantes').append('<tr><td class="col-xs-5"><input name="nome_visitante[]" type="text" class="form-control" value=""  /></td><td class="col-xs-3"><input name="fone_visitante[]" type="text" class="form-control" value=""  /></td><td class="col-xs-3"><input name="email_visitante[]" type="text" class="form-control" value=""  /></td><td class="col-xs-1"><button data-toggle="tooltip" data-placement="top" title="Excluir Ítem"  class="btn btn-danger btn-sm remover"><spam class="glyphicon glyphicon-trash"></spam></button></td></tr>')
+              $('#tab_visitantes').append('<tr><td class="col-xs-5"><input name="nome_visitante[]" type="text" class="form-control" value=""  /></td><td class="col-xs-3"><input name="fone_visitante[]" type="text" class="form-control" value=""  /></td><td class="col-xs-3"><input name="email_visitante[]" type="text" class="form-control" value=""  /></td><td class="col-xs-1"><button data-toggle="tooltip" data-placement="top" title="Excluir Ítem"  class="btn btn-danger btn-sm remover"><spam class="glyphicon glyphicon-trash"></spam></button></td></tr>')
 
-        });
+         });
 
 
           //editing data
