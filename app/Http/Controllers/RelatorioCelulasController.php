@@ -65,7 +65,7 @@ class RelatorioCelulasController extends Controller
 
     }
 
-
+//RELATORIO DE ENCONTROS E CELULAS
  public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
  {
 
@@ -165,13 +165,13 @@ class RelatorioCelulasController extends Controller
     }
 
 
-    if ($tipo_relatorio=="celulas")
+    if ($tipo_relatorio=="celulas") //SE FOR RELATORIO DE CELULAS
     {
         if ($input["dia_encontro"]!="")  $filtros .= "      Dia Encontro : " . $sDiaEncontro;
         if ($input["turno"]!="")  $filtros .= "         Turno : " . $input["turno"];
         if ($input["segundo_dia_encontro"]!="")  $filtros .= "      Segundo dia encontro : " . $input["segundo_dia_encontro"];
     }
-    else
+    else //RELATORIO DE ENCONTROS
     {
         $filtros .= "     Mes : " . $input["mes"];
         $filtros .= "     Ano : " . $input["ano"];
@@ -202,29 +202,44 @@ class RelatorioCelulasController extends Controller
         "empresas_id"=> $this->dados_login->empresas_id,
         "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
         "lideres"=> ($descricao_lider=="" ? 0 : $descricao_lider[0]),
-        "nivel1"=> ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]),
-        "nivel2"=> ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]),
-        "nivel3"=> ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]),
-        "nivel4"=> ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]),
-        "nivel5"=> ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]),
         "filtros"=> "'" . ($filtros) . "'"
     );
 
     if (isset($input["publico_alvo"]))
     {
-        $parametros = array_add($parametros, 'publico_alvo', ($descricao_publico_alvo[0]=="" ? 0 : $descricao_publico_alvo[0]));
+        if ($input["publico_alvo"]!="0")
+            $parametros = array_add($parametros, 'publico_alvo', ($descricao_publico_alvo[0]=="" ? 0 : $descricao_publico_alvo[0]));
     }
 
     if (isset($input["faixa_etaria"]))
     {
-        $parametros = array_add($parametros, 'faixa_etaria', ($descricao_faixa_etaria[0]=="" ? 0 : $descricao_faixa_etaria[0]));
+        if ($input["faixa_etaria"]!="0")
+            $parametros = array_add($parametros, 'faixa_etaria', ($descricao_faixa_etaria[0]=="" ? 0 : $descricao_faixa_etaria[0]));
     }
 
     if (isset($input["regiao"]))
     {
-        $parametros = array_add($parametros, 'regiao', $input["regiao"] . '%');
+        if ($input["regiao"]!="")
+            $parametros = array_add($parametros, 'regiao', $input["regiao"] . '%');
     }
 
+
+    //PARAMETROS
+    $parametros = array_add($parametros, 'nivel1', ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]));
+    $parametros = array_add($parametros, 'nivel2', ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]));
+    $parametros = array_add($parametros, 'nivel3', ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]));
+    $parametros = array_add($parametros, 'nivel4', ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]));
+    $parametros = array_add($parametros, 'nivel5', ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]));
+
+    if ($input["mes"]!="")
+    {
+        $parametros = array_add($parametros, 'mes', $input["mes"]);
+    }
+
+    if ($input["ano"]!="")
+    {
+        $parametros = array_add($parametros, 'ano', $input["ano"]);
+    }
 
 
    if ($tipo_relatorio=="celulas")  //Relatorio de celulas
@@ -233,6 +248,7 @@ class RelatorioCelulasController extends Controller
         $parametros = array_add($parametros, 'turno', $input["turno"]);
         $parametros = array_add($parametros, 'dia_encontro', $input["dia_encontro"] );
         $parametros = array_add($parametros, 'id', 0);
+
 
         if ($input["tipo"]=="S") //Sintetico, nao listar endereco, fone e email
             {
@@ -282,18 +298,9 @@ class RelatorioCelulasController extends Controller
               }
 
    }
-   else //relatorio de encotnros
+   else //RELATORIO ENCONTROS
    {
 
-        if ($input["mes"]!="")
-        {
-            $parametros = array_add($parametros, 'mes', $input["mes"]);
-        }
-
-        if ($input["ano"]!="")
-        {
-            $parametros = array_add($parametros, 'ano', $input["ano"]);
-        }
 
         $parametros = array_add($parametros, 'SUBREPORT_DIR', public_path() . '/relatorios/');
 
@@ -303,14 +310,14 @@ class RelatorioCelulasController extends Controller
             $parametros = array_add($parametros, 'path_logo', public_path() . '/images/clients/' . \Session::get('logo'));
         }
 
-        //if ($input["ckExibir"]=="on") //Exibir LIDER
-        //{
-                $nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral_lider.jasper';
-        //}
-        //else
-        //{
-                //$nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral.jasper';
-        //}
+        if ($input["ckExibir"]=="on") //Exibir PARTICIPANTES
+        {
+               $nome_relatorio = public_path() . '/relatorios/relatorio_encontro.jasper';
+        }
+        else
+        {
+                $nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral_lider2.jasper';
+        }
 
    }
 
@@ -407,29 +414,29 @@ class RelatorioCelulasController extends Controller
 
 
         switch ($tipo_relatorio) {
-            case 1:
+            case 1: //Resumo Geral
                 $nome_relatorio = public_path() . '/relatorios/total_celulas_anual.jasper';
                 break;
 
-           case 2:
+           case 2: //Batismos Anual
                 $nome_relatorio = public_path() . '/relatorios/total_batismos.jasper';
                 $parametros = array_add($parametros, 'ano_inicial', (date("Y")-4));
                 $parametros = array_add($parametros, 'ano_final', date("Y"));
                 break;
 
-            case 3:
+            case 3: //Batismos Mensal
                 $nome_relatorio = public_path() . '/relatorios/total_batismos_mensal.jasper';
                 $parametros = array_add($parametros, 'ano_inicial', date("Y"));
                 $parametros = array_add($parametros, 'ano_final', date("Y"));
                 break;
 
-            case 4:
+            case 4: //Multiplicacoes ano a ano
                 $nome_relatorio = public_path() . '/relatorios/total_multiplicacao_anual.jasper';
                 $parametros = array_add($parametros, 'ano_inicial', (date("Y")-4));
                 $parametros = array_add($parametros, 'ano_final', date("Y"));
                 break;
 
-           case 5:
+           case 5: //Multiplicacoes mensal
                 $nome_relatorio = public_path() . '/relatorios/total_multiplicacao_mensal.jasper';
                 $parametros = array_add($parametros, 'ano_inicial', date("Y"));
                 $parametros = array_add($parametros, 'ano_final', date("Y"));

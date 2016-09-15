@@ -288,11 +288,11 @@ class CelulasController extends Controller
 
             $retornar = \DB::select($strSql);
 
+            //ABRE NOVA TAG E CONTABILIZA SE ENCONTRAR FILHOS
             if (count($retornar)>0)
             {
                 $this->linha .= "<ul>";
                 $this->sequencia = $this->sequencia + 1;
-                //dd($strSql);
             }
 
             foreach ($retornar as $key => $value)
@@ -311,23 +311,25 @@ class CelulasController extends Controller
 
             }
 
-            //verifica se tem outro nivel
+            //SE TIVER OUTRO FILHO, GERA NOVAMENTE (EXECUTA NOVAMENTE A FUNCTION ATÉ NAO EXISTIR MAIS FILHOS/NETOS)
             if ($this->gerar_proximo_nivel!="")
             {
                $mais = $this->buscaProximoNivel($this->gerar_proximo_nivel);
-            }else
+            }
+            else
             {
+              //NAO TEM  MAIS NIVEIS, FECHAS AS TAGS
                 for ($i=$this->sequencia; $i >1 ; $i--) {
                       $this->linha .= "     </li>";
                       $this->linha .= "</ul>";
                 }
 
-                //$this->linha .= "</ul>";
                 $mais="";
             }
 
    }
 
+    //MONTA ARVORE HIERARQUICA DE MULTIPLICACOES E CELULAS FILHAS...
     public function getEstruturasCelulasOrigem($celulas_id)
     {
 
@@ -357,7 +359,7 @@ class CelulasController extends Controller
 
             $this->linha .= "                   <a href='#'>" . $retornar[0]->nome .  "</a>";
 
-            //Gera niveis
+            //GERA NIVEIS FILHOS
             $niveis = $this->buscaProximoNivel($celulas_id);
 
             //Finaliza

@@ -6,7 +6,7 @@
 
                                     {!! csrf_field() !!}
 
-                                     <!--<input  id= "ckExibir" name="ckExibir" type="hidden"  value="" />-->
+                                     <input  id= "ckExibir" name="ckExibir" type="hidden"  value="" />
 
                                       <div class="box box-default">
 
@@ -26,19 +26,16 @@
                                                       <div class="tab-content">
                                                         <div class="tab-pane active" id="tab_filtros">
 
-                                                            <!--
                                                             <div class="row">
-                                                                    <div class="col-xs-3">
-                                                                          <label for="tipo" 88class="control-label">Exibir Líder / Célula ?</label>
-                                                                          <div class="input-group">
-                                                                                 <div class="input-group-addon">
-                                                                                      <input  id= "ckExibir" name="ckExibir" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm" />
-                                                                                 </div>
-                                                                          </div>
-                                                                    </div>
-
+                                                                <div class="col-xs-3">
+                                                                      <label for="ckExibir" class="control-label">Listar Participantes</label>
+                                                                      <div class="input-group">
+                                                                             <div class="input-group-addon">
+                                                                                  <input  id= "ckExibir" name="ckExibir" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm" />
+                                                                             </div>
+                                                                      </div>
+                                                                </div>
                                                             </div>
-                                                            -->
 
                                                             <div class="row">
 
@@ -309,10 +306,10 @@
                 onLabel : 'Sim',
             });
 
-            //$('.ckExibir').checkboxpicker({
-                //offLabel : 'Não',
-                //onLabel : 'Sim',
-            //});
+            $('.ckExibir').checkboxpicker({
+                offLabel : 'Não',
+                onLabel : 'Sim',
+            });
 
       });
 

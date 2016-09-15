@@ -200,7 +200,8 @@ public function salvar($request, $id, $tipo_operacao)
 
             $this->salvar($request, "", "create");
             \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-             return redirect($this->rota);
+             //return redirect($this->rota);
+             return redirect('celulas');
 
     }
 
@@ -322,7 +323,7 @@ public function imprimir($id)
   {
         $this->salvar($request, $id,  "update");
         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-        return redirect($this->rota);
+        return redirect('celulas');
   }
 
 
