@@ -231,14 +231,20 @@ class RelatorioCelulasController extends Controller
     $parametros = array_add($parametros, 'nivel4', ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]));
     $parametros = array_add($parametros, 'nivel5', ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]));
 
-    if ($input["mes"]!="")
+    if (isset($input["mes"]))
     {
-        $parametros = array_add($parametros, 'mes', $input["mes"]);
+        if ($input["mes"]!="")
+        {
+            $parametros = array_add($parametros, 'mes', $input["mes"]);
+        }
     }
 
-    if ($input["ano"]!="")
+    if (isset($input["ano"]))
     {
-        $parametros = array_add($parametros, 'ano', $input["ano"]);
+        if ($input["ano"]!="")
+        {
+            $parametros = array_add($parametros, 'ano', $input["ano"]);
+        }
     }
 
 
