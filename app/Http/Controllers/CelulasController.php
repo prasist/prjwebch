@@ -19,6 +19,8 @@ class CelulasController extends Controller
         $this->rota = "celulas"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
         $this->sequencia = 0;
+        $this->pais=array();
+        $this->celulas_pai_id=null;
 
         /*Instancia a classe de funcoes (Data, valor, etc)*/
         $this->formatador = new  \App\Functions\FuncoesGerais();
@@ -269,7 +271,7 @@ class CelulasController extends Controller
     }
 
    //Lista celulas filhas e suas filhas,,,, enquanto houverem
-   protected function buscaProximoNivel($celulas_id)
+   protected function buscaProximoNivel($celulas_id, $pai)
    {
 
             $this->gerar_proximo_nivel = "";
@@ -295,6 +297,7 @@ class CelulasController extends Controller
                 $this->sequencia = $this->sequencia + 1;
             }
 
+
             foreach ($retornar as $key => $value)
             {
                   $this->linha .= "      <li>";
@@ -304,17 +307,58 @@ class CelulasController extends Controller
                          $this->linha .= "<img src='http://app.sigma3sistemas.com.br/images/persons/" . $value->caminhofoto . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
                   }
 
-                  $this->linha .= "        <a href='#'>" . $this->sequencia . ' - ' . $value->razaosocial .  ' - ' . ($value->origem==1 ? "Multiplicação" : "Vínculo (ou Célula Filha)") . "</a>";
+                  //$this->linha .= "        <a href='#'>" .  $value->razaosocial .  ' - ' . ($value->origem==1 ? "Multiplicação" : "Vínculo (ou Célula Filha)") . " Pai-> " . $value->celulas_pai_id . "</a>";
+                  $this->linha .= "        <a href='#'>" .  $value->razaosocial .  ' - ' . ($value->origem==1 ? "Multiplicação" : "Vínculo (ou Célula Filha)") . "</a>";
 
                   //Verificar se a celula filha tem PAI
                   $this->gerar_proximo_nivel = $value->id;
 
+                  //PEGA SOMENTE O PAIZAO... QUEM INICIOU TUDO
+                  $this->celulas_pai_id = $value->celulas_pai_id;
+
+                  $this->pais[] = $value->celulas_pai_id;
+
+                  //SE TIVER OUTRO FILHO, GERA NOVAMENTE (EXECUTA NOVAMENTE A FUNCTION ATÉ NAO EXISTIR MAIS FILHOS/NETOS)
+                  if ($this->gerar_proximo_nivel!="")
+                  {
+
+                     $mesmo_pai = array_search($value->celulas_pai_id, $this->pais);
+                     $mais = $this->buscaProximoNivel($this->gerar_proximo_nivel, $this->celulas_pai_id);
+
+                     if ($mesmo_pai!=null)
+                     {
+                            //NAO TEM  MAIS NIVEIS, FECHAS AS TAGS
+                            //for ($i=$this->sequencia; $i >1 ; $i--)
+                            //{
+                                  $this->linha .= "     </li>";
+                                  $this->linha .= "</ul>";
+                                  //$this->linha .= "<ul>";
+                                  //$this->linha .= "<li>";
+                            //}
+                            $mais="";
+                     }
+                     //dd($mais);
+                  }
+                  else
+                  {
+                    //NAO TEM  MAIS NIVEIS, FECHAS AS TAGS
+                      for ($i=$this->sequencia; $i >1 ; $i--)
+                      {
+                            $this->linha .= "     </li>";
+                            $this->linha .= "</ul>";
+                      }
+
+                      $mais="";
+                  }
+
             }
 
+            /*
             //SE TIVER OUTRO FILHO, GERA NOVAMENTE (EXECUTA NOVAMENTE A FUNCTION ATÉ NAO EXISTIR MAIS FILHOS/NETOS)
             if ($this->gerar_proximo_nivel!="")
             {
                $mais = $this->buscaProximoNivel($this->gerar_proximo_nivel);
+               dd($mais);
             }
             else
             {
@@ -326,6 +370,7 @@ class CelulasController extends Controller
 
                 $mais="";
             }
+            */
 
    }
 
@@ -360,7 +405,7 @@ class CelulasController extends Controller
             $this->linha .= "                   <a href='#'>" . $retornar[0]->nome .  "</a>";
 
             //GERA NIVEIS FILHOS
-            $niveis = $this->buscaProximoNivel($celulas_id);
+            $niveis = $this->buscaProximoNivel($celulas_id, '');
 
             //Finaliza
             $this->linha .= "</h5>";
