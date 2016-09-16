@@ -256,7 +256,7 @@ class RelatorioCelulasController extends Controller
         $parametros = array_add($parametros, 'id', 0);
 
 
-        if ($input["tipo"]=="S") //Sintetico, nao listar endereco, fone e email
+            if ($input["tipo"]=="S") //Sintetico, nao listar endereco, fone e email
             {
                 $parametros = array_add($parametros, 'exibir_dados_lider', 'N');
             }
@@ -294,7 +294,8 @@ class RelatorioCelulasController extends Controller
                     if ($input["ckEstruturas"])
                     {
                         //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas_niveis_sintetico.jrxml');
-                        $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_niveis_sintetico.jasper';
+                        //$nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_niveis_sintetico.jasper';
+                        $nome_relatorio = public_path() . '/relatorios/listagem_celulas_sintetico.jasper';
                     }
                     else
                     {
