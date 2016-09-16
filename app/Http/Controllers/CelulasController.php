@@ -1092,6 +1092,28 @@ class CelulasController extends Controller
                 $dados->data_multiplicacao = date('Y-m-d');
          }
 
+
+         //BUSCAR SE O PAI TEM  GERACAO GRAVADA
+         //Se for NULO, considerar então celulas_pai_id, caso contrario , pega o conteudo celulas_id_geracao do PAI e replica na celula que esta sendo gravada
+         if ($input["origem"]!="")
+         {
+             if ($dados->celulas_pai_id!=null) //CELULA PAI
+             {
+                   //BUSCA NA CELULA PAI SE TEM GERACAO INFORMADA
+                   $busca_geracao = \App\Models\celulas::select('celulas_id_geracao')->where('id', $dados->celulas_pai_id)->get();
+
+                   if  ($busca_geracao[0]->celulas_id_geracao==null)  //NÃO ENCONTROU, ENTAO INICIA O CICLO DA GERACAO NESSA CELULA
+                   {
+                           $dados->celulas_id_geracao = $dados->celulas_pai_id;
+                   }
+                   else  //ENCONTROU GERACAO, ENTAO REPLICA PARA ESSA NOVA CELULA PARA SABER QUEM FOI A ORIGEM DE TODAS
+                   {
+                           $dados->celulas_id_geracao = $busca_geracao[0]->celulas_id_geracao;
+                   }
+             }
+        }
+
+
          $dados->qual_endereco = ($input['local']=="" ? null : $input['local']);
 
          //Verifique qual endereco sera o encontro conforme selecao do local
