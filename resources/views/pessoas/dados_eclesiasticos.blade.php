@@ -1423,7 +1423,7 @@
                                                               <td class="col-xs-1"></td>
                                                           </tr>
 
-                                                          @if (isset ($membros_cursos))
+                                                          @if ($membros_cursos!="")
                                                               @foreach($membros_cursos as $item)
                                                                   <tr>
                                                                       <td class="col-xs-3">{!!$item->nome!!}</td>

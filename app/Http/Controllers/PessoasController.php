@@ -378,7 +378,7 @@ class PessoasController extends Controller
             $membros_dados_pessoais =  $vazio; //array('0' => ['0'  => 'membros_dados']);
             $membros_situacoes =  "";
             $membros_dons =  "";
-            $membros_cursos=$vazio;
+            $membros_cursos="";
             $membros_habilidades =  "";
             $membros_formacoes =  "";
             $membros_idiomas =  "";
@@ -761,7 +761,6 @@ public function salvar($request, $id, $tipo_operacao) {
 
                             }
                         /*------------------------------FIM - MEMBROS FILHOS (SEM CADASTRO) ------------------------------*/
-
 
 
 
