@@ -1068,6 +1068,8 @@ class CelulasController extends Controller
 
   public function salvar($request, $id, $tipo_operacao)
   {
+        $guarda_pai=0;
+
         $input = $request->except(array('_token', 'ativo')); //não levar o token
 
         $this->validate($request, [
@@ -1084,7 +1086,9 @@ class CelulasController extends Controller
         else //update
         {
              $dados = celulas::findOrfail($id);
+             $guarda_pai = $dados->celulas_pai_id;
         }
+
 
          $dados->dia_encontro = $input['dia_encontro'];
 
@@ -1137,13 +1141,19 @@ class CelulasController extends Controller
                 $dados->data_multiplicacao = date('Y-m-d');
          }
 
-
          //BUSCAR SE O PAI TEM  GERACAO GRAVADA
          //Se for NULO, considerar então celulas_pai_id, caso contrario , pega o conteudo celulas_id_geracao do PAI e replica na celula que esta sendo gravada
          if ($input["origem"]!="")
          {
-             if ($dados->celulas_pai_id!=null) //CELULA PAI
+
+             if ($dados->celulas_pai_id!=null && $dados->celulas_pai_id!=0) //CELULA PAI
              {
+
+                   if($guarda_pai==0)
+                   {
+                      $guarda_pai = $dados->celulas_pai_id;
+                   }
+
                    //BUSCA NA CELULA PAI SE TEM GERACAO INFORMADA
                    $busca_geracao = \App\Models\celulas::select('celulas_id_geracao')->where('id', $dados->celulas_pai_id)->get();
 
@@ -1157,6 +1167,7 @@ class CelulasController extends Controller
                    }
              }
         }
+
 
 
          $dados->qual_endereco = ($input['local']=="" ? null : $input['local']);
@@ -1209,6 +1220,18 @@ class CelulasController extends Controller
 
          $dados->data_inicio = ($input["data_inicio"]!="" ? $this->formatador->FormatarData($input["data_inicio"]) : date('Y-m-d'));
          $dados->save();
+
+         //BUSCAR QTD DE FILHAS APOS INCLUSAO OU ALTERACAO DA CELULA
+         if ($guarda_pai!=0 && $guarda_pai!=null)  //CELULA PAI
+         {
+              $retorno = \DB::select('select  fn_total_filhas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ',' . $guarda_pai . ')');
+              $total_filhas = $retorno[0]->fn_total_filhas;
+
+              $atualizar = celulas::findOrfail($guarda_pai);
+              $atualizar->qtd_filhas = $total_filhas;
+              $atualizar->save();
+         }
+
          return  $dados->id;
   }
 
