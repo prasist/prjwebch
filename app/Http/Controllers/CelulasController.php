@@ -1129,6 +1129,16 @@ class CelulasController extends Controller
          $dados->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
          $dados->empresas_id  = $this->dados_login->empresas_id;
          $dados->celulas_pai_id = ($input['celulas_pai_id']=="" ? null : $input['celulas_pai_id']);
+
+         //SE FOR EDICAO E USUARIO TENTAR COLOCAR A CELULA PAI DA PROPRIA CELULA... NAO DEIXAR
+         if ($tipo_operacao!="create")
+         {
+              if ($dados->celulas_pai_id==$id)
+              {
+                    $dados->celulas_pai_id=null;
+              }
+         }
+
          $dados->origem = ($input['origem']=="" ? null : $input['origem']);
 
          if (isset($input["endereco_encontro"]))
@@ -1145,10 +1155,8 @@ class CelulasController extends Controller
          //Se for NULO, considerar então celulas_pai_id, caso contrario , pega o conteudo celulas_id_geracao do PAI e replica na celula que esta sendo gravada
          if ($input["origem"]!="")
          {
-
              if ($dados->celulas_pai_id!=null && $dados->celulas_pai_id!=0) //CELULA PAI
              {
-
                    if($guarda_pai==0)
                    {
                       $guarda_pai = $dados->celulas_pai_id;
@@ -1167,8 +1175,6 @@ class CelulasController extends Controller
                    }
              }
         }
-
-
 
          $dados->qual_endereco = ($input['local']=="" ? null : $input['local']);
 

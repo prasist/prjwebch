@@ -86,8 +86,8 @@
                                                 {!! $value->razaosocial !!} <span class="badge bg-blue">{!!$value->tot!!}</span>
                                         @endcan
                                   @endcan
-                                  @if ($value->tot_vinc>0)
-                                  <span class="badge bg-yellow">{!!$value->tot_vinc!!}</span>
+                                  @if ($value->tot_vinc>0 || $value->tot_filhas>0)
+                                  <span class="badge bg-yellow">{!! ($value->tot_vinc + $value->tot_filhas) !!}</span>
                                   @endif
                             </td>
 
