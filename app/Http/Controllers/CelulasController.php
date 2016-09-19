@@ -1230,11 +1230,19 @@ class CelulasController extends Controller
          //BUSCAR QTD DE FILHAS APOS INCLUSAO OU ALTERACAO DA CELULA
          if ($guarda_pai!=0 && $guarda_pai!=null)  //CELULA PAI
          {
+              $total_filhas=0;
+
+              // QTD DE IRMAS E OUTROS PARENTESCOS
               $retorno = \DB::select('select  fn_total_filhas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ',' . $guarda_pai . ')');
               $total_filhas = $retorno[0]->fn_total_filhas;
 
+              //QTD DE FILHAS DESSA CELULA
+              $retorno = \DB::select('select  fn_total_filhas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ',' . $dados->id . ')');
+              $total_filhas = $total_filhas + $retorno[0]->fn_total_filhas;
+
               $atualizar = celulas::findOrfail($guarda_pai);
               $atualizar->qtd_filhas = $total_filhas;
+
               $atualizar->save();
          }
 
