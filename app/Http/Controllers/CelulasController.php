@@ -1248,7 +1248,6 @@ class CelulasController extends Controller
                 }
          }
 
-
          return  $dados->id;
 
   }
@@ -1276,8 +1275,12 @@ protected function gravaQtdFilhos($id)
 
       if ($pai->count()>=1)
       {
-          $this->qtd_pais[] = $pai[0]->celulas_pai_id;
-          $this->buscaPai($pai[0]->celulas_pai_id);
+          if ($pai[0]->celulas_pai_id!=0)
+          {
+                $this->qtd_pais[] = $pai[0]->celulas_pai_id;
+                $this->buscaPai($pai[0]->celulas_pai_id);
+          }
+
       }
 
  }
