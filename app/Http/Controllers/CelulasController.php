@@ -1239,16 +1239,15 @@ class CelulasController extends Controller
               $this->buscaPai($guarda_pai);
          }
 
-         for ($iSeq=0; $iSeq < count($this->qtd_pais); $iSeq++)
+         if (isset($this->qtd_pais))
          {
+               for ($iSeq=0; $iSeq < count($this->qtd_pais); $iSeq++)
+               {
+                    if ($this->qtd_pais[$iSeq]!=0)
+                        $this->gravaQtdFilhos($this->qtd_pais[$iSeq]);
+                }
+         }
 
-              if ($this->qtd_pais[$iSeq]!=0)
-                  $this->gravaQtdFilhos($this->qtd_pais[$iSeq]);
-              //echo "pai :" . $this->qtd_pais[$iSeq];
-              //echo "<br/>";
-              //echo  "qtd " . $this->verificaQtdFilhos($this->qtd_pais[$iSeq]);
-              //echo "<br/>";
-          }
 
          return  $dados->id;
 
