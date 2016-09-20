@@ -19,6 +19,7 @@ class CelulasController extends Controller
         $this->rota = "celulas"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
         $this->sequencia = 0;
+        $this->qtd_acumulada=0;
         $this->pais=array();
         $this->celulas_pai_id=null;
 
@@ -1230,23 +1231,61 @@ class CelulasController extends Controller
          //BUSCAR QTD DE FILHAS APOS INCLUSAO OU ALTERACAO DA CELULA
          if ($guarda_pai!=0 && $guarda_pai!=null)  //CELULA PAI
          {
-              $total_filhas=0;
 
-              // QTD DE IRMAS E OUTROS PARENTESCOS
-              $retorno = \DB::select('select  fn_total_filhas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ',' . $guarda_pai . ')');
-              $total_filhas = $retorno[0]->fn_total_filhas;
+              //PRIMEIRO PAI DO VETOR
+              $this->qtd_pais[] = $guarda_pai;
 
-              //QTD DE FILHAS DESSA CELULA
-              $retorno = \DB::select('select  fn_total_filhas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ',' . $dados->id . ')');
-              $total_filhas = $total_filhas + $retorno[0]->fn_total_filhas;
-
-              $atualizar = celulas::findOrfail($guarda_pai);
-              $atualizar->qtd_filhas = $total_filhas;
-
-              $atualizar->save();
+              //MONTA VETOR COM TODOS OS PAIS A PARTIR DESSE PAI
+              $this->buscaPai($guarda_pai);
          }
 
+         for ($iSeq=0; $iSeq < count($this->qtd_pais); $iSeq++)
+         {
+              $this->gravaQtdFilhos($this->qtd_pais[$iSeq]);
+              //echo "pai :" . $this->qtd_pais[$iSeq];
+              //echo "<br/>";
+              //echo  "qtd " . $this->verificaQtdFilhos($this->qtd_pais[$iSeq]);
+              //echo "<br/>";
+          }
+
+          //dd('fim');
          return  $dados->id;
+
+  }
+
+protected function gravaQtdFilhos($id)
+{
+
+      $total_filhas= $this->verificaQtdFilhos($id);
+
+      //VAI ACUMULANDO QTD DE FILHOS SOMADOS
+      $this->qtd_acumulada = $this->qtd_acumulada + $total_filhas;
+
+      $atualizar = celulas::findOrfail($id);
+      $atualizar->qtd_filhas = $this->qtd_acumulada;
+      $atualizar->save();
+
+}
+
+
+ protected function buscaPai($id)
+ {
+
+      $pai = \App\Models\celulas::select('celulas_pai_id')->where('id', $id)->get();
+
+      if ($pai->count()>=1)
+      {
+          $this->qtd_pais[] = $pai[0]->celulas_pai_id;
+          $this->buscaPai($pai[0]->celulas_pai_id);
+      }
+
+ }
+
+  protected function verificaQtdFilhos($pai)
+  {
+        // QTD DE FILHOS
+        $retorno = \DB::select('select  fn_total_filhas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ',' . $pai . ')');
+        return $retorno[0]->fn_total_filhas;
   }
 
     //Criar novo registro
