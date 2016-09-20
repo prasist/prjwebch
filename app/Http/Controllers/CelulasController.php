@@ -22,6 +22,8 @@ class CelulasController extends Controller
         $this->qtd_acumulada=0;
         $this->pais=array();
         $this->celulas_pai_id=null;
+        $this->linha='';
+        $this->guarda_id = "";
 
         /*Instancia a classe de funcoes (Data, valor, etc)*/
         $this->formatador = new  \App\Functions\FuncoesGerais();
@@ -271,6 +273,50 @@ class CelulasController extends Controller
 
     }
 
+
+ //Lista celulas filhas e suas filhas,,,, enquanto houverem
+   protected function retorna_filho($celulas_id, $pai)
+   {
+
+            $this->gerar_proximo_nivel = "";
+
+            //BUSCA AS CELULAS FILHOS DE UM DETERMINADO PAI
+            $strSql = " SELECT celulas_pai_id, celulas.Id, nome, razaosocial , caminhofoto, origem, ";
+            $strSql .= " CASE  WHEN nome <> ''::text AND razaosocial <> ''::text THEN (nome || ' - '::text) || razaosocial ";
+            $strSql .= "       ELSE COALESCE(razaosocial, nome) ";
+            $strSql .= "       END AS nome";
+            $strSql .=  " FROM  celulas ";
+            $strSql .=  " INNER JOIN pessoas on pessoas.id = celulas.lider_pessoas_id AND pessoas.empresas_id = celulas.empresas_id AND pessoas.empresas_clientes_cloud_id = celulas.empresas_clientes_cloud_id";
+            $strSql .=  " WHERE ";
+            $strSql .=  " isnull_int(celulas_pai_id ,0) = " . $celulas_id . " AND ";
+            $strSql .=  " celulas.empresas_id = " . $this->dados_login->empresas_id . " AND ";
+            $strSql .=  " celulas.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+
+            $retornar = \DB::select($strSql);
+
+            foreach ($retornar as $key => $value)
+            {
+
+                  //Verificar se a celula filha tem PAI
+                  $this->gerar_proximo_nivel = $value->id;
+
+                  //PEGA SOMENTE O PAIZAO... QUEM INICIOU TUDO
+                  $this->celulas_pai_id = $value->celulas_pai_id;
+
+                  //SE TIVER OUTRO FILHO, GERA NOVAMENTE (EXECUTA NOVAMENTE A FUNCTION ATÉ NAO EXISTIR MAIS FILHOS/NETOS)
+                  if ($this->gerar_proximo_nivel!="")
+                  {
+                     $this->guarda_id = $this->guarda_id . ", " . $this->gerar_proximo_nivel;
+                     $exec = $this->retorna_filho($this->gerar_proximo_nivel, $this->celulas_pai_id);
+                  }
+
+            }
+
+   }
+
+
+
+
    //Lista celulas filhas e suas filhas,,,, enquanto houverem
    protected function buscaProximoNivel($celulas_id, $pai)
    {
@@ -374,6 +420,27 @@ class CelulasController extends Controller
             */
 
    }
+
+
+   public function pegarSomenteId($celulas_id)
+    {
+
+            $strSql = " SELECT celulas.id ";
+            $strSql .=  " FROM  celulas ";
+            $strSql .=  " WHERE ";
+            $strSql .=  " celulas.id = " . $celulas_id . " AND ";
+            $strSql .=  " celulas.empresas_id = " . $this->dados_login->empresas_id . " AND ";
+            $strSql .=  " celulas.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+
+            $retornar = \DB::select($strSql);
+
+            $this->guarda_id = $celulas_id; //GUARDA NO ARRAY O ID DA CELULA MATRIZ
+
+            $this->retorna_filho($retornar[0]->id, ''); //ACRESCENTA NO ARRAY TODOS OS FILHOS...
+
+    }
+
+
 
     //MONTA ARVORE HIERARQUICA DE MULTIPLICACOES E CELULAS FILHAS...
     public function getEstruturasCelulasOrigem($celulas_id)
@@ -1231,7 +1298,6 @@ class CelulasController extends Controller
          //BUSCAR QTD DE FILHAS APOS INCLUSAO OU ALTERACAO DA CELULA
          if ($guarda_pai!=0 && $guarda_pai!=null)  //CELULA PAI
          {
-
               //PRIMEIRO PAI DO VETOR
               $this->qtd_pais[] = $guarda_pai;
 
@@ -1245,24 +1311,26 @@ class CelulasController extends Controller
                {
                     if ($this->qtd_pais[$iSeq]!=0)
                         $this->gravaQtdFilhos($this->qtd_pais[$iSeq]);
-                }
+               }
          }
 
          return  $dados->id;
 
   }
 
+
 protected function gravaQtdFilhos($id)
 {
 
+      //QTD DE FILHOS DE CADA PAI
       $total_filhas= $this->verificaQtdFilhos($id);
-
 
       //VAI ACUMULANDO QTD DE FILHOS SOMADOS
       $this->qtd_acumulada = $this->qtd_acumulada + $total_filhas;
 
       $atualizar = celulas::findOrfail($id);
-      $atualizar->qtd_filhas = $this->qtd_acumulada;
+      $atualizar->qtd_filhas = $total_filhas;
+      $atualizar->qtd_geracao = $this->qtd_acumulada;
       $atualizar->save();
 
 }
@@ -1381,25 +1449,33 @@ protected function gravaQtdFilhos($id)
         $dados = \DB::select("select to_char(to_date(data_previsao_multiplicacao, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_previsao_multiplicacao_format, to_char(to_date(data_inicio, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_inicio_format, * from view_celulas  where id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ", [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         $participantes = \DB::select('select * from view_celulas_pessoas where celulas_id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-        //$dados = \DB::select('select distinct celulas_id, lider_pessoas_id, descricao_lider  as nome, tot from view_celulas_pessoas_participantes where  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-
-        //Busca celulas filhas
-        //$vinculos = \DB::select('select * from view_celulas_simples  where celulas_pai_id = ?  and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
 
-        $gerar_estrutura_origem = $this->getEstruturasCelulasOrigem($id);
+        //CARREGAR UM ARRAY COM TODOS ID'S PERTENCENTES A CELULA PESQUISADA
+        $this->pegarSomenteId($id);
 
-        //if  ($vinculos==null) //Se nao encontrar, gera controller vazio
-        //{
-            //$vinculos = \App\Models\tabela_vazia::get();
-            //$total_vinculos = 0;
-        //}
-        //else
-        //{
-            $temp = \DB::select('select count(*) as tot from view_celulas  where celulas_pai_id = ?  and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-            $total_vinculos =$temp[0]->tot;
-        //}
-            //'vinculos'=>$vinculos,
+        //QUERY MONTA UM ARRAY COM ARVORE HIERARQUICA
+        $strSql = " SELECT celulas.id, CASE WHEN celulas.id = " . $id . " THEN 0 ELSE celulas_pai_id END AS celulas_pai_id, caminhofoto, ";
+        $strSql .= " CASE  WHEN nome <> ''::text AND razaosocial <> ''::text THEN (nome || ' - '::text) || razaosocial ";
+        $strSql .= "       ELSE COALESCE(razaosocial, nome) ";
+        $strSql .= "       END AS nome";
+        $strSql .=  " FROM  celulas ";
+        $strSql .=  " INNER JOIN pessoas on pessoas.id = celulas.lider_pessoas_id ";
+        $strSql .=  " WHERE ";
+        $strSql .=  " celulas.id IN (" . $this->guarda_id . ") AND ";
+        $strSql .=  " celulas.empresas_id = " . $this->dados_login->empresas_id . " AND ";
+        $strSql .=  " celulas.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ORDER BY nome";
+        $retornar = \DB::select($strSql);
+
+        $resultArray = json_decode(json_encode($retornar), true); //GERAR ARRAY MULTINIVEIS
+
+
+        //GERA CODIGO HTML PARA GERAR LISTA UNIFICADA DAS HIERARQUIAS
+        //$gerar_estrutura_origem = $this->getEstruturasCelulasOrigem($id);
+        $gerar_estrutura_origem = "<ul class='treeview2'><li><a href='#'>Árvore Hierárquica da Célula (Multiplicação / Vínculos)</a>" . $this->printListRecursive($resultArray) . "</li></ul>";
+
+        $temp = \DB::select('select count(*) as tot from view_celulas  where celulas_pai_id = ?  and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $total_vinculos =$temp[0]->tot;
 
         //return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview,  'nivel5' =>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
         return view($this->rota . '.atualizacao', [
@@ -1416,6 +1492,39 @@ protected function gravaQtdFilhos($id)
             ]);
 
     }
+
+
+protected   function makeListRecursive(&$list,$parent=0){
+    $result = array();
+    for( $i=0,$c=count($list);$i<$c;$i++ ){
+        if( $list[$i]['celulas_pai_id']==$parent ){
+            $list[$i]['childs'] = $this->makeListRecursive($list,$list[$i]['id']);
+            $result[] = $list[$i];
+        }
+    }
+    return $result;
+}
+
+  protected  function printListRecursive(&$list,$parent=0)
+  {
+
+      $foundSome = false;
+      for( $i=0,$c=count($list);$i<$c;$i++ ){
+          if( $list[$i]['celulas_pai_id']==$parent ){
+              if( $foundSome==false ){
+                  $this->linha .= '<ul>';
+                  $foundSome = true;
+              }
+              $this->linha .=  '<li><a href="#">'.$list[$i]['nome'].'</a></li>';
+              $this->printListRecursive($list,$list[$i]['id']);
+          }
+      }
+      if( $foundSome ){
+          $this->linha .=  '</ul>';
+      }
+
+      return $this->linha;
+  }
 
     //Visualizar registro
     public function show (\Illuminate\Http\Request $request, $id)
