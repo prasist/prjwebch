@@ -1241,14 +1241,15 @@ class CelulasController extends Controller
 
          for ($iSeq=0; $iSeq < count($this->qtd_pais); $iSeq++)
          {
-              //$this->gravaQtdFilhos($this->qtd_pais[$iSeq]);
+
+              if ($this->qtd_pais[$iSeq]!=0)
+                  $this->gravaQtdFilhos($this->qtd_pais[$iSeq]);
               //echo "pai :" . $this->qtd_pais[$iSeq];
               //echo "<br/>";
               //echo  "qtd " . $this->verificaQtdFilhos($this->qtd_pais[$iSeq]);
               //echo "<br/>";
           }
 
-          //dd('fim');
          return  $dados->id;
 
   }
@@ -1257,6 +1258,7 @@ protected function gravaQtdFilhos($id)
 {
 
       $total_filhas= $this->verificaQtdFilhos($id);
+
 
       //VAI ACUMULANDO QTD DE FILHOS SOMADOS
       $this->qtd_acumulada = $this->qtd_acumulada + $total_filhas;
