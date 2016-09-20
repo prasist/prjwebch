@@ -1241,7 +1241,7 @@ class CelulasController extends Controller
 
          for ($iSeq=0; $iSeq < count($this->qtd_pais); $iSeq++)
          {
-              $this->gravaQtdFilhos($this->qtd_pais[$iSeq]);
+              //$this->gravaQtdFilhos($this->qtd_pais[$iSeq]);
               //echo "pai :" . $this->qtd_pais[$iSeq];
               //echo "<br/>";
               //echo  "qtd " . $this->verificaQtdFilhos($this->qtd_pais[$iSeq]);
