@@ -16,11 +16,21 @@
                 <div class="content body">
 
                       <section id="introduction">
-                        <h2 class="page-header"><a href="#introduction">{!!$dados->titulo!!}</a></h2>
+                        <h2 class="page-header"><a href="#introduction">{!!$dados[0]->titulo!!}</a></h2>
                         <p class="lead">
-                        {!!$dados->texto!!}
+                        {!!$dados[0]->texto!!}
                         </p>
                       </section><!-- /#introduction -->
+
+                      <br/>
+                      <ul>
+                      @foreach($outras as $item)
+
+                                      <li><a href="{{url('/avisos/ler/' . $item->id . '')}}">{{$item->titulo}}  - {!! date('d/m/Y',strtotime($item->data_publicacao)) !!}</a></li>
+
+
+                      @endforeach
+                      </ul>
 
                 </div>
 

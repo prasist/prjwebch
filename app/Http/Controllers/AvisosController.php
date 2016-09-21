@@ -32,7 +32,7 @@ class AvisosController extends Controller
     {
 
         $dados = avisos::select('id', 'titulo', 'texto', 'data_publicacao')
-        ->orderBy('data_publicacao')
+        ->orderBy('data_publicacao', 'desc')
         ->get();
 
         return view($this->rota . '.listar',compact('dados'));
@@ -83,15 +83,18 @@ class AvisosController extends Controller
     {
 
         //Busca mensagem para leitura
-         $dados = avisos::findOrfail($id);
+        //$dados = avisos::findOrfail($id);
+        $dados  = avisos::where('id', $id)->get();
 
-         $log = \App\Models\log_avisos::firstOrNew(['users_id' => Auth::user()->id, 'id'=>$id]);
-         $log->users_id = Auth::user()->id;
-         $log->avisos_id = $id;
-         $log->data_leitura = date("Y-m-d");
-         $log->save();
+        $outras  = avisos::where('id', '<>', $id)->get();
 
-         return view($this->rota . '.ler' , ['dados' => $dados]);
+        $log = \App\Models\log_avisos::firstOrNew(['users_id' => Auth::user()->id, 'id'=>$id]);
+        $log->users_id = Auth::user()->id;
+        $log->avisos_id = $id;
+        $log->data_leitura = date("Y-m-d");
+        $log->save();
+
+         return view($this->rota . '.ler' , ['dados' => $dados, 'outras'=>$outras]);
 
     }
 
