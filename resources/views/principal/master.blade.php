@@ -2,7 +2,7 @@
 <html lang="pt-br">
     <head>
         <meta charset="UTF-8">
-        <title>SIGMA3 - Sistema para Igrejas</title>
+        <title>SIGMA3 - Gestão para Igrejas</title>
         <!-- Est-->
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta http-equiv="x-ua-compatible" content="IE=10">
@@ -40,7 +40,6 @@
         <link href="{{ asset('/dist/css/bootstrap-treeview.min.css')}}" rel="stylesheet"/>
 
         <link href="{{ asset('/dist/css/pace.min.css')}}" rel="stylesheet"/>
-
 
 
 
