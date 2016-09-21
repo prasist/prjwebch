@@ -375,7 +375,8 @@
         <ul class="treeview-menu">
           <li><a href="{{ url('/tutoriais/1')}}">Cadastro de Usuários</a></li>
           <li><a href="{{ url('/tutoriais/2')}}">Novo Usuário Administrador</a></li>
-          <li><a href="{{ url('/tutoriais/3')}}">Gerando Login do Membro e Líder de Célula</a></li>
+          <li><a href="{{ url('/tutoriais/3')}}">Criando Login do Membro</a></li>
+          <li><a href="{{ url('/tutoriais/3')}}">Criando Login do Líder</a></li>
         </ul>
       </li>
     </ul>
