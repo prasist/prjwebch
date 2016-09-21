@@ -86,7 +86,7 @@ class AvisosController extends Controller
         //$dados = avisos::findOrfail($id);
         $dados  = avisos::where('id', $id)->get();
 
-        $outras  = avisos::where('id', '<>', $id)->get();
+        $outras  = avisos::where('id', '<>', $id)->orderBy('data_publicacao', 'desc')->get();
 
         $log = \App\Models\log_avisos::firstOrNew(['users_id' => Auth::user()->id, 'id'=>$id]);
         $log->users_id = Auth::user()->id;
