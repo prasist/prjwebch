@@ -115,7 +115,7 @@ public function store(\Illuminate\Http\Request  $request)
      \DB::transaction(function() use ($request)
      {
 
-            $input = $request->except(array('_token', 'ativo')); //não levar o token
+            $input = $request->except(array('_token')); //não levar o token
 
             /*Validação de campos - request*/
             if ($input['quem']=="2") {
@@ -133,21 +133,46 @@ public function store(\Illuminate\Http\Request  $request)
 
             if ($input["pessoas"]!="")  //PESSOA ESPECIFICA
            {
+               /*
                $pessoas = \App\Models\pessoas::select('emailprincipal', 'razaosocial', 'datanasc', 'cpf')
                ->where('empresas_id', $this->dados_login->empresas_id)
                ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
                ->where('emailprincipal', '<>', '')
                ->where('id', substr($input['pessoas'],0,9))
                ->get();
+                */
+
+               $sSql = " SELECT emailprincipal, razaosocial, datanasc, cpf FROM pessoas ";
+               $sSql .= " WHERE empresas_id = " .  $this->dados_login->empresas_id . "";
+               $sSql .= " AND empresas_clientes_cloud_id = " .  $this->dados_login->empresas_clientes_cloud_id . "";
+               $sSql .= " and emailprincipal <> '' ";
+               $sSql .= " and emailprincipal not in (select email from users)";
+               $sSql .= " and id = " . substr($input['pessoas'],0,9);
+               $pessoas = \DB::select($sSql);
+
+
            } else {
+
                //Lista tipos de pessoas, será usado no botão novo registro para indicar qual tipo de cadastro efetuar
-               $pessoas = \App\Models\pessoas::select('emailprincipal', 'razaosocial', 'datanasc', 'cpf')
+               /*$pessoas = \App\Models\pessoas::select('emailprincipal', 'razaosocial', 'datanasc', 'cpf')
                ->where('empresas_id', $this->dados_login->empresas_id)
                ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
                ->where('emailprincipal', '<>', '')
                ->where('tipos_pessoas_id', '=', $tipos[0]->id) //SOMENTE MEMBROS
                ->where('ativo', '=', 'S') //ATIVOS
                ->get();
+                */
+
+               $sSql = " SELECT emailprincipal, razaosocial, datanasc, cpf FROM pessoas ";
+               $sSql .= " WHERE empresas_id = " .  $this->dados_login->empresas_id;
+               $sSql .= " AND empresas_clientes_cloud_id = " .  $this->dados_login->empresas_clientes_cloud_id;
+               $sSql .= " and emailprincipal <> '' ";
+               $sSql .= " and emailprincipal not in (select email from users)";
+               $sSql .= " and tipos_pessoas_id = " . $tipos[0]->id;
+               $sSql .= " and ativo = 'S' ";
+               $pessoas = \DB::select($sSql);
+
+
             }
 
             $iQtd=0;
@@ -210,12 +235,16 @@ public function store(\Illuminate\Http\Request  $request)
 
                         $data = ['email'=>$item->emailprincipal, 'nome_igreja'=>\Session::get('nome_igreja'), 'nome'=>$item->razaosocial, 'senha'=>$sSenha];
 
-                        \Mail::send('emails.bemvindo', ['nome' => $data["nome"], 'nome_igreja'=>$data["nome_igreja"], 'email'=>$data["email"], 'senha'=>$data["senha"]], function($message) use ($data)
+
+                        if (isset($input["ckenviar"]))
                         {
-                            $message->from('contato@sigma3sistemas.com.br', 'Sigma3');
-                            $message->subject('Acesso a Área do Membro - ' . $data['nome_igreja']);
-                            $message->to($data['email']);
-                        });
+                                \Mail::send('emails.bemvindo', ['nome' => $data["nome"], 'nome_igreja'=>$data["nome_igreja"], 'email'=>$data["email"], 'senha'=>$data["senha"]], function($message) use ($data)
+                                {
+                                    $message->from('contato@sigma3sistemas.com.br', 'Sigma3');
+                                    $message->subject('Acesso a Área do Membro - ' . $data['nome_igreja']);
+                                    $message->to($data['email']);
+                                });
+                        }
 
                 }
 
@@ -303,89 +332,6 @@ public function store(\Illuminate\Http\Request  $request)
     }
 
 
-    /**
-     * Atualiza dados no banco
-     *
-     * @param    \Illuminate\Http\Request  $request
-     * @param    int  $id
-     * @return  \Illuminate\Http\Response
-     */
-    public function update(\Illuminate\Http\Request  $request, $id)
-    {
-       /*Validação de campos - request*/
-        $this->validate($request, [
-               'name' => 'required|max:255',
-                'email' => 'required|email|max:255',
-                'password' => 'required|confirmed|min:6',
-         ]);
-
-        $image = $request->file('caminhologo'); //Pega imagem
-
-        $input = $request->except(array('_token', 'ativo')); //não levar o token
-
-        //-------------Atualiza Usuario
-        $dados = users::findOrfail($id);
-        $dados->name  = $input['name'];
-        $dados->email  = $input['email'];
-        $dados->password  = bcrypt($input['password']);
-
-        if ($image)
-        {
-            $dados->path_foto  = $image->getClientOriginalName();
-        }
-
-        $dados->save();//-------------FIM - Atualiza Usuario
-
-
-        //----------------------------------Foto do usuário
-        if ($image)
-        {
-                /*Regras validação imagem*/
-                $rules = array(
-                    'image' => 'image',
-                    'image' => array('mimes:jpeg,jpg,png', 'max:200px'),
-                );
-
-                // Validar regras
-                $validator = Validator::make([$image], $rules);
-
-                // Check to see if validation fails or passes
-                if ($validator->fails()) {
-
-                    dd($validator);
-
-                } else {
-
-                    $destinationPath = base_path() . '/public/images/users'; //caminho onde será gravado
-                    if(!$image->move($destinationPath, $image->getClientOriginalName())) //move para pasta destino com nome fixo logo
-                    {
-                        return $this->errors(['message' => 'Erro ao salvar imagem.', 'code' => 400]);
-                    }
-                }
-         }//-----FIM upload
-
-
-         //-----------------Cria registro na tabela usuarios para associar com a tabela users
-         $where = ['empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $input['empresa'], 'id' => $id];
-
-         $update = \DB::table('usuarios')->where($where)->update(array('empresas_id'    =>  $input['empresa'],'admin' =>  $input['sera_admin']));
-         //-----------------FIM - Cria registro na tabela usuarios para associar com a tabela users
-
-
-        //------------------Atualizar tabela USUARIOS_GRUPO
-        $where = ['usuarios_empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'usuarios_id' => $id];
-
-        $update = \DB::table('usuarios_grupo')->where($where)
-        ->update(array(
-                        'usuarios_empresas_id'    =>  $input['empresa'],
-                        'grupos_id'    => $input['grupo']));
-        //------------------FIM - Atualizar tabela USUARIOS_GRUPO
-
-
-        \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-        return redirect('login_membros');
-
-    }
 
 
     /**

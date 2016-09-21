@@ -80,7 +80,6 @@
     Route::post('/login_membros/gravar','LoginMembroController@store');
     Route::get('/login_membros/registrar','LoginMembroController@create');
     Route::get('/login_membros/{id}/preview','LoginMembroController@show');
-    Route::post('login_membros/{id}/update','LoginMembroController@update');
     Route::get('login_membros/{id}/edit','LoginMembroController@edit');
     Route::get('login_membros/{id}/delete','LoginMembroController@destroy');
 

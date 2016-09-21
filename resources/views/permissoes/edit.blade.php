@@ -15,9 +15,9 @@
             <a href="{{ url('/permissoes')}}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
       </div>
 
-        <form method = 'POST'  class="form-horizontal" action = {{ url('/permissoes/update')}}>
-            <!--<input type = 'hidden' name = '_token' value = '{{Session::token()}}'>-->
-            {!! csrf_field() !!}
+        <form method = 'POST'  class="form-horizontal" action = "{{ url('/permissoes/update')}}">
+        <!--<input type = 'hidden' name = '_token' value = '{{Session::token()}}'>-->
+        {!! csrf_field() !!}
 
         <div class="box box-primary">
 
@@ -28,7 +28,6 @@
                                           <label for="nome" class="control-label">Grupo</label>
 
                                           <select name="nome" class="form-control select2" style="width: 100%;">
-
                                           @foreach($dados as $item)
                                                 <option  value="{{$item->id}}">{{$item->nome}}</option>
                                           @endforeach
@@ -128,12 +127,11 @@
 
                                                                 @endif
 
-
-                                                                        @if (($value->id==3 && \Session::get('admin')==1))
+                                                                        @if (($value->id==3 && $dados[0]->default==1))
                                                                                  <tr>
                                                                                       <td></td>
                                                                                       <td>
-                                                                                          <b>Usuário ADMIN não pode retirar as permissões de acesso dele mesmo para a página : {{ $value->nome }}</b>
+                                                                                          <b>Não é possível retirar as permissões de acesso a página : {{ $value->nome }} para o GRUPO Administrador.</b>
                                                                                       </td>
                                                                                   </tr>
                                                                         @else
