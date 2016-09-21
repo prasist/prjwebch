@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-        <script src="//vitalets.github.io/x-editable/assets/mockjax/jquery.mockjax.js"></script>
+        <!--<script src="//vitalets.github.io/x-editable/assets/mockjax/jquery.mockjax.js"></script>-->
         <link href="{{ asset('/dist/css/bootstrap-editable.css')}}" rel="stylesheet" type="text/css" />
         <script src="{{ asset('/dist/js/bootstrap-editable.js')}}"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.css" rel="stylesheet" type="text/css" />

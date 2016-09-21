@@ -13,6 +13,24 @@
 {{ \Session::put('route', 'celulas') }}
 {{ \Session::put('id_pagina', '42') }}
 
+<style type="text/css">
+
+    @media print{
+         body * {
+           visibility: hidden;
+         }
+        #printable, #printable * {
+          visibility: visible;
+        }
+        #printable {
+          position: fixed;
+          left: 0;
+          top: 0;
+        }
+    }
+
+</style>
+
 <div class = 'row'>
 
 <div class="col-md-12">
@@ -683,10 +701,15 @@
 
                                                   <div class="row">
                                                     <div class="col-md-12">
-                                                     <div class="box-header with-border">
-                                                      {!! $gerar_estrutura_origem !!}
+                                                              <a href="#" onclick="window.print();"><i class="fa fa-print"></i>&nbsp;Clique Aqui para Imprimir (<i>Será necessário expandir a Árvore Hierárquica antes da impressão</i>)</a>
                                                     </div>
+                                                  </div>
 
+                                                  <div class="row">
+                                                    <div class="col-md-12">
+                                                     <div id="printable" class="box-header with-border">
+                                                      {!! $gerar_estrutura_origem !!}
+                                                     </div>
                                                   </div>
                                                 </div>
 

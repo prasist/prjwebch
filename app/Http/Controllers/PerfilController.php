@@ -34,10 +34,13 @@ class PerfilController extends Controller
     private function exibir ($request, $id, $preview, $perfil)
     {
 
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.profile'))==false)
+        {
+              return redirect('home');
+        }
 
         //preview = true, somente visualizacao, desabilita botao gravar
         $dados = users::findOrfail($id);
-
 
         $where = ['empresas.id' => $this->dados_login->empresas_id, 'clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id];
 

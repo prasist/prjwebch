@@ -155,8 +155,6 @@
                                             </div>
                                     </div>
 
-
-
                          <div class="row">
                                   <div class="col-xs-5">
                                           <label for="caminhologo" class="control-label">Foto</label>
