@@ -365,16 +365,17 @@
       <li>
         <a href="#"><i class="fa fa-angle-double-right"></i>Tour Rápido </i></a>
         <ul class="treeview-menu">
-          <li><a href={{ url('/quicktour/reload/2')}}><i class="fa fa-flag-checkered"></i> Visão Geral do SIGMA3</a></li>
-          <li><a href={{ url('/quicktour/reload/1')}}><i class="fa fa-flag-checkered"></i> Cadastrar Novo Usuário</a></li>
+          <li><a href="{{ url('/quicktour/reload/2')}}"><i class="fa fa-flag-checkered"></i> Visão Geral do SIGMA3</a></li>
+          <li><a href="{{ url('/quicktour/reload/1')}}"><i class="fa fa-flag-checkered"></i> Cadastrar Novo Usuário</a></li>
         </ul>
       </li>
 
       <li>
         <a href="#"><i class="fa fa-angle-double-right"></i>Tutoriais</i></a>
         <ul class="treeview-menu">
-          <li><a href={{ url('/tutoriais/1')}}>Cadastro de Usuários</a></li>
-          <li><a href={{ url('/tutoriais/2')}}>Novo Usuário Administrador</a></li>
+          <li><a href="{{ url('/tutoriais/1')}}">Cadastro de Usuários</a></li>
+          <li><a href="{{ url('/tutoriais/2')}}">Novo Usuário Administrador</a></li>
+          <li><a href="{{ url('/tutoriais/3')}}">Gerando Login do Membro e Líder de Célula</a></li>
         </ul>
       </li>
     </ul>

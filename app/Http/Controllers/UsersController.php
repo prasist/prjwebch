@@ -49,11 +49,14 @@ class UsersController extends Controller
             $where = ['usuarios.empresas_id' => $this->dados_login->empresas_id, 'usuarios.empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id];
         }
 
+
         $usuarios = users::select ('users.path_foto', 'users.id', 'users.name', 'users.email', 'usuarios.master', 'empresas.razaosocial')
         ->join('usuarios', 'usuarios.id' , '=' , 'users.id')
         ->join('empresas', 'empresas.id' , '=' , 'usuarios.empresas_id')
+        ->where('usuarios.membro', '<>', 'S')
         ->where($where)
         ->get();
+
 
         return view('usuarios.index', compact('usuarios'));
 

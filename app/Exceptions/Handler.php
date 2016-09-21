@@ -78,7 +78,7 @@ class Handler extends ExceptionHandler
                 }
                 else
                 {
-                    $sMensagem = "Ocorreu um erro";
+                    $sMensagem = "Misericórdia... Ocorreu um erro. Lembre-se : 'Irai-vos mas não pequeis'. Estamos recebendo um email com o erro, em breve será resolvido.";
                 }
 
                 return view('errors.msgerro')
