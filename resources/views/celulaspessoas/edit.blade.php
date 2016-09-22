@@ -75,7 +75,8 @@
                   <div class="row">
                      <div class="col-xs-11">
                         <br/>
-                        <button onclick="AddTableRow()" type="button" class="btn btn-info" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-user-plus"></i> Incluir Participante na Célula</button>
+                        <!--AddTableRow()-->
+                        <button onclick="validar_pessoa()" type="button" class="btn btn-info" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-user-plus"></i> Incluir Participante na Célula</button>
                         <br/>
                         <br/>
                         <p class="text-info">Dica !!! Clique em Salvar para confirmar tanto a Inclusão quanto a Exclusão do Participante</p>

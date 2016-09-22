@@ -208,6 +208,9 @@
     /*Verificar se a célula que está sendo incluida  já existe*/
     Route::get('funcoes/verificarcelulas/{id}', 'FuncoesController@validar_celulas');
 
+    /*Verificar se a PESSOA ja participa de alguma celula*/
+    Route::get('funcoes/verificar_participante/{id}', 'FuncoesController@validar_participante');
+
     /*Pesquisa de pessoas*/
     Route::get('buscapessoa/{id}', 'FuncoesController@buscarpessoa');
 

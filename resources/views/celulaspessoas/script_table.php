@@ -1,5 +1,44 @@
 <script type="text/javascript">
+
+function validar_pessoa()
+{
+
+        /*Não deixa adicionar sem conteudo*/
+        if (document.getElementById("pessoas").value=="")
+        {
+            return false; //sai da funcao
+        }
+
+        var verifica_valor =  parseInt(document.getElementById("pessoas").value.substr(0,9));
+
+        //VERIFICAR SE A PESSOA JÁ PARTICIPA DE OUTRA CÉLULA
+        var urlGetUser = '{!! url("/funcoes/verificar_participante/' +  verifica_valor +  '") !!}';
+
+        $.ajax(
+          {
+              url: urlGetUser,
+               success: function (response)
+               { //Encontrando a rota e a funcao retornando dados, exibe alerta
+
+                   if (response!="") //SE ENCONTROU DADOS
+                   {
+                        if (confirm('Pessoa já cadastrada em outra Célula. Confirma a inclusão mesmo assim ?'))
+                        {
+                              AddTableRow();
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                   }
+               }
+         });
+
+
+}
+
     (function($) {
+
       AddTableRow = function() {
 
         /*Não deixa adicionar sem conteudo*/
@@ -7,6 +46,7 @@
         {
             return false; //sai da funcao
         }
+
 
         /*Validar se usuario selecionou uma pessoa na pesquisa*/
         var verifica_valor =  parseInt(document.getElementById("pessoas").value.substr(0,9));

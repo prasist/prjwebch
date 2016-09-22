@@ -57,6 +57,27 @@ class FuncoesController extends Controller
 
     }
 
+    //VERIFICAR SE A PESSOA PARTICIPA DE ALGUMA CELULA
+    public function validar_participante($id)
+    {
+
+            $buscar = \App\Models\celulaspessoas::select('id')
+            ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('empresas_id', $this->dados_login->empresas_id)
+            ->where('pessoas_id', $id)
+            ->get();
+
+            if ($buscar)
+            {
+                return $buscar[0]->id; //RETORNA ID
+            }
+            else
+            {
+                return ""; //VAZIO
+            }
+
+    }
+
     public function validar_celulas($id)
     {
 
@@ -69,7 +90,7 @@ class FuncoesController extends Controller
 
             if ($buscar)
             {
-                return $buscar[0]->celulas_id; //Retorna o nome da pessoa
+                return $buscar[0]->celulas_id;
             }
             else
             {

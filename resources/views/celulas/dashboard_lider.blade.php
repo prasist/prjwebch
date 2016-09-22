@@ -9,30 +9,29 @@
 
 
 <!-- Small boxes (Stat box) -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-default">
+                          <div class="box-header with-border">
+                            <h4>Olá <b>{!! strtoupper(Auth::user()->name) !!}</b>, confira abaixo alguns números de sua célula.</h4>
+                            @if (rtrim(ltrim($dados[0]->data_previsao_multiplicacao))!="")
+                                  A multiplicação de sua célula está prevista para <b>{{date("d/m/Y", strtotime($dados[0]->data_previsao_multiplicacao)) }}</b>.
+                            @endif
 
-<div class="box box-default">
-                  <div class="box-header with-border">
-                    <h4>Olá <b>{!! strtoupper(Auth::user()->name) !!}</b>, confira abaixo alguns números de sua célula.</h4>
-                    @if (rtrim(ltrim($dados[0]->data_previsao_multiplicacao))!="")
-                          A multiplicação de sua célula está prevista para {{$dados[0]->data_previsao_multiplicacao}}.
-                    @endif
+                            @if ($aberto)
+                               <b class="text-red">O encontro do dia {{$aberto[0]->data_encontro}} ainda não foi marcado como encerrado, </b><a href="{{ url('/controle_atividades') }}">CLIQUE AQUI</a> para gerenciá-lo.
+                            @endif
 
-                    @if ($aberto)
-                       <b class="text-red">O encontro do dia {{$aberto[0]->data_encontro}} ainda não foi marcado como encerrado, </b><a href="{{ url('/controle_atividades') }}">CLIQUE AQUI</a> para gerenciá-lo.
-                    @endif
+                          </div>
 
-                  </div>
-
+        </div>
+    </div>
 </div>
 
-<div class="row">
-      <div class="col-xs-12">
 
-      </div>
-</div>
 
 <div class="row">
-    <div class="col-lg-12 col-xs-8">
+    <div class="col-md-12">
             <div class="nav-tabs-custom">
 
               <ul class="nav nav-tabs">
