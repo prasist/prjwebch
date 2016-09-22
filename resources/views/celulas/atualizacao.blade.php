@@ -22,10 +22,17 @@
         #printable, #printable * {
           visibility: visible;
         }
-        #printable {
-          position: fixed;
+        #printable
+        {
+
+          page-break-before: always;*/
+          position: relative;
+          page-break-inside:auto;
           left: 0;
           top: 0;
+          bottom: 0;
+          margin: 0;
+          padding: 0;
         }
     }
 

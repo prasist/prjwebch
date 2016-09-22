@@ -1337,11 +1337,21 @@ protected function gravaQtdFilhos($id)
         $resultArray = json_decode(json_encode($retornar), true); //GERAR ARRAY MULTINIVEIS
 
         //BUSCA NOME DO PAI PARA INCLUIR NA ESTRUTURA
-        $nome_pai = \DB::select("SELECT descricao_concatenada FROM view_celulas_simples WHERE id = " .  $dados[0]->celulas_pai_id . "");
+        if ($dados[0]->celulas_pai_id!=null || $dados[0]->celulas_pai_id!=0)
+        {
+            $nome_pai = \DB::select("SELECT descricao_concatenada FROM view_celulas_simples WHERE id = " .  $dados[0]->celulas_pai_id . "");
+
+            //GERA CODIGO HTML PARA GERAR LISTA UNIFICADA DAS HIERARQUIAS
+            //$gerar_estrutura_origem = $this->getEstruturasCelulasOrigem($id);
+            $gerar_estrutura_origem = "<h4>Árvore Hierárquica de <b><i>" . $dados[0]->nome . ' - ' . $dados[0]->nome_lider . "</i></b> (Multiplicação/Vínculos)</h4><ul id='ul_nivel0' class='treeview2'><li><a href='#'>" . (count($nome_pai)>0 ? $nome_pai[0]->descricao_concatenada : "Sem Célula Pai") . "</a>" . $this->printListRecursive($resultArray) . "</li></ul>";
+        } else
+        {
+            $gerar_estrutura_origem = "<h4>Árvore Hierárquica de <b><i>" . $dados[0]->nome . ' - ' . $dados[0]->nome_lider . "</i></b> (Multiplicação/Vínculos)</h4><ul id='ul_nivel0' class='treeview2'><li><a href='#'>Sem Pai</a>" . $this->printListRecursive($resultArray) . "</li></ul>";
+        }
 
         //GERA CODIGO HTML PARA GERAR LISTA UNIFICADA DAS HIERARQUIAS
         //$gerar_estrutura_origem = $this->getEstruturasCelulasOrigem($id);
-        $gerar_estrutura_origem = "<h4>Árvore Hierárquica de <b><i>" . $dados[0]->nome . ' - ' . $dados[0]->nome_lider . "</i></b> (Multiplicação/Vínculos)</h4><ul id='ul_nivel0' class='treeview2'><li><a href='#'>" . (count($nome_pai)>0 ? $nome_pai[0]->descricao_concatenada : "Sem Célula Pai") . "</a>" . $this->printListRecursive($resultArray) . "</li></ul>";
+        //$gerar_estrutura_origem = "<h4>Árvore Hierárquica de <b><i>" . $dados[0]->nome . ' - ' . $dados[0]->nome_lider . "</i></b> (Multiplicação/Vínculos)</h4><ul id='ul_nivel0' class='treeview2'><li><a href='#'>" . (count($nome_pai)>0 ? $nome_pai[0]->descricao_concatenada : "Sem Célula Pai") . "</a>" . $this->printListRecursive($resultArray) . "</li></ul>";
 
         $temp = \DB::select('select count(*) as tot from view_celulas  where celulas_pai_id = ?  and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
         $total_vinculos =$temp[0]->tot;
