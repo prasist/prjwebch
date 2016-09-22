@@ -166,7 +166,7 @@
                           @if ($participantes_presenca)
                           <div class="col-xs-12">
 
-                              <table id="tab_simples" class="table table-responsive table-hover">
+                              <table class="table table-responsive table-hover">
                                     <tr>
                                           <td>Foto</td>
                                           <td>Nome</td>
