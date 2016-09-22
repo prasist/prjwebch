@@ -15,19 +15,38 @@
 
 <style type="text/css">
 
-    @media print{
-         body * {
+    @media print
+    {
+         body *
+         {
            visibility: hidden;
          }
-        #printable, #printable * {
-          visibility: visible;
+
+        #printable, #printable *
+        {
+            visibility: visible;
         }
+
+        #nao_imprimir_1
+        {
+            display:none;
+        }
+
+        #nao_imprimir_2
+        {
+            display:none;
+        }
+
+        #nao_imprimir_3
+        {
+            display:none;
+        }
+
+
         #printable
         {
-
-          page-break-before: always;*/
-          position: relative;
-          page-break-inside:auto;
+          page-break-inside: auto;
+          page-break-after: avoid;
           left: 0;
           top: 0;
           bottom: 0;
@@ -43,7 +62,7 @@
 <div class="col-md-12">
 
 <div>
-        <a href={{ url('/' . \Session::get('route')) }} class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+        <a href="{{ url('/' . \Session::get('route')) }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
 </div>
 
 @if ($tipo_operacao=="incluir")
@@ -661,7 +680,7 @@
 
                                     <div class="tab-pane" id="tab_2">
 
-                                          <div class="row">
+                                          <div id="nao_imprimir_1" class="row">
                                                 <div class="col-xs-11">
                                                       <p class="text-info">- Informe o campo abaixo caso essa célula teve origem em outra.</p>
                                                       <p class="text-info"> - Células Vinculadas são aquelas que ocorrem dentro da própria célula, por exemplo : Célula para Crianças</p>
@@ -682,7 +701,7 @@
                                                 </div>
                                           </div>
 
-                                          <div class="row">
+                                          <div id="nao_imprimir_2" class="row">
                                               <div class="col-xs-11">
                                                       <label for="celulas_pai_id" class="control-label">Quem é a Célula Pai ?</label>
                                                       <select id="celulas_pai_id" placeholder="(Selecionar)" name="celulas_pai_id" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;" >
@@ -706,7 +725,7 @@
 
                                                 <div class="box-footer no-padding">
 
-                                                  <div class="row">
+                                                  <div id="nao_imprimir_3" class="row">
                                                     <div class="col-md-12">
                                                               <a href="#" onclick="window.print();"><i class="fa fa-print"></i>&nbsp;Clique Aqui para Imprimir (<i>Será necessário expandir a Árvore Hierárquica antes da impressão</i>)</a>
                                                     </div>
