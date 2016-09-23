@@ -27,7 +27,7 @@ class FuncoesController extends Controller
 
     }
 
-/**//**
+/**
  * Description : Verificar se o CPF ou CNPJ informado já está cadastrado para outra pessoa
  * @param  $id = CPF ou CNPJ passado, tipo de validação (cpf ou cnpj)
  * @return  string = Nome da pessoa (se encontrar)
@@ -67,13 +67,13 @@ class FuncoesController extends Controller
             ->where('pessoas_id', $id)
             ->get();
 
-            if ($buscar)
+            if ($buscar->count()>0)
             {
-                return $buscar[0]->id; //RETORNA ID
+                return 1; //NAO ACHOU
             }
             else
             {
-                return ""; //VAZIO
+                return 0; //NAO ACHOU
             }
 
     }
@@ -88,7 +88,7 @@ class FuncoesController extends Controller
             ->where('celulas_id', $id)
             ->get();
 
-            if ($buscar)
+            if ($buscar->count()>0)
             {
                 return $buscar[0]->celulas_id;
             }

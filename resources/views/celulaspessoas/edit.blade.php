@@ -75,8 +75,8 @@
                   <div class="row">
                      <div class="col-xs-11">
                         <br/>
-                        <!--validar_pessoa()-->
-                        <button onclick="AddTableRow()" type="button" class="btn btn-info" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-user-plus"></i> Incluir Participante na Célula</button>
+                        <!--AddTableRow validar_pessoa()-->
+                        <button onclick="validar_pessoa()" type="button" class="btn btn-info" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-user-plus"></i> Incluir Participante na Célula</button>
                         <br/>
                         <br/>
                         <p class="text-info">Dica !!! Clique em Salvar para confirmar tanto a Inclusão quanto a Exclusão do Participante</p>
@@ -138,6 +138,41 @@
     </div>
 
 </div>
+
+
+<script type="text/javascript">
+
+   function validar_pessoa()
+   {
+
+          var verifica_valor =  parseInt(document.getElementById("pessoas").value.substr(0,9));
+          var urlGetUser = '{!! url("/funcoes/verificar_participante/' +  verifica_valor +  '") !!}';
+
+          $.ajax(
+          {
+               url: urlGetUser,
+               success: function (response)
+               { //Encontrando a rota e a funcao retornando dados, exibe alerta
+
+                   if (response==0) //SÓ ADICIONA LINHA SE NAO EXISTIR PESSOA JA ADICIONADA
+                   {
+                        AddTableRow();
+                   }
+                   else
+                   {
+
+                        if (confirm('Pessoa já participa de outra Célula, confirma inclusão mesmo assim ? '))
+                        {
+                              AddTableRow();
+                        }
+
+                   }
+
+               }
+          });
+   }
+
+</script>
 
 <script type="text/javascript">
 
