@@ -335,6 +335,7 @@ public function imprimir($id)
         ->where('celulas_pessoas.empresas_id', $this->dados_login->empresas_id)
         ->where('celulas_pessoas.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('celulas_pessoas.celulas_id', $id)
+        ->orderBy('razaosocial')
         ->get();
 
         return json_encode($dados);
