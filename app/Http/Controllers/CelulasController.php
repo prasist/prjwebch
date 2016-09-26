@@ -1362,8 +1362,8 @@ protected function gravaQtdFilhos($id)
         $grava_qtd->save();
 
 
-        $temp = \DB::select('select count(*) as tot from view_celulas  where celulas_pai_id = ?  and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-        $total_vinculos =$temp[0]->tot;
+        //$temp = \DB::select('select count(*) as tot from view_celulas  where celulas_pai_id = ?  and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        //$total_vinculos =$temp[0]->tot;
 
         //return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview,  'nivel5' =>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
         return view($this->rota . '.atualizacao', [
@@ -1375,8 +1375,7 @@ protected function gravaQtdFilhos($id)
               'publicos'=>$publicos,
               'faixas'=>$faixas,
               'tipo_operacao'=>'editar',
-              'celulas'=>$celulas,
-              'total_vinculos'=>$total_vinculos
+              'celulas'=>$celulas
             ]);
 
     }

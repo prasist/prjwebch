@@ -91,7 +91,7 @@
                                 <input type="hidden" name="hidden_existe" id="hidden_existe" value="">
                             @endif
 
-                            <li><a href="#tab_2" data-toggle="tab">Vinculo de Células&nbsp;<span class="pull-right badge bg-yellow">{!! ($total_vinculos==0 ? "" : $total_vinculos) !!}</span></a></li>
+                            <li><a href="#tab_2" data-toggle="tab">Vinculo de Células&nbsp;<span class="pull-right badge bg-yellow">{!! ($dados[0]->tot_geracao==0 ? "" : $dados[0]->tot_geracao) !!}</span></a></li>
 
                           </ul>
 
