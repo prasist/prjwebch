@@ -1708,6 +1708,8 @@ public function salvar($request, $id, $tipo_operacao) {
                 /* FIM Para preencher combos Dados eclesiasticos*/
 
 
+                $view_pessoas_movimentacoes = \DB::select("select * from view_pessoas_movimentacoes where id = ? ", [$id]);
+
                 if ($bool_exibir_perfil=="true")
                 {
                         $perfil = \DB::select("select * from view_perfil where id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ", [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
@@ -1749,6 +1751,7 @@ public function salvar($request, $id, $tipo_operacao) {
                     'perfil'=>$perfil,
                     'cursos'=>$cursos,
                     'pessoas_timeline'=>$pessoas_timeline,
+                    'view_pessoas_movimentacoes'=>$view_pessoas_movimentacoes,
                     'tiposrelacionamentos'=>$tiposrelacionamentos,
                     'membros_celula'=>$membros_celula,
                     'membros_situacoes' =>$membros_situacoes,

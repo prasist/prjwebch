@@ -297,29 +297,27 @@ public function imprimir($id)
 
     }
 
-    //Visualizar registro
-    public function show (\Illuminate\Http\Request $request, $id)
-    {
+  //Visualizar registro
+  public function show (\Illuminate\Http\Request $request, $id)
+  {
+        return $this->exibir($request, $id, 'true');
+  }
 
-            return $this->exibir($request, $id, 'true');
 
-    }
+  //Direciona para tela de alteracao
+  public function edit(\Illuminate\Http\Request $request, $id)
+  {
+        return $this->exibir($request, $id, 'false');
+  }
 
-    //Direciona para tela de alteracao
-    public function edit(\Illuminate\Http\Request $request, $id)
-    {
 
-            return $this->exibir($request, $id, 'false');
-
-    }
-
-    /**
-     * Atualiza dados no banco
-     *
-     * @param    \Illuminate\Http\Request  $request
-     * @param    int  $id
-     * @return  \Illuminate\Http\Response
-     */
+  /**
+   * Atualiza dados no banco
+   *
+   * @param    \Illuminate\Http\Request  $request
+   * @param    int  $id
+   * @return  \Illuminate\Http\Response
+   */
   public function update(\Illuminate\Http\Request  $request, $id)
   {
         $this->salvar($request, $id,  "update");
@@ -328,9 +326,25 @@ public function imprimir($id)
   }
 
 
-  //Abre tela para edicao ou somente visualização dos registros
-  public function exibir_participantes_json ($id)
-  {
+ //Abre tela para edicao ou somente visualização dos registros
+ public function listar_participantes_json ($id)
+{
+
+        $dados = celulaspessoas::select('pessoas.id', 'pessoas.razaosocial')
+        ->join('pessoas', 'pessoas.id', '=', 'celulas_pessoas.pessoas_id')
+        ->where('celulas_pessoas.empresas_id', $this->dados_login->empresas_id)
+        ->where('celulas_pessoas.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('celulas_pessoas.celulas_id', $id)
+        ->get();
+
+        return json_encode($dados);
+
+}
+
+
+//Abre tela para edicao ou somente visualização dos registros
+public function exibir_participantes_json ($id)
+{
 
         $dados = celulaspessoas::select('pessoas.id', 'pessoas.razaosocial')
         ->join('pessoas', 'pessoas.id', '=', 'celulas_pessoas.pessoas_id')
@@ -342,56 +356,53 @@ public function imprimir($id)
 
         return \Datatables::of($dados)->make(true);
 
-  }
+}
 
 
-    /**
-     * Excluir registro do banco.
-     *
-     * @param    int  $id
-     * @return  \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
+/**
+ * Excluir registro do banco.
+ *
+ * @param    int  $id
+ * @return  \Illuminate\Http\Response
+ */
+public function destroy($id)
+{
 
-         if ($id!="") //Se for alteração, exclui primeiro, para depois percorrer a tabela e inserir novamente
-         {
+     if ($id!="") //Se for alteração, exclui primeiro, para depois percorrer a tabela e inserir novamente
+     {
+            /*Clausula where padrao para as tabelas auxiliares*/
+           $where =
+           [
+              'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+              'empresas_id' =>  $this->dados_login->empresas_id,
+              'celulas_id' => $id
+           ];
 
-                /*Clausula where padrao para as tabelas auxiliares*/
-               $where =
-               [
-                  'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                  'empresas_id' =>  $this->dados_login->empresas_id,
-                  'celulas_id' => $id
-               ];
+           $excluir = celulaspessoas::where($where)->delete();
+     }
 
-               $excluir = celulaspessoas::where($where)->delete();
-         }
+     return redirect($this->rota);
+}
 
-         return redirect($this->rota);
 
-    }
+public function remover_membro($id, $pessoas_id)
+{
 
-    public function remover_membro($id, $pessoas_id)
-    {
+     if ($id!="") //Se for alteração, exclui primeiro, para depois percorrer a tabela e inserir novamente
+     {
+            /*Clausula where padrao para as tabelas auxiliares*/
+           $where =
+           [
+              'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+              'empresas_id' =>  $this->dados_login->empresas_id,
+              'celulas_id' => $id,
+              'pessoas_id'=>$pessoas_id
+           ];
+           $excluir = celulaspessoas::where($where)->delete();
+     }
 
-         if ($id!="") //Se for alteração, exclui primeiro, para depois percorrer a tabela e inserir novamente
-         {
+     return redirect($this->rota);
 
-                /*Clausula where padrao para as tabelas auxiliares*/
-               $where =
-               [
-                  'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                  'empresas_id' =>  $this->dados_login->empresas_id,
-                  'celulas_id' => $id,
-                  'pessoas_id'=>$pessoas_id
-               ];
-
-               $excluir = celulaspessoas::where($where)->delete();
-         }
-
-         return redirect($this->rota);
-
-    }
+}
 
 }

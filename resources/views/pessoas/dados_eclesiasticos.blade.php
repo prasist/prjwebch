@@ -1313,7 +1313,32 @@
                           </div>
                           <div id="tab8" class="panel-collapse collapse">
                             <div class="box-body">
-                                 Em Breve...
+
+                                <div class="row">
+                                          <div class="col-xs-12">
+
+                                               @if (isset($view_pessoas_movimentacoes))
+                                                         <table class="table table-bordered table-hover">
+                                                           <tr>
+                                                                <td>Data Movimentação</td>
+                                                                <td>Motivo</td>
+                                                                <td>Célula Anterior</td>
+                                                                <td>Célula Nova</td>
+                                                                <td>Observação</td>
+                                                            </tr>
+                                                         @foreach ($view_pessoas_movimentacoes as $item)
+                                                                  <tr>
+                                                                      <td>{!! $item->data_movimentacao !!}</td>
+                                                                      <td>{!! $item->nome !!}</td>
+                                                                      <td>{!! $item->celula_atual !!}</td>
+                                                                      <td>{!! $item->celula_nova !!}</td>
+                                                                      <td>{!! $item->observacao !!}</td>
+                                                                  </tr>
+                                                         @endforeach
+                                                         </table>
+                                               @endif
+                                          </div>
+                                  </div>
                             </div>
                           </div>
                       </div><!-- FIM TAB Histórico de Movimentações -->

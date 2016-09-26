@@ -71,6 +71,7 @@ return [
     'configmsg'=>'64',
     'relencontro'=>'65',
     'cursos'=>'66',
+    'membersmove'=>'67',
 
 
     'env' => env('APP_ENV', 'production'),

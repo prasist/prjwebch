@@ -248,6 +248,29 @@
                    <!-- The timeline -->
                 <ul class="timeline timeline-inverse">
 
+                 @if (isset($view_pessoas_movimentacoes))
+                      @foreach ($view_pessoas_movimentacoes as $item)
+                            <!-- timeline time label -->
+                            <li class="time-label">
+                                  <span class="bg-blue">
+                                        {{$item->data_movimentacao}}
+                                  </span>
+                            </li>
+                            <!-- /.timeline-label -->
+                            <!-- timeline item -->
+                            <li>
+                              <i class="fa fa-hourglass-end"></i>
+
+                              <div class="timeline-item">
+                                <h3 class="timeline-header"><a href="#">{!! $item->nome !!} de : <b><i>{!! $item->celula_atual !!}</i></b> para : <b><i>{!! $item->celula_nova !!}</i></b></a></h3>
+
+                              </div>
+                            </li>
+                            <!-- END timeline item -->
+                      @endforeach
+                 @endif
+
+
 
                  @if (rtrim($pessoas_timeline[0]->data_saida))
                   <!-- timeline time label -->

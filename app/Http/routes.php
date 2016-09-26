@@ -48,11 +48,14 @@
           return view('suporte.suporte');
     });
 
+ /*Movimentacao Membros*/
+ Route::get('membersmove', 'MembersMoveController@index');
+ Route::post('/membersmove/gravar','MembersMoveController@store');
 
-   //Relatorio geral celulas
-  Route::get('estatisticas/{id}', 'RelatorioCelulasController@estatisticas');    //Imprimir relatorio encontro semanal
-  Route::get('estatisticas_nivel/{id}/{nivel}/{valor}/{nome}/{saida}', 'RelatorioCelulasController@estatisticas_nivel');    //Imprimir relatorio encontro semanal
-  //Route::get('estatisticas_batismos/{id}/{nivel}/{valor}/{mes}/{ano}/{nome}/{saida}', 'RelatorioCelulasController@estatisticas_batismos');    //Imprimir relatorio encontro semanal
+
+  //Relatorio geral celulas
+ Route::get('estatisticas/{id}', 'RelatorioCelulasController@estatisticas');    //Imprimir relatorio encontro semanal
+ Route::get('estatisticas_nivel/{id}/{nivel}/{valor}/{nome}/{saida}', 'RelatorioCelulasController@estatisticas_nivel');    //Imprimir relatorio encontro semanal
 
 
     //Avisos dos sistema
@@ -632,5 +635,7 @@
     Route::get('celulaspessoas/{id}/delete','CelulasPessoasController@destroy');
     Route::get('celulaspessoas/{id}/remover_membro/{pessoas_id}','CelulasPessoasController@remover_membro');
     Route::get('celulaspessoas/participantes/{id}', 'CelulasPessoasController@exibir_participantes_json'); /*A partir da celula informada, retorna um json com os participantes*/
+    Route::get('celulaspessoas/listar_participantes/{id}', 'CelulasPessoasController@listar_participantes_json'); /*A partir da celula informada, retorna um json com os participantes*/
+
 
 });

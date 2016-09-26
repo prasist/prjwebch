@@ -24,6 +24,7 @@ class CelulasController extends Controller
         $this->celulas_pai_id=null;
         $this->linha='';
         $this->guarda_id = "";
+        $this->qtd=0;
 
         /*Instancia a classe de funcoes (Data, valor, etc)*/
         $this->formatador = new  \App\Functions\FuncoesGerais();
@@ -436,7 +437,9 @@ class CelulasController extends Controller
 
             $this->guarda_id = $celulas_id; //GUARDA NO ARRAY O ID DA CELULA MATRIZ
 
-            $this->retorna_filho($retornar[0]->id, ''); //ACRESCENTA NO ARRAY TODOS OS FILHOS...
+
+            if (count($retornar)>0)
+                $this->retorna_filho($retornar[0]->id, ''); //ACRESCENTA NO ARRAY TODOS OS FILHOS...
 
     }
 
@@ -1353,6 +1356,12 @@ protected function gravaQtdFilhos($id)
         //$gerar_estrutura_origem = $this->getEstruturasCelulasOrigem($id);
         //$gerar_estrutura_origem = "<h4>Árvore Hierárquica de <b><i>" . $dados[0]->nome . ' - ' . $dados[0]->nome_lider . "</i></b> (Multiplicação/Vínculos)</h4><ul id='ul_nivel0' class='treeview2'><li><a href='#'>" . (count($nome_pai)>0 ? $nome_pai[0]->descricao_concatenada : "Sem Célula Pai") . "</a>" . $this->printListRecursive($resultArray) . "</li></ul>";
 
+        //GRAVA QTD DE FILHOS, NETOS, BISNETOS, ETC...
+        $grava_qtd = celulas::findOrfail($id);
+        $grava_qtd->qtd_geracao = ($this->qtd - 1);
+        $grava_qtd->save();
+
+
         $temp = \DB::select('select count(*) as tot from view_celulas  where celulas_pai_id = ?  and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
         $total_vinculos =$temp[0]->tot;
 
@@ -1375,8 +1384,10 @@ protected function gravaQtdFilhos($id)
 
 protected   function makeListRecursive(&$list,$parent=0){
     $result = array();
-    for( $i=0,$c=count($list);$i<$c;$i++ ){
-        if( $list[$i]['celulas_pai_id']==$parent ){
+    for( $i=0,$c=count($list);$i<$c;$i++ )
+    {
+        if( $list[$i]['celulas_pai_id']==$parent )
+        {
             $list[$i]['childs'] = $this->makeListRecursive($list,$list[$i]['id']);
             $result[] = $list[$i];
         }
@@ -1397,6 +1408,7 @@ protected  function printListRecursive(&$list,$parent=0)
                   $this->linha .= '<ul>';
                   $foundSome = true;
               }
+              $this->qtd++; //CONTA A QUANTIDADE DA FAMILIA TODA (FILHOS, NETOS, BISNETOS, ETC)
               $this->linha .=  '<li><a href="#">'.$list[$i]['nome'].  ' - ' . ($list[$i]['origem']==1 ? 'Multiplicação': 'Vínculo (ou Célula Filha)') . '</a></li>';
               $this->printListRecursive($list,$list[$i]['id']);
           }

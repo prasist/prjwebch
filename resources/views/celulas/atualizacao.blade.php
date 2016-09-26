@@ -85,7 +85,7 @@
                             <li class="active"><a href="#tab_1" data-toggle="tab">Dados Cadastrais</a></li>
 
                             @if ($tipo_operacao=="editar")
-                                <li><a href="#tab_participantes" data-toggle="tab">Participantes <span class="badge bg-blue">{!!$dados[0]->tot!!}</span></a></li>
+                                <li><a href="#tab_participantes" data-toggle="tab">Participantes <span class="badge bg-blue">{!!$dados[0]->tot_geracao!!}</span></a></li>
                                 <input type="hidden" name="hidden_existe" id="hidden_existe" value="{!!$dados[0]->tot!!}">
                             @else
                                 <input type="hidden" name="hidden_existe" id="hidden_existe" value="">
