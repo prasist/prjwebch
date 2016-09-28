@@ -441,7 +441,6 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
             $parametros = array_add($parametros, 'nivel' . $nivel, $valor);
         }
 
-
         switch ($tipo_relatorio) {
             case 1: //Resumo Geral
                 $nome_relatorio = public_path() . '/relatorios/total_celulas_anual.jasper';
