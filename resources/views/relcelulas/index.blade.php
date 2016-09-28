@@ -148,7 +148,7 @@
 
                           <div class="row">
 
-                              <div class="col-xs-6">
+                              <div class="col-xs-3">
                                     <label for="publico_alvo" class="control-label">Público Alvo</label>
                                     <select id="publico_alvo" placeholder="(Selecionar)" name="publico_alvo" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
                                           <option  value="0"></option>
@@ -158,7 +158,7 @@
                                     </select>
                               </div>
 
-                              <div class="col-xs-6">
+                              <div class="col-xs-3">
                                     <label for="faixa_etaria" class="control-label">Faixa Etária</label>
                                     <select id="faixa_etaria" placeholder="(Selecionar)" name="faixa_etaria" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
                                           <option  value="0"></option>
@@ -167,6 +167,17 @@
                                             @endforeach
                                     </select>
                               </div>
+
+                              <div class="col-xs-3">
+                                    <label for="qtd_inicial" class="control-label">Qtd. Multiplicações - Inicial</label>
+                                    <input type="text" name="qtd_inicial" value="" class="form-control">
+                              </div>
+
+                              <div class="col-xs-3">
+                                    <label for="qtd_final" class="control-label">Qtd. Multiplicações - Final</label>
+                                    <input type="text" name="qtd_final" value="" class="form-control">
+                              </div>
+
 
                          </div>
 

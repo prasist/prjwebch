@@ -48,6 +48,9 @@
           return view('suporte.suporte');
     });
 
+
+ Route::get('pessoas/validar', 'PessoasController@validacao_dados');
+
  /*Movimentacao Membros*/
  Route::get('membersmove', 'MembersMoveController@index');
  Route::post('/membersmove/gravar','MembersMoveController@store');

@@ -29,8 +29,8 @@ class RelatorioCelulasController extends Controller
     }
 
 
-    public function CarregarView($var_download, $var_mensagem)
-    {
+ public function CarregarView($var_download, $var_mensagem)
+{
 
         $publicos = \App\Models\publicos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
         $faixas = \App\Models\faixas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
@@ -51,10 +51,10 @@ class RelatorioCelulasController extends Controller
 
         return view($this->rota . '.index', ['vice_lider'=>$vice_lider, 'nivel1'=>$view1, 'nivel2'=>$view2, 'nivel3'=>$view3, 'nivel4'=>$view4, 'nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'lideres'=>$lideres, 'var_download' => $var_download, 'var_mensagem'=>$var_mensagem]);
 
-    }
+}
 
-    public function index()
-    {
+public function index()
+{
 
         if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
         {
@@ -63,11 +63,11 @@ class RelatorioCelulasController extends Controller
 
         return $this->CarregarView('','');
 
-    }
+}
 
 //RELATORIO DE ENCONTROS E CELULAS
- public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
- {
+public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
+{
 
     /*Pega todos campos enviados no post*/
     $input = $request->except(array('_token', 'ativo')); //não levar o token
@@ -177,6 +177,12 @@ class RelatorioCelulasController extends Controller
         $filtros .= "     Ano : " . $input["ano"];
     }
 
+    if (isset($input["qtd_inicial"]))
+        if ($input["qtd_inicial"]!="")  $filtros .= "        Qtd. Multiplicacoes Inicial : " . $input["qtd_inicial"];
+
+    if (isset($input["qtd_final"]))
+        if ($input["qtd_final"]!="")  $filtros .= "        Qtd. Multiplicacoes Final : " . $input["qtd_final"];
+
     if (isset($input["regiao"]))
         if ($input["regiao"]!="")  $filtros .= "        Regiao : " . $input["regiao"];
 
@@ -204,6 +210,17 @@ class RelatorioCelulasController extends Controller
         "lideres"=> ($descricao_lider=="" ? 0 : $descricao_lider[0]),
         "filtros"=> "'" . ($filtros) . "'"
     );
+
+
+    if (isset($input["qtd_inicial"]))
+    {
+            $parametros = array_add($parametros, 'qtd_inicial', ($input["qtd_inicial"]=="" ? 0 : $input["qtd_inicial"]));
+    }
+
+    if (isset($input["qtd_final"]))
+    {
+            $parametros = array_add($parametros, 'qtd_final', ($input["qtd_final"]=="" ? 0 : $input["qtd_final"]));
+    }
 
     if (isset($input["publico_alvo"]))
     {
@@ -247,6 +264,13 @@ class RelatorioCelulasController extends Controller
         }
     }
 
+ /*
+    RELATORIOS E SUAS VIEWS
+    listagem_celulas => view_celulas_completo
+    listagem_celulas_pessoas_analitico => view_celulas_pessoas
+    listagem_celulas_pessoas_niveis => view_celulas_pessoas_niveis
+    listagem_celulas_sintetico => view_celulas_niveis
+ */
 
    if ($tipo_relatorio=="celulas")  //Relatorio de celulas
    {
@@ -276,7 +300,6 @@ class RelatorioCelulasController extends Controller
             //{
               if ($input["ckExibir"]) //Exibir participantes
               {
-
                     if ($input["ckEstruturas"])
                     {
                         //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas_niveis.jrxml');
@@ -307,7 +330,6 @@ class RelatorioCelulasController extends Controller
    }
    else //RELATORIO ENCONTROS
    {
-
 
         $parametros = array_add($parametros, 'SUBREPORT_DIR', public_path() . '/relatorios/');
 
