@@ -2,7 +2,7 @@
 
 @section('content')
 
-{{ \Session::put('titulo', 'Pessoas') }}
+{{ \Session::put('titulo', 'Validação de Dados') }}
 {{ \Session::put('subtitulo', 'Listagem') }}
 {{ \Session::put('route', 'pessoas') }}
 {{ \Session::put('id_pagina', '28') }}
@@ -14,25 +14,11 @@
             <div class="box-header" data-original-title>
                 <div class="box-body table-responsive no-padding">
 
-                 <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                        <!--<th>ID</th>-->
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Tipo</th>
-                        <th>Alterar</th>
-                        <th>Visualizar</th>
-                        <th>Excluir</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                        <ul>
                         @foreach($dados as $value)
 
-                        <tr>
+                            <li>{{$value->id}}
 
-                            <td>{{$value->id}}</td>
-                            <td>
                                   @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
                                   <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" data-toggle="tooltip" data-placement="top" title="Clique para Alterar">
                                         {{$value->razaosocial}}
@@ -46,39 +32,37 @@
                                                 {{$value->razaosocial}}
                                         @endcan
                                   @endcan
-                            </td>
 
-                            <td>{{$value->tipo}}</td>
 
-                            <td class="col-xs-1">
+                            - {{$value->tipo}} -
+
+
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
-                                            <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" class = 'btn  btn-info btn-sm' data-toggle="tooltip" data-placement="top" title="Alterar Registro"><spam class="glyphicon glyphicon-pencil"></spam></a>
+                                            <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit') }}" class = 'btn  btn-info btn-sm' data-toggle="tooltip" data-placement="top" title="Alterar Registro">Alterar</a>
                                       @endcan
-                            </td>
 
-                            <td class="col-xs-1">
+
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'visualizar'])
-                                               <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" class = 'btn btn-primary btn-sm' data-toggle="tooltip" data-placement="top" title="Visualizar Registro"><span class="glyphicon glyphicon-zoom-in"></span></a>
+                                               <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/preview') }}" class = 'btn btn-primary btn-sm' data-toggle="tooltip" data-placement="top" title="Visualizar Registro">Visualizar</a>
                                       @endcan
-                            </td>
-                            <td class="col-xs-1">
-                                        @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
+
+                                      @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
                                         <form id="excluir{{ $value->id }}" action="{{ URL::to(\Session::get('route') . '/' . $value->id . '/delete') }}" method="DELETE">
 
                                               <button
                                                   data-toggle="tooltip" data-placement="top" title="Excluir Registro" type="submit"
                                                   class="btn btn-danger btn-sm"
                                                   onclick="return confirm('Confirma exclusão desse registro : {{ $value->razaosocial }} ?');">
-                                                  <spam class="glyphicon glyphicon-trash"></spam></button>
+                                                  Excluir</button>
 
                                         </form>
-                                        @endcan
-                            </td>
+                                      @endcan
+                                     </li>
 
-                        </tr>
+
                         @endforeach
-                    </tbody>
-                    </table>
+
+                    </ul>
 
                 </div>
             </div>

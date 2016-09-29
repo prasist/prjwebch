@@ -60,6 +60,7 @@ Route::get('relcelulas', 'RelatorioCelulasController@index'); /*PAGINA INICIAL D
 
 /*VALIDACAO DADOS CADASTRAIS*/
 Route::get('pessoas/validar', 'PessoasController@validacao_dados');
+Route::get('pessoas/validar/{tipo}', 'PessoasController@listar_validacao');
 
  /*Movimentacao Membros*/
 Route::get('membersmove', 'MembersMoveController@index');

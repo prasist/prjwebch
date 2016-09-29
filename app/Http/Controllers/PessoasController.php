@@ -62,56 +62,71 @@ class PessoasController extends Controller
     }
 
 
-  public function validacao_dados()
-    {
+
+public function listar_validacao($tipo)
+{
 
 
-     //NOME DUPLICADOS
-     $strSql =  " SELECT razaosocial, id, 'Cadastros Repetidos' as tipo ";
-     $strSql .=  " FROM pessoas ";
-     $strSql .=  " WHERE  ";
-     $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
-     $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  AND ";
-     $strSql .=  " razaosocial IN (SELECT razaosocial FROM pessoas p WHERE empresas_id = " . $this->dados_login->empresas_id . " AND  empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " GROUP BY p.razaosocial HAVING COUNT(*) > 1) ";
+    switch ($tipo) {
+        case 'repetidos':
+             //NOME DUPLICADOS
+             $strSql =  " SELECT razaosocial, id, 'Cadastros Repetidos' as tipo ";
+             $strSql .=  " FROM pessoas ";
+             $strSql .=  " WHERE  ";
+             $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+             $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  AND ";
+             $strSql .=  " razaosocial IN (SELECT razaosocial FROM pessoas p WHERE empresas_id = " . $this->dados_login->empresas_id . " AND  empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " GROUP BY p.razaosocial HAVING COUNT(*) > 1) ";
+             $strSql .=  " order by tipo, razaosocial ";
+            break;
 
-     $strSql .=  " union all ";
+        case 'semdata':
+            //SEM DATA DE NASCIMENTO
+             $strSql =  " SELECT  razaosocial, id,  'Sem Data de Nascimento' as tipo ";
+             $strSql .=  " FROM pessoas ";
+             $strSql .=  " WHERE  ";
+             $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+             $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
+             $strSql .=  " ativo = 'S' and datanasc is null   ";
+             $strSql .=  " order by tipo, razaosocial ";
+        break;
 
-    //SEM DATA DE NASCIMENTO
-     $strSql .=  " SELECT  razaosocial, id,  'Sem Data de Nascimento' as tipo ";
-     $strSql .=  " FROM pessoas ";
-     $strSql .=  " WHERE  ";
-     $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
-     $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
-     $strSql .=  " ativo = 'S' and datanasc is null   ";
+        case 'sememail':
+                 //SEM EMAIL
+                 $strSql =  " SELECT razaosocial, id, 'Sem Email'  as tipo ";
+                 $strSql .=  " FROM pessoas ";
+                 $strSql .=  " WHERE  ";
+                 $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+                 $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
+                 $strSql .=  " ativo = 'S' and isnull(emailprincipal,'')=''  ";
+                 $strSql .=  " order by tipo, razaosocial ";
+                 break;
 
-     $strSql .=  " union all ";
+        case 'semfone':
+                 //SEM NENHUM TELEFONE
+                 $strSql =  " SELECT razaosocial, id, 'Sem Telefones Cadastrados' as tipo ";
+                 $strSql .=  " FROM pessoas ";
+                 $strSql .=  " WHERE  ";
+                 $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+                 $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
+                 $strSql .=  " ativo = 'S' and (isnull(fone_secundario,'') = '' and isnull(fone_principal,'') = '' and isnull(fone_recado,'') = '' and isnull(fone_celular,'') = '') ";
+                 $strSql .=  " order by tipo, razaosocial ";
+        break;
 
-     //SEM EMAIL
-     $strSql .=  " SELECT razaosocial, id, 'Sem Email'  as tipo ";
-     $strSql .=  " FROM pessoas ";
-     $strSql .=  " WHERE  ";
-     $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
-     $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
-     $strSql .=  " ativo = 'S' and isnull(emailprincipal,'')=''  ";
-
-     $strSql .=  " union all ";
-
-     //SEM NENHUM TELEFONE
-     $strSql .=  " SELECT razaosocial, id, 'Sem Telefones Cadastrados' as tipo ";
-     $strSql .=  " FROM pessoas ";
-     $strSql .=  " WHERE  ";
-     $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
-     $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " AND ";
-     $strSql .=  " ativo = 'S' and (isnull(fone_secundario,'') = '' and isnull(fone_principal,'') = '' and isnull(fone_recado,'') = '' and isnull(fone_celular,'') = '') ";
-     $strSql .=  " order by tipo, razaosocial ";
+        default:
+            # nothing
+            break;
+    }
 
      $leitura = \DB::select($strSql);
 
-     //dd($strSql);
+     return view($this->rota . '.validacao', ['dados'=>$leitura]);
 
-     return view($this->rota . '.validacao', ['dados' => $leitura]);
+}
 
-    }
+public function validacao_dados()
+{
+        return view($this->rota . '.indexvalidacao');
+}
 
 
     /*Busca pela inicial do nome (alfabeto)*/
