@@ -35,7 +35,7 @@
 
                         <div class="row">
                                  <div class="col-xs-3">
-                                      <label for="data_mov" class="control-label"><span class="text-danger">*</span>  Data Movimentação</label>
+                                      <label for="data_mov" class="control-label">Data Movimentação</label>
                                       <div class="input-group">
                                               <div class="input-group-addon">
                                                   <i class="fa fa-calendar"></i>
@@ -89,7 +89,7 @@
                           <div class="row">
                             <div class="col-xs-5 {{ $errors->has('celulas') ? ' has-error' : '' }}">
 
-                            <label for="celulas" class="control-label">Célula Atual</label>
+                                    <label for="celulas" class="control-label">Célula Atual</label>
                                     <select id="celulas" placeholder="(Selecionar)" name="celulas" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                     <option  value="0"></option>
                                     @foreach($celulas as $item)

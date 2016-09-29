@@ -130,7 +130,7 @@
       id: "tour_visaogeral",
       steps: [
         {
-          title: "Bem-Vindo ao Sigma3 - Sistema de Gestão para Igrejas",
+          title: "Bem-Vindo ao Sigma3 - Gestão para Igrejas",
           content: "Nesse Guia Rápido você terá uma visão geral do SIGMA3.",
           target: document.querySelector("#tour1_visaogeral"),
           placement: "right"

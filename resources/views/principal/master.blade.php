@@ -516,9 +516,9 @@
         <script src="{{ asset('/dist/js/pace.min.js')}}"></script>
 
 
-        @if (\Session::get('membro')=='')
+        @if (\Session::get('membro')=='' || \Session::get('membro')=='N')
                 <!-- tour rápido-->
-                @if (\Session::get('tour_visaogeral')=='' || \Session::get('tour_visaogeral')!='S')
+                @if (\Session::get('tour_visaogeral')==null || \Session::get('tour_visaogeral')=='' || \Session::get('tour_visaogeral')!='S')
                     @if (\Session::get('dados_login')!='')
                     <script type="text/javascript">
                             hopscotch.startTour(tour_visao_geral);
@@ -526,7 +526,7 @@
                     @endif
                 @endif
 
-                @if (\Session::get('tour_rapido')==' ' || \Session::get('tour_rapido')!='S')
+                @if (\Session::get('tour_rapido')==NULL || \Session::get('tour_rapido')==' ' || \Session::get('tour_rapido')!='S')
                     @if (\Session::get('admin')==1)
                         <script type="text/javascript">
                                 hopscotch.startTour(tour);
