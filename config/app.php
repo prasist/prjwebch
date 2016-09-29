@@ -72,6 +72,8 @@ return [
     'relencontro'=>'65',
     'cursos'=>'66',
     'membersmove'=>'67',
+    'relmovimentacoes' => '68',
+
 
 
     'env' => env('APP_ENV', 'production'),

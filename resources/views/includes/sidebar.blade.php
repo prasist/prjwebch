@@ -239,7 +239,11 @@
           @if(Gate::check('verifica_permissao', [67 ,'acessar']))
           <ul class="treeview-menu">
             <li>
-              <a href="{{ url('/membersmove')}}"><i class="fa fa-exchange"></i> Movimentação de Membros</a>
+              <a href="#" title="Movimentação de Membros entre Células..."><i class="fa fa-exchange"></i> Movimentação Membros <i class="fa fa-angle-left pull-right"></i></a>
+                  <ul class="treeview-menu">
+                      <li><a href="{{ url('/membersmove')}}"> Nova Movimentação</a></li>
+                      <li><a href="{{ url('/relmovimentacoes')}}"> Relatórios</a></li>
+                  </ul>
             </li>
           </ul>
           @endif

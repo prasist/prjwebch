@@ -48,37 +48,40 @@
           return view('suporte.suporte');
     });
 
+/*--------------------------RELATÓRIOS ENVOLVENDO CÉLULAS / PESSOAS-------------------------*/
+Route::get('/relmovimentacoes','RelatorioCelulasController@index_movimentacoes'); /*RELATORIO DE MOVIMENTACOES*/
+Route::post('/relmovimentacoes/{tipo}','RelatorioCelulasController@pesquisar'); /*RELATORIO DE CELULAS, PASSANDO PARAMETRO "MOVIMENTACOES" GERARÁ O RELATÓRIO DE MOVIMENTACOES DE MEMBROS*/
+Route::post('relcelulas/pesquisar/{tipo}', 'RelatorioCelulasController@pesquisar');  /*RELATORIO DE CELULAS, PASSANDO PARAMETRO "CELULAS" GERARÁ O RELATÓRIO DE CELULAS, OU "ENCONTRO" PARA RELATORIOS DOS ENCONTROS*/
+Route::get('estatisticas/{id}', 'RelatorioCelulasController@estatisticas'); /*RELATORIOS ESTATISTICOS CELULAS (MULTIPLICACOES, BATISMOS, QUANTIDADE GERAL)*/
+Route::get('estatisticas_nivel/{id}/{nivel}/{valor}/{nome}/{saida}', 'RelatorioCelulasController@estatisticas_nivel');  /*RELATORIO ESTATISTICOS CONFORME NIVEL HIERARQUICO SELECIONADO*/
+Route::get('relcelulas', 'RelatorioCelulasController@index'); /*PAGINA INICIAL DOS RELATORIOS (FILTROS)*/
 
- Route::get('pessoas/validar', 'PessoasController@validacao_dados');
+
+
+/*VALIDACAO DADOS CADASTRAIS*/
+Route::get('pessoas/validar', 'PessoasController@validacao_dados');
 
  /*Movimentacao Membros*/
- Route::get('membersmove', 'MembersMoveController@index');
- Route::post('/membersmove/gravar','MembersMoveController@store');
+Route::get('membersmove', 'MembersMoveController@index');
+Route::post('/membersmove/gravar','MembersMoveController@store');
 
+//Avisos dos sistema
+Route::get('/avisos/ler/{id}','AvisosController@show');
+Route::get('/avisos/listar','AvisosController@listar');
 
-  //Relatorio geral celulas
- Route::get('estatisticas/{id}', 'RelatorioCelulasController@estatisticas');    //Imprimir relatorio encontro semanal
- Route::get('estatisticas_nivel/{id}/{nivel}/{valor}/{nome}/{saida}', 'RelatorioCelulasController@estatisticas_nivel');    //Imprimir relatorio encontro semanal
+Route::get('/celulas/buscar_estruturas','CelulasController@getEstruturas');
 
+//Alteracao dados membro  - area do membro
+Route::post('/membro_dados/gravar','MembroDadosController@store');
+Route::get('membro_dados/{id}/edit','MembroDadosController@edit');
+Route::post('membro_dados/{id}/update','MembroDadosController@update');
 
-    //Avisos dos sistema
-   Route::get('/avisos/ler/{id}','AvisosController@show');
+Route::post('checkin/{controle_atividades}/{pessoas}/{user}','ControleAtividadesController@checkin');
 
-   Route::get('/avisos/listar','AvisosController@listar');
-
-   Route::get('/celulas/buscar_estruturas','CelulasController@getEstruturas');
-
-   //Alteracao dados membro  - area do membro
-   Route::post('/membro_dados/gravar','MembroDadosController@store');
-   Route::get('membro_dados/{id}/edit','MembroDadosController@edit');
-   Route::post('membro_dados/{id}/update','MembroDadosController@update');
-
-   Route::post('checkin/{controle_atividades}/{pessoas}/{user}','ControleAtividadesController@checkin');
-
-    /*configuracao*/
-    Route::get('configmsg','ConfigMsgController@index');
-    Route::post('configmsg/{id}/update','ConfigMsgController@update');
-    Route::post('/configmsg/gravar','ConfigMsgController@store');
+/*configuracao*/
+Route::get('configmsg','ConfigMsgController@index');
+Route::post('configmsg/{id}/update','ConfigMsgController@update');
+Route::post('/configmsg/gravar','ConfigMsgController@store');
 
 
 /*Login membros*/
@@ -239,11 +242,8 @@
     Route::get('relpessoas', 'RelatorioPessoasController@index');
     Route::post('relpessoas/pesquisar', 'RelatorioPessoasController@pesquisar');
 
-    /*Relatorio de Celulas*/
-    Route::get('relcelulas', 'RelatorioCelulasController@index');
 
-    //Route::post('relcelulas/pesquisar', 'RelatorioCelulasController@pesquisar');
-    Route::post('relcelulas/pesquisar/{tipo}', 'RelatorioCelulasController@pesquisar');
+
 
    //Relatorio de encontros
     Route::get('relencontro', 'RelEncontroController@index');

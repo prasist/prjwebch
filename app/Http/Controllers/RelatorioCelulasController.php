@@ -65,6 +65,35 @@ public function index()
 
 }
 
+
+public function index_movimentacoes()
+{
+
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
+        {
+              return redirect('home');
+        }
+
+        $publicos = \App\Models\publicos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $faixas = \App\Models\faixas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $motivos = \App\Models\tiposmovimentacao::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+
+        /*Busca Lideres*/
+        //$lideres = \DB::select('select * from view_lideres where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $lideres = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        /*Busca Niveis*/
+        $view1 = \DB::select('select * from view_celulas_nivel1 v1 where v1.empresas_id = ? and v1.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $view2 = \DB::select('select * from view_celulas_nivel2 v2 where v2.empresas_id = ? and v2.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $view3 = \DB::select('select * from view_celulas_nivel3 v3 where v3.empresas_id = ? and v3.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $view4 = \DB::select('select * from view_celulas_nivel4 v4 where v4.empresas_id = ? and v4.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+        $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        return view('relmovimentacoes.index', ['motivos'=>$motivos,  'nivel1'=>$view1, 'nivel2'=>$view2, 'nivel3'=>$view3, 'nivel4'=>$view4, 'nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'lideres'=>$lideres, 'var_download' => '', 'var_mensagem'=>'']);
+
+}
+
+
 //RELATORIO DE ENCONTROS E CELULAS
 public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 {
@@ -90,6 +119,23 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
     $descricao_nivel3="";
     $descricao_nivel4="";
     $descricao_nivel5="";
+    $descricao_motivo="";
+
+
+    if (isset($input["data_movimentacao"]))
+    {
+         if ($input["data_movimentacao"]!="")
+            $filtros .= "     Data Mov. Inicial : " . $input["data_movimentacao"];
+    }
+
+    if (isset($input["data_movimentacao_ate"]))
+    {
+         if ($input["data_movimentacao_ate"]!="")
+            $filtros .= "     Data Mov. Final : " . $input["data_movimentacao_ate"];
+    }
+
+    if (isset($input["motivos"]))
+        if ($input["motivos"]!="") $descricao_motivo = explode("|", $input["motivos"]);
 
     if (isset($input["publico_alvo"]))
     {
@@ -102,13 +148,41 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
         if ($descricao_faixa_etaria[0]!="0")  $filtros .= "     Faixa Etaria : " . $descricao_faixa_etaria[1];
     }
 
-    if (isset($input["lideres"]))
+    if (isset($input["lideres"])) {
         if ($input["lideres"]!="") $descricao_lider = explode("|", $input["lideres"]);
+
+        if ($descricao_lider[0]!="0")  {
+
+            if ($tipo_relatorio=="movimentacoes")  //RELATORIO MOVIMENTACOES
+            {
+                $filtros .= "     Celula Anterior : " . $descricao_lider[1];
+            }
+            else
+            {
+                 $filtros .= "     Lider : " . $descricao_lider[1];
+            }
+        }
+
+    }
+
 
     if (isset($input["vice_lider"]))
     {
         if ($input["vice_lider"]!="") $descricao_vice_lider = explode("|", $input["vice_lider"]);
-        if ($descricao_vice_lider[0]!="0")  $filtros .= "     Lider em Treinamento: " . $descricao_vice_lider[1];
+
+        if ($descricao_vice_lider[0]!="0")  {
+
+            if ($tipo_relatorio=="movimentacoes")  //RELATORIO MOVIMENTACOES
+            {
+                $filtros .= "     Nova Celula : " . $descricao_vice_lider[1];
+            }
+            else
+            {
+                 $filtros .= "     Lider em Treinamento: " . $descricao_vice_lider[1];
+            }
+        }
+
+
     }
 
     if (isset($input["nivel1_up"]))
@@ -164,6 +238,9 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
         }
     }
 
+   /*Instancia biblioteca de funcoes globais*/
+   $formatador = new  \App\Functions\FuncoesGerais();
+
 
     if ($tipo_relatorio=="celulas") //SE FOR RELATORIO DE CELULAS
     {
@@ -171,11 +248,12 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
         if ($input["turno"]!="")  $filtros .= "         Turno : " . $input["turno"];
         if ($input["segundo_dia_encontro"]!="")  $filtros .= "      Segundo dia encontro : " . $input["segundo_dia_encontro"];
     }
-    else //RELATORIO DE ENCONTROS
+    else if ($tipo_relatorio=="encontro")  //RELATORIO DE ENCONTROS
     {
         $filtros .= "     Mes : " . $input["mes"];
         $filtros .= "     Ano : " . $input["ano"];
     }
+
 
     if (isset($input["qtd_inicial"]))
         if ($input["qtd_inicial"]!="")  $filtros .= "        Qtd. Multiplicacoes Inicial : " . $input["qtd_inicial"];
@@ -185,8 +263,6 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
     if (isset($input["regiao"]))
         if ($input["regiao"]!="")  $filtros .= "        Regiao : " . $input["regiao"];
-
-    if ($descricao_lider[0]!="0")  $filtros .= "     Lider : " . $descricao_lider[1];
 
     if (isset($input["nivel1_up"]))
         if ($input["nivel1_up"]!="0")  $filtros .= "        " . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
@@ -207,10 +283,24 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
     (
         "empresas_id"=> $this->dados_login->empresas_id,
         "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
-        "lideres"=> ($descricao_lider=="" ? 0 : $descricao_lider[0]),
         "filtros"=> "'" . ($filtros) . "'"
     );
 
+    if (isset($input["data_movimentacao"]))
+    {
+            $parametros = array_add($parametros, 'data_mov_inicial', $formatador->FormatarData($input["data_movimentacao"]));
+    }
+
+    if (isset($input["data_movimentacao_ate"]))
+    {
+            $parametros = array_add($parametros, 'data_mov_final', $formatador->FormatarData($input["data_movimentacao_ate"]));
+    }
+
+    if (isset($input["motivos"]))
+    {
+            if ($input["motivos"]!="")
+                $parametros = array_add($parametros, 'motivos_id', ($descricao_motivo[0]=="" ? 0 : $descricao_motivo[0]));
+    }
 
     if (isset($input["qtd_inicial"]))
     {
@@ -241,12 +331,16 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
     }
 
 
-    //PARAMETROS
-    $parametros = array_add($parametros, 'nivel1', ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]));
-    $parametros = array_add($parametros, 'nivel2', ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]));
-    $parametros = array_add($parametros, 'nivel3', ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]));
-    $parametros = array_add($parametros, 'nivel4', ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]));
-    $parametros = array_add($parametros, 'nivel5', ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]));
+    if ($tipo_relatorio!="movimentacoes")  //RELATORIO MOVIMENTACOES
+   {
+             //PARAMETROS
+            $parametros = array_add($parametros, 'nivel1', ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]));
+            $parametros = array_add($parametros, 'nivel2', ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]));
+            $parametros = array_add($parametros, 'nivel3', ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]));
+            $parametros = array_add($parametros, 'nivel4', ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]));
+            $parametros = array_add($parametros, 'nivel5', ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]));
+   }
+
 
     if (isset($input["mes"]))
     {
@@ -285,10 +379,14 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
                 $parametros = array_add($parametros, 'exibir_dados_lider', 'N');
             }
 
-
             if ($input["ckExibirDadosParticipantes"]=="")
             {
                 $parametros = array_add($parametros, 'exibir_dados', 'N');
+            }
+
+            if ($descricao_lider[0]!="0")
+            {
+                $parametros = array_add($parametros, 'lideres', $descricao_lider[0]);
             }
 
             if ($descricao_vice_lider[0]!="0")
@@ -328,10 +426,15 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
               }
 
    }
-   else //RELATORIO ENCONTROS
+   else if ($tipo_relatorio=="encontro")  //RELATORIO ENCONTROS
    {
 
         $parametros = array_add($parametros, 'SUBREPORT_DIR', public_path() . '/relatorios/');
+
+        if ($descricao_lider[0]!="0")
+        {
+              $parametros = array_add($parametros, 'lideres', $descricao_lider[0]);
+        }
 
         //se houver logo informada
         if (rtrim(ltrim(\Session::get('logo')))!="")
@@ -347,6 +450,22 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
         {
                 $nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral_lider2.jasper';
         }
+
+   }
+   else if ($tipo_relatorio=="movimentacoes")  //RELATORIO MOVIMENTACOES
+   {
+
+          $nome_relatorio = public_path() . '/relatorios/movimentacao_membros_niveis.jasper';
+
+         if ($descricao_lider[0]!="0")
+         {
+             $parametros = array_add($parametros, 'celulas_id_atual', $descricao_lider[0]);
+         }
+
+         if ($descricao_vice_lider[0]!="0")
+         {
+             $parametros = array_add($parametros, 'celulas_id_nova', $descricao_vice_lider[0]);
+         }
 
    }
 
@@ -372,7 +491,19 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
                 if ($tipo_relatorio=="celulas")  {
                     return $this->CarregarView('', $Mensagem);
                 } else {
-                    return redirect('relencontro');
+                    //return redirect('relencontro');
+
+                       header('Content-Description: File Transfer');
+                    header('Content-Type: application/pdf');
+                    header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
+                    //header('Content-Transfer-Encoding: binary');
+                    header('Expires: 0');
+                    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                    header('Content-Length: ' . filesize($output.'.'.$ext));
+                    flush();
+                    readfile($output.'.'.$ext);
+                    unlink($output.'.'.$ext);
+
                 }
 
             }

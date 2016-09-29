@@ -98,7 +98,7 @@ class MembersMoveController extends Controller
                                    $dados->empresas_id = $this->dados_login->empresas_id;
                                    $dados->celulas_id_atual = $descricao_celula[0];
                                    $dados->celulas_id_nova = $descricao_celula_nova[0];
-                                   $dados->data_movimentacao = $input['data_mov'];
+                                   $dados->data_movimentacao = $this->formatador->FormatarData($input['data_mov']);
                                    $dados->pessoas_id = $selected;
                                    $dados->motivos_id = $input['tipos_mov'];
                                    $dados->observacao = trim($input['obs']);
