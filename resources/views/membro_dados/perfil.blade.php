@@ -164,7 +164,7 @@
                                     @if ($pessoas[0]->caminhofoto!="")
                                         <p></p>
                                         <div class="col-xs-3">
-                                              <img src="{{ url('/images/users/' . $pessoas[0]->caminhofoto) }}" width="160px" height="160px">
+                                              <img src="{{ url('/images/persons/' . $pessoas[0]->caminhofoto) }}" width="160px" height="160px">
                                               <a href="{{ url('/profile/' . $pessoas[0]->id . '/remover')}}"><i class="fa fa-remove"> Remover Imagem</i> </a>
                                         </div>
 
