@@ -50,7 +50,7 @@
                          Natural de  <i><b>{{$perfil[0]->naturalidade}} - {{$perfil[0]->uf_naturalidade}}</b></i>
                   @endif
 
-                  @if($membros_celula[0]->celulas_id)
+                  @if(isset($membros_celula))
                       Participa da Célula <i><b>{{$membros_celula[0]->nome}}</b></i>
 
                       @if (rtrim($membros_celula[0]->data_entrada_celula)!="")
@@ -118,7 +118,7 @@
 
               <p class="text-muted">
                       {{$perfil[0]->grau_instrucao}}
-                      @if ($membros_formacoes[0]->nome)
+                      @if (isset($membros_formacoes))
                           em <i><b>{{$membros_formacoes[0]->nome}}</b></i>
                       @endif
               </p>
@@ -177,7 +177,7 @@
 
                           <b>Relacionamentos</b>
                           <br/><br/>
-                          @if ($membros_relacionamentos)
+                          @if (isset($membros_relacionamentos))
                               @foreach ($membros_relacionamentos as $item)
                                    @if ($item->nome!="")
                                         {{$item->nome}} de {{$item->razaosocial}}<br/>
@@ -369,45 +369,41 @@
 
                   <div class="post">
                     <div class="user-block">
-                      @if ($membros_dons)
+                      @if (isset($membros_dons))
                       <b>Dons Espirituais</b>
                       <br/><br/>
+                            @foreach ($membros_dons as $item)
+                              <i><b>{{$item->nome}}</b></i><br/>
+                            @endforeach
                       @endif
 
-                      @foreach ($membros_dons as $item)
-                        <i><b>{{$item->nome}}</b></i><br/>
-                      @endforeach
-
-                      @if ($membros_habilidades)
+                      @if (isset($membros_habilidades))
                       <br/><br/>
                       <b>Habilidades</b>
                       <br/><br/>
+                          @foreach ($membros_habilidades as $item)
+                            <i><b>{{$item->nome}}</b></i><br/>
+                          @endforeach
                       @endif
 
-                      @foreach ($membros_habilidades as $item)
-                        <i><b>{{$item->nome}}</b></i><br/>
-                      @endforeach
 
-
-                      @if ($membros_ministerios)
+                      @if (isset($membros_ministerios))
                       <br/><br/>
                       <b>Ministérios</b>
                       <br/><br/>
+                            @foreach ($membros_ministerios as $item)
+                              <i><b>{{$item->nome}}</b></i><br/>
+                            @endforeach
                       @endif
 
-                      @foreach ($membros_ministerios as $item)
-                        <i><b>{{$item->nome}}</b></i><br/>
-                      @endforeach
-
-                      @if ($membros_atividades)
+                      @if (isset($membros_atividades))
                       <br/><br/>
                       <b>Atividades</b>
                       <br/><br/>
+                            @foreach ($membros_atividades as $item)
+                              <i><b>{{$item->nome}}</b></i><br/>
+                            @endforeach
                       @endif
-
-                      @foreach ($membros_atividades as $item)
-                        <i><b>{{$item->nome}}</b></i><br/>
-                      @endforeach
                     </div>
                  </div>
 

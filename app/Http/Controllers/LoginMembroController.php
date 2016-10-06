@@ -184,9 +184,9 @@ public function store(\Illuminate\Http\Request  $request)
                 {
 
                         $iQtd++;
-                        $dados = users::firstOrNew(['email' => $item->emailprincipal]);
+                        $dados = users::firstOrNew(['email' => strtolower($item->emailprincipal)]);
                         $dados->name  = $item->razaosocial;
-                        $dados->email  = $item->emailprincipal;
+                        $dados->email  = strtolower($item->emailprincipal);
                         $dados->confirmed = 1; //Se for criado usuario pelo usuario.
 
                         if ($input["gerar"]=="1")  //CPF

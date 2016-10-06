@@ -7,62 +7,55 @@
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <meta http-equiv="x-ua-compatible" content="IE=10">
 
+        <!--  ONLINE-->
+        <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
+        <link rel="stylesheet" href="{{ asset('/dist/css/bootstrap.min.css')}}">
 
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-        <!--<script src="//vitalets.github.io/x-editable/assets/mockjax/jquery.mockjax.js"></script>-->
-        <link href="{{ asset('/dist/css/bootstrap-editable.css')}}" rel="stylesheet" type="text/css" />
-        <script src="{{ asset('/dist/js/bootstrap-editable.js')}}"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.css" rel="stylesheet" type="text/css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>
-        <script src="{{ asset('/dist/js/bootstrap-datepicker.js')}}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('/dist/css/AdminLTE.min.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('/dist/css/skins/skin-green.min.css')}}" rel="stylesheet" type="text/css" />
-        <!-- Bootstrap time Picker -->
-        <link href="{{ asset('/dist/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
+        <!--<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>-->
+        <script src="{{ asset('/dist/js/jquery-2.0.3.min.js')}}"></script>
 
-        <!-- jvectormap -->
-        <!--<link href="{{ asset('/plugins/jvectormap/jquery-jvectormap-1.2.2.css')}}" rel="stylesheet" type="text/css" />-->
-        <!-- Daterange picker -->
+        <!--<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>-->
+        <script src="{{ asset('/dist/js/bootstrap.min.js')}}"></script>
+
+        <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.css" rel="stylesheet" type="text/css" />-->
+        <link href="{{ asset('/dist/css/sweetalert.css')}}" rel="stylesheet" type="text/css" />
+
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>-->
+        <script src="{{ asset('/dist/js/sweetalert.min.js')}}"></script>
+
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>-->
+        <script src="{{ asset('/dist/js/moment.min.js')}}"></script>
+
+        <!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />-->
+        <link href="{{ asset('/dist/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!--<link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />-->
+        <link href="{{ asset('/dist/css/ionicons.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">-->
+        <link rel="stylesheet" href="{{ asset('/dist/css/bootstrap-select.min.css')}}">
+
+        <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" />-->
+        <link href="{{ asset('/dist/css/bootstrap-datepicker3.css')}}" rel="stylesheet" type="text/css" />
+
+
+        <!--  OFFLINE-->
         <link href="{{ asset('/plugins/daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet" type="text/css" />
-        <!-- bootstrap wysihtml5 - text editor -->
         <link href="{{ asset('/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}" rel="stylesheet" type="text/css" />
-        <!-- DataTables -->
         <link rel="stylesheet" href="{{ asset('/plugins/datatables/dataTables.bootstrap.css')}}"/>
         <link rel="stylesheet" href="{{ asset('/dist/css/hopscotch.min.css')}}"/>
         <link rel="stylesheet" href="{{ asset('/dist/css/buscapessoas.css')}}"/>
-
         <link href="{{ asset('/dist/css/bootstrap-switch.min.css')}}" rel="stylesheet"/>
         <link href="{{ asset('/dist/css/bootstrap-treeview.min.css')}}" rel="stylesheet"/>
-
         <link href="{{ asset('/dist/css/pace.min.css')}}" rel="stylesheet"/>
-
-
-
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
-        <!-- Date Picker -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css" />
-
+        <link href="{{ asset('/dist/css/bootstrap-editable.css')}}" rel="stylesheet" type="text/css" />
+        <script src="{{ asset('/dist/js/bootstrap-editable.js')}}"></script>
+        <script src="{{ asset('/dist/js/bootstrap-datepicker.js')}}"></script>
+        <link href="{{ asset('/dist/css/AdminLTE.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('/dist/css/skins/skin-green.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('/dist/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('/dist/css/pick-a-color-1.1.8.min.css')}}" rel="stylesheet"/>
-
         <link href="{{ asset('/dist/css/treeview.css')}}" rel="stylesheet"/>
-
-
-        <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>-->
-
 
 
     </head>
@@ -143,7 +136,10 @@
 
 <script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>-->
+<script src="{{ asset('/dist/js/bootstrap-select.min.js')}}"></script>
+
 <script src="{{ asset('/dist/js/tinycolor-0.9.15.min.js')}}"></script> <!-- monetarios-->
 <script src="{{ asset('/dist/js/pick-a-color-1.1.8.min.js')}}"></script> <!-- monetarios-->
 
@@ -483,15 +479,21 @@
         </script>
 
         <script src="{{ asset('/dist/js/bootstrap-treeview.min.js')}}"></script>
-        <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>-->
-        <!--<script src="{{ asset('/js/controller.js')}}"></script>-->
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.js')}}"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
         <script src="{{ asset('/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
         <script src="{{ asset('/dist/js/app.min.js')}} " type="text/javascript"></script>
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
-        <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+        <!--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">-->
+        <link rel="stylesheet" href="{{ asset('/dist/css/morris.css')}}">
+
+        <!--<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>-->
+        <script src="{{ asset('/dist/js/raphael-min.js')}}"></script>
+
+        <!--<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>-->
+        <script src="{{ asset('/dist/js/morris.min.js')}}"></script>
+
+
         <script src="{{ asset('/plugins/sparkline/jquery.sparkline.min.js')}}"></script>
         <script src="{{ asset('/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js')}}"></script>
         <script src="{{ asset('/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
@@ -502,16 +504,13 @@
         <script src="{{ asset('/dist/js/pages/dashboard.js')}}"></script>
         <script src="{{ asset('/dist/js/hopscotch.min.js')}}"></script>
         <script src="{{ asset('/js/tour_sigma3.js')}}"></script>
-        <!--<script src="{{ asset('/js/app_angular.js')}}"></script>-->
         <script src="{{ asset('/js/typeahead.min.js')}}"></script>
         <script src="{{ asset('/dist/webcam.js')}}"></script>
         <script src="{{ asset('/dist/js/bootstrap-checkbox.min.js')}}" defer></script>
         <script src="{{ asset('/dist/js/moment.min.js')}}"></script> <!-- datas-->
         <script src="{{ asset('/dist/js/autoNumeric-min.js')}}"></script> <!-- monetarios-->
         <script src="{{ asset('/dist/js/bootstrap-switch.min.js')}}"></script>
-        <!-- bootstrap time picker -->
         <script src="{{ asset('/dist/js/bootstrap-timepicker.min.js')}}"></script>
-
         <script src="{{ asset('/dist/js/treeview.js')}}"></script>
         <script src="{{ asset('/dist/js/pace.min.js')}}"></script>
 

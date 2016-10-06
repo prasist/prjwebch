@@ -734,7 +734,9 @@
                                                   <div class="row">
                                                     <div class="col-md-12">
                                                      <div id="printable" class="box-header with-border">
-                                                      {!! $gerar_estrutura_origem !!}
+                                                      @if (isset($gerar_estrutura_origem))
+                                                            {!! $gerar_estrutura_origem !!}
+                                                      @endif
                                                      </div>
                                                   </div>
                                                 </div>
@@ -762,6 +764,7 @@
        <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-save"></i> Salvar</button>
        <a href="#" class="btn btn-warning" onclick="salvar_e_incluir();" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }} ><i class="fa fa-users"></i> Salvar e Incluir Participantes</a>
        <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Cancelar</a>
+       <br/><span class="text-danger">*</span><i>Campos Obrigatórios</i>
    </div>
 
    </form>

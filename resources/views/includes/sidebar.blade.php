@@ -236,6 +236,7 @@
           @endif
 
 
+          @if(Gate::check('verifica_permissao', [67 ,'acessar']) || Gate::check('verifica_permissao', [68 ,'acessar']))
           <ul class="treeview-menu">
             <li>
               <a href="#" title="Movimentação de Membros entre Células..."><i class="fa fa-exchange"></i> Movimentação Membros <i class="fa fa-angle-left pull-right"></i></a>
@@ -250,7 +251,7 @@
                   </ul>
             </li>
           </ul>
-
+          @endif
 
 
           <!--<ul class="treeview-menu">

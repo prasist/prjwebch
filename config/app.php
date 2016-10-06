@@ -76,7 +76,7 @@ return [
 
 
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'staging'),
 
     'debug' => env('APP_DEBUG', true),
 

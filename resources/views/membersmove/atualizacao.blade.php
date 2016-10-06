@@ -35,18 +35,19 @@
 
                         <div class="row">
                                  <div class="col-xs-3">
-                                      <label for="data_mov" class="control-label">Data Movimentação</label>
+                                      <label for="data_mov" class="control-label"><span class="text-danger">*</span> Data Movimentação</label>
                                       <div class="input-group">
                                               <div class="input-group-addon">
                                                   <i class="fa fa-calendar"></i>
                                               </div>
 
-                                              <input id ="data_mov" name = "data_mov" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                              <input id ="data_mov" name = "data_mov" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('data_mov')}}">
 
                                       </div>
                                  </div>
 
                                  <div class="col-xs-9 {{ $errors->has('tipos_mov') ? ' has-error' : '' }}">
+                                          <span class="text-danger">*</span>
                                           @include('carregar_combos', array('dados'=>$motivos, 'titulo' =>'Motivos', 'id_combo'=>'tipos_mov', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '18'))
                                           @include('modal_cadastro_basico', array('qual_campo'=>'tipos_mov', 'modal' => 'modal_tipos_mov', 'tabela' => 'tipos_movimentacao'))
 
@@ -63,7 +64,7 @@
                        <div class="row">
                                  <div class="col-xs-12">
                                         <label for="obs" class="control-label">Observação</label>
-                                        <input id="obs"  placeholder="(Opcional)" name = "obs" type="text" class="form-control" value="">
+                                        <input id="obs"  placeholder="(Opcional)" name = "obs" type="text" class="form-control" value="{{old('obs')}}">
                                  </div>
                        </div>
 
@@ -89,11 +90,11 @@
                           <div class="row">
                             <div class="col-xs-5 {{ $errors->has('celulas') ? ' has-error' : '' }}">
 
-                                    <label for="celulas" class="control-label">Célula Atual</label>
+                                    <label for="celulas" class="control-label"><span class="text-danger">*</span> Célula Atual</label>
                                     <select id="celulas" placeholder="(Selecionar)" name="celulas" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                     <option  value="0"></option>
                                     @foreach($celulas as $item)
-                                            <option  value="{{$item->id . '|' . $item->nome}}" {{ (old('celulas')== $item->id ? 'selected' : '') }}>{{$item->nome}}</option>
+                                            <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
                                     @endforeach
                                     </select>
 
@@ -112,7 +113,7 @@
 
                            <div class="col-xs-5 {{ $errors->has('celulas_nova') ? ' has-error' : '' }}">
 
-                                    <label for="celulas_nova" class="control-label">Nova Célula</label>
+                                    <label for="celulas_nova" class="control-label"><span class="text-danger">*</span> Nova Célula</label>
                                     <select id="celulas_nova" placeholder="(Selecionar)" name="celulas_nova" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                     <option  value="0"></option>
                                     @foreach($celulas as $item)
@@ -167,6 +168,7 @@
       <div class="box-footer">
             <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-save"></i> Salvar</button>
             <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Cancelar</a>
+            <br/><span class="text-danger">*</span><i>Campos Obrigatórios</i>
       </div>
 
     </section>

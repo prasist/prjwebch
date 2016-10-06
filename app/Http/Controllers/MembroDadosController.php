@@ -30,7 +30,6 @@ class MembroDadosController extends Controller
     }
 
 
-
 /*
 * Grava dados no banco
 *
@@ -177,7 +176,5 @@ public function salvar($request, $id) {
             \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
             return redirect('home');
     }
-
-
 
 }

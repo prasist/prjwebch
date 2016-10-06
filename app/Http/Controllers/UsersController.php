@@ -122,7 +122,7 @@ class UsersController extends Controller
             //----------------------Grava novo usuario (Tabela USERS)
             $dados = new users();
             $dados->name  = $input['name'];
-            $dados->email  = $input['email'];
+            $dados->email  = strtolower($input['email']);
             $dados->confirmed                              = 1; //Se for criado usuario pelo usuario.
             $dados->password  = bcrypt($input['password']);
 

@@ -67,9 +67,22 @@ return [
             ]
         ],
 
-        'pgsql' => [
+        /*
+'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', '177.101.149.118'),
+            'database' => env('DB_DATABASE', 'webigrejas'),
+            'username' => env('DB_USERNAME', 'postgres'),
+            'password' => env('DB_PASSWORD', 'b1c0d3p4t044'),
+            'charset'  => 'utf8',
+            'prefix'   => '',
+            'schema'   => 'public',
+        ],
+        */
+
+        'pgsql' => [
+            'driver'   => 'pgsql',
+            'host'     => env('DB_HOST', 'localhost'),
             'database' => env('DB_DATABASE', 'webigrejas'),
             'username' => env('DB_USERNAME', 'postgres'),
             'password' => env('DB_PASSWORD', 'b1c0d3p4t044'),
@@ -80,6 +93,18 @@ return [
 
         'jasper_report' => [
             'driver'   => 'postgres',
+            'host'     => env('DB_HOST', 'localhost'),
+            'database' => env('DB_DATABASE', 'webigrejas'),
+            'username' => env('DB_USERNAME', 'postgres'),
+            'password' => env('DB_PASSWORD', 'b1c0d3p4t044'),
+            'charset'  => 'utf8',
+            'prefix'   => '',
+            'schema'   => 'public',
+        ],
+
+        /*
+'jasper_report' => [
+            'driver'   => 'postgres',
             'host'     => env('DB_HOST', '177.101.149.118'),
             'database' => env('DB_DATABASE', 'webigrejas'),
             'username' => env('DB_USERNAME', 'postgres'),
@@ -88,6 +113,7 @@ return [
             'prefix'   => '',
             'schema'   => 'public',
         ],
+        */
 
 
         'sqlsrv' => [

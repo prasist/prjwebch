@@ -1259,7 +1259,6 @@ protected function gravaQtdFilhos($id)
 
         //return view($this->rota . '.registrar', ['nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
         return view($this->rota . '.atualizacao', [
-          'gerar_estrutura_origem' => $vazio,
           'participantes'=>'',
           'preview'=>$preview,
           'nivel5'=>$view5,

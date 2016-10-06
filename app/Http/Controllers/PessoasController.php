@@ -398,7 +398,7 @@ public function validacao_dados()
         ->get();
 
         //Artificio para tabelas vazias com objetos collection
-        $vazio = \App\Models\tabela_vazia::get();
+        //$vazio = \App\Models\tabela_vazia::get();
 
         //Verificar qual o tipo de pessoa para habilitar ou não abas e campos conforme o tipo
         //Ex; Pessoa fisica, habilita cpf e rg, juridica habilita CNPJ,  membros habilita dados especificos de membresia.
@@ -441,23 +441,6 @@ public function validacao_dados()
             $motivos = \App\Models\tiposmovimentacao::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
             /* FIM Para preencher combos Dados eclesiasticos*/
 
-            /*Inicializa variaveis vazias dos dados eclesiasticos*/
-            $membros_dados_pessoais =  $vazio; //array('0' => ['0'  => 'membros_dados']);
-            $membros_situacoes =  "";
-            $membros_dons =  "";
-            $membros_cursos="";
-            $membros_habilidades =  "";
-            $membros_formacoes =  "";
-            $membros_idiomas =  "";
-            $membros_familiares = $vazio;
-            $membros_relacionamentos = $vazio;
-            $membros_filhos = $vazio;
-            $membros_atividades =  "";
-            $membros_ministerios =  "";
-            $membros_historico =  $vazio;
-            $membros_profissionais =  $vazio; //array('0' => ['0'  => 'membros_profissionais']);
-            $membros_celula=$vazio;
-
 
             return view($this->rota . '.registrar',
             [
@@ -484,21 +467,6 @@ public function validacao_dados()
                 'cargos' => $cargos,
                 'celulas'=> $celulas,
                 'tiposrelacionamentos'=> $tiposrelacionamentos,
-                'membros_dados_pessoais' => $membros_dados_pessoais,
-                'membros_situacoes' => $membros_situacoes,
-                'membros_dons' => $membros_dons,
-                'membros_celula' => $membros_celula,
-                'membros_filhos' => $membros_filhos,
-                'membros_atividades' => $membros_atividades,
-                'membros_ministerios' => $membros_ministerios,
-                'membros_habilidades' => $membros_habilidades,
-                'membros_familiares' => $membros_familiares,
-                'membros_historico' => $membros_historico,
-                'membros_formacoes' => $membros_formacoes,
-                'membros_idiomas' => $membros_idiomas,
-                'membros_profissionais' => $membros_profissionais,
-                'membros_relacionamentos'=>$membros_relacionamentos,
-                'membros_cursos'=>$membros_cursos,
                 'tipos_pessoas'=>$tipos_pessoas
             ]);
 
@@ -680,36 +648,42 @@ public function salvar($request, $id, $tipo_operacao) {
               if ($habilitar_interface->membro)
               {
 
+
                        /*Se foi informado uma celula, associa o membro a celula*/
-                       if ($input['celulas']!="")
+                       if (isset($input['celulas']))
                        {
-                                if ($tipo_operacao=="create")  //novo registro
-                                {
-                                    $dados = new \App\Models\celulaspessoas();
-                                }
-                                else //Alteracao
-                                {
-                                    $dados = \App\Models\celulaspessoas::firstOrNew($where);
-                                }
+                           if ($input['celulas']!="")
+                           {
+                                    if ($tipo_operacao=="create")  //novo registro
+                                    {
+                                        $dados = new \App\Models\celulaspessoas();
+                                    }
+                                    else //Alteracao
+                                    {
+                                        $dados = \App\Models\celulaspessoas::firstOrNew($where);
+                                    }
 
-                                /*input celulas vem com pipe separando celulas_id | lider_pessoas_id - nome*/
-                                $strCampos = explode("|", $input['celulas']);
+                                    /*input celulas vem com pipe separando celulas_id | lider_pessoas_id - nome*/
+                                    $strCampos = explode("|", $input['celulas']);
 
-                                $valores =
-                                [
-                                    'pessoas_id' => $pessoas->id,
-                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                    'celulas_id' => $strCampos[0],
-                                    'lider_pessoas_id' => substr($strCampos[1],0,9)
-                                ];
+                                    $valores =
+                                    [
+                                        'pessoas_id' => $pessoas->id,
+                                        'empresas_id' =>  $this->dados_login->empresas_id,
+                                        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                        'celulas_id' => $strCampos[0],
+                                        'lider_pessoas_id' => substr($strCampos[1],0,9)
+                                    ];
 
-                                $dados->fill($valores)->save();
-                                $dados->save();
+                                    $dados->fill($valores)->save();
+                                    $dados->save();
+                            }
                         }
 
-
                         /*------------------------------DADOS ECLESIASTICOS------------------------------*/
+
+                      if (isset($input['opSexo']))
+                      {
 
                         if ($input['opSexo']!="" || $input['status']!="" || $input['graus']!="" || $input['lingua']!="" || $input['igreja']!=""
                             || $input['familia']!="" || $input['opDoadorSangue']!="" || $input['opDoadorOrgaos']!="" || $input['naturalidade']!=""
@@ -760,73 +734,79 @@ public function salvar($request, $id, $tipo_operacao) {
                                 $eclesiasticos->fill($valores)->save();
                                 $eclesiasticos->save();
                             }
+
+                        }
                         /*------------------------------FIM - DADOS ECLESIASTICOS------------------------------*/
 
 
 
                         /*------------------------------MEMBROS FILHOS------------------------------*/
 
-                        if ($input['inc_filhos']!="") /*Se for inclusão sem cadastro vinculado*/
+                        if (isset($input['inc_filhos']))
                         {
 
-                            $i_index=0; /*Inicia sequencia*/
+                            if ($input['inc_filhos']!="") /*Se for inclusão sem cadastro vinculado*/
+                            {
 
-                            /*Pode ser um ou vários, por isso percorre array de inputs gerados*/
-                            foreach($input['inc_filhos'] as $selected)
-                                {
-                                        if ($selected!="")
-                                        {
+                                $i_index=0; /*Inicia sequencia*/
 
-                                                $whereForEach =
-                                                [
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'nome_filho' => $selected
-                                                ];
+                                /*Pode ser um ou vários, por isso percorre array de inputs gerados*/
+                                foreach($input['inc_filhos'] as $selected)
+                                    {
+                                            if ($selected!="")
+                                            {
 
-                                                if ($tipo_operacao=="create")  //novo registro
-                                                {
-                                                    $filhos = new \App\Models\membros_filhos();
-                                                }
-                                                else //Alteracao
-                                                {
-                                                    $filhos = \App\Models\membros_filhos::firstOrNew($whereForEach);
-                                                }
+                                                    $whereForEach =
+                                                    [
+                                                        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                        'empresas_id' =>  $this->dados_login->empresas_id,
+                                                        'pessoas_id' => $pessoas->id,
+                                                        'nome_filho' => $selected
+                                                    ];
 
-                                                /*Se houver conteudo, significa que usuario adicionou mais de 1 filho do cadastro*/
-                                                if ($input['hidden_id_filhos'][$i_index]!="")
-                                                {
-                                                    $var_filhos_id = $input['hidden_id_filhos'][$i_index];
-                                                }
-                                                else
-                                                {
-                                                    $var_filhos_id = null;
-                                                }
+                                                    if ($tipo_operacao=="create")  //novo registro
+                                                    {
+                                                        $filhos = new \App\Models\membros_filhos();
+                                                    }
+                                                    else //Alteracao
+                                                    {
+                                                        $filhos = \App\Models\membros_filhos::firstOrNew($whereForEach);
+                                                    }
 
-                                                $valores =
-                                                [
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'nome_filho' => $input['inc_filhos'][$i_index],
-                                                    'filhos_id' => $var_filhos_id,
-                                                    'status_id' => ($input['hidden_status'][$i_index]=="" ? null : $input['hidden_status'][$i_index]),
-                                                    'estadocivil_id' => ($input['hidden_estadocivl'][$i_index]=="" ? null : $input['hidden_estadocivl'][$i_index]),
-                                                    'sexo' => ($input['hidden_sexo'][$i_index]=="" ? null : $input['hidden_sexo'][$i_index]),
-                                                    'data_nasc' => $formatador->FormatarData($input['inc_datanasc'][$i_index]),
-                                                    'data_falecimento' => $formatador->FormatarData($input['inc_datafalec'][$i_index])
-                                                ];
+                                                    /*Se houver conteudo, significa que usuario adicionou mais de 1 filho do cadastro*/
+                                                    if ($input['hidden_id_filhos'][$i_index]!="")
+                                                    {
+                                                        $var_filhos_id = $input['hidden_id_filhos'][$i_index];
+                                                    }
+                                                    else
+                                                    {
+                                                        $var_filhos_id = null;
+                                                    }
 
-                                                $filhos->fill($valores)->save();
-                                                $filhos->save();
+                                                    $valores =
+                                                    [
+                                                        'pessoas_id' => $pessoas->id,
+                                                        'empresas_id' =>  $this->dados_login->empresas_id,
+                                                        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                        'nome_filho' => $input['inc_filhos'][$i_index],
+                                                        'filhos_id' => $var_filhos_id,
+                                                        'status_id' => ($input['hidden_status'][$i_index]=="" ? null : $input['hidden_status'][$i_index]),
+                                                        'estadocivil_id' => ($input['hidden_estadocivl'][$i_index]=="" ? null : $input['hidden_estadocivl'][$i_index]),
+                                                        'sexo' => ($input['hidden_sexo'][$i_index]=="" ? null : $input['hidden_sexo'][$i_index]),
+                                                        'data_nasc' => $formatador->FormatarData($input['inc_datanasc'][$i_index]),
+                                                        'data_falecimento' => $formatador->FormatarData($input['inc_datafalec'][$i_index])
+                                                    ];
 
-                                                $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
-                                        }
+                                                    $filhos->fill($valores)->save();
+                                                    $filhos->save();
+
+                                                    $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
+                                            }
+                                    }
+
+
                                 }
-
-
-                            }
+                        }
                         /*------------------------------FIM - MEMBROS FILHOS (SEM CADASTRO) ------------------------------*/
 
 
@@ -887,13 +867,15 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                         /*------------------------------ DADOS PROFISSIONAIS ------------------------------*/
-
-                        if ($input['nome_empresa']!="" || $input['endereco_prof']!=""
-                            || $input['numero_prof']!="" || $input['bairro_prof']!="" || $input['cep_prof']!="" || $input['complemento_prof']!=""
-                            || $input['cidade_prof']!="" || $input['estado_prof']!="" || $input['cargos']!="" || $input['ramos']!=""
-                            || $input['profissoes']!="" || $input['emailprofissional']!="")
-
+                        if (isset($input['nome_empresa']))
                         {
+
+                            if ($input['nome_empresa']!="" || $input['endereco_prof']!=""
+                                || $input['numero_prof']!="" || $input['bairro_prof']!="" || $input['cep_prof']!="" || $input['complemento_prof']!=""
+                                || $input['cidade_prof']!="" || $input['estado_prof']!="" || $input['cargos']!="" || $input['ramos']!=""
+                                || $input['profissoes']!="" || $input['emailprofissional']!="")
+
+                            {
 
                                 if ($tipo_operacao=="create")  //novo registro
                                 {
@@ -927,6 +909,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                 $profissionais->fill($valores)->save();
                                 $profissionais->save();
                             }
+                        }
                         /*------------------------------ FIM - DADOS PROFISSIONAIS ------------------------------*/
 
 
@@ -934,11 +917,14 @@ public function salvar($request, $id, $tipo_operacao) {
 
                         /*------------------------------ DADOS FAMILIARES ------------------------------*/
 
-                        if ($input['conjuge']!="" || $input['nome_conjuge']!=""
-                            || $input['datanasc_conjuge']!="" || $input['datafalecimento']!="" || $input['datacasamento']!="" || $input['igrejacasamento']!="" || $input['pai']!="" || $input['mae']!=""
-                            || $input['nome_pai']!="" || $input['nome_mae']!="" || $input['status_pai']!="" || $input['status_mae']!=""  || $input['datafalecimento_pai']!="" || $input['datafalecimento_mae']!="")
-
+                        if (isset($input['conjuge']))
                         {
+
+                            if ($input['conjuge']!="" || $input['nome_conjuge']!=""
+                                || $input['datanasc_conjuge']!="" || $input['datafalecimento']!="" || $input['datacasamento']!="" || $input['igrejacasamento']!="" || $input['pai']!="" || $input['mae']!=""
+                                || $input['nome_pai']!="" || $input['nome_mae']!="" || $input['status_pai']!="" || $input['status_mae']!=""  || $input['datafalecimento_pai']!="" || $input['datafalecimento_mae']!="")
+
+                            {
 
                                 if ($tipo_operacao=="create")  //novo registro
                                 {
@@ -975,6 +961,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                 $familiares->fill($valores)->save();
                                 $familiares->save();
                             }
+                        }
                         /*------------------------------ FIM - DADOS FAMILIARES ------------------------------*/
 
 
@@ -982,42 +969,46 @@ public function salvar($request, $id, $tipo_operacao) {
 
                         /*------------------------------ Tabela MEMBROS_SITUACOES---------------------------*/
 
-                        if ($input['situacoes']!="")  /*Array combo multiple*/
+                        if (isset($input['situacoes']))
                         {
-                                foreach($input['situacoes'] as $selected)
-                                {
-                                        if ($selected!="")
-                                        {
-                                                $whereForEach =
-                                                [
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'situacoes_id' => $selected
-                                                ];
 
-                                                if ($tipo_operacao=="create")  //novo registro
-                                                {
-                                                    $situacoes = new \App\Models\membros_situacoes();
-                                                }
-                                                else //Alteracao
-                                                {
-                                                    $situacoes = \App\Models\membros_situacoes::firstOrNew($whereForEach);
-                                                }
+                            if ($input['situacoes']!="")  /*Array combo multiple*/
+                            {
+                                    foreach($input['situacoes'] as $selected)
+                                    {
+                                            if ($selected!="")
+                                            {
+                                                    $whereForEach =
+                                                    [
+                                                        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                        'empresas_id' =>  $this->dados_login->empresas_id,
+                                                        'pessoas_id' => $pessoas->id,
+                                                        'situacoes_id' => $selected
+                                                    ];
+
+                                                    if ($tipo_operacao=="create")  //novo registro
+                                                    {
+                                                        $situacoes = new \App\Models\membros_situacoes();
+                                                    }
+                                                    else //Alteracao
+                                                    {
+                                                        $situacoes = \App\Models\membros_situacoes::firstOrNew($whereForEach);
+                                                    }
 
 
-                                                $valores =
-                                                [
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'situacoes_id' => $selected,
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id
-                                                ];
+                                                    $valores =
+                                                    [
+                                                        'pessoas_id' => $pessoas->id,
+                                                        'situacoes_id' => $selected,
+                                                        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                        'empresas_id' =>  $this->dados_login->empresas_id
+                                                    ];
 
-                                                $situacoes->fill($valores)->save();
-                                                $situacoes->save();
-                                        }
-                                }
+                                                    $situacoes->fill($valores)->save();
+                                                    $situacoes->save();
+                                            }
+                                    }
+                            }
                         }
                         /*------------------------------ FIM Tabela MEMBROS_SITUACOES---------------------------*/
 
@@ -1026,43 +1017,46 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                         /*------------------------------ Tabela MEMBROS_FORMAÇÕES ---------------------------*/
-
-                        if ($input['formacoes']!="")  /*Array combo multiple*/
+                        if (isset($input['formacoes']))
                         {
-                                foreach($input['formacoes'] as $selected)
-                                {
-                                        if ($selected!="")
-                                        {
-                                                $whereForEach =
-                                                [
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'formacoes_id' => $selected
-                                                ];
 
-                                                 if ($tipo_operacao=="create")  //novo registro
-                                                {
-                                                    $formacoes = new \App\Models\membros_formacoes();
-                                                }
-                                                else //Alteracao
-                                                {
-                                                    $formacoes = \App\Models\membros_formacoes::firstOrNew($whereForEach);
-                                                }
+                            if ($input['formacoes']!="")  /*Array combo multiple*/
+                            {
+                                    foreach($input['formacoes'] as $selected)
+                                    {
+                                            if ($selected!="")
+                                            {
+                                                    $whereForEach =
+                                                    [
+                                                        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                        'empresas_id' =>  $this->dados_login->empresas_id,
+                                                        'pessoas_id' => $pessoas->id,
+                                                        'formacoes_id' => $selected
+                                                    ];
+
+                                                     if ($tipo_operacao=="create")  //novo registro
+                                                    {
+                                                        $formacoes = new \App\Models\membros_formacoes();
+                                                    }
+                                                    else //Alteracao
+                                                    {
+                                                        $formacoes = \App\Models\membros_formacoes::firstOrNew($whereForEach);
+                                                    }
 
 
-                                                $valores =
-                                                [
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'formacoes_id' => $selected,
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id
-                                                ];
+                                                    $valores =
+                                                    [
+                                                        'pessoas_id' => $pessoas->id,
+                                                        'formacoes_id' => $selected,
+                                                        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                        'empresas_id' =>  $this->dados_login->empresas_id
+                                                    ];
 
-                                                $formacoes->fill($valores)->save();
-                                                $formacoes->save();
-                                        }
-                                }
+                                                    $formacoes->fill($valores)->save();
+                                                    $formacoes->save();
+                                            }
+                                    }
+                            }
                         }
                         /*------------------------------ FIM Tabela MEMBROS_SITUACOES---------------------------*/
 
@@ -1071,43 +1065,45 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
                         /*------------------------------ Tabela MEMBROS_IDIOMAS ---------------------------*/
-
-                        if ($input['idiomas']!="")  /*Array combo multiple*/
+                        if (isset($input['idiomas']))
                         {
-                                foreach($input['idiomas'] as $selected)
-                                {
-                                        if ($selected!="")
-                                        {
-                                                $whereForEach =
-                                                [
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'idiomas_id' => $selected
-                                                ];
+                            if ($input['idiomas']!="")  /*Array combo multiple*/
+                            {
+                                    foreach($input['idiomas'] as $selected)
+                                    {
+                                            if ($selected!="")
+                                            {
+                                                    $whereForEach =
+                                                    [
+                                                        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                        'empresas_id' =>  $this->dados_login->empresas_id,
+                                                        'pessoas_id' => $pessoas->id,
+                                                        'idiomas_id' => $selected
+                                                    ];
 
-                                                if ($tipo_operacao=="create")  //novo registro
-                                                {
-                                                    $idiomas = new \App\Models\membros_idiomas();
-                                                }
-                                                else //Alteracao
-                                                {
-                                                    $idiomas = \App\Models\membros_idiomas::firstOrNew($whereForEach);
-                                                }
+                                                    if ($tipo_operacao=="create")  //novo registro
+                                                    {
+                                                        $idiomas = new \App\Models\membros_idiomas();
+                                                    }
+                                                    else //Alteracao
+                                                    {
+                                                        $idiomas = \App\Models\membros_idiomas::firstOrNew($whereForEach);
+                                                    }
 
 
-                                                $valores =
-                                                [
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'idiomas_id' => $selected,
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id
-                                                ];
+                                                    $valores =
+                                                    [
+                                                        'pessoas_id' => $pessoas->id,
+                                                        'idiomas_id' => $selected,
+                                                        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                        'empresas_id' =>  $this->dados_login->empresas_id
+                                                    ];
 
-                                                $idiomas->fill($valores)->save();
-                                                $idiomas->save();
-                                        }
-                                }
+                                                    $idiomas->fill($valores)->save();
+                                                    $idiomas->save();
+                                            }
+                                    }
+                            }
                         }
                         /*------------------------------ FIM Tabela MEMBROS_IDIOMAS---------------------------*/
 
@@ -1116,45 +1112,48 @@ public function salvar($request, $id, $tipo_operacao) {
 
                         /*------------------------------ Tabela MEMBROS_DONS ---------------------------*/
 
-
-                        if ($input['dons']!="")  /*Array combo multiple*/
+                        if (isset($input['dons']))
                         {
-                                foreach($input['dons'] as $selected)
-                                {
-                                        if ($selected!="")
-                                        {
-                                                $whereForEach =
-                                                [
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'dons_id' => $selected
-                                                ];
 
-                                                if ($tipo_operacao=="create")  //novo registro
-                                                {
-                                                    $dons = new \App\Models\membros_dons();
-                                                }
-                                                else //Alteracao
-                                                {
-                                                    $dons = \App\Models\membros_dons::firstOrNew($whereForEach);
-                                                }
+                            if ($input['dons']!="")  /*Array combo multiple*/
+                            {
+                                    foreach($input['dons'] as $selected)
+                                    {
+                                            if ($selected!="")
+                                            {
+                                                    $whereForEach =
+                                                    [
+                                                        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                        'empresas_id' =>  $this->dados_login->empresas_id,
+                                                        'pessoas_id' => $pessoas->id,
+                                                        'dons_id' => $selected
+                                                    ];
+
+                                                    if ($tipo_operacao=="create")  //novo registro
+                                                    {
+                                                        $dons = new \App\Models\membros_dons();
+                                                    }
+                                                    else //Alteracao
+                                                    {
+                                                        $dons = \App\Models\membros_dons::firstOrNew($whereForEach);
+                                                    }
 
 
-                                                $valores =
-                                                [
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'dons_id' => $selected,
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id
-                                                ];
+                                                    $valores =
+                                                    [
+                                                        'pessoas_id' => $pessoas->id,
+                                                        'dons_id' => $selected,
+                                                        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                        'empresas_id' =>  $this->dados_login->empresas_id
+                                                    ];
 
-                                                $dons->fill($valores)->save();
-                                                $dons->save();
+                                                    $dons->fill($valores)->save();
+                                                    $dons->save();
 
-                                        }
-                                }
+                                            }
+                                    }
 
+                            }
                         }
                         /*------------------------------ FIM Tabela MEMBROS_DONS---------------------------*/
 
@@ -1167,49 +1166,53 @@ public function salvar($request, $id, $tipo_operacao) {
 
 
 
-                          /*------------------------------ Tabela MEMBROS_RELACIONAMENTOS ---------------------------*/
+                        /*------------------------------ Tabela MEMBROS_RELACIONAMENTOS ---------------------------*/
 
 
-                        if ($input['tiposrelacionamentos']!="" && $input['pessoa_relacionamento']!="")  /*Array combo multiple*/
+                        if (isset($input['tiposrelacionamentos']))
                         {
-                                foreach($input['tiposrelacionamentos'] as $selected)
+
+                                if ($input['tiposrelacionamentos']!="" && $input['pessoa_relacionamento']!="")  /*Array combo multiple*/
                                 {
-                                        if ($selected!="")
+                                        foreach($input['tiposrelacionamentos'] as $selected)
                                         {
-                                                $whereForEach =
-                                                [
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'pessoas2_id' => ($input['pessoa_relacionamento']=="" ? null : substr($input['pessoa_relacionamento'],0,9)),
-                                                    'tipos_relacionamentos_id' => $selected
-                                                ];
-
-                                                if ($tipo_operacao=="create")  //novo registro
+                                                if ($selected!="")
                                                 {
-                                                    $relacionamentos = new \App\Models\membros_relacionamentos();
+                                                        $whereForEach =
+                                                        [
+                                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                            'empresas_id' =>  $this->dados_login->empresas_id,
+                                                            'pessoas_id' => $pessoas->id,
+                                                            'pessoas2_id' => ($input['pessoa_relacionamento']=="" ? null : substr($input['pessoa_relacionamento'],0,9)),
+                                                            'tipos_relacionamentos_id' => $selected
+                                                        ];
+
+                                                        if ($tipo_operacao=="create")  //novo registro
+                                                        {
+                                                            $relacionamentos = new \App\Models\membros_relacionamentos();
+                                                        }
+                                                        else //Alteracao
+                                                        {
+                                                            $relacionamentos = \App\Models\membros_relacionamentos::firstOrNew($whereForEach);
+                                                        }
+
+
+                                                        $valores =
+                                                        [
+                                                            'pessoas_id' => $pessoas->id,
+                                                            'pessoas2_id' => ($input['pessoa_relacionamento']=="" ? null : substr($input['pessoa_relacionamento'],0,9)),
+                                                            'tipos_relacionamentos_id' => $selected,
+                                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                            'empresas_id' =>  $this->dados_login->empresas_id
+                                                        ];
+
+                                                        $relacionamentos->fill($valores)->save();
+                                                        $relacionamentos->save();
+
                                                 }
-                                                else //Alteracao
-                                                {
-                                                    $relacionamentos = \App\Models\membros_relacionamentos::firstOrNew($whereForEach);
-                                                }
-
-
-                                                $valores =
-                                                [
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'pessoas2_id' => ($input['pessoa_relacionamento']=="" ? null : substr($input['pessoa_relacionamento'],0,9)),
-                                                    'tipos_relacionamentos_id' => $selected,
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id
-                                                ];
-
-                                                $relacionamentos->fill($valores)->save();
-                                                $relacionamentos->save();
-
                                         }
-                                }
 
+                                }
                         }
                         /*------------------------------ FIM Tabela MEMBROS_RELACIONAMENTOS---------------------------*/
 
@@ -1219,39 +1222,43 @@ public function salvar($request, $id, $tipo_operacao) {
 
                         /*------------------------------ Tabela MEMBROS_HABILIDADES ---------------------------*/
 
-                        if ($input['habilidades']!="")  /*Array combo multiple*/
+                        if (isset($input['habilidades']))
                         {
-                                foreach($input['habilidades'] as $selected)
+
+                                if ($input['habilidades']!="")  /*Array combo multiple*/
                                 {
-                                        if ($selected!="")
+                                        foreach($input['habilidades'] as $selected)
                                         {
-                                                $whereForEach =
-                                                [
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'habilidades_id' => $selected
-                                                ];
-
-                                                if ($tipo_operacao=="create")  //novo registro
+                                                if ($selected!="")
                                                 {
-                                                    $habilidades = new \App\Models\membros_habilidades();
-                                                }
-                                                else //Alteracao
-                                                {
-                                                    $habilidades = \App\Models\membros_habilidades::firstOrNew($whereForEach);
-                                                }
+                                                        $whereForEach =
+                                                        [
+                                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                            'empresas_id' =>  $this->dados_login->empresas_id,
+                                                            'pessoas_id' => $pessoas->id,
+                                                            'habilidades_id' => $selected
+                                                        ];
 
-                                                $valores =
-                                                [
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'habilidades_id' => $selected,
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id
-                                                ];
+                                                        if ($tipo_operacao=="create")  //novo registro
+                                                        {
+                                                            $habilidades = new \App\Models\membros_habilidades();
+                                                        }
+                                                        else //Alteracao
+                                                        {
+                                                            $habilidades = \App\Models\membros_habilidades::firstOrNew($whereForEach);
+                                                        }
 
-                                                $habilidades->fill($valores)->save();
-                                                $habilidades->save();
+                                                        $valores =
+                                                        [
+                                                            'pessoas_id' => $pessoas->id,
+                                                            'habilidades_id' => $selected,
+                                                            'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                            'empresas_id' =>  $this->dados_login->empresas_id
+                                                        ];
+
+                                                        $habilidades->fill($valores)->save();
+                                                        $habilidades->save();
+                                                }
                                         }
                                 }
                         }
@@ -1264,42 +1271,46 @@ public function salvar($request, $id, $tipo_operacao) {
 
                         /*------------------------------ Tabela MEMBROS_ATIVIDADES ---------------------------*/
 
-                        if ($input['atividades']!="")  /*Array combo multiple*/
+                        if (isset($input['atividades']))
                         {
-                                foreach($input['atividades'] as $selected)
-                                {
-                                        if ($selected!="")
-                                        {
-                                                $whereForEach =
-                                                [
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'atividades_id' => $selected
-                                                ];
 
-                                                if ($tipo_operacao=="create")  //novo registro
-                                                {
-                                                    $atividades = new \App\Models\membros_atividades();
-                                                }
-                                                else //Alteracao
-                                                {
-                                                    $atividades = \App\Models\membros_atividades::firstOrNew($whereForEach);
-                                                }
+                            if ($input['atividades']!="")  /*Array combo multiple*/
+                            {
+                                    foreach($input['atividades'] as $selected)
+                                    {
+                                            if ($selected!="")
+                                            {
+                                                    $whereForEach =
+                                                    [
+                                                        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                        'empresas_id' =>  $this->dados_login->empresas_id,
+                                                        'pessoas_id' => $pessoas->id,
+                                                        'atividades_id' => $selected
+                                                    ];
+
+                                                    if ($tipo_operacao=="create")  //novo registro
+                                                    {
+                                                        $atividades = new \App\Models\membros_atividades();
+                                                    }
+                                                    else //Alteracao
+                                                    {
+                                                        $atividades = \App\Models\membros_atividades::firstOrNew($whereForEach);
+                                                    }
 
 
-                                                $valores =
-                                                [
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'atividades_id' => $selected,
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id
-                                                ];
+                                                    $valores =
+                                                    [
+                                                        'pessoas_id' => $pessoas->id,
+                                                        'atividades_id' => $selected,
+                                                        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                        'empresas_id' =>  $this->dados_login->empresas_id
+                                                    ];
 
-                                                $atividades->fill($valores)->save();
-                                                $atividades->save();
-                                        }
-                                }
+                                                    $atividades->fill($valores)->save();
+                                                    $atividades->save();
+                                            }
+                                    }
+                            }
                         }
                         /*------------------------------ FIM Tabela MEMBROS_ATIVIDADES---------------------------*/
 
@@ -1309,41 +1320,45 @@ public function salvar($request, $id, $tipo_operacao) {
 
                         /*------------------------------ Tabela MEMBROS_MINISTERIOS ---------------------------*/
 
-                        if ($input['ministerios']!="")  /*Array combo multiple*/
+                        if (isset($input['ministerios']))
                         {
-                                foreach($input['ministerios'] as $selected)
-                                {
-                                        if ($selected!="")
-                                        {
-                                                $whereForEach =
-                                                [
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id,
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'ministerios_id' => $selected
-                                                ];
 
-                                                if ($tipo_operacao=="create")  //novo registro
-                                                {
-                                                    $ministerios = new \App\Models\membros_ministerios();
-                                                }
-                                                else //Alteracao
-                                                {
-                                                    $ministerios = \App\Models\membros_ministerios::firstOrNew($whereForEach);
-                                                }
+                            if ($input['ministerios']!="")  /*Array combo multiple*/
+                            {
+                                    foreach($input['ministerios'] as $selected)
+                                    {
+                                            if ($selected!="")
+                                            {
+                                                    $whereForEach =
+                                                    [
+                                                        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                        'empresas_id' =>  $this->dados_login->empresas_id,
+                                                        'pessoas_id' => $pessoas->id,
+                                                        'ministerios_id' => $selected
+                                                    ];
 
-                                                $valores =
-                                                [
-                                                    'pessoas_id' => $pessoas->id,
-                                                    'ministerios_id' => $selected,
-                                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                                    'empresas_id' =>  $this->dados_login->empresas_id
-                                                ];
+                                                    if ($tipo_operacao=="create")  //novo registro
+                                                    {
+                                                        $ministerios = new \App\Models\membros_ministerios();
+                                                    }
+                                                    else //Alteracao
+                                                    {
+                                                        $ministerios = \App\Models\membros_ministerios::firstOrNew($whereForEach);
+                                                    }
 
-                                                $ministerios->fill($valores)->save();
-                                                $ministerios->save();
-                                        }
-                                }
+                                                    $valores =
+                                                    [
+                                                        'pessoas_id' => $pessoas->id,
+                                                        'ministerios_id' => $selected,
+                                                        'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                                        'empresas_id' =>  $this->dados_login->empresas_id
+                                                    ];
+
+                                                    $ministerios->fill($valores)->save();
+                                                    $ministerios->save();
+                                            }
+                                    }
+                            }
                         }
                         /*------------------------------ FIM Tabela MEMBROS_MINISTERIOS---------------------------*/
 
@@ -1352,12 +1367,15 @@ public function salvar($request, $id, $tipo_operacao) {
 
                         /*------------------------------ DADOS HIST. ECLESIASTICOS ------------------------------*/
 
-                        if ($input['igreja_anterior']!="" || $input['fone_igreja_anterior']!=""
-                            || $input['religioes']!="" || $input['cep_igreja_anterior']!="" || $input['endereco_igreja_anterior']!="" || $input['numero_igreja_anterior']!=""
-                            || $input['cidade_igreja_anterior']!="" || $input['estado_igreja_anterior']!="" || $input['bairro_igreja_anterior']!="" || $input['data_batismo']!=""
-                            || $input['igreja_batismo']!="" || $input['celebrador']!="" || $input['data_entrada']!="" || $input['data_saida']!="")
-
+                        if (isset($input['igreja_anterior']))
                         {
+
+                            if ($input['igreja_anterior']!="" || $input['fone_igreja_anterior']!=""
+                                || $input['religioes']!="" || $input['cep_igreja_anterior']!="" || $input['endereco_igreja_anterior']!="" || $input['numero_igreja_anterior']!=""
+                                || $input['cidade_igreja_anterior']!="" || $input['estado_igreja_anterior']!="" || $input['bairro_igreja_anterior']!="" || $input['data_batismo']!=""
+                                || $input['igreja_batismo']!="" || $input['celebrador']!="" || $input['data_entrada']!="" || $input['data_saida']!="")
+
+                            {
 
                                 if ($tipo_operacao=="create")  //novo registro
                                 {
@@ -1399,6 +1417,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                 $historico->fill($valores)->save();
                                 $historico->save();
                             }
+                        }
                         /*------------------------------ FIM - HIST. ECLESIASTICO ------------------------------*/
 
                   }
@@ -1488,8 +1507,6 @@ public function salvar($request, $id, $tipo_operacao) {
         //Ex; Pessoa fisica, habilita cpf e rg, juridica habilita CNPJ,  MEMBRO habilita dados especificos de membresia.
         $habilitar_interface = \App\Models\tipospessoas::findOrfail($id_tipo_pessoa);
 
-        //Artificio para tabelas vazias com objetos collection
-        $vazio = \App\Models\tabela_vazia::get();
 
         //Listagem grupos de pessoas (Para carregar dropdown )
         $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
@@ -1516,36 +1533,17 @@ public function salvar($request, $id, $tipo_operacao) {
         /*Busca */
         $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
-         if ($celulas==null)
-        {
-             $celulas = $vazio; //Artificio para nao ter que tratar array vazia nas views
-        }
-
-
 
         /*Se for MEMBRO, busca informacoes em tabelas especificas*/
         if ($habilitar_interface->membro)
         {
 
-            //Novo - aqui
+            //VERIFICA SE PARTICIPA DE CELULAS
             $membros_celula = \DB::select("select celulas_id, to_char(to_date(data_entrada_celula, 'yyyy-MM-dd'), 'DD-MM-YYYY') AS data_entrada_celula,  descricao_concatenada_scod as nome from view_celulas_pessoas  where pessoas_id = ? and  empresas_id = ? and empresas_clientes_cloud_id = ? ", [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-            /*Busca célula que o membro participa*/
-            //$membros_celula  = \App\Models\celulaspessoas::select('celulas_pessoas.celulas_id', 'data_entrada_celula')
-            //->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-            //->where('empresas_id', $this->dados_login->empresas_id)
-            //->where('pessoas_id', $id)
-            //->get();
-
-            /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
-            //if ($membros_celula->count()==0)
-            //{
-            //    $membros_celula = $vazio; //Artificio para nao ter que tratar array vazia nas views
-            //}
             if ($membros_celula==null)
             {
-                $membros_celula = $vazio; //Artificio para nao ter que tratar array vazia nas views
+                 unset($membros_celula);
             }
 
 
@@ -1560,7 +1558,7 @@ public function salvar($request, $id, $tipo_operacao) {
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
             if ($membros_dados_pessoais->count()==0)
             {
-                $membros_dados_pessoais = $vazio; //Artificio para nao ter que tratar array vazia nas views
+                 unset($membros_dados_pessoais);
             }
 
 
@@ -1582,7 +1580,7 @@ public function salvar($request, $id, $tipo_operacao) {
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
             if ($membros_historico==null)
             {
-                $membros_historico = $vazio; //Artificio para nao ter que tratar array vazia nas views
+                unset($membros_historico);
             }
 
 
@@ -1602,7 +1600,7 @@ public function salvar($request, $id, $tipo_operacao) {
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
             if ($membros_filhos==null)
             {
-                $membros_filhos = $vazio; //Artificio para nao ter que tratar array vazia nas views
+                unset($membros_filhos);
             }
 
 
@@ -1616,7 +1614,7 @@ public function salvar($request, $id, $tipo_operacao) {
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
             if ($membros_situacoes->count()==0)
             {
-                $membros_situacoes = $vazio; //Artificio para nao ter que tratar array vazia nas views
+                unset($membros_situacoes);
             }
 
             /*Dados Profissionais Membros*/
@@ -1628,7 +1626,7 @@ public function salvar($request, $id, $tipo_operacao) {
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
             if ($membros_profissionais->count()==0)
             {
-                $membros_profissionais = $vazio; //Artificio para nao ter que tratar array vazia nas views
+                 unset($membros_profissionais);
             }
 
 
@@ -1642,10 +1640,10 @@ public function salvar($request, $id, $tipo_operacao) {
             ->get();
 
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
-            //if ($membros_cursos->count()==0)
-            //{
-                //$membros_cursos = $vazio; //Artificio para nao ter que tratar array vazia nas views
-            //}
+            if ($membros_cursos->count()==0)
+            {
+                unset($membros_cursos);
+            }
 
 
             $sQuery = " select p3.razaosocial as razaosocial_mae, p2.razaosocial as razaosocial_pai,  pessoas.razaosocial, pessoas_id, membros_familiares.empresas_id, membros_familiares.empresas_clientes_cloud_id, conjuge_id, nome_conjuge, ";
@@ -1668,7 +1666,7 @@ public function salvar($request, $id, $tipo_operacao) {
             /*Se nao retornar dados, inicializar variavel com uma colection qualquer*/
             if ($membros_familiares==null)
             {
-                $membros_familiares = $vazio; //Artificio para nao ter que tratar array vazia nas views
+                  unset($membros_familiares);
             }
 
             /*Dados Formacoes*/
@@ -1679,7 +1677,7 @@ public function salvar($request, $id, $tipo_operacao) {
             ->where('pessoas_id', $id)
             ->get();
 
-            if ($membros_formacoes->count()==0) $membros_formacoes = $vazio;
+            if ($membros_formacoes->count()==0) unset($membros_formacoes);
 
 
             /*Dados idiomas*/
@@ -1689,7 +1687,7 @@ public function salvar($request, $id, $tipo_operacao) {
             ->where('pessoas_id', $id)
             ->get();
 
-            if ($membros_idiomas->count()==0) $membros_idiomas = $vazio;
+            if ($membros_idiomas->count()==0) unset($membros_idiomas);
 
 
            /*Dons*/
@@ -1700,7 +1698,7 @@ public function salvar($request, $id, $tipo_operacao) {
             ->where('pessoas_id', $id)
             ->get();
 
-            if ($membros_dons->count()==0) $membros_dons = $vazio;
+            if ($membros_dons->count()==0) unset($membros_dons);
 
 
             /*habilidades*/
@@ -1711,7 +1709,7 @@ public function salvar($request, $id, $tipo_operacao) {
             ->where('pessoas_id', $id)
             ->get();
 
-            if ($membros_habilidades->count()==0) $membros_habilidades = $vazio;
+            if ($membros_habilidades->count()==0) unset($membros_habilidades);
 
             /*atividades*/
             $membros_atividades  = \App\Models\membros_atividades::select('atividades_id as id', 'atividades.nome')
@@ -1721,8 +1719,7 @@ public function salvar($request, $id, $tipo_operacao) {
             ->where('pessoas_id', $id)
             ->get();
 
-            if ($membros_atividades->count()==0) $membros_atividades = $vazio;
-
+            if ($membros_atividades->count()==0) unset($membros_atividades);
             /*ministerios*/
             $membros_ministerios  = \App\Models\membros_ministerios::select('ministerios_id as id', 'ministerios.nome')
             ->join('ministerios', 'ministerios.id', '=', 'membros_ministerios.ministerios_id')
@@ -1731,7 +1728,7 @@ public function salvar($request, $id, $tipo_operacao) {
             ->where('pessoas_id', $id)
             ->get();
 
-            if ($membros_ministerios->count()==0) $membros_ministerios = $vazio;
+            if ($membros_ministerios->count()==0)  unset($membros_ministerios);
 
 
             /*membros Relacionamentos*/
@@ -1743,7 +1740,7 @@ public function salvar($request, $id, $tipo_operacao) {
             ->where('membros_relacionamentos.pessoas_id', $id)
             ->get();
 
-            if ($membros_relacionamentos->count()==0) $membros_relacionamentos = $vazio;
+            if ($membros_relacionamentos->count()==0)  unset($membros_relacionamentos);
 
         }
 
@@ -1784,58 +1781,92 @@ public function salvar($request, $id, $tipo_operacao) {
                 }
                 else
                 {
-                        $perfil = $vazio;
-                        $pessoas_timeline= $vazio;
+                        $perfil = null;
+                        $pessoas_timeline= null;
                 }
 
+                //COLLECTION COM DADOS DA PESSOA
+                $var_collections =
+                    array (
+                        'grupos' =>$grupos,
+                        'preview' => $preview,
+                        'interface' => $habilitar_interface,
+                        'bancos' => $bancos,
+                        'pessoas' => $pessoas,
+                        'igrejas' => $igrejas,
+                        'situacoes' => $situacoes,
+                        'status' => $status,
+                        'idiomas' => $idiomas,
+                        'profissoes' => $profissoes,
+                        'ramos' => $ramos,
+                        'graus' => $graus,
+                        'formacoes' => $formacoes,
+                        'religioes' => $religioes,
+                        'disponibilidades' => $disponibilidades,
+                        'dons' => $dons,
+                        'habilidades' => $habilidades,
+                        'estadoscivis' => $estadoscivis,
+                        'motivos' => $motivos,
+                        'atividades' => $atividades,
+                        'ministerios' => $ministerios,
+                        'cargos' => $cargos,
+                        'celulas'=>$celulas,
+                        'perfil'=>$perfil,
+                        'cursos'=>$cursos,
+                        'pessoas_timeline'=>$pessoas_timeline,
+                        'view_pessoas_movimentacoes'=>$view_pessoas_movimentacoes,
+                        'tiposrelacionamentos'=>$tiposrelacionamentos,
+                        'tipos_pessoas'=>$tipos_pessoas
+                    );
 
-                return view($this->rota . ($bool_exibir_perfil=="true" ? '.perfil' : '.edit') ,
-                [
-                    'grupos' =>$grupos,
-                    'preview' => $preview,
-                    'interface' => $habilitar_interface,
-                    'bancos' => $bancos,
-                    'membros_dados_pessoais' => $membros_dados_pessoais,
-                    'pessoas' => $pessoas,
-                    'igrejas' => $igrejas,
-                    'situacoes' => $situacoes,
-                    'status' => $status,
-                    'idiomas' => $idiomas,
-                    'profissoes' => $profissoes,
-                    'ramos' => $ramos,
-                    'graus' => $graus,
-                    'formacoes' => $formacoes,
-                    'religioes' => $religioes,
-                    'disponibilidades' => $disponibilidades,
-                    'dons' => $dons,
-                    'habilidades' => $habilidades,
-                    'estadoscivis' => $estadoscivis,
-                    'motivos' => $motivos,
-                    'atividades' => $atividades,
-                    'ministerios' => $ministerios,
-                    'cargos' => $cargos,
-                    'celulas'=>$celulas,
-                    'perfil'=>$perfil,
-                    'cursos'=>$cursos,
-                    'pessoas_timeline'=>$pessoas_timeline,
-                    'view_pessoas_movimentacoes'=>$view_pessoas_movimentacoes,
-                    'tiposrelacionamentos'=>$tiposrelacionamentos,
-                    'membros_celula'=>$membros_celula,
-                    'membros_situacoes' =>$membros_situacoes,
-                    'membros_formacoes' =>$membros_formacoes,
-                    'membros_idiomas' =>$membros_idiomas,
-                    'membros_atividades' =>$membros_atividades,
-                    'membros_historico' =>$membros_historico,
-                    'membros_ministerios' =>$membros_ministerios,
-                    'membros_familiares' =>$membros_familiares,
-                    'membros_dons' =>$membros_dons,
-                    'membros_filhos' => $membros_filhos,
-                    'membros_habilidades' =>$membros_habilidades,
-                    'membros_profissionais' => $membros_profissionais,
-                    'membros_relacionamentos' => $membros_relacionamentos,
-                    'membros_cursos'=>$membros_cursos,
-                    'tipos_pessoas'=>$tipos_pessoas
-                ]);
+                //ACRESCENTA AS COLLECTIONS SOMENTE SE HOUVEREM DADOS
+                 if (isset($membros_celula))
+                    $var_collections = array_add($var_collections, 'membros_celula', $membros_celula);
+
+                if (isset($membros_situacoes))
+                    $var_collections = array_add($var_collections, 'membros_situacoes', $membros_situacoes);
+
+                if (isset($membros_formacoes))
+                    $var_collections = array_add($var_collections, 'membros_formacoes', $membros_formacoes);
+
+                if (isset($membros_idiomas))
+                    $var_collections = array_add($var_collections, 'membros_idiomas', $membros_idiomas);
+
+                if (isset($membros_atividades))
+                    $var_collections = array_add($var_collections, 'membros_atividades', $membros_atividades);
+
+                if (isset($membros_historico))
+                    $var_collections = array_add($var_collections, 'membros_historico', $membros_historico);
+
+                if (isset($membros_ministerios))
+                    $var_collections = array_add($var_collections, 'membros_ministerios', $membros_ministerios);
+
+                if (isset($membros_familiares))
+                    $var_collections = array_add($var_collections, 'membros_familiares', $membros_familiares);
+
+                if (isset($membros_dons))
+                    $var_collections = array_add($var_collections, 'membros_dons', $membros_dons);
+
+                if (isset($membros_filhos))
+                    $var_collections = array_add($var_collections, 'membros_filhos', $membros_filhos);
+
+                if (isset($membros_habilidades))
+                    $var_collections = array_add($var_collections, 'membros_habilidades', $membros_habilidades);
+
+                if (isset($membros_profissionais))
+                    $var_collections = array_add($var_collections, 'membros_profissionais', $membros_profissionais);
+
+                if (isset($membros_relacionamentos))
+                    $var_collections = array_add($var_collections, 'membros_relacionamentos', $membros_relacionamentos);
+
+                if (isset($membros_cursos))
+                    $var_collections = array_add($var_collections, 'membros_cursos', $membros_cursos);
+
+                if (isset($membros_dados_pessoais))
+                    $var_collections = array_add($var_collections, 'membros_dados_pessoais', $membros_dados_pessoais);
+
+                //dd($var_collections);
+                return view($this->rota . ($bool_exibir_perfil=="true" ? '.perfil' : '.edit') , $var_collections);
 
         }
         else
