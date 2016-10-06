@@ -207,7 +207,7 @@
                                @endif
 
                                <br/>
-                                @if ($membros_filhos!=null)
+                                @if (isset($membros_filhos))
                                       @foreach($membros_filhos as $item)
                                             @if ($item->filhos_id)
                                                     Filho(a)(s) <i><b>{{$item->filhos_id}}</b></i>
