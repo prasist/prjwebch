@@ -215,7 +215,7 @@
 
             <!-- INICIO CONTEUDO -->
             <!-- Horizontal Form -->
-            <div class="box box-info" id="box_mais" style="display: none">
+            <div class="box box-info" id="box_mais" >
                   <div class="box-header with-border">
                     <h3 class="box-title">Encerramento Encontro</h3>
                   </div>
@@ -332,7 +332,7 @@
 
         </div>
 
-       <div class="col-md-12" id="box_participantes" style="display: none">
+       <div class="col-md-12" id="box_participantes" >
 
           <div class="box box-default">
 
@@ -394,7 +394,7 @@
 
 
        <!-- ini-->
-       <div class="col-md-12"  id="box_visitantes" style="display: none">
+       <div class="col-md-12"  id="box_visitantes" >
 
             <!-- Horizontal Form -->
                 <div class="box box-info">
@@ -462,7 +462,7 @@
 
         </div>
 
-       <div class="col-md-12"  id="box_questions" style="display: none">
+       <div class="col-md-12"  id="box_questions" >
              <!-- Horizontal Form -->
                 <div class="box box-info">
                   <div class="box-header with-border">
@@ -716,11 +716,11 @@
                   else
                   {
                         //hide divs
-                      $('#box_mais').hide();
-                      $('#box_participantes').hide();
-                      $('#box_visitantes').hide();
-                      $('#box_questions').hide();
-                      $('#box_resumo').hide();
+                      //$('#box_mais').hide();
+                      //$('#box_participantes').hide();
+                      //$('#box_visitantes').hide();
+                      //$('#box_questions').hide();
+                      //$('#box_resumo').hide();
                  }
           }
 
@@ -780,9 +780,12 @@
 
                                  }
 
+                                  //$("#data_encontro").trigger("change");
+                                  exibir_divs(true);
+                                  $("[class='obs']").bootstrapSwitch();
+
                              }
                         });
-
 
                 }
 
