@@ -126,7 +126,7 @@ class RelatorioPessoasController extends Controller
                 "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id
             );
 
-            $parametros = array_add($parametros, 'ordem', 'razaosocial');
+            //$parametros = array_add($parametros, 'ordem', 'razaosocial');
 
 
             if ($querystring=="mes")
@@ -559,12 +559,12 @@ class RelatorioPessoasController extends Controller
 
     if ($input["data_casamento"]!="")
     {
-        if ($input["ordem"]!="razaosocial" || $input["mes"]!="" || $input["ano_inicial"]!="" || $input["ano_final"]!="")
-        {
+        //if ($input["ordem"]!="razaosocial" || $input["mes"]!="" || $input["ano_inicial"]!="" || $input["ano_final"]!="")
+        //{
             //nothing
-        }
-        else
-        {
+        //}
+        //else
+        //{
             $filtros = array_add($filtros, '35',
             [
                 'find' =>['data_casamento>='=> "'" . $formatador->FormatarData($input["data_casamento"]) . "'"],
@@ -576,7 +576,7 @@ class RelatorioPessoasController extends Controller
                 'find' =>['data_casamento<='=> "'" . $formatador->FormatarData($input["data_casamento_ate"]) . "'"],
                 'label' =>['Dt. Casamento Final'=>$input["data_casamento_ate"]]
             ]);
-        }
+        //}
     }
 
     if ($input["nivel1_up"]!="0")
@@ -712,7 +712,7 @@ class RelatorioPessoasController extends Controller
 
         //CONCATENA A STRING DA QUERY A CLAUSULA WHERE
         $strSql .= $sWhere;
-        $strSql .=  " ORDER BY " . $input["ordem"] . ", p.razaosocial ";
+        $strSql .=  " ORDER BY p.razaosocial ";
 
 
         $emails = \DB::select($strSql);

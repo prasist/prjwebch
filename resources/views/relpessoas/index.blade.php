@@ -220,6 +220,7 @@
 
                                                               </div>
 
+                                                              <!--
                                                               <div class="col-xs-3">
                                                                     <label for="ordem" class="control-label">Ordem</label>
                                                                     <select id="ordem" name="ordem" class="form-control selectpicker">
@@ -229,6 +230,7 @@
                                                                     <option  value="ano" >Ano</option>
                                                                     </select>
                                                              </div>
+                                                             -->
 
                                                              <div class="col-xs-3">
 
