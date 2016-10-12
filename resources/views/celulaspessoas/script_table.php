@@ -5,6 +5,8 @@
       AddTableRow = function() {
 
         /*Não deixa adicionar sem conteudo*/
+        console.log(document.getElementById("pessoas").value);
+
         if (document.getElementById("pessoas").value=="")
         {
             return false; //sai da funcao

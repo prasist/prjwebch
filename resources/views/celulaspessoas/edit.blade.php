@@ -145,6 +145,11 @@
    function validar_pessoa()
    {
 
+          if (document.getElementById("pessoas").value=="") {
+                alert("Favor Selecionar o participante no campo acima.");
+                return ;
+          }
+
           var verifica_valor =  parseInt(document.getElementById("pessoas").value.substr(0,9));
           var urlGetUser = '{!! url("/funcoes/verificar_participante/' +  verifica_valor +  '") !!}';
 
