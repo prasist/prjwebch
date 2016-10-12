@@ -224,7 +224,7 @@
                                                                     <label for="ordem" class="control-label">Ordem</label>
                                                                     <select id="ordem" name="ordem" class="form-control selectpicker">
                                                                     <option  value="razaosocial"  selected>Nome</option>
-                                                                    <option  value="aniversariante" >Data Nasc. (Dia/Mês)</option>
+                                                                    <option  value="datanasc" >Data Nasc. (Dia/Mês)</option>
                                                                     <option  value="idade" >Idade</option>
                                                                     <option  value="ano" >Ano</option>
                                                                     </select>
