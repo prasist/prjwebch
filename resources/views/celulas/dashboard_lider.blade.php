@@ -123,7 +123,11 @@
                         </div><!-- /.tab-pane -->
 
                         <div class="tab-pane" id="tab_2">
-                                @include('celulas.filtro_rel_encontro_lider')
+                                @if(Gate::check('verifica_permissao', [46 ,'acessar']))
+                                    @include('celulas.filtro_rel_encontro_lider')
+                                 @else
+                                    <p>Sem permissão para relatórios, verifique com o administrador do sistema.</p>
+                                @endif
                         </div>
                         <!--  END TABS-->
 
