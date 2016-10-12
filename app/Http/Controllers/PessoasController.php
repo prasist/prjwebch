@@ -218,7 +218,6 @@ public function validacao_dados()
         ->orderBy('pessoas.razaosocial')
         ->get();
 
-
         return \Datatables::of($dados)->make(true);
 
   }
@@ -366,7 +365,6 @@ public function validacao_dados()
     ->get();
 
     $where .= "tipos_pessoas_id|" . $tipos[0]->id . "&";
-
 
     /*Verifica permissoes do usuario para criar os botoes da consulta*/
     $visualizar = Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'visualizar']);

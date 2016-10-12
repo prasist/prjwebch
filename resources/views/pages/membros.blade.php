@@ -178,7 +178,7 @@
                       @foreach($materiais as $item)
                        @if ($item->arquivo!="")
                           <tr id="{{$item->id}}">
-                              <a href="{{ url('/images/persons/' . $item->arquivo) }}" target="_blank">{{$item->arquivo}}
+                              <a href="{{ url('/arquivos/encontros/' . $item->arquivo) }}" target="_blank">{{$item->arquivo}}
                                 <img src="{{ url('/images/files-download-file-icon.png') }}" alt="..." width="100" height="100" class="margin">
                                 </a>
                           </tr>

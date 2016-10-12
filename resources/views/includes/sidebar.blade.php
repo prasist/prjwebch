@@ -386,7 +386,9 @@
         <a href="#"><i class="fa fa-angle-double-right"></i>Tour Rápido </i></a>
         <ul class="treeview-menu">
           <li><a href="{{ url('/quicktour/reload/2')}}"><i class="fa fa-flag-checkered"></i> Visão Geral do SIGMA3</a></li>
+          @if (\Session::get('admin')==1)
           <li><a href="{{ url('/quicktour/reload/1')}}"><i class="fa fa-flag-checkered"></i> Cadastrar Novo Usuário</a></li>
+          @endif
         </ul>
       </li>
 
@@ -397,6 +399,7 @@
           <li><a href="{{ url('/tutoriais/2')}}">Novo Usuário Administrador</a></li>
           <li><a href="{{ url('/tutoriais/3')}}">Criando Login do Membro</a></li>
           <li><a href="{{ url('/tutoriais/3')}}">Criando Login do Líder</a></li>
+          <li><a href="{{ url('/tutoriais/4')}}">Criando Novas Células</a></li>
         </ul>
       </li>
     </ul>

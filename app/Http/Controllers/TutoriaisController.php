@@ -96,6 +96,10 @@ class TutoriaisController extends Controller
             {
                     return view('tutoriais.tutorial_login');
             }
+            else if ($id==4)
+            {
+                    return view('tutoriais.celulas');
+            }
 
     }
 

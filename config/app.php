@@ -124,6 +124,12 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         //Barryvdh\DomPDF\ServiceProvider::class,
 
+        /*
+                SNAPPY PDF
+        */
+        Barryvdh\Snappy\ServiceProvider::class,
+
+
         /*Validacao CPF e CNPJ*/
         EltonInacio\ValidadorCpjCnpj\CpfCnpjServiceProvider::class,
 
@@ -180,7 +186,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Image' => 'Intervention\Image\Facades\Image',
-        'PDF' => Barryvdh\DomPDF\Facade::class,
+        //'PDF' => Barryvdh\DomPDF\Facade::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 
     ],
 

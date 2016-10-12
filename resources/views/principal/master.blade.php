@@ -39,6 +39,7 @@
         <link href="{{ asset('/dist/css/bootstrap-datepicker3.css')}}" rel="stylesheet" type="text/css" />
 
 
+
         <!--  OFFLINE-->
         <link href="{{ asset('/plugins/daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}" rel="stylesheet" type="text/css" />
@@ -133,15 +134,21 @@
             </footer>
         </div><!-- ./wrapper -->
 
-
+<!-- -DATATABLE -->
 <script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
-
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>-->
 <script src="{{ asset('/dist/js/bootstrap-select.min.js')}}"></script>
-
 <script src="{{ asset('/dist/js/tinycolor-0.9.15.min.js')}}"></script> <!-- monetarios-->
 <script src="{{ asset('/dist/js/pick-a-color-1.1.8.min.js')}}"></script> <!-- monetarios-->
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+<script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+<link href="https://cdn.datatables.net/buttons/1.0.1/css/buttons.dataTables.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.datatables.net/buttons/1.0.1/js/dataTables.buttons.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.0.3/js/buttons.html5.min.js"></script>
 
 
 <script type="text/javascript">
@@ -296,7 +303,10 @@
                             });
 
 
+
+
                             $("#tab_simples").DataTable({
+                                      "pageLength": 50,
                                        language: {
                                             paginate: {
                                                 first:      "Primeira",
@@ -310,6 +320,26 @@
                                       {"targets": [2], "sortable": false}
                                   ]
                             });
+
+
+                                 $("#tab_pesquisas").DataTable({
+                                      "pageLength": 50,
+                                        dom: 'Bfrtip',
+                                        buttons: [
+                                            { extend: 'print', text: 'Imprimir', header: 'false'},
+                                            { extend: 'excel', text: 'Excel' },
+                                            { extend: 'pdf', text: 'PDF', orientation : 'landscape' }
+                                        ],
+                                       language: {
+                                            paginate: {
+                                                first:      "Primeira",
+                                                previous:   "Anterior",
+                                                next:       "Próxima",
+                                                last:       "Última"}
+                                        }
+
+                            });
+
 
                             $('input.typeahead').typeahead({
                                 name: 'typeahead',
@@ -514,10 +544,19 @@
         <script src="{{ asset('/dist/js/treeview.js')}}"></script>
         <script src="{{ asset('/dist/js/pace.min.js')}}"></script>
 
+<!--
+    <script type="text/javascript" language="javascript" src="{{ asset('/dist/js/dataTables.buttons.min.js')}}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('/dist/js/pdfmake.min.js')}}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('/dist/js/vfs_fonts.js')}}"></script>
+    <script type="text/javascript" language="javascript" src="{{ asset('/dist/js/buttons.html5.min.js')}}"></script>
+    -->
+
+
+
 
         @if (\Session::get('membro')=='' || \Session::get('membro')=='N')
                 <!-- tour rápido-->
-                @if (\Session::get('tour_visaogeral')==null || \Session::get('tour_visaogeral')=='' || \Session::get('tour_visaogeral')!='S')
+                @if (\Session::get('tour_visaogeral')=='' || \Session::get('tour_visaogeral')!='S')
                     @if (\Session::get('dados_login')!='')
                     <script type="text/javascript">
                             hopscotch.startTour(tour_visao_geral);
@@ -525,7 +564,7 @@
                     @endif
                 @endif
 
-                @if (\Session::get('tour_rapido')==NULL || \Session::get('tour_rapido')==' ' || \Session::get('tour_rapido')!='S')
+                @if (\Session::get('tour_rapido')==' ' || \Session::get('tour_rapido')!='S')
                     @if (\Session::get('admin')==1)
                         <script type="text/javascript">
                                 hopscotch.startTour(tour);

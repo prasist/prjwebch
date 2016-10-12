@@ -36,8 +36,10 @@
                   @if ($perfil[0]->estadoscivis_id)
 
                         <b>{{$perfil[0]->razaosocial }}</b> é <i><b>{{$perfil[0]->estado_civil}}</b></i>
+                        @if (isset($membros_familiares))
                         @if ($membros_familiares[0]->conjuge_id)
                                com <i><b>{{$membros_familiares[0]->razaosocial}}</b></i>
+                        @endif
                         @endif
                         <br/>
                   @endif
@@ -188,7 +190,7 @@
                            <br/><br/>
                            <b>Vínculos Familiares</b>
                           <br/><br/>
-
+                          @if (isset($membros_familiares))
                                @if ($membros_familiares[0]->razaosocial_pai)
                                       Pai <i><b>{{$membros_familiares[0]->razaosocial_pai}}</b></i>
                                @endif
@@ -205,7 +207,7 @@
                                @if ($membros_familiares[0]->nome_mae)
                                       Mãe <i><b>{{$membros_familiares[0]->nome_mae}}</b></i>
                                @endif
-
+                      @endif
                                <br/>
                                 @if (isset($membros_filhos))
                                       @foreach($membros_filhos as $item)

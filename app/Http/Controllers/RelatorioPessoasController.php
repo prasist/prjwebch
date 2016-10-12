@@ -188,21 +188,11 @@ class RelatorioPessoasController extends Controller
     }
 
 
-
-
   public function pesquisar(\Illuminate\Http\Request  $request)
   {
 
     /*Pega todos campos enviados no post*/
     $input = $request->except(array('_token', 'ativo')); //não levar o token
-
-    /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
-    //Pega dados de conexao com o banco para o JASPER REPORT
-    $database = \Config::get('database.connections.jasper_report');
-    $ext = $input["resultado"]; //Tipo saída (PDF, XLS)
-    $output = public_path() . '/relatorios/resultados/' . $ext . '/relatorio_' . $this->dados_login->empresas_id . '_' . Auth::user()->id; //Path para cada tipo de relatorio
-    $path_download = '/relatorios/resultados/' . $ext . '/relatorio_' . $this->dados_login->empresas_id . '_' .  Auth::user()->id; //Path para cada tipo de relatorio
-    /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
 
     /*Instancia biblioteca de funcoes globais*/
     $formatador = new  \App\Functions\FuncoesGerais();
@@ -232,7 +222,6 @@ class RelatorioPessoasController extends Controller
     $descricao_habilidade="";
     $descricao_atividade="";
     $descricao_ministerio="";
-    $where="";
 
     if ($input["situacoes"]!="") $descricao_situacoes = explode("|", $input["situacoes"]);
     if ($input["estadoscivis"]!="") $descricao_estado_civil = explode("|", $input["estadoscivis"]);
@@ -259,386 +248,386 @@ class RelatorioPessoasController extends Controller
     if ($input["nivel4_up"]!="") $descricao_nivel4 = explode("|", $input["nivel4_up"]);
     if ($input["nivel5_up"]!="") $descricao_nivel5 = explode("|", $input["nivel5_up"]);
 
+    $sWhere = "";
+    $sFiltrosUtilizados="";
+    $filtros = array(); /*CRIA ARRAY PARA GUARDAR FILTROS UTILIZADOS PARA PESQUISA*/
 
-    $where = " where p.empresas_id = " . $this->dados_login->empresas_id . "  and p.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " and (emailprincipal is not null and emailprincipal<> '') ";
+    $sWhere = " WHERE p.empresas_id = " . $this->dados_login->empresas_id . "  and p.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+
+    //SE FOR RELATORIO PARA LISTAGEM DE EMAILS, FILTRAR SOMENTE COM EMAIL CADASTRADO
+    if ($input["resultado"]=="email")
+            $sWhere .= " and (emailprincipal is not null and emailprincipal<> '') ";
+
 
     /*Filtros utilizados*/
     if ($input["possui_necessidades_especiais"]!="")
     {
-        $filtros .= "   Possui Necessidades Esp.: " . ($input["possui_necessidades_especiais"]=="1" ? "Sim" : "Nao");
-        $where .= " and possui_necessidades_especiais = " . ($input["possui_necessidades_especiais"]=="true" ? "true" : "false");
+        $filtros = array_add($filtros, '1',
+            [
+                'find' =>  ['possui_necessidades_especiais' => ($input["possui_necessidades_especiais"]=="true" ? "true" : "false")],
+                'label' => ['Possui Necessidades Especiais'=>($input["possui_necessidades_especiais"]=="true" ? "Sim" : "Nao")]
+            ]);
     }
 
     if ($input["doador_orgaos"]!="")
     {
-        $filtros .= "   Doador Orgaos: " . ($input["doador_orgaos"]=="1" ? "Sim" : "Nao");
-        $where .= " and doador_orgaos = " . ($input["doador_orgaos"]=="1" ? "true" : "false");
+        $filtros = array_add($filtros, '2',
+            [
+                'find' => ['doador_orgaos'=>($input["doador_orgaos"]=="1" ? "true" : "false")],
+                'label' => ['Doador Orgãos' =>($input["doador_orgaos"]=="1" ? "Sim" : "Não")]
+            ]);
     }
 
     if ($input["doador_sangue"]!="")
     {
-        $filtros .= "   Doador Sangue : " . ($input["doador_sangue"]=="1" ? "Sim" : "Nao");
-        $where .= " and doador_sangue = " . ($input["doador_sangue"]=="1" ? "true" : "false");
+        $filtros = array_add($filtros, '3',
+            [
+                'find' => ['doador_sangue'=>($input["doador_sangue"]=="true" ? "true" : "false")],
+                'label' => ['Doador Sangue'=>($input["doador_sangue"]=="true" ? "Sim" : "Não")]
+            ]);
     }
 
     if ($input["status"]!="")
     {
-        $filtros .= "   Status Cadastro : " . ($input["status"]=="S" ? "Ativo" : "Inativo");
-        $where .= " and ativo = '" . $input["status"] . "'";
+        $filtros = array_add($filtros, '4',
+            [
+                'find' =>['ativo'=>($input["status"]=="S" ? "'S'" : "'N'")] ,
+                'label' =>['Status Cadastro'=>($input["status"]=="S" ? "Ativo" : "Inativo")]
+            ]);
     }
 
     if ($input["graus_id"]!="")
     {
-        $filtros .= "   Grau Instrucao : " . $descricao_graus[1];
-        $where .= " and graus_id = " . $descricao_graus[0];
+        $filtros = array_add($filtros, '5',
+            [
+                'find' => ['graus_id'=>$descricao_graus[0]],
+                'label' =>['Grau de Instrução'=> $descricao_graus[1]]
+            ]);
     }
-
 
     if ($input["formacoes_id"]!="")
     {
-        $filtros .= "   Area de Formacao : " . $descricao_formacao[1];
-        $where .= " and formacoes_id = " . $descricao_formacao[0];
+        $filtros = array_add($filtros, '6',
+            [
+                'find' => ['formacoes_id'=>$descricao_formacao[0]],
+                'label' =>['Area de Formação'=>$descricao_formacao[1]]
+            ]);
     }
 
     if ($input["profissoes_id"]!="")
     {
-        $filtros .= "   Profissao : " . $descricao_profissao[1];
-        $where .= " and mprof.profissoes_id = " . $descricao_profissao[0];
+        $filtros = array_add($filtros, '7',
+            [
+                'find' =>['mprof.profissoes_id'=> $descricao_profissao[0]],
+                'label' =>['Profissão'=> $descricao_profissao[1]]
+            ]);
     }
 
     if ($input["ramos_id"]!="")
     {
-        $filtros .= "   Ramo Atividade : " . $descricao_ramos[1];
-        $where .= " and ramos_id = " . $descricao_ramos[0];
+        $filtros = array_add($filtros, '8',
+            [
+                'find' =>['ramos_id'=>$descricao_ramos[0]] ,
+                'label' =>['Ramo de Atividade'=>$descricao_ramos[1]]
+            ]);
     }
 
     if ($input["cargos_id"]!="")
     {
-        $filtros .= "   Cargo : " . $descricao_cargos[1];
-        $where .= " and cargos_id = " . $descricao_cargos[0];
+        $filtros = array_add($filtros, '9',
+            [
+                'find' =>['cargos_id'=>$descricao_cargos[0]] ,
+                'label' =>['Cargo'=>$descricao_cargos[1]]
+            ]);
     }
 
     if ($input["disponibilidades_id"]!="")
     {
-        $filtros .= "   Disponibilidade : " . $descricao_disponibilidade[1];
-        $where .= " and disponibilidades_id = " . $descricao_disponibilidade[0];
+        $filtros = array_add($filtros, '10',
+            [
+                'find' =>['disponibilidades_id'=>$descricao_disponibilidade[0]] ,
+                'label' =>['Disponibilidade'=>$descricao_disponibilidade[1]]
+            ]);
     }
 
 
     if ($input["tipo_sangue"]!="")
     {
-        $filtros .= "   Tipo Sanguineo : " . strtoupper($input["tipo_sangue"]);
-        $where .= " and grupo_sanguinio = '" . strtoupper($input["tipo_sangue"]) . "'";
+        $filtros = array_add($filtros, '11',
+            [
+                'find' =>['grupo_sanguinio'=> "'" . strtoupper($input["tipo_sangue"]) . "'"] ,
+                'label' =>['Tipo Sanguineo'=>strtoupper($input["tipo_sangue"])]
+            ]);
     }
 
 
     if ($input["religioes_id"]!="")
     {
-        $filtros .= "   Religiao : " . $descricao_religiao[1];
-        $where .= " and religioes_id = " . $descricao_religiao[0];
+        $filtros = array_add($filtros, '12',
+            [
+                'find' =>['religioes_id'=>$descricao_religiao[0]] ,
+                'label' =>['Religião'=>$descricao_religiao[1]]
+            ]);
     }
 
     if ($input["dons_id"]!="")
     {
-        $filtros .= "   Don : " . $descricao_don[1];
-        $where .= " and dons_id = " . $descricao_don[0];
+        $filtros = array_add($filtros, '13',
+            [
+                'find' =>['dons_id'=>$descricao_don[0]] ,
+                'label' =>['Don'=>$descricao_don[1]]
+            ]);
     }
 
     if ($input["habilidades_id"]!="")
     {
-        $filtros .= "   Habilidade : " . $descricao_habilidade[1];
-        $where .= " and habilidades_id = " . $descricao_habilidade[0];
+        $filtros = array_add($filtros, '14',
+            [
+                'find' =>['habilidades_id'=>$descricao_habilidade[0]] ,
+                'label' =>['Habilidade'=>$descricao_habilidade[1]]
+            ]);
     }
 
     if ($input["atividades_id"]!="")
     {
-        $filtros .= "   Atividade : " . $descricao_atividade[1];
-        $where .= " and atividades_id = " . $descricao_atividade[0];
+        $filtros = array_add($filtros, '15',
+            [
+                'find' =>['atividades_id'=>$descricao_atividade[0]],
+                'label' =>['Atividade'=>$descricao_atividade[1]]
+            ]);
     }
 
     if ($input["ministerios_id"]!="")
     {
-        $filtros .= "   Ministerio : " . $descricao_ministerio[1];
-        $where .= " and ministerios_id = " . $descricao_ministerio[0];
+        $filtros = array_add($filtros, '16',
+            [
+                'find' =>['ministerios_id'=>$descricao_ministerio[0]],
+                'label' =>['Ministério'=>$descricao_ministerio[1]]
+            ]);
     }
 
     if ($input["idiomas_id"]!="")
     {
-        $filtros .= "   Idioma : " . $descricao_idiomas[1];
-        $where .= " and mi.idiomas_id = " . $descricao_idiomas[0];
+        $filtros = array_add($filtros, '17',
+            [
+                'find' =>['mi.idiomas_id'=>$descricao_idiomas[0]] ,
+                'label' =>['Idioma'=>$descricao_idiomas[1]]
+            ]);
     }
 
     if ($input["mes"]!="")
     {
-        $filtros .= "   Mes Aniversario : " . $input["mes"];
-        $where .= " and to_char(p.datanasc, 'MM') = '" . $input["mes"] . "'";
+        $filtros = array_add($filtros, '18',
+            [
+                'find' => ["date_part('month', p.datanasc)"=>"'" . $input["mes"] . "'"] ,
+                'label' => ['Mês Aniversário'=>$input["mes"]]
+            ]);
     }
 
     if ($input["ano_inicial"]!="" && $input["ano_final"]!="" )
     {
-        $filtros .= "   Periodo Ano : " . $input["ano_inicial"] . " - " . $input["ano_final"];
-        $where .= " and ano >= '" . $input["ano_inicial"] . "'";
-        $where .= " and ano <= '" . $input["ano_final"] . "'";
+        $filtros = array_add($filtros, '19',
+            [
+                'find' =>['to_char(p.datanasc, "YYYY")>='=>"'" . $input["ano_inicial"] . "'"] ,
+                'label' =>['Ano Inicial'=>$input["ano_inicial"]]
+            ]);
+
+        $filtros = array_add($filtros, '20',
+            [
+                'find' =>['to_char(p.datanasc, "YYYY")<='=> "'" . $input["ano_final"] . "'"] ,
+                'label' =>['Ano Final'=>$input["ano_final"]]
+            ]);
     }
 
     if ($input["sexo"]!="")
     {
-        $filtros .= "   Sexo : " . ($input["sexo"]=="M" ? "Masculino" : "Feminino");
-        $where .= " and sexo = '" . $input["sexo"] . "'";
+        $filtros = array_add($filtros, '21',
+            [
+                'find' =>['sexo'=>"'" . $input["sexo"] . "'"] ,
+                'label' =>['Sexo'=>$input["sexo"]]
+            ]);
     }
 
     if ($descricao_estado_civil!="")
     {
-        $filtros .= "   Estado Civil : " . $descricao_estado_civil[1];
-        $where .= " and estadoscivis_id = " . $descricao_estado_civil[0];
+        $filtros = array_add($filtros, '22',
+            [
+                'find' =>['estadoscivis_id'=>$descricao_estado_civil[0]] ,
+                'label' =>['Estado Civil'=>$descricao_estado_civil[1]]
+            ]);
     }
 
     if ($descricao_grupo!="")
     {
-        $filtros .= "   Grupo : " . $descricao_grupo[1];
-        $where .= " and grupos_pessoas_id = " . $descricao_grupo[0];
+        $filtros = array_add($filtros, '23',
+            [
+                'find' =>['grupos_pessoas_id'=>$descricao_grupo[0]] ,
+                'label' =>['Grupo'=>$descricao_grupo[1]]
+            ]);
     }
 
     if ($descricao_situacoes!="")
     {
-        $filtros .= "   Situacao : " . $descricao_situacoes[1];
-        $where .= " and situacoes_id = " . $descricao_situacoes[0];
+        $filtros = array_add($filtros, '24',
+            [
+                'find' =>['situacoes_id'=>$descricao_situacoes[0]] ,
+                'label' =>['Situação'=>$descricao_situacoes[1]]
+            ]);
     }
 
     if ($descricao_tipos!="")
     {
-        $filtros .= "   Tipo Pessoa : " . $descricao_tipos[1];
-        $where .= " and tipos_pessoas_id = " . $descricao_tipos[0];
+        $filtros = array_add($filtros, '25',
+            [
+                'find' =>['tipos_pessoas_id'=>$descricao_tipos[0]] ,
+                'label' =>['Tipo Pessoa'=>$descricao_tipos[1]]
+            ]);
     }
 
     if ($descricao_status!="")
     {
-        $filtros .= "   Status : " . $descricao_status[1];
-        $where .= " and status_id = " . $descricao_status[0];
+        $filtros = array_add($filtros, '26',
+            [
+                'find' =>['status_id'=>$descricao_status[0]],
+                'label' =>['Status'=>$descricao_status[1]]
+            ]);
     }
 
     if ($descricao_motivo_ent!="")
     {
-        $filtros .= "   Motivo Entrada : " . $descricao_motivo_ent[1];
-        $where .= " and motivos_entrada_id = " . $descricao_motivo_ent[0];
+        $filtros = array_add($filtros, '27',
+            [
+                'find' =>['motivos_entrada_id'=>$descricao_motivo_ent[0]] ,
+                'label' =>['Motivo Entrada'=>$descricao_motivo_ent[1]]
+            ]);
     }
 
     if ($descricao_motivo_sai!="")
     {
-        $filtros .= "   Motivo Saida : " . ($descricao_motivo_sai[1]);
-        $where .= " and motivos_saida_id = " . $descricao_motivo_sai[0];
+        $filtros = array_add($filtros, '28',
+            [
+                'find' =>['motivos_saida_id'=>$descricao_motivo_sai[0]] ,
+                'label' =>['Motivo Saída'=>$descricao_motivo_sai[1]]
+            ]);
     }
 
     if ($input["data_entrada"]!="")
     {
-        $filtros .= "   Entrada : " . $input["data_entrada"] . " até " . $input["data_entrada_ate"] ;
-        $where .= " and data_entrada >= '" . $formatador->FormatarData($input["data_entrada"]) . "'";
-        $where .= " and data_entrada <= '" . $formatador->FormatarData($input["data_entrada_ate"]) . "'";
+        $filtros = array_add($filtros, '29',
+            [
+                'find' =>['data_entrada>='=>"'" . $formatador->FormatarData($input["data_entrada"]) . "'"] ,
+                'label' =>['Dt. Entrada Inicial'=>$input["data_entrada"]]
+            ]);
+
+        $filtros = array_add($filtros, '30',
+            [
+                'find' =>['data_entrada<='=> "'" . $formatador->FormatarData($input["data_entrada_ate"]) . "'"] ,
+                'label' =>['Dt. Entrada Final'=>$input["data_entrada_ate"]]
+            ]);
     }
 
     if ($input["data_saida"]!="")
     {
-        $filtros .= "   Saida : " . $input["data_saida"] . " até " . $input["data_saida_ate"] ;
-        $where .= " and data_saida >= '" . $formatador->FormatarData($input["data_saida"]) . "'";
-        $where .= " and data_saida < '" . $formatador->FormatarData($input["data_saida_ate"]) . "'";
+        $filtros = array_add($filtros, '31',
+            [
+                'find' =>['data_saida>='=> "'" . $formatador->FormatarData($input["data_saida"]) . "'"] ,
+                'label' =>['Dt. Saída Inicial'=>$input["data_saida"]]
+            ]);
+
+        $filtros = array_add($filtros, '32',
+            [
+                'find' =>['data_saida<='=> "'" . $formatador->FormatarData($input["data_saida_ate"]) . "'"] ,
+                'label' =>['Dt. Saída Final'=>$input["data_saida_ate"]]
+            ]);
+
     }
 
     if ($input["data_batismo"]!="")
     {
-        $filtros .= "   Batismo : " . $input["data_batismo"] . " até " . $input["data_batismo_ate"] ;
-        $where .= " and data_batismo >= '" . $formatador->FormatarData($input["data_batismo"]) . "'";
-        $where .= " and data_batismo <= '" . $formatador->FormatarData($input["data_batismo_ate"]) . "'";
+        $filtros = array_add($filtros, '33',
+            [
+                'find' =>['data_batismo>='=> "'" . $formatador->FormatarData($input["data_batismo"]) . "'"] ,
+                'label' =>['Dt. Batismo Inicial'=>$input["data_batismo"]]
+            ]);
+
+        $filtros = array_add($filtros, '34',
+            [
+                'find' =>['data_batismo<='=> "'" . $formatador->FormatarData($input["data_batismo_ate"]) . "'"] ,
+                'label' =>['Dt. Batismo Final'=>$input["data_batismo_ate"]]
+            ]);
     }
 
     if ($input["data_casamento"]!="")
     {
-
         if ($input["ordem"]!="razaosocial" || $input["mes"]!="" || $input["ano_inicial"]!="" || $input["ano_final"]!="")
         {
             //nothing
         }
         else
         {
-            $filtros .= "   Casamento : " . $input["data_casamento"] . " até " . $input["data_casamento_ate"] ;
-            $where .= " and data_casamento >= '" . $formatador->FormatarData($input["data_casamento"]) . "'";
-            $where .= " and data_casamento <= '" . $formatador->FormatarData($input["data_casamento_ate"]) . "'";
-        }
+            $filtros = array_add($filtros, '35',
+            [
+                'find' =>['data_casamento>='=> "'" . $formatador->FormatarData($input["data_casamento"]) . "'"],
+                'label' =>['Dt. Casamento Inicial'=>$input["data_casamento"]]
+            ]);
 
+            $filtros = array_add($filtros, '35',
+            [
+                'find' =>['data_casamento<='=> "'" . $formatador->FormatarData($input["data_casamento_ate"]) . "'"],
+                'label' =>['Dt. Casamento Final'=>$input["data_casamento_ate"]]
+            ]);
+        }
     }
 
     if ($input["nivel1_up"]!="0")
     {
-        $filtros .= "<br/>" . \Session::get('nivel1') . " : " . $descricao_nivel1[1];
-        $where .= " and celulas_nivel1_id = " . $descricao_nivel1[0];
+        $filtros = array_add($filtros, '36',
+            [
+                'find' =>['celulas_nivel1_id'=>$descricao_nivel1[0]] ,
+                'label' => \Session::get("nivel1") . ' - ' . $descricao_nivel1[1]
+            ]);
     }
 
     if ($input["nivel2_up"]!="0")
     {
-        $filtros .= "" . \Session::get('nivel2') . " : " . $descricao_nivel2[1];
-        $where .= " and celulas_nivel2_id = " . $descricao_nivel2[0];
+        $filtros = array_add($filtros, '37',
+            [
+                'find' =>['celulas_nivel2_id'=>$descricao_nivel2[0]] ,
+                'label' => \Session::get("nivel2") . ' - ' . $descricao_nivel2[1]
+            ]);
     }
 
     if ($input["nivel3_up"]!="0")
     {
-        $filtros .= "<br/>" . \Session::get('nivel3') . " : " . $descricao_nivel3[1];
-        $where .= " and celulas_nivel3_id = " . $descricao_nivel3[0];
+        $filtros = array_add($filtros, '38',
+            [
+                'find' =>['celulas_nivel3_id'=>$descricao_nivel3[0]] ,
+                'label' => \Session::get("nivel3") . ' - ' . $descricao_nivel3[1]
+            ]);
     }
 
     if ($input["nivel4_up"]!="0")
     {
-        $filtros .= "" . \Session::get('nivel4') . " : " . $descricao_nivel4[1];
-        $where .= " and celulas_nivel4_id = " . $descricao_nivel4[0];
+        $filtros = array_add($filtros, '39',
+            [
+                'find' =>['celulas_nivel4_id'=>$descricao_nivel4[0]] ,
+                'label' => \Session::get("nivel4") . ' - ' . $descricao_nivel4[1]
+            ]);
     }
 
     if ($input["nivel5_up"]!="0")
     {
-        $filtros .= "" . \Session::get('nivel5') . " : " . $descricao_nivel5[1];
-        $where .= " and celulas_nivel5_id = " . $descricao_nivel5[0];
+        $filtros = array_add($filtros, '40',
+            [
+                'find' =>['celulas_nivel5_id'=>$descricao_nivel5[0]] ,
+                'label' => \Session::get("nivel5") . ' - ' . $descricao_nivel5[1]
+            ]);
     }
 
 
-    //Parametros JASPER REPORT
-    $parametros = array
-    (
-        "empresas_id"=> $this->dados_login->empresas_id,
-        "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
-        "sexo"=>"'" . $input["sexo"] . "'",
-        "mes"=>"'" . $input["mes"] . "'",
-        "status"=>"'" . $input["status"] . "'",
-        "nivel1"=> ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]),
-        "nivel2"=> ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]),
-        "nivel3"=> ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]),
-        "nivel4"=> ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]),
-        "nivel5"=> ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]),
-        "doador_sangue" => ($input["doador_sangue"]=="1" ? "true" : "false"),
-        "doador_orgaos" => ($input["doador_orgaos"]=="1" ? "true" : "false"),
-        "possui_necessidades_especiais" => ($input["possui_necessidades_especiais"]==true ? "true" : "false"),
-        "idiomas_id" => ($descricao_idiomas=="" ? 0 : $descricao_idiomas[0]),
-        "graus_id" => ($descricao_graus=="" ? 0 : $descricao_graus[0]),
-        "estadoscivis"=> ($descricao_estado_civil=="" ? 0 : $descricao_estado_civil[0]),
-        "situacoes"=> ($descricao_situacoes=="" ? 0 : $descricao_situacoes[0]),
-        "tipos"=> ($descricao_tipos=="" ? 0 : $descricao_tipos[0]),
-        "grupo"=> ($descricao_grupo=="" ? 0 : $descricao_grupo[0]),
-        "status_id"=> ($descricao_status=="" ? 0 : $descricao_status[0]),
-        "motivo_entrada"=> ($descricao_motivo_ent=="" ? 0 : $descricao_motivo_ent[0]),
-        "motivo_saida"=> ($descricao_motivo_sai=="" ? 0 : $descricao_motivo_sai[0]),
-        "data_entrada_inicial"=>"'" . ($input["data_entrada"]=="" ? '' : $formatador->FormatarData($input["data_entrada"])) . "'",
-        "data_entrada_final"=>"'" . ($input["data_entrada_ate"]=="" ? '' : $formatador->FormatarData($input["data_entrada_ate"])) . "'",
-        "filtros"=> "'" . ($filtros) . "'",
-    );
-
-    //A ordem DEFAULT do relatório é DIA/MES da data de nascimento. Se não for relatório de aniversariantes, altera a ordem
-    if ($input["ordem"]=="razaosocial")
+    //QUANDO PESQUISAR E RESULTADO FOR CELULAR OU EMAIL
+    if ($input["resultado"]=="email" || $input["resultado"]=="celular" || $input["resultado"]=="html")
     {
-        $parametros = array_add($parametros, 'ordem', 'razaosocial');
-    }
-    else if ($input["ordem"]=="idade")
-    {
-        $parametros = array_add($parametros, 'ordem', 'idade');
-    }
-    else if ($input["ordem"]=="ano")
-    {
-        $parametros = array_add($parametros, 'ordem', '"ano, idade"');
-    }
-
-    /*Se foi passado filtro por ano de nascimento*/
-    if ($input["ano_inicial"]!="" && $input["ano_final"]!="")
-    {
-        $parametros = array_add($parametros, 'ano_inicial', $input["ano_inicial"]);
-        $parametros = array_add($parametros, 'ano_final', $input["ano_final"]);
-    }
-
-    //Data de saida
-    if ($input["data_saida"]!="" && $input["data_saida_ate"]!="")
-    {
-        $parametros = array_add($parametros, 'data_saida_inicial', ($input["data_saida"]=="" ? '' : $formatador->FormatarData($input["data_saida"])));
-        $parametros = array_add($parametros, 'data_saida_final', ($input["data_saida_ate"]=="" ? '' : $formatador->FormatarData($input["data_saida_ate"])));
-    }
-
-
-    if ($input["tipo_sangue"]!="")
-    {
-        $parametros = array_add($parametros, 'grupo_sanguinio', strtoupper($input["tipo_sangue"]));
-    }
-
-    if ($input["formacoes_id"]!="")
-    {
-        $parametros = array_add($parametros, 'formacoes_id', ($descricao_formacao=="" ? 0 : $descricao_formacao[0]));
-    }
-
-    if ($input["profissoes_id"]!="")
-    {
-        $parametros = array_add($parametros, 'profissoes_id', ($descricao_profissao=="" ? 0 : $descricao_profissao[0]));
-    }
-
-    if ($input["ramos_id"]!="")
-    {
-        $parametros = array_add($parametros, 'ramos_id', ($descricao_ramos=="" ? 0 : $descricao_ramos[0]));
-    }
-
-    if ($input["cargos_id"]!="")
-    {
-        $parametros = array_add($parametros, 'cargos_id', ($descricao_cargos=="" ? 0 : $descricao_cargos[0]));
-    }
-
-    if ($input["disponibilidades_id"]!="")
-    {
-        $parametros = array_add($parametros, 'disponibilidades_id', ($descricao_disponibilidade=="" ? 0 : $descricao_disponibilidade[0]));
-    }
-
-    if ($input["religioes_id"]!="")
-    {
-        $parametros = array_add($parametros, 'religioes_id', ($descricao_religiao=="" ? 0 : $descricao_religiao[0]));
-    }
-
-    if ($input["dons_id"]!="")
-    {
-        $parametros = array_add($parametros, 'dons_id', ($descricao_don=="" ? 0 : $descricao_don[0]));
-    }
-
-    if ($input["habilidades_id"]!="")
-    {
-        $parametros = array_add($parametros, 'habilidades_id', ($descricao_habilidade=="" ? 0 : $descricao_habilidade[0]));
-    }
-
-    if ($input["atividades_id"]!="")
-    {
-        $parametros = array_add($parametros, 'atividades_id', ($descricao_atividade=="" ? 0 : $descricao_atividade[0]));
-    }
-
-    if ($input["ministerios_id"]!="")
-    {
-        $parametros = array_add($parametros, 'ministerios_id', ($descricao_ministerio=="" ? 0 : $descricao_ministerio[0]));
-    }
-
-    //Data de batismo
-    if ($input["data_batismo"]!="" && $input["data_batismo_ate"]!="")
-    {
-        $parametros = array_add($parametros, 'data_batismo_inicial', ($input["data_batismo"]=="" ? '' : $formatador->FormatarData($input["data_batismo"])));
-        $parametros = array_add($parametros, 'data_batismo_final', ($input["data_batismo_ate"]=="" ? '' : $formatador->FormatarData($input["data_batismo_ate"])));
-    }
-
-    //Data de casamento
-    if ($input["data_casamento"]!="" && $input["data_casamento_ate"]!="")
-    {
-
-        if ($input["ordem"]!="razaosocial" || $input["mes"]!="" || $input["ano_inicial"]!="" || $input["ano_final"]!="") {
-            //nothing
-        }
-        else
-        {
-            $parametros = array_add($parametros, 'data_casamento_inicial', ($input["data_casamento"]=="" ? '' : $formatador->FormatarData($input["data_casamento"])));
-            $parametros = array_add($parametros, 'data_casamento_final', ($input["data_casamento_ate"]=="" ? '' : $formatador->FormatarData($input["data_casamento_ate"])));
-        }
-
-    }
-
-   //QUANDO PESQUISAR E RESULTADO FOR CELULAR OU EMAIL
-    if ($input["resultado"]=="email" || $input["resultado"]=="celular")
-    {
-
-
-        //Busca configuracao do provedor SMS
 
         //Se for SMS, verifica se foi contratado o servico
         if ($input["resultado"]=="celular")
@@ -652,16 +641,13 @@ class RelatorioPessoasController extends Controller
         }
 
 
-        //$emails = \DB::select('select distinct razaosocial, emailprincipal from view_pessoas_geral_celulas' . $where . ' order by razaosocial');
         $strSql = " SELECT DISTINCT ";
-        $strSql .= " c.celulas_nivel1_id,      c.celulas_nivel2_id,     c.celulas_nivel3_id,      c.celulas_nivel4_id,      c.celulas_nivel5_id, ";
-        $strSql .= " p.empresas_id,  p.empresas_clientes_cloud_id, ";
         $strSql .= " p.id,  p.tipos_pessoas_id,  p.razaosocial, ";
-        $strSql .= " to_char(p.datanasc, 'MM') AS mes, ";
-        $strSql .= " p.nomefantasia,  p.fone_principal,  p.fone_celular,  p.emailprincipal,  p.ativo,  p.datanasc, ";
-        $strSql .= " mp.sexo,  mp.status_id,     mp.estadoscivis_id,     p.grupos_pessoas_id,     mh.data_entrada,     mh.data_saida,     mh.data_batismo, ";
-        $strSql .= " mh.motivos_entrada_id,     mh.motivos_saida_id,     mp.doador_orgaos,     mp.doador_sangue,     mp.possui_necessidades_especiais, ";
-        $strSql .= " mp.idiomas_id,    mp.graus_id ";
+        $strSql .= " to_char(p.datanasc::timestamp with time zone, 'MM'::text) AS mes, ";
+        $strSql .= " to_char(p.datanasc::timestamp with time zone, 'YYYY'::text) AS ano, ";
+        $strSql .= " date_part('day'::text, p.datanasc) AS dia, ";
+        $strSql .= " to_char(date_part('years'::text, age(now(), p.datanasc::timestamp with time zone)), '9999'::text) AS idade, ";
+        $strSql .= " p.nomefantasia,  p.fone_principal,  p.fone_celular,  p.emailprincipal,  p.ativo,  p.datanasc ";
         $strSql .= " FROM pessoas p ";
         $strSql .= "   LEFT JOIN membros_dados_pessoais mp ON mp.pessoas_id = p.id AND mp.empresas_id = p.empresas_id AND mp.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id ";
         $strSql .= "   LEFT JOIN celulas_pessoas cp ON cp.pessoas_id = p.id AND cp.empresas_id = p.empresas_id AND cp.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
@@ -676,96 +662,74 @@ class RelatorioPessoasController extends Controller
         $strSql .= "   LEFT JOIN membros_atividades ma ON ma.pessoas_id = p.id AND ma.empresas_id = p.empresas_id AND ma.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
         $strSql .= "   LEFT JOIN membros_habilidades mhab ON mhab.pessoas_id = p.id AND mhab.empresas_id = p.empresas_id AND mhab.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
         $strSql .= "   LEFT JOIN membros_idiomas mi ON mi.pessoas_id = p.id AND mi.empresas_id = p.empresas_id AND mi.empresas_clientes_cloud_id = p.empresas_clientes_cloud_id";
-        $strSql .=  $where;
+
+        $sFiltrosUtilizados = "<table class='table table-responsive table-hover'>";
+        $sFiltrosUtilizados .= '<tr>';
+        $iCol=0;
+
+        //PERCORRE ARRAY COM TODOS OS FILTROS INFORMADOS
+        foreach ($filtros as $section => $items)
+        {
+            foreach ($items as $key => $value)
+            {
+                // check whether the current item is an array!
+                if(is_array($value))
+                {
+
+                    if ($key=="find") //PEGA CAMPOS E VALORES PARA FILTRAR NA QUERY
+                    {
+                         foreach($value as $subKey => $subValue)
+                         {
+                             if (preg_match("/>=/", $subKey)==1 || preg_match("/<=/", $subKey)==1) //VERIFICA SE JA VEIO COM O OPERADOR. NESSE CASO TRATA-SE DE DATAS
+                             {
+                                $sWhere .= ' And ' . $subKey .  $subValue;
+                             }
+                             else
+                             {
+                                $sWhere .= ' And ' . $subKey . ' = ' .  $subValue;
+                             }
+                         }
+                    }
+
+                    if ($key=="label") //MONTA O CABECALHO COM FILTROS SELECIONADOS
+                    {
+                         foreach($value as $subKey => $subValue)
+                         {
+                            if ($iCol==4)
+                            {
+                                 $sFiltrosUtilizados .= '</tr><tr>';
+                                 $iCol=0;
+                            }
+                             $sFiltrosUtilizados .= '<td>' . $subKey . ' : <b>' .  $subValue . '</b></td>';
+                             $iCol++; //CONTA COLUNAS TABLE
+                         }
+                    }
+                }
+            }
+        }
+
+        $sFiltrosUtilizados .= "</tr></table>";
+
+        //CONCATENA A STRING DA QUERY A CLAUSULA WHERE
+        $strSql .= $sWhere;
+        $strSql .=  " ORDER BY " . $input["ordem"] . ", p.razaosocial ";
+
+
         $emails = \DB::select($strSql);
 
-        return view($this->rota . '.listaremails', ['parametros'=>$parametros, 'emails'=>$emails, 'filtros'=>$filtros, 'resultado'=>$input["resultado"]]);
+        if ($input["resultado"]=="html") //RESULTADO PADRAO
+        {
+            return view($this->rota . '.relatorios', ['dados'=>$emails, 'filtros'=>$sFiltrosUtilizados]);
+        }
+        else //LISTAGEM DE EMAILS OU DE NUMEROS DE CELULAR
+        {
+            return view($this->rota . '.listaremails', ['parametros'=>(isset($parametros) ? $parametros : ''), 'emails'=>$emails, 'filtros'=>$sFiltrosUtilizados, 'resultado'=>$input["resultado"]]);
+        }
 
     }
-     else
-    {
-        /*Exibir quebras por estrutura de celulas*/
-            if ($input["ckEstruturas"])
-            {
-                if ($descricao_situacoes!="")
-                {
-                    $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_celulas_situacoes.jasper';
-                }
-                else
-                {
-                    $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_celulas.jasper';
-                }
-            }
-            else
-            {
-                if ($descricao_situacoes!="")
-                {
-                    $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_situacoes.jasper';
-                }
-                else
-                {
-                    if ($input["ordem"]!="razaosocial" || $input["mes"]!="" || $input["ano_inicial"]!="" || $input["ano_final"]!="")
-                    {
-                        $nome_relatorio = public_path() . '/relatorios/listagem_aniversariantes.jasper';
-                    }
-                    else
-                    {
-                        $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_completo.jasper';
-                        //$nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral.jasper';
-                    }
-                }
-            }
 
-            //Executa JasperReport
-            \JasperPHP::process(
-                    $nome_relatorio,
-                    $output,
-                    array($ext),
-                    $parametros,
-                    $database,
-                    false,
-                    false
-                )->execute();
-
-
-            $Mensagem="";
-
-            if (filesize($output . '.' . $ext)<=1000) //Se arquivo tiver menos de 1k, provavelmente está vazio...
-            {
-                $Mensagem = "Nenhum Registro Encontrado";
-                return $this->CarregarView('', $Mensagem);
-            }
-                else
-            {
-
-                if ($ext=="pdf") //Se for pdf abre direto na pagina
-                {
-
-                    header('Content-Description: File Transfer');
-                    header('Content-Type: application/pdf');
-                    header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
-                    //header('Content-Transfer-Encoding: binary');
-                    header('Expires: 0');
-                    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-                    header('Content-Length: ' . filesize($output.'.'.$ext));
-                    flush();
-                    readfile($output.'.'.$ext);
-                    unlink($output.'.'.$ext);
-
-
-                }
-                else //Gera link para download
-                {
-                    return $this->CarregarView($path_download . '.' . $ext, $Mensagem);
-                }
-            }
-
-
-    }
 
   } //fim function
-
-
 
 
 }

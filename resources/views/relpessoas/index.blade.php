@@ -11,7 +11,7 @@
 
  <div class="col-md-12">
 
-  <form method = 'POST'  class="form-horizontal" onsubmit="return validar_datas();"  action = {{ url('/' . \Session::get('route') . '/pesquisar')}}>
+  <form method = 'POST'  class="form-horizontal" onsubmit="return validar_datas();"  action ="{{ url('/' . \Session::get('route') . '/pesquisar')}}">
 
   {!! csrf_field() !!}
 
@@ -173,11 +173,7 @@
 
                                                                     <label for="resultado" class="control-label">Formato de Saída : </label>
                                                                     <select id="resultado" name="resultado" class="form-control selectpicker">
-                                                                    <option  value="pdf" data-icon="fa fa-file-pdf-o" selected>PDF (.pdf)</option>
-                                                                    <option  value="xlsx" data-icon="fa fa-file-excel-o">Planilha Excel (.xls)</option>
-                                                                    <option  value="csv" data-icon="fa fa-file-excel-o">CSV (.csv)</option>
-                                                                    <option  value="docx" data-icon="fa fa-file-word-o">Microsoft Word (.docx)</option>
-                                                                    <option  value="html" data-icon="fa fa-file-word-o">HTML (.html)</option>
+                                                                    <option  value="html">(Padrão)</option>
                                                                     <option  value="email" data-icon="fa fa-envelope-o">Listagem de E-mails</option>
                                                                     <option  value="celular" data-icon="fa fa-whatsapp">Número Celular (Envio Mensagens)</option>
                                                                     </select>

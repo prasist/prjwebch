@@ -366,6 +366,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
     listagem_celulas_sintetico => view_celulas_niveis
  */
 
+
    if ($tipo_relatorio=="celulas")  //Relatorio de celulas
    {
         $parametros = array_add($parametros, 'segundo_dia_encontro', $input["segundo_dia_encontro"]);
@@ -470,6 +471,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
    }
 
 
+
     \JasperPHP::process(
             $nome_relatorio,
             $output,
@@ -479,7 +481,6 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
             false,
             false
         )->execute();
-
 
 
             $Mensagem="";

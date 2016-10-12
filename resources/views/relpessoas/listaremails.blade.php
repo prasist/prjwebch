@@ -43,14 +43,13 @@
                             </p>
                             <br/>
                             @if ($emails)
-
                                 @if ($resultado=="email")
                                     <textarea class="form-control" rows="30">
                                     @foreach($emails as $item)
                                           {!! $item->razaosocial . ' <' . $item->emailprincipal . '>'!!},
                                     @endforeach
                                     </textarea>
-                               @endif
+                                @endif
                            @else
                               <b>Nenhum Registro Encontrado ou Email/Celular não preenchido no cadastro da Pessoa.</b>
                            @endif
@@ -62,14 +61,12 @@
                       @endif
 
                 </div><!-- /.col -->
+
             </div><!-- /.row -->
 
             @if ($resultado=="celular")
-
                   @include('envio_mensagem', ['listagem'=>$emails])
-
             @endif
-
 
          </div><!-- fim box-body"-->
      </div><!-- box box-primary -->

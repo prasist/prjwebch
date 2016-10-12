@@ -46,7 +46,9 @@
     Route::get('suporte', function ()
     {
           return view('suporte.suporte');
+
     });
+
 
 /*--------------------------RELATÓRIOS ENVOLVENDO CÉLULAS / PESSOAS-------------------------*/
 Route::get('/relmovimentacoes','RelatorioCelulasController@index_movimentacoes'); /*RELATORIO DE MOVIMENTACOES*/
