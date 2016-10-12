@@ -28,7 +28,6 @@
 
                       <table id="tab_pesquisas" class="table table-responsive table-hover">
                       <thead>
-
                           <tr>
                           <th>Nome</th>
                           <th>Dia/Mes</th>
@@ -37,7 +36,6 @@
                           <th>Celular</th>
                           <th>Email</th>
                           </tr>
-
                       </thead>
                       <tbody>
 

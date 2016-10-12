@@ -39,7 +39,6 @@
         <link href="{{ asset('/dist/css/bootstrap-datepicker3.css')}}" rel="stylesheet" type="text/css" />
 
 
-
         <!--  OFFLINE-->
         <link href="{{ asset('/plugins/daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}" rel="stylesheet" type="text/css" />

@@ -26,7 +26,6 @@ class RelEncontroController extends Controller
 
     }
 
-
     //Exibir listagem
     public function index()
     {

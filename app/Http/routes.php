@@ -246,8 +246,6 @@ Route::post('/configmsg/gravar','ConfigMsgController@store');
     Route::post('relpessoas/pesquisar', 'RelatorioPessoasController@pesquisar');
 
 
-
-
    //Relatorio de encontros
     Route::get('relencontro', 'RelEncontroController@index');
 
