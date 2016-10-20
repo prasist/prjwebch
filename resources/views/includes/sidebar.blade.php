@@ -400,6 +400,7 @@
           <li><a href="{{ url('/tutoriais/3')}}">Criando Login do Membro</a></li>
           <li><a href="{{ url('/tutoriais/3')}}">Criando Login do Líder</a></li>
           <li><a href="{{ url('/tutoriais/4')}}">Criando Novas Células</a></li>
+          <li><a href="{{ url('/tutoriais/5')}}">Gerenciando Encontros</a></li>
         </ul>
       </li>
     </ul>

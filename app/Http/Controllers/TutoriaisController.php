@@ -100,6 +100,10 @@ class TutoriaisController extends Controller
             {
                     return view('tutoriais.celulas');
             }
+            else if ($id==5)
+            {
+                    return view('tutoriais.encontros');
+            }
 
     }
 

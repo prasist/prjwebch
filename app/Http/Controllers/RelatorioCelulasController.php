@@ -477,9 +477,6 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
    }
 
-   //dd($parametros);
-
-
 
     \JasperPHP::process(
             $nome_relatorio,
