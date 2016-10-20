@@ -430,6 +430,13 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
    else if ($tipo_relatorio=="encontro")  //RELATORIO ENCONTROS
    {
 
+
+        if (isset($input["ckExibirCurso"])){
+           $parametros = array_add($parametros, 'exibir_cursos', ($input["ckExibirCurso"]=="on" ? "S" : "N"));
+        } else {
+            $parametros = array_add($parametros, 'exibir_cursos', "N");
+        }
+
         $parametros = array_add($parametros, 'SUBREPORT_DIR', public_path() . '/relatorios/');
 
         if ($descricao_lider[0]!="0")
@@ -470,6 +477,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
    }
 
+   //dd($parametros);
 
     \JasperPHP::process(
             $nome_relatorio,

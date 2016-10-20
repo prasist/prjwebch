@@ -37,7 +37,7 @@
                                                                 </div>
 
                                                                 @if ($encontro)
-                                                               <!--
+
                                                                 <div class="col-xs-3">
                                                                       <label for="ckExibirCurso" class="control-label">Listar Resumo Cursos/Eventos</label>
                                                                       <div class="input-group">
@@ -46,7 +46,7 @@
                                                                              </div>
                                                                       </div>
                                                                 </div>
-                                                                -->
+
                                                                 @endif
 
                                                             </div>

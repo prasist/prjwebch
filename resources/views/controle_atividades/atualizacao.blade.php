@@ -509,27 +509,27 @@
                                                                          @if ($item->questionarios_id==$item->id)
 
                                                                                 @if ($item->tipo_resposta==2)
-                                                                                      <input id="text_resposta[]" name="text_resposta[]" type="number" name="input"  min="0" max="99" class="form-control"  value="{{ ($tipo_operacao=='editar' ? $item->resposta : '') }}" required>
+                                                                                      <input id="text_resposta[]" name="text_resposta[]" type="number" name="input"  min="0" max="99" class="form-control"  value="{{ ($tipo_operacao=='editar' ? $item->resposta : '') }}" >
                                                                                 @else
                                                                                       <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="{{ ($tipo_operacao=='editar' ? $item->resposta : '') }}" />
                                                                                 @endif
                                                                          @else
                                                                                 @if ($item->tipo_resposta==2)
-                                                                                      <input id="text_resposta[]" name="text_resposta[]" type="number" name="input"  min="0" max="99" class="form-control"  value="" required>
+                                                                                      <input id="text_resposta[]" name="text_resposta[]" type="number" name="input"  min="0" max="99" class="form-control"  value="" >
                                                                                 @else
                                                                                       <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="" />
                                                                                 @endif
                                                                          @endif
                                                                     @else
                                                                          @if ($item->tipo_resposta==2)
-                                                                                <input id="text_resposta[]" name="text_resposta[]" type="number" name="input"  min="0" max="99" class="form-control"  value="" required>
+                                                                                <input id="text_resposta[]" name="text_resposta[]" type="number" name="input"  min="0" max="99" class="form-control"  value="" >
                                                                           @else
                                                                                 <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="" />
                                                                           @endif
                                                                     @endif
                                                             @else
                                                                     @if ($item->tipo_resposta==2)
-                                                                                <input id="text_resposta[]" name="text_resposta[]" type="number" name="input"  min="0" max="99" class="form-control"  value="" required>
+                                                                                <input id="text_resposta[]" name="text_resposta[]" type="number" name="input"  min="0" max="99" class="form-control"  value="" >
                                                                           @else
                                                                                 <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="" />
                                                                           @endif
