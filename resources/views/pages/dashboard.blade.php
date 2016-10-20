@@ -7,6 +7,7 @@
         <div id="tour1_visaogeral"></div>
         <div id="tour3_visaogeral"></div>
         <!-- small box -->
+
         <div class="small-box bg-aqua">
             <div class="inner">
                 <h3>{{$total_pessoas}}</h3>

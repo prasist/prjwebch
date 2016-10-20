@@ -625,7 +625,7 @@ class RelatorioPessoasController extends Controller
     }
 
 
-    //QUANDO PESQUISAR E RESULTADO FOR CELULAR OU EMAIL
+    //QUANDO PESQUISAR E RESULTADO FOR CELULAR,  EMAIL OU PESQUISA NA TELA
     if ($input["resultado"]=="email" || $input["resultado"]=="celular" || $input["resultado"]=="html")
     {
 
@@ -712,8 +712,7 @@ class RelatorioPessoasController extends Controller
 
         //CONCATENA A STRING DA QUERY A CLAUSULA WHERE
         $strSql .= $sWhere;
-        $strSql .=  " ORDER BY p.razaosocial ";
-
+        $strSql .=  " ORDER BY dia, mes, p.razaosocial ";
 
         $emails = \DB::select($strSql);
 

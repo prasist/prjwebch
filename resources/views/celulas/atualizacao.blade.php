@@ -66,9 +66,9 @@
 </div>
 
 @if ($tipo_operacao=="incluir")
-<form id="form_celulas" method = 'POST'  class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/gravar')}}">
+<form name="form_celulas" id="form_celulas" method = 'POST' ng-controller="valida_campos_celulas"  class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/gravar')}}" novalidate>
 @else
-<form id="form_celulas" method = 'POST' class="form-horizontal"  action = "{{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update')}}">
+<form name="form_celulas" id="form_celulas" method = 'POST' ng-controller="valida_campos_celulas" class="form-horizontal"  action = "{{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update')}}" novalidate>
 @endif
 
 <input type="hidden" id="quero_incluir_participante" name="quero_incluir_participante" value="">
@@ -254,6 +254,7 @@
                                                                     <input id="pessoas"  name = "pessoas" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
                                                                 @endif
 
+
                                                                 <!-- se houver erros na validacao do form request -->
                                                                 @if ($errors->has('pessoas'))
                                                                 <span class="help-block">
@@ -331,7 +332,7 @@
                                                 <div class="col-xs-3 {{ $errors->has('dia_encontro') ? ' has-error' : '' }}">
                                                       <label for="dia_encontro" class="control-label"><span class="text-danger">*</span> Dia Encontro</label>
 
-                                                      <select id="dia_encontro" placeholder="(Selecionar)" name="dia_encontro" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                      <select id="dia_encontro" ng-model="dia_encontro" required placeholder="(Selecionar)" name="dia_encontro" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                                       <option  value=""></option>
                                                       <!--[0 Domingo] - [1 Segunda] - [2 Terca] - [3 Quarta] - [4 Quinta] - [5 Sexta] - [6 Sabado]-->
                                                       @if ($tipo_operacao=="editar")
@@ -353,6 +354,10 @@
                                                       @endif
                                                       </select>
 
+
+                                                      <span style="color:red" ng-show="form_celulas.dia_encontro.$error.required">Campo Obrigatório.</span>
+
+
                                                       <!-- se houver erros na validacao do form request -->
                                                      @if ($errors->has('dia_encontro'))
                                                       <span class="help-block">
@@ -370,9 +375,14 @@
 
                                                                 <div class="input-group">
                                                                   @if ($tipo_operacao=="editar")
-                                                                        <input type="text" name="horario" id="horario"  data-inputmask='"mask": "99:99"' data-mask  class="form-control input-small" value="{{ $dados[0]->horario}}">
+                                                                        <input type="text" ng-model="hora" data-inputmask='"mask": "99:99"' data-mask  name="horario" id="horario"  class="form-control input-small" value="{{ $dados[0]->horario}}" required>
                                                                   @else
-                                                                        <input type="text" name="horario" id="horario"  data-inputmask='"mask": "99:99"' data-mask  class="form-control input-small">
+                                                                        <input type="text" ng-model="hora" data-inputmask='"mask": "99:99"' data-mask  name="horario" id="horario" class="form-control input-small" required>
+
+                                                                        <span style="color:red" ng-show="form_celulas.hora.$dirty && form_celulas.hora.$invalid">
+                                                                              <span style="color:red" ng-show="form_celulas.hora.$error.required">Campo Obrigatório.</span>
+                                                                        </span>
+
                                                                   @endif
                                                                   <div class="input-group-addon">
                                                                     <i class="fa fa-clock-o"></i>
@@ -393,6 +403,17 @@
 
                                                 <div class="col-xs-4">
                                                       <label for="local" class="control-label">Local Encontro</label>
+
+                                                      <!-- ng-options="local.Name for local in Locais track by local.Id"-->
+                                                      <!--
+                                                      <select ng-model="selectedCarregar" ng-options="local.Name for local in Locais track by local.Id">
+                                                            <option value="">Selecionar</option>
+
+                                                      </select>
+                                                      -->
+
+                                                      <!--<option ng-repeat="option in data.Locais" value="@{{option.id}}">@{{option.name}}</option>-->
+
 
                                                       <select id="local" placeholder="(Selecionar)" name="local" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                                       <option  value=""></option>
@@ -433,7 +454,6 @@
 
                                                 </div>
                                                 -->
-
 
                                         </div><!-- end row -->
 
@@ -761,8 +781,8 @@
 </div>
 
    <div class="box-footer">
-       <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-save"></i> Salvar</button>
-       <a href="#" class="btn btn-warning" onclick="salvar_e_incluir();" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }} ><i class="fa fa-users"></i> Salvar e Incluir Participantes</a>
+       <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }} ng-disabled="form_celulas.hora.$error.required || form_celulas.dia_encontro.$error.required"><i class="fa fa-save"></i> Salvar</button>
+       <a href="#" class="btn btn-warning" ng-disabled="form_celulas.hora.$error.required || form_celulas.dia_encontro.$error.required" onclick="salvar_e_incluir();" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }} ><i class="fa fa-users"></i> Salvar e Incluir Participantes</a>
        <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Cancelar</a>
        <br/><span class="text-danger">*</span><i>Campos Obrigatórios</i>
    </div>

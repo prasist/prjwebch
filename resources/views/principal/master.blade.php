@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" ng-app="appSigma3" ng-controller="loadselect">
     <head>
         <meta charset="UTF-8">
         <title>SIGMA3 - Gestão para Igrejas</title>
@@ -57,10 +57,17 @@
         <link href="{{ asset('/dist/css/pick-a-color-1.1.8.min.css')}}" rel="stylesheet"/>
         <link href="{{ asset('/dist/css/treeview.css')}}" rel="stylesheet"/>
 
+        <!--ANGULAR-->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+        <script src="{{ asset('/angular/app.js')}}"></script>
+        <script src="{{ asset('/angular/modules/celulas/controllers/celulas.main.controller.js')}}"></script>
+        <script src="{{ asset('/angular/controllers/loadselect.ctrl.js')}}"></script>
+
 
     </head>
 
     <body class="hold-transition skin-green sidebar-mini">
+
 
         <div class="wrapper">
             @include('includes.header')
@@ -141,13 +148,14 @@
 <script src="{{ asset('/dist/js/pick-a-color-1.1.8.min.js')}}"></script> <!-- monetarios-->
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script type="text/javascript" language="javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
 <script type="text/javascript" language="javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
 <script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
 <script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
 <script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
 <link href="https://cdn.datatables.net/buttons/1.0.1/css/buttons.dataTables.css" rel="stylesheet" type="text/css" />
 <script src="https://cdn.datatables.net/buttons/1.0.1/js/dataTables.buttons.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.0.3/js/buttons.html5.min.js"></script>
+<!--<script src="https://cdn.datatables.net/buttons/1.0.3/js/buttons.html5.min.js"></script>-->
 
 
 <script type="text/javascript">
@@ -326,9 +334,9 @@
                                         dom: 'Bfrtip',
                                         buttons: [
                                             { extend: 'print', text: 'Imprimir', header: 'false'},
-                                            { extend: 'excel', text: 'Excel' },
                                             { extend: 'pdf', text: 'PDF', orientation : 'landscape' }
                                         ],
+                                        "order": [],
                                        language: {
                                             paginate: {
                                                 first:      "Primeira",

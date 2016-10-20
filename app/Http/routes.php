@@ -598,6 +598,7 @@ Route::post('/configmsg/gravar','ConfigMsgController@store');
     Route::get('configuracoes/{id}/edit','ConfiguracoesController@edit');
 
     /*Células*/
+    Route::get('celulas/select1', 'CelulasController@loadSelect');
     Route::get('celulas/buscar/{id}', 'CelulasController@buscar_dados');
     Route::get('celulas/buscar_datas/{dia}/{mes}/{ano}', 'CelulasController@return_dates');
     Route::get('celulas', 'CelulasController@index');

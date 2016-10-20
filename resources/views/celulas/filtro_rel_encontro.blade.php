@@ -35,7 +35,22 @@
                                                                              </div>
                                                                       </div>
                                                                 </div>
+
+                                                                @if ($encontro)
+                                                               <!--
+                                                                <div class="col-xs-3">
+                                                                      <label for="ckExibirCurso" class="control-label">Listar Resumo Cursos/Eventos</label>
+                                                                      <div class="input-group">
+                                                                             <div class="input-group-addon">
+                                                                                  <input  id= "ckExibirCurso" name="ckExibirCurso" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm" />
+                                                                             </div>
+                                                                      </div>
+                                                                </div>
+                                                                -->
+                                                                @endif
+
                                                             </div>
+
 
                                                             <div class="row">
 

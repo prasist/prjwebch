@@ -7,7 +7,7 @@
 {{ \Session::put('route', 'relencontro') }}
 {{ \Session::put('id_pagina', '65') }}
 
-@include('celulas.filtro_rel_encontro')
+@include('celulas.filtro_rel_encontro', ['encontro'=>true])
 
 @include('configuracoes.script_estruturas')
 @endsection

@@ -42,6 +42,17 @@ class CelulasController extends Controller
 
     }
 
+    /**//**
+     * Description : load data from select 'local of meeting'
+     * @return var JSON
+     */
+    public function loadSelect() {
+
+       $users = \App\Models\users::select('id', 'name')->get();
+       return json_encode($users);
+
+    }
+
     public function getEstruturas()
     {
 

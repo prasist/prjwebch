@@ -500,20 +500,39 @@
                                                             @endif
                                                     @endif
 
+
+
                                                     @if ($item->tipo_resposta==2 || $item->tipo_resposta==3)
 
                                                             @if ($tipo_operacao=='editar')
                                                                     @if (rtrim(ltrim($item->resposta))!="")
                                                                          @if ($item->questionarios_id==$item->id)
-                                                                                <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="{{ ($tipo_operacao=='editar' ? $item->resposta : '') }}" />
+
+                                                                                @if ($item->tipo_resposta==2)
+                                                                                      <input id="text_resposta[]" name="text_resposta[]" type="number" name="input"  min="0" max="99" class="form-control"  value="{{ ($tipo_operacao=='editar' ? $item->resposta : '') }}" required>
+                                                                                @else
+                                                                                      <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="{{ ($tipo_operacao=='editar' ? $item->resposta : '') }}" />
+                                                                                @endif
                                                                          @else
-                                                                                <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="" />
+                                                                                @if ($item->tipo_resposta==2)
+                                                                                      <input id="text_resposta[]" name="text_resposta[]" type="number" name="input"  min="0" max="99" class="form-control"  value="" required>
+                                                                                @else
+                                                                                      <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="" />
+                                                                                @endif
                                                                          @endif
                                                                     @else
-                                                                         <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="" />
+                                                                         @if ($item->tipo_resposta==2)
+                                                                                <input id="text_resposta[]" name="text_resposta[]" type="number" name="input"  min="0" max="99" class="form-control"  value="" required>
+                                                                          @else
+                                                                                <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="" />
+                                                                          @endif
                                                                     @endif
                                                             @else
-                                                                    <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="" />
+                                                                    @if ($item->tipo_resposta==2)
+                                                                                <input id="text_resposta[]" name="text_resposta[]" type="number" name="input"  min="0" max="99" class="form-control"  value="" required>
+                                                                          @else
+                                                                                <input id="text_resposta[]" name="text_resposta[]" type="text" class="form-control"  value="" />
+                                                                          @endif
                                                             @endif
 
                                                     @else
