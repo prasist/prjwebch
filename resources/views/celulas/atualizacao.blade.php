@@ -61,8 +61,17 @@
 
 <div class="col-md-12">
 
-<div>
-        <a href="{{ url('/' . \Session::get('route')) }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+
+<div class="row">
+    <div class="col-xs-2">
+            <a href="{{ url('/' . \Session::get('route')) }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+    </div>
+
+    <div class="col-xs-3">
+        <a href="{{ url('/tutoriais/4')}}" data-toggle="tooltip" title="Veja nosso tutorial e tire suas dúvidas..." target="_blank">
+            <i class="glyphicon glyphicon-question-sign text-success"></i>&nbsp;Como cadastrar uma Célula ?
+       </a>
+    </div>
 </div>
 
 @if ($tipo_operacao=="incluir")

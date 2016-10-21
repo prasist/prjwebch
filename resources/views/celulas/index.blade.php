@@ -19,6 +19,12 @@
                 @endcan
                 </div>
 
+                <div class="col-xs-3">
+                    <a href="{{ url('/tutoriais/4')}}" data-toggle="tooltip" title="Veja nosso tutorial e tire suas dúvidas..." target="_blank">
+                        <i class="glyphicon glyphicon-question-sign text-success"></i>&nbsp;Como cadastrar uma Célula ?
+                   </a>
+                </div>
+
                <div class="col-xs-5">
                         <p class="text"><i> Legendas</i></p>
                         <span class="badge bg-yellow">0</span>&nbsp;Indica se há célula multiplicada ou vínculada
