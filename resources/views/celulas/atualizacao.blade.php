@@ -332,7 +332,7 @@
                                                 <div class="col-xs-3 {{ $errors->has('dia_encontro') ? ' has-error' : '' }}">
                                                       <label for="dia_encontro" class="control-label"><span class="text-danger">*</span> Dia Encontro</label>
 
-                                                      <select id="dia_encontro" ng-model="dia_encontro" required placeholder="(Selecionar)" name="dia_encontro" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                      <select id="dia_encontro"  placeholder="(Selecionar)" name="dia_encontro" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;" required>
                                                       <option  value=""></option>
                                                       <!--[0 Domingo] - [1 Segunda] - [2 Terca] - [3 Quarta] - [4 Quinta] - [5 Sexta] - [6 Sabado]-->
                                                       @if ($tipo_operacao=="editar")
@@ -355,9 +355,6 @@
                                                       </select>
 
 
-                                                      <span style="color:red" ng-show="form_celulas.dia_encontro.$error.required">Campo Obrigatório.</span>
-
-
                                                       <!-- se houver erros na validacao do form request -->
                                                      @if ($errors->has('dia_encontro'))
                                                       <span class="help-block">
@@ -375,14 +372,9 @@
 
                                                                 <div class="input-group">
                                                                   @if ($tipo_operacao=="editar")
-                                                                        <input type="text" ng-model="hora" data-inputmask='"mask": "99:99"' data-mask  name="horario" id="horario"  class="form-control input-small" value="{{ $dados[0]->horario}}" required>
+                                                                        <input type="text" data-inputmask='"mask": "99:99"' data-mask  name="horario" id="horario"  class="form-control input-small" value="{{ $dados[0]->horario}}" required>
                                                                   @else
-                                                                        <input type="text" ng-model="hora" data-inputmask='"mask": "99:99"' data-mask  name="horario" id="horario" class="form-control input-small" required>
-
-                                                                        <span style="color:red" ng-show="form_celulas.hora.$dirty && form_celulas.hora.$invalid">
-                                                                              <span style="color:red" ng-show="form_celulas.hora.$error.required">Campo Obrigatório.</span>
-                                                                        </span>
-
+                                                                        <input type="text" data-inputmask='"mask": "99:99"' data-mask  name="horario" id="horario" class="form-control input-small" required>
                                                                   @endif
                                                                   <div class="input-group-addon">
                                                                     <i class="fa fa-clock-o"></i>
@@ -781,8 +773,8 @@
 </div>
 
    <div class="box-footer">
-       <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }} ng-disabled="form_celulas.hora.$error.required || form_celulas.dia_encontro.$error.required"><i class="fa fa-save"></i> Salvar</button>
-       <a href="#" class="btn btn-warning" ng-disabled="form_celulas.hora.$error.required || form_celulas.dia_encontro.$error.required" onclick="salvar_e_incluir();" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }} ><i class="fa fa-users"></i> Salvar e Incluir Participantes</a>
+       <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }} ><i class="fa fa-save"></i> Salvar</button>
+       <a href="#" class="btn btn-warning" onclick="salvar_e_incluir();" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }} ><i class="fa fa-users"></i> Salvar e Incluir Participantes</a>
        <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Cancelar</a>
        <br/><span class="text-danger">*</span><i>Campos Obrigatórios</i>
    </div>

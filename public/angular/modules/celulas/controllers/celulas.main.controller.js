@@ -9,9 +9,9 @@
 
    function valida_campos_celulas($scope) {
         $scope.app = "Bem-Vindo Curioso";
-        $scope.hora = "";
-        $scope.dia_encontro = "";
-        $scope.lider="";
+        //$scope.hora = "";
+        //$scope.dia_encontro = "";
+        //$scope.lider="";
    }
 
 })();
