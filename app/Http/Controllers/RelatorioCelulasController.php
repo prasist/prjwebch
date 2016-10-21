@@ -1,5 +1,11 @@
 <?php
-
+/*
+    RELATORIOS E SUAS VIEWS
+    listagem_celulas => view_celulas_completo
+    listagem_celulas_pessoas_analitico => view_celulas_pessoas
+    listagem_celulas_pessoas_niveis => view_celulas_pessoas_niveis
+    listagem_celulas_sintetico => view_celulas_niveis
+ */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -62,7 +68,6 @@ public function index()
         }
 
         return $this->CarregarView('','');
-
 }
 
 
@@ -181,8 +186,6 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
                  $filtros .= "     Lider em Treinamento: " . $descricao_vice_lider[1];
             }
         }
-
-
     }
 
     if (isset($input["nivel1_up"]))
@@ -279,6 +282,16 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
     if (isset($input["nivel5_up"]))
         if ($input["nivel5_up"]!="0")  $filtros .= "        " . \Session::get('nivel5') . " : " . $descricao_nivel5[1];
 
+   //make where clausure for query in jasper report
+   //for report (encontro), set alias from field empresas_id (celulas.empresas_id)
+   if ($tipo_relatorio=="encontro")  {
+          $sWhere = " celulas.empresas_id = " . $this->dados_login->empresas_id . " and celulas.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
+   } else {
+          $sWhere = " empresas_id = " . $this->dados_login->empresas_id . " and empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
+   }
+
+
+    //parameters fields to jasper report
     $parametros = array
     (
         "empresas_id"=> $this->dados_login->empresas_id,
@@ -302,43 +315,73 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
                 $parametros = array_add($parametros, 'motivos_id', ($descricao_motivo[0]=="" ? 0 : $descricao_motivo[0]));
     }
 
-    if (isset($input["qtd_inicial"]))
-    {
+    if (isset($input["qtd_inicial"]) && isset($input["qtd_final"])) {
             $parametros = array_add($parametros, 'qtd_inicial', ($input["qtd_inicial"]=="" ? 0 : $input["qtd_inicial"]));
+
+            if ($input["qtd_inicial"]!="") {
+                $sWhere .= " and qtd_geracao between " . $input["qtd_inicial"] . " and " . $input["qtd_final"];
+            }
     }
 
-    if (isset($input["qtd_final"]))
-    {
-            $parametros = array_add($parametros, 'qtd_final', ($input["qtd_final"]=="" ? 0 : $input["qtd_final"]));
+    if (isset($input["qtd_final"])) {
+       $parametros = array_add($parametros, 'qtd_final', ($input["qtd_final"]=="" ? 0 : $input["qtd_final"]));
     }
 
     if (isset($input["publico_alvo"]))
     {
-        if ($input["publico_alvo"]!="0")
+        if ($input["publico_alvo"]!="0") {
             $parametros = array_add($parametros, 'publico_alvo', ($descricao_publico_alvo[0]=="" ? 0 : $descricao_publico_alvo[0]));
+            $sWhere .= " and publico_alvo_id = " . $descricao_publico_alvo[0];
+        }
     }
 
     if (isset($input["faixa_etaria"]))
     {
-        if ($input["faixa_etaria"]!="0")
+        if ($input["faixa_etaria"]!="0"){
             $parametros = array_add($parametros, 'faixa_etaria', ($descricao_faixa_etaria[0]=="" ? 0 : $descricao_faixa_etaria[0]));
+            $sWhere .= " and faixa_etaria_id = " . $descricao_faixa_etaria[0];
+        }
     }
 
     if (isset($input["regiao"]))
     {
-        if ($input["regiao"]!="")
-            $parametros = array_add($parametros, 'regiao', $input["regiao"] . '%');
+        if ($input["regiao"]!="") {
+            $parametros = array_add($parametros, 'regiao', $input["regiao"]);
+        }
     }
-
 
     if ($tipo_relatorio!="movimentacoes")  //RELATORIO MOVIMENTACOES
    {
              //PARAMETROS
             $parametros = array_add($parametros, 'nivel1', ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]));
+
+            if ($descricao_nivel1!="" && $descricao_nivel1[0]!="0") {
+                $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel1_id = " . $descricao_nivel1[0];
+            }
+
             $parametros = array_add($parametros, 'nivel2', ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]));
+
+            if ($descricao_nivel2!="" && $descricao_nivel2[0]!="0") {
+                $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel2_id = " . $descricao_nivel2[0];
+            }
+
             $parametros = array_add($parametros, 'nivel3', ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]));
+
+            if ($descricao_nivel3!="" && $descricao_nivel3[0]!="0") {
+                $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel3_id = " . $descricao_nivel3[0];
+            }
+
             $parametros = array_add($parametros, 'nivel4', ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]));
+
+            if ($descricao_nivel4!="" && $descricao_nivel4[0]!="0") {
+                $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel4_id = " . $descricao_nivel4[0];
+            }
+
             $parametros = array_add($parametros, 'nivel5', ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]));
+
+            if ($descricao_nivel5!="" && $descricao_nivel5[0]!="0") {
+                $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel5_id = " . $descricao_nivel5[0];
+            }
    }
 
 
@@ -347,6 +390,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
         if ($input["mes"]!="")
         {
             $parametros = array_add($parametros, 'mes', $input["mes"]);
+            $sWhere .= " and mes = " . $input["mes"];
         }
     }
 
@@ -355,16 +399,9 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
         if ($input["ano"]!="")
         {
             $parametros = array_add($parametros, 'ano', $input["ano"]);
+            $sWhere .= " and ano = " . $input["ano"];
         }
     }
-
- /*
-    RELATORIOS E SUAS VIEWS
-    listagem_celulas => view_celulas_completo
-    listagem_celulas_pessoas_analitico => view_celulas_pessoas
-    listagem_celulas_pessoas_niveis => view_celulas_pessoas_niveis
-    listagem_celulas_sintetico => view_celulas_niveis
- */
 
 
    if ($tipo_relatorio=="celulas")  //Relatorio de celulas
@@ -388,40 +425,28 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
             if ($descricao_lider[0]!="0")
             {
                 $parametros = array_add($parametros, 'lideres', $descricao_lider[0]);
+                $sWhere .= " and lider_pessoas_id = " . $descricao_lider[0];
             }
 
             if ($descricao_vice_lider[0]!="0")
             {
                 $parametros = array_add($parametros, 'vice_lider', $descricao_vice_lider[0]);
+                $sWhere .= " and vicelider_pessoas_id = " . $descricao_vice_lider[0];
             }
 
-            //if ($input["tipo_relatorio"]=="S") //Sintético
-            //{
               if ($input["ckExibir"]) //Exibir participantes
               {
-                    if ($input["ckEstruturas"])
-                    {
-                        //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas_niveis.jrxml');
+                    if ($input["ckEstruturas"]) {
                         $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_niveis.jasper';
-                    }
-                    else
-                    {
-                        //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas.jrxml');
-                        //$nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas.jasper';
+                    } else {
                         $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_analitico.jasper';
                     }
 
               } else
               {
-                    if ($input["ckEstruturas"])
-                    {
-                        //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas_pessoas_niveis_sintetico.jrxml');
-                        //$nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_niveis_sintetico.jasper';
+                    if ($input["ckEstruturas"])                    {
                         $nome_relatorio = public_path() . '/relatorios/listagem_celulas_sintetico.jasper';
-                    }
-                    else
-                    {
-                         //$PHPJasperXML->load_xml_file(__DIR__ . '/../../../public/relatorios/listagem_celulas.jrxml');
+                    } else {
                          $nome_relatorio = public_path() . '/relatorios/listagem_celulas.jasper';
                     }
               }
@@ -439,24 +464,20 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
         $parametros = array_add($parametros, 'SUBREPORT_DIR', public_path() . '/relatorios/');
 
-        if ($descricao_lider[0]!="0")
-        {
-              $parametros = array_add($parametros, 'lideres', $descricao_lider[0]);
+        if ($descricao_lider[0]!="0") {
+            $parametros = array_add($parametros, 'lideres', $descricao_lider[0]);
+            $sWhere .= " and celulas.lider_pessoas_id = " . $descricao_lider[0];
         }
 
         //se houver logo informada
-        if (rtrim(ltrim(\Session::get('logo')))!="")
-        {
+        if (rtrim(ltrim(\Session::get('logo')))!="") {
             $parametros = array_add($parametros, 'path_logo', public_path() . '/images/clients/' . \Session::get('logo'));
         }
 
-        if ($input["ckExibir"]=="on") //Exibir PARTICIPANTES
-        {
-               $nome_relatorio = public_path() . '/relatorios/relatorio_encontro.jasper';
-        }
-        else
-        {
-                $nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral_lider2.jasper';
+        if ($input["ckExibir"]=="on") {
+              $nome_relatorio = public_path() . '/relatorios/relatorio_encontro.jasper';
+        } else {
+              $nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral_lider2.jasper';
         }
 
    }
@@ -477,6 +498,9 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
    }
 
+    //set parameter sWhere for query in report
+    $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");
+
 
     \JasperPHP::process(
             $nome_relatorio,
@@ -490,7 +514,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
 
             $Mensagem="";
-
+            //dd($parametros);
             if (filesize($output . '.' . $ext)<=1000) //Se arquivo tiver menos de 1k, provavelmente está vazio...
             {
 
@@ -498,12 +522,10 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
                 if ($tipo_relatorio=="celulas")  {
                     return $this->CarregarView('', $Mensagem);
                 } else {
-                    //return redirect('relencontro');
 
-                       header('Content-Description: File Transfer');
+                    header('Content-Description: File Transfer');
                     header('Content-Type: application/pdf');
                     header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
-                    //header('Content-Transfer-Encoding: binary');
                     header('Expires: 0');
                     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
                     header('Content-Length: ' . filesize($output.'.'.$ext));
@@ -523,7 +545,6 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
                     header('Content-Description: File Transfer');
                     header('Content-Type: application/pdf');
                     header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
-                    //header('Content-Transfer-Encoding: binary');
                     header('Expires: 0');
                     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
                     header('Content-Length: ' . filesize($output.'.'.$ext));

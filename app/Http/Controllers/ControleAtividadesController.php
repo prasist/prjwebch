@@ -778,11 +778,16 @@ class ControleAtividadesController extends Controller
     $path_download = '/relatorios/resultados/' . $ext . '/encontro_' . $this->dados_login->empresas_id . '_' .  Auth::user()->id; //Path para cada tipo de relatorio
     /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
 
+
+   //make where clausure for query in jasper report
+   $sWhere = " ca.empresas_id = " . $this->dados_login->empresas_id . " and ca.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
+   $sWhere .= " and ca.id = " . $id;
+
+
     $parametros = array
     (
         "empresas_id"=> $this->dados_login->empresas_id,
         "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
-        "controle_ativ_id"=> $id,
         "data_encontro"=> "'" . $data . "'",
         "SUBREPORT_DIR"=> "'" . public_path() . '/relatorios/' . "'"
     );
@@ -800,6 +805,9 @@ class ControleAtividadesController extends Controller
         $parametros = array_add($parametros, 'exibir_pessoas', 'N');
     }
 
+
+   //set parameter sWhere for query in report
+   $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");
 
    $nome_relatorio = public_path() . '/relatorios/relatorio_encontro.jasper';
 
