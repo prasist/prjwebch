@@ -22,13 +22,13 @@
     <div class="col-md-12">
 
     <div>
-            <a href={{ url('/' . \Session::get('route')) . '/' . $tipo }} class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+            <a href="{{ url('/' . \Session::get('route')) . '/' . $tipo }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
     </div>
 
-     @if ($tipo_operacao=="editar")
-          <form method = 'POST' class="form-horizontal"  action = {{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update/' . $tipo)}}>
+     @if (isset($dados))
+          <form method = 'POST' class="form-horizontal"  action = "{{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update/' . $tipo)}}">
      @else
-          <form method = 'POST'  class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/gravar/' . $tipo)}}>
+          <form method = 'POST'  class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/gravar/' . $tipo)}}">
      @endif
 
         {!! csrf_field() !!}
@@ -52,7 +52,7 @@
                                         <div class="row">
                                               <div class="col-xs-4 {{ $errors->has('descricao') ? ' has-error' : '' }}">
                                                     <label for="descricao" class="control-label"><span class="text-danger">*</span>  Descrição</label>
-                                                    @if ($tipo_operacao=="editar")
+                                                    @if (isset($dados))
                                                         <input id="descricao"  placeholder="Campo Obrigatório" name = "descricao" type="text" class="form-control" value="{{ $dados[0]->descricao }}">
                                                     @else
                                                         <input id="descricao"  placeholder="Campo Obrigatório" name = "descricao" type="text" class="form-control" value="">
@@ -69,7 +69,7 @@
                                                     <label for="valor" class="control-label"><span class="text-danger">*</span>  Valor</label>
                                                     <div class="input-group">
                                                        <span class="input-group-addon">R$</span>
-                                                         @if ($tipo_operacao=="editar")
+                                                         @if (isset($dados))
                                                               <input id="valor" maxlength="60"   name = "valor" type="text" class="formata_valor form-control" value="{{ $dados[0]->valor }}">
                                                          @else
                                                               <input id="valor" maxlength="60"   name = "valor" type="text" class="formata_valor form-control" onblur="onblur_valor();" value="">
@@ -89,7 +89,7 @@
                                                          <div class="input-group-addon">
                                                           <i class="fa fa-calendar"></i>
                                                           </div>
-                                                          @if ($tipo_operacao=="editar")
+                                                          @if (isset($dados))
                                                                 <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ $dados[0]->data_emissao }}">
                                                           @else
                                                                 <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
@@ -103,7 +103,7 @@
                                                          <div class="input-group-addon">
                                                           <i class="fa fa-calendar"></i>
                                                           </div>
-                                                          @if ($tipo_operacao=="editar")
+                                                          @if (isset($dados))
                                                                 <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ $dados[0]->data_vencimento }}">
                                                           @else
                                                                 <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
@@ -122,7 +122,7 @@
                                         <div class="row">
                                               <div class="col-xs-4  {{ $errors->has('conta') ? ' has-error' : '' }}">
                                                     <span class="text-danger">*</span>
-                                                    @if ($tipo_operacao=="editar")
+                                                   @if (isset($dados))
                                                             @include('carregar_combos', array('dados'=>$contas, 'titulo' =>'Conta', 'id_combo'=>'conta', 'complemento'=>'', 'comparar'=>$dados[0]->contas_id, 'id_pagina'=> '48'))
                                                    @else
                                                             @include('carregar_combos', array('dados'=>$contas, 'titulo' =>'Conta', 'id_combo'=>'conta', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '48'))
@@ -138,7 +138,7 @@
                                               </div><!-- col-xs-->
 
                                               <div class="col-xs-4">
-                                                    @if ($tipo_operacao=="editar")
+                                                    @if (isset($dados))
                                                           @include('carregar_combos', array('dados'=>$plano_contas, 'titulo' =>'Plano de Contas', 'id_combo'=>'plano', 'complemento'=>'', 'comparar'=>$dados[0]->planos_contas_id, 'id_pagina'=> '49'))
                                                     @else
                                                           @include('carregar_combos', array('dados'=>$plano_contas, 'titulo' =>'Plano de Contas', 'id_combo'=>'plano', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '49'))
@@ -150,12 +150,17 @@
                                               <div class="col-xs-3">
 
                                                     <input type="hidden" name="centros_custos" id="centros_custos" value="">
-                                                    @if ($rateio_titulos->count()>0)
-                                                          @if ($tipo_operacao=="editar")
-                                                                <label for="centros_custos" class="control-label text-info">Centro de Custo <i>(Existem Valores de Rateio)</i></label>
-                                                          @else
-                                                                <label for="centros_custos" class="control-label">Centro de Custo</label>
-                                                          @endif
+
+                                                    @if (isset($rateio_titulos))
+                                                        @if ($rateio_titulos->count()>0)
+                                                              @if ($tipo_operacao=="editar")
+                                                                    <label for="centros_custos" class="control-label text-info">Centro de Custo <i>(Existem Valores de Rateio)</i></label>
+                                                              @else
+                                                                    <label for="centros_custos" class="control-label">Centro de Custo</label>
+                                                              @endif
+                                                        @else
+                                                              <label for="centros_custos" class="control-label">Centro de Custo</label>
+                                                        @endif
                                                     @else
                                                           <label for="centros_custos" class="control-label">Centro de Custo</label>
                                                     @endif
@@ -168,9 +173,17 @@
                                                                  </a>
                                                               </div>
 
-                                                              <select id="centros_custos" onchange="incluir_registro_combo('centros_custos');" placeholder="(Selecionar)"
-                                                              name="centros_custos" data-live-search="true" data-none-selected-text="Nenhum item selecionado"
-                                                              class="form-control selectpicker" style="width: 100%;" {{$rateio_titulos->count()>0 ? "disabled" : "" }}>
+                                                              @if (isset($rateio_titulos) && $rateio_titulos->count()>0)
+                                                                    <select id="centros_custos" onchange="incluir_registro_combo('centros_custos');" placeholder="(Selecionar)"
+                                                                    name="centros_custos" data-live-search="true" data-none-selected-text="Nenhum item selecionado"
+                                                                    class="form-control selectpicker" style="width: 100%;" {{$rateio_titulos->count()>0 ? "disabled" : "" }}>
+                                                             @else
+                                                                    <select id="centros_custos" onchange="incluir_registro_combo('centros_custos');" placeholder="(Selecionar)"
+                                                                    name="centros_custos" data-live-search="true" data-none-selected-text="Nenhum item selecionado"
+                                                                    class="form-control selectpicker" style="width: 100%;">
+                                                             @endif
+
+
                                                               <option  value=""></option>
 
                                                               <!-- Verifica permissão de inclusao da pagina/tabela-->
@@ -187,7 +200,7 @@
 
                                                               <optgroup label="Registros">
                                                               @foreach($centros_custos as $item)
-                                                                     @if ($tipo_operacao=="editar")
+                                                                     @if (isset($dados))
                                                                           <option  value="{{$item->id}}" {{$dados[0]->centros_custos_id==$item->id ? "selected" : ""}} >{{$item->nome}}</option>
                                                                      @else
                                                                           <option  value="{{$item->id}}">{{$item->nome}}</option>
@@ -273,7 +286,7 @@
                                                                   <div class="col-xs-10">
                                                                        <input type="hidden" name="hidden_id_rateio_cc[]" id="hidden_id_rateio_cc[]" value="">
                                                                         <table id="mais_rateios" class="table table-bordered table-hover">
-                                                                        @if ($rateio_titulos!=null)
+                                                                        @if (isset($rateio_titulos))
                                                                             <tr>
                                                                                   <td>Centro de Custo</td>
                                                                                   <td>%</td>
@@ -330,24 +343,26 @@
                                                       <label for="ckpago" class="control-label">Marcar como Pago (Parcial ou Integral) ?</label>
                                                       <div class="input-group">
                                                              <div class="input-group-addon">
-                                                                  @if ($tipo_operacao=="editar")
+                                                                  @if (isset($dados))
                                                                         <input  id= "ckpago" name="ckpago" type="checkbox" class="ckpago" data-group-cls="btn-group-sm" value="{{ ($dados[0]->status=='B' ? true : '') }}"  {{ ($dados[0]->status=='B' ? 'checked' : '') }} />
                                                                   @else
-                                                                        <input  id= "ckpago" name="ckpago" type="checkbox" class="ckpago" data-group-cls="btn-group-sm" value="{{ ($dados[0]->status=='B' ? true : '') }}"  />
+                                                                        <input  id= "ckpago" name="ckpago" type="checkbox" class="ckpago" data-group-cls="btn-group-sm" value=""  />
                                                                   @endif
                                                              </div>
                                                       </div>
                                                 </div>
                                         </div>
 
-                                        <!-- Somente para titulos parciais-->
-                                        @if ($dados[0]->saldo_a_pagar>0 && $dados[0]->saldo_a_pagar <> $dados[0]->valor)
-                                        <div class="row">
-                                              <div class="col-xs-10">
-                                                <label for="" class="control-label text-warning"><i class="fa fa-exclamation-triangle"></i> Esse Título está parcialmente baixado. Você pode efetuar novas baixas informando o valor no campo abaixo</label>
-                                                <p class="text-warning">- Em caso de pagamentos parciais, o título aparecerá como NÃO PAGO, pois existirá saldo à pagar.</p>
+                                        @if (isset($dados))
+                                              <!-- Somente para titulos parciais-->
+                                              @if ($dados[0]->saldo_a_pagar>0 && $dados[0]->saldo_a_pagar <> $dados[0]->valor)
+                                              <div class="row">
+                                                    <div class="col-xs-10">
+                                                      <label for="" class="control-label text-warning"><i class="fa fa-exclamation-triangle"></i> Esse Título está parcialmente baixado. Você pode efetuar novas baixas informando o valor no campo abaixo</label>
+                                                      <p class="text-warning">- Em caso de pagamentos parciais, o título aparecerá como NÃO PAGO, pois existirá saldo à pagar.</p>
+                                                    </div>
                                               </div>
-                                        </div>
+                                              @endif
                                         @endif
                                         <!-- FIM - Somente para titulos parciais-->
 
@@ -360,7 +375,7 @@
                                                            <span class="input-group-addon">R$</span>
                                                            <b>
 
-                                                           @if ($tipo_operacao=="editar")
+                                                           @if (isset($dados))
                                                                 <input id="total_pago" readonly="true"  name = "total_pago" type="text" class="formata_valor form-control" value="{{$dados[0]->valor - $dados[0]->saldo_a_pagar}}">
                                                            @else
                                                                 <input id="total_pago" readonly="true"  name = "total_pago" type="text" class="formata_valor form-control" value="">
@@ -376,7 +391,7 @@
                                                            <span class="input-group-addon">R$</span>
                                                            <b>
 
-                                                           @if ($tipo_operacao=="editar")
+                                                           @if (isset($dados))
                                                                 <input id="saldo" readonly="true"  name = "saldo" type="text" class="formata_valor form-control" value="{{$dados[0]->saldo_a_pagar}}">
                                                            @else
                                                                 <input id="saldo" readonly="true"  name = "saldo" type="text" class="formata_valor form-control" value="">
@@ -395,7 +410,7 @@
                                                                  <div class="input-group-addon">
                                                                   <i class="fa fa-calendar"></i>
                                                                   </div>
-                                                                  @if ($tipo_operacao=="editar")
+                                                                  @if (isset($dados))
                                                                         <input id ="data_pagamento" name = "data_pagamento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{$dados[0]->data_pagamento}}">
                                                                   @else
                                                                         <input id ="data_pagamento" name = "data_pagamento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
@@ -408,7 +423,7 @@
                                                             <label for="acrescimo" class="control-label">Acréscimo</label>
                                                             <div class="input-group">
                                                                <span class="input-group-addon">R$</span>
-                                                                 @if ($tipo_operacao=="editar")
+                                                                 @if (isset($dados))
                                                                       <input id="acrescimo" maxlength="10"   name = "acrescimo" type="text" class="formata_valor form-control" onblur="recalcula();" value="{{$dados[0]->acrescimo}}">
                                                                  @else
                                                                       <input id="acrescimo" maxlength="10"   name = "acrescimo" type="text" class="formata_valor form-control" onblur="recalcula();" value="">
@@ -420,7 +435,7 @@
                                                             <label for="desconto" class="control-label">Desconto</label>
                                                             <div class="input-group">
                                                                <span class="input-group-addon">R$</span>
-                                                                 @if ($tipo_operacao=="editar")
+                                                                 @if (isset($dados))
                                                                       <input id="desconto" maxlength="10"   name = "desconto" type="text" class="formata_valor form-control" onblur="recalcula();" value="{{$dados[0]->desconto}}">
                                                                  @else
                                                                       <input id="desconto" maxlength="10"   name = "desconto" type="text" class="formata_valor form-control" onblur="recalcula();" value="">
@@ -472,7 +487,7 @@
 
                                                                                           @include('modal_buscar_pessoas', array('qual_campo'=>'fornecedor', 'modal' => 'modal_fornecedor'))
 
-                                                                                          @if ($tipo_operacao=="editar")
+                                                                                          @if (isset($dados))
                                                                                                 <input id="fornecedor" name = "fornecedor" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($dados[0]->pessoas_id!='' ? str_repeat('0', (9-strlen($dados[0]->pessoas_id))) . $dados[0]->pessoas_id . ' - ' . $dados[0]->razaosocial  : '') !!}" readonly >
                                                                                           @else
                                                                                                 <input id="fornecedor" name = "fornecedor" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
@@ -483,7 +498,7 @@
 
                                                                           <div class="col-xs-5">
                                                                                 <label for="obs" class="control-label">Observação</label>
-                                                                                @if ($tipo_operacao=="editar")
+                                                                                @if (isset($dados))
                                                                                       <input id="obs"  placeholder="(Opcional)" name = "obs" type="text" class="form-control" value="{{$dados[0]->obs}}">
                                                                                 @else
                                                                                       <input id="obs"  placeholder="(Opcional)" name = "obs" type="text" class="form-control" value="">
@@ -495,7 +510,7 @@
                                                                      <div class="row">
                                                                           <div class="col-xs-2">
                                                                                 <label for="parcelas" class="control-label">Qtd. Parcelas</label>
-                                                                                @if ($tipo_operacao=="editar")
+                                                                                @if (isset($dados))
                                                                                       <input id="parcelas"  placeholder="(Opcional)" name = "parcelas" type="number" class="form-control" value="{{$dados[0]->numpar}}">
                                                                                 @else
                                                                                       <input id="parcelas"  placeholder="(Opcional)" name = "parcelas" type="number" class="form-control" value="">
@@ -504,7 +519,7 @@
 
                                                                           <div class="col-xs-2">
                                                                                 <label for="numdoc" class="control-label">N. Documento</label>
-                                                                                @if ($tipo_operacao=="editar")
+                                                                                @if (isset($dados))
                                                                                       <input id="numdoc"  placeholder="(Opcional)" name = "numdoc" type="text" class="form-control" value="{{$dados[0]->numdoc}}">
                                                                                 @else
                                                                                       <input id="numdoc"  placeholder="(Opcional)" name = "numdoc" type="text" class="form-control" value="">
@@ -513,7 +528,7 @@
 
                                                                           <div class="col-xs-2">
                                                                                 <label for="serie" class="control-label">Série</label>
-                                                                                @if ($tipo_operacao=="editar")
+                                                                                @if (isset($dados))
                                                                                       <input id="serie"  placeholder="(Opcional)" name = "serie" type="text" class="form-control" value="{{$dados[0]->serie}}">
                                                                                 @else
                                                                                       <input id="serie"  placeholder="(Opcional)" name = "serie" type="text" class="form-control" value="">
@@ -521,7 +536,7 @@
                                                                           </div>
 
                                                                           <div class="col-xs-6">
-                                                                                @if ($tipo_operacao=="editar")
+                                                                                @if (isset($dados))
                                                                                       @include('carregar_combos', array('dados'=>$grupos_titulos, 'titulo' =>'Grupo Título', 'id_combo'=>'grupos_titulos', 'complemento'=>'', 'comparar'=>$dados[0]->grupos_titulos_id, 'id_pagina'=> '51'))
                                                                                 @else
                                                                                       @include('carregar_combos', array('dados'=>$grupos_titulos, 'titulo' =>'Grupo Título', 'id_combo'=>'grupos_titulos', 'complemento'=>'', 'comparar'=>'', 'id_pagina'=> '51'))
@@ -564,35 +579,37 @@
                                         <td>Status</td>
                                         <td>Ação</td>
                                     </tr>
-                                    @foreach($log as $item)
-                                          <tr>
-                                              <td>{{$item->data_ocorrencia}}</td>
-                                              <td>{{$item->name}}</td>
-                                              <td>{{$item->descricao}}</td>
-                                              <td>{{$item->valor}}</td>
-                                              <td>{{$item->acrescimo}}</td>
-                                              <td>{{$item->desconto}}</td>
-                                              <td>{{$item->valor_pago}}</td>
-                                              <td>{{$item->saldo_a_pagar}}</td>
-                                              <td>{{$item->status}}</td>
-                                              <td>
-                                              <!-- Se houve alteracao de status, poderá ser baixa, estorno ou baixa parcial-->
-                                              <!-- Se houver alteracao de status-->
-                                              @if (trim($item->alteracao_status)!="")
-                                                  @if ($item->saldo_a_pagar==0)
-                                                        <p>Baixa Integral</p>
-                                                  @elseif ($item->saldo_a_pagar==$item->valor)
-                                                        <p>Estorno</p>
+                                    @if (isset($log))
+                                        @foreach($log as $item)
+                                              <tr>
+                                                  <td>{{$item->data_ocorrencia}}</td>
+                                                  <td>{{$item->name}}</td>
+                                                  <td>{{$item->descricao}}</td>
+                                                  <td>{{$item->valor}}</td>
+                                                  <td>{{$item->acrescimo}}</td>
+                                                  <td>{{$item->desconto}}</td>
+                                                  <td>{{$item->valor_pago}}</td>
+                                                  <td>{{$item->saldo_a_pagar}}</td>
+                                                  <td>{{$item->status}}</td>
+                                                  <td>
+                                                  <!-- Se houve alteracao de status, poderá ser baixa, estorno ou baixa parcial-->
+                                                  <!-- Se houver alteracao de status-->
+                                                  @if (trim($item->alteracao_status)!="")
+                                                      @if ($item->saldo_a_pagar==0)
+                                                            <p>Baixa Integral</p>
+                                                      @elseif ($item->saldo_a_pagar==$item->valor)
+                                                            <p>Estorno</p>
+                                                      @else
+                                                            <p>Baixa Parcial</p>
+                                                      @endif
                                                   @else
-                                                        <p>Baixa Parcial</p>
+                                                      {{$item->acao}}
                                                   @endif
-                                              @else
-                                                  {{$item->acao}}
-                                              @endif
 
-                                              </td>
-                                          </tr>
-                                    @endforeach
+                                                  </td>
+                                              </tr>
+                                        @endforeach
+                                    @endif
                                     </table>
                           </div>
                           <!-- /.tab-pane -->

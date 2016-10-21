@@ -99,10 +99,7 @@ class TitulosController extends Controller
         ->OrderBy('nome')
         ->get();
 
-        $vazio = \App\Models\tabela_vazia::get();
-
-        //return view($this->rota . '.registrar
-        return view($this->rota . '.atualizacao', ['preview'=>'false', 'log'=>$vazio, 'dados'=>$vazio, 'rateio_titulos'=>$vazio, 'tipo_operacao'=>'incluir', 'contas' => $contas,'tipo'=>$tipo, 'plano_contas'=>$plano_contas, 'centros_custos'=>$centros_custos, 'grupos_titulos'=>$grupos_titulos]);
+        return view($this->rota . '.atualizacao', ['preview'=>'false', 'tipo_operacao'=>'incluir', 'contas' => $contas,'tipo'=>$tipo, 'plano_contas'=>$plano_contas, 'centros_custos'=>$centros_custos, 'grupos_titulos'=>$grupos_titulos]);
 
     }
 

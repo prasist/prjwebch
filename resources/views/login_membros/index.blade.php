@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="col-xs-3">
-                        <a href="{{ url('/tutoriais/3')}}" data-toggle="tooltip" title="Veja nosso tutorial e tire suas dúvidas..." target="_blank">
+                        <a href="{{ url('/tutoriais/3')}}" data-toggle="tooltip" title="Clique Aqui para ver o tutorial..." target="_blank">
                               <i class="glyphicon glyphicon-question-sign text-success"></i>&nbsp;Como criar um login para o Membro ?
                         </a>
                 </div>

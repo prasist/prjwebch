@@ -12,10 +12,10 @@
     <div class="col-md-12">
 
     <div>
-            <a href={{ url('/' . \Session::get('route')) }} class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+            <a href="{{ url('/' . \Session::get('route')) }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
     </div>
 
-    <form method = 'POST' class="form-horizontal"  action = {{ url('/' . \Session::get('route') . '/' . $dados[0]->celulas_id . '/update')}}>
+    <form method = 'POST' class="form-horizontal"  action = "{{ url('/' . \Session::get('route') . '/' . $dados[0]->celulas_id . '/update')}}">
 
     {!! csrf_field() !!}
 
@@ -166,10 +166,11 @@
                    else
                    {
 
-                        if (confirm('Pessoa já participa de outra Célula, confirma inclusão mesmo assim ? '))
-                        {
-                              AddTableRow();
-                        }
+                        //if (confirm('Pessoa já participa de outra Célula, confirma inclusão mesmo assim ? '))
+                        //{
+                        //      AddTableRow();
+                        //}
+                        alert('Pessoa já participa de outra Célula.');
 
                    }
 
