@@ -475,10 +475,14 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
         }
 
         if ($input["ckExibir"]=="on") {
-              $nome_relatorio = public_path() . '/relatorios/relatorio_encontro.jasper';
+              $parametros = array_add($parametros, 'exibir_pessoas', 'S');
+              //$nome_relatorio = public_path() . '/relatorios/relatorio_encontro.jasper';
         } else {
-              $nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral_lider2.jasper';
+              //$nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral_lider2.jasper';
+            $parametros = array_add($parametros, 'exibir_pessoas', 'N');
         }
+
+        $nome_relatorio = public_path() . '/relatorios/relatorio_encontro.jasper';
 
    }
    else if ($tipo_relatorio=="movimentacoes")  //RELATORIO MOVIMENTACOES
