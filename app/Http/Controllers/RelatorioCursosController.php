@@ -135,7 +135,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
         if ($descricao_lider[0]!="0")  {
             $filtros .= "     Celula : " . $descricao_lider[1];
-            $sWhere .= " and lider_pessoas_id = " . $descricao_lider[0];
+            $sWhere .= " and cel.lider_pessoas_id = " . $descricao_lider[0];
         }
    }
 
