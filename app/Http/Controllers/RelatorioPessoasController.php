@@ -424,6 +424,7 @@ class RelatorioPessoasController extends Controller
             ]);
     }
 
+/*
     if ($input["ano_inicial"]!="" && $input["ano_final"]!="" )
     {
         $filtros = array_add($filtros, '19',
@@ -438,6 +439,7 @@ class RelatorioPessoasController extends Controller
                 'label' =>['Ano Final'=>$input["ano_final"]]
             ]);
     }
+    */
 
     if ($input["sexo"]!="")
     {
@@ -707,6 +709,13 @@ class RelatorioPessoasController extends Controller
                 }
             }
         }
+
+        if ($input["ano_inicial"]!="" && $input["ano_final"]!="" )
+        {
+            $sWhere .= " And to_char(p.datanasc, 'YYYY')>= '" . $input["ano_inicial"] . "'";
+            $sWhere .= " And to_char(p.datanasc, 'YYYY')<= '" . $input["ano_final"] . "'";
+        }
+
 
         $sFiltrosUtilizados .= "</tr></table>";
 
