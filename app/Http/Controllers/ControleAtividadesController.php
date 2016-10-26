@@ -802,7 +802,7 @@ class ControleAtividadesController extends Controller
     //Relatorio Resumido
     if ($tipo=="R")
     {
-        $parametros = array_add($parametros, 'exibir_pessoas', 'N');
+        $parametros = array_add($parametros, 'exibir_pessoas', 0);
     }
 
 
