@@ -726,7 +726,6 @@
 
 <script type="text/javascript">
 
-
        var myApp;
        myApp = myApp || (function () {
 
@@ -741,13 +740,11 @@
       function validar_datas()
       {
 
-
          if (($('#data_entrada').val()!="" && $('#data_entrada_ate').val()=="") || ($('#data_entrada').val()=="" && $('#data_entrada_ate').val()!=""))
          {
               alert('Informe a Data de Entrada Inicial e Final');
               return false;
          }
-
 
          if (($('#data_batismo').val()!="" && $('#data_batismo_ate').val()=="") || ($('#data_batismo').val()=="" && $('#data_batismo_ate').val()!=""))
          {
@@ -766,7 +763,6 @@
 
        }
 
-
       /*Prepara checkbox bootstrap*/
        $(function () {
 
@@ -783,7 +779,7 @@
       });
 
 </script>
-@include('configuracoes.script_estruturas')
 
+@include('configuracoes.script_estruturas')
 
 @endsection

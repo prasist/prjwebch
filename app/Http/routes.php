@@ -49,6 +49,8 @@
 
     });
 
+Route::get('relcursos', 'RelatorioCursosController@index'); /*PAGINA INICIAL DOS RELATORIOS (FILTROS)*/
+Route::post('relcursos/pesquisar/{tipo}', 'RelatorioCursosController@pesquisar');  /*RELATORIO DE CELULAS, PASSANDO PARAMETRO "CELULAS" GERARÁ O RELATÓRIO DE CELULAS, OU "ENCONTRO" PARA RELATORIOS DOS ENCONTROS*/
 
 /*--------------------------RELATÓRIOS ENVOLVENDO CÉLULAS / PESSOAS-------------------------*/
 Route::get('/relmovimentacoes','RelatorioCelulasController@index_movimentacoes'); /*RELATORIO DE MOVIMENTACOES*/

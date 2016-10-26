@@ -168,6 +168,10 @@
           @if(Gate::check('verifica_permissao', [47 ,'acessar']))
           <li><a href="{{ url('/relpessoas')}}"><i class="fa fa-print"></i> Relatórios</a></li>
           @endif
+
+          @if(Gate::check('verifica_permissao', [69 ,'acessar']))
+          <li><a href="{{ url('/relcursos')}}"><i class="fa fa-print"></i> Relatórios Cursos / Eventos</a></li>
+          @endif
         </ul>
       </li>
       @endcan

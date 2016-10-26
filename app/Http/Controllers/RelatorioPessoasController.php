@@ -488,7 +488,7 @@ class RelatorioPessoasController extends Controller
     {
         $filtros = array_add($filtros, '26',
             [
-                'find' =>['status_id'=>$descricao_status[0]],
+                'find' =>['mp.status_id'=>$descricao_status[0]],
                 'label' =>['Status'=>$descricao_status[1]]
             ]);
     }

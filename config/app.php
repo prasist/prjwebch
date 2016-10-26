@@ -73,6 +73,7 @@ return [
     'cursos'=>'66',
     'membersmove'=>'67',
     'relmovimentacoes' => '68',
+    'relcursos' => '69',
 
 
 

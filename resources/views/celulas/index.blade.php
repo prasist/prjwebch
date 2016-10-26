@@ -13,7 +13,7 @@
         <div class="row">
                 <div class="col-xs-2">
                 @can('verifica_permissao', [ \Session::get('id_pagina'),'incluir'])
-                  <form method = 'get' class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/registrar')}}>
+                  <form method = 'get' class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/registrar')}}">
                         <button class = 'btn btn-success btn-flat' type ='submit'><i class="fa fa-file-text-o"></i> Criar Nova Célula</button>
                   </form>
                 @endcan
@@ -117,19 +117,17 @@
                             </td>
 
                             <td class="col-xs-1">
+                                      @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
+                                      <form id="excluir{{ $value->id }}" action="{{ URL::to(\Session::get('route') . '/' . $value->id . '/delete') }}" method="DELETE">
 
-                                                @can('verifica_permissao', [ \Session::get('id_pagina') ,'excluir'])
-                                                <form id="excluir{{ $value->id }}" action="{{ URL::to(\Session::get('route') . '/' . $value->id . '/delete') }}" method="DELETE">
+                                            <button
+                                                data-toggle="tooltip" data-placement="top" title="Excluir Registro" type="submit"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Confirma exclusão do registro ?');">
+                                                <spam class="glyphicon glyphicon-trash"></spam></button>
 
-                                                      <button
-                                                          data-toggle="tooltip" data-placement="top" title="Excluir Registro" type="submit"
-                                                          class="btn btn-danger btn-sm"
-                                                          onclick="return confirm('Confirma exclusão do registro ?');">
-                                                          <spam class="glyphicon glyphicon-trash"></spam></button>
-
-                                                </form>
-                                                @endcan
-
+                                      </form>
+                                      @endcan
                             </td>
 
 

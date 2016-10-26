@@ -165,13 +165,11 @@
                    }
                    else
                    {
-
                         //if (confirm('Pessoa já participa de outra Célula, confirma inclusão mesmo assim ? '))
                         //{
                         //      AddTableRow();
                         //}
                         alert('Pessoa já participa de outra Célula.');
-
                    }
 
                }

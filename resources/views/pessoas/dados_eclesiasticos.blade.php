@@ -1524,8 +1524,8 @@
                                                                   <tr>
                                                                       <td class="col-xs-3">{!!$item->nome!!}</td>
                                                                       <td class="col-xs-4">{!!$item->razaosocial!!}</td>
-                                                                      <td class="col-xs-2">{!!$item->data_inicio!!}</td>
-                                                                      <td class="col-xs-2">{!!$item->data_fim!!}</td>
+                                                                      <td class="col-xs-2">{!! date('d/m/Y',strtotime($item->data_inicio)) !!}</td>
+                                                                      <td class="col-xs-2">{!! date('d/m/Y',strtotime($item->data_fim)) !!}</td>
                                                                       <td class="col-xs-5">{!!$item->observacao!!}</td>
                                                                       <td class="col-xs-1"><a href="#tabela_cursos" class="btn btn-danger btn-sm" onclick="RemoveTableRow(this)"><spam class="glyphicon glyphicon-trash"></spam></a>
                                                                             <input id="hidden_cursos[]"  name = "hidden_cursos[]" type="hidden" value="{!!$item->id!!}">
@@ -1614,17 +1614,14 @@
 
 <script type="text/javascript">
 
-
-
-
   function remover_pessoa(var_objeto)
-    {
+  {
         $('#' + var_objeto).val('');
-    }
+  }
 
-/*Quando selecionar um conjuge do cadastro desabilitar os campos para informação manual*/
-   function validar_conjuge()
-   {
+  /*Quando selecionar um conjuge do cadastro desabilitar os campos para informação manual*/
+  function validar_conjuge()
+  {
 
       var ind_conjuge = document.getElementById("conjuge").selectedIndex;
       var texto_conjuge = document.getElementById("conjuge").options;
@@ -1643,7 +1640,7 @@
        }
 
 
-   }
+ }
 
 function incluir_filho_cadastro()
 {
@@ -1731,8 +1728,6 @@ function incluir_filho()
         });
       return false;
     });
-
-
 });
 
 </script>
