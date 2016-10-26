@@ -168,14 +168,18 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
     if (isset($input["data_inicio"]))
     {
-         $parametros = array_add($parametros, 'data_inicio', $formatador->FormatarData($input["data_inicio"]));
-         $filtros .= "     Data Inicial : " . $input["data_inicio"];
+        if (trim($input["data_inicio"])!="") {
+             $parametros = array_add($parametros, 'data_inicio', $formatador->FormatarData($input["data_inicio"]));
+             $filtros .= "     Data Inicial : " . $input["data_inicio"];
+        }
     }
 
     if (isset($input["data_fim"]))
     {
-         $filtros .= "     Data Final : " . $input["data_fim"];
-         $parametros = array_add($parametros, 'data_fim', $formatador->FormatarData($input["data_fim"]));
+        if (trim($input["data_fim"])!="") {
+             $filtros .= "     Data Final : " . $input["data_fim"];
+             $parametros = array_add($parametros, 'data_fim', $formatador->FormatarData($input["data_fim"]));
+         }
     }
 
     if ($descricao_nivel1!="" && $descricao_nivel1[0]!="0") {
