@@ -34,7 +34,6 @@ class RelatorioCursosController extends Controller
 
     }
 
-
  public function CarregarView($var_download, $var_mensagem)
 {
 
