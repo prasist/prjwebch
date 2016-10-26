@@ -808,7 +808,6 @@ public function salvar($request, $id, $tipo_operacao) {
                         /*------------------------------FIM - MEMBROS FILHOS (SEM CADASTRO) ------------------------------*/
 
 
-
                         /*------------------------------ Tabela CURSOS ---------------------------*/
                         if (isset($input['hidden_cursos']))
                         {
@@ -846,8 +845,8 @@ public function salvar($request, $id, $tipo_operacao) {
                                                             'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
                                                             'empresas_id' =>  $this->dados_login->empresas_id,
                                                             'ministrante_id' => ($input['inc_ministrante_id'][$i_index] !="" ? $input['inc_ministrante_id'][$i_index] : null),
-                                                            'data_inicio' => $formatador->FormatarData($input['inc_datainicio'][$i_index]),
-                                                            'data_fim' => $formatador->FormatarData($input['inc_datafim'][$i_index]),
+                                                            'data_inicio' => trim($input['inc_datainicio'][$i_index]) != "" ? $formatador->FormatarData(trim($input['inc_datainicio'][$i_index])) : "",
+                                                            'data_fim' => trim($input['inc_datafim'][$i_index]) != "" ? $formatador->FormatarData(trim($input['inc_datafim'][$i_index])) : "",
                                                             'observacao' => $input['inc_obs'][$i_index]
                                                         ];
 
@@ -858,6 +857,7 @@ public function salvar($request, $id, $tipo_operacao) {
 
                                                 }
                                         }
+
                                 }
                         }
                         /*------------------------------ FIM Tabela CURSOS---------------------------*/

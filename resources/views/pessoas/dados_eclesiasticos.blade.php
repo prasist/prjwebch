@@ -1524,16 +1524,16 @@
                                                                   <tr>
                                                                       <td class="col-xs-3">{!!$item->nome!!}</td>
                                                                       <td class="col-xs-4">{!!$item->razaosocial!!}</td>
-                                                                      <td class="col-xs-2">{!! date('d/m/Y',strtotime($item->data_inicio)) !!}</td>
-                                                                      <td class="col-xs-2">{!! date('d/m/Y',strtotime($item->data_fim)) !!}</td>
+                                                                      <td class="col-xs-2">{!! trim($item->data_inicio)!="" ? date('d/m/Y',strtotime($item->data_inicio)) : "" !!}</td>
+                                                                      <td class="col-xs-2">{!! trim($item->data_fim)!="" ? date('d/m/Y',strtotime($item->data_fim)) : "" !!}</td>
                                                                       <td class="col-xs-5">{!!$item->observacao!!}</td>
                                                                       <td class="col-xs-1"><a href="#tabela_cursos" class="btn btn-danger btn-sm" onclick="RemoveTableRow(this)"><spam class="glyphicon glyphicon-trash"></spam></a>
                                                                             <input id="hidden_cursos[]"  name = "hidden_cursos[]" type="hidden" value="{!!$item->id!!}">
                                                                             <input id="inc_cursos[]"  name = "inc_cursos[]" type="hidden" value="{!!$item->nome!!}">
                                                                             <input id="inc_ministrante[]"  name = "inc_ministrante[]" type="hidden" value="{!!$item->razaosocial!!}">
                                                                             <input id="inc_ministrante_id[]"  name = "inc_ministrante_id[]" type="hidden" value="{!!$item->ministrante_id!!}">
-                                                                            <input id="inc_datainicio[]"  name = "inc_datainicio[]" type="hidden" value="{!!$item->data_inicio!!}">
-                                                                            <input id="inc_datafim[]"  name = "inc_datafim[]" type="hidden" value="{!!$item->data_fim!!}">
+                                                                            <input id="inc_datainicio[]"  name = "inc_datainicio[]" type="hidden" value="{!! trim($item->data_inicio)!="" ? date('d/m/Y',strtotime($item->data_inicio)) : "" !!}">
+                                                                            <input id="inc_datafim[]"  name = "inc_datafim[]" type="hidden" value="{!! trim($item->data_fim)!="" ? date('d/m/Y',strtotime($item->data_fim)) : "" !!}">
                                                                             <input id="inc_obs[]"  name = "inc_obs[]" type="hidden" value="{!!$item->observacao!!}">
                                                                       </td>
 
