@@ -66,8 +66,8 @@
                                                                 <td>Incluir</td>
                                                                 <td>Alterar</td>
                                                                 <td>Excluir</td>
-                                                                <td>Visualizar</td>
-                                                                <td>Exportar</td>
+                                                                <!--<td>Visualizar</td>
+                                                                <td>Exportar</td>-->
                                                                 <td>Imprimir</td>
                                                               </tr>
                                                               <tr>
@@ -76,8 +76,8 @@
                                                                 <td><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_incluir" name="selecionar_incluir" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_incluir" /></td>
                                                                 <td><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_alterar" name="selecionar_alterar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_alterar" /></td>
                                                                 <td><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_excluir" name="selecionar_excluir" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_excluir" /></td>
-                                                                <td><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_visualizar" name="selecionar_visualizar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_visualizar" /></td>
-                                                                <td><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_exportar" name="selecionar_exportar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_exportar" /></td>
+                                                                <!--<td><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_visualizar" name="selecionar_visualizar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_visualizar" /></td>
+                                                                <td><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_exportar" name="selecionar_exportar" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_exportar" /></td>-->
                                                                 <td><i class="fa  fa-long-arrow-down"></i>&nbsp;&nbsp;<input  id= "selecionar_imprimir" name="selecionar_imprimir" type="checkbox" data-group-cls="btn-group-sm" class="selecionar_imprimir" /></td>
                                                               </tr>
                                                           </table>
@@ -121,8 +121,8 @@
                                                                               <th>Incluir</th>
                                                                               <th>Alterar</th>
                                                                               <th>Excluir</th>
-                                                                              <th>Visualizar</th>
-                                                                              <th>Exportar</th>
+                                                                              <!--<th>Visualizar</th>
+                                                                              <th>Exportar</th>-->
                                                                               <th>Imprimir</th>
                                                                               </tr>
                                                                           </thead>
@@ -157,12 +157,15 @@
                                                                                   <td>
                                                                                   <input  name="excluir[{{ $value->id }}]" type="hidden" value="0" />
                                                                                   <input  name="excluir[{{ $value->id }}]" type="checkbox" class="excluir" data-group-cls="btn-group-sm" value="1"  /></td>
+
+                                                                                  <!--
                                                                                   <td>
                                                                                   <input  name="visualizar[{{ $value->id }}]" type="hidden" value="0" />
                                                                                   <input  name="visualizar[{{ $value->id }}]" type="checkbox" class="visualizar"  data-group-cls="btn-group-sm" value="1" /></td>
                                                                                   <td>
                                                                                   <input  name="exportar[{{ $value->id }}]" type="hidden" value="0" />
                                                                                   <input  name="exportar[{{ $value->id }}]" type="checkbox" class="exportar" data-group-cls="btn-group-sm" value="1" /></td>
+                                                                                  -->
                                                                                   <td>
                                                                                   <input  name="imprimir[{{ $value->id }}]" type="hidden" value="0" />
                                                                                   <input  name="imprimir[{{ $value->id }}]" type="checkbox" class="imprimir" data-group-cls="btn-group-sm" value="1"  /></td>
@@ -226,6 +229,7 @@
                               onLabel : 'Sim',
                          });
 
+                         /*
                          $('.visualizar').checkboxpicker({
                               offLabel : 'Não',
                               onLabel : 'Sim',
@@ -235,6 +239,7 @@
                               offLabel : 'Não',
                               onLabel : 'Sim',
                          });
+                         */
 
                          $('.imprimir').checkboxpicker({
                               offLabel : 'Não',
@@ -278,6 +283,7 @@
                                 $('.excluir').prop('checked', false);
                             }
 
+                            /*
                             if ($(this).prop('checked')) {
                                 $('.visualizar').prop('checked', true);
                             } else {
@@ -289,6 +295,7 @@
                             } else {
                                 $('.exportar').prop('checked', false);
                             }
+                            */
 
                             if ($(this).prop('checked')) {
                                 $('.imprimir').prop('checked', true);
@@ -320,6 +327,7 @@
                                 $('.selecionar_excluir').prop('checked', false);
                             }
 
+                            /*
                             if ($(this).prop('checked')) {
                                 $('.selecionar_visualizar').prop('checked', true);
                             } else {
@@ -331,6 +339,7 @@
                             } else {
                                 $('.selecionar_exportar').prop('checked', false);
                             }
+                            */
 
                             if ($(this).prop('checked')) {
                                 $('.selecionar_imprimir').prop('checked', true);
@@ -394,7 +403,7 @@
                             }
                         });
 
-
+                        /*
                         $('.selecionar_visualizar').checkboxpicker({
                               offLabel : 'Não',
                               onLabel : 'Sim',
@@ -421,7 +430,7 @@
                                 $('.exportar').prop('checked', false);
                             }
                         });
-
+                      */
 
                         $('.selecionar_imprimir').checkboxpicker({
                               offLabel : 'Não',

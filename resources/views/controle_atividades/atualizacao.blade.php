@@ -300,7 +300,7 @@
                                       @foreach($controle_materiais as $item)
                                            @if ($item->arquivo!="")
                                               <tr id="{{$item->id}}">
-                                                  <td><a href="{{ url('/images/arquivos/encontros/' . $item->arquivo) }}" target="_blank">{{$item->arquivo}}</a></td>
+                                                  <td><a href="{{ url('/arquivos/encontros/' . $item->arquivo) }}" target="_blank">{{$item->arquivo}}</a></td>
                                                   <td><a href="#" class="btn btn-danger remover_arquivo" id="{{$item->id}}"><i class="fa fa-trash"></i></a></td>
                                               </tr>
                                            @endif
@@ -612,19 +612,13 @@
       function abrir_relatorio(tipo)
       {
 
-
           if ($('#hidden_id').val()!="")
           {
-
               var var_day = $("#data_encontro").val();
               var var_year = $("#ano").val();
               var var_month = $("#mes").val();
               var urlGetUser = '{!! url("/controle_atividades/imprimir/' +  $('#hidden_id').val() +  '/data/' + tipo + '/' + var_year + '-' + var_month + '-' + var_day + '") !!}';
-
-              //window.location=urlGetUser; //redirect to route
-
               window.location.href =urlGetUser;
-
           }
           else
           {
@@ -634,7 +628,6 @@
 
 
     $(document).ready(function(){
-
 
       $("#ampulheta").bind("ajaxStart", function(){
           $(this).show();
@@ -648,7 +641,6 @@
       //Remove linha visitantes
       $("#tab_visitantes").on("click", ".remover", function(e){
           $(this).closest('tr').remove();
-
       });
 
 
@@ -797,7 +789,9 @@
 
                                                    $.each(data, function(index, element)
                                                    {
-                                                       html +='<option value="' + element.substr(0,2) + '">' + element + '</option>';
+
+                                                      html +='<option value="' + element.substr(0,2) + '">' + element + '</option>';
+
                                                    });
 
                                                   var $stations = $("#data_encontro"); //Instancia o objeto combo nivel2
@@ -932,6 +926,7 @@
                {
                     exibir_divs(false);
                }
+
 
                 //Search for existent data in database
                 var var_day = $("#data_encontro").val();

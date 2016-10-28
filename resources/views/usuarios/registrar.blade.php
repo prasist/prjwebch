@@ -24,7 +24,7 @@
 
                             <div class="row{{ $errors->has('empresa') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
-                                          <label for="empresa" class="control-label">Igreja / Instituição</label>
+                                          <label for="empresa" class="control-label"><span class="text-danger">*</span> Igreja / Instituição</label>
 
                                           <select id="empresa" name="empresa" class="form-control select2" style="width: 100%;">
                                           <option  selected="selected" value="">(Selecione uma Igreja/Instituição</option>
@@ -57,7 +57,7 @@
 
                                   <div class="row{{ $errors->has('grupo') ? ' has-error' : '' }}">
                                           <div class="col-xs-10">
-                                                <label for="grupo" class="control-label">Grupo</label>
+                                                <label for="grupo" class="control-label"><span class="text-danger">*</span> Grupo</label>
 
                                                 <select name="grupo" class="form-control select2" style="width: 100%;">
 
@@ -97,7 +97,7 @@
 
                             <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
-                                          <label for="name" class="control-label">Nome</label>
+                                          <label for="name" class="control-label"><span class="text-danger">*</span> Nome</label>
 
                                           <input id="name" maxlength="50"  placeholder = "Campo Obrigatório" name = "name" type="text" class="form-control" value="{{ old('name') }}">
 
@@ -113,7 +113,7 @@
 
                             <div class="row{{ $errors->has('email') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
-                                          <label for="email" class="control-label">Email</label>
+                                          <label for="email" class="control-label"><span class="text-danger">*</span> Email</label>
 
                                           <input id="email" maxlength="255"  placeholder = "Campo Obrigatório" name = "email" type="text" class="form-control" value="{{ old('email') }}">
 
@@ -129,7 +129,7 @@
 
                             <div class="row">
                                     <div class="col-xs-5 {{ $errors->has('password') ? ' has-error' : '' }}">
-                                          <label for="password" class="control-label">Senha</label>
+                                          <label for="password" class="control-label"><span class="text-danger">*</span> Senha</label>
 
                                           <input id="password" maxlength="60" placeholder = "Campo Obrigatório" name = "password" type="password" class="form-control" value="">
 
@@ -143,7 +143,7 @@
                                     </div>
 
                                     <div class="col-xs-5 {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                          <label for="password_confirmation" class="control-label">Confirmação Senha</label>
+                                          <label for="password_confirmation" class="control-label"><span class="text-danger">*</span> Confirmação Senha</label>
 
                                           <input id="password_confirmation" placeholder = "Campo Obrigatório" maxlength="60"  name = "password_confirmation" type="password" class="form-control" value="">
 
@@ -240,6 +240,7 @@
         <div class="box-footer">
             <button class = 'btn btn-primary' type ='submit' id='gravar'>Gravar</button>
             <a href="{{ url('/usuarios')}}" class="btn btn-default">Cancelar</a>
+            <br/><span class="text-danger">*</span><i>Campos Obrigatórios</i>
         </div>
 
        </form>

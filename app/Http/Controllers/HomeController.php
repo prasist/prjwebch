@@ -23,15 +23,7 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
         $this->rota = "home"; //Define nome da rota que será usada na classe
-        //retirado gate
-
-        //if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
-        //{
-            //$this->dados_login = \Session::get('dados_login');
-        //}
-
     }
-
 
 
      public function confirm($codigo)

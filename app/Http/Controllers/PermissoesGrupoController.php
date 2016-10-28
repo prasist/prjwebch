@@ -44,8 +44,6 @@ class PermissoesGrupoController extends Controller
 
         $dados  = grupos::select('grupos.id', 'grupos.nome', 'grupos.default')
         ->join('permissoes_grupos', 'permissoes_grupos.grupos_id', '=', 'grupos.id')
-        //->where('usuarios_grupo.usuarios_empresas_id', $this->dados_login->empresas_id)
-        //->where('permissoes_grupos.usuarios_empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('grupos.empresas_id', $this->dados_login->empresas_id)
         ->where('grupos.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->distinct()->get();
@@ -108,8 +106,8 @@ class PermissoesGrupoController extends Controller
             $incluir_array        = $input['incluir'];
             $alterar_array       = $input['alterar'];
             $excluir_array       = $input['excluir'];
-            $visualizar_array   = $input['visualizar'];
-            $exportar_array    = $input['exportar'];
+            //$visualizar_array   = $input['visualizar'];
+            //$exportar_array    = $input['exportar'];
             $imprimir_array    = $input['imprimir'];
 
           if(is_array($paginas_array))
@@ -123,9 +121,9 @@ class PermissoesGrupoController extends Controller
                           $permissoes->incluir          = $incluir_array[$key];
                           $permissoes->alterar         = $alterar_array[$key];
                           $permissoes->excluir         = $excluir_array[$key];
-                          $permissoes->visualizar     = $visualizar_array[$key];
+                          //$permissoes->visualizar     = $visualizar_array[$key];
                           $permissoes->acessar       = $acessar_array[$key];
-                          $permissoes->exportar      = $exportar_array[$key];
+                          //$permissoes->exportar      = $exportar_array[$key];
                           $permissoes->imprimir      = $imprimir_array[$key];
 
                           $permissoes->save();
@@ -207,8 +205,8 @@ class PermissoesGrupoController extends Controller
         $incluir_array     =  $input['incluir'];
         $alterar_array    =  $input['alterar'];
         $excluir_array    =  $input['excluir'];
-        $visualizar_array = $input['visualizar'];
-        $exportar_array  = $input['exportar'];
+        //$visualizar_array = $input['visualizar'];
+        //$exportar_array  = $input['exportar'];
         $imprimir_array  = $input['imprimir'];
         $acessar_array   = $input['acessar'];
 
@@ -223,13 +221,13 @@ class PermissoesGrupoController extends Controller
                                 'paginas_id' => $value
                               ]);
 
+                            //'visualizar'   => $visualizar_array[$key],
+                            //'exportar'    => $exportar_array[$key],
                             $valores = [
                                         'incluir'        => $incluir_array[$key],
                                         'alterar'       => $alterar_array[$key],
                                         'excluir'       => $excluir_array[$key],
-                                        'visualizar'   => $visualizar_array[$key],
                                         'acessar'     => $acessar_array[$key],
-                                        'exportar'    => $exportar_array[$key],
                                         'imprimir'    => $imprimir_array[$key]
                                         ];
 

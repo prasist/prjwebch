@@ -525,7 +525,7 @@ class ControleAtividadesController extends Controller
         }
 
         //Controle de Atividades
-        $dados = controle_atividades::select('texto', 'link_externo', 'controle_atividades.id', 'celulas_id', 'hora_inicio', 'hora_fim', 'valor_oferta', 'controle_atividades.obs', 'dia', 'mes', 'ano', 'celulas.dia_encontro', 'encontro_encerrado')
+        $dados = controle_atividades::select('texto', 'link_externo', 'controle_atividades.id', 'celulas_id', 'hora_inicio', 'hora_fim', 'valor_oferta', 'controle_atividades.obs', 'dia', 'mes', 'ano', 'celulas.dia_encontro', 'celulas.segundo_dia_encontro', 'encontro_encerrado')
         ->join('celulas', 'celulas.id', '=', 'controle_atividades.celulas_id')
         ->where('controle_atividades.empresas_id', $this->dados_login->empresas_id)
         ->where('controle_atividades.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
@@ -645,7 +645,6 @@ class ControleAtividadesController extends Controller
              $questions_saved = $questions;
 
 
-
         }
         else
         {
@@ -655,6 +654,7 @@ class ControleAtividadesController extends Controller
 
         //Load all dates by day of week (mondays, tuesdays, etc)
         $dates_of_meeting = $this->return_dates($dados);
+
 
         $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
@@ -697,6 +697,37 @@ class ControleAtividadesController extends Controller
             if($diasemana == $var_dayOfWeek)
             { // [0 Domingo] - [1 Segunda] - [2 Terca] - [3 Quarta] - [4 Quinta] - [5 Sexta] - [6 Sabado]
                 array_push($return_d, $dt);
+            }
+
+            $dini += 86400; // Adicionando mais 1 dia (em segundos) na data inicial
+        }
+
+        //Segundo dia encontro
+        $var_month = $dados[0]->mes;
+        $var_year = $dados[0]->ano;
+        $var_dayOfWeek = $dados[0]->segundo_dia_encontro;
+        $var_counting_days = cal_days_in_month(CAL_GREGORIAN, $var_month, $var_year); //days of month
+
+        $dini = mktime(0,0,0,$var_month,1,$var_year);
+        $dfim = mktime(0,0,0,$var_month,$var_counting_days,$var_year);
+
+        $bPrimeiro = false;
+
+        while($dini <= $dfim) //Enquanto uma data for inferior a outra
+        {
+            $dt = date("d/m/Y",$dini); //Convertendo a data no formato dia/mes/ano
+            $diasemana = date("w", $dini);
+
+            if($diasemana == $var_dayOfWeek)
+            { // [0 Domingo] - [1 Segunda] - [2 Terca] - [3 Quarta] - [4 Quinta] - [5 Sexta] - [6 Sabado]
+
+              if ($bPrimeiro==false) {
+                  array_push($return_d, "");
+                  array_push($return_d, " Segundo Dia Encontro ");
+              }
+
+                array_push($return_d, $dt);
+                $bPrimeiro=true;
             }
 
             $dini += 86400; // Adicionando mais 1 dia (em segundos) na data inicial

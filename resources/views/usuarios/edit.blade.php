@@ -29,7 +29,7 @@
                                          <!-- Campo hidden para preservar valor da empresa gravado, pois o combo desabilitado nao envia valor para o POST quando disabled-->
                                           <input  name="empresa" type="hidden"  value="{{ $grupo_do_usuario[0]->usuarios_empresas_id }}" />
 
-                                          <label for="empresa" class="control-label">Igreja / Instituição</label>
+                                          <label for="empresa" class="control-label"><span class="text-danger">*</span> Igreja / Instituição</label>
 
                                           <select name="empresa" class="form-control select2" style="width: 100%;" disabled>
 
@@ -42,7 +42,7 @@
 
                            <div class="row{{ $errors->has('grupo') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
-                                          <label for="grupo" class="control-label">Grupo</label>
+                                          <label for="grupo" class="control-label"><span class="text-danger">*</span> Grupo</label>
                                           <!-- Campo hidden para preservar valor do grupo gravado, pois o combo desabilitado nao envia valor para o POST quando disabled-->
                                           <input  name="grupo" type="hidden"  value="{{ $grupo_do_usuario[0]->grupos_id }}" />
 
@@ -73,7 +73,7 @@
 
                             <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
-                                          <label for="name" class="control-label">Nome</label>
+                                          <label for="name" class="control-label"><span class="text-danger">*</span> Nome</label>
 
                                           <input id="name" maxlength="50"  name = "name" type="text" class="form-control" value="{{ $dados->name }}">
 
@@ -89,7 +89,7 @@
 
                             <div class="row{{ $errors->has('email') ? ' has-error' : '' }}">
                                     <div class="col-xs-10">
-                                          <label for="email" class="control-label">Email</label>
+                                          <label for="email" class="control-label"><span class="text-danger">*</span> Email</label>
 
                                           <input id="email" maxlength="255"  name = "email" type="text" class="form-control" value="{{ $dados->email }}">
 
@@ -105,7 +105,7 @@
 
                             <div class="row">
                                     <div class="col-xs-5 {{ $errors->has('password') ? ' has-error' : '' }}">
-                                          <label for="password" class="control-label">Senha</label>
+                                          <label for="password" class="control-label"><span class="text-danger">*</span> Senha</label>
 
                                           <input id="password" maxlength="60"  name = "password" type="password" class="form-control" value="">
 
@@ -119,7 +119,7 @@
                                     </div>
 
                                     <div class="col-xs-5{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                          <label for="password_confirmation" class="control-label">Confirmação Senha</label>
+                                          <label for="password_confirmation" class="control-label"><span class="text-danger">*</span> Confirmação Senha</label>
 
                                           <input id="password_confirmation" maxlength="60"  name = "password_confirmation" type="password" class="form-control" value="">
 
@@ -226,6 +226,7 @@
         <div class="box-footer">
             <button class = 'btn btn-primary' type ='submit' {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-save"></i> Salvar</button>
             <a href="{{ url('/usuarios')}}" class="btn btn-default">Cancelar</a>
+            <br/><span class="text-danger">*</span><i>Campos Obrigatórios</i>
         </div>
 
        </form>

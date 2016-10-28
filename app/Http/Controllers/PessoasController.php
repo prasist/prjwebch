@@ -223,7 +223,6 @@ public function validacao_dados()
   }
 
 
-
  public function pesquisar(\Illuminate\Http\Request  $request)
  {
 
