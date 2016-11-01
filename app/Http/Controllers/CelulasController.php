@@ -989,6 +989,7 @@ class CelulasController extends Controller
 
         $dini = mktime(0,0,0,$var_month,1,$var_year);
         $dfim = mktime(0,0,0,$var_month,$var_counting_days,$var_year);
+        $dfim += 86400; //Artificio para pegar meses com 5 semanas
 
         $return_d = array();
 
