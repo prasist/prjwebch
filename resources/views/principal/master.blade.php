@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br" ng-app="appSigma3" ng-controller="loadselect">
+<html lang="pt-br">
     <head>
         <meta charset="UTF-8">
         <title>SIGMA3 - Gestão para Igrejas</title>
@@ -60,8 +60,12 @@
         <!--ANGULAR-->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
         <script src="{{ asset('/angular/app.js')}}"></script>
-        <script src="{{ asset('/angular/modules/celulas/controllers/celulas.main.controller.js')}}"></script>
-        <script src="{{ asset('/angular/controllers/loadselect.ctrl.js')}}"></script>
+        <!--<script src="{{ asset('/angular/modules/celulas/controllers/celulas.main.controller.js')}}"></script>
+        <script src="{{ asset('/angular/controllers/loadselect.ctrl.js')}}"></script>-->
+
+        <link href="{{ asset('/dist/css/xeditable.css')}}" rel="stylesheet"/>
+        <script src="{{ asset('/dist/js/xeditable.js')}}"></script>
+        <!-- FIM ANGULAR -->
 
 
     </head>
@@ -551,14 +555,12 @@
         <script src="{{ asset('/dist/js/treeview.js')}}"></script>
         <script src="{{ asset('/dist/js/pace.min.js')}}"></script>
 
-<!--
+    <!--
     <script type="text/javascript" language="javascript" src="{{ asset('/dist/js/dataTables.buttons.min.js')}}"></script>
     <script type="text/javascript" language="javascript" src="{{ asset('/dist/js/pdfmake.min.js')}}"></script>
     <script type="text/javascript" language="javascript" src="{{ asset('/dist/js/vfs_fonts.js')}}"></script>
     <script type="text/javascript" language="javascript" src="{{ asset('/dist/js/buttons.html5.min.js')}}"></script>
     -->
-
-
 
 
         @if (\Session::get('membro')=='' || \Session::get('membro')=='N')

@@ -90,7 +90,7 @@
                           <div class="row">
                             <div class="col-xs-5 {{ $errors->has('celulas') ? ' has-error' : '' }}">
 
-                                    <label for="celulas" class="control-label"><span class="text-danger">*</span> Célula Atual</label>
+                                    <label for="celulas" class="control-label"><span class="text-danger">*</span> {!! \Session::get('label_celulas_singular') !!} Atual</label>
                                     <select id="celulas" placeholder="(Selecionar)" name="celulas" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                     <option  value="0"></option>
                                     @foreach($celulas as $item)
@@ -113,7 +113,7 @@
 
                            <div class="col-xs-5 {{ $errors->has('celulas_nova') ? ' has-error' : '' }}">
 
-                                    <label for="celulas_nova" class="control-label"><span class="text-danger">*</span> Nova Célula</label>
+                                    <label for="celulas_nova" class="control-label"><span class="text-danger">*</span> Transferirar para {!! \Session::get('label_celulas_singular') !!}</label>
                                     <select id="celulas_nova" placeholder="(Selecionar)" name="celulas_nova" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                     <option  value="0"></option>
                                     @foreach($celulas as $item)

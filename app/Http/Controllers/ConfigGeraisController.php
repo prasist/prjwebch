@@ -151,4 +151,5 @@ class ConfigGeraisController extends Controller
 
     }
 
+
 }

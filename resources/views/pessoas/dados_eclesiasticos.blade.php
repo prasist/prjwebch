@@ -1393,8 +1393,8 @@
                                                            <tr>
                                                                 <td>Data Movimentação</td>
                                                                 <td>Motivo</td>
-                                                                <td>Célula Anterior</td>
-                                                                <td>Célula Nova</td>
+                                                                <td>{!! \Session::get('label_celulas_singular') !!} Anterior</td>
+                                                                <td>Novo(a) {!! \Session::get('label_celulas_singular') !!}</td>
                                                                 <td>Observação</td>
                                                             </tr>
                                                          @foreach ($view_pessoas_movimentacoes as $item)
@@ -1560,7 +1560,7 @@
                           <div class="box-header with-border">
                             <h5 class="box-title">
                               <a data-toggle="collapse" data-parent="#accordion" href="#tab10">
-                                <span class="fa fa-street-view"></span> Células
+                                <span class="fa fa-street-view"></span> {!! \Session::get('label_celulas') !!}
                               </a>
                             </h5>
                           </div>
@@ -1574,7 +1574,7 @@
                                                               <div class="row"><!-- row-->
                                                                   <div class="col-xs-11">
 
-                                                                        <label for="celulas" class="control-label">Participa Célula</label>
+                                                                        <label for="celulas" class="control-label">Participa {!! \Session::get('label_celulas_singular') !!}</label>
 
                                                                         <select id="celulas" name="celulas" placeholder="(Selecionar)" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
                                                                         <option  value=""></option>

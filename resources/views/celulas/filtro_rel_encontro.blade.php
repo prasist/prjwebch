@@ -20,7 +20,7 @@
 
                                                       <ul class="nav nav-tabs">
                                                         <li class="active"><a href="#tab_filtros" data-toggle="tab">Filtros Básicos</a></li>
-                                                        <li><a href="#tab_estruturas" data-toggle="tab">Filtrar Estrutura de Células</a></li>
+                                                        <li><a href="#tab_estruturas" data-toggle="tab">Filtrar Estrutura de {!! \Session::get('label_celulas') !!}</a></li>
                                                       </ul>
 
                                                       <div class="tab-content">
@@ -28,7 +28,7 @@
 
                                                             <div class="row">
                                                                 <div class="col-xs-3">
-                                                                      <label for="ckExibir" class="control-label">Listar Participantes</label>
+                                                                      <label for="ckExibir" class="control-label">Listar {!! \Session::get('label_participantes') !!}</label>
                                                                       <div class="input-group">
                                                                              <div class="input-group-addon">
                                                                                   <input  id= "ckExibir" name="ckExibir" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm" />
@@ -55,7 +55,7 @@
                                                             <div class="row">
 
                                                                   <div class="col-xs-6">
-                                                                          <label for="lideres" class="control-label">Líder</label>
+                                                                          <label for="lideres" class="control-label">{!! \Session::get('label_lider_singular') !!}</label>
                                                                           <select id="lideres" placeholder="(Selecionar)" name="lideres" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
                                                                                 <option  value="0"></option>
                                                                                   @foreach($lideres as $item)
@@ -65,7 +65,7 @@
                                                                   </div>
 
                                                                   <div class="col-xs-6">
-                                                                          <label for="vice_lider" class="control-label">Líder em Treinamento</label>
+                                                                          <label for="vice_lider" class="control-label">{!! \Session::get('label_lider_treinamento') !!}</label>
                                                                           <select id="vice_lider" placeholder="(Selecionar)" name="vice_lider" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
                                                                                 <option  value="0"></option>
                                                                                   @foreach($vice_lider as $item)
@@ -196,7 +196,7 @@
                                                               <!-- Horizontal Form -->
                                                                <div class="box box-default">
                                                                     <div class="box-header with-border">
-                                                                      <h3 class="box-title">Estrutura de Células</h3>
+                                                                      <h3 class="box-title">Estrutura de {!! \Session::get('label_celulas') !!}</h3>
                                                                     </div>
 
                                                                       <div class="box-body">

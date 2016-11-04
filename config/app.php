@@ -74,6 +74,7 @@ return [
     'membersmove'=>'67',
     'relmovimentacoes' => '68',
     'relcursos' => '69',
+    'config_gerais' => '70',
 
 
 

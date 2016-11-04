@@ -2,7 +2,7 @@
 
 @section('content')
 
-{{ \Session::put('titulo', 'Cadastro de Células') }}
+{{ \Session::put('titulo', 'Cadastro ' . \Session::get('label_celulas')) }}
 
 @if ($tipo_operacao=="incluir")
     {{ \Session::put('subtitulo', 'Inclusão') }}
@@ -61,7 +61,6 @@
 
 <div class="col-md-12">
 
-
 <div class="row">
     <div class="col-xs-2">
             <a href="{{ url('/' . \Session::get('route')) }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
@@ -69,15 +68,15 @@
 
     <div class="col-xs-3">
         <a href="{{ url('/tutoriais/4')}}" data-toggle="tooltip" title="Clique Aqui para ver o tutorial..." target="_blank">
-            <i class="glyphicon glyphicon-question-sign text-success"></i>&nbsp;Como cadastrar uma Célula ?
+            <i class="glyphicon glyphicon-question-sign text-success"></i>&nbsp;Como cadastrar {!! \Session::get('label_celulas') !!} ?
        </a>
     </div>
 </div>
 
 @if ($tipo_operacao=="incluir")
-<form name="form_celulas" id="form_celulas" method = 'POST' ng-controller="valida_campos_celulas"  class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/gravar')}}" novalidate>
+<form name="form_celulas" id="form_celulas" method = 'POST' class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/gravar')}}" novalidate>
 @else
-<form name="form_celulas" id="form_celulas" method = 'POST' ng-controller="valida_campos_celulas" class="form-horizontal"  action = "{{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update')}}" novalidate>
+<form name="form_celulas" id="form_celulas" method = 'POST' class="form-horizontal"  action = "{{ url('/' . \Session::get('route') . '/' . $dados[0]->id . '/update')}}" novalidate>
 @endif
 
 <input type="hidden" id="quero_incluir_participante" name="quero_incluir_participante" value="">
@@ -100,7 +99,7 @@
                                 <input type="hidden" name="hidden_existe" id="hidden_existe" value="">
                             @endif
 
-                            <li><a href="#tab_2" data-toggle="tab">Vinculo de Células&nbsp;<span class="pull-right badge bg-yellow">{!! ($dados[0]->tot_geracao==0 ? "" : $dados[0]->tot_geracao) !!}</span></a></li>
+                            <li><a href="#tab_2" data-toggle="tab">Vinculo de {!! \Session::get('label_celulas') !!}&nbsp;<span class="pull-right badge bg-yellow">{!! ($dados[0]->tot_geracao==0 ? "" : $dados[0]->tot_geracao) !!}</span></a></li>
 
                           </ul>
 
@@ -207,7 +206,7 @@
                                          <div class="row">
 
                                               <div class="col-xs-5">
-                                                      <label for="nome" class="control-label">Nome Célula</label>
+                                                      <label for="nome" class="control-label">Nome {!! \Session::get('label_celulas_singular') !!}</label>
                                                       @if ($tipo_operacao=="editar")
                                                             <input id="nome"  placeholder="(Opcional)" name = "nome" type="text" class="form-control" value="{!! $dados[0]->nome !!}">
                                                       @else
@@ -245,7 +244,7 @@
                                         <div class="row">
 
                                               <div class="col-xs-6 {{ $errors->has('pessoas') ? ' has-error' : '' }}">
-                                                      <label for="pessoas" class="control-label"><span class="text-danger">*</span> Líder</label>
+                                                      <label for="pessoas" class="control-label"><span class="text-danger">*</span> {!! \Session::get('label_lider_singular') !!}</label>
                                                       <div class="input-group">
                                                                <div class="input-group-addon">
                                                                   <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#modal_lider" >
@@ -275,7 +274,7 @@
                                                </div>
 
                                                <div class="col-xs-6 {{ $errors->has('vicelider_pessoas_id') ? ' has-error' : '' }}">
-                                                      <label for="vicelider_pessoas_id" class="control-label">Líder em Treinamento</label>
+                                                      <label for="vicelider_pessoas_id" class="control-label">{!! \Session::get('label_lider_treinamento') !!}</label>
                                                       <div class="input-group">
                                                                <div class="input-group-addon">
                                                                   <button  id="buscarpessoa2" type="button"  data-toggle="modal" data-target="#modal_vice" >
@@ -307,7 +306,7 @@
 
                                         <div class="row">
                                                    <div class="col-xs-12 {{ $errors->has('suplente1_pessoas_id') ? ' has-error' : '' }}">
-                                                        <label for="suplente1_pessoas_id" class="control-label">Anfitrião</label>
+                                                        <label for="suplente1_pessoas_id" class="control-label">{!! \Session::get('label_anfitriao') !!}</label>
                                                         <div class="input-group">
                                                                  <div class="input-group-addon">
                                                                     <button  id="buscarpessoa3" type="button"  data-toggle="modal" data-target="#modal_suplente1" >
@@ -419,17 +418,17 @@
                                                       <select id="local" placeholder="(Selecionar)" name="local" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                                       <option  value=""></option>
                                                       @if ($tipo_operacao=="editar")
-                                                          <option  value="1" {{ ($dados[0]->qual_endereco=="1" ? "selected" : "") }}>Endereço do Líder</option>
-                                                          <option  value="2" {{ ($dados[0]->qual_endereco=="2" ? "selected" : "") }}>Endereço do Vice Líder</option>
-                                                          <option  value="3" {{ ($dados[0]->qual_endereco=="3" ? "selected" : "") }}>Endereço do Anfitrião</option>
-                                                          <option  value="4" {{ ($dados[0]->qual_endereco=="4" ? "selected" : "") }}>Endereço do Líder Suplente</option>
+                                                          <option  value="1" {{ ($dados[0]->qual_endereco=="1" ? "selected" : "") }}>Endereço do {!! \Session::get('label_lider_singular') !!}</option>
+                                                          <option  value="2" {{ ($dados[0]->qual_endereco=="2" ? "selected" : "") }}>Endereço do {!! \Session::get('label_lider_treinamento') !!}</option>
+                                                          <option  value="3" {{ ($dados[0]->qual_endereco=="3" ? "selected" : "") }}>Endereço do {!! \Session::get('label_anfitriao') !!}</option>
+                                                          <option  value="4" {{ ($dados[0]->qual_endereco=="4" ? "selected" : "") }}>Endereço do {!! \Session::get('label_lider_suplente') !!}</option>
                                                           <option  value="5" {{ ($dados[0]->qual_endereco=="5" ? "selected" : "") }}>Endereço da Igreja Sede</option>
                                                           <option  value="6" {{ ($dados[0]->qual_endereco=="6" ? "selected" : "") }}>Outro</option>
                                                       @else
-                                                          <option  value="1">Endereço do Líder</option>
-                                                          <option  value="2">Endereço do Vice Líder</option>
-                                                          <option  value="3">Endereço do Anfitrião</option>
-                                                          <option  value="4">Endereço do Líder Suplente</option>
+                                                          <option  value="1">Endereço do {!! \Session::get('label_lider_singular') !!}</option>
+                                                          <option  value="2">Endereço do {!! \Session::get('label_lider_treinamento') !!}</option>
+                                                          <option  value="3">Endereço do {!! \Session::get('label_anfitriao') !!}</option>
+                                                          <option  value="4">Endereço do {!! \Session::get('label_lider_suplente') !!}</option>
                                                           <option  value="5">Endereço da Igreja Sede</option>
                                                           <option  value="6">Outro</option>
                                                       @endif
@@ -539,7 +538,7 @@
 
                                                                   <div class="row">
                                                                     <div class="col-xs-12">
-                                                                          <label for="suplente2_pessoas_id" class="control-label">Líder Suplente</label>
+                                                                          <label for="suplente2_pessoas_id" class="control-label">{!! \Session::get('label_lider_suplente') !!}</label>
                                                                           <div class="input-group">
                                                                                    <div class="input-group-addon">
                                                                                       <button  id="buscarpessoa4" type="button"  data-toggle="modal" data-target="#modal_suplente2" >
@@ -617,7 +616,7 @@
 
                                                                 <div class="row">
                                                                        <div class="col-xs-3">
-                                                                                <label  for="data_inicio" class="control-label">Data de Início da Célula</label>
+                                                                                <label  for="data_inicio" class="control-label">Data de Início da {!! \Session::get('label_celulas') !!}</label>
                                                                                 <div class="input-group">
                                                                                        <div class="input-group-addon">
                                                                                         <i class="fa fa-calendar"></i>
@@ -707,15 +706,15 @@
                                                       <p class="text-info"> - Células Vinculadas são aquelas que ocorrem dentro da própria célula, por exemplo : Célula para Crianças</p>
                                                       <p class="text-info"> - Células Multiplicadas são novas células geradas a partir de outra.</p>
 
-                                                      <label for="origem" class="control-label">Qual a origem dessa célula ?</label>
+                                                      <label for="origem" class="control-label">Qual a origem {!! \Session::get('label_celulas') !!} ?</label>
                                                       <select id="origem" placeholder="(Selecionar)" name="origem" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;" >
                                                       <option  value=""></option>
                                                       @if ($tipo_operacao=="editar")
                                                           <option  value="1" {{ $dados[0]->origem == 1 ? "selected" : ""}}>Multiplicação</option>
-                                                          <option  value="2" {{ $dados[0]->origem == 2 ? "selected" : ""}}>Vínculo (ou célula Filha)</option>
+                                                          <option  value="2" {{ $dados[0]->origem == 2 ? "selected" : ""}}>Vínculo (ou {!! \Session::get('label_celulas') !!} Filho(a))</option>
                                                       @else
                                                           <option  value="1">Multiplicação</option>
-                                                          <option  value="2">Vínculo (ou célula Filha)</option>
+                                                          <option  value="2">Vínculo (ou {!! \Session::get('label_celulas') !!} Filho(a))</option>
                                                       @endif
                                                       </select>
 
@@ -724,7 +723,7 @@
 
                                           <div id="nao_imprimir_2" class="row">
                                               <div class="col-xs-11">
-                                                      <label for="celulas_pai_id" class="control-label">Quem é a Célula Pai ?</label>
+                                                      <label for="celulas_pai_id" class="control-label">Quem é a {!! \Session::get('label_celulas') !!} Pai ?</label>
                                                       <select id="celulas_pai_id" placeholder="(Selecionar)" name="celulas_pai_id" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;" >
                                                       <option  value="0"></option>
                                                       @foreach($celulas as $item)

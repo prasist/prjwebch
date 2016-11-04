@@ -67,7 +67,7 @@ return [
             ]
         ],
 
-        /*
+
 'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', '177.101.149.118'),
@@ -78,8 +78,8 @@ return [
             'prefix'   => '',
             'schema'   => 'public',
         ],
-        */
 
+/*
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),
@@ -101,8 +101,9 @@ return [
             'prefix'   => '',
             'schema'   => 'public',
         ],
+        */
 
-        /*
+
 'jasper_report' => [
             'driver'   => 'postgres',
             'host'     => env('DB_HOST', '177.101.149.118'),
@@ -113,18 +114,7 @@ return [
             'prefix'   => '',
             'schema'   => 'public',
         ],
-        */
 
-
-        'sqlsrv' => [
-            'driver'   => 'sqlsrv',
-            'host'     => env('DB_HOST', 'localhost'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset'  => 'utf8',
-            'prefix'   => '',
-        ],
 
     ],
 

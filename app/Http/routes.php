@@ -61,7 +61,6 @@ Route::get('estatisticas_nivel/{id}/{nivel}/{valor}/{nome}/{saida}', 'RelatorioC
 Route::get('relcelulas', 'RelatorioCelulasController@index'); /*PAGINA INICIAL DOS RELATORIOS (FILTROS)*/
 
 
-
 /*VALIDACAO DADOS CADASTRAIS*/
 Route::get('pessoas/validar', 'PessoasController@validacao_dados');
 Route::get('pessoas/validar/{tipo}', 'PessoasController@listar_validacao');
@@ -82,6 +81,10 @@ Route::get('membro_dados/{id}/edit','MembroDadosController@edit');
 Route::post('membro_dados/{id}/update','MembroDadosController@update');
 
 Route::post('checkin/{controle_atividades}/{pessoas}/{user}','ControleAtividadesController@checkin');
+
+Route::get('config_gerais/json','ConfigGeraisController@index_json');
+Route::get('config_gerais','ConfigGeraisController@index');
+Route::post('config_gerais/{id}/update','ConfigGeraisController@update');
 
 /*configuracao*/
 Route::get('configmsg','ConfigMsgController@index');

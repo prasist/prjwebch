@@ -2,7 +2,7 @@
 
 @section('content')
 
-{{ \Session::put('titulo', 'Células') }}
+{{ \Session::put('titulo', \Session::get('label_celulas')) }}
 {{ \Session::put('subtitulo', 'Listagem') }}
 {{ \Session::put('route', 'celulas') }}
 {{ \Session::put('id_pagina', '42') }}
@@ -14,22 +14,22 @@
                 <div class="col-xs-2">
                 @can('verifica_permissao', [ \Session::get('id_pagina'),'incluir'])
                   <form method = 'get' class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/registrar')}}">
-                        <button class = 'btn btn-success btn-flat' type ='submit'><i class="fa fa-file-text-o"></i> Criar Nova Célula</button>
+                        <button class = 'btn btn-success btn-flat' type ='submit'><i class="fa fa-file-text-o"></i> Criar {!! \Session::get('label_celulas_singular') !!}</button>
                   </form>
                 @endcan
                 </div>
 
                 <div class="col-xs-3">
                     <a href="{{ url('/tutoriais/4')}}" data-toggle="tooltip" title="Clique Aqui para ver o tutorial..." target="_blank">
-                        <i class="glyphicon glyphicon-question-sign text-success"></i>&nbsp;Como cadastrar uma Célula ?
+                        <i class="glyphicon glyphicon-question-sign text-success"></i>&nbsp;Como cadastrar {!! \Session::get('label_celulas') !!} ?
                    </a>
                 </div>
 
                <div class="col-xs-5">
                         <p class="text"><i> Legendas</i></p>
-                        <span class="badge bg-yellow">0</span>&nbsp;Indica se há célula multiplicada ou vínculada
+                        <span class="badge bg-yellow">0</span>&nbsp;Indica se há {!! \Session::get('label_celulas_singular') !!} com multiplicação e ou vínculos
                         <br/>
-                        <span class="badge bg-blue">0</span>&nbsp;Quantidade de Participantes
+                        <span class="badge bg-blue">0</span>&nbsp;Quantidade de {!! \Session::get('label_participantes') !!}
                         <br/>
               </div>
 
@@ -46,8 +46,8 @@
                     <table id="table_celulas" class="table table-responsive table-hover">
                     <thead>
                         <tr>
-                        <th>Nome Célula</th>
-                        <th>Líder</th>
+                        <th>Nome {!! \Session::get('label_celulas_singular') !!}</th>
+                        <th>{!! \Session::get('label_lider_singular') !!}</th>
                         <th>Dia Encontro</th>
                         <th>Região</th>
                         <th>Horário</th>

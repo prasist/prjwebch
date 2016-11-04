@@ -987,11 +987,16 @@ class CelulasController extends Controller
 
         $var_counting_days = cal_days_in_month(CAL_GREGORIAN, $var_month, $var_year); //days of month
 
+        //echo "dias " . $var_counting_days;
+
         $dini = mktime(0,0,0,$var_month,1,$var_year);
         $dfim = mktime(0,0,0,$var_month,$var_counting_days,$var_year);
+
         $dfim += 86400; //Artificio para pegar meses com 5 semanas
 
         $return_d = array();
+        //echo "ini " . $dini . "<br/>";
+        //echo "fim " . $dfim . "<br/>";
 
         while($dini <= $dfim) //Enquanto uma data for inferior a outra
         {
@@ -1000,39 +1005,44 @@ class CelulasController extends Controller
 
             if($diasemana == $var_dayOfWeek)
             { // [0 Domingo] - [1 Segunda] - [2 Terca] - [3 Quarta] - [4 Quinta] - [5 Sexta] - [6 Sabado]
+                //echo " select " . $dt . "<br/>";
                 array_push($return_d, $dt);
             }
 
             $dini += 86400; // Adicionando mais 1 dia (em segundos) na data inicial
+            //echo " data " . $dt . "<br/>";
+            //echo $dini . "<br/>";
         }
 
         //Segundo dia encontro
         $var_dayOfWeek = $this->buscar_segundo_dia_encontro($id); //pega dia do encontro da celula
 
-        $var_counting_days = cal_days_in_month(CAL_GREGORIAN, $var_month, $var_year); //days of month
+        if ($var_dayOfWeek!="") {
+            $var_counting_days = cal_days_in_month(CAL_GREGORIAN, $var_month, $var_year); //days of month
 
-        $dini = mktime(0,0,0,$var_month,1,$var_year);
-        $dfim = mktime(0,0,0,$var_month,$var_counting_days,$var_year);
+            $dini = mktime(0,0,0,$var_month,1,$var_year);
+            $dfim = mktime(0,0,0,$var_month,$var_counting_days,$var_year);
 
-        $bPrimeiro = false;
+            $bPrimeiro = false;
 
-        while($dini <= $dfim) //Enquanto uma data for inferior a outra
-        {
-            $dt = date("d/m/Y",$dini); //Convertendo a data no formato dia/mes/ano
-            $diasemana = date("w", $dini);
+            while($dini <= $dfim) //Enquanto uma data for inferior a outra
+            {
+                $dt = date("d/m/Y",$dini); //Convertendo a data no formato dia/mes/ano
+                $diasemana = date("w", $dini);
 
-            if($diasemana == $var_dayOfWeek)
-            { // [0 Domingo] - [1 Segunda] - [2 Terca] - [3 Quarta] - [4 Quinta] - [5 Sexta] - [6 Sabado]
+                if($diasemana == $var_dayOfWeek)
+                { // [0 Domingo] - [1 Segunda] - [2 Terca] - [3 Quarta] - [4 Quinta] - [5 Sexta] - [6 Sabado]
 
-               if ($bPrimeiro==false) {
-                  array_push($return_d, "");
-                  array_push($return_d, " Segundo Dia Encontro ");
-               }
-                array_push($return_d, $dt);
-                $bPrimeiro=true;
+                   if ($bPrimeiro==false) {
+                      array_push($return_d, "");
+                      array_push($return_d, " Segundo Dia Encontro ");
+                   }
+                    array_push($return_d, $dt);
+                    $bPrimeiro=true;
+                }
+
+                $dini += 86400; // Adicionando mais 1 dia (em segundos) na data inicial
             }
-
-            $dini += 86400; // Adicionando mais 1 dia (em segundos) na data inicial
         }
 
         return ($return_d);

@@ -2,7 +2,6 @@
 
     $(document).ready(function()
     {
-
         /*Hierarquia do primeiro nivel ao ultimo*/
         /*Quando selecionar item no combo nivel1, carrega combo nivel2 com dados relacionados*/
         $("#nivel1_up").change(function()

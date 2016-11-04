@@ -35,7 +35,6 @@ class RelEncontroController extends Controller
               return redirect('home');
         }
 
-
             $publicos = \App\Models\publicos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
             $faixas = \App\Models\faixas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
 
@@ -77,9 +76,6 @@ class RelEncontroController extends Controller
                    'var_download'=>'',
                    'var_mensagem'=>''
                 ]);
-
-
     }
-
 
 }

@@ -137,8 +137,7 @@ class HomeController extends Controller
         /*
         Busca Configuracao de labels para menu de estrutura de celulas
         */
-        $menu_celulas = \App\Models\configuracoes::select('id', 'celulas_nivel1_label', 'celulas_nivel2_label', 'celulas_nivel3_label', 'celulas_nivel4_label', 'celulas_nivel5_label')
-                ->where('empresas_id', $this->dados_login->empresas_id)
+        $menu_celulas = \App\Models\configuracoes::where('empresas_id', $this->dados_login->empresas_id)
                 ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
                 ->get();
 
@@ -149,6 +148,19 @@ class HomeController extends Controller
              \Session::put('nivel3', $menu_celulas[0]->celulas_nivel3_label);
              \Session::put('nivel4', $menu_celulas[0]->celulas_nivel4_label);
              \Session::put('nivel5', $menu_celulas[0]->celulas_nivel5_label);
+
+             /*Variaveis para configuracoes gerais do sistema*/
+             \Session::put('padrao_textos', $menu_celulas[0]->padrao_textos);
+             \Session::put('label_celulas', $menu_celulas[0]->label_celulas);
+             \Session::put('label_celulas_singular', $menu_celulas[0]->label_celulas_singular);
+             \Session::put('label_encontros', $menu_celulas[0]->label_encontros);
+             \Session::put('label_encontros_singular', $menu_celulas[0]->label_encontros_singular);
+             \Session::put('label_lider_singular', $menu_celulas[0]->label_lider_singular);
+             \Session::put('label_lider_plural', $menu_celulas[0]->label_lider_plural);
+             \Session::put('label_lider_treinamento', $menu_celulas[0]->label_lider_treinamento);
+             \Session::put('label_anfitriao', $menu_celulas[0]->label_anfitriao);
+             \Session::put('label_lider_suplente', $menu_celulas[0]->label_lider_suplente);
+             \Session::put('label_participantes', $menu_celulas[0]->label_participantes);
         }
 
 

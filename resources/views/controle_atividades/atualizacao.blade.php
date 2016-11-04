@@ -24,7 +24,7 @@
 
               <div class="col-xs-3">
                   <a href="{{ url('/tutoriais/5')}}" data-toggle="tooltip" title="Clique Aqui para ver o tutorial..." target="_blank">
-                      <i class="glyphicon glyphicon-question-sign text-success"></i>&nbsp;Como Gerenciar os encontros ?
+                      <i class="glyphicon glyphicon-question-sign text-success"></i>&nbsp;Como Gerenciar {!! \Session::get('label_encontros') !!} ?
                  </a>
               </div>
           </div>
@@ -51,7 +51,7 @@
                 <!-- Horizontal Form -->
                 <div class="box box-info">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Selecionar Célula e Data do Encontro</h3>
+                    <h3 class="box-title">Selecionar {!! \Session::get('label_celulas_singular') !!} e Data de {!! \Session::get('label_encontros') !!}</h3>
                   </div>
                   <!-- /.box-header -->
                   <!-- form start -->
@@ -67,7 +67,7 @@
                                   <input type="hidden" name="hidden_id" id="hidden_id" value="">
                             @endif
 
-                            <label for="celulas" class="control-label">Célula</label>
+                            <label for="celulas" class="control-label">{!! \Session::get('label_celulas_singular') !!}</label>
                                     <select id="celulas" placeholder="(Selecionar)" name="celulas" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                     <option  value="0"></option>
                                     @foreach($celulas as $item)
@@ -159,7 +159,7 @@
                             </div>
 
                             <div class="col-xs-4 {{ $errors->has('data_encontro') ? ' has-error' : '' }}">
-                                <label for="data_encontro" class="control-label">Data do Encontro</label>
+                                <label for="data_encontro" class="control-label">Data {!! \Session::get('label_encontros_singular') !!}</label>
                                 <!--<select id="data_encontro" name="data_encontro" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">-->
                                 <select id="data_encontro" name="data_encontro" class="form-control">
                                       @if ($tipo_operacao=="incluir")
@@ -185,7 +185,7 @@
                       </div>
                       <div class="row">
                             <div class="col-xs-5">
-                                      <label for="ckEstruturas" class="control-label">Encontro Encerrado ?</label>
+                                      <label for="ckEstruturas" class="control-label">{!! \Session::get('label_encontros_singular') !!} Encerrado ?</label>
                                       <div class="input-group">
                                              <div class="input-group-addon">
                                                   <input  id= "ckFinalizar" name="ckFinalizar" data-group-cls="btn-group-sm" type="checkbox" class="ckFinalizar" {{ ($tipo_operacao=="incluir" ? "" : ($dados[0]->encontro_encerrado=="S" ? "checked" : "") )  }}/>
@@ -229,7 +229,7 @@
             <!-- Horizontal Form -->
             <div class="box box-info" id="box_mais" >
                   <div class="box-header with-border">
-                    <h3 class="box-title">Encerramento Encontro</h3>
+                    <h3 class="box-title">Encerramento {!! \Session::get('label_encontros_singular') !!}</h3>
                   </div>
                   <!-- /.box-header -->
                   <!-- form start -->
@@ -281,7 +281,7 @@
           <!-- Horizontal Form -->
             <div class="box box-info" id="box_material">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Material Encontro</h3>
+                    <h3 class="box-title">Material {!! \Session::get('label_encontros_singular') !!}</h3>
                   </div>
                   <!-- /.box-header -->
                   <!-- form start -->
@@ -314,7 +314,7 @@
 
                       <div class="row">
                               <div class="col-xs-12">
-                                   <label for="link_externo" class="control-label">Link Externo (Material Encontro, Artigo, Documento, Site, Video, Imagem, etc)</label>
+                                   <label for="link_externo" class="control-label">Link Externo (Material {!! \Session::get('label_encontros_singular') !!}, Artigo, Documento, Site, Video, Imagem, etc)</label>
                                    <input type="text" name="link_externo" id="link_externo"  class="form-control" value='{{ ($tipo_operacao=="editar" ? $dados[0]->link_externo : "") }}'>
                               </div>
                       </div>
@@ -622,7 +622,7 @@
           }
           else
           {
-              alert('Não há dados para imprimir para a Célula e Data informada.');
+              alert('Não há dados para imprimir para a Data informada.');
           }
       }
 

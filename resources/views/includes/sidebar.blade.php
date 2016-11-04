@@ -27,7 +27,6 @@
         <a href="{{ URL::to('profile/' . Auth::user()->id . '/perfil') }}"><i class="fa fa-user text-success"></i> Alterar Perfil</a>
       </div>
       <!-- ************** -->
-
     </div>
 
     <!-- search form -->
@@ -66,6 +65,10 @@
 
           @if(Gate::check('verifica_permissao', [64 ,'acessar']))
           <li><a href="{{ url('/configmsg')}}"><i class="fa fa-angle-double-right"></i> Config Serviço SMS/Whatsapp </a></li>
+          @endif
+
+          @if(Gate::check('verifica_permissao', [70 ,'acessar']))
+          <!--<li><a href="{{ url('/config_gerais')}}"><i class="fa fa-angle-double-right"></i> Configurações Gerais </a></li>-->
           @endif
 
         </ul>
@@ -181,8 +184,8 @@
       <!-- Células -->
       <li class="treeview" id="menu_celulas">
 
-        <a href="#" onclick="redirecionar_celulas();" title="Gerencie suas células, planejamento dos encontros, configurações, relatórios e estatísticas...">
-          <i class="fa fa-users"></i> <span>Células</span>
+        <a href="#" onclick="redirecionar_celulas();" title="Gerencie {!! \Session::get('label_celulas') !!}, planejamento {!! \Session::get('label_encontros') !!}, configurações, relatórios e estatísticas...">
+          <i class="fa fa-users"></i> <span>{!! \Session::get('label_celulas') !!}</span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
 
@@ -218,7 +221,7 @@
           @if(Gate::check('verifica_permissao', [42 ,'acessar']))
           <ul class="treeview-menu">
             <li>
-              <a href="{{ url('/celulas/registrar')}}"><i class="fa fa-plus"></i> Nova Célula</a>
+              <a href="{{ url('/celulas/registrar')}}"><i class="fa fa-plus"></i> Incluir {!! \Session::get('label_celulas_singular') !!}</a>
             </li>
           </ul>
           @endif
@@ -226,7 +229,7 @@
           @if(Gate::check('verifica_permissao', [42 ,'acessar']))
           <ul class="treeview-menu">
             <li>
-              <a href="{{ url('/celulas')}}" title="Lista todas as células cadastradas e a quantidade de participantes..."><i class="fa  fa-list-alt"></i> Listar</a>
+              <a href="{{ url('/celulas')}}" title="Lista todas {!! \Session::get('label_celulas') !!} cadastradas e a quantidade de {!! \Session::get('label_participantes') !!}..."><i class="fa  fa-list-alt"></i> Listar</a>
             </li>
           </ul>
           @endif
@@ -234,7 +237,7 @@
           @if(Gate::check('verifica_permissao', [45 ,'acessar']))
           <ul class="treeview-menu">
             <li>
-              <a href="{{ url('/celulaspessoas')}}" title="Inclua pessoas que participarão das células..."> <i class="fa fa-user-plus"></i> Participantes </i></a>
+              <a href="{{ url('/celulaspessoas')}}" title="Incluir Pessoas para {!! \Session::get('label_celulas') !!}..."> <i class="fa fa-user-plus"></i> {!! \Session::get('label_participantes') !!} </i></a>
             </li>
           </ul>
           @endif
@@ -243,7 +246,7 @@
           @if(Gate::check('verifica_permissao', [67 ,'acessar']) || Gate::check('verifica_permissao', [68 ,'acessar']))
           <ul class="treeview-menu">
             <li>
-              <a href="#" title="Movimentação de Membros entre Células..."><i class="fa fa-exchange"></i> Movimentação Membros <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#" title="Movimentação de Membros entre {!! \Session::get('label_celulas') !!}..."><i class="fa fa-exchange"></i> Movimentação Membros <i class="fa fa-angle-left pull-right"></i></a>
                   <ul class="treeview-menu">
                       @if(Gate::check('verifica_permissao', [67 ,'acessar']))
                       <li><a href="{{ url('/membersmove')}}"> Nova Movimentação</a></li>
@@ -264,11 +267,11 @@
               -->
               <ul class="treeview-menu">
                @if(Gate::check('verifica_permissao', [58 ,'acessar']))
-               <li><a href="{{ url('/controle_atividades')}}" title="Controle a presença dos membros e visitantes, envie material para encontro..."> <i class="fa fa-check"></i> Gerenciar Encontros</a></li>
+               <li><a href="{{ url('/controle_atividades')}}" title="Controle a presença dos membros e visitantes, envie material {!! \Session::get('label_encontros') !!}..."> <i class="fa fa-check"></i> Gerenciar {!! \Session::get('label_encontros') !!}</a></li>
                @endif
 
                @if(Gate::check('verifica_permissao', [65 ,'acessar']))
-               <li><a href="{{ url('/relencontro')}}" title="Relatórios Estatístico dos Encontros, Participantes de Células..."> <i class="fa fa-print"></i> Relatório Encontros</a></li>
+               <li><a href="{{ url('/relencontro')}}" title="Relatórios Estatístico dos {!! \Session::get('label_encontros') !!}, {!! \Session::get('label_participantes') !!} {!! \Session::get('label_celulas') !!}..."> <i class="fa fa-print"></i> Relatório {!! \Session::get('label_encontros') !!}</a></li>
                @endif
 
              </ul>
@@ -280,7 +283,7 @@
          @if(Gate::check('verifica_permissao', [46 ,'acessar']))
          <ul class="treeview-menu">
           <li>
-            <a href="{{ url('/relcelulas')}}"><i class="fa fa-print"></i> Relatório Células</a>
+            <a href="{{ url('/relcelulas')}}"><i class="fa fa-print"></i> Relatório {!! \Session::get('label_celulas') !!}</a>
           </li>
         </ul>
         @endif
@@ -372,7 +375,7 @@
   @if(Gate::check('verifica_permissao', [60 ,'acessar']))
   <li class="treeview">
     <a href="{{ url('/home')}}">
-      <i class="fa fa-users"></i> <span>Minha Célula</span>
+      <i class="fa fa-users"></i> <span>{!! \Session::get('label_celulas') !!}</span>
     </a>
   </li>
   @endif
@@ -402,9 +405,9 @@
           <li><a href="{{ url('/tutoriais/1')}}">Cadastro de Usuários</a></li>
           <li><a href="{{ url('/tutoriais/2')}}">Novo Usuário Administrador</a></li>
           <li><a href="{{ url('/tutoriais/3')}}">Criando Login do Membro</a></li>
-          <li><a href="{{ url('/tutoriais/3')}}">Criando Login do Líder</a></li>
-          <li><a href="{{ url('/tutoriais/4')}}">Criando Novas Células</a></li>
-          <li><a href="{{ url('/tutoriais/5')}}">Gerenciando Encontros</a></li>
+          <li><a href="{{ url('/tutoriais/3')}}">Criando Login do {!! \Session::get('label_lider_singular') !!}</a></li>
+          <li><a href="{{ url('/tutoriais/4')}}">Criando ({!! \Session::get('label_celulas') !!})</a></li>
+          <li><a href="{{ url('/tutoriais/5')}}">Gerenciando {!! \Session::get('label_encontros') !!}</a></li>
         </ul>
       </li>
     </ul>

@@ -1,7 +1,7 @@
 @extends('principal.master')
 @section('content')
 
-{{ \Session::put('titulo', 'Dashboard Células') }}
+{{ \Session::put('titulo', 'Dashboard - ' . \Session::get('label_celulas')) }}
 {{ \Session::put('subtitulo', 'Visão Geral') }}
 {{ \Session::put('route', 'celulas') }}
 {{ \Session::put('id_pagina', '42') }}
@@ -90,7 +90,7 @@
 <div class="row">
           <div class="col-lg-4 col-xs-7">
                     <div class="inner">
-                         <center><h4>Total Participantes</h4>
+                         <center><h4>Total {!! \Session::get('label_participantes') !!}</h4>
                          </center>
                     </div>
                     <div id="tipo_pessoa" style="height: 250px;"></div>
@@ -155,17 +155,17 @@
                  <div class="row">
 
                         <div class="col-xs-4">
-                              <h4>&nbsp;&nbsp;&nbsp;&nbsp;Células</h4>
+                              <h4>&nbsp;&nbsp;&nbsp;&nbsp;{!! \Session::get('label_celulas') !!}</h4>
                               <ul class="nav nav-stacked">
 
                                     <li>
-                                        <a href="#">&nbsp;Células Ativas
+                                        <a href="#">&nbsp;{!! \Session::get('label_celulas') !!} em Atividade
                                             <span class="pull-left badge bg-blue">{!! $total_celulas !!}</span>
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a href="#">Participantes :
+                                        <a href="#">{!! \Session::get('label_participantes') !!} :
                                             <span class="pull-right badge bg-green">{!! $total_participantes !!}</span>
                                         </a>
 
@@ -212,7 +212,7 @@
 
                           @if ($resumo)
                           <div class="col-xs-6">
-                              <h4>&nbsp;&nbsp;&nbsp;&nbsp;Resumo Encontros (Mês Corrente)</h4>
+                              <h4>&nbsp;&nbsp;&nbsp;&nbsp;Resumo {!! \Session::get('label_encontros') !!} (Mês Corrente)</h4>
                               <ul class="nav nav-stacked">
 
                                     <li>
@@ -246,11 +246,11 @@
                           </div>
                           @else
                             <div class="col-xs-6">
-                                  <h4>&nbsp;&nbsp;&nbsp;&nbsp;Resumo Encontros (Mês Corrente)</h4>
+                                  <h4>&nbsp;&nbsp;&nbsp;&nbsp;Resumo {!! \Session::get('label_encontros') !!} (Mês Corrente)</h4>
                                   <ul class="nav nav-stacked">
 
                                         <li>
-                                            Sem dados estatísticos dos encontros até o momento.
+                                            Sem dados estatísticos de {!! \Session::get('label_encontros') !!} até o momento.
                                         </li>
                                   </ul>
                            </div>
