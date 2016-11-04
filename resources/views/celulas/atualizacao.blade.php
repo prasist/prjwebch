@@ -414,7 +414,6 @@
 
                                                       <!--<option ng-repeat="option in data.Locais" value="@{{option.id}}">@{{option.name}}</option>-->
 
-
                                                       <select id="local" placeholder="(Selecionar)" name="local" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                                       <option  value=""></option>
                                                       @if ($tipo_operacao=="editar")
