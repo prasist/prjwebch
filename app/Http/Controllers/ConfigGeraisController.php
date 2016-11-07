@@ -76,40 +76,6 @@ class ConfigGeraisController extends Controller
 
     }
 
-/*
-* Grava dados no banco
-*
-*/
-    public function store(\Illuminate\Http\Request  $request)
-    {
-
-        /*Validação de campos - request*/
-        $this->validate($request, [
-                'email' => 'required',
-                'password' => 'required|min:6',
-                'ddd' => 'required|min:2',
-         ]);
-
-        $input = $request->except(array('_token', 'ativo')); //não levar o token
-
-        $dados = new configuracoes();
-        $dados->empresas_id  =  $this->dados_login->empresas_id;
-        $dados->empresas_clientes_cloud_id  =  $this->dados_login->empresas_clientes_cloud_id;
-        $dados->login_provedor_mensagens  = $input['email'];
-        $dados->senha_provedor_mensagens  = ($input['password']);
-        $dados->sms_marketing  = (isset($input['sms_marketing']) ? "S" : "N");
-        $dados->sms_corporativo  = (isset($input['sms_corporativo']) ? "S" : "N");
-        $dados->whatsapp  = (isset($input['whatsapp']) ? "S" : "N");
-        $dados->ddd  = $input['ddd'];
-
-        $dados->save();
-
-        \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-
-        return redirect('home');
-
-    }
-
 
     //Visualizar registro
     public function show (\Illuminate\Http\Request $request, $id)
@@ -136,20 +102,41 @@ class ConfigGeraisController extends Controller
     public function update(\Illuminate\Http\Request  $request, $id)
     {
 
+        /*Validação de campos - request*/
+        $this->validate($request, [
+                'label_celulas' => 'required',
+                'label_encontros' => 'required',
+                'label_lider_singular' => 'required',
+                'label_lider_plural' => 'required',
+                'label_lider_treinamento' => 'required',
+                'label_anfitriao' => 'required',
+                'label_participantes' => 'required',
+                'label_lider_suplente' => 'required',
+                'label_encontros_singular' => 'required'
+         ]);
+
         $input = $request->except(array('_token')); //não levar o token
 
-        //-------------Atualiza Usuario
         $dados = configuracoes::findOrfail($id);
         $dados->empresas_id  =  $this->dados_login->empresas_id;
         $dados->empresas_clientes_cloud_id  =  $this->dados_login->empresas_clientes_cloud_id;
-
-        $dados->save();//-------------FIM - Atualiza Usuario
+        //$dados->padrao_textos  =  $input["padrao_textos"];
+        $dados->label_celulas  =  $input["label_celulas"];
+        $dados->label_celulas_singular  =  $input["label_celulas_singular"];
+        $dados->label_encontros  =  $input["label_encontros"];
+        $dados->label_lider_singular  =  $input["label_lider_singular"];
+        $dados->label_lider_plural  =  $input["label_lider_plural"];
+        $dados->label_lider_treinamento  =  $input["label_lider_treinamento"];
+        $dados->label_anfitriao  =  $input["label_anfitriao"];
+        $dados->label_participantes  =  $input["label_participantes"];
+        $dados->label_lider_suplente  =  $input["label_lider_suplente"];
+        $dados->label_encontros_singular  =  $input["label_encontros_singular"];
+        $dados->save();
 
         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
 
         return redirect('home');
 
     }
-
 
 }

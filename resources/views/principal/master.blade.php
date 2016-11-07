@@ -59,7 +59,7 @@
 
         <!--ANGULAR-->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-        <script src="{{ asset('/angular/app.js')}}"></script>
+        <!--<script src="{{ asset('/angular/app.js')}}"></script>-->
         <!--<script src="{{ asset('/angular/modules/celulas/controllers/celulas.main.controller.js')}}"></script>
         <script src="{{ asset('/angular/controllers/loadselect.ctrl.js')}}"></script>-->
 

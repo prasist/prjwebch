@@ -763,12 +763,9 @@
                                               </div>
                                             </div>
                                           </div>
-                                          </div>
+                                       </div>
 
-
-                                    </div>
-
-                                    <!--  END TABS-->
+                                    </div><!--  END TABS-->
 
                          </div> <!-- TAB CONTENTS -->
 

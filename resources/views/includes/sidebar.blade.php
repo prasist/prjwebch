@@ -68,7 +68,7 @@
           @endif
 
           @if(Gate::check('verifica_permissao', [70 ,'acessar']))
-          <!--<li><a href="{{ url('/config_gerais')}}"><i class="fa fa-angle-double-right"></i> Configurações Gerais </a></li>-->
+          <li><a href="{{ url('/config_gerais')}}"><i class="fa fa-angle-double-right"></i> Configurações Gerais </a></li>
           @endif
 
         </ul>
