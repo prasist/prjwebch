@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
+    <head X-Frame-Options: DENY>
         <meta charset="UTF-8">
         <title>SIGMA3 - Gestão para Igrejas</title>
         <!-- Est-->

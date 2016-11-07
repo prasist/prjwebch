@@ -18,7 +18,7 @@
     <style>
         body {
             font-family: 'Lato';
-            background-image: url('http://177.101.149.118/wp-content/uploads/2016/03/bridge-lake-bokeh-hd-wallpaper.jpg');
+            background-image: url('http://sigma3sistemas.com.br/wp-content/uploads/2016/03/bridge-lake-bokeh-hd-wallpaper.jpg');
         }
 
         .fa-btn {
