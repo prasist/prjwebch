@@ -102,8 +102,12 @@ class ConfigGeraisController extends Controller
     public function update(\Illuminate\Http\Request  $request, $id)
     {
 
+
+        $input = $request->except(array('_token')); //não levar o token
+
         /*Validação de campos - request*/
         $this->validate($request, [
+                'label_celulas_singular'=> 'required',
                 'label_celulas' => 'required',
                 'label_encontros' => 'required',
                 'label_lider_singular' => 'required',
@@ -114,8 +118,6 @@ class ConfigGeraisController extends Controller
                 'label_lider_suplente' => 'required',
                 'label_encontros_singular' => 'required'
          ]);
-
-        $input = $request->except(array('_token')); //não levar o token
 
         $dados = configuracoes::findOrfail($id);
         $dados->empresas_id  =  $this->dados_login->empresas_id;
