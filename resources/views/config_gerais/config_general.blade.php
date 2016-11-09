@@ -79,7 +79,7 @@
                                           <label for="label_encontros" class="control-label">Nomenclatura Encontros (Plural)</label>
                                           <input id="label_encontros"  name = "label_encontros" type="text" class="form-control" value="{{ $dados[0]->label_encontros }}">
 
-                                          <!-- se houver erros na validacao do form request -->
+                                             <!-- se houver erros na validacao do form request -->
                                              @if ($errors->has('label_encontros'))
                                               <span class="help-block">
                                                   <strong>{{ $errors->first('label_encontros') }}</strong>
@@ -89,7 +89,7 @@
                            </div>
 
 
-                           <div class="row">
+                          <div class="row">
                                     <div class="col-xs-6 {{ $errors->has('label_lider_singular') ? ' has-error' : '' }}">
                                           <label for="label_lider_singular" class="control-label">Nomenclatura Líder (Singular)</label>
                                           <input id="label_lider_singular"  name = "label_lider_singular" type="text" class="form-control" value="{{ $dados[0]->label_lider_singular }}">
@@ -111,10 +111,10 @@
                                               </span>
                                              @endif
                                     </div>
-                           </div>
+                          </div>
 
 
-                           <div class="row">
+                          <div class="row">
                                     <div class="col-xs-6 {{ $errors->has('label_lider_treinamento') ? ' has-error' : '' }}">
                                           <label for="label_lider_treinamento" class="control-label">Nomenclatura Líder em Treinamento</label>
                                           <input id="label_lider_treinamento"  name = "label_lider_treinamento" type="text" class="form-control" value="{{ $dados[0]->label_lider_treinamento }}">
@@ -136,7 +136,7 @@
                                               </span>
                                              @endif
                                     </div>
-                           </div>
+                          </div>
 
 
                            <div class="row">

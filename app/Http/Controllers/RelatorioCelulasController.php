@@ -287,7 +287,14 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
    if ($tipo_relatorio=="encontro")  {
           $sWhere = " celulas.empresas_id = " . $this->dados_login->empresas_id . " and celulas.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
    } else {
-          $sWhere = " empresas_id = " . $this->dados_login->empresas_id . " and empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
+
+         $sWhere = " empresas_id = " . $this->dados_login->empresas_id . " and empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
+
+            if (!$input["ckExibir"]) {
+                    if (!$input["ckEstruturas"]) {
+                        $sWhere = " vw.empresas_id = " . $this->dados_login->empresas_id . " and vw.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
+                    }
+            }
    }
 
 
@@ -507,6 +514,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
    //dd($nome_relatorio);
     $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");
 
+    //dd($nome_relatorio);
 
     \JasperPHP::process(
             $nome_relatorio,

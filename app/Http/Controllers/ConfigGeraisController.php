@@ -13,7 +13,6 @@ use Gate;
 
 class ConfigGeraisController extends Controller
 {
-    //
 
     public function __construct()
     {
@@ -29,7 +28,7 @@ class ConfigGeraisController extends Controller
 
     }
 
-//Exibir listagem
+    //Exibir listagem
     public function index_json()
     {
 
@@ -102,7 +101,6 @@ class ConfigGeraisController extends Controller
     public function update(\Illuminate\Http\Request  $request, $id)
     {
 
-
         $input = $request->except(array('_token')); //não levar o token
 
         /*Validação de campos - request*/
@@ -122,7 +120,7 @@ class ConfigGeraisController extends Controller
         $dados = configuracoes::findOrfail($id);
         $dados->empresas_id  =  $this->dados_login->empresas_id;
         $dados->empresas_clientes_cloud_id  =  $this->dados_login->empresas_clientes_cloud_id;
-        //$dados->padrao_textos  =  $input["padrao_textos"];
+      //$dados->padrao_textos  =  $input["padrao_textos"];
         $dados->label_celulas  =  $input["label_celulas"];
         $dados->label_celulas_singular  =  $input["label_celulas_singular"];
         $dados->label_encontros  =  $input["label_encontros"];
