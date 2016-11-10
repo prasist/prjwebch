@@ -45,6 +45,7 @@ class FuncoesGerais extends Controller
             $data_formatada = \DateTime::createFromFormat('d/m/Y', $valor);
 
             return $data_formatada->format('Y-m-d'); //Retorna data preparada para insert
+
     }
 
 

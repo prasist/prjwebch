@@ -156,6 +156,25 @@
                                                                     </div>
 
                                                                     <div class="col-xs-3">
+                                                                      <label for="mes" class="control-label">Tipo Aniversariante</label>
+                                                                    <div class="form-group">
+
+                                                                        <label>
+                                                                          <input type="radio" name="r1" class="minimal" value = "1" checked>
+                                                                          Nascimento
+                                                                        </label>
+                                                                        <label>
+                                                                          <input type="radio" name="r1" class="minimal" value = "2">
+                                                                          Casamento
+                                                                        </label>
+                                                                        <label>
+                                                                          <input type="radio" name="r1" class="minimal" value = "3">
+                                                                          Batismo
+                                                                        </label>
+                                                                      </div>
+                                                                    </div>
+
+                                                                    <div class="col-xs-3">
                                                                         <label for="ano_inicial" class="control-label">Ano Nascimento Inicial :</label>
                                                                         <input type="text" id="ano_inicial" name="ano_inicial" class="form-control" placeholder="Ano Inicial"  data-inputmask='"mask": "9999"' data-mask>
                                                                     </div><!-- col-xs-5-->
@@ -166,6 +185,8 @@
                                                                     </div><!-- col-xs-5-->
 
                                                                  </div><!-- end row -->
+
+
 
                                                           <div class="row">
 

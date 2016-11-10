@@ -417,11 +417,34 @@ class RelatorioPessoasController extends Controller
 
     if ($input["mes"]!="")
     {
-        $filtros = array_add($filtros, '18',
+
+        if ($input["r1"]=="1") { //nascimento
+
+            $filtros = array_add($filtros, '18',
             [
                 'find' => ["date_part('month', p.datanasc)"=>"'" . $input["mes"] . "'"] ,
                 'label' => ['Mês Aniversário'=>$input["mes"]]
             ]);
+
+        } else if ($input["r1"]=="2") { //casamento
+
+            //date_part('month', to_date(data_casamento,'yyyy-MM-dd')) = '02'
+            $filtros = array_add($filtros, '18',
+            [
+                'find' => ["date_part('month', to_date(data_casamento,'yyyy-MM-dd'))"=>"'" . $input["mes"] . "'"] ,
+                'label' => ['Mês Casamento'=>$input["mes"]]
+            ]);
+
+        } else if ($input["r1"]=="3") { //batismo
+
+            $filtros = array_add($filtros, '18',
+            [
+                'find' => ["date_part('month', to_date(data_batismo,'yyyy-MM-dd'))"=>"'" . $input["mes"] . "'"] ,
+                'label' => ['Mês Batismo'=>$input["mes"]]
+            ]);
+        }
+
+
     }
 
 /*
@@ -567,13 +590,14 @@ class RelatorioPessoasController extends Controller
         //}
         //else
         //{
+
             $filtros = array_add($filtros, '35',
             [
                 'find' =>['data_casamento>='=> "'" . $formatador->FormatarData($input["data_casamento"]) . "'"],
                 'label' =>['Dt. Casamento Inicial'=>$input["data_casamento"]]
             ]);
 
-            $filtros = array_add($filtros, '35',
+            $filtros = array_add($filtros, '36',
             [
                 'find' =>['data_casamento<='=> "'" . $formatador->FormatarData($input["data_casamento_ate"]) . "'"],
                 'label' =>['Dt. Casamento Final'=>$input["data_casamento_ate"]]
@@ -583,7 +607,7 @@ class RelatorioPessoasController extends Controller
 
     if ($input["nivel1_up"]!="0")
     {
-        $filtros = array_add($filtros, '36',
+        $filtros = array_add($filtros, '37',
             [
                 'find' =>['celulas_nivel1_id'=>$descricao_nivel1[0]] ,
                 'label' => \Session::get("nivel1") . ' - ' . $descricao_nivel1[1]
@@ -592,7 +616,7 @@ class RelatorioPessoasController extends Controller
 
     if ($input["nivel2_up"]!="0")
     {
-        $filtros = array_add($filtros, '37',
+        $filtros = array_add($filtros, '38',
             [
                 'find' =>['celulas_nivel2_id'=>$descricao_nivel2[0]] ,
                 'label' => \Session::get("nivel2") . ' - ' . $descricao_nivel2[1]
@@ -601,7 +625,7 @@ class RelatorioPessoasController extends Controller
 
     if ($input["nivel3_up"]!="0")
     {
-        $filtros = array_add($filtros, '38',
+        $filtros = array_add($filtros, '39',
             [
                 'find' =>['celulas_nivel3_id'=>$descricao_nivel3[0]] ,
                 'label' => \Session::get("nivel3") . ' - ' . $descricao_nivel3[1]
@@ -610,7 +634,7 @@ class RelatorioPessoasController extends Controller
 
     if ($input["nivel4_up"]!="0")
     {
-        $filtros = array_add($filtros, '39',
+        $filtros = array_add($filtros, '40',
             [
                 'find' =>['celulas_nivel4_id'=>$descricao_nivel4[0]] ,
                 'label' => \Session::get("nivel4") . ' - ' . $descricao_nivel4[1]
@@ -619,7 +643,7 @@ class RelatorioPessoasController extends Controller
 
     if ($input["nivel5_up"]!="0")
     {
-        $filtros = array_add($filtros, '40',
+        $filtros = array_add($filtros, '41',
             [
                 'find' =>['celulas_nivel5_id'=>$descricao_nivel5[0]] ,
                 'label' => \Session::get("nivel5") . ' - ' . $descricao_nivel5[1]
@@ -645,9 +669,28 @@ class RelatorioPessoasController extends Controller
 
         $strSql = " SELECT DISTINCT ";
         $strSql .= " p.id,  p.tipos_pessoas_id,  p.razaosocial, ";
-        $strSql .= " to_char(p.datanasc::timestamp with time zone, 'MM'::text) AS mes, ";
-        $strSql .= " to_char(p.datanasc::timestamp with time zone, 'YYYY'::text) AS ano, ";
-        $strSql .= " date_part('day'::text, p.datanasc) AS dia, ";
+
+        if ($input["r1"]=="1") { //nascimento
+
+            $strSql .= " to_char(p.datanasc::timestamp with time zone, 'MM'::text) AS mes, ";
+            $strSql .= " to_char(p.datanasc::timestamp with time zone, 'YYYY'::text) AS ano, ";
+            $strSql .= " date_part('day'::text, p.datanasc) AS dia, ";
+
+        } else if ($input["r1"]=="2") { //casamento
+
+            $strSql .= " to_char(data_casamento::timestamp with time zone, 'MM'::text) AS mes, ";
+            $strSql .= " to_char(data_casamento::timestamp with time zone, 'YYYY'::text) AS ano, ";
+            $strSql .= " to_char(data_casamento::timestamp with time zone, 'DD'::text) AS dia, ";
+
+        } else if ($input["r1"]=="3") { //batismo
+
+            $strSql .= " to_char(data_batismo::timestamp with time zone, 'MM'::text) AS mes, ";
+            $strSql .= " to_char(data_batismo::timestamp with time zone, 'YYYY'::text) AS ano, ";
+            $strSql .= " to_char(data_batismo::timestamp with time zone, 'DD'::text) AS dia, ";
+
+        }
+
+
         $strSql .= " to_char(date_part('years'::text, age(now(), p.datanasc::timestamp with time zone)), '9999'::text) AS idade, ";
         $strSql .= " p.nomefantasia,  p.fone_principal,  p.fone_celular,  p.emailprincipal,  p.ativo,  p.datanasc ";
         $strSql .= " FROM pessoas p ";
@@ -718,6 +761,7 @@ class RelatorioPessoasController extends Controller
 
 
         $sFiltrosUtilizados .= "</tr></table>";
+
 
         //CONCATENA A STRING DA QUERY A CLAUSULA WHERE
         $strSql .= $sWhere;
