@@ -47,9 +47,7 @@ class RelatorioPessoasController extends Controller
         $situacoes = \App\Models\situacoes::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
         $status = \App\Models\status::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
         $estadoscivis = \App\Models\civis::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
-        $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->where('empresas_id', $this->dados_login->empresas_id)
-        ->orderBy('nome','ASC')->get();
+        $grupos = \App\Models\grupospessoas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->where('empresas_id', $this->dados_login->empresas_id)->orderBy('nome','ASC')->get();
 
         /*Busca Nivel1*/
         $view1 = \DB::select('select * from view_celulas_nivel1 v1 where v1.empresas_id = ? and v1.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
@@ -773,4 +771,5 @@ class RelatorioPessoasController extends Controller
 
     }
 
-  } //fim function
+    }
+}
