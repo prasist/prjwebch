@@ -521,6 +521,37 @@ class CelulasController extends Controller
 
     }
 
+    //Verifica se houve encontro avulso para a celula / mes / ano
+    public function buscar_data_avulsa($id, $mes, $ano)
+    {
+            $buscar = \App\Models\controle_atividades::select('data_encontro')
+            ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('empresas_id', $this->dados_login->empresas_id)
+            ->where('encontro_avulso', 1)
+            ->where('mes', $mes)
+            ->where('ano', $ano)
+            ->where('celulas_id', $id)
+            ->get();
+
+            /*
+            if ($buscar->count()>0)
+            {
+                return date("d/m/Y", strtotime($buscar[0]->data_encontro));
+            }
+            else
+            {
+                return ""; //Retorna vazio
+            }
+            */
+
+            if ($buscar->count()>0) {
+                return $buscar;
+            } else {
+                return ""; //Retorna vazio
+            }
+    }
+
+
     public function buscar_segundo_dia_encontro($id)
     {
 
@@ -1045,8 +1076,22 @@ class CelulasController extends Controller
             }
         }
 
-        return ($return_d);
+        array_push($return_d, "");
+        array_push($return_d, " Encontro Avulso (Criar Novo) ");
 
+        //Verificar se houve encontro avulso
+        $dt_encontro_avulso = $this->buscar_data_avulsa($id, $var_month, $var_year);
+
+        if ($dt_encontro_avulso!="") {
+            array_push($return_d, "");
+            array_push($return_d, " Houve Encontro Avulso : ");
+
+            foreach ($dt_encontro_avulso as $item) {
+                array_push($return_d, date("d/m/Y", strtotime($item->data_encontro)));
+            }
+        }
+
+        return ($return_d);
    }
 
 

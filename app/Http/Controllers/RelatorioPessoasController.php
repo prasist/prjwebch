@@ -105,8 +105,6 @@ class RelatorioPessoasController extends Controller
 
 
 
-
-
       public function pesquisar_aniversariantes($querystring)
       {
 
@@ -128,7 +126,6 @@ class RelatorioPessoasController extends Controller
 
             //$parametros = array_add($parametros, 'ordem', 'razaosocial');
 
-
             if ($querystring=="mes")
             {
                     $nome_relatorio = public_path() . '/relatorios/listagem_aniversariantes_mes.jasper';
@@ -139,7 +136,6 @@ class RelatorioPessoasController extends Controller
             }
 
            //$nome_relatorio = public_path() . '/relatorios/listagem_aniversariantes.jasper';
-
 
             //Executa JasperReport
             \JasperPHP::process(
@@ -687,7 +683,6 @@ class RelatorioPessoasController extends Controller
             $strSql .= " to_char(data_batismo::timestamp with time zone, 'MM'::text) AS mes, ";
             $strSql .= " to_char(data_batismo::timestamp with time zone, 'YYYY'::text) AS ano, ";
             $strSql .= " to_char(data_batismo::timestamp with time zone, 'DD'::text) AS dia, ";
-
         }
 
 
@@ -759,9 +754,7 @@ class RelatorioPessoasController extends Controller
             $sWhere .= " And to_char(p.datanasc, 'YYYY')<= '" . $input["ano_final"] . "'";
         }
 
-
         $sFiltrosUtilizados .= "</tr></table>";
-
 
         //CONCATENA A STRING DA QUERY A CLAUSULA WHERE
         $strSql .= $sWhere;
@@ -780,8 +773,4 @@ class RelatorioPessoasController extends Controller
 
     }
 
-
   } //fim function
-
-
-}

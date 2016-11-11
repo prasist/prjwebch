@@ -51,7 +51,7 @@
                 <!-- Horizontal Form -->
                 <div class="box box-info">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Selecionar {!! \Session::get('label_celulas_singular') !!} e Data de {!! \Session::get('label_encontros') !!}</h3>
+                       <h3 class="box-title">Selecionar {!! \Session::get('label_celulas_singular') !!} e Data de {!! \Session::get('label_encontros') !!}</h3>
                   </div>
                   <!-- /.box-header -->
                   <!-- form start -->
@@ -61,13 +61,13 @@
                       <div class="row">
                             <div class="col-xs-12 {{ $errors->has('celulas') ? ' has-error' : '' }}">
 
-                            @if ($tipo_operacao=="editar")
-                                  <input type="hidden" name="hidden_id" id="hidden_id" value="{{$dados[0]->id}}">
-                            @else
-                                  <input type="hidden" name="hidden_id" id="hidden_id" value="">
-                            @endif
+                                    @if ($tipo_operacao=="editar")
+                                          <input type="hidden" name="hidden_id" id="hidden_id" value="{{$dados[0]->id}}">
+                                    @else
+                                          <input type="hidden" name="hidden_id" id="hidden_id" value="">
+                                    @endif
 
-                            <label for="celulas" class="control-label">{!! \Session::get('label_celulas_singular') !!}</label>
+                                    <label for="celulas" class="control-label">{!! \Session::get('label_celulas_singular') !!}</label>
                                     <select id="celulas" placeholder="(Selecionar)" name="celulas" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                     <option  value="0"></option>
                                     @foreach($celulas as $item)
@@ -184,7 +184,7 @@
 
                       </div>
                       <div class="row">
-                            <div class="col-xs-5">
+                            <div class="col-xs-4">
                                       <label for="ckEstruturas" class="control-label">{!! \Session::get('label_encontros_singular') !!} Encerrado ?</label>
                                       <div class="input-group">
                                              <div class="input-group-addon">
@@ -193,7 +193,7 @@
                                       </div>
                             </div>
 
-                            <div class="col-xs-5">
+                            <div class="col-xs-4">
                                 <p>&nbsp;</p>
 
                                 <!--<button class = 'btn btn-info' type ='button' onclick="abrir_relatorio();" {{ ($preview=='true' ? 'disabled=disabled' : "" ) }}><i class="fa fa-print"></i> Imprimir</button>-->
@@ -213,6 +213,12 @@
                               </div>
 
                             </div>
+
+                            <div id="div_data" class="col-xs-3" style="display: none">
+                                  <label for="data_avulsa" class="control-label">Data Encontro Avulso</label>
+                                  <input id ="data_avulsa" name = "data_avulsa" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                            </div>
+
                       </div>
 
 
@@ -846,11 +852,9 @@
         $("#celulas").change(function()
         {
 
-
              var conteudo_celulas = $(this).val().split('|');
              var id_celula = conteudo_celulas[0];
              var urlRoute = "{!! url('/celulaspessoas/participantes/" + id_celula + "') !!}"; //Rota para consulta
-
 
                     $('#tab_participantes').dataTable({
                           "destroy": true,
@@ -927,7 +931,6 @@
                     exibir_divs(false);
                }
 
-
                 //Search for existent data in database
                 var var_day = $("#data_encontro").val();
                 var var_data = $("#data_encontro").text();
@@ -935,25 +938,30 @@
                 var var_cell_id = var_cell_input[0];
                 var var_year = $("#ano").val();
                 var var_month = $("#mes").val();
-                var urlGetUser = '{!! url("/controle_atividades/buscar/' +  var_cell_id +  '/' + var_day + '/' + var_month + '/' + var_year + '") !!}';
 
-                //if selected a date
-                if (var_day!="")
-                {
+                //Se for encontro avulso
+                if (var_day==" E") {
+                   $('#div_data').show();
+                } else {
 
-                    $.getJSON(urlGetUser, function( data, status ) //search by : id, dia encontro, mes, ano
+                    var urlGetUser = '{!! url("/controle_atividades/buscar/' +  var_cell_id +  '/' + var_day + '/' + var_month + '/' + var_year + '") !!}';
+
+                    //if selected a date
+                    if (var_day!="")
                     {
-
-                        if (data!="") //found
+                        $.getJSON(urlGetUser, function( data, status ) //search by : id, dia encontro, mes, ano
                         {
-                            //reopen page with ID found
-                            var urlGetUser = '{!! url("/controle_atividades/' +  data[0].id +  '/edit") !!}';
-                            window.location=urlGetUser; //redirect to route
-                        }
 
-                    });
+                            if (data!="") //found
+                            {
+                                //reopen page with ID found
+                                var urlGetUser = '{!! url("/controle_atividades/' +  data[0].id +  '/edit") !!}';
+                                window.location=urlGetUser; //redirect to route
+                            }
+
+                        });
+                    }
                 }
-
 
           });
           //-------------FIM DATA ENCONTRO CHANGE EVENT-----------------------

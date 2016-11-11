@@ -37,8 +37,6 @@ class ControleAtividadesController extends Controller
 
             $this->dados_login = \App\Models\usuario::find($user_id);
 
-
-
             $whereForEach =
                             [
                                 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
@@ -46,8 +44,6 @@ class ControleAtividadesController extends Controller
                                 'controle_atividades_id' => $controle_id,
                                 'pessoas_id' => $pessoa_id
                             ];
-
-
 
             $controle_presencas = \App\Models\controle_presencas::firstOrNew($whereForEach);
             $controle_presencas->presenca_simples = "S";
@@ -57,7 +53,6 @@ class ControleAtividadesController extends Controller
             $controle_presencas->save();
 
             return redirect('home');
-
 
     }
 
@@ -83,7 +78,6 @@ class ControleAtividadesController extends Controller
        } else {
             $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
        }
-
 
 
         //get questions from database
@@ -112,6 +106,8 @@ class ControleAtividadesController extends Controller
      \DB::transaction(function() use ($request, $id, $tipo_operacao)
     {
 
+        /*Instancia biblioteca de funcoes globais*/
+        $formatador = new  \App\Functions\FuncoesGerais();
 
         $input = $request->except(array('_token')); //não levar o token
 
@@ -137,13 +133,22 @@ class ControleAtividadesController extends Controller
          $dados->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
          $dados->empresas_id = $this->dados_login->empresas_id;
          $dados->celulas_id = $descricao_celula[0];
-         $dados->data_encontro = $input['ano'] . "-" . $input['mes'] . "-" . $input['data_encontro'];
-         $dados->dia = $input['data_encontro'];
+
+         //Se for encontro avulso pega data avulsa
+         if ($input["data_encontro"]==" E") {
+             $dados->data_encontro = $formatador->FormatarData($input['data_avulsa']);
+             $dados->dia = substr($input['data_avulsa'], 0,2);
+             $dados->encontro_avulso = 1;
+         } else {
+              $dados->data_encontro = $input['ano'] . "-" . $input['mes'] . "-" . $input['data_encontro'];
+              $dados->dia = $input['data_encontro'];
+              $dados->encontro_avulso = 0;
+         }
+
          $dados->mes = $input['mes'];
          $dados->ano = $input['ano'];
          $dados->hora_inicio = $input['hora_inicio'];
          $dados->hora_fim = $input['hora_fim'];
-         //$dados->valor_oferta = ($input['valor_oferta']=="" ? null : $this->formatador->GravarCurrency($input['valor_oferta']));
          $dados->obs = trim($input['observacao']);
          $dados->link_externo = trim($input['link_externo']);
          $dados->texto = trim($input['texto_encontro']);
@@ -655,7 +660,6 @@ class ControleAtividadesController extends Controller
         //Load all dates by day of week (mondays, tuesdays, etc)
         $dates_of_meeting = $this->return_dates($dados);
 
-
         $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         return view($this->rota . '.atualizacao',
@@ -733,9 +737,56 @@ class ControleAtividadesController extends Controller
             $dini += 86400; // Adicionando mais 1 dia (em segundos) na data inicial
         }
 
+        array_push($return_d, "");
+        array_push($return_d, " Encontro Avulso (Criar Novo) ");
+
+        //Verifica se houve encontro avulso para a celula / mes / ano
+        $dt_encontro_avulso = $this->buscar_data_avulsa($dados[0]->celulas_id, $var_month, $var_year);
+
+        if ($dt_encontro_avulso!=null) {
+            array_push($return_d, "");
+            array_push($return_d, " Houve Encontro Avulso : ");
+
+            foreach ($dt_encontro_avulso as $item) {
+               array_push($return_d, date("d/m/Y", strtotime($item->data_encontro)));
+            }
+        }
+
         return ($return_d);
 
    }
+
+
+  public function buscar_data_avulsa($id, $mes, $ano)
+  {
+            $buscar = \App\Models\controle_atividades::select('data_encontro')
+            ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('empresas_id', $this->dados_login->empresas_id)
+            ->where('encontro_avulso', 1)
+            ->where('encontro_avulso', 1)
+            ->where('mes', $mes)
+            ->where('ano', $ano)
+            ->where('celulas_id', $id)
+            ->get();
+
+            /*
+            if ($buscar->count()>0)
+            {
+                return date("d/m/Y", strtotime($buscar[0]->data_encontro));
+            }
+            else
+            {
+                return ""; //Retorna vazio
+            }
+            */
+
+            if ($buscar->count()>0) {
+                return $buscar;
+            } else {
+                return null; //Retorna vazio
+            }
+    }
+
 
 
     //Visualizar registro

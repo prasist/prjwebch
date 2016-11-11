@@ -606,6 +606,7 @@ Route::post('/configmsg/gravar','ConfigMsgController@store');
     Route::get('celulas/select1', 'CelulasController@loadSelect');
     Route::get('celulas/buscar/{id}', 'CelulasController@buscar_dados');
     Route::get('celulas/buscar_datas/{dia}/{mes}/{ano}', 'CelulasController@return_dates');
+    //Route::get('celulas/buscar_data_avulsa/{dia}/{mes}/{ano}', 'CelulasController@return_dates_avulsa');
     Route::get('celulas', 'CelulasController@index');
     Route::post('/celulas/gravar','CelulasController@store');
     Route::get('/celulas/registrar','CelulasController@create');
