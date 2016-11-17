@@ -70,9 +70,9 @@ class CelulasPessoasController extends Controller
         if ($this->lider_logado!=null)
         {
               if ($this->id_lideres!="") {
-                  $strSql .= " AND lider_pessoas_id IN (" . $lider_logado[0]->lider_pessoas_id . ", " . $this->id_lideres . ")";
+                  $strSql .= " AND lider_pessoas_id IN (" . $this->lider_logado[0]->lider_pessoas_id . ", " . $this->id_lideres . ")";
               } else {
-                  $strSql .= " AND lider_pessoas_id IN (" . $lider_logado[0]->lider_pessoas_id . ")";
+                  $strSql .= " AND lider_pessoas_id IN (" . $this->lider_logado[0]->lider_pessoas_id . ")";
               }
               //$celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where lider_pessoas_id = ? and  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$lider_logado[0]->lider_pessoas_id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
