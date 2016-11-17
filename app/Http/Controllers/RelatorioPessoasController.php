@@ -769,7 +769,8 @@ class RelatorioPessoasController extends Controller
             return view($this->rota . '.listaremails', ['parametros'=>(isset($parametros) ? $parametros : ''), 'emails'=>$emails, 'filtros'=>$sFiltrosUtilizados, 'resultado'=>$input["resultado"]]);
         }
 
-    }
+      }
 
     }
+
 }

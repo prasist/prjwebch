@@ -1,5 +1,5 @@
 <?php
-
+//ZP3993081153
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -27,6 +27,23 @@ class ControleAtividadesController extends Controller
         if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
         {
             $this->dados_login = \Session::get('dados_login');
+        }
+
+        //Verifica se é alguém da liderança (Lider de Rede, Area, Coordenador, Supervisor, etc)
+        $this->lideranca = $this->formatador->verifica_se_lideranca();
+
+        $this->id_lideres="";
+
+        //Preenche variavel com os lideres abaixo da hierarquia
+        if ($this->lideranca!=null)
+        {
+             foreach ($this->lideranca as $item) {
+                if ($this->id_lideres=="") {
+                   $this->id_lideres =  $item->id_lideres;
+                } else {
+                   $this->id_lideres .=  ", " . $item->id_lideres;
+                }
+             }
         }
 
     }
@@ -71,14 +88,29 @@ class ControleAtividadesController extends Controller
 
        $lider_logado = $funcoes->verifica_se_lider();
 
+       $sSql  = " SELECT id, descricao_concatenada as nome FROM view_celulas_simples ";
+       $sSql .= " WHERE ";
+       $sSql .= " empresas_id = " . $this->dados_login->empresas_id;
+       $sSql .= " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
 
+       //Trazer somente celula do lider logado... ou
        if ($lider_logado!=null)
        {
-            $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where lider_pessoas_id = ? and  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$lider_logado[0]->lider_pessoas_id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-       } else {
-            $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+            if ($this->id_lideres!="") {
+                $sSql .= " AND lider_pessoas_id IN (" . $lider_logado[0]->lider_pessoas_id . ", " . $this->id_lideres . ")";
+            } else {
+                $sSql .= " AND lider_pessoas_id IN (" . $lider_logado[0]->lider_pessoas_id . ")";
+            }
+            //$celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where lider_pessoas_id = ? and  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$lider_logado[0]->lider_pessoas_id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+       } else { //verificar se é alguém da lideranca (supervisor, coordenador, etc) e trazer somente as celulas subordinadas
+
+            if ($this->id_lideres!="") {
+                $sSql .= " AND lider_pessoas_id IN (" . $this->id_lideres . ")";
+            }
        }
 
+       $celulas = \DB::select($sSql);
 
         //get questions from database
         $questions = \App\Models\questionarios_encontros::select('id', 'pergunta', 'tipo_resposta')
@@ -153,6 +185,7 @@ class ControleAtividadesController extends Controller
          $dados->link_externo = trim($input['link_externo']);
          $dados->texto = trim($input['texto_encontro']);
          $dados->lider_pessoas_id = substr($descricao_celula[1],0,9);
+
          if (isset($input["ckFinalizar"]))
          {
            $dados->encontro_encerrado = ($input["ckFinalizar"] ? "S" : "N");

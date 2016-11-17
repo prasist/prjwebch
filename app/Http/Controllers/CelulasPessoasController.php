@@ -32,6 +32,23 @@ class CelulasPessoasController extends Controller
             //Verificar se usuario logado é LIDER
             $this->lider_logado = $this->formatador->verifica_se_lider();
 
+            //Verifica se é alguém da liderança (Lider de Rede, Area, Coordenador, Supervisor, etc)
+            $this->lideranca = $this->formatador->verifica_se_lideranca();
+
+            $this->id_lideres="";
+
+            //Preenche variavel com os lideres abaixo da hierarquia
+            if ($this->lideranca!=null)
+            {
+                 foreach ($this->lideranca as $item) {
+                    if ($this->id_lideres=="") {
+                       $this->id_lideres =  $item->id_lideres;
+                    } else {
+                       $this->id_lideres .=  ", " . $item->id_lideres;
+                    }
+                 }
+            }
+
         }
 
     }
@@ -49,10 +66,21 @@ class CelulasPessoasController extends Controller
         $strSql .= " WHERE  empresas_id = " . $this->dados_login->empresas_id;
         $strSql .= " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
 
-        //SE for lider, direciona para dashboard da célula
+        //Trazer somente celula do lider logado... ou
         if ($this->lider_logado!=null)
         {
-               $strSql .=  " AND lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+              if ($this->id_lideres!="") {
+                  $strSql .= " AND lider_pessoas_id IN (" . $lider_logado[0]->lider_pessoas_id . ", " . $this->id_lideres . ")";
+              } else {
+                  $strSql .= " AND lider_pessoas_id IN (" . $lider_logado[0]->lider_pessoas_id . ")";
+              }
+              //$celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where lider_pessoas_id = ? and  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$lider_logado[0]->lider_pessoas_id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        } else { //verificar se é alguém da lideranca (supervisor, coordenador, etc) e trazer somente as celulas subordinadas
+
+              if ($this->id_lideres!="") {
+                  $strSql .= " AND lider_pessoas_id IN (" . $this->id_lideres . ")";
+              }
         }
 
         $dados = \DB::select($strSql);

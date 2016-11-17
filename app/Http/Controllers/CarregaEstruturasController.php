@@ -15,8 +15,8 @@ class CarregaEstruturasController extends Controller
     public function __construct()
     {
 
-        /*O usuário deverá ter acesso a tela de pessoas para ter acesso as estruturas...*/
-        $this->rota = "pessoas"; //Define nome da rota que será usada na classe
+        /*O usuário deverá ter acesso a tela de celulas para ter acesso as estruturas...*/
+        $this->rota = "celulas"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
         //Validação de permissão de acesso a pagina

@@ -37,6 +37,24 @@ class CelulasController extends Controller
             //Verificar se usuario logado é LIDER
             $this->lider_logado = $this->formatador->verifica_se_lider();
 
+            //Verifica se é alguém da liderança (Lider de Rede, Area, Coordenador, Supervisor, etc)
+            $this->lideranca = $this->formatador->verifica_se_lideranca();
+
+            $this->id_lideres="";
+
+            //Preenche variavel com os lideres abaixo da hierarquia
+            if ($this->lideranca!=null)
+            {
+                 foreach ($this->lideranca as $item) {
+                    if ($this->id_lideres=="") {
+                       $this->id_lideres =  $item->id_lideres;
+                    } else {
+                       $this->id_lideres .=  ", " . $item->id_lideres;
+                    }
+                 }
+            }
+
+
         }
 
     }
@@ -586,6 +604,22 @@ class CelulasController extends Controller
                    $strSql .=  " AND lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
             }
 
+/*
+            if (is_array($this->lideranca))
+            {
+                 foreach ($this->lideranca as $item) {
+
+                    if ($id_lideres=="") {
+                      $id_lideres =  $item->id_lideres;
+                    } else {
+                      $id_lideres .=  ", " . $item->id_lideres;
+                    }
+
+                 }
+                   $strSql .=  " AND lider_pessoas_id  in ('" . $id_lideres . "')";
+            }
+*/
+
             $participantes_presenca = \DB::select($strSql);
             return $participantes_presenca;
 
@@ -607,11 +641,20 @@ class CelulasController extends Controller
             $strSql .=  " ca.mes  = '" . $mes . "' AND ";
             $strSql .=  " ca.ano  = '" . $ano . "'";
 
-            //SE for lider, direciona para dashboard da célula
-            if ($this->lider_logado!=null)
-            {
-                   $strSql .=  " AND ca.lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+            //Busca LIDERES, se for lider logado retorna somente dados dele mesmo
+            if ($this->lider_logado!=null) {
+                if ($this->id_lideres!="") {
+                    $strSql .=  " AND ca.lider_pessoas_id  in (" . $this->lider_logado[0]->lider_pessoas_id . "," . $this->id_lideres . ")";
+                }else {
+                    $strSql .=  " AND ca.lider_pessoas_id  in (" . $this->lider_logado[0]->lider_pessoas_id . ")";
+                }
             }
+
+            //O usuario logado é da liderança
+            if ($this->lider_logado==null && $this->id_lideres!="") {
+                $strSql .=  " AND ca.lider_pessoas_id  in (" . $this->id_lideres . ")";
+            }
+
 
             $strSql .=  " group by c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano, qe.pergunta ";
 
@@ -635,10 +678,18 @@ class CelulasController extends Controller
                 $strSql .=  " ca.empresas_id = " . $this->dados_login->empresas_id . " AND ";
                 $strSql .=  " ca.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "";
 
-                //SE for lider, direciona para dashboard da célula
-                if ($this->lider_logado!=null)
-                {
-                       $strSql .=  " AND c.lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+                //Busca LIDERES, se for lider logado retorna somente dados dele mesmo
+                if ($this->lider_logado!=null) {
+                    if ($this->id_lideres!="") {
+                        $strSql .=  " AND c.lider_pessoas_id  in (" . $this->lider_logado[0]->lider_pessoas_id . "," . $this->id_lideres . ")";
+                    }else {
+                        $strSql .=  " AND c.lider_pessoas_id  in (" . $this->lider_logado[0]->lider_pessoas_id . ")";
+                    }
+                }
+
+                //O usuario logado é da liderança
+                if ($this->lider_logado==null && $this->id_lideres!="") {
+                    $strSql .=  " AND c.lider_pessoas_id  in (" . $this->id_lideres . ")";
                 }
 
                 $strSql .=  " group by c.empresas_id, c.empresas_clientes_cloud_id, tp.nome ";
@@ -660,10 +711,18 @@ class CelulasController extends Controller
                 $strSql .=  " ca.mes  = '" . $mes . "' AND ";
                 $strSql .=  " ca.ano  = '" . $ano . "'";
 
-                //SE for lider, direciona para dashboard da célula
-                if ($this->lider_logado!=null)
-                {
-                       $strSql .=  " AND c.lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+                //Busca LIDERES, se for lider logado retorna somente dados dele mesmo
+                if ($this->lider_logado!=null) {
+                    if ($this->id_lideres!="") {
+                        $strSql .=  " AND c.lider_pessoas_id  in (" . $this->lider_logado[0]->lider_pessoas_id . "," . $this->id_lideres . ")";
+                    }else {
+                        $strSql .=  " AND c.lider_pessoas_id  in (" . $this->lider_logado[0]->lider_pessoas_id . ")";
+                    }
+                }
+
+                //O usuario logado é da liderança
+                if ($this->lider_logado==null && $this->id_lideres!="") {
+                    $strSql .=  " AND c.lider_pessoas_id  in (" . $this->id_lideres . ")";
                 }
 
                 $strSql .=  " group by c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano, tp.nome ";
@@ -689,10 +748,18 @@ class CelulasController extends Controller
             $strSql .=  " ca.mes  = '" . $mes . "' AND ";
             $strSql .=  " ca.ano  = '" . $ano . "'";
 
-            //SE for lider, direciona para dashboard da célula
-            if ($this->lider_logado!=null)
-            {
-                   $strSql .=  " AND ca.lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+            //Busca LIDERES, se for lider logado retorna somente dados dele mesmo
+            if ($this->lider_logado!=null) {
+                if ($this->id_lideres!="") {
+                    $strSql .=  " AND ca.lider_pessoas_id  in (" . $this->lider_logado[0]->lider_pessoas_id . "," . $this->id_lideres . ")";
+                }else {
+                    $strSql .=  " AND ca.lider_pessoas_id  in (" . $this->lider_logado[0]->lider_pessoas_id . ")";
+                }
+            }
+
+            //O usuario logado é da liderança
+            if ($this->lider_logado==null && $this->id_lideres!="") {
+                $strSql .=  " AND ca.lider_pessoas_id  in (" . $this->id_lideres . ")";
             }
 
             $resumo_geral = \DB::select($strSql);
@@ -717,10 +784,18 @@ class CelulasController extends Controller
             $strSql .=  " ca.mes  = '" . $mes . "' AND ";
             $strSql .=  " ca.ano  = '" . $ano . "'";
 
-            //SE for lider, direciona para dashboard da célula
-            if ($this->lider_logado!=null)
-            {
-                   $strSql .=  " AND ca.lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+            //Busca LIDERES, se for lider logado retorna somente dados dele mesmo
+            if ($this->lider_logado!=null) {
+                if ($this->id_lideres!="") {
+                    $strSql .=  " AND ca.lider_pessoas_id  in (" . $this->lider_logado[0]->lider_pessoas_id . "," . $this->id_lideres . ")";
+                }else {
+                    $strSql .=  " AND ca.lider_pessoas_id  in (" . $this->lider_logado[0]->lider_pessoas_id . ")";
+                }
+            }
+
+            //O usuario logado é da liderança
+            if ($this->lider_logado==null && $this->id_lideres!="") {
+                $strSql .=  " AND ca.lider_pessoas_id  in (" . $this->id_lideres . ")";
             }
 
             $strSql .=  " GROUP BY c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano";
@@ -771,8 +846,25 @@ class CelulasController extends Controller
         else if ($opcao=="frequencia")
         {
 
-                    $retorno = \DB::select('select  fn_total_participantes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
-                    $total_participantes = $retorno[0]->fn_total_participantes;
+                    //Se for integrante da lideranca (supervisor, coordenador, etc)
+                    if ($this->id_lideres!="") {
+                       $strSql = " select count(*)  as tot from celulas_pessoas";
+                       $strSql .=  " WHERE ";
+                       $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+                       $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  AND ";
+                       $strSql .=  " lider_pessoas_id IN (" . $this->id_lideres . ")";
+                       $retorno = \DB::select($strSql);
+
+                       if ($retorno) {
+                          $total_participantes = $retorno[0]->tot;
+                       }
+
+                    } else {
+
+                        $retorno = \DB::select('select  fn_total_participantes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
+                        $total_participantes = $retorno[0]->fn_total_participantes;
+
+                    }
 
                     $retorna = array();
 
@@ -900,12 +992,25 @@ class CelulasController extends Controller
             $strSql .=  " WHERE  empresas_id = " . $this->dados_login->empresas_id;
             $strSql .=  " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
 
+
+
             //Busca LIDERES, se for lider logado retorna somente dados dele mesmo
             if ($this->lider_logado!=null)
             {
-                $strSql .=  " AND id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+                if ($this->id_lideres!=""){
+                    $strSql .=  " AND id  in (" . $this->lider_logado[0]->lider_pessoas_id . "," . $this->id_lideres . ")";
+                }else {
+                    $strSql .=  " AND id  in (" . $this->lider_logado[0]->lider_pessoas_id . ")";
+                }
             }
 
+            //O usuario logado é da liderança
+            if ($this->lider_logado==null && $this->id_lideres!="")
+            {
+                $strSql .=  " AND id  in (" . $this->id_lideres . ")";
+            }
+
+            //dd($strSql);
             $lideres = \DB::select($strSql);
 
 
@@ -922,11 +1027,51 @@ class CelulasController extends Controller
             $view4 = \DB::select('select * from view_celulas_nivel4 v4 where v4.empresas_id = ? and v4.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
             $view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-            $retorno = \DB::select('select  fn_total_celulas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
-            $total_celulas = $retorno[0]->fn_total_celulas;
+            //$retorno = \DB::select('select  fn_total_celulas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
+            //$total_celulas = $retorno[0]->fn_total_celulas;
 
-            $retorno = \DB::select('select  fn_total_participantes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
-            $total_participantes = $retorno[0]->fn_total_participantes;
+            //Se for integrante da lideranca (supervisor, coordenador, etc) mostra totais somente de suas celulas subordinadas
+            if ($this->id_lideres!="") {
+               $strSql = " select count(*)  as tot from celulas";
+               $strSql .=  " WHERE ";
+               $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+               $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  AND ";
+               $strSql .=  " lider_pessoas_id IN (" . $this->id_lideres . ")";
+               $retorno = \DB::select($strSql);
+
+               if ($retorno) {
+                  $total_celulas = $retorno[0]->tot;
+               }
+
+            } else {
+
+                $retorno = \DB::select('select  fn_total_celulas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
+                $total_celulas = $retorno[0]->fn_total_celulas;
+
+            }
+
+            //$retorno = \DB::select('select  fn_total_participantes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
+            //$total_participantes = $retorno[0]->fn_total_participantes;
+
+            //Se for integrante da lideranca (supervisor, coordenador, etc) mostra totais somente de suas celulas subordinadas
+            if ($this->id_lideres!="") {
+               $strSql = " SELECT count(*)  as tot FROM celulas_pessoas";
+               $strSql .=  " WHERE ";
+               $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+               $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  AND ";
+               $strSql .=  " lider_pessoas_id IN (" . $this->id_lideres . ")";
+               $retorno = \DB::select($strSql);
+
+               if ($retorno) {
+                   $total_participantes = $retorno[0]->tot;
+               }
+
+            } else {
+
+                $retorno = \DB::select('select  fn_total_participantes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ')');
+                $total_participantes = $retorno[0]->fn_total_participantes;
+            }
+
 
             $celulas_faixas = \DB::select('select * from view_total_celulas_faixa_etaria vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
             $celulas_publicos = \DB::select('select * from view_total_celulas_publico_alvo vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
@@ -1011,7 +1156,6 @@ class CelulasController extends Controller
    //Return all dates in a month by dayOfWeek
    public function return_dates($id, $var_month, $var_year)
    {
-
 
         //Primeiro dia encontro
         $var_dayOfWeek = $this->buscar_dados($id); //pega dia do encontro da celula
@@ -1105,7 +1249,7 @@ class CelulasController extends Controller
                   return redirect('home');
             }
 
-            $strSql = "SELECT * from view_celulas_simples ";
+            $strSql = "SELECT * FROM view_celulas_simples ";
             $strSql .=  " WHERE  empresas_id = " . $this->dados_login->empresas_id;
             $strSql .=  " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
 
@@ -1115,6 +1259,13 @@ class CelulasController extends Controller
                    $strSql .=  " AND lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
             }
 
+            if ($this->lideranca!=null)
+            {
+                 if ($this->id_lideres!=""){
+                   $strSql .=  " AND lider_pessoas_id  in (" . $this->id_lideres . ")";
+                 }
+            }
+
             $dados = \DB::select($strSql);
 
             //Listagem de pessoas
@@ -1122,189 +1273,189 @@ class CelulasController extends Controller
 
     }
 
-  public function salvar($request, $id, $tipo_operacao)
-  {
-        $guarda_pai=0;
+public function salvar($request, $id, $tipo_operacao)
+{
+    $guarda_pai=0;
 
-        $input = $request->except(array('_token', 'ativo')); //não levar o token
+    $input = $request->except(array('_token', 'ativo')); //não levar o token
 
-        $this->validate($request, [
-            'pessoas' => 'required',
-            'dia_encontro' => 'required',
-            'horario' => 'required',
-        ]);
-
-
-        if ($tipo_operacao=="create") //novo registro
-        {
-             $dados = new celulas();
-        }
-        else //update
-        {
-             $dados = celulas::findOrfail($id);
-             $guarda_pai = $dados->celulas_pai_id;
-        }
+    $this->validate($request, [
+        'pessoas' => 'required',
+        'dia_encontro' => 'required',
+        'horario' => 'required',
+    ]);
 
 
-         $dados->dia_encontro = $input['dia_encontro'];
+    if ($tipo_operacao=="create") //novo registro
+    {
+         $dados = new celulas();
+    }
+    else //update
+    {
+         $dados = celulas::findOrfail($id);
+         $guarda_pai = $dados->celulas_pai_id;
+    }
 
-         if ($input["horario"]<"12:00") //bom dia
+
+     $dados->dia_encontro = $input['dia_encontro'];
+
+     if ($input["horario"]<"12:00") //bom dia
+     {
+            $dados->turno = "M";
+     }
+     else if ($input["horario"]>"12:00" && $input["horario"]<"18:00") //boa tarde
+     {
+            $dados->turno = "T";
+     }
+     else if ($input["horario"]>"18:00") //boa noite
+     {
+            $dados->turno = "N";
+     }
+
+     //$dados->turno = $input['turno'];
+     $dados->regiao = $input['regiao'];
+     $dados->horario = $input['horario'];
+     $dados->horario2 = $input['horario2'];
+     $dados->segundo_dia_encontro = $input['segundo_dia_encontro'];
+     $dados->obs = $input['obs'];
+     $dados->email_grupo = $input['email_grupo'];
+     $dados->faixa_etaria_id = ($input['faixa_etaria']=="" ? null : $input['faixa_etaria']);
+     $dados->publico_alvo_id = ($input['publico_alvo']=="" ? null : $input['publico_alvo']);
+     $dados->nome = $input['nome'];
+     $dados->cor = $input['cor'];
+     $dados->data_previsao_multiplicacao = $this->formatador->FormatarData($input["data_previsao_multiplicacao"]);
+     $dados->celulas_nivel1_id  = ($input['nivel1']=="" ? null : $input['nivel1']);
+     $dados->celulas_nivel2_id  = ($input['nivel2']=="" ? null : $input['nivel2']);
+     $dados->celulas_nivel3_id  = ($input['nivel3']=="" ? null : $input['nivel3']);
+     $dados->celulas_nivel4_id  = ($input['nivel4']=="" ? null : $input['nivel4']);
+     $dados->celulas_nivel5_id  = ($input['nivel5']=="" ? null : $input['nivel5']);
+     $dados->lider_pessoas_id  = ($input['pessoas']=="" ? null : substr($input['pessoas'],0,9));
+     $dados->vicelider_pessoas_id  = ($input['vicelider_pessoas_id']=="" ? null : substr($input['vicelider_pessoas_id'],0,9));
+     $dados->suplente1_pessoas_id  = ($input['suplente1_pessoas_id']=="" ? null : substr($input['suplente1_pessoas_id'],0,9));
+     $dados->suplente2_pessoas_id  = ($input['suplente2_pessoas_id']=="" ? null : substr($input['suplente2_pessoas_id'],0,9));
+     $dados->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
+     $dados->empresas_id  = $this->dados_login->empresas_id;
+     $dados->celulas_pai_id = ($input['celulas_pai_id']=="" ? null : $input['celulas_pai_id']);
+
+     //SE FOR EDICAO E USUARIO TENTAR COLOCAR A CELULA PAI DA PROPRIA CELULA... NAO DEIXAR
+     if ($tipo_operacao!="create")
+     {
+          if ($dados->celulas_pai_id==$id)
+          {
+                $dados->celulas_pai_id=null;
+          }
+     }
+
+     $dados->origem = ($input['origem']=="" ? null : $input['origem']);
+
+     if (isset($input["endereco_encontro"]))
+     {
+           $dados->endereco_encontro = ($input['endereco_encontro']=="" ? null : $input['endereco_encontro']);
+     }
+
+     if ($input["origem"]=="1")  //Multiplicacao
+     {
+            $dados->data_multiplicacao = date('Y-m-d');
+     }
+
+     //BUSCAR SE O PAI TEM  GERACAO GRAVADA
+     //Se for NULO, considerar então celulas_pai_id, caso contrario , pega o conteudo celulas_id_geracao do PAI e replica na celula que esta sendo gravada
+     if ($input["origem"]!="")
+     {
+         if ($dados->celulas_pai_id!=null && $dados->celulas_pai_id!=0) //CELULA PAI
          {
-                $dados->turno = "M";
-         }
-         else if ($input["horario"]>"12:00" && $input["horario"]<"18:00") //boa tarde
-         {
-                $dados->turno = "T";
-         }
-         else if ($input["horario"]>"18:00") //boa noite
-         {
-                $dados->turno = "N";
-         }
-
-         //$dados->turno = $input['turno'];
-         $dados->regiao = $input['regiao'];
-         $dados->horario = $input['horario'];
-         $dados->horario2 = $input['horario2'];
-         $dados->segundo_dia_encontro = $input['segundo_dia_encontro'];
-         $dados->obs = $input['obs'];
-         $dados->email_grupo = $input['email_grupo'];
-         $dados->faixa_etaria_id = ($input['faixa_etaria']=="" ? null : $input['faixa_etaria']);
-         $dados->publico_alvo_id = ($input['publico_alvo']=="" ? null : $input['publico_alvo']);
-         $dados->nome = $input['nome'];
-         $dados->cor = $input['cor'];
-         $dados->data_previsao_multiplicacao = $this->formatador->FormatarData($input["data_previsao_multiplicacao"]);
-         $dados->celulas_nivel1_id  = ($input['nivel1']=="" ? null : $input['nivel1']);
-         $dados->celulas_nivel2_id  = ($input['nivel2']=="" ? null : $input['nivel2']);
-         $dados->celulas_nivel3_id  = ($input['nivel3']=="" ? null : $input['nivel3']);
-         $dados->celulas_nivel4_id  = ($input['nivel4']=="" ? null : $input['nivel4']);
-         $dados->celulas_nivel5_id  = ($input['nivel5']=="" ? null : $input['nivel5']);
-         $dados->lider_pessoas_id  = ($input['pessoas']=="" ? null : substr($input['pessoas'],0,9));
-         $dados->vicelider_pessoas_id  = ($input['vicelider_pessoas_id']=="" ? null : substr($input['vicelider_pessoas_id'],0,9));
-         $dados->suplente1_pessoas_id  = ($input['suplente1_pessoas_id']=="" ? null : substr($input['suplente1_pessoas_id'],0,9));
-         $dados->suplente2_pessoas_id  = ($input['suplente2_pessoas_id']=="" ? null : substr($input['suplente2_pessoas_id'],0,9));
-         $dados->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
-         $dados->empresas_id  = $this->dados_login->empresas_id;
-         $dados->celulas_pai_id = ($input['celulas_pai_id']=="" ? null : $input['celulas_pai_id']);
-
-         //SE FOR EDICAO E USUARIO TENTAR COLOCAR A CELULA PAI DA PROPRIA CELULA... NAO DEIXAR
-         if ($tipo_operacao!="create")
-         {
-              if ($dados->celulas_pai_id==$id)
-              {
-                    $dados->celulas_pai_id=null;
-              }
-         }
-
-         $dados->origem = ($input['origem']=="" ? null : $input['origem']);
-
-         if (isset($input["endereco_encontro"]))
-         {
-               $dados->endereco_encontro = ($input['endereco_encontro']=="" ? null : $input['endereco_encontro']);
-         }
-
-         if ($input["origem"]=="1")  //Multiplicacao
-         {
-                $dados->data_multiplicacao = date('Y-m-d');
-         }
-
-         //BUSCAR SE O PAI TEM  GERACAO GRAVADA
-         //Se for NULO, considerar então celulas_pai_id, caso contrario , pega o conteudo celulas_id_geracao do PAI e replica na celula que esta sendo gravada
-         if ($input["origem"]!="")
-         {
-             if ($dados->celulas_pai_id!=null && $dados->celulas_pai_id!=0) //CELULA PAI
-             {
-                   if($guarda_pai==0)
-                   {
-                      $guarda_pai = $dados->celulas_pai_id;
-                   }
-
-                   //BUSCA NA CELULA PAI SE TEM GERACAO INFORMADA
-                   $busca_geracao = \App\Models\celulas::select('celulas_id_geracao')->where('id', $dados->celulas_pai_id)->get();
-
-                   if  ($busca_geracao[0]->celulas_id_geracao==null)  //NÃO ENCONTROU, ENTAO INICIA O CICLO DA GERACAO NESSA CELULA
-                   {
-                           $dados->celulas_id_geracao = $dados->celulas_pai_id;
-                   }
-                   else  //ENCONTROU GERACAO, ENTAO REPLICA PARA ESSA NOVA CELULA PARA SABER QUEM FOI A ORIGEM DE TODAS
-                   {
-                           $dados->celulas_id_geracao = $busca_geracao[0]->celulas_id_geracao;
-                   }
-             }
-        }
-
-         $dados->qual_endereco = ($input['local']=="" ? null : $input['local']);
-
-         //Verifique qual endereco sera o encontro conforme selecao do local
-         if (isset($input["endereco_encontro"]))
-         {
-               if ($dados->qual_endereco != "6")
+               if($guarda_pai==0)
                {
-                        switch ($dados->qual_endereco)
-                        {
-                            case '1': //lider
-                                $id_pessoa_endereco = $dados->lider_pessoas_id;
-                                break;
-
-                                case '2': //lider em treinamento
-                                $id_pessoa_endereco = $dados->vicelider_pessoas_id;
-                                break;
-
-                                case '3': //anfitriao
-                                $id_pessoa_endereco = $dados->suplente1_pessoas_id;
-                                break;
-
-                                case '4': //suplente
-                                $id_pessoa_endereco = $dados->suplente2_pessoas_id;
-                                break;
-
-                            default:
-                                $id_pessoa_endereco = "";
-                                break;
-                        }
-
-                        if ($dados->qual_endereco=='5') //endereco igreja sede
-                        {
-                            $pegar_endereco = \App\Models\empresas::select('endereco', 'numero', 'bairro', 'cidade', 'estado', 'complemento')->findOrfail($this->dados_login->empresas_id);
-                            $dados->endereco_encontro = $pegar_endereco->endereco . ', ' . $pegar_endereco->numero . ' - ' . $pegar_endereco->bairro . '  ' . $pegar_endereco->complemento;
-                        }
-                        else
-                        {
-                            if ($id_pessoa_endereco!="")
-                            {
-                                    $pegar_endereco = \App\Models\pessoas::select('endereco', 'numero', 'bairro', 'cidade', 'estado', 'complemento')->findOrfail($id_pessoa_endereco);
-                                    $dados->endereco_encontro = $pegar_endereco->endereco . ', ' . $pegar_endereco->numero . ' - ' . $pegar_endereco->bairro . '  ' . $pegar_endereco->complemento;
-                            }
-                        }
-
+                  $guarda_pai = $dados->celulas_pai_id;
                }
 
-         }
+               //BUSCA NA CELULA PAI SE TEM GERACAO INFORMADA
+               $busca_geracao = \App\Models\celulas::select('celulas_id_geracao')->where('id', $dados->celulas_pai_id)->get();
 
-         $dados->data_inicio = ($input["data_inicio"]!="" ? $this->formatador->FormatarData($input["data_inicio"]) : date('Y-m-d'));
-         $dados->save();
-
-         //BUSCAR QTD DE FILHAS APOS INCLUSAO OU ALTERACAO DA CELULA
-         if ($guarda_pai!=0 && $guarda_pai!=null)  //CELULA PAI
-         {
-              //PRIMEIRO PAI DO VETOR
-              $this->qtd_pais[] = $guarda_pai;
-
-              //MONTA VETOR COM TODOS OS PAIS A PARTIR DESSE PAI
-              $this->buscaPai($guarda_pai);
-         }
-
-         if (isset($this->qtd_pais))
-         {
-               for ($iSeq=0; $iSeq < count($this->qtd_pais); $iSeq++)
+               if  ($busca_geracao[0]->celulas_id_geracao==null)  //NÃO ENCONTROU, ENTAO INICIA O CICLO DA GERACAO NESSA CELULA
                {
-                    if ($this->qtd_pais[$iSeq]!=0)
-                        $this->gravaQtdFilhos($this->qtd_pais[$iSeq]);
+                       $dados->celulas_id_geracao = $dados->celulas_pai_id;
+               }
+               else  //ENCONTROU GERACAO, ENTAO REPLICA PARA ESSA NOVA CELULA PARA SABER QUEM FOI A ORIGEM DE TODAS
+               {
+                       $dados->celulas_id_geracao = $busca_geracao[0]->celulas_id_geracao;
                }
          }
+    }
 
-         return  $dados->id;
+     $dados->qual_endereco = ($input['local']=="" ? null : $input['local']);
 
-  }
+     //Verifique qual endereco sera o encontro conforme selecao do local
+     if (isset($input["endereco_encontro"]))
+     {
+           if ($dados->qual_endereco != "6")
+           {
+                    switch ($dados->qual_endereco)
+                    {
+                        case '1': //lider
+                            $id_pessoa_endereco = $dados->lider_pessoas_id;
+                            break;
+
+                            case '2': //lider em treinamento
+                            $id_pessoa_endereco = $dados->vicelider_pessoas_id;
+                            break;
+
+                            case '3': //anfitriao
+                            $id_pessoa_endereco = $dados->suplente1_pessoas_id;
+                            break;
+
+                            case '4': //suplente
+                            $id_pessoa_endereco = $dados->suplente2_pessoas_id;
+                            break;
+
+                        default:
+                            $id_pessoa_endereco = "";
+                            break;
+                    }
+
+                    if ($dados->qual_endereco=='5') //endereco igreja sede
+                    {
+                        $pegar_endereco = \App\Models\empresas::select('endereco', 'numero', 'bairro', 'cidade', 'estado', 'complemento')->findOrfail($this->dados_login->empresas_id);
+                        $dados->endereco_encontro = $pegar_endereco->endereco . ', ' . $pegar_endereco->numero . ' - ' . $pegar_endereco->bairro . '  ' . $pegar_endereco->complemento;
+                    }
+                    else
+                    {
+                        if ($id_pessoa_endereco!="")
+                        {
+                                $pegar_endereco = \App\Models\pessoas::select('endereco', 'numero', 'bairro', 'cidade', 'estado', 'complemento')->findOrfail($id_pessoa_endereco);
+                                $dados->endereco_encontro = $pegar_endereco->endereco . ', ' . $pegar_endereco->numero . ' - ' . $pegar_endereco->bairro . '  ' . $pegar_endereco->complemento;
+                        }
+                    }
+
+           }
+
+     }
+
+     $dados->data_inicio = ($input["data_inicio"]!="" ? $this->formatador->FormatarData($input["data_inicio"]) : date('Y-m-d'));
+     $dados->save();
+
+     //BUSCAR QTD DE FILHAS APOS INCLUSAO OU ALTERACAO DA CELULA
+     if ($guarda_pai!=0 && $guarda_pai!=null)  //CELULA PAI
+     {
+          //PRIMEIRO PAI DO VETOR
+          $this->qtd_pais[] = $guarda_pai;
+
+          //MONTA VETOR COM TODOS OS PAIS A PARTIR DESSE PAI
+          $this->buscaPai($guarda_pai);
+     }
+
+     if (isset($this->qtd_pais))
+     {
+           for ($iSeq=0; $iSeq < count($this->qtd_pais); $iSeq++)
+           {
+                if ($this->qtd_pais[$iSeq]!=0)
+                    $this->gravaQtdFilhos($this->qtd_pais[$iSeq]);
+           }
+     }
+
+     return  $dados->id;
+
+}
 
 
 protected function gravaQtdFilhos($id)

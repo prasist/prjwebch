@@ -29,6 +29,23 @@ class MembersMoveController extends Controller
             $this->dados_login = \Session::get('dados_login');
         }
 
+        //Verifica se é alguém da liderança (Lider de Rede, Area, Coordenador, Supervisor, etc)
+        $this->lideranca = $this->formatador->verifica_se_lideranca();
+
+        $this->id_lideres="";
+
+        //Preenche variavel com os lideres abaixo da hierarquia
+        if ($this->lideranca!=null)
+        {
+             foreach ($this->lideranca as $item) {
+                if ($this->id_lideres=="") {
+                   $this->id_lideres =  $item->id_lideres;
+                } else {
+                   $this->id_lideres .=  ", " . $item->id_lideres;
+                }
+             }
+        }
+
     }
 
 
@@ -48,13 +65,36 @@ class MembersMoveController extends Controller
 
        $motivos = \App\Models\tiposmovimentacao::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->orderBy('nome','ASC')->get();
 
+       //if ($lider_logado!=null)
+       //{
+       //     $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where lider_pessoas_id = ? and  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$lider_logado[0]->lider_pessoas_id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+       //} else {
+       //     $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+       //}
+
+       $sSql  = " SELECT id, descricao_concatenada as nome FROM view_celulas_simples ";
+       $sSql .= " WHERE ";
+       $sSql .= " empresas_id = " . $this->dados_login->empresas_id;
+       $sSql .= " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
+
+       //Trazer somente celula do lider logado... ou
        if ($lider_logado!=null)
        {
-            $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where lider_pessoas_id = ? and  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$lider_logado[0]->lider_pessoas_id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-       } else {
-            $celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+            if ($this->id_lideres!="") {
+                $sSql .= " AND lider_pessoas_id IN (" . $lider_logado[0]->lider_pessoas_id . ", " . $this->id_lideres . ")";
+            } else {
+                $sSql .= " AND lider_pessoas_id IN (" . $lider_logado[0]->lider_pessoas_id . ")";
+            }
+            //$celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where lider_pessoas_id = ? and  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$lider_logado[0]->lider_pessoas_id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+       } else { //verificar se é alguém da lideranca (supervisor, coordenador, etc) e trazer somente as celulas subordinadas
+
+            if ($this->id_lideres!="") {
+                $sSql .= " AND lider_pessoas_id IN (" . $this->id_lideres . ")";
+            }
        }
 
+       $celulas = \DB::select($sSql);
 
         return view($this->rota . '.atualizacao',
             [

@@ -174,10 +174,15 @@ class HomeController extends Controller
 
                         $lider_logado = $funcoes->verifica_se_lider();
 
+                        //Verifica se é alguém da liderança (Lider de Rede, Area, Coordenador, Supervisor, etc)
+                        $lideranca = $funcoes->verifica_se_lideranca();
+
                         //SE for lider, direciona para dashboard da célula
                         if ($lider_logado!=null)
                         {
-                             return redirect('dashboard_celulas');
+                             if ($lideranca==null) { //Somente se nao for alguem da lideranca
+                                return redirect('dashboard_celulas');
+                             }
                         }
 
                         $where =
