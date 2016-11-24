@@ -394,6 +394,13 @@
                                     <br/>
 
                                       <div class="row">
+                                                <div class="col-xs-3">
+                                                       <label for="codigo_contabil" class="control-label">Código Contábil</label>
+                                                       <input id="codigo_contabil"  name = "codigo_contabil" type="text" class="form-control" value="{{old('codigo_contabil')}}">
+                                                </div>
+                                      </div>
+
+                                      <div class="row">
                                             <div class="col-xs-8">
                                                   @include('carregar_combos', array('dados'=>$bancos, 'titulo' =>'Banco Emissão Boleto', 'id_combo'=>'banco', 'complemento'=>'', 'comparar'=>old('banco'), 'id_pagina'=>'35'))
                                             </div>

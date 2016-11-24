@@ -26,8 +26,7 @@ class RelatorioFinanceiroController extends Controller
         }
     }
 
-    public function CarregarView($var_download, $var_mensagem)
-    {
+  public function CarregarView($var_download, $var_mensagem) {
 
         $contas = \App\Models\contas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('empresas_id', $this->dados_login->empresas_id)
@@ -49,7 +48,6 @@ class RelatorioFinanceiroController extends Controller
         ->OrderBy('nome')
         ->get();
 
-
         return view($this->rota . '.index',
             [
                 'var_download' => $var_download,
@@ -59,20 +57,18 @@ class RelatorioFinanceiroController extends Controller
                 'grupos_titulos'=>$grupos_titulos,
                 'var_mensagem'=>$var_mensagem
                 ]);
+}
+
+
+public function index() {
+
+    if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false) {
+          return redirect('home');
     }
 
+    return $this->CarregarView('', '');
 
-    public function index()
-    {
-
-        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
-        {
-              return redirect('home');
-        }
-
-        return $this->CarregarView('', '');
-
-    }
+}
 
 
  public function pesquisar(\Illuminate\Http\Request  $request)
@@ -105,57 +101,56 @@ class RelatorioFinanceiroController extends Controller
         if ($input["status_id"]!="") $descricao_status = explode("|", $input["status_id"]);
         if ($input["grupos"]!="") $descricao_grupostitulos = explode("|", $input["grupos"]);
 
-        if ($input["opTipo"]=="P")
-        {
+        //INICIALIZA CLAUSULA WHERE QUE SERA PASSADA AO RELATORIO
+        $sWhere = " empresas_id = " . $this->dados_login->empresas_id . " and empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
+        //$sWhere .= " and tipo = '" . $input["opTipo"] . "'";  //CONTAS A PAGAR OU RECEBER
+
+        if ($input["opTipo"]=="P") {
             $filtros .= "   Tipo : Contas a Pagar";
-        }
-        else
-        {
+        } else {
             $filtros .= "   Tipo : Contas a Receber";
         }
 
-        if ($input["status_id"]!="T")
-        {
+        if ($input["status_id"]!="T") {
             $filtros .= "   Status : " . ($input["status_id"]=="A" ? "Aberto" : ($input["status_id"]=="B" ? "Baixado" : "Ambos"));
+            //$sWhere .= " and status = '" . $input["status_id"] . "'";  //ABERTO OU BAIXADOS
         }
 
-        if ($input["contas"]!="")
-        {
+        if ($input["contas"]!="") {
             $filtros .= "   Conta : " . $descricao_contas[1];
+            $sWhere .= " and contas_id = " . ($descricao_contas=="" ? 0 : $descricao_contas[0]);  //CONTA CORRENTE
         }
 
-        if ($input["centros_custos"]!="")
-        {
+        if ($input["centros_custos"]!="") {
             $filtros .= "   Centro de Custo : " . $descricao_centrocusto[1];
+            $sWhere .= " and centros_custos_id = " . ($descricao_centrocusto=="" ? 0 : $descricao_centrocusto[0]);
         }
 
-        if ($input['fornecedor']!="")
-        {
+        if ($input['fornecedor']!="") {
             $filtros .= "   Fornecedor/Cliente : " . $input['fornecedor'];
+            $sWhere .= " and pessoas_id = " . ($input['fornecedor']=="" ? null : substr($input['fornecedor'],0,9));
         }
 
-        if ($input["planos_contas"]!="")
-        {
+        if ($input["planos_contas"]!="") {
             $filtros .= "   Plano de Contas : " . $descricao_planocontas[1];
+            $sWhere .= " and planos_contas_id = " . ($descricao_planocontas=="" ? 0 : $descricao_planocontas[0]);
         }
 
-        if ($descricao_grupostitulos!="")
-        {
+        if ($descricao_grupostitulos!="") {
             $filtros .= "   Grupo Titulos : " . $descricao_grupostitulos[1];
+            $sWhere .= " and grupos_titulos_id = " . ($descricao_grupostitulos=="" ? 0 : $descricao_grupostitulos[0]);
         }
 
-        if ($input["data_vencimento"]!="")
-        {
+        if ($input["data_vencimento"]!="") {
             $filtros .= "   Dt. Vencimento : " . $input["data_vencimento"] . " até " . $input["data_vencimento_ate"] ;
         }
 
-        if ($input["data_pagamento"]!="")
-        {
+        if ($input["data_pagamento"]!="") {
             $filtros .= "   Dt. Pagamento : " . $input["data_pagamento"] . " até " . $input["data_pagamento_ate"] ;
         }
 
         //Parametros JASPER REPORT
-        $parametros = array
+        /*$parametros = array
         (
             "empresas_id"=> $this->dados_login->empresas_id,
             "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
@@ -167,37 +162,40 @@ class RelatorioFinanceiroController extends Controller
             "filtros"=> "'" . ($filtros) . "'",
             "REPORT_LOCALE"=> "pt",
         );
+        */
+
+        //Parametros JASPER REPORT
+        $parametros = array
+        (
+            "filtros"=> "'" . ($filtros) . "'",
+            "tipo"=>"'" . $input["opTipo"] . "'",
+            "REPORT_LOCALE"=> "pt",
+        );
 
 
-        //Ordem
-        if ($input["ordem"]=="razaosocial")
-        {
-            $parametros = array_add($parametros, 'ordem', 'razaosocial');
-        }
-        else if ($input["ordem"]=="data_vencimento")
-        {
-            $parametros = array_add($parametros, 'ordem', 'data_vencimento');
-        }
-        else if ($input["ordem"]=="data_pagamento")
-        {
-            $parametros = array_add($parametros, 'ordem', 'data_pagamento');
-        }
-        else if ($input["ordem"]=="descricao")
-        {
-            $parametros = array_add($parametros, 'ordem', 'descricao');
+        //DIRECIONA PARA O RELATORIO CONFORME ORDEM / QUEBRA SELECIONADA
+        if ($input["ordem"]=="data_vencimento") {
+            $nome_relatorio = public_path() . '/relatorios/listagem_titulos_venc.jasper';
+        } else if ($input["ordem"]=="data_pagamento") {
+            $nome_relatorio = public_path() . '/relatorios/listagem_titulos_dtpagto.jasper';
+        } else if ($input["ordem"]=="centro_custo") {
+            $nome_relatorio = public_path() . '/relatorios/listagem_titulos_cc.jasper';
+        } else if ($input["ordem"]=="plano_contas") {
+            $nome_relatorio = public_path() . '/relatorios/listagem_titulos_pc.jasper';
+        } else if ($input["ordem"]=="cc_pc") {
+            $nome_relatorio = public_path() . '/relatorios/listagem_titulos_agrupado.jasper';
         }
 
         //Se status for diferente de ambos
-        if ($input["status_id"]!="T")
-        {
+        if ($input["status_id"]!="T") {
             $parametros = array_add($parametros, 'status', $input["status_id"]);
         }
 
         //Filtra conta corrente
-        if ($input["contas"]!="")
-        {
-            $parametros = array_add($parametros, 'contas_id', ($descricao_contas=="" ? 0 : $descricao_contas[0]));
-        }
+        //if ($input["contas"]!="")
+        //{
+            //$parametros = array_add($parametros, 'contas_id', ($descricao_contas=="" ? 0 : $descricao_contas[0]));
+        //}
 
         //Data de pagamento
         if ($input["data_pagamento"]!="" && $input["data_pagamento_ate"]!="")
@@ -214,7 +212,7 @@ class RelatorioFinanceiroController extends Controller
         }
 
         //Path relatorio
-        $nome_relatorio = public_path() . '/relatorios/listagem_titulos_agrupado.jasper';
+        //$nome_relatorio = public_path() . '/relatorios/listagem_titulos_agrupado.jasper';
 
          \JasperPHP::process(
             $nome_relatorio,

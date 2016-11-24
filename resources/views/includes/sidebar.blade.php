@@ -349,9 +349,11 @@
       </li>
       @endif
 
+      <!--
       <li>
         <a href="#"><i class="fa fa-angle-double-right"></i>Transferências</i></a>
       </li>
+      -->
 
       @if(Gate::check('verifica_permissao', [53 ,'acessar']))
       <li>

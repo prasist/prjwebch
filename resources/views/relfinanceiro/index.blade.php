@@ -9,7 +9,7 @@
 
 <div class="row">
 
-  <form method = 'POST'  class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/pesquisar')}}>
+  <form method = 'POST'  class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/pesquisar')}}">
   {!! csrf_field() !!}
     <!-- Main content -->
     <section class="content">
@@ -36,6 +36,7 @@
                                     <select id="opTipo" placeholder="(Selecionar)" name="opTipo" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
                                     <option  value="P">Contas à Pagar</option>
                                     <option  value="R">Contas à Receber</option>
+                                    <option  value="M">Movimentação Bancária</option>
                                     </select>
                               </div><!-- col-xs-3-->
                       </div>
@@ -256,7 +257,6 @@
                               <option  value="csv" data-icon="fa fa-file-excel-o">CSV (.csv)</option>
                               <option  value="docx" data-icon="fa fa-file-word-o">Microsoft Word (.docx)</option>
                               <option  value="html" data-icon="fa fa-file-word-o">HTML (.html)</option>
-                              <option  value="email" data-icon="fa fa-envelope-o">Listagem de E-mails</option>
                               </select>
 
                              @if ($var_download!="")
@@ -288,10 +288,13 @@
                           <label for="ordem" class="col-sm-3 control-label">Ordem</label>
                           <div class="col-xs-8">
                                 <select id="ordem" name="ordem" class="form-control selectpicker">
-                                <option  value="descricao"  selected>Descrição Título</option>
-                                <option  value="razaosocial"  selected>Fornecedor/Cliente</option>
-                                <option  value="data_vencimento" >Data Vencimento</option>
-                                <option  value="data_pagamento" >Data Pagamento</option>
+                                <option  value="plano_contas">Plano de Contas</option>
+                                <option  value="centro_custo">Centro de Custo</option>
+                                <option  value="cc_pc">Centro de Custo + Plano de Contas</option>
+                                <!--<option  value="descricao">Descrição Título</option>
+                                <option  value="razaosocial">Fornecedor/Cliente</option>-->
+                                <option  value="data_vencimento">Data Vencimento</option>
+                                <option  value="data_pagamento">Data Pagamento</option>
                                 </select>
                          </div>
                 </div>

@@ -83,7 +83,7 @@
                                                    </div>
                                               </div>
 
-                                              <div class="col-xs-2">
+                                             <div class="col-xs-2">
                                                   <label for="data_emissao" class="control-label"><span class="text-danger">*</span>  Data Emissão</label>
                                                   <div class="input-group">
                                                          <div class="input-group-addon">

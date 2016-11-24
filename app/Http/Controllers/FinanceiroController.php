@@ -44,25 +44,32 @@ class FinanceiroController extends Controller
        {
               //Busca ID do cliente cloud e ID da empresa
               $this->dados_login = usuario::find(Auth::user()->id);
+              $this->formatador = new  \App\Functions\FuncoesGerais();
 
               //$dados = bancos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
 
               $retorno = \DB::select('select  fn_total_titulos_aberto(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id . ', ' . "'R'" . ')');
-              $total_receber_aberto = $retorno[0]->fn_total_titulos_aberto;
+              $total_receber_aberto = $this->formatador->ExibirCurrency($retorno[0]->fn_total_titulos_aberto);
 
               $retorno = \DB::select('select  fn_total_titulos_mes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id . ', ' . "'R'" . ')');
-              $total_receber_mes = $retorno[0]->fn_total_titulos_mes;
+              $total_receber_mes = $this->formatador->ExibirCurrency($retorno[0]->fn_total_titulos_mes);
 
               $retorno = \DB::select('select  fn_total_titulos_aberto(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id . ', ' . "'P'" . ')');
-              $total_pagar_aberto = $retorno[0]->fn_total_titulos_aberto;
+              $total_pagar_aberto = $this->formatador->ExibirCurrency($retorno[0]->fn_total_titulos_aberto);
 
               $retorno = \DB::select('select  fn_total_titulos_mes(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id . ', ' . "'P'" . ')');
-              $total_pagar_mes = $retorno[0]->fn_total_titulos_mes;
+              $total_pagar_mes = $this->formatador->ExibirCurrency($retorno[0]->fn_total_titulos_mes);
 
               $retorno = \DB::select('select  fn_saldo_contas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id . ')');
-              $saldo_contas = $retorno[0]->fn_saldo_contas;
+              $saldo_contas = $this->formatador->ExibirCurrency($retorno[0]->fn_saldo_contas);
 
-              return view($this->rota . '.dashboard', ['total_receber_aberto'=>$total_receber_aberto, 'total_receber_mes'=>$total_receber_mes, 'total_pagar_aberto'=>$total_pagar_aberto, 'total_pagar_mes'=>$total_pagar_mes, 'saldo_contas'=>$saldo_contas]);
+              $todas_contas = \App\Models\contas::select('nome', 'saldo_atual')
+              ->where('empresas_id', $this->dados_login->empresas_id)
+              ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+              ->get();
+
+
+              return view($this->rota . '.dashboard', ['todas_contas'=>$todas_contas, 'total_receber_aberto'=>$total_receber_aberto, 'total_receber_mes'=>$total_receber_mes, 'total_pagar_aberto'=>$total_pagar_aberto, 'total_pagar_mes'=>$total_pagar_mes, 'saldo_contas'=>$saldo_contas]);
        }
 
     }

@@ -7,6 +7,57 @@
 {{ \Session::put('route', 'pessoas') }}
 {{ \Session::put('id_pagina', '28') }}
 
+<!--
+
+In this obsession with the things this world says make us happy
+Can't see the slaves we are in all the searching all the grasping
+Like we deserve much more than all these blessing we're holding
+So now I'm running free into an ocean of mercy unending
+
+So come and empty me
+So that it's you I breathe
+I want my life to be
+Only Christ in me
+So I will fix my eyes
+'Cause you're my source of life
+I need the world to see
+That it's Christ in me
+That it's Christ in me
+
+Done with what holds me down the things I once was chasing after
+Throw off these heavy chains that I have let become my master
+So now I'm running free into an ocean of mercy unending
+
+So come and empty me
+So that it's you I breathe
+I want my life to be
+Only Christ in me
+So I will fix my eyes
+'Cause you're my source of life
+I need the world to see
+That it's Christ in me
+That it's Christ in me
+
+In this obsession with the things this world says make us happy
+Can't see the slaves we are in all the searching all the grasping
+
+So come and empty me
+So that it's you I breathe
+I want my life to be
+Only Christ in me
+So I will fix my eyes
+'Cause you're my source of life
+I need the world to see
+Only Christ in me
+Only Christ in me
+Only Christ in me
+Christ in me
+
+
+
+Read more: Jeremy Camp - Christ In Me Lyrics | MetroLyrics
+
+-->
 <div class = 'row'>
 
     <div class="col-md-12">
@@ -412,6 +463,13 @@
                                 <!-- TAB FINANCEIRO-->
                                 <div class="tab-pane fade" id="panel_financ">
                                     <br/>
+
+                                      <div class="row">
+                                                <div class="col-xs-3">
+                                                       <label for="codigo_contabil" class="control-label">Código Contábil</label>
+                                                       <input id="codigo_contabil"  name = "codigo_contabil" type="text" class="form-control" value="{{$pessoas[0]->codigo_contabil}}">
+                                                </div>
+                                      </div>
 
                                       <div class="row">
                                             <div class="col-xs-8">

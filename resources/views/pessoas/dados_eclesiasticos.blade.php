@@ -39,7 +39,7 @@
                                                                       <label for="familia" class="control-label">Resp. Família</label>
                                                                       <div class="input-group">
                                                                                <div class="input-group-addon">
-                                                                                  <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#familia_myModal" >
+                                                                                   <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#familia_myModal" >
                                                                                          <i class="fa fa-search"></i> ...
                                                                                    </button>
                                                                                 </div>

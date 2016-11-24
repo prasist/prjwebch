@@ -51,6 +51,14 @@
                 <i class="ion ion-social-usd"></i>
             </div>
         </div>
+
+        <div class="row" class="list">
+            <ul>
+                @foreach($todas_contas as $item)
+                       <li class="text-info">{!! $item->nome !!} - Saldo : {!! number_format($item->saldo_atual, 2, ',', '.') !!}</li>
+                @endforeach
+           </ul>
+        </div>
     </div><!-- ./col -->
 
 

@@ -603,7 +603,7 @@ public function salvar($request, $id, $tipo_operacao) {
 
                 /*------------------------------DADOS FINANCEIROS------------------------------*/
 
-                if ($input['banco']!="" || $input['endereco_cobranca']!="") {
+                if ($input['banco']!="" || $input['endereco_cobranca']!="" || $input['codigo_contabil']!="") {
 
                         if ($tipo_operacao=="create")  //novo registro
                         {
@@ -619,6 +619,7 @@ public function salvar($request, $id, $tipo_operacao) {
                                 [
                                     'pessoas_id' => $pessoas->id,
                                     'endereco' => $input['endereco_cobranca'],
+                                    'codigo_contabil' => $input['codigo_contabil'],
                                     'numero' => $input['numero_cobranca'],
                                     'bairro' => $input['bairro_cobranca'],
                                     'cep' => $input['cep_cobranca'],
@@ -1519,7 +1520,7 @@ public function salvar($request, $id, $tipo_operacao) {
 
         /*Pessoas e dados financeiros*/
         /*Usado dessa forma para formatar a data de nascimento */
-        $sQuery = "select to_char(datanasc, 'DD-MM-YYYY') AS datanasc_formatada, pessoas.*, financ_pessoas.id as id_financ, financ_pessoas.bancos_id, financ_pessoas.endereco as endereco_cobranca, financ_pessoas.numero as numero_cobranca, financ_pessoas.bairro as bairro_cobranca, financ_pessoas.cidade as cidade_cobranca, financ_pessoas.estado as estado_cobranca, financ_pessoas.cep as cep_cobranca, financ_pessoas.complemento as complemento_cobranca";
+        $sQuery = "select to_char(datanasc, 'DD-MM-YYYY') AS datanasc_formatada, pessoas.*, financ_pessoas.codigo_contabil,  financ_pessoas.id as id_financ, financ_pessoas.bancos_id, financ_pessoas.endereco as endereco_cobranca, financ_pessoas.numero as numero_cobranca, financ_pessoas.bairro as bairro_cobranca, financ_pessoas.cidade as cidade_cobranca, financ_pessoas.estado as estado_cobranca, financ_pessoas.cep as cep_cobranca, financ_pessoas.complemento as complemento_cobranca";
         $sQuery .= " from pessoas left join financ_pessoas on financ_pessoas.pessoas_id = pessoas.id";
         $sQuery .= " where pessoas.id = ? ";
         $sQuery .= " and pessoas.empresas_id = ? ";

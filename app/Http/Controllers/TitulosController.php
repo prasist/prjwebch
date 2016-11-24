@@ -56,6 +56,11 @@ class TitulosController extends Controller
         ->OrderBy('nome')
         ->get();
 
+        $contas = \App\Models\contas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->OrderBy('nome')
+        ->get();
+
         $sQuery = "select id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, saldo_a_pagar, alteracao_status, DATE_PART('day', now() - data_vencimento::timestamp) AS dias_atraso";
         $sQuery .= " from titulos ";
         $sQuery .= " where tipo = ? ";
@@ -66,7 +71,7 @@ class TitulosController extends Controller
 
         $dados = \DB::select($sQuery, [$tipo, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id, 'A']);
 
-        return view($this->rota . '.index',['dados'=>$dados, 'post_status'=>'', 'tipo'=>$tipo, 'post_mes'=>'', 'plano_contas'=>$plano_contas, 'centros_custos'=>$centros_custos]);
+        return view($this->rota . '.index',['contas'=>$contas, 'dados'=>$dados, 'post_status'=>'', 'tipo'=>$tipo, 'post_mes'=>'', 'plano_contas'=>$plano_contas, 'centros_custos'=>$centros_custos]);
     }
 
 
@@ -118,9 +123,16 @@ class TitulosController extends Controller
                   //Baixa com valor integral
                   if ($input['quero_fazer']=="baixar") //Baixar selecionados
                   {
-                        $dados->data_pagamento  = $this->formatador->FormatarData($input["data_pagto_lote"]);
+                        //$dados->data_pagamento  = $this->formatador->FormatarData($input["data_pagto_lote"]);
+                        $dados->data_pagamento  = $this->formatador->FormatarData($input["dt_pagto"]);
                         $dados->status  = "B";
                         //$dados->valor_pago  = ($input["campo_valor_pago"][$key]>0 ? $this->formatador->GravarCurrency($input["campo_valor_pago"][$key]) : $this->formatador->GravarCurrency($input["campo_valor"][$key]));
+
+                        //Se foi informado CONTA CORRENTE
+                        if ($input["contacorrente"]!="") {
+                            $dados->contas_id = $input["contacorrente"];
+                        }
+
                         $dados->valor_pago  = $this->formatador->GravarCurrency($input["campo_valor"][$key]);
                         $dados->saldo_a_pagar  = 0;
                         $dados->users_id  = Auth::user()->id;
@@ -186,6 +198,11 @@ class TitulosController extends Controller
           ->OrderBy('nome')
           ->get();
 
+          $contas = \App\Models\contas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->OrderBy('nome')
+        ->get();
+
           //Array principal de campos a serem filtrados
           $where = array(
               $tipo,
@@ -243,7 +260,7 @@ class TitulosController extends Controller
 
           $dados = \DB::select($sQuery, $where);
 
-          return view($this->rota . '.index',['dados'=>$dados, 'post_status'=>$input["status"], 'tipo'=>$tipo, 'post_mes'=>$input["mes"], 'plano_contas'=>$plano_contas, 'centros_custos'=>$centros_custos]);
+          return view($this->rota . '.index',['contas'=>$contas, 'dados'=>$dados, 'post_status'=>$input["status"], 'tipo'=>$tipo, 'post_mes'=>$input["mes"], 'plano_contas'=>$plano_contas, 'centros_custos'=>$centros_custos]);
 
     }
 
@@ -292,6 +309,20 @@ class TitulosController extends Controller
             }
 
     }
+
+/**
+ * Busca Saldo atual da conta corrente informada
+ */
+ private function busca_saldo_conta($id_conta) {
+
+      $retorno = \App\Models\contas::select('saldo_atual')
+      ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+      ->where('empresas_id', $this->dados_login->empresas_id)
+      ->where('id', $id_conta)
+      ->get();
+
+      return $retorno[0]->saldo_atual;
+ }
 
 
   private function persisteDados($tipo, $dados, $input, $seq, $vencimento, $qtd_parcelas, $date, $tipo_operacao)
@@ -356,12 +387,13 @@ class TitulosController extends Controller
       else
       { //Baixa Parcial, deixar titulo em aberto. Nesse caso marcar tambem com alteracao de status
           $dados->status = "A";
-          $dados->alteracao_status = "S"; //Servirá para filtras o log de titulos somente com baixas e estornors
+          $dados->alteracao_status = "S"; //Servirá para filtrar o log de titulos somente com baixas e estornors
       }
 
       $dados->grupos_titulos_id  = ($input['grupos_titulos']=="" ? null : $input['grupos_titulos']);
       $dados->pessoas_id  = ($input['fornecedor']=="" ? null : substr($input['fornecedor'],0,9));
       $dados->contas_id  =  ($input['conta']=="" ? null : $input['conta']);
+      $dados->saldo_conta = $this->busca_saldo_conta($dados->contas_id); //Pega saldo atual da conta corrente
       $dados->planos_contas_id  =  ($input['plano']=="" ? null : $input['plano']);
       $dados->centros_custos_id  =  ($input['centros_custos']=="" ? null : $input['centros_custos']);
       $dados->obs  = $input['obs'];
@@ -371,55 +403,50 @@ class TitulosController extends Controller
       $dados->users_id  = Auth::user()->id;
       $dados->save();
 
+        //Rateios por centro de custo
+      if ($input['hidden_id_rateio_cc']!="") {
 
-      //Rateios por centro de custo
-      if ($input['hidden_id_rateio_cc']!="")
-      {
+              $i_index=0; /*Inicia sequencia*/
 
-            $i_index=0; /*Inicia sequencia*/
+               foreach($input['hidden_id_rateio_cc'] as $selected) {
+                        if ($selected!="")
+                        {
+                                $whereForEach =
+                                [
+                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                    'empresas_id' =>  $this->dados_login->empresas_id,
+                                    'titulos_id' => $dados->id,
+                                    'centros_custos_id' => $selected
+                                ];
 
-             foreach($input['hidden_id_rateio_cc'] as $selected)
-              {
-                      if ($selected!="")
-                      {
-                              $whereForEach =
-                              [
-                                  'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                  'empresas_id' =>  $this->dados_login->empresas_id,
-                                  'titulos_id' => $dados->id,
-                                  'centros_custos_id' => $selected
-                              ];
+                                if ($tipo_operacao=="create")  //novo registro
+                                {
+                                    $rateio = new \App\Models\rateio_titulos();
+                                }
+                                else //Alteracao
+                                {
+                                    $rateio = \App\Models\rateio_titulos::firstOrNew($whereForEach);
+                                }
 
-                              if ($tipo_operacao=="create")  //novo registro
-                              {
-                                  $rateio = new \App\Models\rateio_titulos();
-                              }
-                              else //Alteracao
-                              {
-                                  $rateio = \App\Models\rateio_titulos::firstOrNew($whereForEach);
-                              }
+                                $valores =
+                                [
+                                    'titulos_id' => $dados->id,
+                                    'empresas_id' =>  $this->dados_login->empresas_id,
+                                    'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+                                    'centros_custos_id' => $selected,
+                                    'valor' => $this->formatador->GravarCurrency($input['inc_valor'][$i_index]),
+                                    'percentual' => $this->formatador->GravarCurrency($input['inc_perc'][$i_index]),
+                                ];
 
-                              $valores =
-                              [
-                                  'titulos_id' => $dados->id,
-                                  'empresas_id' =>  $this->dados_login->empresas_id,
-                                  'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
-                                  'centros_custos_id' => $selected,
-                                  'valor' => $this->formatador->GravarCurrency($input['inc_valor'][$i_index]),
-                                  'percentual' => $this->formatador->GravarCurrency($input['inc_perc'][$i_index]),
-                              ];
+                                $rateio->fill($valores)->save();
+                                $rateio->save();
 
-                              $rateio->fill($valores)->save();
-                              $rateio->save();
-
-                              $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
-                      }
-              }
-
+                                $i_index = $i_index + 1; //Incrementa sequencia do array para pegar proximos campos (se houver)
+                        }
+               }
       }
 
-    }
-
+   }
 
 
 /*
@@ -499,13 +526,14 @@ class TitulosController extends Controller
 
 
 
-
     /*Update pela table editavel*/
     public function update_inline(\Illuminate\Http\Request  $request, $id, $campo, $tipo)
     {
 
         $input = $request->except(array('_token', 'ativo')); //não levar o token
         $titulos = titulos::findOrfail($id);
+
+        $titulos->saldo_conta = $this->busca_saldo_conta($titulos->contas_id); //Pega saldo atual da conta corrente
 
         $var_acrescimo = ($titulos->acrescimo!="" ? $titulos->acrescimo :0);
         $var_desconto = ($titulos->desconto!="" ? $titulos->desconto :0);
@@ -547,8 +575,8 @@ class TitulosController extends Controller
             $titulos->alteracao_status = "S"; //Servirá para filtras o log de titulos somente com baixas e estornos
         }
 
-        //Se marcou PAGO ou NÃO PAGO
-        if ($campo=="check_pago")
+       //Se marcou PAGO ou NÃO PAGO
+       if ($campo=="check_pago")
        {
              if ($input["value"]=="0")
              { //PAGOU
@@ -591,7 +619,7 @@ class TitulosController extends Controller
     //Visualizar registro
     public function show (\Illuminate\Http\Request $request, $id, $tipo)
     {
-            return $this->exibir($request, $id, 'true', $tipo);
+          return $this->exibir($request, $id, 'true', $tipo);
     }
 
     //Direciona para tela de alteracao
@@ -601,27 +629,27 @@ class TitulosController extends Controller
     }
 
 
-    /**
-     * Atualiza dados no banco
-     *
-     * @param    \Illuminate\Http\Request  $request
-     * @param    int  $id
-     * @return  \Illuminate\Http\Response
-     */
-    public function update(\Illuminate\Http\Request  $request, $id, $tipo)
-    {
+   /**
+   * Atualiza dados no banco
+   *
+   * @param    \Illuminate\Http\Request  $request
+   * @param    int  $id
+   * @return  \Illuminate\Http\Response
+   */
+   public function update(\Illuminate\Http\Request  $request, $id, $tipo)
+   {
         $this->salvar($request, $id,  $tipo, "update");
         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
         return redirect($this->rota . '/' . $tipo);
-    }
+   }
 
 
     /**
-     * Excluir registro do banco.
-     *
-     * @param    int  $id
-     * @return  \Illuminate\Http\Response
-     */
+    * Excluir registro do banco.
+    *
+    * @param    int  $id
+    * @return  \Illuminate\Http\Response
+    */
     public function destroy($id, $tipo)
     {
             $dados = titulos::findOrfail($id);

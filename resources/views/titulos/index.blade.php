@@ -18,13 +18,13 @@
         <div class="row">
               <div class="col-xs-2">
               @can('verifica_permissao', [ \Session::get('id_pagina'),'incluir'])
-                 <form method = 'get' class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/registrar/' . $tipo)}}>
+                 <form method = 'get' class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/registrar/' . $tipo)}}">
                       <button class = 'btn btn-success btn-flat' type ='submit'><span class="fa fa-plus"></span> {!! ($tipo=="P" ? "Nova Despesa" : "Nova Receita")!!}</button>
                  </form>
               @endcan
               </div>
 
-              <form method = 'post' class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/filtrar/' . $tipo)}}>
+              <form method = 'post' class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/filtrar/' . $tipo)}}">
               {!! csrf_field() !!}
 
                 <div class="col-xs-3">
@@ -101,9 +101,9 @@
 
         </div>
 
-        <p></p>
+      <p></p>
 
-      <form id="lote" method = 'post' class="form-horizontal" action = {{ url('/' . \Session::get('route') . '/acao_lote/' . $tipo)}}>
+      <form id="lote" method = 'post' class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/acao_lote/' . $tipo)}}">
         {!! csrf_field() !!}
 
         <input type="hidden" id="quero_fazer" name="quero_fazer" value="">
@@ -111,7 +111,73 @@
 
         <div class="row">
 
-          <div class="col-xs-3">
+          <div class="col-xs-5">
+
+              <!--
+                <a href="#" id="queromais"><i class="fa fa-cog"></i> Alterar dados para Baixa Automática (Data de Pagamento / Conta Corrente)</a>
+
+                <div id="div_opcoes_baixa" style="display: none">
+
+                      <div class="row">
+                            <div class="col-xs-3">
+                                  <label for="dt_pagto" class="control-label">Data Pagamento</label>
+                                  <input id ="dt_pagto" name = "dt_pagto" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ date('d-m-Y')}}">
+                            </div>
+
+                            <div class="col-xs-5">
+                                  <label for="contacorrente" class="control-label">Conta Corrente</label>
+                                  <select id="contacorrente" name="contacorrente" placeholder="(Selecionar)" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                  <option  value=""></option>
+                                  @foreach($contas as $item)
+                                         <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                  @endforeach
+                                  </select>
+                            </div>
+                      </div>
+                      <p></p>
+
+                </div>
+                -->
+
+<!-- MODAL PARA BAIXA AUTOMATICA -->
+                  <!-- Modal -->
+                      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog  modal-lg" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                                  <h4 class="modal-title" id="myModalLabel">Dados para Baixa Automática</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                      <div class="row">
+                                          <div class="col-xs-3">
+                                                <label for="dt_pagto" class="control-label">Data Pagamento</label>
+                                                <input id ="dt_pagto" name = "dt_pagto" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ date('d-m-Y')}}">
+                                          </div>
+
+                                          <div class="col-xs-5">
+                                                <label for="contacorrente" class="control-label">Conta Corrente <i>(Opcional)</i></label>
+                                                <select id="contacorrente" name="contacorrente" placeholder="(Selecionar)" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                                <option  value=""></option>
+                                                @foreach($contas as $item)
+                                                       <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                @endforeach
+                                                </select>
+                                          </div>
+                                    </div>
+
+                                </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="fechar" type="button" class="btn btn-default" data-dismiss="modal" ><i class="fa fa-close"></i> Cancelar</button>
+                                    <button id="salvar" type="button" class="btn btn-primary" data-dismiss="modal" onclick="if(confirm('Confirma o Pagamento dos Títulos Selecionados ?')) acao('baixar');"><i class="fa fa-save"></i> Ok</button>
+                                </div>
+                              </div>
+                            </div>
+                   <!-- fim modal -->
+
                 <div class="btn-group">
                   <button type="button" class="btn btn-default">Ações (Selecionados)</button>
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -119,12 +185,20 @@
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
-                      <li><a href="#" onclick="if(confirm('Confirma o Pagamento dos Títulos Selecionados ?')) acao('baixar');"><i class="fa fa-thumbs-o-up"></i> Definir como Pago</a></li>
+                      <!--<li><a href="#" onclick="if(confirm('Confirma o Pagamento dos Títulos Selecionados ?')) acao('baixar');"><i class="fa fa-thumbs-o-up"></i> Definir como Pago</a></li>-->
+
+                      <li>
+                            <a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-thumbs-o-up"></i> Definir como Pago</a>
+                      </li>
+
                       <li><a href="#" onclick="if(confirm('Deseja marcar os Títulos Selecionados como NÃO PAGO ?')) acao('estornar');"><i class="fa fa-thumbs-o-down"></i> Definir como NÃO Pago</a></li>
                       <!--<li><a href="#" onclick="if(confirm('ATENÇÃO !!! Confirma a exclusão dos Títulos Selecionados ? Essa ação não tem reversão')) baixar_todos(event);"><i class="glyphicon glyphicon-trash"></i> Excluir</a></li>-->
                   </ul>
                 </div>
+
           </div>
+
+
 
         <div class="col-md-12">
           <div class="box">
@@ -211,7 +285,7 @@
 
                             <td>
 
-                                    <a href="#" id="check_pago[{!!$value->id!!}]"
+                                   <a href="#" id="check_pago[{!!$value->id!!}]"
                                     class="check_pago"
                                     data-type="select" data-column="check_pago"
                                     data-url="{{ url('/titulos/' . $value->id . '/update_inline/check_pago/' . $tipo)}}"
@@ -239,7 +313,7 @@
 
                                         </p>
                                         @endif
-                                    </a>
+                                   </a>
 
                             </td>
 
@@ -376,6 +450,7 @@
 
              if (e=="baixar") //Solicita data baixa, informando a data atual
              {
+                /*
                 var var_data=window.prompt("Informe a Data para Pagamento dos Títulos : ", moment().format('DD/MM/YYYY'));
 
                  if (var_data!="")
@@ -395,6 +470,7 @@
                     alert("Data Inválida.");
                     return;
                  }
+                 */
 
              }
 
@@ -425,6 +501,11 @@
         /*Validacao dos campos alterados inline */
         $(document).ready(function() {
 
+
+            $('#queromais').click(function (){
+                $("#div_opcoes_baixa").toggle();
+            });
+
             $('#mes').change(function()
             {
                   if ($(this).prop('value')=="E")
@@ -454,6 +535,7 @@
             $('.check_pago').editable({
                  value: [0, 1],
                  source: [
+                    {value: 0, text: ''},
                     {value: 0, text: 'Sim'},
                     {value: 1, text: 'Não'}
                 ],

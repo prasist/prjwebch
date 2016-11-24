@@ -1,6 +1,5 @@
 <script type="text/javascript">
- /*Prepara checkbox bootstrap*/
-
+    /*Prepara checkbox bootstrap*/
     //Abre menu
     $(document).ready(function(){
 
@@ -82,31 +81,26 @@
     });
 
 
-     function onblur_valor()
-     {
+     function onblur_valor() {
             if ($("#valor").val()!="")
             {
                 atualizar_valor_rateio();
                 $("#valor_rateio").val('0');
                 $("#soma_rateio").val('0');
                 $("#valor_restante").val($("#valor_original").val());
-
             }
-
      }
 
 
-       //Quando informar o valor do titulo, atualizar o valor de rateio
-       function atualizar_valor_rateio()
-       {
-            $("#valor_original").val($("#valor").val().replace('.', '').replace(',', '.'));
-            $("#valor_restante").val($("#valor").val().replace('.', '').replace(',', '.'));
-       }
+     //Quando informar o valor do titulo, atualizar o valor de rateio
+     function atualizar_valor_rateio() {
+          $("#valor_original").val($("#valor").val().replace('.', '').replace(',', '.'));
+          $("#valor_restante").val($("#valor").val().replace('.', '').replace(',', '.'));
+     }
 
 
-       //Calcula valor rateado, saldo remanescente e validacoes
-       function calcular_rateio()
-       {
+      //Calcula valor rateado, saldo remanescente e validacoes
+      function calcular_rateio() {
 
            //Verifica se foi informado valor do titulo
            if ($("#valor_original").val()=="")
@@ -161,14 +155,11 @@
 
             }
 
-       }
+      }
 
       //Verificar se centro de custo não foi inserido
-       function validar_cc(valor)
-      {
-
-          $.each($('input[class="form-control ccusto"]'),function(){
-
+      function validar_cc(valor) {
+          $.each($('input[class="form-control ccusto"]'),function() {
                 if ($(this).val()==valor && $(this).val()!="") //verifica se item selecionado na combo ja foi adicionado
                 {
                    alert("Centro de Custo já informado.");
@@ -176,13 +167,10 @@
                    $("#rateio_cc").trigger('change'); //dispara change para limpar campo
                    return;
                 }
-
           });
+      }
 
-       }
-
-       function remover_todos()
-       {
+      function remover_todos() {
             table = $('#mais_rateios');
               table.find('input').each(function (){
                 $(this).val("");
@@ -192,8 +180,7 @@
        }
 
        //Percorre valores adicionados
-       function verificar_valores_rateados()
-      {
+       function verificar_valores_rateados() {
 
            var percentual=0;
            var valor=0;
@@ -232,51 +219,48 @@
       }
 
 
-       //Adiciona novo valor de rateio
-      function incluir_rateio()
-      {
-
+      //Adiciona novo valor de rateio
+      function incluir_rateio() {
             //Centro de custo
-                if ($("#rateio_cc").val() == "")
-                {
-                    alert("Informe o Centro de Custo");
-                    return false;
-                }
+            if ($("#rateio_cc").val() == "")
+            {
+                alert("Informe o Centro de Custo");
+                return false;
+            }
 
-                //Ou valor ou percentual
-                if ($("#valor_rateio").val() == "" && $("#perc_rateio").val()=="")
-                {
-                    alert("Informe o valor ou percentual para rateio");
-                    return false;
-                }
+            //Ou valor ou percentual
+            if ($("#valor_rateio").val() == "" && $("#perc_rateio").val()=="")
+            {
+                alert("Informe o valor ou percentual para rateio");
+                return false;
+            }
 
-                //Pega dados dos campos
-                var ind_centrocusto = document.getElementById("rateio_cc").selectedIndex;
-                var texto_rateio = document.getElementById("rateio_cc").options;
+            //Pega dados dos campos
+            var ind_centrocusto = document.getElementById("rateio_cc").selectedIndex;
+            var texto_rateio = document.getElementById("rateio_cc").options;
 
-                //Criar campos dinamicamente
-                var sCentroCustoID = '<tr><input id="hidden_id_rateio_cc[]" name = "hidden_id_rateio_cc[]" type="hidden" class="form-control" value=" ' + ind_centrocusto + '">';
-                var sCentroCusto = '<td><input id="inc_cc[]" readonly name = "inc_cc[]" type="text" class="form-control" value="' + texto_rateio[ind_centrocusto].text + '"></td>';
-                var sPercentual = '<td><input id="inc_perc[]" readonly name = "inc_perc[]" type="text" class="form-control valores" value="' + document.getElementById("perc_rateio").value + '"></td>';
-                var sValor = '<td><input id="inc_valor[]" readonly name = "inc_valor[]" type="text" class="form-control valores" value="' + document.getElementById("valor_rateio").value + '"></td>';
-                var sBotao = '<td><button data-toggle="tooltip" data-placement="top" title="Excluir Ítem"  class="btn btn-danger btn-sm remover"><spam class="glyphicon glyphicon-trash"></spam></button></td>';
+            //Criar campos dinamicamente
+            var sCentroCustoID = '<tr><input id="hidden_id_rateio_cc[]" name = "hidden_id_rateio_cc[]" type="hidden" class="form-control" value=" ' + ind_centrocusto + '">';
+            var sCentroCusto = '<td><input id="inc_cc[]" readonly name = "inc_cc[]" type="text" class="form-control" value="' + texto_rateio[ind_centrocusto].text + '"></td>';
+            var sPercentual = '<td><input id="inc_perc[]" readonly name = "inc_perc[]" type="text" class="form-control valores" value="' + document.getElementById("perc_rateio").value + '"></td>';
+            var sValor = '<td><input id="inc_valor[]" readonly name = "inc_valor[]" type="text" class="form-control valores" value="' + document.getElementById("valor_rateio").value + '"></td>';
+            var sBotao = '<td><button data-toggle="tooltip" data-placement="top" title="Excluir Ítem"  class="btn btn-danger btn-sm remover"><spam class="glyphicon glyphicon-trash"></spam></button></td>';
 
-                /*Gera codigo HTML*/
-                document.getElementById("mais_rateios").innerHTML = document.getElementById("mais_rateios").innerHTML + sCentroCustoID + sCentroCusto + sPercentual + sValor + sBotao + '</tr>';
+            /*Gera codigo HTML*/
+            document.getElementById("mais_rateios").innerHTML = document.getElementById("mais_rateios").innerHTML + sCentroCustoID + sCentroCusto + sPercentual + sValor + sBotao + '</tr>';
 
-                /*Limpar campos*/
-                $("#rateio_cc").val('');
-                $("#rateio_cc").trigger('change');
-                $("#perc_rateio").val('');
-                $("#valor_rateio").val('');
+            /*Limpar campos*/
+            $("#rateio_cc").val('');
+            $("#rateio_cc").trigger('change');
+            $("#perc_rateio").val('');
+            $("#valor_rateio").val('');
 
-                verificar_valores_rateados();
+            verificar_valores_rateados();
       }
 
-      //Recalcula ao informar percentual ou valor
-      function recalcula()
-      {
 
+      //Recalcula ao informar percentual ou valor
+      function recalcula() {
              var_acrescimo=0;
              var_desconto=0;
              var_pago=0;
@@ -303,7 +287,7 @@
             {
                   $('#valor_pago').val(var_resultado.toFixed(2).replace('.', ',')); //Mesmo valor do titulo
             }
-
       }
+
 
 </script>

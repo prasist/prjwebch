@@ -12,10 +12,10 @@
     <div class="col-md-12">
 
         <div>
-            <a href={{ url('/' . \Session::get('route')) }} class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+            <a href="{{ url('/' . \Session::get('route')) }}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
         </div>
 
-        <form method = 'POST' class="form-horizontal"  action = {{ url('/' . \Session::get('route') . '/' . $dados->id . '/update')}}>
+        <form method = 'POST' class="form-horizontal"  action = "{{ url('/' . \Session::get('route') . '/' . $dados->id . '/update')}}">
 
         {!! csrf_field() !!}
 
@@ -24,7 +24,7 @@
                  <div class="box-body"> <!--anterior box-body-->
 
                             <div class="row{{ $errors->has('nome') ? ' has-error' : '' }}">
-                                    <div class="col-xs-10">
+                                    <div class="col-xs-7">
                                           <label for="nome" class="control-label">Descrição</label>
 
                                           <input id="nome" maxlength="60"  name = "nome" type="text" class="form-control" value="{{ $dados->nome }}">
@@ -37,6 +37,13 @@
                                              @endif
 
                                     </div>
+
+                                    <div class="col-xs-3">
+                                           <label for="codigo_contabil" class="control-label">Código Contábil</label>
+                                           <input id="codigo_contabil"  name = "codigo_contabil" type="text" class="form-control" value="{{$dados->codigo_contabil}}">
+                                    </div>
+
+
                             </div>
 
                              <div class="row">
