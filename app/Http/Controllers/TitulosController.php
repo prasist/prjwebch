@@ -461,9 +461,8 @@ class TitulosController extends Controller
     }
 
 
-    //Abre tela para edicao ou somente visualização dos registros
-    private function exibir ($request, $id, $preview, $tipo)
-    {
+   //Abre tela para edicao ou somente visualização dos registros
+   private function exibir ($request, $id, $preview, $tipo) {
         if($request->ajax())
         {
             return URL::to($this->rota . '/'. $id . '/edit/' . $tipo);

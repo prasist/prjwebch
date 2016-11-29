@@ -28,35 +28,35 @@ class RelatorioFinanceiroController extends Controller
 
   public function CarregarView($var_download, $var_mensagem) {
 
-        $contas = \App\Models\contas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->where('empresas_id', $this->dados_login->empresas_id)
-        ->OrderBy('nome')
-        ->get();
+    $contas = \App\Models\contas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+    ->where('empresas_id', $this->dados_login->empresas_id)
+    ->OrderBy('nome')
+    ->get();
 
-        $plano_contas = \App\Models\planos_contas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->where('empresas_id', $this->dados_login->empresas_id)
-        ->OrderBy('nome')
-        ->get();
+    $plano_contas = \App\Models\planos_contas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+    ->where('empresas_id', $this->dados_login->empresas_id)
+    ->OrderBy('nome')
+    ->get();
 
-        $centros_custos = \App\Models\centros_custos::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->where('empresas_id', $this->dados_login->empresas_id)
-        ->OrderBy('nome')
-        ->get();
+    $centros_custos = \App\Models\centros_custos::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+    ->where('empresas_id', $this->dados_login->empresas_id)
+    ->OrderBy('nome')
+    ->get();
 
-        $grupos_titulos = \App\Models\grupos_titulos::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
-        ->where('empresas_id', $this->dados_login->empresas_id)
-        ->OrderBy('nome')
-        ->get();
+    $grupos_titulos = \App\Models\grupos_titulos::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+    ->where('empresas_id', $this->dados_login->empresas_id)
+    ->OrderBy('nome')
+    ->get();
 
-        return view($this->rota . '.index',
-            [
-                'var_download' => $var_download,
-                'centros_custos'=>$centros_custos,
-                'planos_contas'=>$plano_contas,
-                'contas'=>$contas,
-                'grupos_titulos'=>$grupos_titulos,
-                'var_mensagem'=>$var_mensagem
-                ]);
+    return view($this->rota . '.index',
+        [
+            'var_download' => $var_download,
+            'centros_custos'=>$centros_custos,
+            'planos_contas'=>$plano_contas,
+            'contas'=>$contas,
+            'grupos_titulos'=>$grupos_titulos,
+            'var_mensagem'=>$var_mensagem
+            ]);
 }
 
 
@@ -107,13 +107,15 @@ public function index() {
 
         if ($input["opTipo"]=="P") {
             $filtros .= "   Tipo : Contas a Pagar";
-        } else {
+        } else if ($input["opTipo"]=="R") {
             $filtros .= "   Tipo : Contas a Receber";
         }
 
-        if ($input["status_id"]!="T") {
-            $filtros .= "   Status : " . ($input["status_id"]=="A" ? "Aberto" : ($input["status_id"]=="B" ? "Baixado" : "Ambos"));
-            //$sWhere .= " and status = '" . $input["status_id"] . "'";  //ABERTO OU BAIXADOS
+        if ($input["opTipo"]!="M") {
+            if ($input["status_id"]!="T") {
+                $filtros .= "   Status : " . ($input["status_id"]=="A" ? "Aberto" : ($input["status_id"]=="B" ? "Baixado" : "Ambos"));
+                //$sWhere .= " and status = '" . $input["status_id"] . "'";  //ABERTO OU BAIXADOS
+            }
         }
 
         if ($input["contas"]!="") {
@@ -173,18 +175,27 @@ public function index() {
         );
 
 
-        //DIRECIONA PARA O RELATORIO CONFORME ORDEM / QUEBRA SELECIONADA
-        if ($input["ordem"]=="data_vencimento") {
-            $nome_relatorio = public_path() . '/relatorios/listagem_titulos_venc.jasper';
-        } else if ($input["ordem"]=="data_pagamento") {
-            $nome_relatorio = public_path() . '/relatorios/listagem_titulos_dtpagto.jasper';
-        } else if ($input["ordem"]=="centro_custo") {
-            $nome_relatorio = public_path() . '/relatorios/listagem_titulos_cc.jasper';
-        } else if ($input["ordem"]=="plano_contas") {
-            $nome_relatorio = public_path() . '/relatorios/listagem_titulos_pc.jasper';
-        } else if ($input["ordem"]=="cc_pc") {
-            $nome_relatorio = public_path() . '/relatorios/listagem_titulos_agrupado.jasper';
+        if ($input["opTipo"]=="M") { //SE FOR RELATORIO DE MOVIMENTACAO DE CONTA / CAIXA
+
+            $nome_relatorio = public_path() . '/relatorios/listagem_movimentacao.jasper';
+
+        } else {
+
+            //DIRECIONA PARA O RELATORIO CONFORME ORDEM / QUEBRA SELECIONADA
+            if ($input["ordem"]=="data_vencimento") {
+                $nome_relatorio = public_path() . '/relatorios/listagem_titulos_venc.jasper';
+            } else if ($input["ordem"]=="data_pagamento") {
+                $nome_relatorio = public_path() . '/relatorios/listagem_titulos_dtpagto.jasper';
+            } else if ($input["ordem"]=="centro_custo") {
+                $nome_relatorio = public_path() . '/relatorios/listagem_titulos_cc.jasper';
+            } else if ($input["ordem"]=="plano_contas") {
+                $nome_relatorio = public_path() . '/relatorios/listagem_titulos_pc.jasper';
+            } else if ($input["ordem"]=="cc_pc") {
+                $nome_relatorio = public_path() . '/relatorios/listagem_titulos_agrupado.jasper';
+            }
+
         }
+
 
         //Se status for diferente de ambos
         if ($input["status_id"]!="T") {

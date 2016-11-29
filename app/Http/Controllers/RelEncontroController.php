@@ -22,6 +22,30 @@ class RelEncontroController extends Controller
         if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
         {
             $this->dados_login = \Session::get('dados_login');
+
+           /*Instancia a classe de funcoes (Data, valor, etc)*/
+           $this->formatador = new  \App\Functions\FuncoesGerais();
+
+            //Verificar se usuario logado é LIDER
+            $this->lider_logado = $this->formatador->verifica_se_lider();
+
+
+            //Verifica se é alguém da liderança (Lider de Rede, Area, Coordenador, Supervisor, etc)
+            $this->lideranca = $this->formatador->verifica_se_lideranca();
+
+            $this->id_lideres="";
+
+            //Preenche variavel com os lideres abaixo da hierarquia
+            if ($this->lideranca!=null)
+            {
+                 foreach ($this->lideranca as $item) {
+                    if ($this->id_lideres=="") {
+                       $this->id_lideres =  $item->id_lideres;
+                    } else {
+                       $this->id_lideres .=  ", " . $item->id_lideres;
+                    }
+                 }
+            }
         }
 
     }
@@ -39,7 +63,30 @@ class RelEncontroController extends Controller
             $faixas = \App\Models\faixas::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
 
             /*Busca Lideres*/
-            $lideres = \DB::select('select * from view_lideres where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+            //$lideres = \DB::select('select * from view_lideres where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+           $strSql  = " SELECT * FROM view_lideres ";
+           $strSql .= " WHERE  empresas_id = " . $this->dados_login->empresas_id;
+           $strSql .= " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
+
+           //Trazer somente celula do lider logado... ou
+            if ($this->lider_logado!=null) {
+                  if ($this->id_lideres!="") {
+                      $strSql .= " AND id IN (" . $this->lider_logado[0]->lider_pessoas_id . ", " . $this->id_lideres . ")";
+                  } else {
+                      $strSql .= " AND id IN (" . $this->lider_logado[0]->lider_pessoas_id . ")";
+                  }
+                  //$celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where lider_pessoas_id = ? and  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$lider_logado[0]->lider_pessoas_id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+            } else { //verificar se é alguém da lideranca (supervisor, coordenador, etc) e trazer somente as celulas subordinadas
+
+                  if ($this->id_lideres!="") {
+                      $strSql .= " AND id IN (" . $this->id_lideres . ")";
+                  }
+            }
+
+           $lideres = \DB::select($strSql);
+
 
             /*Busca vice - Lideres*/
             $vice_lider = \DB::select('select * from view_vicelideres where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
