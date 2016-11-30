@@ -152,52 +152,52 @@ class RelEncontroController extends Controller
             //$view4 = \DB::select('select * from view_celulas_nivel4 v4 where v4.empresas_id = ? and v4.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
             //$view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-            //NIVEL HIERARQUICO 1
-        $sSql  = " SELECT * FROM view_celulas_nivel1 v1  WHERE  v1.empresas_id = " . $this->dados_login->empresas_id . " AND v1.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
+           //NIVEL HIERARQUICO 1
+          $sSql  = " SELECT * FROM view_celulas_nivel1 v1  WHERE  v1.empresas_id = " . $this->dados_login->empresas_id . " AND v1.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
 
-        if ($this->id_niveis1!="") { /*Busca NIVEL especifico (se for alguem da hierarquia de lideranca logado*/
-           $sSql .= " AND v1.id in (" . $this->id_niveis1 . ") ";
-        }
+          if ($this->id_niveis1!="") { /*Busca NIVEL especifico (se for alguem da hierarquia de lideranca logado*/
+             $sSql .= " AND v1.id in (" . $this->id_niveis1 . ") ";
+          }
 
-        $view1 = \DB::select($sSql);
+          $view1 = \DB::select($sSql);
 
-        //NIVEL HIERARQUICO 2
-        $sSql  = " SELECT * FROM view_celulas_nivel2 v2  WHERE  v2.empresas_id = " . $this->dados_login->empresas_id . " AND v2.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
+          //NIVEL HIERARQUICO 2
+          $sSql  = " SELECT * FROM view_celulas_nivel2 v2  WHERE  v2.empresas_id = " . $this->dados_login->empresas_id . " AND v2.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
 
-        if ($this->id_niveis2!="") { /*Busca NIVEL especifico (se for alguem da hierarquia de lideranca logado*/
-           $sSql .= " AND v2.id in (" . $this->id_niveis2 . ") ";
-        }
+          if ($this->id_niveis2!="") { /*Busca NIVEL especifico (se for alguem da hierarquia de lideranca logado*/
+             $sSql .= " AND v2.id in (" . $this->id_niveis2 . ") ";
+          }
 
-        $view2 = \DB::select($sSql);
+          $view2 = \DB::select($sSql);
 
-        //NIVEL HIERARQUICO 3
-        $sSql  = " SELECT * FROM view_celulas_nivel3 v3  WHERE  v3.empresas_id = " . $this->dados_login->empresas_id . " AND v3.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
+          //NIVEL HIERARQUICO 3
+          $sSql  = " SELECT * FROM view_celulas_nivel3 v3  WHERE  v3.empresas_id = " . $this->dados_login->empresas_id . " AND v3.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
 
-        if ($this->id_niveis3!="") { /*Busca NIVEL especifico (se for alguem da hierarquia de lideranca logado*/
-           $sSql .= " AND v3.id in (" . $this->id_niveis3 . ") ";
-        }
+          if ($this->id_niveis3!="") { /*Busca NIVEL especifico (se for alguem da hierarquia de lideranca logado*/
+             $sSql .= " AND v3.id in (" . $this->id_niveis3 . ") ";
+          }
 
-        $view3 = \DB::select($sSql);
-
-
-        //NIVEL HIERARQUICO 4
-        $sSql  = " SELECT * FROM view_celulas_nivel4 v4  WHERE  v4.empresas_id = " . $this->dados_login->empresas_id . " AND v4.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
-
-        if ($this->id_niveis4!="") { /*Busca NIVEL especifico (se for alguem da hierarquia de lideranca logado*/
-           $sSql .= " AND v4.id in (" . $this->id_niveis4 . ") ";
-        }
-
-        $view4 = \DB::select($sSql);
+          $view3 = \DB::select($sSql);
 
 
-        //NIVEL HIERARQUICO 5
-        $sSql  = " SELECT * FROM view_celulas_nivel5 v5  WHERE  v5.empresas_id = " . $this->dados_login->empresas_id . " AND v5.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
+          //NIVEL HIERARQUICO 4
+          $sSql  = " SELECT * FROM view_celulas_nivel4 v4  WHERE  v4.empresas_id = " . $this->dados_login->empresas_id . " AND v4.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
 
-        if ($this->id_niveis5!="") { /*Busca NIVEL especifico (se for alguem da hierarquia de lideranca logado*/
-           $sSql .= " AND v5.id in (" . $this->id_niveis5 . ") ";
-        }
+          if ($this->id_niveis4!="") { /*Busca NIVEL especifico (se for alguem da hierarquia de lideranca logado*/
+             $sSql .= " AND v4.id in (" . $this->id_niveis4 . ") ";
+          }
 
-        $view5 = \DB::select($sSql);
+          $view4 = \DB::select($sSql);
+
+
+          //NIVEL HIERARQUICO 5
+          $sSql  = " SELECT * FROM view_celulas_nivel5 v5  WHERE  v5.empresas_id = " . $this->dados_login->empresas_id . " AND v5.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
+
+          if ($this->id_niveis5!="") { /*Busca NIVEL especifico (se for alguem da hierarquia de lideranca logado*/
+             $sSql .= " AND v5.id in (" . $this->id_niveis5 . ") ";
+          }
+
+          $view5 = \DB::select($sSql);
 
 
             $celulas_faixas = \DB::select('select * from view_total_celulas_faixa_etaria vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
