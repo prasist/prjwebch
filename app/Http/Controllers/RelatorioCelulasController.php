@@ -73,8 +73,7 @@ class RelatorioCelulasController extends Controller
         $strSql .= " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
 
         //Trazer somente celula do lider logado... ou
-        if ($this->lider_logado!=null)
-        {
+        if ($this->lider_logado!=null) {
               if ($this->id_lideres!="") {
                   $strSql .= " AND id IN (" . $this->lider_logado[0]->lider_pessoas_id . ", " . $this->id_lideres . ")";
               } else {
@@ -214,7 +213,6 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
                  $filtros .= "     Lider : " . $descricao_lider[1];
             }
         }
-
     }
 
 
@@ -480,6 +478,13 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
             {
                 $parametros = array_add($parametros, 'lideres', $descricao_lider[0]);
                 $sWhere .= " and lider_pessoas_id = " . $descricao_lider[0];
+            } else { //Se for lider logado e ele nao informou a célula, força trazer resultados somente de sua célula
+
+                if ($this->lider_logado!=null) {
+                    $parametros = array_add($parametros, 'lideres', $this->lider_logado[0]->lider_pessoas_id);
+                    $sWhere .= " and lider_pessoas_id = " . $this->lider_logado[0]->lider_pessoas_id;
+                }
+
             }
 
             if ($descricao_vice_lider[0]!="0")
@@ -521,6 +526,12 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
         if ($descricao_lider[0]!="0") {
             $parametros = array_add($parametros, 'lideres', $descricao_lider[0]);
             $sWhere .= " and celulas.lider_pessoas_id = " . $descricao_lider[0];
+        } else { //Se for lider logado e ele nao informou a célula, força trazer resultados somente de sua célula
+
+            if ($this->lider_logado!=null) {
+                $parametros = array_add($parametros, 'lideres', $this->lider_logado[0]->lider_pessoas_id);
+                $sWhere .= " and celulas.lider_pessoas_id = " . $this->lider_logado[0]->lider_pessoas_id;
+            }
         }
 
         //se houver logo informada

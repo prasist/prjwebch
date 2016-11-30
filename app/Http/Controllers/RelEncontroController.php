@@ -76,8 +76,6 @@ class RelEncontroController extends Controller
                   } else {
                       $strSql .= " AND id IN (" . $this->lider_logado[0]->lider_pessoas_id . ")";
                   }
-                  //$celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where lider_pessoas_id = ? and  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$lider_logado[0]->lider_pessoas_id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
-
             } else { //verificar se é alguém da lideranca (supervisor, coordenador, etc) e trazer somente as celulas subordinadas
 
                   if ($this->id_lideres!="") {

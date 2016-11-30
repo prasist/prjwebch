@@ -36,7 +36,7 @@ class Estruturas1Controller extends Controller
               return redirect('home');
         }
 
-       /*Busca NIVEL1*/
+        /*Busca NIVEL1*/
         $dados = \DB::select('select * from view_celulas_nivel1 v1 where  v1.empresas_id = ? and v1.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         return view($this->rota . '.index',compact('dados'));

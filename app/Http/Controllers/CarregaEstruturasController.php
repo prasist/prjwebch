@@ -19,10 +19,55 @@ class CarregaEstruturasController extends Controller
         $this->rota = "celulas"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
+        /*Instancia a classe de funcoes (Data, valor, etc)*/
+        $this->formatador = new  \App\Functions\FuncoesGerais();
+
         //Validação de permissão de acesso a pagina
-        if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
-        {
+        if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar'])) {
             $this->dados_login = \Session::get('dados_login');
+
+            //Verificar se usuario logado é LIDER
+            $this->lider_logado = $this->formatador->verifica_se_lider();
+
+            //Verifica se é alguém da liderança (Lider de Rede, Area, Coordenador, Supervisor, etc)
+            $this->lideranca = $this->formatador->verifica_se_lideranca();
+
+            $this->id_lideres="";
+
+            //Preenche variavel com os lideres abaixo da hierarquia
+            if ($this->lideranca!=null)
+            {
+                 foreach ($this->lideranca as $item) {
+                    if ($this->id_lideres=="") {
+                       $this->id_lideres =  $item->id_lideres;
+                    } else {
+                       $this->id_lideres .=  ", " . $item->id_lideres;
+                    }
+                 }
+            }
+
+        } else if (Gate::allows('verifica_permissao', [\Config::get('app.controle_atividades'),'acessar'])) { //se nao achou permissao para celulas, tenta a permissao de gestao de encontros
+            $this->dados_login = \Session::get('dados_login');
+
+            //Verificar se usuario logado é LIDER
+            $this->lider_logado = $this->formatador->verifica_se_lider();
+
+            //Verifica se é alguém da liderança (Lider de Rede, Area, Coordenador, Supervisor, etc)
+            $this->lideranca = $this->formatador->verifica_se_lideranca();
+
+            $this->id_lideres="";
+
+            //Preenche variavel com os lideres abaixo da hierarquia
+            if ($this->lideranca!=null)
+            {
+                 foreach ($this->lideranca as $item) {
+                    if ($this->id_lideres=="") {
+                       $this->id_lideres =  $item->id_lideres;
+                    } else {
+                       $this->id_lideres .=  ", " . $item->id_lideres;
+                    }
+                 }
+            }
         }
 
     }
@@ -196,6 +241,34 @@ class CarregaEstruturasController extends Controller
         ->leftJoin('pessoas', 'pessoas.id', '=' , 'celulas_nivel2.pessoas_id')
         ->get();
 
+        /*
+        $strSql  = " SELECT celulas_nivel2.id, nome, razaosocial FROM celulas_nivel2 LEFT JOIN pessoas ON pessoas.id = celulas_nivel2.pessoas_id ";
+        $strSql .= " WHERE  celulas_nivel2.empresas_id = " . $this->dados_login->empresas_id;
+        $strSql .= " AND celulas_nivel2.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
+        $strSql .= " AND celulas_nivel2.celulas_nivel1_id = " . $id;
+
+        //Trazer somente celula do lider logado... ou
+        if ($this->lider_logado!=null)
+        {
+              if ($this->id_lideres!="") {
+                  $strSql .= " or celulas_nivel2.pessoas_id IN (" . $this->lider_logado[0]->lider_pessoas_id . ", " . $this->id_lideres . ")";
+              } else {
+                  $strSql .= " or celulas_nivel2.pessoas_id IN (" . $this->lider_logado[0]->lider_pessoas_id . ")";
+              }
+              //$celulas = \DB::select('select id, descricao_concatenada as nome from view_celulas_simples  where lider_pessoas_id = ? and  empresas_id = ? and empresas_clientes_cloud_id = ? ', [$lider_logado[0]->lider_pessoas_id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+
+        } else { //verificar se é alguém da lideranca (supervisor, coordenador, etc) e trazer somente as celulas subordinadas
+
+              if ($this->id_lideres!="") {
+                  $strSql .= " or celulas_nivel2.pessoas_id IN (" . $this->id_lideres . ")";
+              }
+        }
+
+        //dd($strSql);
+        $nivel2 = \DB::select($strSql);
+        */
+
+
         $options = array();
 
         //enquanto houver registros
@@ -235,6 +308,32 @@ class CarregaEstruturasController extends Controller
         ->leftJoin('pessoas', 'pessoas.id', '=' , 'celulas_nivel3.pessoas_id')
         ->get();
 
+
+        /*
+        $strSql  = " SELECT celulas_nivel3.id, nome, razaosocial FROM celulas_nivel3 LEFT JOIN pessoas ON pessoas.id = celulas_nivel3.pessoas_id ";
+        $strSql .= " WHERE  celulas_nivel3.empresas_id = " . $this->dados_login->empresas_id;
+        $strSql .= " AND celulas_nivel3.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
+        $strSql .= " AND celulas_nivel3.celulas_nivel2_id = " . $id;
+
+        //Trazer somente celula do lider logado... ou
+        if ($this->lider_logado!=null) {
+              if ($this->id_lideres!="") {
+                  $strSql .= " or celulas_nivel3.pessoas_id IN (" . $this->lider_logado[0]->lider_pessoas_id . ", " . $this->id_lideres . ")";
+              } else {
+                  $strSql .= " or celulas_nivel3.pessoas_id IN (" . $this->lider_logado[0]->lider_pessoas_id . ")";
+              }
+
+        } else { //verificar se é alguém da lideranca (supervisor, coordenador, etc) e trazer somente as celulas subordinadas
+
+              if ($this->id_lideres!="") {
+                  $strSql .= " or celulas_nivel3.pessoas_id IN (" . $this->id_lideres . ")";
+              }
+        }
+
+        //dd($strSql);
+        $nivel3 = \DB::select($strSql);
+        */
+
         $options = array();
 
         //enquanto houver registros
@@ -273,6 +372,32 @@ class CarregaEstruturasController extends Controller
         ->leftJoin('pessoas', 'pessoas.id', '=' , 'celulas_nivel4.pessoas_id')
         ->get();
 
+        /*
+        $strSql  = " SELECT celulas_nivel4.id, nome, razaosocial FROM celulas_nivel4 LEFT JOIN pessoas ON pessoas.id = celulas_nivel4.pessoas_id ";
+        $strSql .= " WHERE  celulas_nivel4.empresas_id = " . $this->dados_login->empresas_id;
+        $strSql .= " AND celulas_nivel4.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
+        $strSql .= " AND celulas_nivel4.celulas_nivel3_id = " . $id;
+
+        //Trazer somente celula do lider logado... ou
+        if ($this->lider_logado!=null) {
+              if ($this->id_lideres!="") {
+                  $strSql .= " or celulas_nivel4.pessoas_id IN (" . $this->lider_logado[0]->lider_pessoas_id . ", " . $this->id_lideres . ")";
+              } else {
+                  $strSql .= " or celulas_nivel4.pessoas_id IN (" . $this->lider_logado[0]->lider_pessoas_id . ")";
+              }
+
+        } else { //verificar se é alguém da lideranca (supervisor, coordenador, etc) e trazer somente as celulas subordinadas
+
+              if ($this->id_lideres!="") {
+                  $strSql .= " or celulas_nivel4.pessoas_id IN (" . $this->id_lideres . ")";
+              }
+        }
+
+        dd($strSql);
+
+        $nivel4 = \DB::select($strSql);
+        */
+
         $options = array();
 
         //enquanto houver registros
@@ -310,6 +435,31 @@ class CarregaEstruturasController extends Controller
         ->where('celulas_nivel5.empresas_id', $this->dados_login->empresas_id)
         ->leftJoin('pessoas', 'pessoas.id', '=' , 'celulas_nivel5.pessoas_id')
         ->get();
+
+        /*
+        $strSql  = " SELECT celulas_nivel5.id, nome, razaosocial FROM celulas_nivel5 LEFT JOIN pessoas ON pessoas.id = celulas_nivel5.pessoas_id ";
+        $strSql .= " WHERE  celulas_nivel5.empresas_id = " . $this->dados_login->empresas_id;
+        $strSql .= " AND celulas_nivel5.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
+        $strSql .= " AND celulas_nivel5.celulas_nivel4_id = " . $id;
+
+        //Trazer somente celula do lider logado... ou
+        if ($this->lider_logado!=null) {
+              if ($this->id_lideres!="") {
+                  $strSql .= " or celulas_nivel5.pessoas_id IN (" . $this->lider_logado[0]->lider_pessoas_id . ", " . $this->id_lideres . ")";
+              } else {
+                  $strSql .= " or celulas_nivel5.pessoas_id IN (" . $this->lider_logado[0]->lider_pessoas_id . ")";
+              }
+
+        } else { //verificar se é alguém da lideranca (supervisor, coordenador, etc) e trazer somente as celulas subordinadas
+
+              if ($this->id_lideres!="") {
+                  $strSql .= " or celulas_nivel5.pessoas_id IN (" . $this->id_lideres . ")";
+              }
+        }
+
+        //dd($strSql);
+        $nivel5 = \DB::select($strSql);
+        */
 
         $options = array();
 
