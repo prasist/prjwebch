@@ -58,8 +58,7 @@ class CarregaEstruturasController extends Controller
             $this->id_lideres="";
 
             //Preenche variavel com os lideres abaixo da hierarquia
-            if ($this->lideranca!=null)
-            {
+            if ($this->lideranca!=null) {
                  foreach ($this->lideranca as $item) {
                     if ($this->id_lideres=="") {
                        $this->id_lideres =  $item->id_lideres;
@@ -68,6 +67,8 @@ class CarregaEstruturasController extends Controller
                     }
                  }
             }
+
+
         }
 
     }

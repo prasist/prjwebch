@@ -153,4 +153,50 @@ class FuncoesGerais extends Controller
     }
 
 
+        /**
+     * Pelo email da liderança, o sistema buscará toda a hierarquia ao qual pertence. A função buscará em todos os níveis disponiveis (Lider de Rede, Area, coordenador, supervisor, etc)
+     * Retorna dataset com todas as hierarquias
+     *
+     * */
+    public function verifica_niveis_permitidos() {
+
+       if (\App\Models\usuario::find(Auth::user()->id)) {
+            //Busca ID do cliente cloud e ID da empresa
+            $this->dados_login = \App\Models\usuario::find(Auth::user()->id);
+       }
+
+        $email = Auth::user()->email; //pega email do usuario logado
+
+        $strSql =  " SELECT distinct celulas_nivel1.id as n1, celulas_nivel2.id as n2, celulas_nivel3.id as n3, celulas_nivel4.id as n4, celulas_nivel5.id as n5  FROM celulas     ";
+        $strSql .=  " JOIN celulas_nivel1 ON celulas_nivel1.id = celulas.celulas_nivel1_id AND celulas_nivel1.empresas_id = celulas.empresas_id AND celulas_nivel1.empresas_clientes_cloud_id = celulas.empresas_clientes_cloud_id ";
+        $strSql .=  " JOIN celulas_nivel2 ON celulas_nivel2.id = celulas.celulas_nivel2_id AND celulas_nivel2.empresas_id = celulas.empresas_id AND celulas_nivel2.empresas_clientes_cloud_id = celulas.empresas_clientes_cloud_id ";
+        $strSql .=  " JOIN celulas_nivel3 ON celulas_nivel3.id = celulas.celulas_nivel3_id AND celulas_nivel3.empresas_id = celulas.empresas_id AND celulas_nivel3.empresas_clientes_cloud_id = celulas.empresas_clientes_cloud_id ";
+        $strSql .=  " JOIN celulas_nivel4 ON celulas_nivel4.id = celulas.celulas_nivel4_id AND celulas_nivel4.empresas_id = celulas.empresas_id AND celulas_nivel4.empresas_clientes_cloud_id = celulas.empresas_clientes_cloud_id ";
+        $strSql .=  " JOIN celulas_nivel5 ON celulas_nivel5.id = celulas.celulas_nivel5_id AND celulas_nivel5.empresas_id = celulas.empresas_id AND celulas_nivel5.empresas_clientes_cloud_id = celulas.empresas_clientes_cloud_id ";
+        $strSql .=  " LEFT JOIN pessoas pessoa_celula1 ON pessoa_celula1.id = celulas_nivel1.pessoas_id AND celulas_nivel1.empresas_id = pessoa_celula1.empresas_id AND celulas_nivel1.empresas_clientes_cloud_id = pessoa_celula1.empresas_clientes_cloud_id ";
+        $strSql .=  " LEFT JOIN pessoas pessoa_celula2 ON pessoa_celula2.id = celulas_nivel2.pessoas_id AND celulas_nivel2.empresas_id = pessoa_celula2.empresas_id AND celulas_nivel2.empresas_clientes_cloud_id = pessoa_celula2.empresas_clientes_cloud_id ";
+        $strSql .=  " LEFT JOIN pessoas pessoa_celula3 ON pessoa_celula3.id = celulas_nivel3.pessoas_id AND celulas_nivel3.empresas_id = pessoa_celula3.empresas_id AND celulas_nivel3.empresas_clientes_cloud_id = pessoa_celula3.empresas_clientes_cloud_id ";
+        $strSql .=  " LEFT JOIN pessoas pessoa_celula4 ON pessoa_celula4.id = celulas_nivel4.pessoas_id AND celulas_nivel4.empresas_id = pessoa_celula4.empresas_id AND celulas_nivel4.empresas_clientes_cloud_id = pessoa_celula4.empresas_clientes_cloud_id ";
+        $strSql .=  " LEFT JOIN pessoas pessoa_celula5 ON pessoa_celula5.id = celulas_nivel5.pessoas_id AND celulas_nivel5.empresas_id = pessoa_celula5.empresas_id AND celulas_nivel5.empresas_clientes_cloud_id = pessoa_celula5.empresas_clientes_cloud_id ";
+        $strSql .=  " WHERE  ";
+        $strSql .=  " celulas.empresas_id = " . $this->dados_login->empresas_id . " ";
+        $strSql .=  " and celulas.empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
+        $strSql .=  " and ( upper(pessoa_celula1.emailprincipal) ilike '%" . strtoupper($email) . "%'  ";
+        $strSql .=  " or upper(pessoa_celula2.emailprincipal) ilike '%" . strtoupper($email) . "%'  ";
+        $strSql .=  " or upper(pessoa_celula3.emailprincipal) ilike '%" . strtoupper($email) . "%'  ";
+        $strSql .=  " or upper(pessoa_celula4.emailprincipal) ilike '%" . strtoupper($email) . "%'  ";
+        $strSql .=  " or upper(pessoa_celula5.emailprincipal) ilike '%" . strtoupper($email) . "%'  )";
+
+        $lider_logado = \DB::select($strSql);
+
+        if (count($lider_logado)>0) {
+            return $lider_logado;
+        } else {
+            return null;
+        }
+
+    }
+
+
+
 }
