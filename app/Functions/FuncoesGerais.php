@@ -187,6 +187,15 @@ class FuncoesGerais extends Controller
         $strSql .=  " or upper(pessoa_celula4.emailprincipal) ilike '%" . strtoupper($email) . "%'  ";
         $strSql .=  " or upper(pessoa_celula5.emailprincipal) ilike '%" . strtoupper($email) . "%'  )";
 
+        $strSql .=  " UNION ";
+
+        $strSql .=  " SELECT distinct celulas_nivel1_id as n1, celulas_nivel2_id as n2, celulas_nivel3_id as n3, celulas_nivel4_id as n4, celulas_nivel5_id as n5  ";
+        $strSql .=  " FROM celulas ";
+        $strSql .=  " where ";
+        $strSql .=  " (lider_pessoas_id in (select id from pessoas where upper(emailprincipal) = '" .  strtoupper($email)  . "') or vicelider_pessoas_id in (select id from pessoas where upper(emailprincipal) = '" .  strtoupper($email) . "'))";
+        $strSql .=  " and empresas_id = " . $this->dados_login->empresas_id . " ";
+        $strSql .=  " and empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
+
         $lider_logado = \DB::select($strSql);
 
         if (count($lider_logado)>0) {
