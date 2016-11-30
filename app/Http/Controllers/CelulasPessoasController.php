@@ -49,6 +49,30 @@ class CelulasPessoasController extends Controller
                  }
             }
 
+        } else if (Gate::allows('verifica_permissao', [\Config::get('app.controle_atividades'),'acessar'])) {
+
+          $this->dados_login = \Session::get('dados_login');
+
+            //Verificar se usuario logado é LIDER
+            $this->lider_logado = $this->formatador->verifica_se_lider();
+
+            //Verifica se é alguém da liderança (Lider de Rede, Area, Coordenador, Supervisor, etc)
+            $this->lideranca = $this->formatador->verifica_se_lideranca();
+
+            $this->id_lideres="";
+
+            //Preenche variavel com os lideres abaixo da hierarquia
+            if ($this->lideranca!=null)
+            {
+                 foreach ($this->lideranca as $item) {
+                    if ($this->id_lideres=="") {
+                       $this->id_lideres =  $item->id_lideres;
+                    } else {
+                       $this->id_lideres .=  ", " . $item->id_lideres;
+                    }
+                 }
+            }
+
         }
 
     }
