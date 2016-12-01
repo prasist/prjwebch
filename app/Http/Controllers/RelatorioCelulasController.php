@@ -668,7 +668,6 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
    //dd($nome_relatorio);
     $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");
 
-    //dd($nome_relatorio);
 
     \JasperPHP::process(
             $nome_relatorio,
@@ -682,6 +681,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
 
             $Mensagem="";
+
             //dd($parametros);
             if (filesize($output . '.' . $ext)<=1000) //Se arquivo tiver menos de 1k, provavelmente está vazio...
             {
