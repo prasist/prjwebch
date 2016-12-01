@@ -25,9 +25,7 @@ class FuncoesGerais extends Controller
      */
     public function RetirarCaracteres($dados)
     {
-
             return preg_replace("/[^0-9]/", '', $dados);
-
     }
 
 
@@ -52,8 +50,7 @@ class FuncoesGerais extends Controller
     /*
     * Recebe data Y-m-d gravada no banco e retorna d/m/y para exibição correta
     */
-    public function ExibirData($valor)
-    {
+    public function ExibirData($valor) {
 
         if ($valor==null) /*Se data estiver em branco grava nulo no banco de dados*/
         {

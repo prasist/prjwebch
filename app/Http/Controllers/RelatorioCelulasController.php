@@ -31,7 +31,7 @@ class RelatorioCelulasController extends Controller
 
 
         //Validação de permissão de acesso a pagina
-        if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
+        if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']) || Gate::allows('verifica_permissao', [\Config::get('app.relencontro'),'acessar']))
         {
             $this->dados_login = \Session::get('dados_login');
 
