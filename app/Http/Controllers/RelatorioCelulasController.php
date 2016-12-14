@@ -644,6 +644,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
         }
 
         $nome_relatorio = public_path() . '/relatorios/relatorio_encontro.jasper';
+        //$nome_relatorio = public_path() . '/relatorios/relatorio_encontro_novo.jasper';
 
    }
    else if ($tipo_relatorio=="movimentacoes")  //RELATORIO MOVIMENTACOES
@@ -663,9 +664,6 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
    }
 
-    //set parameter sWhere for query in report
-   //print_r($parametros);
-   //dd($nome_relatorio);
     $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");
 
 

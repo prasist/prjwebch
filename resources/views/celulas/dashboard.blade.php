@@ -17,13 +17,10 @@
 
        <div class="row">
           <div class="col-md-12">
-           <div class="box-header with-border">
-            <h3 class="box-title">Árvore Hierárquica da Rede</h3>
-            &nbsp;(<i class="text-info">Clique no nível para expandir e exibir os relatório disponíveis.</i>)
-            {!! $gerar_treeview !!}
+             <div class="box-header with-border">
+                 <h3 class="box-title">Árvore Hierárquica da Rede</h3>&nbsp;(<i class="text-info">Clique no nível para expandir e exibir os relatório disponíveis.</i>){!! $gerar_treeview !!}
+             </div>
           </div>
-
-         </div>
 
          <!--
             <div class="col-xs-6">
@@ -245,7 +242,7 @@
                                 </ul>
                           </div>
                           @else
-                            <div class="col-xs-6">
+                           <div class="col-xs-6">
                                   <h4>&nbsp;&nbsp;&nbsp;&nbsp;Resumo {!! \Session::get('label_encontros') !!} (Mês Corrente)</h4>
                                   <ul class="nav nav-stacked">
 
