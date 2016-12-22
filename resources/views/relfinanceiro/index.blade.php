@@ -9,7 +9,7 @@
 
 <div class="row">
 
-  <form method = 'POST'  class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/pesquisar')}}">
+  <form method = 'POST'  class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/pesquisar')}}" onsubmit="return validar();">
   {!! csrf_field() !!}
     <!-- Main content -->
     <section class="content">
@@ -32,16 +32,24 @@
                       <div class="form-group">
                         <label for="opTipo" class="col-sm-3 control-label">Tipo :</label>
 
-                              <div class="col-xs-8">
+                              <div class="col-xs-8{{ $errors->has('opTipo') ? ' has-error' : '' }}">
                                     <select id="opTipo" placeholder="(Selecionar)" name="opTipo" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
+                                    <option  value="">Selecione uma opção</option>
                                     <option  value="P">Contas à Pagar</option>
                                     <option  value="R">Contas à Receber</option>
                                     <option  value="M">Movimentação Bancária</option>
                                     </select>
                               </div><!-- col-xs-3-->
+
+                              <!-- se houver erros na validacao do form request -->
+                              @if ($errors->has('opTipo'))
+                              <span class="help-block">
+                                     <strong>{{ $errors->first('opTipo') }}</strong>
+                              </span>
+                              @endif
                       </div>
 
-                      <div class="form-group">
+                      <div class="form-group" id="div_status" style="display: none">
                             <label for="status_id" class="col-sm-3 control-label">Status</label>
                             <div class="col-xs-8">
                                 <select id="status_id" placeholder="(Selecionar)" name="status_id" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
@@ -77,7 +85,7 @@
                             </div><!-- col-xs-3-->
                       </div>
 
-                      <div class="form-group">
+                      <div class="form-group" id="div_fornecedor" style="display: none">
                           <label for="fornecedor" class="col-sm-3 control-label">Fornecedor / Cliente</label>
                           <div class="col-xs-8">
                             <div class="input-group">
@@ -106,10 +114,11 @@
                                      <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
                               @endforeach
                               </select>
+
                          </div><!-- col-xs-5-->
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="div_grupo" style="display: none">
                            <label for="grupos" class="col-sm-3 control-label">Grupo de Títulos</label>
                             <div class="col-xs-8">
                                   <select id="grupos" placeholder="(Selecionar)" name="grupos" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">
@@ -149,7 +158,7 @@
             <div class="form-horizontal">
               <div class="box-body">
 
-                <div class="form-group">
+                <div class="form-group" id="div_emissao" style="display: none">
                       <label  for="data_emissao" class="col-sm-3 control-label">Data Emissão</label>
 
                       <div class="col-xs-3">
@@ -174,7 +183,7 @@
                      </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="div_vencimento" style="display: none">
 
                       <label  for="data_vencimento" class="col-sm-3 control-label">Data Vencimento</label>
                       <div class="col-xs-3">
@@ -287,14 +296,12 @@
                 <div class="form-group">
                           <label for="ordem" class="col-sm-3 control-label">Ordem</label>
                           <div class="col-xs-8">
-                                <select id="ordem" name="ordem" class="form-control selectpicker">
+                                <select id="ordem" name="ordem" class="form-control">
                                 <option  value="plano_contas">Plano de Contas</option>
                                 <option  value="centro_custo">Centro de Custo</option>
                                 <option  value="cc_pc">Centro de Custo + Plano de Contas</option>
-                                <!--<option  value="descricao">Descrição Título</option>
-                                <option  value="razaosocial">Fornecedor/Cliente</option>-->
                                 <option  value="data_vencimento">Data Vencimento</option>
-                                <option  value="data_pagamento">Data Pagamento</option>
+                                <option  value="data_pagamento" selected>Data Pagamento</option>
                                 </select>
                          </div>
                 </div>
@@ -338,8 +345,24 @@
           };
       })();
 
+
+        function validar() {
+
+                if ($('#opTipo').val()=="M") { //SE FOR MOVIMENTACAO, EXIGE INFORMAR A CONTA CORRENTE
+                    if ($('#contas').val()=="") {
+                        alert("Informe a Conta Corrente");
+                        $(".overlay").hide();
+                        return false;
+                    } else {
+                       return true;
+                    }
+                }
+            }
+
+
       /*Prepara checkbox bootstrap*/
        $(function () {
+
 
             $('.ckEstruturas').checkboxpicker({
                 offLabel : 'Não',
@@ -350,6 +373,63 @@
                 offLabel : 'Não',
                 onLabel : 'Sim',
             });
+
+
+
+
+            ///quando selecionar o tipo de relatorio
+            $('#opTipo').change(function() {
+
+                if ($('#opTipo').val()=="M") { //SE FOR MOVIMENTACAO, ESCONDE CAMPOS
+
+                    //ESCONDE CAMPOS DESNECESSARIOS
+                    $('#div_status').hide();
+                    $('#div_fornecedor').hide();
+                    $('#div_vencimento').hide();
+                    $('#div_emissao').hide();
+                    $('#div_grupo').hide();
+
+                    //RECARREGA DROPDOWN COM ORDENS DISPONIVEIS PARA REL. MOV. CAIXA
+                    var $stations = $("#ordem");
+                    $stations.empty();
+
+                    var html='';
+
+                    html += '<option value="plano_contas">Plano de Contas</option>';
+                    html += '<option value="centro_custo">Centro de Custo</option>';
+                    html += '<option value="data_pagamento" selected>Data de Pagamento</option>';
+                    html +='<option value=""></option>';
+
+                    $stations.append(html);
+                    $("#ordem").trigger("change");
+
+                } else {
+
+                  $('#div_status').show();
+                  $('#div_fornecedor').show();
+                  $('#div_vencimento').show();
+                  $('#div_emissao').show();
+                  $('#div_grupo').show();
+
+                    //RECARREGA DROPDOWN COM ORDENS DISPONIVEIS PARA REL. MOV. CAIXA
+                    var $stations = $("#ordem");
+                    $stations.empty();
+
+                    var html='';
+
+                    html += '<option value="plano_contas">Plano de Contas</option>';
+                    html += '<option value="centro_custo">Centro de Custo</option>';
+                    html += '<option value="cc_pc">Centro de Custo + Plano de Contas</option>';
+                    html += '<option value="data_vencimento">Data de Vencimento</option>';
+                    html += '<option value="data_pagamento" selected>Data de Pagamento</option>';
+                    html +='<option value=""></option>';
+
+                    $stations.append(html);
+                    $("#ordem").trigger("change");
+
+                }
+
+            })
 
       });
 

@@ -36,7 +36,9 @@ class PlanosContasController extends Controller
               return redirect('home');
         }
 
-        $dados = planos_contas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
+        $dados = planos_contas::where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+        ->where('empresas_id', $this->dados_login->empresas_id)
+        ->get();
 
         return view($this->rota . '.index',compact('dados'));
 
@@ -51,11 +53,36 @@ class PlanosContasController extends Controller
               return redirect('home');
         }
 
-        return view($this->rota . '.registrar');
+        return view($this->rota . '.atualizacao', ['tipo_operacao'=>'incluir', 'preview'=>'false']);
 
     }
 
+public function salvar($request, $id, $tipo_operacao)
+  {
 
+            /*Validação de campos - request*/
+            $this->validate($request, [
+                    'nome' => 'required',
+            ]);
+
+           $input = $request->except(array('_token')); //não levar o token
+
+           if ($tipo_operacao=="create")
+           {
+                $planos_contas = new planos_contas();
+           }
+           else
+           {
+                $planos_contas= planos_contas::findOrfail($id);
+           }
+
+           $planos_contas->nome  = $input['nome'];
+           $planos_contas->codigo_contabil = $input['codigo_contabil'];
+           $planos_contas->empresas_clientes_cloud_id  = $this->dados_login->empresas_clientes_cloud_id;
+           $planos_contas->empresas_id  = $this->dados_login->empresas_id;
+           $planos_contas->save();
+
+  }
 /*
 * Grava dados no banco
 *
@@ -63,19 +90,11 @@ class PlanosContasController extends Controller
     public function store(\Illuminate\Http\Request  $request)
     {
 
-           $input = $request->except(array('_token', 'ativo')); //não levar o token
-
-           $grupos = new planos_contas();
-           $grupos->nome  = $input['nome'];
-           $grupos->empresas_id  = $this->dados_login->empresas_id;
-           $grupos->empresas_clientes_cloud_id  = $this->dados_login->empresas_clientes_cloud_id;
-           $grupos->save();
-
-           \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-
+            $this->salvar($request, "", "create");
+            \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
             return redirect($this->rota);
-
     }
+
 
     //Abre tela para edicao ou somente visualização dos registros
     private function exibir ($request, $id, $preview)
@@ -92,7 +111,7 @@ class PlanosContasController extends Controller
 
         //preview = true, somente visualizacao, desabilita botao gravar
         $dados = planos_contas::findOrfail($id);
-        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview] );
+        return view($this->rota . '.atualizacao', ['dados' =>$dados, 'preview' => $preview, 'tipo_operacao'=>'editar']);
 
     }
 
@@ -122,17 +141,9 @@ class PlanosContasController extends Controller
      */
     public function update(\Illuminate\Http\Request  $request, $id)
     {
-
-        $input = $request->except(array('_token', 'ativo')); //não levar o token
-
-        $dados = planos_contas::findOrfail($id);
-        $dados->nome  = $input['nome'];
-        $dados->save();
-
+        $this->salvar($request, $id,  "update");
         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
-
         return redirect($this->rota);
-
     }
 
 
@@ -144,12 +155,9 @@ class PlanosContasController extends Controller
      */
     public function destroy($id)
     {
-
             $dados = planos_contas::findOrfail($id);
             $dados->delete();
-
             return redirect($this->rota);
-
     }
 
 }

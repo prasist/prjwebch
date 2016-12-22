@@ -77,6 +77,11 @@ public function index() {
         /*Pega todos campos enviados no post*/
         $input = $request->except(array('_token', 'ativo')); //não levar o token
 
+        $this->validate($request, [
+            'opTipo' => 'required',
+        ]);
+
+
         /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
         //Pega dados de conexao com o banco para o JASPER REPORT
         $database = \Config::get('database.connections.jasper_report');
@@ -177,7 +182,14 @@ public function index() {
 
         if ($input["opTipo"]=="M") { //SE FOR RELATORIO DE MOVIMENTACAO DE CONTA / CAIXA
 
-            $nome_relatorio = public_path() . '/relatorios/listagem_movimentacao.jasper';
+            if ($input["ordem"]=="data_pagamento") {
+                $nome_relatorio = public_path() . '/relatorios/listagem_movimentacao.jasper';
+            } else if ($input["ordem"]=="centro_custo") {
+                $nome_relatorio = public_path() . '/relatorios/listagem_movimentacao_cc.jasper';
+            } else if ($input["ordem"]=="plano_contas") {
+                $nome_relatorio = public_path() . '/relatorios/listagem_movimentacao_pc.jasper';
+            }
+
 
         } else {
 
@@ -198,8 +210,12 @@ public function index() {
 
 
         //Se status for diferente de ambos
-        if ($input["status_id"]!="T") {
-            $parametros = array_add($parametros, 'status', $input["status_id"]);
+        if ($input["opTipo"]!="M") {
+            if ($input["status_id"]!="T") {
+                $parametros = array_add($parametros, 'status', $input["status_id"]);
+            }
+        } else if ($input["opTipo"]=="M") {
+            $parametros = array_add($parametros, 'status', "B");
         }
 
         //Filtra conta corrente
@@ -222,8 +238,9 @@ public function index() {
             $parametros = array_add($parametros, 'data_vencimento_final', ($input["data_vencimento_ate"]=="" ? '' : $formatador->FormatarData($input["data_vencimento_ate"])));
         }
 
-        //Path relatorio
-        //$nome_relatorio = public_path() . '/relatorios/listagem_titulos_agrupado.jasper';
+        //Passando paremetro com clausula where montada
+        $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");
+
 
          \JasperPHP::process(
             $nome_relatorio,
@@ -250,7 +267,6 @@ public function index() {
                 header('Content-Description: File Transfer');
                 header('Content-Type: application/pdf');
                 header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
-                //header('Content-Transfer-Encoding: binary');
                 header('Expires: 0');
                 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
                 header('Content-Length: ' . filesize($output.'.'.$ext));
@@ -263,7 +279,6 @@ public function index() {
                 return $this->CarregarView($path_download . '.' . $ext, $Mensagem);
             }
         }
-
 
      }
 
