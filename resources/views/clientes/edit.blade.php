@@ -15,7 +15,7 @@
             <a href="{{ url('/clientes')}}" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i> Voltar </a>
         </div>
 
-        <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action = {{ url('/clientes/' . $dados->id . '/update')}}>
+        <form method = 'POST' class="form-horizontal" enctype="multipart/form-data" action = "{{ url('/clientes/' . $dados->id . '/update')}}">
             <!--<input type = 'hidden' name = '_token' value = '{{Session::token()}}'>-->
             {!! csrf_field() !!}
 

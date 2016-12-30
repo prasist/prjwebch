@@ -134,7 +134,7 @@ Read more: Jeremy Camp - Christ In Me Lyrics | MetroLyrics
 
                                         <div class="row">
 
-                                        <div class="col-xs-3{{ $errors->has('opStatus') ? ' has-error' : '' }}">
+                                            <div class="col-xs-3{{ $errors->has('opStatus') ? ' has-error' : '' }}">
 
                                                     <label for="opStatus" class="control-label">Status :</label>
                                                     <br/>

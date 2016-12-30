@@ -140,23 +140,23 @@
                                                                             <label for="mes" class="control-label">Mês Aniversário</label>
                                                                             <select id="mes" name="mes" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
                                                                                 <option  value=""></option>
-                                                                                <option  value="01">Janeiro</option>
-                                                                                <option  value="02">Fevereiro</option>
-                                                                                <option  value="03">Março</option>
-                                                                                <option  value="04">Abril</option>
-                                                                                <option  value="05">Maio</option>
-                                                                                <option  value="06">Junho</option>
-                                                                                <option  value="07">Julho</option>
-                                                                                <option  value="08">Agosto</option>
-                                                                                <option  value="09">Setembro</option>
-                                                                                <option  value="10">Outubro</option>
-                                                                                <option  value="11">Novembro</option>
                                                                                 <option  value="12">Dezembro</option>
+                                                                                <option  value="11">Novembro</option>
+                                                                                <option  value="10">Outubro</option>
+                                                                                <option  value="09">Setembro</option>
+                                                                                <option  value="08">Agosto</option>
+                                                                                <option  value="07">Julho</option>
+                                                                                <option  value="06">Junho</option>
+                                                                                <option  value="05">Maio</option>
+                                                                                <option  value="04">Abril</option>
+                                                                                <option  value="03">Março</option>
+                                                                                <option  value="02">Fevereiro</option>
+                                                                                <option  value="01">Janeiro</option>
                                                                             </select>
                                                                     </div>
 
                                                                     <div class="col-xs-3">
-                                                                      <label for="mes" class="control-label">Tipo Aniversariante</label>
+                                                                    <label for="mes" class="control-label">Tipo Aniversariante</label>
                                                                     <div class="form-group">
 
                                                                         <label>
@@ -193,8 +193,21 @@
                                                               <div class="col-xs-3">
 
                                                                     <label for="resultado" class="control-label">Formato de Saída : </label>
+
+                                                                    <!--
                                                                     <select id="resultado" name="resultado" class="form-control selectpicker">
                                                                     <option  value="html">(Padrão)</option>
+                                                                    <option  value="email" data-icon="fa fa-envelope-o">Listagem de E-mails</option>
+                                                                    <option  value="celular" data-icon="fa fa-whatsapp">Número Celular (Envio Mensagens)</option>
+                                                                    </select>
+                                                                    -->
+
+                                                                    <select id="resultado" name="resultado" class="form-control selectpicker">
+                                                                    <option  value="pdf" data-icon="fa fa-file-pdf-o" selected>PDF (.pdf)</option>
+                                                                    <option  value="xlsx" data-icon="fa fa-file-excel-o">Planilha Excel (.xls)</option>
+                                                                    <option  value="csv" data-icon="fa fa-file-excel-o">CSV (.csv)</option>
+                                                                    <option  value="docx" data-icon="fa fa-file-word-o">Microsoft Word (.docx)</option>
+                                                                    <option  value="html" data-icon="fa fa-file-word-o">HTML (.html)</option>
                                                                     <option  value="email" data-icon="fa fa-envelope-o">Listagem de E-mails</option>
                                                                     <option  value="celular" data-icon="fa fa-whatsapp">Número Celular (Envio Mensagens)</option>
                                                                     </select>
@@ -241,7 +254,7 @@
 
                                                               </div>
 
-                                                              <!--
+
                                                               <div class="col-xs-3">
                                                                     <label for="ordem" class="control-label">Ordem</label>
                                                                     <select id="ordem" name="ordem" class="form-control selectpicker">
@@ -251,7 +264,6 @@
                                                                     <option  value="ano" >Ano</option>
                                                                     </select>
                                                              </div>
-                                                             -->
 
                                                              <div class="col-xs-3">
 
@@ -525,6 +537,18 @@
                                       <div class="col-md-12">
                                             <div class="box box-default">
                                                   <div class="box-body"><!-- box-body-->
+
+                                                         <div class="row">
+                                                              <div class="col-xs-10">
+                                                                   <label for="igrejas_id" class="control-label">Igreja</label>
+                                                                          <select id="igrejas_id" placeholder="(Selecionar)" name="igrejas_id" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                          <option  value=""></option>
+                                                                          @foreach($igrejas as $item)
+                                                                                 <option  value="{{$item->id . '|' . $item->nome}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                              </div>
+                                                         </div>
 
                                                          <div class="row">
                                                               <div class="col-xs-5">
