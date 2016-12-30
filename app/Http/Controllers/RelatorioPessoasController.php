@@ -336,8 +336,25 @@ class RelatorioPessoasController extends Controller
     }
     if ($input["mes"]!="")
     {
-        $filtros .= "   Mes Aniversario : " . $input["mes"];
-        $where .= " and to_char(p.datanasc, 'MM') = '" . $input["mes"] . "'";
+
+        if ($input["r1"]=="1") { //nascimento
+
+            $filtros .= "   Mes Aniversario : " . $input["mes"];
+            $where .= " and to_char(p.datanasc, 'MM') = '" . $input["mes"] . "'";
+
+        } else if ($input["r1"]=="2") { //casamento
+
+            $filtros .= "   Mes Casamento : " . $input["mes"];
+            $where .= " and date_part('month', to_date(data_casamento,'yyyy-MM-dd')) = '" . $input["mes"] . "'";
+
+        } else if ($input["r1"]=="3") { //batismo
+
+            $filtros .= "   Mes Batismo: " . $input["mes"];
+            $where .= " and date_part('month', to_date(data_batismo,'yyyy-MM-dd')) = '" . $input["mes"] . "'";
+
+        }
+
+
     }
     if ($input["ano_inicial"]!="" && $input["ano_final"]!="" )
     {
@@ -447,7 +464,6 @@ class RelatorioPessoasController extends Controller
         "empresas_id"=> $this->dados_login->empresas_id,
         "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
         "sexo"=>"'" . $input["sexo"] . "'",
-        "mes"=>"'" . $input["mes"] . "'",
         "status"=>"'" . $input["status"] . "'",
         "nivel1"=> ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]),
         "nivel2"=> ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]),
@@ -471,6 +487,24 @@ class RelatorioPessoasController extends Controller
         "filtros"=> "'" . ($filtros) . "'",
     );
     //A ordem DEFAULT do relatório é DIA/MES da data de nascimento. Se não for relatório de aniversariantes, altera a ordem
+
+   if ($input["mes"]!="")
+    {
+
+        if ($input["r1"]=="1") { //nascimento
+
+            $parametros = array_add($parametros, 'mes', $input["mes"]);
+
+        } else if ($input["r1"]=="2") { //casamento
+
+            $parametros = array_add($parametros, 'mes_casamento', $input["mes"]);
+
+        } else if ($input["r1"]=="3") { //batismo
+
+            $parametros = array_add($parametros, 'mes_batismo', $input["mes"]);
+        }
+
+    }
 
 
     if ($input["ordem"]=="razaosocial")
@@ -626,7 +660,20 @@ class RelatorioPessoasController extends Controller
                 {
                     if ($input["ordem"]!="razaosocial" || $input["mes"]!="" || $input["ano_inicial"]!="" || $input["ano_final"]!="")
                     {
-                        $nome_relatorio = public_path() . '/relatorios/listagem_aniversariantes.jasper';
+
+                            if ($input["r1"]=="1") { //nascimento
+
+                                $nome_relatorio = public_path() . '/relatorios/listagem_aniversariantes.jasper';
+
+                            } else if ($input["r1"]=="2") { //casamento
+
+                                $nome_relatorio = public_path() . '/relatorios/listagem_aniversariantes_casamento.jasper';
+
+                            } else if ($input["r1"]=="3") { //batismo
+
+                                $nome_relatorio = public_path() . '/relatorios/listagem_aniversariantes_batismo.jasper';
+                            }
+
                     }
                     else
                     {

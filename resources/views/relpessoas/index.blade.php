@@ -187,7 +187,6 @@
                                                                  </div><!-- end row -->
 
 
-
                                                           <div class="row">
 
                                                               <div class="col-xs-3">
@@ -211,7 +210,6 @@
                                                                     <option  value="email" data-icon="fa fa-envelope-o">Listagem de E-mails</option>
                                                                     <option  value="celular" data-icon="fa fa-whatsapp">Número Celular (Envio Mensagens)</option>
                                                                     </select>
-
 
 
                                                                      @if ($var_download=="")
