@@ -10,6 +10,7 @@ $(function () {
   "use strict";
 
   //Make the dashboard widgets sortable Using jquery UI
+  /*
   $(".connectedSortable").sortable({
     placeholder: "sort-highlight",
     connectWith: ".connectedSortable",
@@ -17,20 +18,23 @@ $(function () {
     forcePlaceholderSize: true,
     zIndex: 999999
   });
+  */
+
   $(".connectedSortable .box-header, .connectedSortable .nav-tabs-custom").css("cursor", "move");
 
   //jQuery UI sortable for the todo list
+  /*
   $(".todo-list").sortable({
     placeholder: "sort-highlight",
     handle: ".handle",
     forcePlaceholderSize: true,
     zIndex: 999999
   });
-
+*/
   //bootstrap WYSIHTML5 - text editor
   $(".textarea").wysihtml5();
 
-
+/*
   $('.daterange').daterangepicker({
     ranges: {
       'Today': [moment(), moment()],
@@ -45,6 +49,7 @@ $(function () {
   }, function (start, end) {
     window.alert("You chose: " + start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
   });
+ */
 
   /* jQueryKnob */
   $(".knob").knob();
@@ -125,6 +130,7 @@ $(function () {
 
   /* Morris.js Charts */
   // Sales chart
+  /*
   var area = new Morris.Area({
     element: 'revenue-chart',
     resize: true,
@@ -146,6 +152,9 @@ $(function () {
     lineColors: ['#a0d0e0', '#3c8dbc'],
     hideHover: 'auto'
   });
+*/
+
+/*
   var line = new Morris.Line({
     element: 'line-chart',
     resize: true,
@@ -176,6 +185,9 @@ $(function () {
     gridTextSize: 10
   });
 
+  */
+
+/*
   //Donut Chart
   var donut = new Morris.Donut({
     element: 'sales-chart',
@@ -188,13 +200,16 @@ $(function () {
     ],
     hideHover: 'auto'
   });
+*/
 
+/*
   //Fix for charts under tabs
   $('.box ul.nav a').on('shown.bs.tab', function () {
     area.redraw();
     donut.redraw();
     line.redraw();
   });
+*/
 
   /* The todo list plugin */
   $(".todo-list").todolist({
