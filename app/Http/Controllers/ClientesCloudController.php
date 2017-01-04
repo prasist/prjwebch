@@ -218,7 +218,7 @@ class ClientesCloudController extends Controller
 
         //preview = true, somente visualizacao, desabilita botao gravar
         $dados = clientescloud::findOrfail($id);
-        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview, 'empresas'=>$empresas] );
+        return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview] );
 
     }
 
