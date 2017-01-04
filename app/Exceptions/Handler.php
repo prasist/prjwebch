@@ -43,7 +43,9 @@ class Handler extends ExceptionHandler
 
                             if ($e->getCode()!=0) {
 
-                                \Mail::send('emails.logerros', ['msg_erros' => $e->getCode() . ' - ' . $e->getMessage()], function($message)
+                                $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+                                \Mail::send('emails.logerros', ['msg_erros' => $e->getCode() . ' - ' . $e->getMessage() . ' - ' . $actual_link], function($message)
                                 {
                                     $message->from('contato@sigma3sistemas.com.br', 'Sigma3');
                                     $message->subject('Log de Erros');
