@@ -390,7 +390,7 @@ class RelatorioPessoasController extends Controller
     if ($descricao_status!="")
     {
         $filtros .= "   Status : " . $descricao_status[1];
-        $where .= " and status_id = " . $descricao_status[0];
+        $where .= " and mp.status_id = " . $descricao_status[0];
     }
     if ($descricao_motivo_ent!="")
     {
