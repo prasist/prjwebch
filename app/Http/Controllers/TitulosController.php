@@ -282,21 +282,16 @@ class TitulosController extends Controller
           $vencimento = $this->formatador->FormatarData($input["data_vencimento"]); //Primeiro vencimento
           $date = new \DateTime($vencimento);
 
-            if ($tipo_operacao=="create") //novo registro
-            {
-                for ($i=1; $i <= $qtd_parcelas; $i++) //Se for passado parcela maior que 1
-                {
+            if ($tipo_operacao=="create") { //novo registro
+                for ($i=1; $i <= $qtd_parcelas; $i++) { //Se for passado parcela maior que 1
                      $dados = new titulos();
                      $this->persisteDados($tipo, $dados, $input, $i, $vencimento, $qtd_parcelas, $date, $tipo_operacao);
-
                      //Acrescenta um mes na data de vencimento
                      $interval = new \DateInterval('P1M');
                      $vencimento = $date->add($interval);
-
                 }
             }
-            else //update
-            {
+            else { //update
 
                 //Exclui rateios para inserir novamente
                 $excluir = \App\Models\rateio_titulos::where('empresas_id', $this->dados_login->empresas_id)
@@ -325,8 +320,7 @@ class TitulosController extends Controller
  }
 
 
-  private function persisteDados($tipo, $dados, $input, $seq, $vencimento, $qtd_parcelas, $date, $tipo_operacao)
-  {
+  private function persisteDados($tipo, $dados, $input, $seq, $vencimento, $qtd_parcelas, $date, $tipo_operacao) {
 
       if ($qtd_parcelas>1)
       {
@@ -550,24 +544,21 @@ class TitulosController extends Controller
 
         if ($campo=="valor") $titulos->valor  = $this->formatador->GravarCurrency($input["value"]);
 
-        if ($campo=="valor_pago")
-        {
+        if ($campo=="valor_pago") {
             //Calcula valor pago com desconto / acrescimo
             $titulos->valor_pago      = ($this->formatador->GravarCurrency($input["value"]) + $var_acrescimo - $var_desconto);
             $titulos->saldo_a_pagar = ($titulos->valor - $titulos->valor_pago);
             $titulos->alteracao_status = "S"; //Servirá para filtras o log de titulos somente com baixas e estornos
         }
 
-        if ($campo=="acrescimo") //Recalcula valor pago
-        {
+        if ($campo=="acrescimo") { //Recalcula valor pago
            $titulos->acrescimo  = $this->formatador->GravarCurrency($input["value"]);
            $titulos->valor_pago  = ($var_valor_liq + $titulos->acrescimo - $var_desconto);
            $titulos->saldo_a_pagar = ($titulos->valor - $titulos->valor_pago);
            $titulos->alteracao_status = "S"; //Servirá para filtras o log de titulos somente com baixas e estornos
         }
 
-        if ($campo=="desconto") //Recalcula valor pago
-        {
+        if ($campo=="desconto") { //Recalcula valor pago
             $titulos->desconto  = $this->formatador->GravarCurrency($input["value"]);
             $titulos->valor_pago  = ($var_valor_liq + $var_acrescimo - $titulos->desconto);
             $titulos->saldo_a_pagar = ($titulos->valor - $titulos->valor_pago);
@@ -575,23 +566,16 @@ class TitulosController extends Controller
         }
 
        //Se marcou PAGO ou NÃO PAGO
-       if ($campo=="check_pago")
-       {
-             if ($input["value"]=="0")
-             { //PAGOU
-
+       if ($campo=="check_pago") {
+             if ($input["value"]=="0") { //PAGOU
                 $titulos->valor_pago  = (($var_valor_pago + $titulos->saldo_a_pagar) + $var_acrescimo - $var_desconto);
                 $titulos->saldo_a_pagar = ($titulos->valor - $titulos->valor_pago);
                 $titulos->data_pagamento  = $titulos->data_vencimento;
                 $titulos->status = "B";
                 $titulos->alteracao_status = "S"; //Servirá para filtras o log de titulos somente com baixas e estornors
-              }
-              else
-              {//ESTORNOU
-
+              } else {//ESTORNOU
                   //Se foi baixado integralmente, estorna integralmente. Caso contrário deixa o saldo a pagar parcial
-                  if ($titulos->status=="B")
-                  {
+                  if ($titulos->status=="B") {
                       $titulos->saldo_a_pagar = $titulos->valor; //Valor original titulo
                   }
 
@@ -605,8 +589,7 @@ class TitulosController extends Controller
         }
 
         //Se ficou negativo, zera
-        if (($titulos->valor - $titulos->valor_pago)<0)
-        {
+        if (($titulos->valor - $titulos->valor_pago)<0) {
              $titulos->saldo_a_pagar=0;
         }
 

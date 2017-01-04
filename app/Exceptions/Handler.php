@@ -41,12 +41,17 @@ class Handler extends ExceptionHandler
                     // it will have access to the $error that we are passing below
                      try {
 
-                             \Mail::send('emails.logerros', ['msg_erros' => $e->getMessage()], function($message)
-                            {
-                                $message->from('contato@sigma3sistemas.com.br', 'Sigma3');
-                                $message->subject('Log de Erros');
-                                $message->to('suporte@sigma3sistemas.com.br');
-                            });
+                            if ($e->getCode()!=0) {
+
+                                \Mail::send('emails.logerros', ['msg_erros' => $e->getCode() . ' - ' . $e->getMessage()], function($message)
+                                {
+                                    $message->from('contato@sigma3sistemas.com.br', 'Sigma3');
+                                    $message->subject('Log de Erros');
+                                    $message->to('suporte@sigma3sistemas.com.br');
+                                });
+
+                            }
+
 
                      } catch (Exception $exc) {
                             dd($exc);

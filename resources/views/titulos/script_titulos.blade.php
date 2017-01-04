@@ -55,7 +55,7 @@
                   {
                       $("#esconder").show();
                       $("#data_pagamento").val(moment().format('DD/MM/YYYY')); //Data de pagamento dia
-                      $('#valor_pago').val($('#saldo').val()); //Mesmo valor do titulo
+                      $('#valor_pago').val($('#valor').val()); //Mesmo valor do titulo
                       $('.ckpago').val('true'); //Mesmo valor do titulo
                   }
                   else
