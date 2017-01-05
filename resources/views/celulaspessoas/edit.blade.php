@@ -151,6 +151,12 @@
           }
 
           var verifica_valor =  parseInt(document.getElementById("pessoas").value.substr(0,9));
+
+          if (isNaN(verifica_valor)) {
+              alert("Pessoa não localizada no cadastro.");
+              return;
+          }
+
           var urlGetUser = '{!! url("/funcoes/verificar_participante/' +  verifica_valor +  '") !!}';
 
           $.ajax(

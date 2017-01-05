@@ -51,6 +51,46 @@ class HomeController extends Controller
 
     }
 
+  public function Avisos() {
+
+    $query = " select CURRENT_DATE - (data_aviso-  INTERVAL '1 DAY')  :: DATE as aviso, CURRENT_DATE - (data_acesso -  INTERVAL '1 DAY')  :: DATE  AS DIAS, users.id, name, razaosocial, data_acesso, users.email from usuarios  ";
+    $query .= " inner join users on users.id = usuarios.id ";
+    $query .= " inner join empresas on empresas.id = usuarios.empresas_id ";
+    $query .= " inner join log_users on log_users.id = usuarios.id";
+    $query .= " WHERE CURRENT_DATE - (data_acesso -  INTERVAL '1 DAY')  :: DATE > 40";
+
+    //busca informacoes do membro
+    $membro = \DB::select($query);
+
+
+    if ($membro)
+    {
+
+            foreach ($membro as $item) {
+
+                if ($item->aviso==null || $item->aviso >= 30) {
+
+                    \Mail::send('emails.inativos', ['email'=> $item->email, 'data' => date("d/m/Y", strtotime($item->data_acesso)), 'nome'=>$item->name], function($message) use ($item)
+                    {
+                        $message->from('contato@sigma3sistemas.com.br', 'Sigma3');
+                        $message->subject('SIGMA3 - Gestão para Igrejas');
+                        $message->to($item->email);
+                    });
+
+                    $log = \App\Models\log_users::find($item->id);
+
+                    if($log) {
+                       $log->data_aviso =  date('Y-m-d h:i:s');
+                       $log->save();
+                    }
+
+                }
+
+            }
+    }
+
+
+  }
 
     public function jalogado()
     {
@@ -284,6 +324,8 @@ class HomeController extends Controller
 
 
             }
+
+            $this->Avisos();
 
             if (Auth::user()->membro=="S")
             {
