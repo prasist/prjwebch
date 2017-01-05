@@ -112,7 +112,7 @@ class RelatorioCelulasController extends Controller
     }
 
 
- public function CarregarView($var_download, $var_mensagem)
+ public function CarregarView($var_download, $var_mensagem, $var_rota="")
 {
 
         $publicos = \App\Models\publicos::where('clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)->get();
@@ -199,7 +199,7 @@ class RelatorioCelulasController extends Controller
         //$view4 = \DB::select('select * from view_celulas_nivel4 v4 where v4.empresas_id = ? and v4.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
         //$view5 = \DB::select('select * from view_celulas_nivel5 v5 where v5.empresas_id = ? and v5.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-        return view($this->rota . '.index', ['vice_lider'=>$vice_lider, 'nivel1'=>$view1, 'nivel2'=>$view2, 'nivel3'=>$view3, 'nivel4'=>$view4, 'nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'lideres'=>$lideres, 'var_download' => $var_download, 'var_mensagem'=>$var_mensagem]);
+        return view(($var_rota=="" ? $this->rota : $var_rota) . '.index', ['vice_lider'=>$vice_lider, 'nivel1'=>$view1, 'nivel2'=>$view2, 'nivel3'=>$view3, 'nivel4'=>$view4, 'nivel5'=>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas, 'lideres'=>$lideres, 'var_download' => $var_download, 'var_mensagem'=>$var_mensagem]);
 
 }
 
@@ -720,7 +720,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
                 }
                 else //Gera link para download
                 {
-                    return $this->CarregarView($path_download . '.' . $ext, $Mensagem);
+                    return $this->CarregarView($path_download . '.' . $ext, $Mensagem, ($tipo_relatorio=="celulas" ? "" : "relencontro") );
                 }
             }
 

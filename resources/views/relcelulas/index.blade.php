@@ -97,7 +97,6 @@
                                         </select>
                                 </div>
 
-
                           </div>
 
                           <div class="row">
@@ -170,12 +169,12 @@
 
                               <div class="col-xs-3">
                                     <label for="qtd_inicial" class="control-label">Qtd. Multiplicações - Inicial</label>
-                                    <input type="text" name="qtd_inicial" value="" class="form-control">
+                                    <input type="number" name="qtd_inicial" value="" class="form-control">
                               </div>
 
                               <div class="col-xs-3">
                                     <label for="qtd_final" class="control-label">Qtd. Multiplicações - Final</label>
-                                    <input type="text" name="qtd_final" value="" class="form-control">
+                                    <input type="number" name="qtd_final" value="" class="form-control">
                               </div>
 
 

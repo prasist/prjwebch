@@ -100,7 +100,7 @@
 
                                                                     <div class="col-xs-3">
                                                                           <label for="ano" class="control-label">Ano</label>
-                                                                          <input id="ano"  name = "ano" type="text" class="form-control" value="{{date('Y')}}">
+                                                                          <input id="ano"  name = "ano" type="number" class="form-control" value="{{date('Y')}}">
                                                                     </div>
 
                                                                     <div class="col-xs-6">

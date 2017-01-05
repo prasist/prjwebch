@@ -104,8 +104,7 @@ class RelEncontroController extends Controller
     }
 
     //Exibir listagem
-    public function index()
-    {
+    public function index()  {
 
         if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
         {
