@@ -182,6 +182,63 @@ class RelatorioPessoasController extends Controller
 
     }
 
+public function relatorio_pessoas_tipo($conteudo, $opcao='') {
+
+    //Pega dados de conexao com o banco para o JASPER REPORT
+    $database = \Config::get('database.connections.jasper_report');
+    $ext = "pdf";
+    $output = public_path() . '/relatorios/resultados/' . $ext . '/relatorio_' . $this->dados_login->empresas_id . '_' . Auth::user()->id; //Path para cada tipo de relatorio
+    $path_download = '/relatorios/resultados/' . $ext . '/relatorio_' . $this->dados_login->empresas_id . '_' .  Auth::user()->id; //Path para cada tipo de relatorio
+    $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_tipo.jasper';
+    /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
+
+    //Parametros JASPER REPORT
+    $parametros = array
+    (
+        "empresas_id"=> $this->dados_login->empresas_id,
+        "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
+    );
+
+    if ($opcao=="tipo") {
+        $tipos = \App\Models\tipospessoas::select('id', 'nome')->where('id', $conteudo)->get();
+        $parametros = array_add($parametros, 'tipos', $conteudo);
+        $parametros = array_add($parametros, 'filtros', "' Tipo de Pessoa : " . ($tipos[0]->nome) . "'");
+    } else if ($opcao=="sexo") {
+        $parametros = array_add($parametros, 'sexo', $conteudo);
+        $parametros = array_add($parametros, 'filtros', "' Sexo : " . $conteudo . "'");
+    } else if ($opcao=="estadoscivis") {
+        $tipos = \App\Models\civis::select('id', 'nome')->where('id', $conteudo)->get();
+        $parametros = array_add($parametros, 'estadoscivis', $conteudo);
+        $parametros = array_add($parametros, 'filtros', "' Estado Civil : " . ($tipos[0]->nome) . "'");
+    } else if ($opcao=="status") {
+        $tipos = \App\Models\status::select('id', 'nome')->where('id', $conteudo)->get();
+        $parametros = array_add($parametros, 'status_id', $conteudo);
+        $parametros = array_add($parametros, 'filtros', "' Status  : " . ($tipos[0]->nome) . "'");
+    }
+
+
+     //Executa JasperReport
+     \JasperPHP::process(
+            $nome_relatorio,
+            $output,
+            array($ext),
+            $parametros,
+            $database,
+            false,
+            false
+        )->execute();
+
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Content-Length: ' . filesize($output.'.'.$ext));
+        flush();
+        readfile($output.'.'.$ext);
+        unlink($output.'.'.$ext);
+
+}
 
   public function pesquisar(\Illuminate\Http\Request  $request)
   {
@@ -677,7 +734,12 @@ class RelatorioPessoasController extends Controller
                     }
                     else
                     {
-                        $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_completo.jasper';
+                        if ($input["ckExibirCelula"]) {
+                            $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_completo2.jasper';
+                        } else {
+                            $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_completo.jasper';
+                        }
+
                         //$nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral.jasper';
                     }
                 }
@@ -692,7 +754,9 @@ class RelatorioPessoasController extends Controller
                     false,
                     false
                 )->execute();
+
             $Mensagem="";
+
             if (filesize($output . '.' . $ext)<=1000) //Se arquivo tiver menos de 1k, provavelmente está vazio...
             {
                 $Mensagem = "Nenhum Registro Encontrado";

@@ -727,7 +727,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
  }
 
- //Relatorios estatisticos : Batismos, Multiplicacao, Geral
+   //Relatorios estatisticos : Batismos, Multiplicacao, Geral
 
     protected function imprimir($tipo_relatorio, $nivel, $valor, $mes, $ano, $nome, $saida)
     {

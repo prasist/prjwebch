@@ -49,6 +49,9 @@
 
     });
 
+
+Route::get('relpessoas/relatorio_pessoas_tipo/{tipo}/{opcao}', 'RelatorioPessoasController@relatorio_pessoas_tipo');
+
 Route::get('relcursos', 'RelatorioCursosController@index'); /*PAGINA INICIAL DOS RELATORIOS (FILTROS)*/
 Route::post('relcursos/pesquisar/{tipo}', 'RelatorioCursosController@pesquisar');  /*RELATORIO DE CELULAS, PASSANDO PARAMETRO "CELULAS" GERARÁ O RELATÓRIO DE CELULAS, OU "ENCONTRO" PARA RELATORIOS DOS ENCONTROS*/
 

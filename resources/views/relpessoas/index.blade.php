@@ -134,6 +134,7 @@
                                                         <div class="row"><!-- row entrada-->
 
                                                                     <input  id="possui_necessidades_especiais" name="possui_necessidades_especiais" type="hidden" value="" />
+                                                                    <input  id="ckExibirCelula" name="ckExibirCelula" type="hidden" value="" />
                                                                     <input  id= "ckEstruturas" name="ckEstruturas" type="hidden" class="minimal" />
 
                                                                       <div class="col-xs-3">
@@ -277,6 +278,16 @@
                                                                       <div class="input-group">
                                                                            <div class="input-group-addon">
                                                                                     <input  id="possui_necessidades_especiais" data-group-cls="btn-group-sm" name="possui_necessidades_especiais" type="checkbox" class="possui_necessidades_especiais" value="true" />
+                                                                            </div>
+                                                                      </div>
+                                                              </div>
+
+                                                              <div class="col-xs-3">
+
+                                                                      <label for="ckExibirCelula">Exibir {!! \Session::get('label_celulas_singular') !!} ?</label>
+                                                                      <div class="input-group">
+                                                                           <div class="input-group-addon">
+                                                                                    <input  id="ckExibirCelula" data-group-cls="btn-group-sm" name="ckExibirCelula" type="checkbox" class="possui_necessidades_especiais" value="true" />
                                                                             </div>
                                                                       </div>
                                                               </div>

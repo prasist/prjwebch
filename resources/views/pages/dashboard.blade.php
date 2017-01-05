@@ -98,7 +98,7 @@
 
                                  @foreach($pessoas_tipos as $item)
                                  <li>
-                                    <a href="#">&nbsp;{!! $item->nome !!}
+                                    <a href="{{ url('/relpessoas/relatorio_pessoas_tipo/' . $item->id . '/tipo') }}">&nbsp;{!! $item->nome !!}
                                         <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
                                     </a>
                                 </li>
@@ -111,7 +111,7 @@
                           <ul class="nav nav-stacked">
                                 @foreach($pessoas_sexo as $item)
                                 <li>
-                                    <a href="#">&nbsp;{!! ($item->sexo=="M" ? "Homens" : "Mulheres") !!}
+                                    <a href="{{ url('/relpessoas/relatorio_pessoas_tipo/' . $item->sexo . '/sexo') }}">&nbsp;{!! ($item->sexo=="M" ? "Homens" : "Mulheres") !!}
                                         <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
                                     </a>
                                 </li>
@@ -126,7 +126,7 @@
 
                                  @foreach($pessoas_estadoscivis as $item)
                                  <li>
-                                    <a href="#">&nbsp;{!! $item->nome !!}
+                                    <a href="{{ url('/relpessoas/relatorio_pessoas_tipo/' . $item->id . '/estadoscivis') }}">&nbsp;{!! $item->nome !!}
                                         <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
                                     </a>
                                 </li>
@@ -140,7 +140,7 @@
 
                                  @foreach($pessoas_status as $item)
                                  <li>
-                                    <a href="#">&nbsp;{!! $item->nome !!}
+                                    <a href="{{ url('/relpessoas/relatorio_pessoas_tipo/' . $item->id . '/status') }}">&nbsp;{!! $item->nome !!}
                                         <span class="pull-left badge bg-blue">{!! $item->total !!}</span>
                                     </a>
                                 </li>
