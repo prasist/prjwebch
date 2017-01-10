@@ -449,18 +449,15 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
         "filtros"=> "'" . ($filtros) . "'"
     );
 
-    if (isset($input["data_movimentacao"]))
-    {
-            $parametros = array_add($parametros, 'data_mov_inicial', $formatador->FormatarData($input["data_movimentacao"]));
+    if (isset($input["data_movimentacao"])) {
+         $parametros = array_add($parametros, 'data_mov_inicial', $formatador->FormatarData($input["data_movimentacao"]));
     }
 
-    if (isset($input["data_movimentacao_ate"]))
-    {
-            $parametros = array_add($parametros, 'data_mov_final', $formatador->FormatarData($input["data_movimentacao_ate"]));
+    if (isset($input["data_movimentacao_ate"])) {
+          $parametros = array_add($parametros, 'data_mov_final', $formatador->FormatarData($input["data_movimentacao_ate"]));
     }
 
-    if (isset($input["motivos"]))
-    {
+    if (isset($input["motivos"])) {
             if ($input["motivos"]!="")
                 $parametros = array_add($parametros, 'motivos_id', ($descricao_motivo[0]=="" ? 0 : $descricao_motivo[0]));
     }
@@ -665,7 +662,6 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
    }
 
     $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");
-
 
     \JasperPHP::process(
             $nome_relatorio,

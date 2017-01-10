@@ -655,22 +655,6 @@ class CelulasController extends Controller
                    $strSql .=  " AND lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
             }
 
-/*
-            if (is_array($this->lideranca))
-            {
-                 foreach ($this->lideranca as $item) {
-
-                    if ($id_lideres=="") {
-                      $id_lideres =  $item->id_lideres;
-                    } else {
-                      $id_lideres .=  ", " . $item->id_lideres;
-                    }
-
-                 }
-                   $strSql .=  " AND lider_pessoas_id  in ('" . $id_lideres . "')";
-            }
-*/
-
             $participantes_presenca = \DB::select($strSql);
             return $participantes_presenca;
 
@@ -1534,19 +1518,15 @@ public function salvar($request, $id, $tipo_operacao)
      $dados->save();
 
      //BUSCAR QTD DE FILHAS APOS INCLUSAO OU ALTERACAO DA CELULA
-     if ($guarda_pai!=0 && $guarda_pai!=null)  //CELULA PAI
-     {
+     if ($guarda_pai!=0 && $guarda_pai!=null)  { //CELULA PAI
           //PRIMEIRO PAI DO VETOR
           $this->qtd_pais[] = $guarda_pai;
-
           //MONTA VETOR COM TODOS OS PAIS A PARTIR DESSE PAI
           $this->buscaPai($guarda_pai);
      }
 
-     if (isset($this->qtd_pais))
-     {
-           for ($iSeq=0; $iSeq < count($this->qtd_pais); $iSeq++)
-           {
+     if (isset($this->qtd_pais)) {
+           for ($iSeq=0; $iSeq < count($this->qtd_pais); $iSeq++) {
                 if ($this->qtd_pais[$iSeq]!=0)
                     $this->gravaQtdFilhos($this->qtd_pais[$iSeq]);
            }
