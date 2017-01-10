@@ -949,7 +949,7 @@ class ControleAtividadesController extends Controller
             {
                   header('Content-Description: File Transfer');
                   header('Content-Type: application/pdf');
-                  header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
+                  header('Content-Disposition: inline; filename=' . $output .'.' . $ext . '');
                   //header('Content-Transfer-Encoding: binary');
                   header('Expires: 0');
                   header('Cache-Control: must-revalidate, post-check=0, pre-check=0');

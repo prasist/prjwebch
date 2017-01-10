@@ -239,7 +239,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
                 } else {
                     header('Content-Description: File Transfer');
                     header('Content-Type: application/pdf');
-                    header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
+                    header('Content-Disposition: inline; filename=' . $output .'.' . $ext . '');
                     header('Expires: 0');
                     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
                     header('Content-Length: ' . filesize($output.'.'.$ext));
@@ -256,7 +256,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
                 {
                     header('Content-Description: File Transfer');
                     header('Content-Type: application/pdf');
-                    header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
+                    header('Content-Disposition: inline; filename=' . $output .'.' . $ext . '');
                     header('Expires: 0');
                     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
                     header('Content-Length: ' . filesize($output.'.'.$ext));
@@ -377,7 +377,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
                         header('Content-Description: File Transfer');
                         header('Content-Type: application/pdf');
-                        header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
+                        header('Content-Disposition: inline; filename=' . $output .'.' . $ext . '');
                         header('Expires: 0');
                         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
                         header('Content-Length: ' . filesize($output.'.'.$ext));

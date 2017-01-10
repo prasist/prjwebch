@@ -163,7 +163,7 @@ class RelatorioPessoasController extends Controller
 
                     header('Content-Description: File Transfer');
                     header('Content-Type: application/pdf');
-                    header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
+                    header('Content-Disposition: inline; filename=' . $output .'.' . $ext . '');
                     //header('Content-Transfer-Encoding: binary');
                     header('Expires: 0');
                     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -230,7 +230,7 @@ public function relatorio_pessoas_tipo($conteudo, $opcao='') {
 
         header('Content-Description: File Transfer');
         header('Content-Type: application/pdf');
-        header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
+        header('Content-Disposition: inline; filename=' . $output .'.' . $ext . '');
         header('Expires: 0');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Content-Length: ' . filesize($output.'.'.$ext));
@@ -774,7 +774,7 @@ public function relatorio_pessoas_tipo($conteudo, $opcao='') {
                 {
                     header('Content-Description: File Transfer');
                     header('Content-Type: application/pdf');
-                    header('Content-Disposition: inline; filename=' . $output .' . ' . $ext . '');
+                    header('Content-Disposition: inline; filename=' . $output . '.' . $ext . '');
                     //header('Content-Transfer-Encoding: binary');
                     header('Expires: 0');
                     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
