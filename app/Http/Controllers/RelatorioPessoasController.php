@@ -744,6 +744,12 @@ public function relatorio_pessoas_tipo($conteudo, $opcao='') {
                     }
                 }
             }
+
+            //RELATORIO DE VISITAS
+             if ($input["modelo"]=="2") {
+                $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_agenda.jasper';
+             }
+
             //Executa JasperReport
             \JasperPHP::process(
                     $nome_relatorio,

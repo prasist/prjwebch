@@ -295,6 +295,16 @@
 
                                                             <!--<div class="col-xs-3"></div>-->
 
+                                                          </div> <!-- end row-->
+
+                                                          <div class="row">
+                                                                <div class="col-xs-3">
+                                                                      <label for="modelo" class="control-label">Modelo Relatório</label>
+                                                                        <select id="modelo" name="modelo" data-live-search="true" data-none-selected-text="(Selecionar)" class="form-control selectpicker" style="width: 100%;">
+                                                                            <option  value="1">Listagem Pessoas</option>
+                                                                            <option  value="2">Agenda de Visitas</option>
+                                                                        </select>
+                                                                </div><!-- col-xs-5-->
                                                           </div>
 
                                                        </div> <!-- enb box-body-->
