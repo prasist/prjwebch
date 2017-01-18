@@ -225,7 +225,7 @@
                                                                                     <i class="icon fa fa-check"></i> {{$var_mensagem}}</h4>
                                                                                   </div>
                                                                                   {{$var_mensagem}}
-                                                                            @endif
+                                                                           @endif
 
                                                                      @else
                                                                                   <br/>

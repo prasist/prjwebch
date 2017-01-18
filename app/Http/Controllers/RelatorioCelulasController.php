@@ -433,13 +433,14 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
          $sWhere = " empresas_id = " . $this->dados_login->empresas_id . " and empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
 
-            if (!$input["ckExibir"]) {
-                    if (!$input["ckEstruturas"]) {
+            if (trim($input["ckExibir"])=="") {
+                    if (trim($input["ckEstruturas"])=="") {
                         $sWhere = " vw.empresas_id = " . $this->dados_login->empresas_id . " and vw.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
                     }
+            } else if (trim($input["ckEstruturas"])=="") {
+                $sWhere = " vw.empresas_id = " . $this->dados_login->empresas_id . " and vw.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
             }
    }
-
 
     //parameters fields to jasper report
     $parametros = array

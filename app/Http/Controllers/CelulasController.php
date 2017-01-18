@@ -111,19 +111,16 @@ class CelulasController extends Controller
     }
 
     /**//**
-     * Description : load data from select 'local of meeting'
-     * @return var JSON
-     */
+    * Description : load data from select 'local of meeting'
+    * @return var JSON
+    */
     public function loadSelect() {
-
-       $users = \App\Models\users::select('id', 'name')->get();
-       return json_encode($users);
-
+        $users = \App\Models\users::select('id', 'name')->get();
+        return json_encode($users);
     }
 
     public function getEstruturas()
     {
-
 
             //Busca primeiro nivel das estruturas
             $strSql = " SELECT DISTINCT nome_1, celulas_nivel1_id, foto1  FROM view_estruturas";
@@ -140,9 +137,8 @@ class CelulasController extends Controller
                    //NIVEL1
                    $linha .= "      <li>";
 
-                   if  ($value->foto1!="")
-                   {
-                          $linha .= "<img src='./images/persons/" . $value->foto1 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
+                   if  ($value->foto1!="") {
+                        $linha .= "<img src='./images/persons/" . $value->foto1 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
                    }
 
 
@@ -172,10 +168,9 @@ class CelulasController extends Controller
                             foreach ($level2 as $key => $value)
                             {
 
-                                  $linha .= "      <li>";
+                                 $linha .= "      <li>";
 
-                                 if  ($value->foto2!="")
-                                 {
+                                 if  ($value->foto2!="") {
                                         $linha .= "<img src='./images/persons/" . $value->foto2 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
                                  }
 
@@ -204,14 +199,13 @@ class CelulasController extends Controller
                                     foreach ($level3 as $key => $value)
                                     {
 
-                                          $linha .= "      <li>";
+                                         $linha .= "      <li>";
 
-                                         if  ($value->foto3!="")
-                                         {
+                                         if  ($value->foto3!="") {
                                                 $linha .= "<img src='./images/persons/" . $value->foto3 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
                                          }
 
-                                          $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_3 . "</a>";
+                                         $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_3 . "</a>";
                                           //$linha .= "             (<i class='fa fa-print'></i>&nbsp;<a href='#' onclick='abrir_relatorio_nivel(1, 3, " . $value->celulas_nivel3_id . ");'>Resumo</a>)";
 
                                          $linha .= '  <select id="tiporelatorio[]"  name="tiporelatorio[]" onchange="changeFunc(this, 3, ' . $value->celulas_nivel3_id . ', \'' . $value->nome_3 . '\');"> ';
@@ -225,13 +219,13 @@ class CelulasController extends Controller
 
 
                                            //NIVEL4
-                                           $strSql = " SELECT Distinct nome_4, celulas_nivel4_id, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id,foto4 FROM view_estruturas";
-                                           $strSql .=  " WHERE ";
-                                           $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
-                                           $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
-                                           $strSql .=  " AND celulas_nivel3_id = " . $value->celulas_nivel3_id;
+                                          $strSql = " SELECT Distinct nome_4, celulas_nivel4_id, celulas_nivel3_id, celulas_nivel2_id, celulas_nivel1_id,foto4 FROM view_estruturas";
+                                          $strSql .=  " WHERE ";
+                                          $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+                                          $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+                                          $strSql .=  " AND celulas_nivel3_id = " . $value->celulas_nivel3_id;
 
-                                            $level4 = \DB::select($strSql);
+                                          $level4 = \DB::select($strSql);
 
                                             $linha .= "<ul>";
                                             foreach ($level4 as $key => $value)
@@ -239,9 +233,8 @@ class CelulasController extends Controller
 
                                                   $linha .= "      <li>";
 
-                                                  if  ($value->foto4!="")
-                                                 {
-                                                        $linha .= "<img src='./images/persons/" . $value->foto4 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
+                                                 if  ($value->foto4!="") {
+                                                      $linha .= "<img src='./images/persons/" . $value->foto4 . "' class='img-circle' width='40' height='40' alt='Pessoa' />";
                                                  }
 
                                                   $linha .= "             <i class='fa  fa-user'></i>&nbsp;<a href='#'>" . $value->nome_4 . "</a>";
@@ -621,7 +614,7 @@ class CelulasController extends Controller
     }
 
 
-    public function buscar_segundo_dia_encontro($id)
+   public function buscar_segundo_dia_encontro($id)
     {
 
             $buscar = \App\Models\celulas::select('segundo_dia_encontro')
@@ -641,27 +634,25 @@ class CelulasController extends Controller
 
     }
 
- protected function participantes_presenca ()
- {
+  protected function participantes_presenca () {
 
-            $strSql = " SELECT * FROM view_participantes_celula_ultima_presenca";
-            $strSql .=  " WHERE ";
-            $strSql .=  " empresas_id = " . $this->dados_login->empresas_id . " AND ";
-            $strSql .=  " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
+        $strSql  = " SELECT * FROM view_participantes_celula_ultima_presenca" ;
+        $strSql .= " WHERE ";
+        $strSql .= " empresas_id = " . $this->dados_login->empresas_id . " AND ";
+        $strSql .= " empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . "  ";
 
-            //SE for lider, direciona para dashboard da célula
-            if ($this->lider_logado!=null)
-            {
-                   $strSql .=  " AND lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
-            }
+        //SE for lider, direciona para dashboard da célula
+        if ($this->lider_logado!=null) {
+            $strSql .=  " AND lider_pessoas_id  = '" . $this->lider_logado[0]->lider_pessoas_id . "'";
+        }
 
-            $participantes_presenca = \DB::select($strSql);
-            return $participantes_presenca;
+        $participantes_presenca = \DB::select($strSql);
+        return $participantes_presenca;
 
- }
+  }
 
-    protected function resumo_perguntas($mes, $ano)
-    {
+  protected function resumo_perguntas($mes, $ano)  {
+
             //RESUMO por Respostas
             $strSql = " SELECT c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano, qe.pergunta, ";
             $strSql .=  " sum(cast(resposta as int)) as total ";
@@ -695,7 +686,7 @@ class CelulasController extends Controller
 
             $resumo_perguntas = \DB::select($strSql);
             return $resumo_perguntas;
-    }
+  }
 
     protected function resumo_tipo_pessoas($mes, $ano, $opcao)
     {
@@ -802,6 +793,7 @@ class CelulasController extends Controller
             return $resumo_geral;
 
     }
+
     protected function resumo_presencas($mes, $ano)
     {
 
@@ -1443,20 +1435,17 @@ public function salvar($request, $id, $tipo_operacao)
 
      //BUSCAR SE O PAI TEM  GERACAO GRAVADA
      //Se for NULO, considerar então celulas_pai_id, caso contrario , pega o conteudo celulas_id_geracao do PAI e replica na celula que esta sendo gravada
-     if ($input["origem"]!="")
-     {
+     if ($input["origem"]!="") {
          if ($dados->celulas_pai_id!=null && $dados->celulas_pai_id!=0) //CELULA PAI
          {
-               if($guarda_pai==0)
-               {
+               if($guarda_pai==0) {
                   $guarda_pai = $dados->celulas_pai_id;
                }
 
                //BUSCA NA CELULA PAI SE TEM GERACAO INFORMADA
                $busca_geracao = \App\Models\celulas::select('celulas_id_geracao')->where('id', $dados->celulas_pai_id)->get();
 
-               if  ($busca_geracao[0]->celulas_id_geracao==null)  //NÃO ENCONTROU, ENTAO INICIA O CICLO DA GERACAO NESSA CELULA
-               {
+               if  ($busca_geracao[0]->celulas_id_geracao==null)  { //NÃO ENCONTROU, ENTAO INICIA O CICLO DA GERACAO NESSA CELULA
                        $dados->celulas_id_geracao = $dados->celulas_pai_id;
                }
                else  //ENCONTROU GERACAO, ENTAO REPLICA PARA ESSA NOVA CELULA PARA SABER QUEM FOI A ORIGEM DE TODAS
@@ -1464,6 +1453,29 @@ public function salvar($request, $id, $tipo_operacao)
                        $dados->celulas_id_geracao = $busca_geracao[0]->celulas_id_geracao;
                }
          }
+    } else { //PODE SER CELULA COM ORIGEM NA CELULA MAE
+
+          if ($dados->celulas_pai_id!=null && $dados->celulas_pai_id!=0) {
+
+               //BUSCA NA CELULA PAI SE TEM GERACAO INFORMADA
+               $busca_geracao = \App\Models\celulas::select('celulas_id_geracao')->where('id', $dados->celulas_pai_id)->get();
+
+               if  ($busca_geracao[0]->celulas_id_geracao==null)  { //NÃO ENCONTROU, ENTAO INICIA O CICLO DA GERACAO NESSA CELULA
+                       $dados->celulas_id_geracao = $dados->celulas_pai_id;
+               }
+               else  //ENCONTROU GERACAO, ENTAO REPLICA PARA ESSA NOVA CELULA PARA SABER QUEM FOI A ORIGEM DE TODAS
+               {
+                       $dados->celulas_id_geracao = $busca_geracao[0]->celulas_id_geracao;
+               }
+         }
+
+    }
+
+    //CELULA MAE - sem pai e nem origem
+    if ($dados->celulas_pai_id==null || $dados->celulas_pai_id==0) {
+       if ($input["origem"]=="") {
+          $dados->celulas_id_geracao = $dados->id;
+       }
     }
 
      $dados->qual_endereco = ($input['local']=="" ? null : $input['local']);
@@ -1517,6 +1529,57 @@ public function salvar($request, $id, $tipo_operacao)
      $dados->data_inicio = ($input["data_inicio"]!="" ? $this->formatador->FormatarData($input["data_inicio"]) : date('Y-m-d'));
      $dados->save();
 
+
+     //CONTROLE MULTIPLICACOES
+      $where = [ 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $this->dados_login->empresas_id, 'pessoas_id' => $dados->lider_pessoas_id];
+
+      $controle = \App\Models\controle_multiplicacoes::firstOrNew($where);
+
+      //BUSCA ID PESSOA ORIGEM
+      if ($dados->celulas_id_geracao!=null && $dados->celulas_id_geracao!=0) {
+          $temp = celulas::find($dados->celulas_id_geracao);
+          $id_pessoa_origem = $temp->lider_pessoas_id;
+      } else {
+          $id_pessoa_origem = $dados->lider_pessoas_id;
+      }
+
+      //BUSCA ID PESSOA CELULA PAI
+      if ($dados->celulas_pai_id!=null && $dados->celulas_pai_id!=0) {
+          $temp = celulas::find($dados->celulas_pai_id);
+          $id_pessoa_pai = $temp->lider_pessoas_id;
+      } else {
+          $id_pessoa_pai = null;
+      }
+
+
+      if ($controle->data_inicio==null) { //NAO ACHOU, IRA CRIAR
+              $controle->empresas_id = $this->dados_login->empresas_id;
+              $controle->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
+              $controle->pessoas_id = $dados->lider_pessoas_id;
+              $controle->pessoas_id_origem = $id_pessoa_origem;
+              $controle->pessoas_id_pai = $id_pessoa_pai;
+              $controle->data_inicio = date("Y-m-d");
+              $controle->save();
+
+      } else { //ACHOU
+
+              if ($controle->pessoas_id != $dados->lider_pessoas_id) { //ALTEROU LIDER
+                  $novo_controle = new \App\Models\controle_multiplicacoes();
+                  $novo_controle->empresas_id = $this->dados_login->empresas_id;
+                  $novo_controle->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
+                  $novo_controle->pessoas_id = $dados->lider_pessoas_id;
+                  $novo_controle->pessoas_id_origem = $id_pessoa_origem;
+                  $novo_controle->pessoas_id_pai = $id_pessoa_pai;
+                  $novo_controle->data_inicio = date("Y-m-d");
+                  $novo_controle->save();
+              } else {
+                  $controle->pessoas_id_origem = $id_pessoa_origem;
+                  $controle->pessoas_id_pai = $id_pessoa_pai;
+                  $controle->save();
+              }
+      }
+
+
      //BUSCAR QTD DE FILHAS APOS INCLUSAO OU ALTERACAO DA CELULA
      if ($guarda_pai!=0 && $guarda_pai!=null)  { //CELULA PAI
           //PRIMEIRO PAI DO VETOR
@@ -1537,8 +1600,7 @@ public function salvar($request, $id, $tipo_operacao)
 }
 
 
-protected function gravaQtdFilhos($id)
-{
+protected function gravaQtdFilhos($id) {
 
       //QTD DE FILHOS DE CADA PAI
       $total_filhas= $this->verificaQtdFilhos($id);
@@ -1551,31 +1613,57 @@ protected function gravaQtdFilhos($id)
       $atualizar->qtd_geracao = $this->qtd_acumulada;
       $atualizar->save();
 
+      $where = [ 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $this->dados_login->empresas_id, 'pessoas_id' => $atualizar->lider_pessoas_id];
+
+      $controle = \App\Models\controle_multiplicacoes::firstOrNew($where);
+
+      if ($controle->data_inicio==null) { //NAO ACHOU, IRA CRIAR
+              $controle->empresas_id = $this->dados_login->empresas_id;
+              $controle->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
+              $controle->pessoas_id = $atualizar->lider_pessoas_id;
+              //$controle->pessoas_id_origem = $atualizar->lider_pessoas_id;
+              //$controle->pessoas_id_pai = $atualizar->lider_pessoas_id;
+              $controle->data_inicio = date("Y-m-d");
+              $controle->qtd_filhas = $atualizar->qtd_filhas;
+              $controle->qtd_geracao = $atualizar->qtd_geracao;
+
+      } else { //ACHOU
+
+              if ($controle->pessoas_id != $atualizar->lider_pessoas_id) { //ALTEROU LIDER
+                  $novo_controle = new \App\Models\controle_multiplicacoes();
+                  $novo_controle->empresas_id = $this->dados_login->empresas_id;
+                  $novo_controle->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
+                  $novo_controle->pessoas_id = $atualizar->lider_pessoas_id;
+                  $novo_controle->pessoas_id_origem = $atualizar->lider_pessoas_id;
+                  $novo_controle->pessoas_id_pai = $atualizar->lider_pessoas_id;
+                  $novo_controle->data_inicio = date("Y-m-d");
+                  $novo_controle->save();
+              }
+
+              $controle->qtd_filhas = $total_filhas;
+              $controle->qtd_geracao = $this->qtd_acumulada;
+      }
+
+      $controle->save();
+
 }
 
 
- protected function buscaPai($id)
- {
-
+protected function buscaPai($id) {
       $pai = \App\Models\celulas::select('celulas_pai_id')->where('id', $id)->get();
 
-      if ($pai->count()>=1)
-      {
-          if ($pai[0]->celulas_pai_id!=0)
-          {
+      if ($pai->count()>=1) {
+          if ($pai[0]->celulas_pai_id!=0) {
                 $this->qtd_pais[] = $pai[0]->celulas_pai_id;
                 $this->buscaPai($pai[0]->celulas_pai_id);
           }
-
       }
+}
 
- }
-
-  protected function verificaQtdFilhos($pai)
-  {
-        // QTD DE FILHOS
-        $retorno = \DB::select('select  fn_total_filhas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ',' . $pai . ')');
-        return $retorno[0]->fn_total_filhas;
+  protected function verificaQtdFilhos($pai) {
+       // QTD DE FILHOS
+       $retorno = \DB::select('select  fn_total_filhas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ',' . $pai . ')');
+       return $retorno[0]->fn_total_filhas;
   }
 
     //Criar novo registro
@@ -1634,8 +1722,7 @@ protected function gravaQtdFilhos($id)
 * Grava dados no banco
 *
 */
-    public function store(\Illuminate\Http\Request  $request)
-    {
+   public function store(\Illuminate\Http\Request  $request)  {
             $id_gerado = $this->salvar($request, "", "create");
             \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
 
@@ -1648,13 +1735,12 @@ protected function gravaQtdFilhos($id)
                 return redirect($this->rota);
             }
 
-    }
+   }
 
     //Abre tela para edicao ou somente visualização dos registros
-    private function exibir ($request, $id, $preview)
-    {
-        if($request->ajax())
-        {
+   private function exibir ($request, $id, $preview) {
+
+        if($request->ajax()) {
             return URL::to($this->rota . '/'. $id . '/edit');
         }
 
@@ -1692,7 +1778,7 @@ protected function gravaQtdFilhos($id)
         $this->pegarSomenteId($id);
 
         //QUERY MONTA UM ARRAY COM ARVORE HIERARQUICA
-        $strSql = " SELECT celulas.id, CASE WHEN celulas.id = " . $id . " THEN 0 ELSE celulas_pai_id END AS celulas_pai_id, caminhofoto,  origem,";
+        $strSql  = " SELECT celulas.id, CASE WHEN celulas.id = " . $id . " THEN 0 ELSE celulas_pai_id END AS celulas_pai_id, caminhofoto,  origem,";
         $strSql .= " CASE  WHEN nome <> ''::text AND razaosocial <> ''::text THEN (nome || ' - '::text) || razaosocial ";
         $strSql .= "       ELSE COALESCE(razaosocial, nome) ";
         $strSql .= "       END AS nome";
@@ -1706,16 +1792,14 @@ protected function gravaQtdFilhos($id)
 
         $resultArray = json_decode(json_encode($retornar), true); //GERAR ARRAY MULTINIVEIS
 
+        //dd($strSql);
         //BUSCA NOME DO PAI PARA INCLUIR NA ESTRUTURA
-        if ($dados[0]->celulas_pai_id!=null || $dados[0]->celulas_pai_id!=0)
-        {
+        if ($dados[0]->celulas_pai_id!=null || $dados[0]->celulas_pai_id!=0) {
             $nome_pai = \DB::select("SELECT descricao_concatenada FROM view_celulas_simples WHERE id = " .  $dados[0]->celulas_pai_id . "");
-
             //GERA CODIGO HTML PARA GERAR LISTA UNIFICADA DAS HIERARQUIAS
             //$gerar_estrutura_origem = $this->getEstruturasCelulasOrigem($id);
             $gerar_estrutura_origem = "<h4>Árvore Hierárquica de <b><i>" . $dados[0]->nome . ' - ' . $dados[0]->nome_lider . "</i></b> (Multiplicação/Vínculos)</h4><ul id='ul_nivel0' class='treeview2'><li><a href='#'>" . (count($nome_pai)>0 ? $nome_pai[0]->descricao_concatenada : "Sem Célula Pai") . "</a>" . $this->printListRecursive($resultArray) . "</li></ul>";
-        } else
-        {
+        } else {
             $gerar_estrutura_origem = "<h4>Árvore Hierárquica de <b><i>" . $dados[0]->nome . ' - ' . $dados[0]->nome_lider . "</i></b> (Multiplicação/Vínculos)</h4><ul id='ul_nivel0' class='treeview2'><li><a href='#'>Sem Pai</a>" . $this->printListRecursive($resultArray) . "</li></ul>";
         }
 
@@ -1748,7 +1832,7 @@ protected function gravaQtdFilhos($id)
     }
 
 
-protected   function makeListRecursive(&$list,$parent=0){
+protected   function makeListRecursive(&$list,$parent=0) {
     $result = array();
     for( $i=0,$c=count($list);$i<$c;$i++ )
     {
@@ -1761,16 +1845,12 @@ protected   function makeListRecursive(&$list,$parent=0){
     return $result;
 }
 
-protected  function printListRecursive(&$list,$parent=0)
-{
+protected  function printListRecursive(&$list,$parent=0) {
 
       $foundSome = false;
-      for( $i=0,$c=count($list);$i<$c;$i++ )
-      {
-          if( $list[$i]['celulas_pai_id']==$parent )
-          {
-              if( $foundSome==false )
-              {
+      for( $i=0,$c=count($list);$i<$c;$i++ ) {
+          if($list[$i]['celulas_pai_id']==$parent) {
+              if($foundSome==false) {
                   $this->linha .= '<ul>';
                   $foundSome = true;
               }
@@ -1779,65 +1859,60 @@ protected  function printListRecursive(&$list,$parent=0)
               $this->printListRecursive($list,$list[$i]['id']);
           }
       }
-      if( $foundSome )
-      {
+
+      if($foundSome) {
           $this->linha .=  '</ul>';
       }
 
       return $this->linha;
 }
 
-    //Visualizar registro
-    public function show (\Illuminate\Http\Request $request, $id)
-    {
-         return $this->exibir($request, $id, 'true');
-    }
+//Visualizar registro
+public function show (\Illuminate\Http\Request $request, $id) {
+     return $this->exibir($request, $id, 'true');
+}
 
-    //Direciona para tela de alteracao
-    public function edit(\Illuminate\Http\Request $request, $id)
-    {
-         return $this->exibir($request, $id, 'false');
-    }
+//Direciona para tela de alteracao
+public function edit(\Illuminate\Http\Request $request, $id) {
+     return $this->exibir($request, $id, 'false');
+}
 
 
-    /**
-     * Atualiza dados no banco
-     *
-     * @param    \Illuminate\Http\Request  $request
-     * @param    int  $id
-     * @return  \Illuminate\Http\Response
-     */
-    public function update(\Illuminate\Http\Request  $request, $id)
-    {
-           $this->salvar($request, $id,  "update");
-           \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
+/**
+* Atualiza dados no banco
+*
+* @param    \Illuminate\Http\Request  $request
+* @param    int  $id
+* @return  \Illuminate\Http\Response
+*/
+public function update(\Illuminate\Http\Request  $request, $id) {
+         $this->salvar($request, $id,  "update");
+         \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
 
-           if ($request["quero_incluir_participante"]=="sim") //quando for edicao com membros ja incluidos
-            {
-                return redirect('celulaspessoas/' . $id . '/edit');
-            }
-            else if ($request["quero_incluir_participante"]=="simnovo") //nenhum membro inserido ainda...
-            {
-                 return redirect('celulaspessoas/registrar/' . $id);
-            }
-            else //nao quer incluir participante agora
-            {
-                 return redirect($this->rota);
-            }
-    }
+         if ($request["quero_incluir_participante"]=="sim") {//quando for edicao com membros ja incluidos
+              return redirect('celulaspessoas/' . $id . '/edit');
+          }
+          else if ($request["quero_incluir_participante"]=="simnovo") //nenhum membro inserido ainda...
+          {
+               return redirect('celulaspessoas/registrar/' . $id);
+          }
+          else //nao quer incluir participante agora
+          {
+               return redirect($this->rota);
+          }
+}
 
 
     /**
-     * Excluir registro do banco.
-     *
-     * @param    int  $id
-     * @return  \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-            $dados = celulas::findOrfail($id);
-            $dados->delete();
-            return redirect($this->rota);
+    * Excluir registro do banco.
+    *
+    * @param    int  $id
+    * @return  \Illuminate\Http\Response
+    */
+    public function destroy($id) {
+           $dados = celulas::findOrfail($id);
+           $dados->delete();
+           return redirect($this->rota);
     }
 
 }
