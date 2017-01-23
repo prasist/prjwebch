@@ -1650,6 +1650,7 @@ protected function log_geracoes ($id_celula, $id_pai, $id_novo_lider) {
 
 }
 
+/*
 protected function gravaQtdFilhos($id) {
 
       //QTD DE FILHOS DE CADA PAI
@@ -1664,8 +1665,9 @@ protected function gravaQtdFilhos($id) {
       $atualizar->save();
 
 }
+*/
 
-
+/*
 protected function buscaPai($id) {
       $pai = \App\Models\celulas::select('celulas_pai_id')->where('id', $id)->get();
 
@@ -1676,12 +1678,15 @@ protected function buscaPai($id) {
           }
       }
 }
+*/
 
+/*
 protected function verificaQtdFilhos($pai) {
        // QTD DE FILHOS
        $retorno = \DB::select('select  fn_total_filhas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ',' . $pai . ')');
        return $retorno[0]->fn_total_filhas;
 }
+*/
 
  //Criar novo registro
 public function create() {
@@ -1824,9 +1829,9 @@ public function store(\Illuminate\Http\Request  $request)  {
         //$gerar_estrutura_origem = "<h4>Árvore Hierárquica de <b><i>" . $dados[0]->nome . ' - ' . $dados[0]->nome_lider . "</i></b> (Multiplicação/Vínculos)</h4><ul id='ul_nivel0' class='treeview2'><li><a href='#'>" . (count($nome_pai)>0 ? $nome_pai[0]->descricao_concatenada : "Sem Célula Pai") . "</a>" . $this->printListRecursive($resultArray) . "</li></ul>";
 
         //GRAVA QTD DE FILHOS, NETOS, BISNETOS, ETC...
-        $grava_qtd = celulas::findOrfail($id);
-        $grava_qtd->qtd_geracao = ($this->qtd - 1);
-        $grava_qtd->save();
+        //$grava_qtd = celulas::findOrfail($id);
+        //$grava_qtd->qtd_geracao = ($this->qtd - 1);
+        //$grava_qtd->save();
 
 
         //$temp = \DB::select('select count(*) as tot from view_celulas  where celulas_pai_id = ?  and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
