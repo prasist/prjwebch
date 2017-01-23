@@ -1351,6 +1351,7 @@ class CelulasController extends Controller
 public function salvar($request, $id, $tipo_operacao)
 {
     $guarda_pai=0;
+    $guadar_lider_original=0;
 
     $input = $request->except(array('_token', 'ativo')); //não levar o token
 
@@ -1369,6 +1370,7 @@ public function salvar($request, $id, $tipo_operacao)
     {
          $dados = celulas::findOrfail($id);
          $guarda_pai = $dados->celulas_pai_id;
+         $guadar_lider_original = $dados->lider_pessoas_id;
     }
 
 
@@ -1419,7 +1421,13 @@ public function salvar($request, $id, $tipo_operacao)
           {
                 $dados->celulas_pai_id=null;
           }
+
+     } else { //QUANDO CRIAR UMA NOVA CELULA, INICIAR O CONTROLE DE MULTIPLICACOES PARA A PESSOA
+          //$this->log_geracoes ($dados->id, $dados->celulas_pai_id, $dados->lider_pessoas_id);
      }
+
+     //VERIFICA SE EXISTE CONTROLE DE MULTIPLICACOES PARA A PESSOA...
+     //$this->log_geracoes ($dados->id, $dados->celulas_pai_id, $dados->lider_pessoas_id);
 
      $dados->origem = ($input['origem']=="" ? null : $input['origem']);
 
@@ -1470,6 +1478,9 @@ public function salvar($request, $id, $tipo_operacao)
          }
 
     }
+
+    //TRIGGER VERIFICA SE HOUVE ALTERACAO LIDER E ATUALIZA A LOG_GERACOES
+
 
     //CELULA MAE - sem pai e nem origem
     if ($dados->celulas_pai_id==null || $dados->celulas_pai_id==0) {
@@ -1529,58 +1540,21 @@ public function salvar($request, $id, $tipo_operacao)
      $dados->data_inicio = ($input["data_inicio"]!="" ? $this->formatador->FormatarData($input["data_inicio"]) : date('Y-m-d'));
      $dados->save();
 
-
-     //CONTROLE MULTIPLICACOES
-      $where = [ 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $this->dados_login->empresas_id, 'pessoas_id' => $dados->lider_pessoas_id];
-
-      $controle = \App\Models\controle_multiplicacoes::firstOrNew($where);
-
-      //BUSCA ID PESSOA ORIGEM
-      if ($dados->celulas_id_geracao!=null && $dados->celulas_id_geracao!=0) {
-          $temp = celulas::find($dados->celulas_id_geracao);
-          $id_pessoa_origem = $temp->lider_pessoas_id;
-      } else {
-          $id_pessoa_origem = $dados->lider_pessoas_id;
-      }
-
-      //BUSCA ID PESSOA CELULA PAI
-      if ($dados->celulas_pai_id!=null && $dados->celulas_pai_id!=0) {
-          $temp = celulas::find($dados->celulas_pai_id);
-          $id_pessoa_pai = $temp->lider_pessoas_id;
-      } else {
-          $id_pessoa_pai = null;
-      }
+     //CRIAR LOG GERACOES
+     $this->log_geracoes ($dados->id, $dados->celulas_pai_id, $dados->lider_pessoas_id);
 
 
-      if ($controle->data_inicio==null) { //NAO ACHOU, IRA CRIAR
-              $controle->empresas_id = $this->dados_login->empresas_id;
-              $controle->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
-              $controle->pessoas_id = $dados->lider_pessoas_id;
-              $controle->pessoas_id_origem = $id_pessoa_origem;
-              $controle->pessoas_id_pai = $id_pessoa_pai;
-              $controle->data_inicio = date("Y-m-d");
-              $controle->save();
-
-      } else { //ACHOU
-
-              if ($controle->pessoas_id != $dados->lider_pessoas_id) { //ALTEROU LIDER
-                  $novo_controle = new \App\Models\controle_multiplicacoes();
-                  $novo_controle->empresas_id = $this->dados_login->empresas_id;
-                  $novo_controle->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
-                  $novo_controle->pessoas_id = $dados->lider_pessoas_id;
-                  $novo_controle->pessoas_id_origem = $id_pessoa_origem;
-                  $novo_controle->pessoas_id_pai = $id_pessoa_pai;
-                  $novo_controle->data_inicio = date("Y-m-d");
-                  $novo_controle->save();
-              } else {
-                  $controle->pessoas_id_origem = $id_pessoa_origem;
-                  $controle->pessoas_id_pai = $id_pessoa_pai;
-                  $controle->save();
-              }
-      }
+     if ($tipo_operacao=="create") {
+         //ATUALIZAR AS QUANTIDADES DE FILHOS E GERACOES
+         if ($dados->celulas_pai_id!=0) {
+            $busca_lider_id = \App\Models\celulas::select('lider_pessoas_id')->where('id', $dados->celulas_pai_id)->get(); //BUSCA O ID DO PAI
+            $this->recursiva_atualizar_qtd_filhos($busca_lider_id[0]->lider_pessoas_id, 'S');
+         }
+     }
 
 
      //BUSCAR QTD DE FILHAS APOS INCLUSAO OU ALTERACAO DA CELULA
+     /*
      if ($guarda_pai!=0 && $guarda_pai!=null)  { //CELULA PAI
           //PRIMEIRO PAI DO VETOR
           $this->qtd_pais[] = $guarda_pai;
@@ -1594,11 +1568,87 @@ public function salvar($request, $id, $tipo_operacao)
                     $this->gravaQtdFilhos($this->qtd_pais[$iSeq]);
            }
      }
+    */
 
      return  $dados->id;
 
 }
 
+/**
+ * ATUALIZAR EM CASCATA ENQUANTO HOUVER PAIS
+ */
+protected function recursiva_atualizar_qtd_filhos($id_pai, $atualizar_filhos) {
+
+      $pai = \App\Models\log_geracoes::where('lider_pessoas_id', '=', $id_pai)->firstOrFail();
+
+      if ($atualizar_filhos=="S") { //SO NA PRIMEIRA CHAMADA DA FUNÇÃO IRA ATUALIZAR OS FILHOS
+         $pai->qtd_filhas = $pai->qtd_filhas +1;
+      } else {
+         $pai->qtd_geracao = $pai->qtd_geracao +1;
+      }
+      $pai->save();
+
+      // INICIO - ATUALIZAR GERACAO DO ANTIGO LIDER TAMBEM.
+      if ($pai->lider_pessoas_id_anterior!=null) {
+         \DB::statement("update log_geracoes  set qtd_geracao = qtd_geracao + 1 where lider_pessoas_id = " . $pai->lider_pessoas_id_anterior . "");
+      }
+
+      \DB::statement("update log_geracoes  set qtd_geracao = qtd_geracao + 1 where lider_pessoas_id_anterior = " . $pai->lider_pessoas_id . "");
+      // FIM  - ATUALIZAR GERACAO DO ANTIGO LIDER TAMBEM.
+
+      //ENQUANTO ENCONTRAR PAI, ATUALIZAR A GERACAO
+      if ($pai->lider_pessoas_id_pai !=0) {
+          $this->recursiva_atualizar_qtd_filhos($pai->lider_pessoas_id_pai, "N");
+      }
+
+}
+
+/**
+*Função utilizada para criar o controle de multiplicacoes para cada pessoa (lider)
+*Existem 3 triggers na tabela CELULAS, as quais serao responsaveis para atualizar as quantidades de FILHAS e GERACOES
+*/
+protected function log_geracoes ($id_celula, $id_pai, $id_novo_lider) {
+
+
+    if ($id_pai!=0) { //BUSCA O ID DO LIDER DA CELULA PAI INFORMADA
+       $buscar = \App\Models\celulas::select('lider_pessoas_id')
+            ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
+            ->where('empresas_id', $this->dados_login->empresas_id)
+            ->where('id', $id_pai)
+            ->get();
+
+            if ($buscar) {
+                $id_pai = $buscar[0]->lider_pessoas_id;
+            }
+    }
+
+    //INICIALIZA VARIAVEIS
+    $guarda_qtd_filhas=0;
+    $guarda_qtd_geracoes =0;
+
+    //VERIFICA SE JA NAO EXISTE UM CONTROLE PARA A PESSOA. SE ACHAR, SIGNIFICA APENAS UMA ALTERACAO
+    //NESSE CASO EXCLUI PARA INCLUIR NOVAMENTE ATUALIZADO. DESSA FORMA NAO DISPARA A TRIGGER DE UPDATE GERANDO INCONSISTENCIAS NAS QTDS
+    $id_encontrado = \App\Models\log_geracoes::select('id')->where('lider_pessoas_id', $id_novo_lider)->get();
+
+    if ($id_encontrado->count()!=0) { //EXCLUIR PARA INCLUIR CORRETAMENTE
+       $log = \App\Models\log_geracoes::find($id_encontrado[0]->id);
+       $guarda_qtd_filhas = $log->qtd_filhas; //GUARDA QTD ANTERIOR
+       $guarda_qtd_geracoes = $log->qtd_geracao; //GUARDA QTD ANTERIOR
+       $log->delete(); //EXCLUIR O REGISTRO
+    }
+
+      $log = new \App\Models\log_geracoes(); //CRIA NOVO REGISTRO
+      $log->empresas_id                          = $this->dados_login->empresas_id;
+      $log->empresas_clientes_cloud_id   = $this->dados_login->empresas_clientes_cloud_id;
+      $log->data_inicio                            = date("Y-m-d");
+      $log->celulas_id                              = $id_celula;
+      $log->lider_pessoas_id                    = $id_novo_lider;
+      $log->lider_pessoas_id_pai              = $id_pai;
+      $log->qtd_filhas                             = $guarda_qtd_filhas;
+      $log->qtd_geracao                         = $guarda_qtd_geracoes;
+      $log->save();
+
+}
 
 protected function gravaQtdFilhos($id) {
 
@@ -1612,39 +1662,6 @@ protected function gravaQtdFilhos($id) {
       $atualizar->qtd_filhas = $total_filhas;
       $atualizar->qtd_geracao = $this->qtd_acumulada;
       $atualizar->save();
-
-      $where = [ 'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id, 'empresas_id' =>  $this->dados_login->empresas_id, 'pessoas_id' => $atualizar->lider_pessoas_id];
-
-      $controle = \App\Models\controle_multiplicacoes::firstOrNew($where);
-
-      if ($controle->data_inicio==null) { //NAO ACHOU, IRA CRIAR
-              $controle->empresas_id = $this->dados_login->empresas_id;
-              $controle->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
-              $controle->pessoas_id = $atualizar->lider_pessoas_id;
-              //$controle->pessoas_id_origem = $atualizar->lider_pessoas_id;
-              //$controle->pessoas_id_pai = $atualizar->lider_pessoas_id;
-              $controle->data_inicio = date("Y-m-d");
-              $controle->qtd_filhas = $atualizar->qtd_filhas;
-              $controle->qtd_geracao = $atualizar->qtd_geracao;
-
-      } else { //ACHOU
-
-              if ($controle->pessoas_id != $atualizar->lider_pessoas_id) { //ALTEROU LIDER
-                  $novo_controle = new \App\Models\controle_multiplicacoes();
-                  $novo_controle->empresas_id = $this->dados_login->empresas_id;
-                  $novo_controle->empresas_clientes_cloud_id = $this->dados_login->empresas_clientes_cloud_id;
-                  $novo_controle->pessoas_id = $atualizar->lider_pessoas_id;
-                  $novo_controle->pessoas_id_origem = $atualizar->lider_pessoas_id;
-                  $novo_controle->pessoas_id_pai = $atualizar->lider_pessoas_id;
-                  $novo_controle->data_inicio = date("Y-m-d");
-                  $novo_controle->save();
-              }
-
-              $controle->qtd_filhas = $total_filhas;
-              $controle->qtd_geracao = $this->qtd_acumulada;
-      }
-
-      $controle->save();
 
 }
 
@@ -1660,15 +1677,14 @@ protected function buscaPai($id) {
       }
 }
 
-  protected function verificaQtdFilhos($pai) {
+protected function verificaQtdFilhos($pai) {
        // QTD DE FILHOS
        $retorno = \DB::select('select  fn_total_filhas(' . $this->dados_login->empresas_clientes_cloud_id . ', ' . $this->dados_login->empresas_id. ',' . $pai . ')');
        return $retorno[0]->fn_total_filhas;
-  }
+}
 
-    //Criar novo registro
-    public function create()
-    {
+ //Criar novo registro
+public function create() {
 
         if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.' . $this->rota))==false)
         {
@@ -1716,26 +1732,26 @@ protected function buscaPai($id) {
           'vinculos'=>$vazio,
           'total_vinculos'=>'0']);
 
-    }
+}
 
 /*
 * Grava dados no banco
 *
 */
-   public function store(\Illuminate\Http\Request  $request)  {
-            $id_gerado = $this->salvar($request, "", "create");
-            \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
+public function store(\Illuminate\Http\Request  $request)  {
+          $id_gerado = $this->salvar($request, "", "create");
+          \Session::flash('flash_message', 'Dados Atualizados com Sucesso!!!');
 
-            if ($request["quero_incluir_participante"]=="sim")
-            {
-                return redirect('celulaspessoas/registrar/' . $id_gerado);
-            }
-            else
-            {
-                return redirect($this->rota);
-            }
+          if ($request["quero_incluir_participante"]=="sim")
+          {
+              return redirect('celulaspessoas/registrar/' . $id_gerado);
+          }
+          else
+          {
+              return redirect($this->rota);
+          }
 
-   }
+}
 
     //Abre tela para edicao ou somente visualização dos registros
    private function exibir ($request, $id, $preview) {
