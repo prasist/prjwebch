@@ -27,7 +27,9 @@
 
                <div class="col-xs-5">
                         <p class="text"><i> Legendas</i></p>
-                        <span class="badge bg-yellow">0</span>&nbsp;Indica se há {!! \Session::get('label_celulas_singular') !!} com multiplicação e ou vínculos
+                        <span class="badge bg-yellow">0</span>&nbsp;Quantidade {!! \Session::get('label_celulas_singular') !!} Multiplicadas (Primeira Geração)
+                        <br/>
+                        <span class="badge bg-purple">0</span>&nbsp;Quantidade {!! \Session::get('label_celulas_singular') !!} Multiplicadas (Segunda Geração)
                         <br/>
                         <span class="badge bg-blue">0</span>&nbsp;Quantidade de {!! \Session::get('label_participantes') !!}
                         <br/>
@@ -94,6 +96,9 @@
                                   @endcan
                                   @if ($value->tot_geracao>0)
                                   <span class="badge bg-yellow">{!! ($value->tot_geracao) !!}</span>
+                                  @endif
+                                  @if ($value->total_ant>0)
+                                  <span class="badge bg-purple">{!! ($value->total_ant) !!}</span>
                                   @endif
                             </td>
 
