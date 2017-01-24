@@ -759,6 +759,13 @@
                                                   </div>
 
                                                   <div class="row">
+                                                      <div class="col-md-12">
+                                                            <br/>
+                                                            <b>{!!$nome_lider_anterior!!} era o líder anterior e a quantidade atual de sua geração é : {!! $dados[0]->total_ant !!}</b>
+                                                      </div>
+                                                  </div>
+
+                                                  <div class="row">
                                                     <div class="col-md-12">
                                                      <div id="printable" class="box-header with-border">
                                                       @if (isset($gerar_estrutura_origem))

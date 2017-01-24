@@ -1837,6 +1837,13 @@ public function store(\Illuminate\Http\Request  $request)  {
         //$temp = \DB::select('select count(*) as tot from view_celulas  where celulas_pai_id = ?  and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
         //$total_vinculos =$temp[0]->tot;
 
+        $nome_lider_anterior="";
+        $lider_anterior = \DB::select('select p.razaosocial from log_geracoes l inner join pessoas p on p.id = l.lider_pessoas_id_anterior where l.celulas_id = ' . $id . ' and l.lider_pessoas_id_anterior is not null');
+        if ($lider_anterior) {
+           $nome_lider_anterior = $lider_anterior[0]->razaosocial;
+        }
+
+
         //return view($this->rota . '.edit', ['dados' =>$dados, 'preview' => $preview,  'nivel5' =>$view5, 'publicos'=>$publicos, 'faixas'=>$faixas]);
         return view($this->rota . '.atualizacao', [
               'gerar_estrutura_origem'=>$gerar_estrutura_origem,
@@ -1847,7 +1854,8 @@ public function store(\Illuminate\Http\Request  $request)  {
               'publicos'=>$publicos,
               'faixas'=>$faixas,
               'tipo_operacao'=>'editar',
-              'celulas'=>$celulas
+              'celulas'=>$celulas,
+              'nome_lider_anterior' => $nome_lider_anterior
             ]);
 
     }
