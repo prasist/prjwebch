@@ -758,12 +758,14 @@
                                                     </div>
                                                   </div>
 
+                                                  @if ($nome_lider_anterior!="")
                                                   <div class="row">
                                                       <div class="col-md-12">
                                                             <br/>
                                                             <b>{!!$nome_lider_anterior!!} era o líder anterior e a quantidade atual de sua geração é : {!! $dados[0]->total_ant !!}</b>
                                                       </div>
                                                   </div>
+                                                  @endif
 
                                                   <div class="row">
                                                     <div class="col-md-12">
