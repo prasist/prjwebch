@@ -681,7 +681,6 @@ class CelulasController extends Controller
                 $strSql .=  " AND ca.lider_pessoas_id  in (" . $this->id_lideres . ")";
             }
 
-
             $strSql .=  " group by c.empresas_id, c.empresas_clientes_cloud_id, ca.mes, ca.ano, qe.pergunta ";
 
             $resumo_perguntas = \DB::select($strSql);
@@ -789,7 +788,7 @@ class CelulasController extends Controller
             }
 
             $resumo_geral = \DB::select($strSql);
-            //dd($strSql);
+
             return $resumo_geral;
 
     }

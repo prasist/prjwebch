@@ -664,6 +664,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
     $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");
 
+
     \JasperPHP::process(
             $nome_relatorio,
             $output,

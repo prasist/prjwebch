@@ -753,9 +753,9 @@
                                                 <div class="box-footer no-padding">
 
                                                   <div id="nao_imprimir_3" class="row">
-                                                    <div class="col-md-12">
-                                                              <a href="#" onclick="window.print();"><i class="fa fa-print"></i>&nbsp;Clique Aqui para Imprimir (<i>Será necessário expandir a Árvore Hierárquica antes da impressão</i>)</a>
-                                                    </div>
+                                                      <div class="col-md-12">
+                                                           <a href="#" onclick="window.print();"><i class="fa fa-print"></i>&nbsp;Clique Aqui para Imprimir (<i>Será necessário expandir a Árvore Hierárquica antes da impressão</i>)</a>
+                                                     </div>
                                                   </div>
 
                                                   @if ($nome_lider_anterior!="")

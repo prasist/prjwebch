@@ -261,7 +261,7 @@
                           <div id="nao_imprimir_3">
                              <input id="ano"  name = "ano" type="number" value="" placeholder="Ano">
                              <select id="mes" placeholder="(Selecionar Mês)" name="mes" onchange="filtrar_resumos(this);" data-none-selected-text="Nenhum item selecionado" >
-                             <option  value="">(Selecionar Ano)</option>
+                             <option  value="">(Selecionar Mês)</option>
                              <option  value="01">Janeiro</option>
                              <option  value="02">Fevereiro</option>
                              <option  value="03">Março</option>
