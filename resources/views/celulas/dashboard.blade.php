@@ -6,9 +6,58 @@
 {{ \Session::put('route', 'celulas') }}
 {{ \Session::put('id_pagina', '42') }}
 
+<style type="text/css">
+
+    @media print
+    {
+         body *
+         {
+           visibility: hidden;
+         }
+
+        #printable, #printable *
+        {
+            visibility: visible;
+        }
+
+        #nao_imprimir_1
+        {
+            display:none;
+        }
+
+        #nao_imprimir_2
+        {
+            display:none;
+        }
+
+        #nao_imprimir_3
+        {
+            display:none;
+        }
+
+        #nao_imprimir_4
+        {
+            display:none;
+        }
+
+
+        #printable
+        {
+          page-break-inside: auto;
+          page-break-after: avoid;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          margin: 0;
+          padding: 0;
+        }
+    }
+
+</style>
+
 
 <!-- Small boxes (Stat box) -->
-<div class="row">
+<div id="nao_imprimir_1" class="row">
   <div class="col-md-12">
     <!-- Widget: user widget style 1 -->
     <div id="arvore" class="box box-widget" style="display: none">
@@ -84,7 +133,7 @@
 </div>
 </div>
 
-<div class="row">
+<div id="nao_imprimir_2" class="row">
           <div class="col-lg-4 col-xs-7">
                     <div class="inner">
                          <center><h4>Total {!! \Session::get('label_participantes') !!}</h4>
@@ -127,16 +176,18 @@
 <div class="row">
     <div class="col-md-12">
 
-     <div class="row">
+     <div id="printable" class="row">
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Visão Geral</h3>
+              <h3 class="box-title">Visão Geral - {!!$mostrar_texto!!}</h3>
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              <div id="nao_imprimir_4" class="box-tools pull-right">
+
+                <!--<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+                <!--<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>-->
+                <button type="button" class="btn btn-box-tool"><a href="#" onclick="window.print();"><i class="fa fa-print"></i>&nbsp;Clique Aqui para Imprimir</a></button>
+
             </div>
           </div>
 
@@ -207,9 +258,30 @@
                                 </ul>
                           </div>
 
+                          <div id="nao_imprimir_3">
+                             <input id="ano"  name = "ano" type="number" value="" placeholder="Ano">
+                             <select id="mes" placeholder="(Selecionar Mês)" name="mes" onchange="filtrar_resumos(this);" data-none-selected-text="Nenhum item selecionado" >
+                             <option  value="">(Selecionar Ano)</option>
+                             <option  value="01">Janeiro</option>
+                             <option  value="02">Fevereiro</option>
+                             <option  value="03">Março</option>
+                             <option  value="04">Abril</option>
+                             <option  value="05">Maio</option>
+                             <option  value="06">Junho</option>
+                             <option  value="07">Julho</option>
+                             <option  value="08">Agosto</option>
+                             <option  value="09">Setembro</option>
+                             <option  value="10">Outubro</option>
+                             <option  value="11">Novembro</option>
+                             <option  value="12">Dezembro</option>
+                             </select>
+                           </div>
+
+
                           @if ($resumo)
                           <div class="col-xs-6">
-                              <h4>&nbsp;&nbsp;&nbsp;&nbsp;Resumo {!! \Session::get('label_encontros') !!} (Mês Corrente)</h4>
+
+                              <h4>&nbsp;&nbsp;&nbsp;&nbsp;Resumo {!! \Session::get('label_encontros') !!}</h4>
                               <ul class="nav nav-stacked">
 
                                     <li>
@@ -243,6 +315,7 @@
                           </div>
                           @else
                            <div class="col-xs-6">
+
                                   <h4>&nbsp;&nbsp;&nbsp;&nbsp;Resumo {!! \Session::get('label_encontros') !!} (Mês Corrente)</h4>
                                   <ul class="nav nav-stacked">
 
@@ -284,56 +357,71 @@
        })();
 
 
-
-   function changeFunc(objeto, nivel, valor, nome)
-   {
+/*
+FILTRAR RESUMOS ESTATISTICO CONFORME MES ANO SELECIONADOS
+*/
+function filtrar_resumos(objeto) {
         var selectBox =  objeto;
         var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+        var ano = $('#ano').val();
 
-        //var selectSaida =  document.getElementById("resultado");
-        //var saida = selectSaida.options[selectSaida.selectedIndex].value;
-
-        if (selectedValue!="")
-        {
-            //Abre Relatorio conforme parametros passados
+        if (selectedValue!="") {
             myApp.showPleaseWait();
-            abrir_relatorio_nivel(selectedValue, nivel, valor, nome, "pdf");
+            chamar_dashboard(selectedValue, ano);
         }
 
-   }
+}
 
-    //resumo anual por estrutura
-      function abrir_relatorio_nivel(tipo, nivel, valor, nome, saida)
-      {
-             var urlGetUser = '';
-             urlGetUser = '{!! url("/estatisticas_nivel/' +  tipo + '/' + nivel+ '/' + valor + '/' + nome + '/' + saida + '") !!}';
-             window.location.href =urlGetUser;
+
+
+function changeFunc(objeto, nivel, valor, nome) {
+
+      var selectBox =  objeto;
+      var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+
+      //var selectSaida =  document.getElementById("resultado");
+      //var saida = selectSaida.options[selectSaida.selectedIndex].value;
+
+      if (selectedValue!="") {
+          //Abre Relatorio conforme parametros passados
+          myApp.showPleaseWait();
+          abrir_relatorio_nivel(selectedValue, nivel, valor, nome, "pdf");
       }
+}
 
-      //resumo anual
-      function abrir_relatorio(tipo)
-      {
-              var urlGetUser = '{!! url("/estatisticas/' +  tipo + '") !!}';
-              window.location.href =urlGetUser;
-      }
-
-    $(document).ready(function(){
-
-      //so mostrat div quando load pagina
-       $('#arvore').show();
-
-       //expandir menu
-       $("#menu_celulas").addClass("treeview active");
+/*
+CHAMADA ROUTE DASHBOARD COM MES ANO ESPECIFICOS
+*/
+ function chamar_dashboard(mes, ano) {
+         var urlGetUser = '';
+         urlGetUser = '{!! url("/dashboard_celulas/' +  mes + '/' + ano + '") !!}';
+         window.location.href =urlGetUser;
+ }
 
 
-      //-------------------------Grafico visitantes
+  //resumo anual por estrutura
+ function abrir_relatorio_nivel(tipo, nivel, valor, nome, saida)  {
+         var urlGetUser = '';
+         urlGetUser = '{!! url("/estatisticas_nivel/' +  tipo + '/' + nivel+ '/' + valor + '/' + nome + '/' + saida + '") !!}';
+         window.location.href =urlGetUser;
+  }
+
+  //resumo anual
+  function abrir_relatorio(tipo)
+  {
+          var urlGetUser = '{!! url("/estatisticas/' +  tipo + '") !!}';
+          window.location.href =urlGetUser;
+  }
+
+ function chamar_grafico(mes, ano) {
+
+   //-------------------------Grafico visitantes
       var var_json = (function () {
 
 
             var var_json = null;
-            var var_month = moment().format('M');
-            var var_year = moment().format('YYYY');
-            var urlGetUser = '{!! url("/grafico_celulas/visitantes/' +  var_month + '/' + var_year + '") !!}';
+
+            var urlGetUser = '{!! url("/grafico_celulas/visitantes/' +  mes + '/' + ano + '") !!}';
 
             $.ajax({
                 'async': false,
@@ -358,13 +446,16 @@
      //---------------------FIM
 
 
+ }
 
-     //-----------------------Grafico Total Por Tipo de Pessoa
+
+ function chamar_grafico_2(mes, ano) {
+
+    //-----------------------Grafico Total Por Tipo de Pessoa
       var var_json = (function () {
             var var_json = null;
-            var var_month = moment().format('M');
-            var var_year = moment().format('YYYY');
-            var urlGetUser = '{!! url("/grafico_celulas/tipo_pessoa/' +  var_month + '/' + var_year + '") !!}';
+
+            var urlGetUser = '{!! url("/grafico_celulas/tipo_pessoa/' +  mes + '/' + ano + '") !!}';
 
             $.ajax({
                 'async': false,
@@ -391,9 +482,26 @@
         });
 
         //---------------------FIM
+ }
+
+
+    $(document).ready(function(){
+
+      //so mostrat div quando load pagina
+       $('#arvore').show();
+
+       //expandir menu
+       $("#menu_celulas").addClass("treeview active");
+
+       var var_month = moment().format('M');
+       var var_year = moment().format('YYYY');
+
+       chamar_grafico(var_month, var_year); //MONTA GRAFICOS
+       chamar_grafico_2(var_month, var_year);  //MONTA GRAFICOS
 
 
      });
+ //}
 
 
 </script>

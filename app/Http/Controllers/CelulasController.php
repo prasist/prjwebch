@@ -658,7 +658,7 @@ class CelulasController extends Controller
             $strSql .=  " sum(cast(resposta as int)) as total ";
             $strSql .=  " FROM controle_atividades ca  ";
             $strSql .=  " inner join celulas c on c.id = ca.celulas_id ";
-            $strSql .=  " inner join pessoas p on p.id = ca.lider_pessoas_id ";
+            //$strSql .=  " inner join pessoas p on p.id = ca.lider_pessoas_id ";
             $strSql .=  " inner join controle_questions cq on cq.controle_atividades_id = ca.id and cq.empresas_id = ca.empresas_id and cq.empresas_clientes_cloud_id = ca.empresas_clientes_cloud_id ";
             $strSql .=  " inner join questionarios_encontros qe on qe.id = cq.questionarios_id ";
             $strSql .=  " where qe.tipo_resposta = 2  and cq.resposta is not null and cq.resposta <> '' AND ";
@@ -766,7 +766,7 @@ class CelulasController extends Controller
             $strSql = " SELECT sum(total) as total ";
             $strSql .=  " FROM controle_atividades ca  ";
             $strSql .=  " inner join celulas c on c.id = ca.celulas_id ";
-            $strSql .=  " inner join pessoas p on p.id = ca.lider_pessoas_id ";
+            //$strSql .=  " inner join pessoas p on p.id = ca.lider_pessoas_id ";
             $strSql .=  " inner join controle_resumo_tipo_pessoa cr on cr.controle_atividades_id = ca.id ";
             $strSql .=  " WHERE ";
             $strSql .=  " ca.empresas_id = " . $this->dados_login->empresas_id . " AND ";
@@ -802,7 +802,7 @@ class CelulasController extends Controller
             $strSql .=  " sum(total_membros) as total_membros, sum(total_visitantes) as total_visitantes, sum(total_geral) as total_geral ";
             $strSql .=  " FROM controle_atividades ca ";
             $strSql .=  " inner join celulas c on c.id = ca.celulas_id ";
-            $strSql .=  " inner join pessoas p on p.id = ca.lider_pessoas_id ";
+            //$strSql .=  " inner join pessoas p on p.id = ca.lider_pessoas_id ";
             $strSql .=  " inner join controle_resumo cr on cr.controle_atividades_id = ca.id ";
             $strSql .=  " WHERE ";
             //$strSql .=  " ca.id = " . $id . " AND ";
@@ -988,11 +988,36 @@ class CelulasController extends Controller
 
     }
 
+
+    public function dashboard_filtros($mes, $ano)  {
+
+        return $this->view_dashboard($mes, $ano);
+
+    }
+
+    /*
+    EXIBE RESUMOS ESTATISTICOS DO MES CORRENTE CASO NAO SEJA PASSADO PARAMETRO MES/ANO ESPECIFICOS
+    */
     public function dashboard()
     {
 
+        return $this->view_dashboard("","");
 
-        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.controle_atividades')) || \App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.celulas')))
+    }
+
+
+    protected function view_dashboard($mes, $ano) {
+
+
+      if ($mes=="") {
+          $mes = date('m');
+      }
+
+      if ($ano=="") {
+        $ano = date('Y');
+      }
+
+      if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.controle_atividades')) || \App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.celulas')))
         {
               $this->dados_login = \Session::get('dados_login');
 
@@ -1151,13 +1176,13 @@ class CelulasController extends Controller
             $celulas_faixas = \DB::select('select * from view_total_celulas_faixa_etaria vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
             $celulas_publicos = \DB::select('select * from view_total_celulas_publico_alvo vw where vw.empresas_id = ? and vw.empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
-            $resumo = $this->resumo_presencas(date('m'), date('Y'));
+            $resumo = $this->resumo_presencas($mes, $ano);
 
-            $resumo_geral = $this->resumo_geral(date('m'), date('Y'));
+            $resumo_geral = $this->resumo_geral($mes, $ano);
 
-            $resumo_tipo_pessoas = $this->resumo_tipo_pessoas(date('m'), date('Y'), 'Geral');
+            $resumo_tipo_pessoas = $this->resumo_tipo_pessoas($mes, $ano, 'Geral');
 
-            $resumo_perguntas = $this->resumo_perguntas(date('m'), date('Y'));
+            $resumo_perguntas = $this->resumo_perguntas($mes, $ano);
 
             //AQUI
             //Busca ID do cliente cloud e ID da empresa
@@ -1196,6 +1221,7 @@ class CelulasController extends Controller
                 $aberto='';
             }
 
+             $mostrar_texto = "Exibindo dados de : " . $mes . "/" . $ano;
 
               return view($this->rota . $qual_pagina,
                  [
@@ -1221,7 +1247,8 @@ class CelulasController extends Controller
                    'var_download'=>'',
                    'var_mensagem'=>'',
                    'participantes_presenca'=> $participantes_presenca,
-                   'gerar_treeview'=>$gerar_treeview
+                   'gerar_treeview'=>$gerar_treeview,
+                   'mostrar_texto' =>$mostrar_texto
                 ]);
         }
 

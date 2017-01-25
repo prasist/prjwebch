@@ -150,6 +150,7 @@ Route::post('/configmsg/gravar','ConfigMsgController@store');
     Route::get('financeiro', 'FinanceiroController@index');
 
     Route::get('dashboard_celulas', 'CelulasController@dashboard');
+    Route::get('dashboard_celulas/{mes}/{ano}', 'CelulasController@dashboard_filtros');
     Route::get('grafico_celulas/{opcao}/{mes}/{ano}', 'CelulasController@grafico_mensal');
 
 
