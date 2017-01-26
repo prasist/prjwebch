@@ -27,7 +27,7 @@
                                                         <div class="tab-pane active" id="tab_filtros">
 
                                                             <div class="row">
-                                                                <div class="col-xs-3">
+                                                                <div id="div_part" class="col-xs-3">
                                                                       <label for="ckExibir" class="control-label">Listar {!! \Session::get('label_participantes') !!}</label>
                                                                       <div class="input-group">
                                                                              <div class="input-group-addon">
@@ -38,7 +38,7 @@
 
                                                                 @if ($encontro)
 
-                                                                <div class="col-xs-3">
+                                                                <div id="div_cursos" class="col-xs-3">
                                                                       <label for="ckExibirCurso" class="control-label">Listar Resumo Cursos/Eventos</label>
                                                                       <div class="input-group">
                                                                              <div class="input-group-addon">
@@ -49,7 +49,16 @@
 
                                                                 @endif
 
-                                                            </div>
+                                                                 <div class="col-xs-3">
+                                                                         <label for="tiporel" class="control-label">Tipo Relatório</label>
+                                                                         <select id="tiporel" placeholder="(Selecionar)" onchange="exibir_campos();" name="tiporel" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                                            <option  value="0" selected>Relatório Padrão</option>
+                                                                            <option  value="1">Resumo Anual</option>
+                                                                            <option  value="2">Resumo Mensal</option>
+                                                                         </select>
+                                                                 </div>
+
+                                                            </div> <!-- end row -->
 
 
                                                             <div class="row">
@@ -79,7 +88,7 @@
 
                                                             <div class="row">
 
-                                                                    <div class="col-xs-3">
+                                                                    <div id="div_mes_inicial" class="col-xs-3">
                                                                          <label for="mes" class="control-label">Mês</label>
                                                                          <select id="mes" placeholder="(Selecionar)" name="mes" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
                                                                          <option  value=""></option>
@@ -98,20 +107,46 @@
                                                                           </select>
                                                                     </div>
 
-                                                                    <div class="col-xs-3">
+                                                                    <div id="div_mes_final" class="col-xs-3" style="display: none">
+                                                                         <label for="mes_final" class="control-label">Mês Final</label>
+                                                                         <select id="mes_final" placeholder="(Selecionar)" name="mes_final" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                                         <option  value=""></option>
+                                                                         <option  value="01">Janeiro</option>
+                                                                         <option  value="02">Fevereiro</option>
+                                                                         <option  value="03">Março</option>
+                                                                         <option  value="04">Abril</option>
+                                                                         <option  value="05">Maio</option>
+                                                                         <option  value="06">Junho</option>
+                                                                         <option  value="07">Julho</option>
+                                                                         <option  value="08">Agosto</option>
+                                                                         <option  value="09">Setembro</option>
+                                                                         <option  value="10">Outubro</option>
+                                                                         <option  value="11">Novembro</option>
+                                                                         <option  value="12">Dezembro</option>
+                                                                          </select>
+                                                                    </div>
+
+
+                                                                    <div id="div_ano_inicial" class="col-xs-2">
                                                                           <label for="ano" class="control-label">Ano</label>
                                                                           <input id="ano"  name = "ano" type="number" class="form-control" value="{{date('Y')}}">
                                                                     </div>
 
-                                                                    <div class="col-xs-6">
-                                                                          <label for="regiao" class="control-label">Região</label>
-                                                                          <input id="regiao"  placeholder="(Opcional)" name = "regiao" type="text" class="form-control" value="">
+                                                                    <div id="div_ano_final" class="col-xs-2"  style="display: none">
+                                                                          <label for="ano_final" class="control-label">Ano Final</label>
+                                                                          <input id="ano_final"  name = "ano_final" type="number" class="form-control" value="">
                                                                     </div>
-
 
 
                                                             </div>
 
+                                                            <div class="row">
+                                                                    <div class="col-xs-12">
+                                                                          <label for="regiao" class="control-label">Região</label>
+                                                                          <input id="regiao"  placeholder="(Opcional)" name = "regiao" type="text" class="form-control" value="">
+                                                                    </div>
+
+                                                            </div>
                                                             <div class="row">
 
                                                                 <div class="col-xs-6">
@@ -311,6 +346,42 @@
           };
       })();
 
+      $("#tiporel").prop("selectedIndex", 0); //POSICIONE NO PADRAO
+
+      function exibir_campos() {
+
+            if ($('#tiporel').val()=="1") { //RESUMO ANUAL
+                $('#div_ano_final').show();
+                $('#div_ano_inicial').show();
+                $('#div_mes_inicial').hide();
+                $('#div_mes_final').hide();
+                $('#div_part').hide();
+                $('#div_cursos').hide();
+
+            } else if ($('#tiporel').val()=="2") { //RESUMO MENSAL
+
+                $('#div_ano_final').hide();
+                $('#div_ano_inicial').show();
+                $('#div_mes_inicial').show();
+                $('#div_mes_final').show();
+                $('#div_part').hide();
+                $('#div_cursos').hide();
+
+            } else if ($('#tiporel').val()=="0") { //PADRAO
+
+                $('#div_ano_final').hide();
+                $('#div_ano_inicial').show();
+                $('#div_mes_inicial').show();
+                $('#div_mes_final').hide();
+                $('#div_part').show();
+                $('#div_cursos').show();
+
+            }
+
+
+
+      }
+
         /*Prepara checkbox bootstrap*/
        $(function () {
 
@@ -325,6 +396,7 @@
                 offLabel : 'Não',
                 onLabel : 'Sim',
             });
+
 
       });
 

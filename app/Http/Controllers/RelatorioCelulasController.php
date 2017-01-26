@@ -396,8 +396,18 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
     }
     else if ($tipo_relatorio=="encontro")  //RELATORIO DE ENCONTROS
     {
-        $filtros .= "     Mes : " . $input["mes"];
-        $filtros .= "     Ano : " . $input["ano"];
+
+        if ($input["tiporel"]=="0") { //RELATORIO ANUAL
+            $filtros .= "     Mes : " . $input["mes"];
+            $filtros .= "     Ano : " . $input["ano"];
+        } else if ($input["tiporel"]=="1") { //ANUAL
+            $filtros .= "     Ano Inicial : " . $input["ano"];
+            $filtros .= "     Ano Final : " . $input["ano_final"];
+        } else if ($input["tiporel"]=="2") {//MENSAL
+            $filtros .= "     Mes Inicial : " . $input["mes"];
+            $filtros .= "     Mes Final : " . $input["mes_final"];
+            $filtros .= "     Ano : " . $input["ano"];
+        }
     }
 
 
@@ -428,7 +438,13 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
    //make where clausure for query in jasper report
    //for report (encontro), set alias from field empresas_id (celulas.empresas_id)
    if ($tipo_relatorio=="encontro")  {
-          $sWhere = " celulas.empresas_id = " . $this->dados_login->empresas_id . " and celulas.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
+
+           if ($input["tiporel"]=="0") { //PADRAO
+                $sWhere = " celulas.empresas_id = " . $this->dados_login->empresas_id . " and celulas.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
+           } else {
+                $sWhere = " c.empresas_id = " . $this->dados_login->empresas_id . " and c.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
+           }
+
    } else {
 
          $sWhere = " empresas_id = " . $this->dados_login->empresas_id . " and empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
@@ -504,50 +520,81 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
             $parametros = array_add($parametros, 'nivel1', ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]));
 
             if ($descricao_nivel1!="" && $descricao_nivel1[0]!="0") {
-                $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel1_id = " . $descricao_nivel1[0];
+                if ($input["tiporel"]=="0")  {
+                    $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel1_id = " . $descricao_nivel1[0];
+                } else {
+                    $sWhere .= " and c.celulas_nivel1_id = " . $descricao_nivel1[0];
+                }
+
             }
 
             $parametros = array_add($parametros, 'nivel2', ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]));
 
             if ($descricao_nivel2!="" && $descricao_nivel2[0]!="0") {
-                $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel2_id = " . $descricao_nivel2[0];
+                if ($input["tiporel"]=="0")  {
+                    $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel2_id = " . $descricao_nivel2[0];
+                } else {
+                    $sWhere .= " and c.celulas_nivel2_id = " . $descricao_nivel2[0];
+                }
             }
 
             $parametros = array_add($parametros, 'nivel3', ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]));
 
             if ($descricao_nivel3!="" && $descricao_nivel3[0]!="0") {
-                $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel3_id = " . $descricao_nivel3[0];
+                if ($input["tiporel"]=="0")  {
+                    $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel3_id = " . $descricao_nivel3[0];
+                } else {
+                    $sWhere .= " and c.celulas_nivel3_id = " . $descricao_nivel3[0];
+                }
             }
 
             $parametros = array_add($parametros, 'nivel4', ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]));
 
             if ($descricao_nivel4!="" && $descricao_nivel4[0]!="0") {
-                $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel4_id = " . $descricao_nivel4[0];
+                if ($input["tiporel"]=="0")  {
+                    $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel4_id = " . $descricao_nivel4[0];
+                } else {
+                    $sWhere .= " and c.celulas_nivel4_id = " . $descricao_nivel4[0];
+                }
             }
 
             $parametros = array_add($parametros, 'nivel5', ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]));
 
             if ($descricao_nivel5!="" && $descricao_nivel5[0]!="0") {
-                $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel5_id = " . $descricao_nivel5[0];
+                if ($input["tiporel"]=="0")  {
+                    $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel5_id = " . $descricao_nivel5[0];
+                } else {
+                    $sWhere .= " and c.celulas_nivel5_id = " . $descricao_nivel5[0];
+                }
             }
    }
 
 
-    if (isset($input["mes"]))
-    {
-        if ($input["mes"]!="")
-        {
+    if (isset($input["mes"]) && $input["tiporel"]=="0") {
+        if ($input["mes"]!="") {
             $parametros = array_add($parametros, 'mes', $input["mes"]);
             $sWhere .= " and mes = " . $input["mes"];
         }
     }
 
-    if (isset($input["ano"]))
-    {
-        if ($input["ano"]!="")
-        {
+    if ($input["tiporel"]=="2") { //RELATORIO MENSAL
+        if (isset($input["mes"]) && isset($input["mes_final"])) {//MES INICIAL E FINAL
+             $parametros = array_add($parametros, 'mes', $input["mes"]);
+             $parametros = array_add($parametros, 'mes_final', $input["mes_final"]);
+        }
+    }
+
+    if (isset($input["ano"]) && $input["tiporel"]=="0") { //SOMENTE ANO INICIAL
+        if ($input["ano"]!="") {
             $parametros = array_add($parametros, 'ano', $input["ano"]);
             $sWhere .= " and ano = " . $input["ano"];
+        }
+    }
+
+    if ($input["tiporel"]=="1") { //RELATORIO ANUAL
+        if (isset($input["ano"]) && isset($input["ano_final"])) { //ANO INICIAL E FINAL
+                $parametros = array_add($parametros, 'ano', $input["ano"]);
+                $parametros = array_add($parametros, 'ano_final', $input["ano_final"]);
         }
     }
 
@@ -615,40 +662,54 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
             $parametros = array_add($parametros, 'exibir_cursos', 0);
         }
 
-        $parametros = array_add($parametros, 'SUBREPORT_DIR', public_path() . '/relatorios/');
+        if ($input["tiporel"]=="0") { //PADRAO
+            $parametros = array_add($parametros, 'SUBREPORT_DIR', public_path() . '/relatorios/');
+        }
 
         if ($descricao_lider[0]!="0") {
             $parametros = array_add($parametros, 'lideres', $descricao_lider[0]);
-            $sWhere .= " and celulas.lider_pessoas_id = " . $descricao_lider[0];
+            $sWhere .= " and " . ($input["tiporel"]=="0" ? "celulas" : "c"). ".lider_pessoas_id = " . $descricao_lider[0];
         } else { //Se for lider logado e ele nao informou a célula, força trazer resultados somente de sua célula
 
             if ($this->lider_logado!=null) {
                 $parametros = array_add($parametros, 'lideres', $this->lider_logado[0]->lider_pessoas_id);
-                $sWhere .= " and celulas.lider_pessoas_id = " . $this->lider_logado[0]->lider_pessoas_id;
+                $sWhere .= " and " . ($input["tiporel"]=="0" ? "celulas" : "c"). ".lider_pessoas_id = " . $this->lider_logado[0]->lider_pessoas_id;
             }
         }
 
         //se houver logo informada
-        if (rtrim(ltrim(\Session::get('logo')))!="") {
-            $parametros = array_add($parametros, 'path_logo', public_path() . '/images/clients/' . \Session::get('logo'));
+        if ($input["tiporel"]=="0") { //PADRAO
+            if (rtrim(ltrim(\Session::get('logo')))!="") {
+                $parametros = array_add($parametros, 'path_logo', public_path() . '/images/clients/' . \Session::get('logo'));
+            }
         }
 
-        if ($input["ckExibir"]=="on") {
-              $parametros = array_add($parametros, 'exibir_pessoas', 1);
-              //$nome_relatorio = public_path() . '/relatorios/relatorio_encontro.jasper';
-        } else {
-              //$nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral_lider2.jasper';
-            $parametros = array_add($parametros, 'exibir_pessoas', 0);
+        if ($input["tiporel"]=="0") { //PADRAO
+            if ($input["ckExibir"]=="on") {
+                  $parametros = array_add($parametros, 'exibir_pessoas', 1);
+                  //$nome_relatorio = public_path() . '/relatorios/relatorio_encontro.jasper';
+            } else {
+                  //$nome_relatorio = public_path() . '/relatorios/relatorio_encontro_resumo_geral_lider2.jasper';
+                $parametros = array_add($parametros, 'exibir_pessoas', 0);
+            }
         }
 
-        $nome_relatorio = public_path() . '/relatorios/relatorio_encontro.jasper';
+        //TIPO DE RELATORIO
+        if ($input["tiporel"]=="0") { //PADRAO
+            $nome_relatorio = public_path() . '/relatorios/relatorio_encontro.jasper';
+        } else if ($input["tiporel"]=="1") { //RESUMO ANUAL
+            $nome_relatorio = public_path() . '/relatorios/resumo_celulas_anual.jasper';
+        } else if ($input["tiporel"]=="2") { //RESUMO MENSAL
+            $nome_relatorio = public_path() . '/relatorios/resumo_celulas.jasper';
+        }
+
         //$nome_relatorio = public_path() . '/relatorios/relatorio_encontro_novo.jasper';
 
    }
    else if ($tipo_relatorio=="movimentacoes")  //RELATORIO MOVIMENTACOES
    {
 
-          $nome_relatorio = public_path() . '/relatorios/movimentacao_membros_niveis.jasper';
+         $nome_relatorio = public_path() . '/relatorios/movimentacao_membros_niveis.jasper';
 
          if ($descricao_lider[0]!="0")
          {
@@ -662,8 +723,8 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
    }
 
-    $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");
 
+    $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");
 
     \JasperPHP::process(
             $nome_relatorio,
