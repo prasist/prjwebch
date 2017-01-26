@@ -584,7 +584,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
         }
     }
 
-    if (isset($input["ano"]) && $input["tiporel"]=="0") { //SOMENTE ANO INICIAL
+    if (isset($input["ano"]) && $input["tiporel"]!="1") { //SOMENTE ANO INICIAL
         if ($input["ano"]!="") {
             $parametros = array_add($parametros, 'ano', $input["ano"]);
             $sWhere .= " and ano = " . $input["ano"];
@@ -725,6 +725,8 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
 
     $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");
+
+    //dd($parametros);
 
     \JasperPHP::process(
             $nome_relatorio,
