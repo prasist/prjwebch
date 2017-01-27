@@ -721,7 +721,14 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
         } else if ($input["tiporel"]=="1") { //RESUMO ANUAL
             $nome_relatorio = public_path() . '/relatorios/resumo_celulas_anual.jasper';
         } else if ($input["tiporel"]=="2") { //RESUMO MENSAL
-            $nome_relatorio = public_path() . '/relatorios/resumo_celulas.jasper';
+            //$nome_relatorio = public_path() . '/relatorios/resumo_celulas.jasper';
+            $nome_relatorio = public_path() . '/relatorios/resumo_celulas_grafico.jasper';
+        }
+
+        if ($input["tiporel"]!="0") {
+            if (isset($input["ckExibirGraf"])) {
+                $parametros = array_add($parametros, 'exibir_grafico', "'S'");
+            }
         }
 
         //$nome_relatorio = public_path() . '/relatorios/relatorio_encontro_novo.jasper';

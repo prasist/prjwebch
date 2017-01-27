@@ -58,6 +58,16 @@
                                                                          </select>
                                                                  </div>
 
+                                                                 <div id="div_grafico" class="col-xs-3" style="display: none">
+                                                                      <label for="ckExibirGraf" class="control-label">Exibir Gráfico</label>
+                                                                      <div class="input-group">
+                                                                             <div class="input-group-addon">
+                                                                                  <input  id= "ckExibirGraf" name="ckExibirGraf" type="checkbox" class="ckExibir" data-group-cls="btn-group-sm" checked />
+                                                                             </div>
+                                                                      </div>
+                                                                </div>
+
+
                                                             </div> <!-- end row -->
 
 
@@ -134,7 +144,7 @@
 
                                                                     <div id="div_ano_final" class="col-xs-2"  style="display: none">
                                                                           <label for="ano_final" class="control-label">Ano Final</label>
-                                                                          <input id="ano_final"  name = "ano_final" type="number" class="form-control" value="">
+                                                                          <input id="ano_final"  name = "ano_final" type="number" class="form-control" value="{{date('Y')}}">
                                                                     </div>
 
 
@@ -357,6 +367,7 @@
                 $('#div_mes_final').hide();
                 $('#div_part').hide();
                 $('#div_cursos').hide();
+                $('#div_grafico').show();
 
             } else if ($('#tiporel').val()=="2") { //RESUMO MENSAL
 
@@ -366,6 +377,7 @@
                 $('#div_mes_final').show();
                 $('#div_part').hide();
                 $('#div_cursos').hide();
+                $('#div_grafico').show();
 
             } else if ($('#tiporel').val()=="0") { //PADRAO
 
@@ -375,6 +387,7 @@
                 $('#div_mes_final').hide();
                 $('#div_part').show();
                 $('#div_cursos').show();
+                $('#div_grafico').hide();
 
             }
 
