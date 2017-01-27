@@ -533,52 +533,52 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
             $parametros = array_add($parametros, 'nivel1', ($descricao_nivel1=="" ? 0 : $descricao_nivel1[0]));
 
             if ($descricao_nivel1!="" && $descricao_nivel1[0]!="0") {
-                if ($input["tiporel"]=="0")  {
+                //if (isset($input["tiporel"]) && $input["tiporel"]=="0")  {
                     $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel1_id = " . $descricao_nivel1[0];
-                } else {
-                    $sWhere .= " and c.celulas_nivel1_id = " . $descricao_nivel1[0];
-                }
+                //} else {
+                //    $sWhere .= " and c.celulas_nivel1_id = " . $descricao_nivel1[0];
+                //}
 
             }
 
             $parametros = array_add($parametros, 'nivel2', ($descricao_nivel2=="" ? 0 : $descricao_nivel2[0]));
 
             if ($descricao_nivel2!="" && $descricao_nivel2[0]!="0") {
-                if ($input["tiporel"]=="0")  {
+                //if ($input["tiporel"]=="0")  {
                     $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel2_id = " . $descricao_nivel2[0];
-                } else {
-                    $sWhere .= " and c.celulas_nivel2_id = " . $descricao_nivel2[0];
-                }
+                //} else {
+                //    $sWhere .= " and c.celulas_nivel2_id = " . $descricao_nivel2[0];
+                //}
             }
 
             $parametros = array_add($parametros, 'nivel3', ($descricao_nivel3=="" ? 0 : $descricao_nivel3[0]));
 
             if ($descricao_nivel3!="" && $descricao_nivel3[0]!="0") {
-                if ($input["tiporel"]=="0")  {
+                //if ($input["tiporel"]=="0")  {
                     $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel3_id = " . $descricao_nivel3[0];
-                } else {
-                    $sWhere .= " and c.celulas_nivel3_id = " . $descricao_nivel3[0];
-                }
+                //} else {
+                    //$sWhere .= " and c.celulas_nivel3_id = " . $descricao_nivel3[0];
+                //}
             }
 
             $parametros = array_add($parametros, 'nivel4', ($descricao_nivel4=="" ? 0 : $descricao_nivel4[0]));
 
             if ($descricao_nivel4!="" && $descricao_nivel4[0]!="0") {
-                if ($input["tiporel"]=="0")  {
+                //if ($input["tiporel"]=="0")  {
                     $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel4_id = " . $descricao_nivel4[0];
-                } else {
-                    $sWhere .= " and c.celulas_nivel4_id = " . $descricao_nivel4[0];
-                }
+                //} else {
+                //    $sWhere .= " and c.celulas_nivel4_id = " . $descricao_nivel4[0];
+                //}
             }
 
             $parametros = array_add($parametros, 'nivel5', ($descricao_nivel5=="" ? 0 : $descricao_nivel5[0]));
 
             if ($descricao_nivel5!="" && $descricao_nivel5[0]!="0") {
-                if ($input["tiporel"]=="0")  {
+                //if ($input["tiporel"]=="0")  {
                     $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel5_id = " . $descricao_nivel5[0];
-                } else {
-                    $sWhere .= " and c.celulas_nivel5_id = " . $descricao_nivel5[0];
-                }
+                //} else {
+                //    $sWhere .= " and c.celulas_nivel5_id = " . $descricao_nivel5[0];
+                //}
             }
    }
 
