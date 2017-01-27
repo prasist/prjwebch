@@ -449,13 +449,17 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
          $sWhere = " empresas_id = " . $this->dados_login->empresas_id . " and empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
 
-            if (trim($input["ckExibir"])=="") {
-                    if (trim($input["ckEstruturas"])=="") {
-                        $sWhere = " vw.empresas_id = " . $this->dados_login->empresas_id . " and vw.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
-                    }
-            } else if (trim($input["ckEstruturas"])=="") {
-                $sWhere = " vw.empresas_id = " . $this->dados_login->empresas_id . " and vw.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
-            }
+
+         if (isset($input["ckExibir"])) {
+
+               if (trim($input["ckExibir"])=="") {
+                        if (trim($input["ckEstruturas"])=="") {
+                            $sWhere = " vw.empresas_id = " . $this->dados_login->empresas_id . " and vw.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
+                        }
+                } else if (trim($input["ckEstruturas"])=="") {
+                    $sWhere = " vw.empresas_id = " . $this->dados_login->empresas_id . " and vw.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
+                }
+         }
 
             if (isset($input["qtd_inicial"]) && isset($input["qtd_final"])) {
                 if ($input["qtd_inicial"]!="" && $input["qtd_final"]!="")
@@ -741,7 +745,10 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
    }
 
 
-    $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");
+    if ($tipo_relatorio!="movimentacoes") {
+         $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");
+    }
+
 
     //dd($parametros);
 
