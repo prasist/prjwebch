@@ -458,7 +458,8 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
             }
 
             if (isset($input["qtd_inicial"]) && isset($input["qtd_final"])) {
-                $sWhere = " vw.empresas_id = " . $this->dados_login->empresas_id . " and vw.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
+                if ($input["qtd_inicial"]!="" && $input["qtd_final"]!="")
+                    $sWhere = " vw.empresas_id = " . $this->dados_login->empresas_id . " and vw.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
             }
    }
 
@@ -485,11 +486,13 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
     }
 
     if (isset($input["qtd_inicial"]) && isset($input["qtd_final"])) {
-            $parametros = array_add($parametros, 'qtd_inicial', ($input["qtd_inicial"]=="" ? 0 : $input["qtd_inicial"]));
+            if ($input["qtd_inicial"]!="" && $input["qtd_final"]!="") {
+                $parametros = array_add($parametros, 'qtd_inicial', ($input["qtd_inicial"]=="" ? 0 : $input["qtd_inicial"]));
 
-            if ($input["qtd_inicial"]!="") {
-                //$sWhere .= " and qtd_geracao between " . $input["qtd_inicial"] . " and " . $input["qtd_final"];
-                $sWhere .= " and total between " . $input["qtd_inicial"] . " and " . $input["qtd_final"];
+                if ($input["qtd_inicial"]!="") {
+                    //$sWhere .= " and qtd_geracao between " . $input["qtd_inicial"] . " and " . $input["qtd_final"];
+                    $sWhere .= " and total between " . $input["qtd_inicial"] . " and " . $input["qtd_final"];
+                }
             }
     }
 
@@ -661,7 +664,8 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
               }
 
             if (isset($input["qtd_inicial"]) && isset($input["qtd_final"])) {
-                $nome_relatorio = public_path() . '/relatorios/listagem_celulas_mult.jasper';
+                if ($input["qtd_inicial"]!="" && $input["qtd_final"]!="")
+                    $nome_relatorio = public_path() . '/relatorios/listagem_celulas_mult.jasper';
             }
 
    }
