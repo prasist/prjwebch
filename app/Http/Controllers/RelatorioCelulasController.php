@@ -456,9 +456,14 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
             } else if (trim($input["ckEstruturas"])=="") {
                 $sWhere = " vw.empresas_id = " . $this->dados_login->empresas_id . " and vw.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
             }
+
+            if (isset($input["qtd_inicial"]) && isset($input["qtd_final"])) {
+                $sWhere = " vw.empresas_id = " . $this->dados_login->empresas_id . " and vw.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
+            }
    }
 
-    //parameters fields to jasper report
+
+     //parameters fields to jasper report
     $parametros = array
     (
         "empresas_id"=> $this->dados_login->empresas_id,
@@ -483,7 +488,8 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
             $parametros = array_add($parametros, 'qtd_inicial', ($input["qtd_inicial"]=="" ? 0 : $input["qtd_inicial"]));
 
             if ($input["qtd_inicial"]!="") {
-                $sWhere .= " and qtd_geracao between " . $input["qtd_inicial"] . " and " . $input["qtd_final"];
+                //$sWhere .= " and qtd_geracao between " . $input["qtd_inicial"] . " and " . $input["qtd_final"];
+                $sWhere .= " and total between " . $input["qtd_inicial"] . " and " . $input["qtd_final"];
             }
     }
 
@@ -577,10 +583,12 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
         }
     }
 
-    if ($input["tiporel"]=="2") { //RELATORIO MENSAL
-        if (isset($input["mes"]) && isset($input["mes_final"])) {//MES INICIAL E FINAL
-             $parametros = array_add($parametros, 'mes', $input["mes"]);
-             $parametros = array_add($parametros, 'mes_final', $input["mes_final"]);
+    if (isset($input["tiporel"])) {
+        if ($input["tiporel"]=="2") { //RELATORIO MENSAL
+            if (isset($input["mes"]) && isset($input["mes_final"])) {//MES INICIAL E FINAL
+                 $parametros = array_add($parametros, 'mes', $input["mes"]);
+                 $parametros = array_add($parametros, 'mes_final', $input["mes_final"]);
+            }
         }
     }
 
@@ -591,13 +599,14 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
         }
     }
 
-    if ($input["tiporel"]=="1") { //RELATORIO ANUAL
-        if (isset($input["ano"]) && isset($input["ano_final"])) { //ANO INICIAL E FINAL
-                $parametros = array_add($parametros, 'ano', $input["ano"]);
-                $parametros = array_add($parametros, 'ano_final', $input["ano_final"]);
+    if (isset($input["tiporel"])) {
+        if ($input["tiporel"]=="1") { //RELATORIO ANUAL
+            if (isset($input["ano"]) && isset($input["ano_final"])) { //ANO INICIAL E FINAL
+                    $parametros = array_add($parametros, 'ano', $input["ano"]);
+                    $parametros = array_add($parametros, 'ano_final', $input["ano_final"]);
+            }
         }
     }
-
 
    if ($tipo_relatorio=="celulas")  //Relatorio de celulas
    {
@@ -650,6 +659,10 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
                          $nome_relatorio = public_path() . '/relatorios/listagem_celulas.jasper';
                     }
               }
+
+            if (isset($input["qtd_inicial"]) && isset($input["qtd_final"])) {
+                $nome_relatorio = public_path() . '/relatorios/listagem_celulas_mult.jasper';
+            }
 
    }
    else if ($tipo_relatorio=="encontro")  //RELATORIO ENCONTROS
