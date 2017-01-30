@@ -905,8 +905,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
                 $Mensagem="";
 
-                if (filesize($output . '.' . $ext)<=1000) //Se arquivo tiver menos de 1k, provavelmente está vazio...
-                {
+                if (filesize($output . '.' . $ext)<=1000) { //Se arquivo tiver menos de 1k, provavelmente está vazio...
 
                     $Mensagem = "Nenhum Registro Encontrado";
                     if ($tipo_relatorio=="celulas")  {
@@ -919,8 +918,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
                     else
                 {
 
-                    if ($ext=="pdf") //Se for pdf abre direto na pagina
-                    {
+                    if ($ext=="pdf") { //Se for pdf abre direto na pagina
 
                         header('Content-Description: File Transfer');
                         header('Content-Type: application/pdf');

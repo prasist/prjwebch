@@ -136,7 +136,6 @@
                                                                           </select>
                                                                     </div>
 
-
                                                                     <div id="div_ano_inicial" class="col-xs-2">
                                                                           <label for="ano" class="control-label">Ano</label>
                                                                           <input id="ano"  name = "ano" type="number" class="form-control" value="{{date('Y')}}">
@@ -147,7 +146,6 @@
                                                                           <input id="ano_final"  name = "ano_final" type="number" class="form-control" value="{{date('Y')}}">
                                                                     </div>
 
-
                                                             </div>
 
                                                             <div class="row">
@@ -155,10 +153,9 @@
                                                                           <label for="regiao" class="control-label">Região</label>
                                                                           <input id="regiao"  placeholder="(Opcional)" name = "regiao" type="text" class="form-control" value="">
                                                                     </div>
-
                                                             </div>
-                                                            <div class="row">
 
+                                                           <div class="row">
                                                                 <div class="col-xs-6">
                                                                       <label for="publico_alvo" class="control-label">Público Alvo</label>
                                                                       <select id="publico_alvo" placeholder="(Selecionar)" name="publico_alvo" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">

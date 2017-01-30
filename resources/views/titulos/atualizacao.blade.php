@@ -55,7 +55,7 @@
                                                     @if (isset($dados))
                                                         <input id="descricao"  placeholder="Campo Obrigatório" name = "descricao" type="text" class="form-control" value="{{ $dados[0]->descricao }}">
                                                     @else
-                                                        <input id="descricao"  placeholder="Campo Obrigatório" name = "descricao" type="text" class="form-control" value="">
+                                                        <input id="descricao"  placeholder="Campo Obrigatório" name = "descricao" type="text" class="form-control" value="{{ old('descricao') }}">
                                                     @endif
                                                        <!-- se houver erros na validacao do form request -->
                                                        @if ($errors->has('descricao'))
@@ -72,7 +72,7 @@
                                                          @if (isset($dados))
                                                               <input id="valor" maxlength="60"   name = "valor" type="text" class="formata_valor form-control" value="{{ $dados[0]->valor }}">
                                                          @else
-                                                              <input id="valor" maxlength="60"   name = "valor" type="text" class="formata_valor form-control" onblur="onblur_valor();" value="">
+                                                              <input id="valor" maxlength="60"   name = "valor" type="text" class="formata_valor form-control" onblur="onblur_valor();" value="{{ old('valor')}}">
                                                          @endif
 
                                                          @if ($errors->has('valor'))
@@ -92,7 +92,7 @@
                                                           @if (isset($dados))
                                                                 <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ $dados[0]->data_emissao }}">
                                                           @else
-                                                                <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ old('data_emissao') }}">
                                                           @endif
                                                   </div>
                                              </div>
@@ -106,7 +106,7 @@
                                                           @if (isset($dados))
                                                                 <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ $dados[0]->data_vencimento }}">
                                                           @else
-                                                                <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                                                <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{ old('data_vencimento') }}">
                                                           @endif
                                                           <!-- se houver erros na validacao do form request -->
                                                            @if ($errors->has('data_vencimento'))

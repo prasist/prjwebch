@@ -46,7 +46,7 @@ class CadastrarController extends Controller
 
        }
 
-          /*Busca pela inicial do nome (alfabeto)*/
+       /*Busca pela inicial do nome (alfabeto)*/
        public function carregar_tabela($tabela)
        {
 
