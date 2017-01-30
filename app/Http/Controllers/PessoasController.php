@@ -21,6 +21,11 @@ class PessoasController extends Controller
         $this->rota = "pessoas"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
+        /*Instancia a classe de funcoes (Data, valor, etc)*/
+        $this->formatador = new  \App\Functions\FuncoesGerais();
+
+        //echo $this->formatador->tirarAcentos('leão');
+
         //Validação de permissão de acesso a pagina
         if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']))
         {
@@ -185,7 +190,8 @@ public function validacao_dados()
         {
                 /*Pegar todos querystrings passados*/
                 //Exemplo : status|1&tipopessoa|F&nome|fulano&
-                $array_campos = explode("&", htmlspecialchars_decode($querystring));
+
+                $array_campos = explode("&", htmlspecialchars_decode(html_entity_decode($querystring)));
 
                 //Percorre resultado da array
                 foreach ($array_campos as $key => $value)
@@ -194,7 +200,7 @@ public function validacao_dados()
 
                         if ($arraytemp[0]=="ativo") $status = $arraytemp[1];
                         if ($arraytemp[0]=="tipopessoa") $tipopessoa = $arraytemp[1];
-                        if ($arraytemp[0]=="razaosocial") $razaosocial = $arraytemp[1];
+                        if ($arraytemp[0]=="razaosocial") $razaosocial = html_entity_decode($arraytemp[1]);
                         if ($arraytemp[0]=="grupos_pessoas_id") $grupos_pessoas_id = $arraytemp[1];
                         if ($arraytemp[0]=="tipos_pessoas_id") $tipos_pessoas_id = $arraytemp[1];
                         if ($arraytemp[0]=="datanasc") $datanasc = $arraytemp[1];

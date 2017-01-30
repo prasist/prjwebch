@@ -94,6 +94,7 @@
               $(function ()
               {
 
+                //console.log('{{$where}}');
                 var sDados = '{{$where}}';  //Pega dados consulta
                 var urlRoute = "{!! url('/pessoas/json/" + sDados + "') !!}"; //Rota para consulta
                 var rota = "{{$rota}}"; //Somente rota da pagina

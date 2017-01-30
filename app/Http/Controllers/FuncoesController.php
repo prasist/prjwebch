@@ -19,6 +19,10 @@ class FuncoesController extends Controller
         $this->rota = "pessoas"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
+        /*Instancia a classe de funcoes (Data, valor, etc)*/
+        $this->formatador = new  \App\Functions\FuncoesGerais();
+
+
         //Validação de permissão de acesso a pagina
         if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']) || Gate::allows('verifica_permissao', [\Config::get('app.celulas'),'acessar']) || Gate::allows('verifica_permissao', [\Config::get('app.controle_atividades'),'acessar']))
         {
@@ -105,7 +109,7 @@ class FuncoesController extends Controller
             $buscar = \App\Models\pessoas::select('id', 'razaosocial')
             ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
             ->where('empresas_id', $this->dados_login->empresas_id)
-            ->where('razaosocial', 'ilike', '%' . $id . '%')
+            ->where('razaosocial', 'ilike', '%' . $this->formatador->tirarAcentos($id) . '%')
             ->orderBy('razaosocial')
             ->take(50)
             ->get()->toArray();

@@ -50,10 +50,18 @@ class pessoas extends Model
 public function scopeRazaosocial($query, $nome)
     {
 
+        /*Instancia a classe de funcoes (Data, valor, etc)*/
+        $this->formatador = new  \App\Functions\FuncoesGerais();
+
         /*busca por razaosocial, nomefantasia ou cnpj/cpf*/
         if ($nome)
         {
-           return $query->where('razaosocial', 'ilike', '%' . $nome . '%')->orWhere('nomefantasia', 'ilike', '%' . $nome . '%')->orWhere('cnpj_cpf', '=', $nome);
+           return $query
+           ->where('razaosocial', 'ilike', '%' . $this->formatador->tirarAcentos($nome) . '%')
+           ->orWhere('razaosocial', 'ilike', '%' . $nome . '%')
+           ->orWhere('nomefantasia', 'ilike', '%' . $this->formatador->tirarAcentos($nome) . '%')
+           ->orWhere('nomefantasia', 'ilike', '%' . $nome . '%')
+           ->orWhere('cnpj_cpf', '=', $this->formatador->tirarAcentos($nome));
         }
 
         return $query;

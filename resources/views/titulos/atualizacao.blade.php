@@ -173,7 +173,7 @@
                                                                  </a>
                                                               </div>
 
-                                                              @if (isset($rateio_titulos) && $rateio_titulos->count()>0)
+                                                             @if (isset($rateio_titulos) && $rateio_titulos->count()>0)
                                                                     <select id="centros_custos" onchange="incluir_registro_combo('centros_custos');" placeholder="(Selecionar)"
                                                                     name="centros_custos" data-live-search="true" data-none-selected-text="Nenhum item selecionado"
                                                                     class="form-control selectpicker" style="width: 100%;" {{$rateio_titulos->count()>0 ? "disabled" : "" }}>
