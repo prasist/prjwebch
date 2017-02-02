@@ -97,8 +97,10 @@
                                   @if ($value->tot_geracao>0)
                                   <span class="badge bg-yellow">{!! ($value->tot_geracao) !!}</span>
                                   @endif
-                                  @if ($value->total_ant>0)
-                                  <span class="badge bg-purple">{!! ($value->total_ant) !!}</span>
+                                  @if (isset($value->total_ant))
+                                      @if ($value->total_ant>0)
+                                      <span class="badge bg-purple">{!! ($value->total_ant) !!}</span>
+                                      @endif
                                   @endif
                             </td>
 

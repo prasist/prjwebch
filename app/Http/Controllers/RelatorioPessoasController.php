@@ -197,6 +197,7 @@ public function relatorio_pessoas_tipo($conteudo, $opcao='') {
     (
         "empresas_id"=> $this->dados_login->empresas_id,
         "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
+        "empresas_clientes_cloud_id"=> $this->dados_login->empresas_clientes_cloud_id,
     );
 
     if ($opcao=="tipo") {

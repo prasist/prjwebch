@@ -103,7 +103,9 @@
                             @if ($dados[0]->tot_geracao!=0)
                                   <a href="#tab_2" data-toggle="tab">Vinculo de {!! \Session::get('label_celulas') !!}&nbsp;<span class="pull-right badge bg-yellow">{!! ($dados[0]->tot_geracao==0 ? "" : $dados[0]->tot_geracao) !!}</span></a>
                             @else
+                                  @if (isset($dados[0]->total_ant))
                                   <a href="#tab_2" data-toggle="tab">Vinculo de {!! \Session::get('label_celulas') !!}&nbsp;<span class="pull-right badge bg-purple">{!! ($dados[0]->total_ant==0 ? "" : $dados[0]->total_ant) !!}</span></a>
+                                  @endif
                             @endif
 
 
@@ -758,13 +760,17 @@
                                                      </div>
                                                   </div>
 
-                                                  @if ($nome_lider_anterior!="")
-                                                  <div class="row">
-                                                      <div class="col-md-12">
-                                                            <br/>
-                                                            <b>{!!$nome_lider_anterior!!} era o líder anterior e a quantidade atual de sua geração é : {!! $dados[0]->total_ant !!}</b>
+                                                  @if (isset($nome_lider_anterior))
+                                                      @if ($nome_lider_anterior!="")
+                                                      <div class="row">
+                                                          <div class="col-md-12">
+                                                                <br/>
+                                                                @if (isset($dados[0]->total_ant))
+                                                                <b>{!!$nome_lider_anterior!!} era o líder anterior e a quantidade atual de sua geração é : {!! $dados[0]->total_ant !!}</b>
+                                                                @endif
+                                                          </div>
                                                       </div>
-                                                  </div>
+                                                      @endif
                                                   @endif
 
                                                   <div class="row">
