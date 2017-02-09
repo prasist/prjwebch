@@ -68,8 +68,18 @@ class FinanceiroController extends Controller
               ->where('empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
               ->get();
 
+             //BUSCA TÍTULOS VENCIDOS
+              $sQuery = " select id, descricao as nome, tipo , valor , to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') as vencimento, CURRENT_DATE - (to_date(data_vencimento, 'yyyy-MM-dd')-  INTERVAL '1 DAY')  :: DATE  AS DIAS from titulos where  ";
+              $sQuery .= " empresas_id = " . $this->dados_login->empresas_id;
+              $sQuery .= " and empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
+              $sQuery .= " and status <> 'B' ";
+              $sQuery .= " and CURRENT_DATE > to_date(data_vencimento, 'yyyy-mm-dd') ";
+              $sQuery .= " order by id ";
 
-              return view($this->rota . '.dashboard', ['todas_contas'=>$todas_contas, 'total_receber_aberto'=>$total_receber_aberto, 'total_receber_mes'=>$total_receber_mes, 'total_pagar_aberto'=>$total_pagar_aberto, 'total_pagar_mes'=>$total_pagar_mes, 'saldo_contas'=>$saldo_contas]);
+              $vencidos = \DB::select($sQuery);
+
+
+              return view($this->rota . '.dashboard', ['vencidos'=>$vencidos, 'todas_contas'=>$todas_contas, 'total_receber_aberto'=>$total_receber_aberto, 'total_receber_mes'=>$total_receber_mes, 'total_pagar_aberto'=>$total_pagar_aberto, 'total_pagar_mes'=>$total_pagar_mes, 'saldo_contas'=>$saldo_contas]);
        }
 
     }
