@@ -365,7 +365,7 @@ function filtrar_resumos(objeto) {
         var selectedValue = selectBox.options[selectBox.selectedIndex].value;
         var ano = $('#ano').val();
 
-        if (selectedValue!="") {
+        if (selectedValue!="" && ano !="") {
             myApp.showPleaseWait();
             chamar_dashboard(selectedValue, ano);
         }
