@@ -132,7 +132,7 @@
                                  @endcan
                             </td>
 
-                            <td>{{$value->tipo}}</td>
+                            <td>{{ ($value->tipo=="R" ? "À Receber" : "À Pagar")}}</td>
                             <td>{{$value->vencimento}}</td>
                             <td class="text-danger">{{$value->dias}}</td>
                             <td>{{ str_replace(".", ",", $value->valor) }}</td>

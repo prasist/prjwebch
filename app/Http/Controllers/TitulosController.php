@@ -15,13 +15,6 @@ class TitulosController extends Controller
 
     public function __construct() {
 
-      /*
-          select * from titulos where
-empresas_id = 20 and
-empresas_clientes_cloud_id = 15 and
-status  <> 'B' and
-CURRENT_DATE > to_date(data_vencimento, 'yyyy-mm-dd')
-      */
         $this->rota = "titulos"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
 
