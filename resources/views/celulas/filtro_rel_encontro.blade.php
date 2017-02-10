@@ -27,6 +27,18 @@
                                                         <div class="tab-pane active" id="tab_filtros">
 
                                                             <div class="row">
+
+                                                                 <div class="col-xs-3">
+                                                                         <label for="tiporel" class="control-label">Tipo Relatório</label>
+                                                                         <select id="tiporel" placeholder="(Selecionar)" onchange="exibir_campos();" name="tiporel" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
+                                                                            <option  value="0" selected>Relatório Padrão</option>
+                                                                            <option  value="1">Resumo Anual</option>
+                                                                            <option  value="2">Resumo Mensal</option>
+                                                                            <option  value="3">Visitantes</option>
+                                                                         </select>
+                                                                 </div>
+
+
                                                                 <div id="div_part" class="col-xs-3">
                                                                       <label for="ckExibir" class="control-label">Listar {!! \Session::get('label_participantes') !!}</label>
                                                                       <div class="input-group">
@@ -49,14 +61,6 @@
 
                                                                 @endif
 
-                                                                 <div class="col-xs-3">
-                                                                         <label for="tiporel" class="control-label">Tipo Relatório</label>
-                                                                         <select id="tiporel" placeholder="(Selecionar)" onchange="exibir_campos();" name="tiporel" data-none-selected-text="Nenhum item selecionado" class="form-control" style="width: 100%;">
-                                                                            <option  value="0" selected>Relatório Padrão</option>
-                                                                            <option  value="1">Resumo Anual</option>
-                                                                            <option  value="2">Resumo Mensal</option>
-                                                                         </select>
-                                                                 </div>
 
                                                                  <div id="div_grafico" class="col-xs-3" style="display: none">
                                                                       <label for="ckExibirGraf" class="control-label">Exibir Gráfico</label>
@@ -384,6 +388,16 @@
                 $('#div_mes_final').hide();
                 $('#div_part').show();
                 $('#div_cursos').show();
+                $('#div_grafico').hide();
+
+            } else if ($('#tiporel').val()=="3") { //PADRAO
+
+                $('#div_ano_final').hide();
+                $('#div_ano_inicial').show();
+                $('#div_mes_inicial').show();
+                $('#div_mes_final').hide();
+                $('#div_part').hide();
+                $('#div_cursos').hide();
                 $('#div_grafico').hide();
 
             }

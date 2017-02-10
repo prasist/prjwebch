@@ -439,7 +439,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
    //for report (encontro), set alias from field empresas_id (celulas.empresas_id)
    if ($tipo_relatorio=="encontro")  {
 
-           if ($input["tiporel"]=="0") { //PADRAO
+           if ($input["tiporel"]=="0" || $input["tiporel"]=="3") { //PADRAO
                 $sWhere = " celulas.empresas_id = " . $this->dados_login->empresas_id . " and celulas.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
            } else {
                 $sWhere = " c.empresas_id = " . $this->dados_login->empresas_id . " and c.empresas_clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "";
@@ -583,7 +583,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
    }
 
 
-    if (isset($input["mes"]) && $input["tiporel"]=="0") {
+    if (isset($input["mes"]) && ($input["tiporel"]=="0" || $input["tiporel"]=="3")) {
         if ($input["mes"]!="") {
             $parametros = array_add($parametros, 'mes', $input["mes"]);
             $sWhere .= " and mes = " . $input["mes"];
@@ -689,12 +689,12 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
         if ($descricao_lider[0]!="0") {
             $parametros = array_add($parametros, 'lideres', $descricao_lider[0]);
-            $sWhere .= " and " . ($input["tiporel"]=="0" ? "celulas" : "c"). ".lider_pessoas_id = " . $descricao_lider[0];
+            $sWhere .= " and " . (($input["tiporel"]=="0" || $input["tiporel"]=="3") ? "celulas" : "c"). ".lider_pessoas_id = " . $descricao_lider[0];
         } else { //Se for lider logado e ele nao informou a célula, força trazer resultados somente de sua célula
 
             if ($this->lider_logado!=null) {
                 $parametros = array_add($parametros, 'lideres', $this->lider_logado[0]->lider_pessoas_id);
-                $sWhere .= " and " . ($input["tiporel"]=="0" ? "celulas" : "c"). ".lider_pessoas_id = " . $this->lider_logado[0]->lider_pessoas_id;
+                $sWhere .= " and " . (($input["tiporel"]=="0" || $input["tiporel"]=="3") ? "celulas" : "c"). ".lider_pessoas_id = " . $this->lider_logado[0]->lider_pessoas_id;
             }
         }
 
@@ -723,9 +723,11 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
         } else if ($input["tiporel"]=="2") { //RESUMO MENSAL
             //$nome_relatorio = public_path() . '/relatorios/resumo_celulas.jasper';
             $nome_relatorio = public_path() . '/relatorios/resumo_celulas_grafico.jasper';
+        } else if ($input["tiporel"]=="3") { //VISITANTES
+            $nome_relatorio = public_path() . '/relatorios/relatorio_visitantes_geral.jasper';
         }
 
-        if ($input["tiporel"]!="0") {
+        if ($input["tiporel"]!="0" && $input["tiporel"]!="3") {
             if (isset($input["ckExibirGraf"])) {
                 $parametros = array_add($parametros, 'exibir_grafico', "'S'");
             }
