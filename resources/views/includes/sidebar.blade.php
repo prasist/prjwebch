@@ -357,7 +357,7 @@
 
       @if(Gate::check('verifica_permissao', [53 ,'acessar']))
       <li>
-        <a href="{!! url('/relfinanceiro') !!}"><i class="fa fa-angle-double-right"></i>Relatórios</i></a>
+        <a href="{!! url('/relfinanceiro') !!}"><i class="fa fa-print"></i>Relatórios</a>
       </li>
       @endif
 
