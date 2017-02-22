@@ -796,7 +796,11 @@
                                                    $.each(data, function(index, element)
                                                    {
 
-                                                      html +='<option value="' + element.substr(0,2) + '">' + element + '</option>';
+                                                      if (element.trim() =="Segundo Dia Encontro") {
+                                                         html +='<option value="' + element.substr(0,2) + '" disabled>' + element + '</option>';
+                                                      } else {
+                                                         html +='<option value="' + element.substr(0,2) + '">' + element + '</option>';
+                                                      }
 
                                                    });
 

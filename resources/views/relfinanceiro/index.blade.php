@@ -146,9 +146,9 @@
         <div class="col-md-6">
 
 
-        <!-- INICIO CONTEUDO -->
+         <!-- INICIO CONTEUDO -->
 
-                 <!-- Horizontal Form -->
+         <!-- Horizontal Form -->
           <div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">Período</h3>
@@ -166,7 +166,7 @@
                                      <div class="input-group-addon">
                                       <i class="fa fa-calendar"></i>
                                       </div>
-                                      <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                      <input id ="data_emissao" name = "data_emissao" onblur="validar_data(this);" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('data_emissao')}}">
                               </div>
                      </div>
 
@@ -178,7 +178,7 @@
                                      <div class="input-group-addon">
                                       <i class="fa fa-calendar"></i>
                                       </div>
-                                      <input id ="data_emissao_ate" name = "data_emissao_ate" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                      <input id ="data_emissao_ate" name = "data_emissao_ate" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('data_emissao_ate')}}">
                               </div>
                      </div>
                 </div>
@@ -191,7 +191,7 @@
                                      <div class="input-group-addon">
                                       <i class="fa fa-calendar"></i>
                                       </div>
-                                      <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                      <input id ="data_vencimento" name = "data_vencimento" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('data_vencimento')}}">
                               </div>
                      </div>
 
@@ -202,7 +202,7 @@
                                      <div class="input-group-addon">
                                       <i class="fa fa-calendar"></i>
                                       </div>
-                                      <input id ="data_vencimento_ate" name = "data_vencimento_ate" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                      <input id ="data_vencimento_ate" name = "data_vencimento_ate" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('data_vencimento_ate')}}">
                               </div>
 
                      </div>
@@ -219,7 +219,7 @@
                                       <i class="fa fa-calendar"></i>
                                       </div>
 
-                                      <input id ="data_pagamento" name = "data_pagamento" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                      <input id ="data_pagamento" name = "data_pagamento" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('data_pagamento')}}">
                               </div>
 
                      </div>
@@ -232,7 +232,7 @@
                                       <i class="fa fa-calendar"></i>
                                       </div>
 
-                                      <input id ="data_pagamento_ate" name = "data_pagamento_ate" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="">
+                                      <input id ="data_pagamento_ate" name = "data_pagamento_ate" onblur="validar_data(this)" type="text" class="form-control" data-inputmask='"mask": "99/99/9999"' data-mask  value="{{old('data_pagamento_ate')}}">
                               </div>
 
                      </div>
@@ -242,7 +242,7 @@
               <!-- /.box-body -->
               <!-- /.box-footer -->
             </div>
-          </div>
+         </div>
           <!-- /.box -->
 
 
