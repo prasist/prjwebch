@@ -42,6 +42,7 @@
                                                                                    <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#familia_myModal" >
                                                                                          <i class="fa fa-search"></i> ...
                                                                                    </button>
+                                                                                   &nbsp;<a href="#" onclick="remover_pessoa('familia');" title="Limpar Campo"><spam class="fa fa-close"></spam></a>
                                                                                 </div>
 
                                                                                 @include('modal_buscar_pessoas', array('qual_campo'=>'familia', 'modal' => 'familia_myModal'))
@@ -65,7 +66,7 @@
                                                          </div><!-- col-xs-5-->
                                                    </div>
                                                 </div>
-                                          </div>
+                                         </div>
 
                                 </div><!-- end row-->
 
