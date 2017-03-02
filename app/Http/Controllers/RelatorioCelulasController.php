@@ -654,7 +654,8 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
               if ($input["ckExibir"]) //Exibir participantes
               {
                     if ($input["ckEstruturas"]) {
-                        $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_niveis.jasper';
+                        //$nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_niveis.jasper';
+                        $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_niveis_mod2.jasper';
                     } else {
                         $nome_relatorio = public_path() . '/relatorios/listagem_celulas_pessoas_analitico.jasper';
                     }
