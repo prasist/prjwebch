@@ -534,7 +534,8 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
             if ($descricao_nivel1!="" && $descricao_nivel1[0]!="0") {
                 //if (isset($input["tiporel"]) && $input["tiporel"]=="0")  {
-                    $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel1_id = " . $descricao_nivel1[0];
+
+                    $sWhere .= " and " . ($tipo_relatorio=="encontro" ? ($input["tiporel"]!=0 ? "c." : "celulas.") : "") . "celulas_nivel1_id = " . $descricao_nivel1[0];
                 //} else {
                 //    $sWhere .= " and c.celulas_nivel1_id = " . $descricao_nivel1[0];
                 //}
@@ -545,7 +546,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
             if ($descricao_nivel2!="" && $descricao_nivel2[0]!="0") {
                 //if ($input["tiporel"]=="0")  {
-                    $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel2_id = " . $descricao_nivel2[0];
+                    $sWhere .= " and " . ($tipo_relatorio=="encontro" ? ($input["tiporel"]!=0 ? "c." : "celulas.") : "") . "celulas_nivel2_id = " . $descricao_nivel2[0];
                 //} else {
                 //    $sWhere .= " and c.celulas_nivel2_id = " . $descricao_nivel2[0];
                 //}
@@ -555,7 +556,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
             if ($descricao_nivel3!="" && $descricao_nivel3[0]!="0") {
                 //if ($input["tiporel"]=="0")  {
-                    $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel3_id = " . $descricao_nivel3[0];
+                    $sWhere .= " and " . ($tipo_relatorio=="encontro" ? ($input["tiporel"]!=0 ? "c." : "celulas.") : "") . "celulas_nivel3_id = " . $descricao_nivel3[0];
                 //} else {
                     //$sWhere .= " and c.celulas_nivel3_id = " . $descricao_nivel3[0];
                 //}
@@ -565,7 +566,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
             if ($descricao_nivel4!="" && $descricao_nivel4[0]!="0") {
                 //if ($input["tiporel"]=="0")  {
-                    $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel4_id = " . $descricao_nivel4[0];
+                    $sWhere .= " and " . ($tipo_relatorio=="encontro" ? ($input["tiporel"]!=0 ? "c." : "celulas.") : "") . "celulas_nivel4_id = " . $descricao_nivel4[0];
                 //} else {
                 //    $sWhere .= " and c.celulas_nivel4_id = " . $descricao_nivel4[0];
                 //}
@@ -575,7 +576,7 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
             if ($descricao_nivel5!="" && $descricao_nivel5[0]!="0") {
                 //if ($input["tiporel"]=="0")  {
-                    $sWhere .= " and " . ($tipo_relatorio=="encontro" ? "celulas." : "") . "celulas_nivel5_id = " . $descricao_nivel5[0];
+                    $sWhere .= " and " . ($tipo_relatorio=="encontro" ? ($input["tiporel"]!=0 ? "c." : "celulas.") : "") . "celulas_nivel5_id = " . $descricao_nivel5[0];
                 //} else {
                 //    $sWhere .= " and c.celulas_nivel5_id = " . $descricao_nivel5[0];
                 //}
