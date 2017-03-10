@@ -7,6 +7,7 @@
                                     {!! csrf_field() !!}
 
                                      <input  id= "ckExibir" name="ckExibir" type="hidden" value="on" checked />
+                                     <input id="tiporel" type="hidden" name="tiporel" value="0">
 
                                       <div class="box box-default">
 

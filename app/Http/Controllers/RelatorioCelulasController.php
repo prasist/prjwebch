@@ -397,17 +397,20 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
     else if ($tipo_relatorio=="encontro")  //RELATORIO DE ENCONTROS
     {
 
-        if ($input["tiporel"]=="0") { //RELATORIO ANUAL
-            $filtros .= "     Mes : " . $input["mes"];
-            $filtros .= "     Ano : " . $input["ano"];
-        } else if ($input["tiporel"]=="1") { //ANUAL
-            $filtros .= "     Ano Inicial : " . $input["ano"];
-            $filtros .= "     Ano Final : " . $input["ano_final"];
-        } else if ($input["tiporel"]=="2") {//MENSAL
-            $filtros .= "     Mes Inicial : " . $input["mes"];
-            $filtros .= "     Mes Final : " . $input["mes_final"];
-            $filtros .= "     Ano : " . $input["ano"];
+        if (isset($input["tiporel"])) {
+            if ($input["tiporel"]=="0") { //RELATORIO ANUAL
+                $filtros .= "     Mes : " . $input["mes"];
+                $filtros .= "     Ano : " . $input["ano"];
+            } else if ($input["tiporel"]=="1") { //ANUAL
+                $filtros .= "     Ano Inicial : " . $input["ano"];
+                $filtros .= "     Ano Final : " . $input["ano_final"];
+            } else if ($input["tiporel"]=="2") {//MENSAL
+                $filtros .= "     Mes Inicial : " . $input["mes"];
+                $filtros .= "     Mes Final : " . $input["mes_final"];
+                $filtros .= "     Ano : " . $input["ano"];
+            }
         }
+
     }
 
 
