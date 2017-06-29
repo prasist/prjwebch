@@ -105,6 +105,8 @@
                             @else
                                   @if (isset($dados[0]->total_ant))
                                   <a href="#tab_2" data-toggle="tab">Vinculo de {!! \Session::get('label_celulas') !!}&nbsp;<span class="pull-right badge bg-purple">{!! ($dados[0]->total_ant==0 ? "" : $dados[0]->total_ant) !!}</span></a>
+                                  @else
+                                  <a href="#tab_2" data-toggle="tab">Vinculo de {!! \Session::get('label_celulas') !!}</a>
                                   @endif
                             @endif
 
