@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
                                 {
                                     $message->from('contato@sigma3sistemas.com.br', 'Sigma3');
                                     $message->subject('Log de Erros');
-                                    $message->to('suporte@sigma3sistemas.com.br');
+                                    $message->to('logerros@sigma3sistemas.com.br');
                                 });
 
                             }
