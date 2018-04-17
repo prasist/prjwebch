@@ -100,14 +100,23 @@
                             @endif
 
                             <li>
+<<<<<<< HEAD
                             @if ($dados[0]->tot_geracao!=0)
                                   <a href="#tab_2" data-toggle="tab">Vinculo de {!! \Session::get('label_celulas') !!}&nbsp;<span class="pull-right badge bg-yellow">{!! ($dados[0]->tot_geracao==0 ? "" : $dados[0]->tot_geracao) !!}</span></a>
+=======
+                            @if ($dados[0]->tot_geracao_lista!=0)
+                                  <a href="#tab_2" data-toggle="tab">Vinculo de {!! \Session::get('label_celulas') !!}&nbsp;<span class="pull-right badge bg-yellow">{!! ($dados[0]->tot_geracao_lista==0 ? "" : $dados[0]->tot_geracao_lista) !!}</span></a>
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                             @else
                                   @if (isset($dados[0]->total_ant))
                                   <a href="#tab_2" data-toggle="tab">Vinculo de {!! \Session::get('label_celulas') !!}&nbsp;<span class="pull-right badge bg-purple">{!! ($dados[0]->total_ant==0 ? "" : $dados[0]->total_ant) !!}</span></a>
                                   @else
                                   <a href="#tab_2" data-toggle="tab">Vinculo de {!! \Session::get('label_celulas') !!}</a>
+<<<<<<< HEAD
                                   @endif
+=======
+                                  @endif                                  
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                             @endif
 
 
@@ -872,4 +881,8 @@
 </script>
 
 
+<<<<<<< HEAD
 @endsection
+=======
+@endsection
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774

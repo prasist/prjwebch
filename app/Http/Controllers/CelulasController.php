@@ -16,6 +16,11 @@ class CelulasController extends Controller
     public function __construct()
     {
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
         $this->rota = "celulas"; //Define nome da rota que será usada na classe
         $this->middleware('auth');
         $this->sequencia = 0;
@@ -29,11 +34,24 @@ class CelulasController extends Controller
         /*Instancia a classe de funcoes (Data, valor, etc)*/
         $this->formatador = new  \App\Functions\FuncoesGerais();
 
+<<<<<<< HEAD
         //Validação de permissão de acesso a pagina
         if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']) || Gate::allows('verifica_permissao', [\Config::get('app.controle_atividades'),'acessar'])) //
         {
             $this->dados_login = \Session::get('dados_login');
 
+=======
+
+        //Validação de permissão de acesso a pagina
+        //if (Gate::allows('verifica_permissao', [\Config::get('app.' . $this->rota),'acessar']) || Gate::allows('verifica_permissao', [\Config::get('app.controle_atividades'),'acessar'])) //
+        if (\App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.controle_atividades')) || \App\ValidacoesAcesso::PodeAcessarPagina(\Config::get('app.celulas')))
+
+        {
+
+            $this->dados_login = \Session::get('dados_login');
+
+
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
             //Verificar se usuario logado é LIDER
             $this->lider_logado = $this->formatador->verifica_se_lider();
 
@@ -1350,7 +1368,16 @@ class CelulasController extends Controller
                   return redirect('home');
             }
 
+<<<<<<< HEAD
             $strSql = "SELECT * FROM view_celulas_simples ";
+=======
+            $strSql = "SELECT *, ";
+            $strSql .=  " CASE WHEN view_tot_geracao.tot_geracao IS NULL THEN 0 ELSE view_tot_geracao.tot_geracao END AS tot_geracao_lista, ";
+            $strSql .=  " CASE WHEN view_tot_geracao_g2.tot_geracao IS NULL THEN 0 ELSE view_tot_geracao_g2.tot_geracao END AS tot_geracao_lista_g2 ";
+            $strSql .=  " FROM view_celulas_simples ";
+            $strSql .=  " LEFT OUTER JOIN view_tot_geracao on view_tot_geracao.celulas_pai_id = view_celulas_simples.id ";
+            $strSql .=  " LEFT OUTER JOIN view_tot_geracao_g2 on view_tot_geracao_g2.celulas_pai_id = view_celulas_simples.id ";
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
             $strSql .=  " WHERE  empresas_id = " . $this->dados_login->empresas_id;
             $strSql .=  " AND empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id;
 
@@ -1816,7 +1843,16 @@ public function store(\Illuminate\Http\Request  $request)  {
         $celulas = \DB::select('select id, descricao_concatenada as nome, tot from view_celulas_simples  where empresas_id = ? and empresas_clientes_cloud_id = ? ', [$this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 
         /*Busca NIVEL4*/
+<<<<<<< HEAD
         $dados = \DB::select("select to_char(to_date(data_previsao_multiplicacao, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_previsao_multiplicacao_format, to_char(to_date(data_inicio, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_inicio_format, * from view_celulas  where id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ", [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+=======
+        $rSql = " select to_char(to_date(data_previsao_multiplicacao, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_previsao_multiplicacao_format, to_char(to_date(data_inicio, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_inicio_format, *, ";
+        $rSql .= " CASE WHEN view_tot_geracao.tot_geracao IS NULL THEN 0 ELSE view_tot_geracao.tot_geracao END AS tot_geracao_lista ";
+        $rSql .= " from view_celulas ";
+        $rSql .= " LEFT OUTER JOIN view_tot_geracao on view_tot_geracao.celulas_pai_id = view_celulas.id ";
+        $rSql .= " where id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ";
+        $dados = \DB::select($rSql, [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
         $participantes = \DB::select('select * from view_celulas_pessoas where celulas_id = ? and empresas_id = ? and empresas_clientes_cloud_id = ? ', [$id, $this->dados_login->empresas_id, $this->dados_login->empresas_clientes_cloud_id]);
 

@@ -50,6 +50,39 @@
                           <div class="tab-pane active" id="tab_1">
 
                                         <div class="row">
+<<<<<<< HEAD
+=======
+                                              <div class="col-xs-4 {{ $errors->has('fornecedor') ? ' has-error' : '' }}">
+                                                  <label for="fornecedor" class="control-label"><span class="text-danger">*</span>  Fornecedor / Cliente</label>
+                                                  @if (isset($dados))
+                                                      <input type="text" id="fornecedor" name="fornecedor" class="typeahead form-control"  autocomplete="off" spellcheck="false" placeholder="Digite o nome ou parte dele..." value="{!! ($dados[0]->pessoas_id!='' ? str_repeat('0', (9-strlen($dados[0]->pessoas_id))) . $dados[0]->pessoas_id . ' - ' . $dados[0]->razaosocial  : '') !!}" >
+                                                  @else
+                                                      <input type="text" id="fornecedor" name="fornecedor" class="typeahead form-control"  autocomplete="off" spellcheck="false" placeholder="Digite o nome ou parte dele..." value="" >
+                                                  @endif
+                                                  @if ($errors->has('fornecedor'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('fornecedor') }}</strong>
+                                                    </span>
+                                                  @endif
+                                                  <!--<label for="fornecedor" class="control-label">Fornecedor / Cliente</label>
+                                                  <div class="input-group">
+                                                      <div class="input-group-addon">
+                                                          <button  id="buscarpessoa" type="button"  data-toggle="modal" data-target="#modal_fornecedor" >
+                                                          <i class="fa fa-search"></i> ...
+                                                          </button>
+                                                      </div>
+                                                  @include('modal_buscar_pessoas', array('qual_campo'=>'fornecedor', 'modal' => 'modal_fornecedor'))
+                                                  @if (isset($dados))
+                                                      <input id="fornecedor" name = "fornecedor" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="{!! ($dados[0]->pessoas_id!='' ? str_repeat('0', (9-strlen($dados[0]->pessoas_id))) . $dados[0]->pessoas_id . ' - ' . $dados[0]->razaosocial  : '') !!}" readonly >
+                                                  @else
+                                                      <input id="fornecedor" name = "fornecedor" type="text" class="form-control" placeholder="Clica na lupa ao lado para consultar uma pessoa" value="" readonly >
+                                                  @endif
+                                                  </div>-->
+                                              </div>
+                                        </div>
+                                        <div class="row">
+
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                               <div class="col-xs-4 {{ $errors->has('descricao') ? ' has-error' : '' }}">
                                                     <label for="descricao" class="control-label"><span class="text-danger">*</span>  Descrição</label>
                                                     @if (isset($dados))
@@ -228,7 +261,11 @@
                                                       <div class="modal-content">
                                                         <div class="modal-header">
                                                           <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+<<<<<<< HEAD
                                                           <h4 class="modal-title" id="myModalLabel">Rateio por Centro de Custo</h4>
+=======
+                                                          <h4 class="modal-title" id="myModalLabel">Rateio</h4>
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                                         </div>
                                                         <div class="modal-body">
 
@@ -247,6 +284,20 @@
                                                              <div class="row">
 
                                                                     <div class="col-xs-4">
+<<<<<<< HEAD
+=======
+                                                                          <label for="rateio_pc" class="control-label">Plano de Contas</label>
+
+                                                                          <select id="rateio_pc" name="rateio_pc" placeholder="(Selecionar)" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;" onchange="">
+                                                                          <option  value=""></option>
+                                                                          @foreach($plano_contas as $item)
+                                                                                 <option  value="{{$item->id}}">{{$item->nome}}</option>
+                                                                          @endforeach
+                                                                          </select>
+                                                                    </div>
+
+                                                                    <div class="col-xs-4">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                                                           <label for="rateio_cc" class="control-label">Centro de Custo</label>
 
                                                                           <select id="rateio_cc" name="rateio_cc" placeholder="(Selecionar)" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;" onchange="document.getElementById('perc_rateio').focus(); validar_cc(this.value);">
@@ -288,6 +339,10 @@
                                                                         <table id="mais_rateios" class="table table-bordered table-hover">
                                                                         @if (isset($rateio_titulos))
                                                                             <tr>
+<<<<<<< HEAD
+=======
+                                                                                  <td>Plano de Contas</td>
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                                                                   <td>Centro de Custo</td>
                                                                                   <td>%</td>
                                                                                   <td>Valor</td>
@@ -295,7 +350,13 @@
                                                                             </tr>
                                                                             @foreach($rateio_titulos as $item)
                                                                             <tr>
+<<<<<<< HEAD
                                                                                   <input id="hidden_id_rateio_cc[]" name = "hidden_id_rateio_cc[]" type="hidden" class="form-control ccusto" value="{{$item->centros_custos_id}}">
+=======
+                                                                                  <input id="hidden_id_rateio_pc[]" name = "hidden_id_rateio_pc[]" type="hidden" class="form-control ccusto" value="{{$item->planos_contas_id}}">
+                                                                                  <input id="hidden_id_rateio_cc[]" name = "hidden_id_rateio_cc[]" type="hidden" class="form-control ccusto" value="{{$item->centros_custos_id}}">
+                                                                                  <td><input id="inc_pc[]" readonly name = "inc_pc[]" type="text" class="form-control" value="{{$item->nome_pc}}"></td>
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                                                                   <td><input id="inc_cc[]" readonly name = "inc_cc[]" type="text" class="form-control" value="{{$item->nome}}"></td>
                                                                                   <td><input id="inc_perc[]" readonly name = "inc_perc[]" type="text" class="form-control valores" value='{{ str_replace(".", ",", $item->percentual) }}'></td>
                                                                                   <td><input id="inc_valor[]" readonly name = "inc_valor[]" type="text" class="form-control valores" value='{{ str_replace(".", ",", $item->valor) }}'></td>
@@ -311,6 +372,10 @@
                                                                         <input type="hidden" name="hidden_id_rateio_cc[]" id="hidden_id_rateio_cc[]" value="">
                                                                               <table id="mais_rateios" class="table table-bordered table-hover">
                                                                                   <tr>
+<<<<<<< HEAD
+=======
+                                                                                        <td>Plano de Contas</td>
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                                                                         <td>Centro de Custo</td>
                                                                                         <td>%</td>
                                                                                         <td>Valor</td>
@@ -476,6 +541,7 @@
                                                           <div class="box-body">
 
                                                                      <div class="row">
+<<<<<<< HEAD
                                                                            <div class="col-xs-7">
                                                                                 <label for="fornecedor" class="control-label">Fornecedor / Cliente</label>
                                                                                 <div class="input-group">
@@ -497,6 +563,9 @@
                                                                          </div>
 
                                                                           <div class="col-xs-5">
+=======
+                                                                           <div class="col-xs-5">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                                                                 <label for="obs" class="control-label">Observação</label>
                                                                                 @if (isset($dados))
                                                                                       <input id="obs"  placeholder="(Opcional)" name = "obs" type="text" class="form-control" value="{{$dados[0]->obs}}">
@@ -518,6 +587,18 @@
                                                                           </div>
 
                                                                           <div class="col-xs-2">
+<<<<<<< HEAD
+=======
+                                                                                <label for="dias" class="control-label">N. Dias</label>
+                                                                                @if (isset($dados))
+                                                                                      <input id="dias"  placeholder="(Opcional)" name = "dias" type="number" class="form-control" value="{{$dados[0]->numdia}}">
+                                                                                @else
+                                                                                      <input id="dias"  placeholder="(Opcional)" name = "dias" type="number" class="form-control" value="">
+                                                                                @endif
+                                                                          </div>
+
+                                                                          <div class="col-xs-2">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                                                                 <label for="numdoc" class="control-label">N. Documento</label>
                                                                                 @if (isset($dados))
                                                                                       <input id="numdoc"  placeholder="(Opcional)" name = "numdoc" type="text" class="form-control" value="{{$dados[0]->numdoc}}">
@@ -535,6 +616,11 @@
                                                                                 @endif
                                                                           </div>
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                                                           <div class="col-xs-6">
                                                                                 @if (isset($dados))
                                                                                       @include('carregar_combos', array('dados'=>$grupos_titulos, 'titulo' =>'Grupo Título', 'id_combo'=>'grupos_titulos', 'complemento'=>'', 'comparar'=>$dados[0]->grupos_titulos_id, 'id_pagina'=> '51'))
@@ -571,6 +657,10 @@
                                         <td>Data Ocorrência</td>
                                         <td>Usuário</td>
                                         <td>Descrição Título</td>
+<<<<<<< HEAD
+=======
+                                        <td>Conta</td>
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                         <td>Valor Título</td>
                                         <td>Acréscimo</td>
                                         <td>Desconto</td>
@@ -585,6 +675,10 @@
                                                   <td>{{$item->data_ocorrencia}}</td>
                                                   <td>{{$item->name}}</td>
                                                   <td>{{$item->descricao}}</td>
+<<<<<<< HEAD
+=======
+                                                  <td>{{$item->nome}}</td>
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                                   <td>{{$item->valor}}</td>
                                                   <td>{{$item->acrescimo}}</td>
                                                   <td>{{$item->desconto}}</td>

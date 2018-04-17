@@ -243,6 +243,10 @@ public function relatorio_pessoas_tipo($conteudo, $opcao='') {
 
   public function pesquisar(\Illuminate\Http\Request  $request)
   {
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
      /*Pega todos campos enviados no post*/
     $input = $request->except(array('_token', 'ativo')); //não levar o token
@@ -696,6 +700,10 @@ public function relatorio_pessoas_tipo($conteudo, $opcao='') {
     }
      else
     {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
         /*Exibir quebras por estrutura de celulas*/
             if ($input["ckEstruturas"])
             {
@@ -738,6 +746,10 @@ public function relatorio_pessoas_tipo($conteudo, $opcao='') {
                         if ($input["ckExibirCelula"]) {
                             $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_completo2.jasper';
                         } else {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                             $nome_relatorio = public_path() . '/relatorios/listagem_pessoas_geral_completo.jasper';
                         }
 
@@ -771,7 +783,11 @@ public function relatorio_pessoas_tipo($conteudo, $opcao='') {
             }
                 else
             {
+<<<<<<< HEAD
                 if ($ext=="pdf") //Se for pdf abre direto na pagina
+=======
+                /*if ($ext=="pdf") //Se for pdf abre direto na pagina
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                 {
                     header('Content-Description: File Transfer');
                     header('Content-Type: application/pdf');
@@ -785,9 +801,15 @@ public function relatorio_pessoas_tipo($conteudo, $opcao='') {
                     unlink($output.'.'.$ext);
                 }
                 else //Gera link para download
+<<<<<<< HEAD
                 {
                     return $this->CarregarView($path_download . '.' . $ext, $Mensagem);
                 }
+=======
+                {*/
+                    return $this->CarregarView($path_download . '.' . $ext, $Mensagem);
+                //}
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
             }
     }
 

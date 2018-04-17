@@ -758,6 +758,10 @@ public function pesquisar(\Illuminate\Http\Request  $request, $tipo_relatorio)
 
    }
 
+<<<<<<< HEAD
+=======
+   //debugando - dd($parametros);
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
     if ($tipo_relatorio!="movimentacoes") {
          $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");

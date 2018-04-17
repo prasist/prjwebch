@@ -717,10 +717,15 @@ class ControleAtividadesController extends Controller
    {
 
         $var_month = $dados[0]->mes;
+<<<<<<< HEAD
+=======
+        $var_month_str = str_pad("$var_month",2,0,STR_PAD_LEFT);
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
         $var_year = $dados[0]->ano;
         $var_dayOfWeek = $dados[0]->dia_encontro;
         $var_counting_days = cal_days_in_month(CAL_GREGORIAN, $var_month, $var_year); //days of month
 
+<<<<<<< HEAD
         $dini = mktime(0,0,0,$var_month,1,$var_year);
         $dfim = mktime(0,0,0,$var_month,$var_counting_days,$var_year);
 
@@ -730,21 +735,65 @@ class ControleAtividadesController extends Controller
         {
             $dt = date("d/m/Y",$dini); //Convertendo a data no formato dia/mes/ano
             $diasemana = date("w", $dini);
+=======
+        //$dini = mktime(0,0,0,$var_month,1,$var_year);
+        //$dfim = mktime(0,0,0,$var_month,$var_counting_days,$var_year);
+        $datainicio = $var_year.'-'.$var_month_str.'-'.'01';
+        $datafinal = $var_year.'-'.$var_month_str.'-'.$var_counting_days;
+
+        $intervalo = date_interval_create_from_date_string('1 day');
+
+        $dini  = date_create("$datainicio");
+        if($var_month == 2 || $var_month == 3){
+          $dfim = date_create("$datafinal");
+          $dfim = date_add($dfim,$intervalo);
+          $var_dayOfWeek = $var_dayOfWeek + 1;
+        }else{
+          $dfim = date_create("$datafinal");
+        }
+                
+        $return_d = array();
+        
+        $periodo = new \DatePeriod($dini,$intervalo,$dfim);
+
+        foreach($periodo as $datas) //Enquanto uma data for inferior a outra
+        {
+          
+            //$dt = date("d/m/Y",$dini); //Convertendo a data no formato dia/mes/ano
+            //$diasemana = date("w", $dini);
+          
+            $dt = $datas->format('d/m/Y'); //Convertendo a data no formato dia/mes/ano
+            
+            if($var_month == 2 || $var_month == 3){
+              $diasemana = $datas->format('w') + 1;
+            }else{
+              $diasemana = $datas->format('w');
+            }
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
             if($diasemana == $var_dayOfWeek)
             { // [0 Domingo] - [1 Segunda] - [2 Terca] - [3 Quarta] - [4 Quinta] - [5 Sexta] - [6 Sabado]
                 array_push($return_d, $dt);
             }
 
+<<<<<<< HEAD
             $dini += 86400; // Adicionando mais 1 dia (em segundos) na data inicial
+=======
+            //$dini = $dini + 86400; // Adicionando mais 1 dia (em segundos) na data inicial
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
         }
 
         //Segundo dia encontro
         $var_month = $dados[0]->mes;
+<<<<<<< HEAD
+=======
+        $var_month_str = str_pad("$var_month",2,0,STR_PAD_LEFT);
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
         $var_year = $dados[0]->ano;
         $var_dayOfWeek = $dados[0]->segundo_dia_encontro;
         $var_counting_days = cal_days_in_month(CAL_GREGORIAN, $var_month, $var_year); //days of month
 
+<<<<<<< HEAD
         $dini = mktime(0,0,0,$var_month,1,$var_year);
         $dfim = mktime(0,0,0,$var_month,$var_counting_days,$var_year);
 
@@ -754,6 +803,37 @@ class ControleAtividadesController extends Controller
         {
             $dt = date("d/m/Y",$dini); //Convertendo a data no formato dia/mes/ano
             $diasemana = date("w", $dini);
+=======
+        //$dini = mktime(0,0,0,$var_month,1,$var_year);
+        //$dfim = mktime(0,0,0,$var_month,$var_counting_days,$var_year);
+        $datainicio = $var_year.'-'.$var_month_str.'-'.'01';
+        $datafinal = $var_year.'-'.$var_month_str.'-'.$var_counting_days;
+
+        $dini  = date_create("$datainicio");
+        if($var_month == 2 || $var_month == 3){
+          $dfim = date_create("$datafinal");
+          $dfim = date_add($dfim,$intervalo);
+          $var_dayOfWeek = $var_dayOfWeek + 1;
+        }else{
+          $dfim = date_create("$datafinal");
+        }
+
+        $periodo = new \DatePeriod($dini,$intervalo,$dfim);
+
+        $bPrimeiro = false;
+
+        foreach($periodo as $datas) //Enquanto uma data for inferior a outra
+        {
+            //$dt = date("d/m/Y",$dini); //Convertendo a data no formato dia/mes/ano
+            //$diasemana = date("w", $dini);
+
+            $dt = $datas->format('d/m/Y'); //Convertendo a data no formato dia/mes/ano
+            if($var_month == 2 || $var_month == 3){
+              $diasemana = $datas->format('w') + 1;
+            }else{
+              $diasemana = $datas->format('w');
+            }
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
             if($diasemana == $var_dayOfWeek)
             { // [0 Domingo] - [1 Segunda] - [2 Terca] - [3 Quarta] - [4 Quinta] - [5 Sexta] - [6 Sabado]
@@ -767,7 +847,11 @@ class ControleAtividadesController extends Controller
                 $bPrimeiro=true;
             }
 
+<<<<<<< HEAD
             $dini += 86400; // Adicionando mais 1 dia (em segundos) na data inicial
+=======
+            //$dini = $dini + 86400; // Adicionando mais 1 dia (em segundos) na data inicial
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
         }
 
         array_push($return_d, "");

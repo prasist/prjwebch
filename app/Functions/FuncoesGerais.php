@@ -200,6 +200,10 @@ class FuncoesGerais extends Controller
         $strSql .=  " and empresas_id = " . $this->dados_login->empresas_id . " ";
         $strSql .=  " and empresas_clientes_cloud_id = " . $this->dados_login->empresas_clientes_cloud_id . " ";
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
         $lider_logado = \DB::select($strSql);
 
         if (count($lider_logado)>0) {

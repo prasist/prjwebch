@@ -252,7 +252,11 @@
                                     <input type="hidden" id = "campo_valor[{!!$value->id!!}]" name="campo_valor[{!!$value->id!!}]" value='{{ str_replace(".", ",", $value->valor) }}'>
                             </td>
                             <td>
+<<<<<<< HEAD
                                     <a href="#" id="data_pagto[{!!$value->id!!}]" name="data_pagto[{!!$value->id!!}]" class="data_pagto"  data-type="text" data-column="data_pagto" data-url="{{ url('/titulos/' . $value->id . '/update_inline/data_pagto/' . $tipo)}}" data-pk="{!!$value->id!!}" data-title="change" data-name="data_pagto">
+=======
+                                    <a href="#" id="data_pagto[{!!$value->id!!}]" name="data_pagto[{!!$value->id!!}]" class="data_pagto"  data-type="text" data-column="data_pagto" data- data-url="{{ url('/titulos/' . $value->id . '/update_inline/data_pagto/' . $tipo)}}" data-pk="{!!$value->id!!}" data-title="change" data-name="data_pagto">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                          {{$value->data_pagamento}}
                                     </a>
                                     <input type="hidden" id = "campo_data_pagto[{!!$value->id!!}]" name="campo_data_pagto[{!!$value->id!!}]" value="{{$value->data_pagamento}}">
@@ -323,7 +327,13 @@
 
                             <td class="col-xs-1">
                                       @can('verifica_permissao', [\Session::get('id_pagina') ,'alterar'])
+<<<<<<< HEAD
                                             <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit/' . $tipo) }}" class = 'btn  btn-info btn-sm'><spam class="glyphicon glyphicon-pencil"></spam></a>
+=======
+                                          @if ($value->status !="B")
+                                            <a href = "{{ URL::to(\Session::get('route') .'/' . $value->id . '/edit/' . $tipo) }}" class = 'btn  btn-info btn-sm'><spam class="glyphicon glyphicon-pencil"></spam></a>
+                                          @endif
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                       @endcan
                             </td>
 
@@ -370,6 +380,10 @@
       //Abre menu
       $(document).ready(function(){
          $("#financ").addClass("treeview active");
+<<<<<<< HEAD
+=======
+
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
       });
 
       var myApp;
@@ -399,7 +413,11 @@
 
              var_acrescimo=0;
              var_desconto=0;
+<<<<<<< HEAD
              var_pago=0;
+=======
+             var_saldo=0;
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
              //Pega valor de acrescimo se houver, troca ponto por virgula (milhar) e virgula por ponto (decimal)
              if ($('#campo_acrescimo').val()!="")   var_acrescimo = $('#campo_acrescimo').val().replace( '.', '' ).replace( ',', '.' );
@@ -412,12 +430,21 @@
              var_desconto = parseFloat(var_desconto)*100;
 
              //Pega valor de desconto se houver, troca ponto por virgula (milhar) e virgula por ponto (decimal)
+<<<<<<< HEAD
              if ($('#campo_valor').val()!="")  var_pago = $('#campo_valor').val().replace( '.', '' ).replace( ',', '.' );
 
              var_pago = parseFloat(var_pago)*100;
 
              //Calculo do valor pago
              var_resultado = ((var_pago + var_acrescimo) - var_desconto)/100;
+=======
+             if ($('#campo_saldo').val()!="")  var_saldo = $('#campo_saldo').val().replace( '.', '' ).replace( ',', '.' );
+
+             var_saldo = parseFloat(var_saldo)*100;
+
+             //Calculo do valor pago
+             var_resultado = ((var_saldo + var_acrescimo) - var_desconto)/100;
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
             if (parseFloat(var_resultado)>0)
             {

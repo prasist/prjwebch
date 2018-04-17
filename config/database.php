@@ -67,7 +67,11 @@ return [
             ]
         ],
 
+<<<<<<< HEAD
 
+=======
+/*'host'     => env('DB_HOST', '177.101.149.118'),*/
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),

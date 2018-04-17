@@ -49,7 +49,11 @@ class Handler extends ExceptionHandler
                                 {
                                     $message->from('contato@sigma3sistemas.com.br', 'Sigma3');
                                     $message->subject('Log de Erros');
+<<<<<<< HEAD
                                     $message->to('logerros@sigma3sistemas.com.br');
+=======
+                                    $message->to('suporte@sigma3sistemas.com.br');
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                 });
 
                             }
@@ -81,11 +85,19 @@ class Handler extends ExceptionHandler
 
                 if ($e->getCode()==23503)
                 {
+<<<<<<< HEAD
                      $sMensagem =   "Opa, não se preocupe!!! Não é erro, apenas um aviso que não é possivel excluir esse registro, pois ele possui referência(s) em outra(s) tabela(s). Para garantir a integridade dos dados, o sistema verifica se na tentativa da exclusão do registro não há vinculos com outros. Nesse caso é necessário primeiro excluir os registros vinculados antes de excluir o registro principal. Estamos recebendo um email com essa mensagem, em breve lhe retornaremos para auxiliá-lo(a).";
                 }
                 else
                 {
                     $sMensagem = "Misericórdia... Ocorreu um erro. Lembre-se : 'Irai-vos mas não pequeis'. Estamos recebendo um email com o erro, em breve será resolvido.";
+=======
+                     $sMensagem =   "Para garantir a integridade dos dados, o sistema verifica se na tentativa da exclusão do registro não há vinculos com outros. Nesse caso é necessário primeiro excluir os registros vinculados antes de excluir o registro principal. Estamos recebendo um email com essa mensagem, em breve lhe retornaremos para auxiliá-lo(a).";
+                }
+                else
+                {
+                    $sMensagem = "Estamos recebendo um email com o erro, em breve será resolvido.";
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                 }
 
                 return view('errors.msgerro')

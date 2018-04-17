@@ -75,6 +75,10 @@ class ContasController extends Controller
            $dados->nome  = $input['nome'];
            $dados->codigo_contabil  = $input['codigo_contabil'];
            $dados->saldo_inicial  = ($input["saldo"]!="" ? $this->formatador->GravarCurrency($input["saldo"]) : null);
+<<<<<<< HEAD
+=======
+           $dados->saldo_atual = ($input["saldo"]!="" ? $this->formatador->GravarCurrency($input["saldo"]) : null);
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
            $dados->users_id = Auth::user()->id;
            $dados->data_alteracao = date("Y-m-d H:i:s");
            $dados->empresas_id  = $this->dados_login->empresas_id;

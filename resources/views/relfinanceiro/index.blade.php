@@ -9,7 +9,11 @@
 
 <div class="row">
 
+<<<<<<< HEAD
   <form method = 'POST'  class="form-horizontal" action = "{{ url('/' . \Session::get('route') . '/pesquisar')}}" onsubmit="return validar();">
+=======
+  <form method = 'POST'  class="form-horizontal" target="_blank" action = "{{ url('/' . \Session::get('route') . '/pesquisar')}}" onsubmit="return validar();">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
   {!! csrf_field() !!}
     <!-- Main content -->
     <section class="content">
@@ -148,6 +152,48 @@
 
          <!-- INICIO CONTEUDO -->
 
+<<<<<<< HEAD
+=======
+
+         <!-- Horizontal Form -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Totalização</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <div class="form-horizontal">
+              <div class="box-body">
+
+                <div class="form-group">
+
+                      <label  for="lbccpc" class="col-sm-3 control-label">Opção:</label>
+                      
+
+                              <div class="col-xs-8">
+                                     <select id="cbccpc" name="cbccpc" class="form-control">
+                                        <option value="">Selecione para escolher o relatório de totais</option>
+                                        <option value="centro_custos_pagar">Centro de Custos - Contas a Pagar</option>
+                                        <option value="centro_custos_receber">Centro de Custos - Contas a Receber</option>
+                                        <option value="plano_contas_pagar">Plano de Contas - Contas a Pagar</option>
+                                        <option value="plano_contas_receber">Plano de Contas - Contas a Receber</option>          
+                                     </select>
+                                     <input type="hidden" id="cbccpc_hidden" name="cbccpc_hidden"/>
+                              </div>
+
+                      
+                      
+                </div>
+
+              </div>
+              <!-- /.box-body -->
+              <!-- /.box-footer -->
+            </div>
+         </div>
+          <!-- /.box -->
+
+
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
          <!-- Horizontal Form -->
           <div class="box box-info">
             <div class="box-header with-border">
@@ -325,7 +371,11 @@
     <!-- /.content -->
 
   <div class="box-footer">
+<<<<<<< HEAD
       &nbsp;&nbsp;<button class = 'btn btn-primary' type ='submit' onclick="myApp.showPleaseWait();">Pesquisar</button>
+=======
+      &nbsp;&nbsp;<button class = 'btn btn-primary' type ='submit' onclick="">Pesquisar</button>
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
       <a href="{{ url('/' . \Session::get('route') )}}" class="btn btn-default">Limpar</a>
   </div>
 
@@ -345,6 +395,7 @@
           };
       })();
 
+<<<<<<< HEAD
 
         function validar() {
 
@@ -356,6 +407,36 @@
                     } else {
                        return true;
                     }
+=======
+        function validar() {
+                if($('#cbccpc').val()==""){
+                  if ($('#opTipo').val()=="") {
+                    alert("Informe o Tipo");
+                    return false;
+                  }else{
+                    if ($('#opTipo').val()=="M") { //SE FOR MOVIMENTACAO, EXIGE INFORMAR A CONTA CORRENTE
+                        if ($('#contas').val()=="") {
+                            alert("Informe a Conta Corrente");
+                            $(".overlay").hide();
+                            return false;
+                        } else {
+                           return true;
+                        }
+                    }
+                  }
+                }else{
+                  document.getElementById("cbccpc_hidden").value = document.getElementById("cbccpc").value;
+                  
+                  var $comboTot = $("#cbccpc");
+                  $comboTot.empty();
+                  var html='';
+                  html += '<option value="">Selecione para escolher o relatório de totais</option>';
+                  html += '<option value="centro_custos_pagar">Centro de Custos - Contas a Pagar</option>';
+                  html += '<option value="centro_custos_receber">Centro de Custos - Contas a Receber</option>';
+                  html += '<option value="plano_contas_pagar">Plano de Contas - Contas a Pagar</option>';
+                  html += '<option value="plano_contas_receber">Plano de Contas - Contas a Receber</option>';
+                  $comboTot.append(html);
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                 }
             }
 
@@ -434,6 +515,10 @@
       });
 
 </script>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 @include('configuracoes.script_estruturas')
 
 @endsection

@@ -56,7 +56,11 @@
         <ul class="treeview-menu">
 
           @if(Gate::check('verifica_permissao', [1 ,'acessar']))
+<<<<<<< HEAD
           <li><a href="{{ url('/clientes')}}"><i class="fa fa-angle-double-right"></i> Igreja Sede</a></li>
+=======
+          <!--<li><a href="{{ url('/clientes')}}"><i class="fa fa-angle-double-right"></i> Igreja Sede</a></li>-->
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
           @endif
 
           @if(Gate::check('verifica_permissao', [27 ,'acessar']))
@@ -68,7 +72,11 @@
           @endif
 
           @if(Gate::check('verifica_permissao', [70 ,'acessar']))
+<<<<<<< HEAD
           <li><a href="{{ url('/config_gerais')}}"><i class="fa fa-angle-double-right"></i> Configurações Gerais </a></li>
+=======
+          <li><a href="{{ url('/config_gerais')}}"><i class="fa fa-angle-double-right"></i> Config Gerais - Nomenclatura </a></li>
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
           @endif
 
         </ul>
@@ -119,7 +127,10 @@
         </a>
         <ul class="treeview-menu">
 
+<<<<<<< HEAD
           <li class="text">&nbsp;</li>
+=======
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
           <li><a href="{{ url('/bancos')}}"><i class="fa fa-angle-double-right"></i>Bancos</a></li>
           <li><a href="{{ url('/cargos')}}"><i class="fa fa-angle-double-right"></i>Cargos / Funções</a></li>
           <li><a href="{{ url('/ramos')}}"><i class="fa fa-angle-double-right"></i>Ramos de Atividades</a></li>
@@ -184,7 +195,11 @@
       <!-- Células -->
       <li class="treeview" id="menu_celulas">
 
+<<<<<<< HEAD
         <a href="#" onclick="redirecionar_celulas();" title="Gerencie {!! \Session::get('label_celulas') !!}, planejamento {!! \Session::get('label_encontros') !!}, configurações, relatórios e estatísticas...">
+=======
+        <a href="#" onclick="" title="Gerencie {!! \Session::get('label_celulas') !!}, planejamento {!! \Session::get('label_encontros') !!}, configurações, relatórios e estatísticas...">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
           <i class="fa fa-users"></i> <span>{!! \Session::get('label_celulas') !!}</span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
@@ -297,7 +312,11 @@
     @can('verifica_permissao_modulo', ['Financeiro'])
     <li class="treeview" id="financ">
 
+<<<<<<< HEAD
       <a href="#" onclick="redirecionar();">
+=======
+      <a href="#" onclick="">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
         <i class="fa fa-usd"></i><span>Financeiro</span>
         <i class="fa fa-angle-left pull-right"></i>
       </a>
@@ -375,11 +394,19 @@
   @endif
 
   @if(Gate::check('verifica_permissao', [60 ,'acessar']))
+<<<<<<< HEAD
   <li class="treeview">
     <a href="{{ url('/home')}}">
       <i class="fa fa-users"></i> <span>{!! \Session::get('label_celulas') !!}</span>
     </a>
   </li>
+=======
+  <!--<li class="treeview">
+    <a href="{{ url('/home')}}">
+      <i class="fa fa-users"></i> <span>{!! \Session::get('label_celulas') !!}</span>
+    </a>
+  </li>-->
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
   @endif
 
   @if (Auth::user()->membro!="S")

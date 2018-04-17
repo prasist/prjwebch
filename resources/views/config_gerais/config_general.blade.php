@@ -178,7 +178,11 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
+<<<<<<< HEAD
         $("#menu_celulas").addClass("treeview active");
+=======
+        $("#menu_config").addClass("treeview active");
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
     });
 </script>
 @endsection

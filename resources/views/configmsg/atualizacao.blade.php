@@ -155,6 +155,13 @@
                 onLabel : 'Sim',
             });
 
+<<<<<<< HEAD
+=======
+            $(document).ready(function() {
+            $("#menu_config").addClass("treeview active");
+            });
+
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
       });
 
 </script>

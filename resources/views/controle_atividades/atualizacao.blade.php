@@ -161,8 +161,14 @@
                             <div class="col-xs-4 {{ $errors->has('data_encontro') ? ' has-error' : '' }}">
                                 <label for="data_encontro" class="control-label">Data {!! \Session::get('label_encontros_singular') !!}</label>
                                 <!--<select id="data_encontro" name="data_encontro" data-live-search="true" data-none-selected-text="Nenhum item selecionado" class="form-control selectpicker" style="width: 100%;">-->
+<<<<<<< HEAD
                                 <select id="data_encontro" name="data_encontro" class="form-control">
                                       @if ($tipo_operacao=="incluir")
+=======
+                                
+                                <select id="data_encontro" name="data_encontro" class="form-control">
+                                      @if ($tipo_operacao=="incluir")                                      
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                           <option value=""></option>
                                       @else
                                           @foreach($dates_of_meeting as $item)

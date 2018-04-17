@@ -19,12 +19,20 @@
                       <div class="panel box box-primary">
                         <div class="box-header with-border">
                           <h5 class="box-title">
+<<<<<<< HEAD
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+=======
+                            <a onclick="esconder(1)">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                               <span class="fa fa-user-plus"></span> Dados Pessoais
                             </a>
                           </h5>
                         </div>
+<<<<<<< HEAD
                         <div id="collapseOne" class="panel-collapse collapse">
+=======
+                        <div id="tab1" style="display: none">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                           <div class="box-body">
 
                           <input type="hidden" name="situacoes[]" class="minimal" value="">
@@ -262,12 +270,20 @@
                       <div class="panel box box-primary">
                         <div class="box-header with-border">
                           <h5 class="box-title">
+<<<<<<< HEAD
                             <a data-toggle="collapse" data-parent="#accordion" href="#tab2">
+=======
+                            <a onclick="esconder(2)">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                               <span class="fa fa-user-md"></span> Dados Profissionais
                             </a>
                           </h5>
                         </div>
+<<<<<<< HEAD
                         <div id="tab2" class="panel-collapse collapse">
+=======
+                        <div id="tab2" style="display: none">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                           <div class="box-body">
 
                                <div  class="row">
@@ -408,12 +424,20 @@
                       <div class="panel box box-primary">
                           <div class="box-header with-border">
                             <h5 class="box-title">
+<<<<<<< HEAD
                               <a data-toggle="collapse" data-parent="#accordion" href="#tab3">
+=======
+                              <a onclick="esconder(3)">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                 <span class="fa fa-institution"></span> Formação
                               </a>
                             </h5>
                           </div>
+<<<<<<< HEAD
                           <div id="tab3" class="panel-collapse collapse">
+=======
+                          <div id="tab3" style="display: none">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                             <div class="box-body">
 
                              <div  class="row">
@@ -466,12 +490,20 @@
                       <div class="panel box box-primary">
                           <div class="box-header with-border">
                             <h5 class="box-title">
+<<<<<<< HEAD
                               <a data-toggle="collapse" data-parent="#accordion" href="#tab4">
+=======
+                              <a onclick="esconder(4)">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                 <span class="fa fa-users"></span> Familiar
                               </a>
                             </h5>
                           </div>
+<<<<<<< HEAD
                           <div id="tab4" class="panel-collapse collapse">
+=======
+                          <div id="tab4" style="display: none">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                             <div class="box-body">
 
                                <div class="row">
@@ -937,12 +969,20 @@
                       <div class="panel box box-primary">
                           <div class="box-header with-border">
                             <h5 class="box-title">
+<<<<<<< HEAD
                               <a data-toggle="collapse" data-parent="#accordion" href="#tab_relacionamentos">
+=======
+                              <a onclick="esconder(5)">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                 <span class="fa fa-sitemap"></span> Relacionamentos
                               </a>
                             </h5>
                           </div>
+<<<<<<< HEAD
                           <div id="tab_relacionamentos" class="panel-collapse collapse">
+=======
+                          <div id="tab5" style="display: none">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                             <div class="box-body">
 
                              <div  class="row">
@@ -1001,13 +1041,21 @@
                       <div class="panel box box-primary">
                           <div class="box-header with-border">
                             <h5 class="box-title">
+<<<<<<< HEAD
                               <a data-toggle="collapse" data-parent="#accordion" href="#tab5">
+=======
+                              <a onclick="esconder(6)">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                     <span class="fa fa-clone"></span> Histórico Eclesiástico
                               </a>
                             </h5>
                           </div>
 
+<<<<<<< HEAD
                           <div id="tab5" class="panel-collapse collapse">
+=======
+                          <div id="tab6" style="display: none">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
                             <div class="box-body">
 
@@ -1240,12 +1288,20 @@
                       <div class="panel box box-primary">
                           <div class="box-header with-border">
                             <h5 class="box-title">
+<<<<<<< HEAD
                               <a data-toggle="collapse" data-parent="#accordion" href="#tab6">
+=======
+                              <a onclick="esconder(7)">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                 <span class="fa fa-magic"></span> Dons e Habilidades
                               </a>
                             </h5>
                           </div>
+<<<<<<< HEAD
                           <div id="tab6" class="panel-collapse collapse">
+=======
+                          <div id="tab7" style="display: none">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                             <div class="box-body">
 
 
@@ -1330,12 +1386,20 @@
                       <div class="panel box box-primary">
                           <div class="box-header with-border">
                             <h5 class="box-title">
+<<<<<<< HEAD
                               <a data-toggle="collapse" data-parent="#accordion" href="#tab7">
+=======
+                              <a onclick="esconder(8)">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                 <span class="fa fa-bullseye"></span> Envolvimento Ministerial
                               </a>
                             </h5>
                           </div>
+<<<<<<< HEAD
                           <div id="tab7" class="panel-collapse collapse">
+=======
+                          <div id="tab8" style="display: none">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                             <div class="box-body">
 
                                      <div  class="row">
@@ -1378,12 +1442,20 @@
                       <div class="panel box box-primary">
                           <div class="box-header with-border">
                             <h5 class="box-title">
+<<<<<<< HEAD
                               <a data-toggle="collapse" data-parent="#accordion" href="#tab8">
+=======
+                              <a onclick="esconder(9)">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                 <span class="fa fa-exchange"></span> Histórico de Movimentações
                               </a>
                             </h5>
                           </div>
+<<<<<<< HEAD
                           <div id="tab8" class="panel-collapse collapse">
+=======
+                          <div id="tab9" style="display: none">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                             <div class="box-body">
 
                                 <div class="row">
@@ -1419,12 +1491,20 @@
                       <div class="panel box box-primary">
                           <div class="box-header with-border">
                             <h5 class="box-title">
+<<<<<<< HEAD
                               <a data-toggle="collapse" data-parent="#accordion" href="#tab_cursos">
+=======
+                              <a onclick="esconder(10)">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                 <span class="fa fa-mortar-board"></span> Cursos / Eventos
                               </a>
                             </h5>
                           </div>
+<<<<<<< HEAD
                           <div id="tab_cursos" class="panel-collapse collapse">
+=======
+                          <div id="tab10" style="display: none">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                             <div class="box-body">
 
                                       <div class="row">
@@ -1560,12 +1640,20 @@
                       <div class="panel box box-primary">
                           <div class="box-header with-border">
                             <h5 class="box-title">
+<<<<<<< HEAD
                               <a data-toggle="collapse" data-parent="#accordion" href="#tab10">
+=======
+                              <a onclick="esconder(11)">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                 <span class="fa fa-street-view"></span> {!! \Session::get('label_celulas') !!}
                               </a>
                             </h5>
                           </div>
+<<<<<<< HEAD
                           <div id="tab10" class="panel-collapse collapse">
+=======
+                          <div id="tab11" style="display: none">
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                             <div class="box-body">
 
                                   <div  class="row">
@@ -1614,6 +1702,17 @@
    </div><!-- FIM - DADOS ECLISIASTICOS-->
 
 <script type="text/javascript">
+<<<<<<< HEAD
+=======
+  function esconder(numero) {
+    var x = document.getElementById("tab" + numero);
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+  }
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
   function remover_pessoa(var_objeto)
   {

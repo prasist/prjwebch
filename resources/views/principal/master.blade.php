@@ -163,6 +163,10 @@
 
 
 <script type="text/javascript">
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
         // To make Pace works on Ajax calls
             $(document).ajaxStart(function() { Pace.restart(); });
@@ -356,6 +360,16 @@
                                 name: 'typeahead',
                                 remote:'{!! url("/buscapessoa/%QUERY") !!}',
                                 limit : 50
+<<<<<<< HEAD
+=======
+                                }).blur(function(){
+                                    var valor = document.getElementById("fornecedor").value;
+                                    var separador = valor.charAt(9) + valor.charAt(10) + valor.charAt(11);
+         
+                                    if (separador != " - "){
+                                        document.getElementById("fornecedor").value = "";
+                                    }
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                             });
 
                      });

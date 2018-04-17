@@ -221,6 +221,16 @@
 
       //Adiciona novo valor de rateio
       function incluir_rateio() {
+<<<<<<< HEAD
+=======
+            //Plano de contas
+            if ($("#rateio_pc").val() == "")
+            {
+                alert("Informe o Plano de Contas");
+                return false;
+            }
+
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
             //Centro de custo
             if ($("#rateio_cc").val() == "")
             {
@@ -236,20 +246,40 @@
             }
 
             //Pega dados dos campos
+<<<<<<< HEAD
+=======
+            var ind_planoconta = document.getElementById("rateio_pc").selectedIndex;
+            var texto_rateio_pc = document.getElementById("rateio_pc").options;
+
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
             var ind_centrocusto = document.getElementById("rateio_cc").selectedIndex;
             var texto_rateio = document.getElementById("rateio_cc").options;
 
             //Criar campos dinamicamente
+<<<<<<< HEAD
             var sCentroCustoID = '<tr><input id="hidden_id_rateio_cc[]" name = "hidden_id_rateio_cc[]" type="hidden" class="form-control" value=" ' + ind_centrocusto + '">';
+=======
+            var sPlanoContaID = '<tr><input id="hidden_id_rateio_pc[]" name = "hidden_id_rateio_pc[]" type="hidden" class="form-control" value=" ' + ind_planoconta + '">';
+            var sCentroCustoID = '<tr><input id="hidden_id_rateio_cc[]" name = "hidden_id_rateio_cc[]" type="hidden" class="form-control" value=" ' + ind_centrocusto + '">';
+            var sPlanoConta = '<td><input id="inc_pc[]" readonly name = "inc_pc[]" type="text" class="form-control" value="' + texto_rateio_pc[ind_planoconta].text + '"></td>';
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
             var sCentroCusto = '<td><input id="inc_cc[]" readonly name = "inc_cc[]" type="text" class="form-control" value="' + texto_rateio[ind_centrocusto].text + '"></td>';
             var sPercentual = '<td><input id="inc_perc[]" readonly name = "inc_perc[]" type="text" class="form-control valores" value="' + document.getElementById("perc_rateio").value + '"></td>';
             var sValor = '<td><input id="inc_valor[]" readonly name = "inc_valor[]" type="text" class="form-control valores" value="' + document.getElementById("valor_rateio").value + '"></td>';
             var sBotao = '<td><button data-toggle="tooltip" data-placement="top" title="Excluir Ítem"  class="btn btn-danger btn-sm remover"><spam class="glyphicon glyphicon-trash"></spam></button></td>';
 
             /*Gera codigo HTML*/
+<<<<<<< HEAD
             document.getElementById("mais_rateios").innerHTML = document.getElementById("mais_rateios").innerHTML + sCentroCustoID + sCentroCusto + sPercentual + sValor + sBotao + '</tr>';
 
             /*Limpar campos*/
+=======
+            document.getElementById("mais_rateios").innerHTML = document.getElementById("mais_rateios").innerHTML + sPlanoContaID + sCentroCustoID + sPlanoConta + sCentroCusto + sPercentual + sValor + sBotao + '</tr>';
+
+            /*Limpar campos*/
+            $("#rateio_pc").val('');
+            $("#rateio_pc").trigger('change');
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
             $("#rateio_cc").val('');
             $("#rateio_cc").trigger('change');
             $("#perc_rateio").val('');
@@ -263,7 +293,11 @@
       function recalcula() {
              var_acrescimo=0;
              var_desconto=0;
+<<<<<<< HEAD
              var_pago=0;
+=======
+             var_saldo=0;
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
              //Pega valor de acrescimo se houver, troca ponto por virgula (milhar) e virgula por ponto (decimal)
              if ($('#acrescimo').val()!="")   var_acrescimo = $('#acrescimo').val().replace( '.', '' ).replace( ',', '.' );
@@ -276,12 +310,21 @@
              var_desconto = parseFloat(var_desconto)*100;
 
              //Pega valor de desconto se houver, troca ponto por virgula (milhar) e virgula por ponto (decimal)
+<<<<<<< HEAD
              if ($('#valor_pago').val()!="")  var_pago = $('#valor_pago').val().replace( '.', '' ).replace( ',', '.' );
 
              var_pago = parseFloat(var_pago)*100;
 
              //Calculo do valor pago
              var_resultado = ((var_pago + var_acrescimo) - var_desconto)/100;
+=======
+             if ($('#saldo').val()!="")  var_saldo = $('#saldo').val().replace( '.', '' ).replace( ',', '.' );
+
+             var_saldo = parseFloat(var_saldo)*100;
+
+             //Calculo do valor pago
+             var_resultado = ((var_saldo + var_acrescimo) - var_desconto)/100;
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
             if (parseFloat(var_resultado)>0)
             {
@@ -289,5 +332,10 @@
             }
       }
 
+<<<<<<< HEAD
+=======
+      
+
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
 </script>

@@ -94,12 +94,21 @@
                                                 {!! $value->razaosocial !!} <span class="badge bg-blue">{!!$value->tot!!}</span>
                                         @endcan
                                   @endcan
+<<<<<<< HEAD
                                   @if ($value->tot_geracao>0)
                                   <span class="badge bg-yellow">{!! ($value->tot_geracao) !!}</span>
                                   @endif
                                   @if (isset($value->total_ant))
                                       @if ($value->total_ant>0)
                                       <span class="badge bg-purple">{!! ($value->total_ant) !!}</span>
+=======
+                                  @if ($value->tot_geracao_lista>0)
+                                  <span class="badge bg-yellow">{!! ($value->tot_geracao_lista) !!}</span>
+                                  @endif
+                                  @if (isset($value->tot_geracao_lista_g2))
+                                      @if ($value->tot_geracao_lista_g2>0)
+                                      <span class="badge bg-purple">{!! ($value->tot_geracao_lista_g2) !!}</span>
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                       @endif
                                   @endif
                             </td>

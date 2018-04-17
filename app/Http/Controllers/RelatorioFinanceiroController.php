@@ -77,9 +77,15 @@ public function index() {
         /*Pega todos campos enviados no post*/
         $input = $request->except(array('_token', 'ativo')); //não levar o token
 
+<<<<<<< HEAD
         $this->validate($request, [
             'opTipo' => 'required',
         ]);
+=======
+        //$this->validate($request, [
+        //    'opTipo' => 'required',
+        //]);
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
 
         /*------------------------------------------INICIALIZA PARAMETROS JASPER--------------------------------------------------*/
@@ -177,8 +183,14 @@ public function index() {
             "filtros"=> "'" . ($filtros) . "'",
             "tipo"=>"'" . $input["opTipo"] . "'",
             "REPORT_LOCALE"=> "pt",
+<<<<<<< HEAD
         );
 
+=======
+            "ordem"=>"" . $input["ordem"] . "",
+        );
+                
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
         if ($input["opTipo"]=="M") { //SE FOR RELATORIO DE MOVIMENTACAO DE CONTA / CAIXA
 
@@ -238,10 +250,36 @@ public function index() {
             $parametros = array_add($parametros, 'data_vencimento_final', ($input["data_vencimento_ate"]=="" ? '' : $formatador->FormatarData($input["data_vencimento_ate"])));
         }
 
+<<<<<<< HEAD
         //Passando paremetro com clausula where montada
         $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");
 
 
+=======
+        //totalização
+        if ($input["cbccpc_hidden"]!="") {
+            if ($input["cbccpc_hidden"]=="centro_custos_pagar") {
+                $nome_relatorio = public_path() . '/relatorios/centro_custos_pagar.jasper';
+            }else if ($input["cbccpc_hidden"]=="centro_custos_receber"){
+                $nome_relatorio = public_path() . '/relatorios/centro_custos_receber.jasper';
+            }else if ($input["cbccpc_hidden"]=="plano_contas_pagar") {
+                $nome_relatorio = public_path() . '/relatorios/plano_contas_pagar.jasper';
+            }else if ($input["cbccpc_hidden"]=="plano_contas_receber") {
+                $nome_relatorio = public_path() . '/relatorios/plano_contas_receber.jasper';
+            }
+
+            unset($parametros);
+
+            $parametros = array
+            (
+                "sWhere"=> "'" . " empresas.id = " . $this->dados_login->empresas_id . " and empresas.clientes_cloud_id = " .$this->dados_login->empresas_clientes_cloud_id . "" . "'"
+            );
+        }
+
+        //Passando paremetro com clausula where montada
+        $parametros = array_add($parametros, 'sWhere', "'" . $sWhere . "'");
+
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
          \JasperPHP::process(
             $nome_relatorio,
             $output,

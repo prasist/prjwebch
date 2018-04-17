@@ -267,6 +267,10 @@ class TitulosController extends Controller
 
            /*Validação de campos - request*/
            $this->validate($request, [
+<<<<<<< HEAD
+=======
+                    'fornecedor' => 'required',
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                     'descricao' => 'required',
                     'data_vencimento' => 'required',
                     'valor' => 'required',
@@ -277,15 +281,31 @@ class TitulosController extends Controller
 
           $qtd_parcelas = ($input['parcelas']=="" ? 1 : $input['parcelas']); /*Qtd de parcelas*/
           $vencimento = $this->formatador->FormatarData($input["data_vencimento"]); //Primeiro vencimento
+<<<<<<< HEAD
+=======
+          $qtd_dias = $input['dias'];
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
           $date = new \DateTime($vencimento);
 
             if ($tipo_operacao=="create") { //novo registro
                 for ($i=1; $i <= $qtd_parcelas; $i++) { //Se for passado parcela maior que 1
                      $dados = new titulos();
                      $this->persisteDados($tipo, $dados, $input, $i, $vencimento, $qtd_parcelas, $date, $tipo_operacao);
+<<<<<<< HEAD
                      //Acrescenta um mes na data de vencimento
                      $interval = new \DateInterval('P1M');
                      $vencimento = $date->add($interval);
+=======
+                     if($qtd_dias == ""){
+                        //Acrescenta um mes na data de vencimento
+                        $interval = new \DateInterval('P1M');
+                        $vencimento = $date->add($interval);
+                     }else{
+                        //Acrescenta x dias na data de vencimento
+                        $interval = new \DateInterval('P' . $qtd_dias . 'D');
+                        $vencimento = $date->add($interval);
+                     }
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                 }
             }
             else { //update
@@ -391,6 +411,10 @@ class TitulosController extends Controller
       $dados->numdoc  = $input['numdoc'];
       $dados->serie  = $input['serie'];
       $dados->numpar  = $seq;
+<<<<<<< HEAD
+=======
+      $dados->numdia = ($input['dias']=="" ? null : $input['dias']);
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
       $dados->users_id  = Auth::user()->id;
       $dados->save();
 
@@ -424,6 +448,10 @@ class TitulosController extends Controller
                                     'titulos_id' => $dados->id,
                                     'empresas_id' =>  $this->dados_login->empresas_id,
                                     'empresas_clientes_cloud_id' => $this->dados_login->empresas_clientes_cloud_id,
+<<<<<<< HEAD
+=======
+                                    'planos_contas_id' => $input['hidden_id_rateio_pc'][$i_index],
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                                     'centros_custos_id' => $selected,
                                     'valor' => $this->formatador->GravarCurrency($input['inc_valor'][$i_index]),
                                     'percentual' => $this->formatador->GravarCurrency($input['inc_perc'][$i_index]),
@@ -479,7 +507,12 @@ class TitulosController extends Controller
         ->OrderBy('nome')
         ->get();
 
+<<<<<<< HEAD
         $rateio_titulos = \App\Models\rateio_titulos::select('percentual', 'valor', 'centros_custos_id', 'nome')
+=======
+        $rateio_titulos = \App\Models\rateio_titulos::select('percentual', 'valor', 'centros_custos_id', 'centros_custos.nome AS nome', 'planos_contas_id', 'planos_contas.nome AS nome_pc')
+        ->join('planos_contas', 'planos_contas.id' , '=' , 'rateio_titulo.planos_contas_id')
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
         ->join('centros_custos', 'centros_custos.id' , '=' , 'rateio_titulo.centros_custos_id')
         ->where('rateio_titulo.empresas_clientes_cloud_id', $this->dados_login->empresas_clientes_cloud_id)
         ->where('rateio_titulo.empresas_id', $this->dados_login->empresas_id)
@@ -487,12 +520,23 @@ class TitulosController extends Controller
         ->get();
 
         /*Log historico do titulo*/
+<<<<<<< HEAD
         $sQuery = "select to_char(data_ocorrencia, 'DD/MM/YYYY  HH24:MI:SS') AS data_ocorrencia, name, descricao, valor, valor_pago, acrescimo, desconto, tipo, status, acao, ip, id_titulo, saldo_a_pagar, alteracao_status from log_financeiro inner join users  on users.id = log_financeiro.users_id";
         $sQuery .= " where id_titulo = ? Order by to_char(data_ocorrencia, 'YYYY/MM/DD  HH24:MI:SS') desc";
         $log = \DB::select($sQuery,[$id]);
 
 
         $sQuery = "select titulos.saldo_a_pagar, pessoas.razaosocial, titulos.id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, to_char(to_date(data_emissao, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_emissao, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, pessoas_id, contas_id, planos_contas_id, centros_custos_id, titulos.obs, numpar, numdoc, serie, grupos_titulos_id, alteracao_status ";
+=======
+        $sQuery = "select to_char(data_ocorrencia, 'DD/MM/YYYY  HH24:MI:SS') AS data_ocorrencia, name, descricao, nome, valor, valor_pago, acrescimo, desconto, tipo, status, acao, ip, id_titulo, saldo_a_pagar, alteracao_status from log_financeiro ";
+        $sQuery .= "inner join users on users.id = log_financeiro.users_id ";
+        $sQuery .= "inner join contas on contas.id = log_financeiro.contas_id ";
+        $sQuery .= "where id_titulo = ? Order by to_char(data_ocorrencia, 'YYYY/MM/DD  HH24:MI:SS') desc ";
+        $log = \DB::select($sQuery,[$id]);
+
+
+        $sQuery = "select titulos.saldo_a_pagar, pessoas.razaosocial, titulos.id, to_char(to_date(data_vencimento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_vencimento, to_char(to_date(data_pagamento, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_pagamento, to_char(to_date(data_emissao, 'yyyy-MM-dd'), 'DD/MM/YYYY') AS data_emissao, valor, acrescimo, desconto, descricao, tipo, status, valor_pago, pessoas_id, contas_id, planos_contas_id, centros_custos_id, titulos.obs, numpar, numdoc, serie, grupos_titulos_id, alteracao_status, numdia ";
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
         $sQuery .= " from titulos left join pessoas on pessoas.id = titulos.pessoas_id";
         $sQuery .= " where titulos.tipo = ? ";
         $sQuery .= " and titulos.empresas_id = ? ";
@@ -567,7 +611,11 @@ class TitulosController extends Controller
              if ($input["value"]=="0") { //PAGOU
                 $titulos->valor_pago  = (($var_valor_pago + $titulos->saldo_a_pagar) + $var_acrescimo - $var_desconto);
                 $titulos->saldo_a_pagar = ($titulos->valor - $titulos->valor_pago);
+<<<<<<< HEAD
                 $titulos->data_pagamento  = $titulos->data_vencimento;
+=======
+                $titulos->data_pagamento  = $titulos->data_pagamento;
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
                 $titulos->status = "B";
                 $titulos->alteracao_status = "S"; //Servirá para filtras o log de titulos somente com baixas e estornors
               } else {//ESTORNOU

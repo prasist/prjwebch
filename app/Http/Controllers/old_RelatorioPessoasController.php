@@ -185,6 +185,10 @@ class RelatorioPessoasController extends Controller
 
   public function pesquisar(\Illuminate\Http\Request  $request)
   {
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 120dea74f7aae4b7cf0346eef1fc6007bb8de774
 
     /*Pega todos campos enviados no post*/
     $input = $request->except(array('_token', 'ativo')); //não levar o token
